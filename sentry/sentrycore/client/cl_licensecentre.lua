@@ -1,0 +1,163 @@
+-- [CFG]
+licensecentre = {}
+
+licensecentre.location = vector3(-533.50732421875,-193.56317138672,38.222358703613)
+
+licensecentre.marker = vector3(-533.50732421875,-193.56317138672,38.222358703613-0.98)
+
+licensecentre.name = 'License Centre'
+
+licensecentre.banner = ''
+
+-- [Start of RageUI]
+
+RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~g~Sentry " .. licensecentre.name, 1300, 50, licensecentre.banner, licensecentre.banner))
+RMenu.Add("LicenseCentre", "dlicenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
+RMenu.Add("LicenseCentre", "licenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
+RMenu.Add("LicenseCentre", "confirm", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'licenses',  1300, 50)))
+RMenu.Add("LicenseCentre", "dconfirm", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'dlicenses',  1300, 50)))
+
+licensecentre.dlicenses = {
+    {name = "Scrap Job", group = "Scrap Job", price = 200000, priceshow = "200,000"},
+    {name = "Weed", group = "Weed", price = 1000000, priceshow = "1,000,000"},
+    {name = "Diamond", group = "Diamond", price = 5000000, priceshow = "5,000,000"},
+    {name = "Heroin", group = "Heroin", price = 10000000, priceshow = "10,000,000"},
+    {name = "LSD", group = "LSD", price = 20000000, priceshow = "20,000,000"},
+
+}
+
+licensecentre.licenses = {
+    {name = "Gang License", group = "Gang",price = 500000, priceshow = "500,000"},
+    {name = "Rebel Access", group = "Rebel",price = 10000000, priceshow = "10,000,000"},
+
+}
+
+
+-- [Actual Menu]
+
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('LicenseCentre', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+
+        RageUI.Button("Drug Licenses" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "dlicenses"))
+        RageUI.Button("Other Licenses" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "licenses"))
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("LicenseCentre", "dlicenses")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        for i , p in pairs(licensecentre.dlicenses) do 
+            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+                if Selected then
+
+                    cPrice = p.price
+                    cGroup = p.group
+                    cName = p.name
+                    cPriceshop = p.priceshow
+
+                end
+            end, RMenu:Get("LicenseCentre", "dconfirm"))
+        end
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("LicenseCentre", "licenses")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        for i , p in pairs(licensecentre.licenses) do 
+            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+                if Selected then
+
+                    cPrice = p.price
+                    cGroup = p.group
+                    cName = p.name
+                    cPriceshop = p.priceshow
+
+                end
+            end, RMenu:Get("LicenseCentre", "confirm"))
+        end
+    end) 
+end
+end)
+
+-- [Confirm Purchase]
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("LicenseCentre", "confirm")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
+        
+        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+            if Selected then
+
+                TriggerServerEvent('LicenseCentre:BuyGroup', cPrice, cGroup, cName, cPriceshop)
+
+            end
+        end, RMenu:Get("LicenseCentre", "main"))
+
+        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
+       
+
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("LicenseCentre", "dconfirm")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
+        
+        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+            if Selected then
+
+                TriggerServerEvent('LicenseCentre:BuyGroup', cPrice, cGroup, cName, cPriceshop)
+
+            end
+        end, RMenu:Get("LicenseCentre", "main"))
+
+        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
+       
+
+    end) 
+end
+end)
+
+LicenseCentreMenu = false
+Citizen.CreateThread(function() 
+    while true do
+   
+            local v1 = licensecentre.location
+
+            if isInArea(v1, 500.0) then 
+                DrawMarker(27, licensecentre.marker, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 255, 255, 250, 0, 0, 2, true, 0, 0, false)
+            end
+        
+            if isInArea(v1, 0.8) then 
+            
+                alert('Press ~INPUT_VEH_HORN~ to access ' .. licensecentre.name)
+                if IsControlJustPressed(0, 51) then
+                    PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
+                    RageUI.Visible(RMenu:Get("LicenseCentre", "main"), true)
+                    LicenseCentreMenu = true
+
+                end
+            end
+
+            if isInArea(v1, 0.8) == false and LicenseCentreMenu then
+                RageUI.CloseAll()
+                LicenseCentreMenu = false
+            end
+     
+        Citizen.Wait(1)
+    end
+end)
+
+
+
+
+
+
+

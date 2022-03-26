@@ -1,0 +1,222 @@
+CallManagerClient = {}
+Tunnel.bindInterface("CallManager",CallManagerClient)
+Proxy.addInterface("CallManager",CallManagerClient)
+CallManagerServer = Tunnel.getInterface("CallManager","CallManager")
+Sentry = Proxy.getInterface("Sentry")
+
+local adminCalls = {}
+local nhsCalls = {}
+local pdCalls = {}
+
+local savedCoords = true
+local takenticket = false
+
+local isPlayerNHS = false
+local isPlayerPD = false
+
+RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~g~Sentry Call Manager', 1300, 50))
+RMenu.Add("callmanager", "admin", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
+RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
+RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
+RMenu:Get('callmanager', 'main')
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('callmanager', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        if isPlayerAdmin then
+            RageUI.Button("Admin Tickets", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                if (Hovered) then
+
+                end
+                if (Active) then
+
+                end
+                if (Selected) then
+
+                end
+            end, RMenu:Get('callmanager', 'admin'))
+        end
+
+        if isPlayerPD then 
+            RageUI.Button("Police Calls", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                if (Hovered) then
+
+                end
+                if (Active) then
+
+                end
+                if (Selected) then
+
+                end
+            end, RMenu:Get('callmanager', 'police'))
+            
+        end
+
+        if isPlayerNHS then
+            RageUI.Button("NHS Calls", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                if (Hovered) then
+
+                end
+                if (Active) then
+
+                end
+                if (Selected) then
+
+                end
+            end, RMenu:Get('callmanager', 'nhs'))
+        end
+
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("callmanager", "admin")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        if adminCalls ~= nil then
+            for k,v in pairs(adminCalls) do
+                RageUI.Button(string.format("[%s] %s" .. "  :  " .. v[3], v[2], v[1]), nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                        if v[2] == GetPlayerServerId(PlayerId()) then
+                            notify("~r~You can't take your own Call!")
+                        else
+                            if not isInTicket then
+                                    savedCoords = GetEntityCoords(PlayerPedId())
+                            
+                                    CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+                                        SetEntityCoords(PlayerPedId(), targetCoords)
+                                       -- notify("~g~You earned £3000 for taking a staff ticket! ❤️")
+                                       notify("~g~You have taken a staff ticket! ❤️")
+                                        TriggerServerEvent("IFN:returnMe", v[1], v[2], v[3])
+                                    
+                                    
+                                    
+                                        -- [Ticket Webhook]
+                                        -- [Godmode & Clothing]
+                                    end)
+                                
+                                    takenticket = true
+                                    isInTicket = true
+                                    CallManagerServer.RemoveTicket({k, "admin"})
+                            end
+                        end
+                    end
+                end, RMenu:Get('callmanager', 'admin'))
+            end
+        end
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("callmanager", "police")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        if pdCalls ~= nil then
+            for k,v in pairs(pdCalls) do
+                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                   
+                            CallManagerServer.RemoveTicket({k, "pd"})
+                            CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+                                SetNewWaypoint(targetCoords.x, targetCoords.y)
+                            end)
+                        
+                    end
+                end, RMenu:Get('callmanager', 'police'))
+            end
+        end
+    end) 
+end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get("callmanager", "nhs")) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        if nhsCalls ~= nil then
+            for k,v in pairs(nhsCalls) do
+                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                        if v[2] == GetPlayerServerId(PlayerId()) then
+                            notify("~r~You can't take your own Call!")
+                        else
+                            CallManagerServer.RemoveTicket({k, "nhs"})
+                            CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+                                SetNewWaypoint(targetCoords.x, targetCoords.y)
+                            end)
+                        end
+                    end
+                end, RMenu:Get('callmanager', 'nhs'))
+            end
+        end
+    end) 
+end
+end)
+
+Citizen.CreateThread(function()
+    while (true) do
+        Citizen.Wait(0)
+        if IsControlJustPressed(1, callmanager.Key) then
+    
+            CallManagerServer.GetPermissions({}, function(admin, pd, nhs)
+                isPlayerAdmin = admin;
+                isPlayerPD = pd;
+                isPlayerNHS = nhs;
+            end)
+
+            CallManagerServer.GetTickets()
+            RageUI.Visible(RMenu:Get('callmanager', 'main'), not RageUI.Visible(RMenu:Get('callmanager', 'main')))
+        end
+    end
+end)
+
+RegisterNetEvent('CallManager:Table')
+AddEventHandler('CallManager:Table', function(call, call2, call3)
+    adminCalls = call
+    nhsCalls = call2
+    pdCalls = call3
+end)
+
+function notify(text)
+    SetNotificationTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawNotification( false, false)
+end
+
+RegisterCommand("return", function()
+    if takenticket then
+        if savedCoords == nil then return notify("~r~Couldn't get Last Position") end
+        
+
+  
+            SetEntityCoords(PlayerPedId(), savedCoords)
+            notify("~g~Returned.")
+            takenticket = false
+            TriggerEvent('staffOn:false')
+            TriggerEvent("TRP:OMioDioMode",false)
+            isInTicket = false
+    
+    else 
+        notify('~r~You need to /return.')
+    end
+end)
+
+RegisterNetEvent("staffon")
+AddEventHandler("staffon", function()
+
+    TriggerEvent("TRP:OMioDioMode",true)
+    isInTicket = true
+end)
+
+RegisterNetEvent("staffoff")
+AddEventHandler("staffoff", function()
+
+    TriggerEvent("TRP:OMioDioMode",false)
+    isInTicket = false
+end)
+
+function notify(string)
+    SetNotificationTextEntry("STRING")
+    AddTextComponentString(string)
+    DrawNotification(true, false)
+end
+
