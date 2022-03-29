@@ -191,7 +191,7 @@ RegisterCommand("windows", function(source, args, raw)
 	end
 end, false)
 
--- VRP PVP -- 
+-- Sentry PVP -- 
 AddEventHandler("playerSpawned", function(spawn)
 	SetCanAttackFriendly(GetPlayerPed(-1), true, false)
 	NetworkSetFriendlyFireOption(true)

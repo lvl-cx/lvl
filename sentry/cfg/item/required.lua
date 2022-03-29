@@ -98,7 +98,8 @@ items["wbody"] = {wbody_name,wbody_desc,wbody_choices,wbody_weight}
 
 --- weapon ammo
 local wammo_name = function(args)
-  return get_wname(args[2]).." ammo"
+  --print('helloo', json.encode(args))
+  return args[1]
 end
 
 local wammo_desc = function(args)
@@ -108,23 +109,34 @@ end
 local wammo_choices = function(args)
   local choices = {}
   local fullidname = joinStrings(args,"|")
+  local ammotype = nil;
+  ammotype = args[1]
 
   choices["Load"] = {function(player,choice)
     local user_id = Sentry.getUserId(player)
     if user_id ~= nil then
       local amount = Sentry.getInventoryItemAmount(user_id, fullidname)
+      TriggerClientEvent('checkAmmo', player)
       Sentry.prompt(player, "Amount to load ? (max "..amount..")", "", function(player,ramount)
         ramount = parseInt(ramount)
 
         Sentryclient.getWeapons(player, {}, function(uweapons)
-          if uweapons[args[2]] ~= nil then -- check if the weapon is equiped
-            if Sentry.tryGetInventoryItem(user_id, fullidname, ramount, true) then -- give weapon ammo
-              local weapons = {}
-              weapons[args[2]] = {ammo = ramount}
-              Sentryclient.giveWeapons(player, {weapons,false})
-              Sentry.closeMenu(player)
+            for i,v in pairs(SentryAmmoTypes[ammotype]) do
+                if uweapons[v] ~= nil then -- check if the weapon is equiped
+                
+                      if Sentry.tryGetInventoryItem(user_id, fullidname, ramount, true) then -- give weapon ammo
+                        local weapons = {}
+                        weapons[v] = {ammo = ramount}
+                        Sentryclient.giveWeapons(player, {weapons,false})
+                        Sentry.closeMenu(player)
+                        TriggerEvent('Sentry:RefreshInventory', player)
+                        return
+                      end
+      
+                    end
+         
             end
-          end
+            --Sentryclient.notify(player,{'~r~You do not have any guns that fit this ammo type.'})
         end)
       end)
     end
@@ -133,9 +145,33 @@ local wammo_choices = function(args)
   return choices
 end
 
+RegisterNetEvent('sendAmmo')
+AddEventHandler('sendAmmo', function(bool)
+  hasWep = bool 
+end)
+
 local wammo_weight = function(args)
   return 0.01
 end
+
+
+for i,v in pairs(SentryAmmoTypes) do
+  print(i)
+  
+  items[i] = {wammo_name,wammo_desc,wammo_choices,wammo_weight}
+  
+end
+
+--local wammo_name = function(args)
+--  for i,v in pairs(SentryAmmoTypes) do
+--     for a,d in pairs(v) do 
+--        if d == args[2] then
+--          return i
+--        end
+--     end
+--  end
+--  return args[1]
+--end
 
 items["wammo"] = {wammo_name,wammo_desc,wammo_choices,wammo_weight}
 

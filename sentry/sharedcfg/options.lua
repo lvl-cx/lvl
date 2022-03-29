@@ -14,7 +14,7 @@ SentryConfig.StoreWeaponsOnDeath = true; -- Stores the players weapon on death a
 SentryConfig.DoNotDisplayIps = true; -- Removes all Sentry related references in the console to player ip addresses.
 SentryConfig.LoseItemsOnDeath = true; -- Controls whether you lose inventory items on death.
 SentryConfig.AllowMoreThenOneCar = false; -- Controls if you can have more than one car out.
-SentryConfig.F10System = true; -- Logs warnings and can be accessed via F10 (Thanks to Rubbertoe98) (https://github.com/rubbertoe98/FiveM-Scripts/tree/master/vrp_punishments)
+SentryConfig.F10System = true; -- Logs warnings and can be accessed via F10 (Thanks to Rubbertoe98) (https://github.com/rubbertoe98/FiveM-Scripts/tree/master/sentry_punishments)
 SentryConfig.ServerName = "Sentry" -- Controls the name that is displayed on warnings title etc.
 SentryConfig.PlayerSavingTime = 3000 -- Time in milliseconds to update Player saving
 ---------------

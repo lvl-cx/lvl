@@ -1,4 +1,4 @@
-local lsd = AddBlipForRadius(1317.3520507812,4336.3081054688,48.593723297119, 130.0) -- LSD
+local lsd = AddBlipForRadius(2539.0031738281,-395.42044067383,92.74683380127, 140.0) -- LSD
 SetBlipColour(lsd, 1)
 SetBlipAlpha(lsd, 170)
 

@@ -31,6 +31,7 @@ RageUI.CreateWhile(1.0, true, function()
 
                     cPrice = p.price
                     cHash = p.hash
+                    cName = p.name
 
                 end
             end, RMenu:Get("KnifeStoreMenu", "confirm"))
@@ -42,8 +43,10 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("KnifeStoreMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("KnifeStoreMenu", "confirm"):SetSubtitle("Are you sure?")
-        
+        RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
+        RageUI.Separator("~g~Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("~g~Current Gunstore: " .. knifestore.name, function() end)
+        RageUI.Separator("Are you sure you want to purchase this Knife?", function() end)
         RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
             if Selected then
 
@@ -81,7 +84,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and KnifeStoreMenu then
-                RageUI.CloseAll()
+                RageUI.Visible(RMenu:Get("KnifeStoreMenu", "main"), false)
                 KnifeStoreMenu = false
             end
      

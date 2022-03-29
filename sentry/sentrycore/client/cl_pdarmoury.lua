@@ -7,7 +7,7 @@ armoury.marker = vector3(451.34454345703,-980.09381103516,30.689605712891-0.98)
 
 armoury.name = 'Police Armoury'
 
-armoury.banner = 'police'
+armoury.banner = 'armoury'
 
 -- [Start of RageUI]
 
@@ -31,6 +31,7 @@ RageUI.CreateWhile(1.0, true, function()
                 if Selected then
 
                     cHash = p.hash
+                    cName = p.name
 
                 end
             end, RMenu:Get("PDArmoury", "confirm"))
@@ -44,9 +45,12 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("PDArmoury", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("PDArmoury", "confirm"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Armour Plate: " .. 'Level 4 [100%]', function() end)
+            RageUI.Separator("~g~Armour Plate Price: £" .. '0', function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. armoury.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Armour Plate?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('PD:BuyArmour')
@@ -54,7 +58,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("PDArmoury", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
        
 
     end) 
@@ -64,11 +68,14 @@ end)
 
 -- [Confirm Purchase]
 RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get("PDArmoury", "confirma")) then
+    if RageUI.Visible(RMenu:Get("PDArmoury", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("PDArmoury", "confirm"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
+            RageUI.Separator("~g~Weapon Price: £0", function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. armoury.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Weapon?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('PD:BuyWeapon', cHash)
@@ -76,7 +83,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("PDArmoury", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
        
 
     end) 
@@ -105,12 +112,25 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and PDArmoury then
-                RageUI.CloseAll()
+                RageUI.Visible(RMenu:Get("PDArmoury", "main"), false)
                 PDArmoury = false
             end
      
         Citizen.Wait(1)
     end
+end)
+
+
+Citizen.CreateThread(function()
+    blip = AddBlipForCoord(armoury.location)
+    SetBlipSprite(blip, 175)
+    SetBlipScale(blip, 0.7)
+    SetBlipDisplay(blip, 2)
+    SetBlipColour(blip, 3)
+    SetBlipAsShortRange(blip, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString(armoury.name)
+    EndTextCommandSetBlipName(blip)
 end)
 
 

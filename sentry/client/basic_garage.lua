@@ -1,7 +1,7 @@
 local vehicles = {}
 
 
-AllowMoreThenOneCar = false
+AllowMoreThenOneCar = true
 function tSentry.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type (one vehicle per type allowed at the same time)
 
     local vehicle = vehicles[vtype]

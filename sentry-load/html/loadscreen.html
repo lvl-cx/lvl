@@ -1,0 +1,57 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UDM | Loadingscreen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="loadscreen.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="enable_music">
+        <img src=music.png>
+    </div>
+
+    <div class="container">
+        <img src=discord.png>
+    </div>
+    
+    <div class="overcast"></div>
+    <div class="progress"></div>
+
+    
+<div class="anim">
+    <img src=LogoNoBack.png>
+</div>
+
+    <audio id="leson" src="music.mp3" autoplay="false" hidden="true" loop="true"/>
+    
+    <script>
+
+    var play = false;
+    var myAudio = document.getElementById("leson");
+    
+    myAudio.volume = 0.4;
+
+    function onKeyDown(event) {
+            switch (event.keyCode) {
+                case 32: //SpaceBar                    
+                    if (play) {
+                        myAudio.pause();
+                        play = false;
+                    } else {
+                        myAudio.play();
+                        play = true;
+                    }
+                    break;
+            }
+      return false;
+    }
+
+    window.addEventListener("keydown", onKeyDown, false);
+    </script>
+
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 
 licensecentre = {}
 
-licensecentre.location = vector3(-533.50732421875,-193.56317138672,38.222358703613)
+licensecentre.location = vector3(-926.37622070312,-2037.8065185547,9.4023275375366)
 
 RegisterServerEvent("LicenseCentre:BuyGroup")
 AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)

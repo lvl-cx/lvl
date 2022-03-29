@@ -38,6 +38,22 @@ Citizen.CreateThread(function()
     end
 end)
 
+
+RegisterNetEvent('Sentry:GiveStarterCar')
+AddEventHandler('Sentry:GiveStarterCar', function()
+    local source = source
+    local user_id = Sentry.getUserId(source)
+    
+    MySQL.query("Sentry/get_vehicle", {user_id = user_id, vehicle = 'Sanchez'}, function(pvehicle, affected)
+  
+            Sentry.getUserIdentity(user_id, function(identity)
+                MySQL.execute("Sentry/add_vehicle", {user_id = user_id, vehicle = 'Sanchez', registration = "P "..identity.registration})
+    
+            end)            
+     
+    end)
+end)
+
 RegisterNetEvent('Sentry:FetchCars')
 AddEventHandler('Sentry:FetchCars', function(owned, type)
     local source = source
@@ -550,3 +566,12 @@ local function ch_replace(player,choice)
   Sentryclient.replaceNearestVehicle(player,{7})
 end
 
+RegisterNetEvent("Sentry:HasVIP")
+AddEventHandler("Sentry:HasVIP", function()
+    
+    local source = source 
+    userid = Sentry.getUserId(source)
+    if Sentry.hasGroup(userid, "VIP") then 
+        TriggerClientEvent("Sentry:OpenVIPGarage", source)
+    end
+end)

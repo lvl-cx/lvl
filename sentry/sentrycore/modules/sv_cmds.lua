@@ -4,7 +4,7 @@ AddEventHandler('chat:addMessage', function(source, args, rawCommand)
   local msg = rawCommand
   local webhook = "https://discord.com/api/webhooks/932223493368602654/0XV-wIPnjnAW-wcY6d7Mu2EV4FpDx7R_585gAXgz-78_MFVypxvbdMQuLvwgTYwwfVBt"
   PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "Infinite Roleplay", embeds = {
+  end, "POST", json.encode({username = "Sentry Roleplay", embeds = {
     {
       ["color"] = "15158332",
       ["title"] = "Message: "..msg,
@@ -26,7 +26,7 @@ RegisterCommand('anon', function(source, args, rawCommand)
     local msg = rawCommand:sub(5)
     local webhook = "https://discord.com/api/webhooks/932223533709402142/UZlQT1JB23ngOD1piF-WEQbJ-4rQWdOxpWDWrskowsJi6AtU6fzQoiGR1UhhM_YKU6bi"
     PerformHttpRequest(webhook, function(err, text, headers) 
-    end, "POST", json.encode({username = "Infinite Roleplay", embeds = {
+    end, "POST", json.encode({username = "Sentry Roleplay", embeds = {
       {
           ["color"] = "15158332",
           ["title"] = "Message: "..msg,
@@ -48,7 +48,7 @@ RegisterCommand('ooc', function(source, args, rawCommand)
   local user_id = Sentry.getUserId(source)
   local webhook = "https://discord.com/api/webhooks/932223609706016778/NUVEtsAZq_z1oGNvKbfwZRMKWjHVil9e38xs4uIUIwmoDWUtU1kLDZIXremBBvpdDHfU"
   PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "Infinite Roleplay", embeds = {
+  end, "POST", json.encode({username = "Sentry Roleplay", embeds = {
     {
       ["color"] = "15158332",
       ["title"] = "Message: "..msg,
@@ -123,7 +123,7 @@ RegisterCommand('/', function(source, args, rawCommand)
   local user_id = Sentry.getUserId(source)
   local webhook = "https://discord.com/api/webhooks/932223609706016778/NUVEtsAZq_z1oGNvKbfwZRMKWjHVil9e38xs4uIUIwmoDWUtU1kLDZIXremBBvpdDHfU"
   PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "Infinite Roleplay", embeds = {
+  end, "POST", json.encode({username = "Sentry Roleplay", embeds = {
     {
       ["color"] = "15158332",
       ["title"] = "Message: "..msg,
@@ -187,12 +187,12 @@ RegisterCommand('clear', function(source, args, rawCommand)
   end
 end, false)
 
-RegisterServerEvent("Infinite:ClockingOff")
-AddEventHandler("Infinite:ClockingOff", function()
+RegisterServerEvent("Sentry:ClockingOff")
+AddEventHandler("Sentry:ClockingOff", function()
 	print("Player has clocked off")
-	TriggerClientEvent("Infinite:ClockingOff123", source)
+	TriggerClientEvent("Sentry:ClockingOff123", source)
 end)
 
 RegisterCommand("clockingoff", function()
-	TriggerEvent("Infinite:ClockingOff")
+	TriggerEvent("Sentry:ClockingOff")
 end)

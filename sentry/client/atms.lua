@@ -15,7 +15,7 @@ RageUI.CreateWhile(1.0, true, function()
                         local result = GetOnscreenKeyboardResult()
                         if result then 
                             result = tonumber(result)
-                            TriggerServerEvent('VRP:Deposit', result)
+                            TriggerServerEvent('Sentry:Deposit', result)
                             PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
                         end
                     end
@@ -33,7 +33,7 @@ RageUI.CreateWhile(1.0, true, function()
                         local result = GetOnscreenKeyboardResult()
                         if result then 
                             result = tonumber(result)
-                            TriggerServerEvent('VRP:Withdraw', result)
+                            TriggerServerEvent('Sentry:Withdraw', result)
                             PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
                         end
                     end

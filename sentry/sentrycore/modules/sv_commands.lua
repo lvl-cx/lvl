@@ -59,7 +59,7 @@ end)
 
 RegisterCommand("s", function(source,args, rawCommand)
     user_id2 = Sentry.getUserId(source)   
-    if Sentry.hasPermission(user_id2, "vrp.adminmenu") then
+    if Sentry.hasPermission(user_id2, "sentry.adminmenu") then
        
     else 
         local playerName = "Server "

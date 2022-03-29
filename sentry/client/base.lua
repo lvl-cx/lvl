@@ -173,7 +173,7 @@ local anim_ids = Tools.newIDGenerator()
 -- play animation (new version)
 -- upper: true, only upper body, false, full animation
 -- seq: list of animations as {dict,anim_name,loops} (loops is the number of loops, default 1) or a task def (properties: task, play_exit)
--- looping: if true, will infinitely loop the first element of the sequence until stopAnim is called
+-- looping: if true, will Sentryly loop the first element of the sequence until stopAnim is called
 function tSentry.playAnim(upper, seq, looping)
   if seq.task ~= nil then -- is a task (cf https://github.com/ImagicTheCat/Sentry/pull/118)
     tSentry.stopAnim(true)
@@ -332,10 +332,10 @@ Citizen.CreateThread(function()
   end
 end)
 
-TriggerServerEvent('VRP:CheckID')
+TriggerServerEvent('Sentry:CheckID')
 
-RegisterNetEvent('VRP:CheckIdRegister')
-AddEventHandler('VRP:CheckIdRegister', function()
+RegisterNetEvent('Sentry:CheckIdRegister')
+AddEventHandler('Sentry:CheckIdRegister', function()
     TriggerEvent('playerSpawned', GetEntityCoords(PlayerPedId()))
 end)
 

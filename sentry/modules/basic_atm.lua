@@ -37,8 +37,8 @@ local function atm_choice_deposit(player, choice)
 end
 
 
-RegisterNetEvent('VRP:Withdraw')
-AddEventHandler('VRP:Withdraw', function(amount)
+RegisterNetEvent('Sentry:Withdraw')
+AddEventHandler('Sentry:Withdraw', function(amount)
     local source = source
     amount = parseInt(amount)
     if onesync ~= "off" then    
@@ -79,8 +79,8 @@ AddEventHandler('VRP:Withdraw', function(amount)
 end)
 
 
-RegisterNetEvent('VRP:Deposit')
-AddEventHandler('VRP:Deposit', function(amount)
+RegisterNetEvent('Sentry:Deposit')
+AddEventHandler('Sentry:Deposit', function(amount)
     local source = source
     amount = parseInt(amount)
     if onesync ~= "off" then    

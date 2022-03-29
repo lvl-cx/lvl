@@ -33,6 +33,7 @@ RageUI.CreateWhile(1.0, true, function()
 
                         cPrice = p.price
                         cHash = p.hash
+                        cName = p.name
 
                     end
                 end, RMenu:Get("Rebel", "confirm"))
@@ -53,9 +54,12 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Rebel", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("Rebel", "confirma"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
+            RageUI.Separator("~g~Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. rebel.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Weapon?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('Rebel:BuyArmour')
@@ -63,7 +67,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("Rebel", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("Rebel", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("Rebel", "main"))
        
 
     end) 
@@ -74,9 +78,12 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Rebel", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("Rebel", "confirm"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Armour Plate: " .. 'Level 4 [100%]', function() end)
+            RageUI.Separator("~g~Armour Plate Price: £" .. '100,000', function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. rebel.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Armour Plate?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('Rebel:BuyWeapon', cPrice, cHash)
@@ -84,7 +91,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("Rebel", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("Rebel", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("Rebel", "main"))
        
 
     end) 
@@ -113,7 +120,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and RebelMenu then
-                RageUI.CloseAll()
+                RageUI.Visible(RMenu:Get("Rebel", "main"), false)
                 RebelMenu = false
             end
      

@@ -204,7 +204,9 @@ function tSentry.setCustomization(custom) -- indexed [drawable,texture,palette] 
         if HasModelLoaded(mhash) then
           -- changing player model remove weapons, so save it
           local weapons = tSentry.getWeapons()
-          SetPlayerModel(PlayerId(), mhash)
+          if GetEntityModel(PlayerPedId()) ~= GetHashKey("mp_m_freemode_01") then
+            SetPlayerModel(PlayerId(), mhash)
+          end
           tSentry.giveWeapons(weapons,true)
           SetModelAsNoLongerNeeded(mhash)
         end

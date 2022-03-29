@@ -9,16 +9,16 @@ local config = module("cfg/base")
 local log_config = module("servercfg/cfg_webhooks")
 local version = module("version")
 
-print("^5[VRP]: ^7" .. 'Checking for Sentry Updates..')
+print("^5[Sentry]: ^7" .. 'Checking for Sentry Updates..')
 
 PerformHttpRequest("https://raw.githubusercontent.com/DunkoUK/dunko_sentry/master/sentry/version.lua",function(err,text,headers)
 if err == 200 then
     text = string.gsub(text,"return ","")
     local r_version = tonumber(text)
     if version ~= r_version then
-        print("^5[VRP]: ^7" .. 'A Dunko Update is available from: https://github.com/DunkoUK/dunko_sentry')
+        print("^5[Sentry]: ^7" .. 'A Dunko Update is available from: https://github.com/DunkoUK/dunko_sentry')
     else 
-        print("^5[VRP]: ^7" .. 'You are running the most up to date Dunko Version. Thanks for using Dunko_Sentry and thanks to our contributors for updating the project. Support Found At: https://discord.gg/b8wQn2XqDt')
+        print("^5[Sentry]: ^7" .. 'You are running the most up to date Dunko Version. Thanks for using Dunko_Sentry and thanks to our contributors for updating the project. Support Found At: https://discord.gg/b8wQn2XqDt')
     end
 else
     print("[Sentry] unable to check the remote version")
@@ -306,13 +306,13 @@ function Sentry.ReLoadChar(source)
                         MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                         print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") joined (user_id = "..user_id..")")
                         TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
-                        TriggerClientEvent("VRP:CheckIdRegister", source)
+                        TriggerClientEvent("Sentry:CheckIdRegister", source)
                     end)
                 end)
             else -- already connected
                 print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") re-joined (user_id = "..user_id..")")
                 TriggerEvent("Sentry:playerRejoin", user_id, source, name)
-                TriggerClientEvent("VRP:CheckIdRegister", source)
+                TriggerClientEvent("Sentry:CheckIdRegister", source)
                 local tmpdata = Sentry.getUserTmpTable(user_id)
                 tmpdata.spawns = 0
             end
@@ -332,8 +332,8 @@ exports("sentrybot", function(method_name, params, cb)
     end
 end)
 
-RegisterNetEvent("VRP:CheckID")
-AddEventHandler("VRP:CheckID", function()
+RegisterNetEvent("Sentry:CheckID")
+AddEventHandler("Sentry:CheckID", function()
     local user_id = Sentry.getUserId(source)
     if not user_id then
         Sentry.ReLoadChar(source)

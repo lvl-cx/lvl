@@ -32,6 +32,7 @@ RageUI.CreateWhile(1.0, true, function()
 
                     cPrice = p.price
                     cHash = p.hash
+                    cName = p.name
 
                 end
             end, RMenu:Get("SandySmallArms", "confirm"))
@@ -51,9 +52,12 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("SandySmallArms", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("SandySmallArms", "confirm"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
+            RageUI.Separator("~g~Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. sandysmall.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Weapon?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('SandySmall:BuyWeapon', cPrice, cHash)
@@ -61,7 +65,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("SandySmallArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
        
 
     end) 
@@ -71,9 +75,12 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("SandySmallArms", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("SandySmallArms", "confirma"):SetSubtitle("Are you sure?")
+            RageUI.Separator("~g~Armour Plate: " .. 'Level 1 [25%]', function() end)
+            RageUI.Separator("~g~Armour Plate Price: £" .. '25,000', function() end)
+            RageUI.Separator("~g~Current Gunstore: " .. sandysmall.name, function() end)
+            RageUI.Separator("Are you sure you want to purchase this Armour Plate?", function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('SandySmall:BuyArmour')
@@ -81,7 +88,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("SandySmallArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
        
 
     end) 
@@ -109,7 +116,7 @@ Citizen.CreateThread(function()
             end
          
             if isInArea(v1, 0.8) == false and SandySmallMenu then
-                RageUI.CloseAll()
+                RageUI.Visible(RMenu:Get("SandySmallArms", "main"), false)
                 SandySmallMenu = false
             end
      

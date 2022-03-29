@@ -31,7 +31,7 @@ AddEventHandler('whoIs', function(vehicle, price)
                     MySQL.execute("Sentry/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
                     webhook = "https://discord.com/api/webhooks/906657082877550633/R8CnHsE94UPAC3jQVVDe7yJIXAQ8LwJaHDQ8HA5IVDMRswueuLK43hiuSKipYIpQUnJu"
                     PerformHttpRequest(webhook, function(err, text, headers) 
-                    end, "POST", json.encode({username = "Eclipse Roleplay", embeds = {
+                    end, "POST", json.encode({username = "Sentry Roleplay", embeds = {
                     {
                         ["color"] = "15158332",
                         ["title"] = "Showroom Purchase Log",

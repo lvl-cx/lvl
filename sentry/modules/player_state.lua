@@ -32,6 +32,8 @@ AddEventHandler("Sentry:playerSpawn", function(user_id, source, first_spawn)
                 y = y,
                 z = z
             }
+            -- [First Spawn things go here]
+            TriggerClientEvent('FirstSpawn', player, true)
         end
 
         if data.position ~= nil then -- teleport to saved pos
@@ -170,14 +172,21 @@ local isStoring = {}
 function tSentry.StoreWeaponsDead()
     local player = source 
     local user_id = Sentry.getUserId(player)
-	Sentryclient.getWeapons(player,{},function(weapons)
+    Sentryclient.getWeapons(player,{},function(weapons)
         if not isStoring[player] then
             isStoring[player] = true
             Sentryclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
                     Sentry.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                     if v.ammo > 0 then
-                        Sentry.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
+                        for i,c in pairs(SentryAmmoTypes) do
+                            for a,d in pairs(c) do
+                                if d == k then  
+                                    print(i)
+                                    Sentry.giveInventoryItem(user_id, i, v.ammo, true)
+                                end
+                            end   
+                        end
                     end
                 end
                 Sentryclient.notify(player,{"~g~Weapons Stored"})
@@ -188,5 +197,5 @@ function tSentry.StoreWeaponsDead()
         else
             Sentryclient.notify(player,{"~o~Your weapons are already being stored hmm..."})
         end
-	end)
-end
+    end)
+  end

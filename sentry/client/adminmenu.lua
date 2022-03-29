@@ -120,12 +120,15 @@ local getUserGroupsGroupIds = {
     ["VIP"] = "VIP",
 }
 local getUserLicenseGroups = {
-    ["Scrap Job"] = "Scrap Job License",
-    ["Weed"] = "Weed License",
-    ["Diamond"] = "Diamond License",
-    ["Heroin"] = "Heroin License",
-    ["LSD"] = "LSD License",
-    ["Rebel"] = "Rebel License",
+    ["Scrap"] = "Scrap",
+    ["Weed"] = "Weed",
+    ["Cocaine"] = "Cocaine",
+    ["Gold"] = "Gold",
+    ["Diamond"] = "Diamond",
+    ["Heroin"] = "Heroin",
+    ["LSD"] = "LSD",
+    ["Gang"] = "Gang",
+    ["Rebel"] = "Rebel",
     --["largearms"] = "Large Arms License",
 }
 local getUserPOVGroups = {
@@ -590,7 +593,7 @@ RageUI.CreateWhile(1.0, true, function()
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
                 RageUI.Button("Get Coords", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('VRPDEV:GetCoords')
+                        TriggerServerEvent('SentryDEV:GetCoords')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end

@@ -2,7 +2,7 @@ local blips = {
 	{title="[Sandy Hospital]", colour=2, id=1, pos=vector3(1832.4654541016,3678.6604003906,42.009292602539),dist=35,nonRP=false,setBit=false}, -- [Sandy Hospital]
     {title="[St Thomas]", colour=2, id=1, pos=vector3(333.91488647461,-597.16156005859,29.292747497559),dist=40,nonRP=false,setBit=false}, -- [St Thomas]
     {title="[Paleto Hospital]", colour=2, id=1, pos=vector3(-254.16650390625,6324.3740234375,39.203189849854),dist=30,nonRP=false,setBit=false}, -- [Paleto Hospital]
-	{title="[License Centre]", colour=2, id=1, pos=vector3(-538.44488525391,-218.1847076416,40.40007400512),dist=60,nonRP=false,setBit=false}, -- [License Centre]
+	{title="[License Centre]", colour=2, id=1, pos=vector3(-927.42938232422,-2041.2468261719,13.946600914001),dist=60,nonRP=false,setBit=false}, -- [License Centre]
 	{title="[VIP Island]", colour=2, id=1, pos=vector3(-2170.4770507812,5179.0668945312,15.63862323761),dist=100,nonRP=false,setBit=false}, -- [VIP Island]
 	{title="[Legion]", colour=2, id=1, pos=vector3(170.51364135742,-1021.3690795898,28.816247940063),dist=50,nonRP=false,setBit=false}, -- [Legion]
 	{title="[Admin Island]", colour=2, id=1, pos=vector3(3492.4116210938,2579.2509765625,13.129757881165),dist=200,nonRP=false,setBit=false}, -- [Admin Island]
@@ -21,7 +21,7 @@ local SandyHospital = AddBlipForRadius(1832.4654541016,3678.6604003906,42.009292
 SetBlipColour(SandyHospital, 2)
 SetBlipAlpha(SandyHospital, 150)
 
-local LicenseCentre = AddBlipForRadius(-538.44488525391,-218.1847076416,40.40007400512, 60.0)
+local LicenseCentre = AddBlipForRadius(-927.42938232422,-2041.2468261719,13.946600914001, 60.0)
 SetBlipColour(LicenseCentre, 2)
 SetBlipAlpha(LicenseCentre, 150)
 
@@ -163,10 +163,10 @@ greenzoneTimer = 0
 Citizen.CreateThread(function()
 	while true do
 		if showEnterGreenzone and greenzoneTimer > 0 then
-			TriggerEvent("ImmersiveNotify:Success",nil,"You have entered a Greenzone!","top-right",nil,true)
+			TriggerEvent("SentryNotify:Success",nil,"You have entered a Greenzone!","top-right",nil,true)
 		end
 		if showExitGreenzone and greenzoneTimer > 0 then
-			TriggerEvent("ImmersiveNotify:Negative",nil,"You have entered a exited a Greenzone!","top-right",nil,true)
+			TriggerEvent("SentryNotify:Negative",nil,"You have entered a exited a Greenzone!","top-right",nil,true)
 		end
 		Wait(0)
 	end

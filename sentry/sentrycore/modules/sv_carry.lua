@@ -50,34 +50,34 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 
-RegisterServerEvent("Infinite:CarryRequest")
-AddEventHandler("Infinite:CarryRequest", function(targetSrc)
+RegisterServerEvent("Sentry:CarryRequest")
+AddEventHandler("Sentry:CarryRequest", function(targetSrc)
 	local senderSrc = source
 	local targetSrc = targetSrc
 	local senderSrcName = GetPlayerName(senderSrc)
 	userid = Sentry.getUserId(senderSrc)
 	if Sentry.hasPermission(userid, 'staffon.perm') then 
-		TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
+		TriggerClientEvent("Sentry:StartCarry",senderSrc,targetSrc)
 	else
 		Sentryclient.notify(targetSrc,{"Player: ~b~"..senderSrcName.."~w~ is trying to carry you, press ~g~=~w~ to accept or ~r~-~w~ to refuse"})
 		Sentryclient.notify(senderSrc,{"Sent carry request to Temp ID: "..targetSrc})
-		TriggerClientEvent('Infinite:CarryTargetAsk', targetSrc, senderSrc)
+		TriggerClientEvent('Sentry:CarryTargetAsk', targetSrc, senderSrc)
 	end
 
 end)
 
-RegisterServerEvent("Infinite:CarryAccepted")
-AddEventHandler("Infinite:CarryAccepted", function(senderSrc)
+RegisterServerEvent("Sentry:CarryAccepted")
+AddEventHandler("Sentry:CarryAccepted", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)
 	Sentryclient.notify(targetSrc,{"~g~Carry request accepted."})
 	Sentryclient.notify(senderSrc,{"~g~Your carry request to "..targetSrcName.." has been accepted."})
-	TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
+	TriggerClientEvent("Sentry:StartCarry",senderSrc,targetSrc)
 end)
 
-RegisterServerEvent("Infinite:CarryDeclined")
-AddEventHandler("Infinite:CarryDeclined", function(senderSrc)
+RegisterServerEvent("Sentry:CarryDeclined")
+AddEventHandler("Sentry:CarryDeclined", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)

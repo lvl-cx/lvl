@@ -39,20 +39,29 @@ function DeleteCar(veh)
     end
 end
 
+local FirstSpawn = true
+
+RegisterNetEvent('FirstSpawn')
+AddEventHandler('FirstSpawn', function(bool)
+    FirstSpawn = bool 
+end)
+
 -- Did you know you can toggle most things in Sentry within the sentry/sharedcfg/options.lua?
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SentryGarages', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
-            if EnableVeh then
-                RageUI.Button("Buy Vehicles", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
+            if FirstSpawn then
+                RageUI.Button("~g~[Claim Starter Car]", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
-                        if Table_Type == nil or Table_Type then 
-                            TriggerServerEvent('Sentry:FetchCars', false, garage_type)
-                            Table_Type = false;
-                        end
+                        FirstSpawn = false
+                        TriggerEvent("IFN:PlaySound",  1)
+                        notify('~g~The Starter Car is now in your Garage!')
+                        TriggerServerEvent('Sentry:GiveStarterCar')
+
+          
                     end
-                end, RMenu:Get("SentryGarages", "buy_vehicles"))
+                end)
             end
             RageUI.Button("Owned Vehicles", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                 if Selected then 
@@ -75,7 +84,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             selected_category = v.vehicles
                         end
@@ -87,7 +96,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SentryGarages', 'buy_vehicles_submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(selected_category) do 
-                RageUI.Button(v[1], nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button(v[1], nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         SelectedCar.spawncode = i 
                         SelectedCar.name = v[1]
@@ -117,7 +126,7 @@ RageUI.CreateWhile(1.0, true, function()
             RentedVeh = false;
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             selected_category = v.vehicles
                         end
@@ -157,7 +166,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('SentryGarages', 'owned_vehicles_submenu_manage')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button('Spawn Vehicle', nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Spawn Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then 
                     tSentry.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()))
                     DeleteCar(veh)
@@ -169,7 +178,7 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             if not RentedVeh then 
             
-                RageUI.Button('Rent out Vehicle', nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button('Rent out Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('Sentry:RentVehicle', SelectedCar.spawncode) 
                     end
@@ -177,7 +186,7 @@ RageUI.CreateWhile(1.0, true, function()
                     
                     end
                 end)
-                RageUI.Button('Sell Vehicle', nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button('Sell Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         TriggerServerEvent('Sentry:SellVehicle', SelectedCar.spawncode)
                     end
@@ -206,13 +215,13 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SentryGarages', 'rented_vehicles')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
-            RageUI.Button('Rented Vehicles Out', nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Rented Vehicles Out', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then
                     Table_Type = nil;
                     TriggerServerEvent('Sentry:FetchVehiclesOut')
                 end
             end,RMenu:Get("SentryGarages", "rented_vehicles_out_manage"))
-            RageUI.Button('Rented Vehicles In', nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Rented Vehicles In', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then
                     Table_Type = nil;
                     RentedVeh = true;
@@ -227,7 +236,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true; 
                             selected_category = v.vehicles
@@ -251,7 +260,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true; 
                             selected_category = v.vehicles
@@ -289,7 +298,7 @@ end)
                         end
                     end
                     local coords = GetEntityCoords(PlayerPedId())
-                    local ped = PlayerPedId()
+                    ped = PlayerPedId()
                     local cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", coords.x, coords.y-7, coords.z + 1.5, 350.00,0.00,0.00, 50.00, false, 0)
                     vehname = Hovered_Vehicles
                     veh = CreateVehicle(hash,coords.x, coords.y, coords.z + 1, 0.0,false,false)
@@ -353,6 +362,8 @@ Citizen.CreateThread(function()
                     DrawMarker(35, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 255, 00, 50, false, true, 2, true, nil, nil, false)
                 elseif type == "Heli" then 
                     DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 255, 00, 50, false, true, 2, true, nil, nil, false)
+                elseif type == "VIP" then 
+                    DrawMarker(36, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.5, 0.5, 255, 208, 0, 150, false, true, 2, false, nil, nil, false)
                 end
             end
         end
@@ -375,9 +386,15 @@ Citizen.CreateThread(function()
             end
         end
         if not MenuOpen and inMarker then
-            MenuOpen = true
-            RageUI.Visible(RMenu:Get('SentryGarages', 'main'), true)  
-            PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
+            if garage_type == "VIP" then 
+                MenuOpen = true
+                TriggerServerEvent("Sentry:HasVIP")
+                PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
+            else
+                MenuOpen = true
+                RageUI.Visible(RMenu:Get('SentryGarages', 'main'), true)  
+                PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
+            end
         end
         if not inMarker and MenuOpen then
             DeleteCar(veh)
@@ -389,21 +406,32 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent("Sentry:OpenVIPGarage")
+AddEventHandler("Sentry:OpenVIPGarage", function()
+    RageUI.Visible(RMenu:Get('SentryGarages', 'main'), true)  
+end)
+
 for i,v in pairs(cfg.garages) do 
     local x,y,z = v[2], v[3], v[4]
     local Blip = AddBlipForCoord(x, y, z)
     if v[1] == "Car" then 
         SetBlipSprite(Blip, 50)
         SetBlipScale(Blip, 0.4)
+        SetBlipColour(Blip, 2)
     elseif v[1] == "Boat" then 
         SetBlipSprite(Blip, 427)
         SetBlipScale(Blip, 0.4)
+        SetBlipColour(Blip, 2)
     elseif v[1] == "Heli" then 
         SetBlipSprite(Blip, 43)
+        SetBlipColour(Blip, 2)
+        SetBlipScale(Blip, 0.4)
+    elseif v[1] == "VIP" then 
+        SetBlipSprite(Blip, 50)
+        SetBlipColour(Blip, 5)
         SetBlipScale(Blip, 0.4)
     end
     SetBlipDisplay(Blip, 4)
-    SetBlipColour(Blip, 2)
     SetBlipAsShortRange(Blip, true)
     AddTextEntry("MAPBLIP", v[1] .. ' Garage')
     BeginTextCommandSetBlipName("MAPBLIP")
@@ -411,3 +439,7 @@ for i,v in pairs(cfg.garages) do
     SetBlipCategory(Blip, 1)
 end
 
+RegisterNetEvent("returnHover")
+AddEventHandler("returnHover", function(veh)
+    Hovered_Vehicles = veh
+end)

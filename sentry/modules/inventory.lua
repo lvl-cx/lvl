@@ -31,9 +31,12 @@ function Sentry.defInventoryItem(idname,name,description,choices,weight)
     local user_id = Sentry.getUserId(player)
     if user_id ~= nil then
       -- prompt number
+    --   TriggerClientEvent('Sentry:ToggleNUIFocus', player, false)
       Sentry.prompt(player,lang.inventory.trash.prompt({Sentry.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
         local amount = parseInt(amount)
         if Sentry.tryGetInventoryItem(user_id,idname,amount,false) then
+        --   TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
+          TriggerEvent('Sentry:RefreshInventory', Sentry.getUserSource(user_id))
           Sentryclient.notify(player,{lang.inventory.trash.done({Sentry.getItemName(idname),amount})})
           Sentryclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
         else
@@ -54,27 +57,34 @@ function ch_give(idname, player, choice)
         local nuser_id = Sentry.getUserId(nplayer)
         if nuser_id ~= nil then
           -- prompt number
+          TriggerClientEvent('Sentry:ToggleNUIFocus', player, false)
           Sentry.prompt(player,lang.inventory.give.prompt({Sentry.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
             local amount = parseInt(amount)
             -- weight check
+            TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
             local new_weight = Sentry.getInventoryWeight(nuser_id)+Sentry.getItemWeight(idname)*amount
             if new_weight <= Sentry.getInventoryMaxWeight(nuser_id) then
               if Sentry.tryGetInventoryItem(user_id,idname,amount,true) then
                 Sentry.giveInventoryItem(nuser_id,idname,amount,true)
-
+                TriggerEvent('Sentry:RefreshInventory', player)
+                TriggerEvent('Sentry:RefreshInventory', nplayer)
                 Sentryclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
                 Sentryclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
               else
+                TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
                 Sentryclient.notify(player,{lang.common.invalid_value()})
               end
             else
+                TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
               Sentryclient.notify(player,{lang.inventory.full()})
             end
           end)
         else
+            TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
           Sentryclient.notify(player,{lang.common.no_player_near()})
         end
       else
+        TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
         Sentryclient.notify(player,{lang.common.no_player_near()})
       end
     end)
@@ -86,12 +96,16 @@ function ch_trash(idname, player, choice)
   local user_id = Sentry.getUserId(player)
   if user_id ~= nil then
     -- prompt number
+    TriggerClientEvent('Sentry:ToggleNUIFocus', player, false)
     Sentry.prompt(player,lang.inventory.trash.prompt({Sentry.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
       local amount = parseInt(amount)
       if Sentry.tryGetInventoryItem(user_id,idname,amount,false) then
+        TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
+        TriggerEvent('Sentry:RefreshInventory', player)
         Sentryclient.notify(player,{lang.inventory.trash.done({Sentry.getItemName(idname),amount})})
         Sentryclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
       else
+        TriggerClientEvent('Sentry:ToggleNUIFocus', player, true)
         Sentryclient.notify(player,{lang.common.invalid_value()})
       end
     end)
@@ -193,6 +207,7 @@ end
 
 -- add item to a connected user inventory
 function Sentry.giveInventoryItem(user_id,idname,amount,notify)
+  local player = Sentry.getUserSource(user_id)
   if notify == nil then notify = true end -- notify by default
 
   local data = Sentry.getUserDataTable(user_id)
@@ -218,11 +233,52 @@ function Sentry.giveInventoryItem(user_id,idname,amount,notify)
       end
     end
   end
+  TriggerEvent('Sentry:RefreshInventory', player)
+end
+
+
+function Sentry.RunTrashTask(source, itemName)
+    local choices = Sentry.getItemChoices(itemName)
+    if choices['Trash'] then
+        choices['Trash'][1](source)
+    else 
+        local user_id = Sentry.getUserId(source)
+        local data = Sentry.getUserDataTable(user_id)
+        data.inventory[itemName] = nil;
+        print('[^7JamesUKInventory]^1: Invalid item removed from inventory space. Usually caused by spawned in staff items. User item from: ' .. user_id .. ' Item Name: ' .. itemName)
+    end
+    TriggerEvent('Sentry:RefreshInventory', source)
+end
+
+
+function Sentry.RunGiveTask(source, itemName)
+    local choices = Sentry.getItemChoices(itemName)
+    if choices['Give'] then
+        choices['Give'][1](source)
+    end
+    TriggerEvent('Sentry:RefreshInventory', source)
+end
+
+function Sentry.RunInventoryTask(source, itemName)
+    local choices = Sentry.getItemChoices(itemName)
+    if choices['Use'] then 
+        choices['Use'][1](source)
+    elseif choices['Drink'] then
+        choices['Drink'][1](source)
+    elseif choices['Load'] then
+        choices['Load'][1](source)
+    elseif choices['Eat'] then
+        choices['Eat'][1](source)
+    elseif choices['Equip'] then 
+        choices['Equip'][1](source)
+    end
+    TriggerEvent('Sentry:RefreshInventory', source)
 end
 
 -- try to get item from a connected user inventory
 function Sentry.tryGetInventoryItem(user_id,idname,amount,notify)
   if notify == nil then notify = true end -- notify by default
+  local player = Sentry.getUserSource(user_id)
 
   local data = Sentry.getUserDataTable(user_id)
   if data and amount > 0 then
@@ -240,15 +296,10 @@ function Sentry.tryGetInventoryItem(user_id,idname,amount,notify)
         local player = Sentry.getUserSource(user_id)
         if player ~= nil then
           Sentryclient.notify(player,{lang.inventory.give.given({Sentry.getItemName(idname),amount})})
+      
         end
       end
-
-      if Sentry.computeItemsWeight(data.inventory) > 15 then
-        TriggerClientEvent("equipBackpack", source)
-      else
-        TriggerClientEvent("removeBackpack", source)
-      end
-
+      TriggerEvent('Sentry:RefreshInventory', player)
       return true
     else
       -- notify
@@ -297,7 +348,7 @@ end
 
 -- return maximum weight of the user inventory
 function Sentry.getInventoryMaxWeight(user_id)
-  return cfg.inventory_weight_per_strength
+  return cfg.inventory_weight
 end
 
 -- clear connected user inventory
@@ -388,6 +439,9 @@ end)
 local choices = {}
 choices[lang.inventory.title()] = {function(player, choice) Sentry.openInventory(player) end, lang.inventory.description()}
 
+Sentry.registerMenuBuilder("main", function(add, data)
+  add(choices)
+end)
 
 -- CHEST SYSTEM
 

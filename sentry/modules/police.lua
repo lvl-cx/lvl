@@ -613,3 +613,43 @@ local function task_wanted_positions()
   SetTimeout(5000, task_wanted_positions)
 end
 task_wanted_positions()
+
+local isStoring = {}
+local choice_store_weapons = function(player, choice)
+    local user_id = Sentry.getUserId(player)
+    Sentryclient.getWeapons(player,{},function(weapons)
+      if not isStoring[player] then
+            isStoring[player] = true
+            if Sentry.getInventoryWeight(user_id) <= 25 then
+              Sentryclient.giveWeapons(player,{{},true}, function(removedwep)
+
+                    for k,v in pairs(weapons) do
+                        Sentry.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                        if v.ammo > 0 then
+                          for i,c in pairs(SentryAmmoTypes) do
+                            for a,d in pairs(c) do
+                                if d == k then  
+
+                                    Sentry.giveInventoryItem(user_id, i, v.ammo, true)
+                            
+                                end
+                            end   
+                          end
+                        end
+                    end
+                    Sentryclient.notify(player,{"~g~Weapons Stored"})
+                    SetTimeout(3000,function()
+                         isStoring[player] = nil 
+                     end)
+              end)
+            else
+              Sentryclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
+            end
+      
+       end
+    end)
+end
+
+RegisterCommand('storeweapons', function(source)
+  choice_store_weapons(source)
+end)

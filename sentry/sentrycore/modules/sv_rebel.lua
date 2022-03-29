@@ -35,15 +35,15 @@ end)
 RegisterServerEvent("Rebel:BuyArmour")
 AddEventHandler('Rebel:BuyArmour', function()
     local source = source
-    userid = Sentry.getUserId({source})
+    userid = Sentry.getUserId(source)
     local coords = rebel.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
 
     if #(playerCoords - coords) <= 5.0 then 
-        if Sentry.hasPermission({userid, 'rebel.guns'}) then
+        if Sentry.hasPermission(userid, 'rebel.guns') then
         
-            if Sentry.tryPayment({userid, 100000}) then
+            if Sentry.tryPayment(userid, 100000) then
                 SetPedArmour(source, 96)
                 TriggerClientEvent("IFN:PlaySound", source, 1)
                 Sentryclient.notify(source, {"~g~Paid ".. '£100,000'})
@@ -57,7 +57,7 @@ AddEventHandler('Rebel:BuyArmour', function()
             TriggerClientEvent("IFN:PlaySound", source, 2)
         end
     else 
-        Sentry.banConsole({userid,"perm","Cheating/ Triggering Events"})
+        Sentry.banConsole(userid,"perm","Cheating/ Triggering Events")
     end
 end)
 

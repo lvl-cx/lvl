@@ -3,17 +3,7 @@
 dealership = {}
 
 dealership.guns = {
-    {spawncode = "zoeesport", vehname = "Zoee Sport", vehdesc = "", price = 3000},
-    {spawncode = "XADV", vehname = "XADV", vehdesc = "", price = 5000},
-    {spawncode = "w115200d", vehname = "W115200D", vehdesc = "", price = 30000},
-    {spawncode = "subwrx", vehname = "SubWRX", vehdesc = "", price = 15000},
-    {spawncode = "sjtoyota", vehname = "SJ Toyota", vehdesc = "", price = 100000},
-    {spawncode = "rs6", vehname = "RS6", vehdesc = "", price = 35000},
-    {spawncode = "m13fortwo", vehname = "M13 Fortwo", vehdesc = "", price = 60000},
-    {spawncode = "jcwc", vehname = "JCWC", vehdesc = "", price = 80000}, 
-    {spawncode = "avalon", vehname = "Avalon", vehdesc = "", price = 5000},
-    {spawncode = "al18", vehname = "AL18", vehdesc = "", price = 150000},
-
+    {spawncode = "sanchez", vehname = "Sanchez", vehdesc = "", price = 3000},
 }
 
 dealership.guns2 = {
@@ -112,16 +102,16 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("Are you sure?")
+        RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("~g~Are you sure?")
 
-        RageUI.Button("Purchase Vehicle" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 -- [Event Here]
                 TriggerServerEvent('whoIs',cHash, cPrice)
             end
         end, RMenu:Get("DealershipMenu", "main"))
         
-        RageUI.Button("Test Drive" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Test Drive" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then   
                 testdrivetimer = 30
                 local mhash = GetHashKey(cHash)
@@ -179,10 +169,10 @@ currentAmmunition = nil
 Citizen.CreateThread(function() 
     while true do
 
-            local v1 = vector3(-50.406093597412,-1111.1015625,26.435157775879)
+            local v1 = vector3(-49.388229370117,-1112.5594482422,26.435178756714)
 
             if isInArea(v1, 100.0) then 
-                DrawMarker(36, -50.406093597412,-1111.1015625,26.435157775879 +1 - 0.98, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 255, 255, 255, 155, false, true, 0, 0, 0, 0, 0)
+                DrawMarker(36, -49.388229370117,-1112.5594482422,26.435178756714 +1 - 0.98, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.5, 0.5, 255, 255, 255, 250, false, true, 2, false, nil, nil, false)
             end
             if isInDealership == false then
             if isInArea(v1, 1.4) then 
@@ -199,7 +189,7 @@ Citizen.CreateThread(function()
             end
             if isInArea(v1, 1.4) == false and isInDealership and k == currentAmmunition then
                 TriggerEvent('returnHover', "shalean")
-                RageUI.CloseAll()
+                RageUI.Visible(RMenu:Get("DealershipMenu", "main"), false)
                 isInDealership = false
                 currentAmmunition = nil
             end

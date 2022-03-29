@@ -392,11 +392,11 @@ RageUI.CreateWhile(1.0, true, function()
             SetTextEntry_2("STRING")
             AddTextComponentString("Press [SPACE] to input an ID")
 			EndTextCommandPrint(1000, 1)
-            RageUI.List("Face", Face.Max, Face.Index, 'Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Face", Face.Max, Face.Index, '~g~Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Face.Index = Index
                 if Active then
                     SelectedOption = 0;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 0, Face.Index, Face.TextureIndex, 0)
                 end
                 if Selected then 
@@ -407,11 +407,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Mask", Mask.Max, Mask.Index, 'Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Mask", Mask.Max, Mask.Index, '~g~Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Mask.Index = Index
                 if Active then
                     SelectedOption = 1;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 1, Mask.Index, Mask.TextureIndex, 0)
                 end
                 if Selected then 
@@ -422,11 +422,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Hair", Hair.Max, Hair.Index, 'Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Hair", Hair.Max, Hair.Index, '~g~Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Hair.Index = Index
                 if Active then
                     SelectedOption = 2;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 2, Hair.Index, Hair.TextureIndex, 0)
                 end
                 if Selected then 
@@ -437,11 +437,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Arms / Torso", Torso.Max, Torso.Index, 'Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Arms / Torso", Torso.Max, Torso.Index, '~g~Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Torso.Index = Index
                 if Active then
                     SelectedOption = 3;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 3, Torso.Index, Torso.TextureIndex, 0)
                 end
                 if Selected then 
@@ -452,11 +452,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Legs", Legs.Max, Legs.Index, 'Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Legs", Legs.Max, Legs.Index, '~g~Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Legs.Index = Index
                 if Active then
                     SelectedOption = 4;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index),  255, 255, 255, 255, 6, 0)
+                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 4, Legs.Index, Legs.TextureIndex, 0)
                 end
                 if Selected then 
@@ -467,11 +467,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Bags", Parachute.Max, Parachute.Index, 'Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Bags", Parachute.Max, Parachute.Index, '~g~Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Parachute.Index = Index
                 if Active then
                     SelectedOption = 5;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index),  255, 255, 255, 255, 6, 0)
+                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 5, Parachute.Index, Parachute.TextureIndex, 0)
                 end
                 if Selected then 
@@ -482,11 +482,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Shoes", Shoes.Max, Shoes.Index, 'Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Shoes", Shoes.Max, Shoes.Index, '~g~Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Shoes.Index = Index
                 if Active then
                     SelectedOption = 6;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 6, Shoes.Index, Shoes.TextureIndex, 0)
                 end
                 if Selected then 
@@ -497,11 +497,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Accessories", Accessory.Max, Accessory.Index, 'Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Accessories", Accessory.Max, Accessory.Index, '~g~Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Accessory.Index = Index
                 if Active then
                     SelectedOption = 7;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
                 end
                 if Selected then 
@@ -512,11 +512,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Undershirt", Undershirt.Max, Undershirt.Index, 'Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Undershirt", Undershirt.Max, Undershirt.Index, '~g~Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Undershirt.Index = Index
                 if Active then
                     SelectedOption = 8;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index),  255, 255, 255, 255, 6, 0)
+                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 8, Undershirt.Index, Undershirt.TextureIndex, 0)
                 end
                 if Selected then 
@@ -527,11 +527,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Vest", Kevlar.Max, Kevlar.Index, 'Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Vest", Kevlar.Max, Kevlar.Index, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Kevlar.Index = Index
                 if Active then
                     SelectedOption = 9;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 9, Kevlar.Index, Kevlar.TextureIndex, 0)
                 end
                 if Selected then 
@@ -542,11 +542,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Badges", Badge.Max, Badge.Index, 'Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Badges", Badge.Max, Badge.Index, '~g~Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Badge.Index = Index
                 if Active then
                     SelectedOption = 10;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index),  255, 255, 255, 255, 6, 0)
+                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 10, Badge.Index, Badge.TextureIndex, 0)
                 end
                 if Selected then 
@@ -557,7 +557,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Shirts / Jackets", Torso2.Max, Torso2.Index, 'Texture Index: ' .. Torso2.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 11,  tonumber(Torso2.Index)), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Shirts / Jackets", Torso2.Max, Torso2.Index, '~g~Texture Index: ' .. Torso2.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 11,  tonumber(Torso2.Index)), { }, true, function(Hovered, Active, Selected, Index)
                 Torso2.Index = Index
                 if Active then
                     SelectedOption = 11;
@@ -572,11 +572,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Hats / Helmets", Hats.Max, Hats.Index, 'Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Hats / Helmets", Hats.Max, Hats.Index, '~g~Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Hats.Index = Index
                 if Active then
                     SelectedOption = "hats";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 0, Hats.Index, Hats.TextureIndex, 0)
                 end
                 if Selected then 
@@ -587,11 +587,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Glasses", Glasses.Max, Glasses.Index, 'Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Glasses", Glasses.Max, Glasses.Index, '~g~Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Glasses.Index = Index
                 if Active then
                     SelectedOption = "glasses";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 1, Glasses.Index, Glasses.TextureIndex, 0)
                 end
                 if Selected then 
@@ -602,11 +602,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Ear Accessories", Earings.Max, Earings.Index,  'Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Ear Accessories", Earings.Max, Earings.Index,  '~g~Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Earings.Index = Index
                 if Active then
                     SelectedOption = "earings";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 2, Earings.Index, Earings.TextureIndex, 0)
                 end
                 if Selected then 
@@ -617,11 +617,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Watches", Watches.Max, Watches.Index, 'Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Watches", Watches.Max, Watches.Index, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Watches.Index = Index
                 if Active then
                     SelectedOption = "watches";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 6, Watches.Index, Watches.TextureIndex, 0)
                 end
                 if Selected then 
@@ -632,11 +632,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Bracelets", Bracelets.Max, Bracelets.Index, 'Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Bracelets", Bracelets.Max, Bracelets.Index, '~g~Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Bracelets.Index = Index
                 if Active then
                     SelectedOption = "bracelets";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index),  255, 255, 255, 255, 6, 0)
+                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 7, Bracelets.Index, Bracelets.TextureIndex, 0)
                 end
                 if Selected then 

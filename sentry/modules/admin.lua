@@ -124,7 +124,7 @@ AddEventHandler('SentryAdmin:SpectatePlr', function(id)
     local source = source 
     local SelectedPlrSource = Sentry.getUserSource(id) 
     local userid = Sentry.getUserId(source)
- 
+    if Sentry.hasPermission(userid, 'admin.spectate') then
         if SelectedPlrSource then  
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(SelectedPlrSource)
@@ -137,7 +137,7 @@ AddEventHandler('SentryAdmin:SpectatePlr', function(id)
         else 
             Sentryclient.notify(source,{"~r~This player may have left the game."})
         end
-
+    end
 end)
 
 RegisterServerEvent("Sentry:addGroup")
@@ -251,6 +251,7 @@ AddEventHandler('Sentry:BanPlayer', function(admin, target, reason, duration)
     local target = target
     local target_id = Sentry.getUserSource(target)
     local admin_id = Sentry.getUserId(admin)
+    local user_id = Sentry.getUserId(source)
     if Sentry.hasPermission(user_id, "admin.ban") then
         if tonumber(duration) then 
             local playerName = GetPlayerName(source)
@@ -509,7 +510,7 @@ AddEventHandler('SentryAdmin:Bring', function(id)
     local source = source 
     local SelectedPlrSource = Sentry.getUserSource(id) 
     local userid = Sentry.getUserId(source)
-  
+    if Sentry.hasPermission(userid, 'admin.teleport') then
         if SelectedPlrSource then  
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(source)
@@ -536,7 +537,7 @@ AddEventHandler('SentryAdmin:Bring', function(id)
         else 
             Sentryclient.notify(source,{"~r~This player may have left the game."})
         end
- 
+    end
 end)
 
 playersSpectating = {}
@@ -576,8 +577,8 @@ AddEventHandler('Sentry:Prompt', function(shit)
     end)
 end)
 
-RegisterNetEvent('VRPDEV:GetCoords')
-AddEventHandler('VRPDEV:GetCoords', function()
+RegisterNetEvent('SentryDEV:GetCoords')
+AddEventHandler('SentryDEV:GetCoords', function()
     local source = source 
     local userid = Sentry.getUserId(source)
     if Sentry.hasGroup(userid, "dev") then
@@ -881,6 +882,7 @@ end)
 
 RegisterNetEvent('hello')
 AddEventHandler('hello', function(bool)
+    local source = source
     userid = Sentry.getUserId(source)
     if bool then
         Sentry.addUserGroup(userid,'staffon')
