@@ -194,6 +194,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and LicenseCentreMenu then
+                RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("LicenseCentre", "main"), false)
                 LicenseCentreMenu = false
             end

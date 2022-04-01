@@ -94,6 +94,7 @@ Citizen.CreateThread(function()
         if MenuOpen and not inMarker then 
             MenuOpen = false 
             PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
+            RageUI.ActuallyCloseAll()
             RageUI.Visible(RMenu:Get('SentryATM', 'main'), false) 
         end
     end

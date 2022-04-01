@@ -189,6 +189,7 @@ Citizen.CreateThread(function()
             end
             if isInArea(v1, 1.4) == false and isInDealership and k == currentAmmunition then
                 TriggerEvent('returnHover', "shalean")
+                RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("DealershipMenu", "main"), false)
                 isInDealership = false
                 currentAmmunition = nil

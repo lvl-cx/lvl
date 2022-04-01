@@ -31,7 +31,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£10,000,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '7,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '2,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -42,7 +42,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£20,000,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '15,000,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '5,000,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -53,7 +53,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£500,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '15,000,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '125,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -64,7 +64,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£200,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
                 
-                RageUI.Button('Refund License - ~g~[£' .. '150,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '50,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -75,7 +75,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£10,000,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '7,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '2,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -86,7 +86,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£500,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '375,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '125,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -98,7 +98,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£5,000,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '3,750,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '1,250,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 
@@ -109,7 +109,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£1,000,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '750,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '250,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         if string.upper(Confirm()) == 'YES' then
                             TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
@@ -124,7 +124,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~g~Price of License: " .. '£100,000', function() end)
                 RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '75,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~g~[£' .. '25,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('Sentry:RefundLicense', SelectedGroup)
 

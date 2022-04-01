@@ -120,6 +120,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and RebelMenu then
+                RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("Rebel", "main"), false)
                 RebelMenu = false
             end

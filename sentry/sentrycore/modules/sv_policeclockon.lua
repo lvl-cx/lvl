@@ -92,46 +92,46 @@ AddEventHandler('PoliceMenu:ClockOff', function()
         Sentryclient.notify(source,{"~r~You are a nil User ID, please relog."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Commissioner Clocked") then
         Sentry.removeUserGroup(user_id,"Commissioner Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Deputy Commissioner Clocked") then
         Sentry.removeUserGroup(user_id,"Deputy Commissioner Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Assistant Commissioner Clocked") then
         Sentry.removeUserGroup(user_id,"Assistant Commissioner Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Deputy Assistant Commissioner Clocked") then
         Sentry.removeUserGroup(user_id,"Deputy Assistant Commissioner Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Commander Clocked") then
         Sentry.removeUserGroup(user_id,"Commander Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Chief Superintendent Clocked") then
         Sentry.removeUserGroup(user_id,"Chief Superintendent Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Superintendent Clocked") then
         Sentry.removeUserGroup(user_id,"Superintendent Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Chief Inspector Clocked") then
         Sentry.removeUserGroup(user_id,"Chief Inspector Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Inspector Clocked") then
         Sentry.removeUserGroup(user_id,"Inspector Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Sergeant Clocked") then
         Sentry.removeUserGroup(user_id,"Sergeant Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Special Police Constable Clocked") then
         Sentry.removeUserGroup(user_id,"Special Police Constable Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Senior Police Constable Clocked") then
         Sentry.removeUserGroup(user_id,"Senior Police Constable Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "Police Constable Clocked") then
         Sentry.removeUserGroup(user_id,"Police Constable Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     elseif user_id ~= nil and Sentry.hasGroup(user_id, "PCSO Clocked") then
         Sentry.removeUserGroup(user_id,"PCSO Clocked")
-        Sentryclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You clocked off."})
     end
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock off as Police!")

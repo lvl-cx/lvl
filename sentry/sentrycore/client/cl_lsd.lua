@@ -115,6 +115,7 @@ Citizen.CreateThread(function()
             end
             end
             if isInArea(v1, 1.4) == false and isInMenu and k == currentAmmunition then
+              RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("LSDMenu", "LSD Seller"), false)
                 isInMenu = false
                 currentAmmunition = nil

@@ -117,6 +117,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and CitySmallMenu then
+                RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("CitySmallArms", "main"), false)
                 CitySmallMenu = false
             end

@@ -22,6 +22,10 @@ Citizen.CreateThread(function()
   end
 end)
 
+function tSentry.setArmour(armour)
+    SetPedArmour(PlayerPedId(), armour)
+end
+
 
 Citizen.CreateThread(function() -- coma thread
     Wait(500)

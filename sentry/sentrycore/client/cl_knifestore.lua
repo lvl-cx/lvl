@@ -84,6 +84,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v1, 0.8) == false and KnifeStoreMenu then
+                RageUI.ActuallyCloseAll()
                 RageUI.Visible(RMenu:Get("KnifeStoreMenu", "main"), false)
                 KnifeStoreMenu = false
             end

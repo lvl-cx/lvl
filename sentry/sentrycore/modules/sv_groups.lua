@@ -6,72 +6,72 @@ AddEventHandler('Sentry:RefundLicense', function(group)
     if group == 'LSD' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 15000000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £15,000,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 5000000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £5,000,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end 
     elseif group == 'Rebel' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 7500000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £7,500,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 2500000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Gang' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 375000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £375,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 125000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Heroin' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 7500000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £7,500,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 2500000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Diamond' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 3750000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £3,750,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 1250000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £1,250,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Gold' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 750000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £750,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 250000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £250,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Cocaine' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 375000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £375,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 125000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Weed' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 150000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £150,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 50000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £50,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     elseif group == 'Scrap' then 
         if Sentry.hasGroup(user_id, group) then
             Sentry.removeUserGroup(user_id, group)
-            Sentry.giveBankMoney(user_id, 75000)
-            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £75,000 ~w~[75% of License Price]'})
+            Sentry.giveBankMoney(user_id, 25000)
+            Sentryclient.notify(source, {'~g~You have refunded ' .. group .. ' for £25,000 ~w~[25% of License Price]'})
         else
             Sentryclient.notify(source, {'~r~Error, You do not have this License.'})
         end
