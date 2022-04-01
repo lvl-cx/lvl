@@ -349,8 +349,8 @@ local choice_player_check = {function(player,choice)
   end)
 end, lang.police.menu.check.description()}
 
-RegisterServerEvent("IFN:SearchNearest")
-AddEventHandler("IFN:SearchNearest", function()
+RegisterServerEvent("Sentry:SearchNearest")
+AddEventHandler("Sentry:SearchNearest", function()
   local player = source
   Sentryclient.getNearestPlayer(player,{5},function(nplayer)
     local nuser_id = Sentry.getUserId({nplayer})
@@ -559,7 +559,7 @@ AddEventHandler("Sentry:playerSpawn", function(user_id, source, first_spawn)
 	    if custom ~= nil then
 		  if tonumber(custom) > 0 then
 			BMclient.loadFreeze(target,{false,false,false})
-      TriggerClientEvent("IFN:UnFreezeRespawn", source)
+      TriggerClientEvent("Sentry:UnFreezeRespawn", source)
 			SetTimeout(1,function()
 			  BMclient.loadFreeze(target,{false,false,false})
 			end)

@@ -135,4 +135,19 @@ local choice_revive = {function(player, choice)
     end
 end, lang.emergency.menu.revive.description()}
 
+RegisterNetEvent('Sentry:SearchForPlayer')
+AddEventHandler('Sentry:SearchForPlayer', function()
+    TriggerClientEvent('Sentry:ReceiveSearch', -1, source)
+end)
+
+RegisterNetEvent('TeleportThem')
+AddEventHandler('TeleportThem', function(one, two)
+    Wait(500)
+    Sentryclient.teleport(one, {-934.38214111328,-782.61444091797,15.921166419983})
+    Sentryclient.notify(one, {'Number One'})
+    Sentryclient.teleport(two, {-948.12878417969,-801.18139648438,15.921133995056})
+    Sentryclient.notify(two, {'Number Two'})
+end)
+
+
 

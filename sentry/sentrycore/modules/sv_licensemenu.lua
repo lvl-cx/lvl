@@ -14,18 +14,18 @@ AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)
     if #(playerCoords - coords) <= 5.0 then
         if Sentry.hasGroup(userid, job) then 
             Sentryclient.notify(source, {"~o~You have already purchased this license!"})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         else
             if Sentry.tryFullPayment(userid, price) then
 
                 Sentry.addUserGroup(userid,job)
 
                 Sentryclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..tostring(priceshow) .. " ❤️"})
-                TriggerClientEvent("IFN:PlaySound", source, 1)
+                TriggerClientEvent("Sentry:PlaySound", source, 1)
 
                 else 
                 Sentryclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
-                    TriggerClientEvent("IFN:PlaySound", source, 2)
+                    TriggerClientEvent("Sentry:PlaySound", source, 2)
             end
         end
     else 

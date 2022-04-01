@@ -52,7 +52,7 @@ AddEventHandler('SentryCrypto:Withdraw:Crypto', function(system)
             exports['ghmattimysql']:executeSync("UPDATE c_cryptominers SET amountmined = 0 WHERE user_id = @user_id AND machineid = @machineid", {user_id = user_id, machineid = system.machineid}, function() end)
             Sentry.giveBankMoney(user_id, CalculateBitcoin(system.amountmined))
             Sentryclient.notify(source, {"~g~Withdraw Successfull: £"..amount_bank})
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
         end
@@ -76,7 +76,7 @@ AddEventHandler('SentryCrypto:Sell:System', function(system)
             Sentry.giveMoney(user_id,sell_amount)
 
             Sentryclient.notify(source, {"~g~You have sold a System for £".. sell_amount})
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
         end
@@ -105,11 +105,11 @@ AddEventHandler("SentryCrypto:buy_crypto_system", function(system)
         if Sentry.tryPayment(user_id,system.price) then
             Sentryclient.notify(player, {"~g~You bought a System For £"..price})
         
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
             exports['ghmattimysql']:executeSync("INSERT INTO c_cryptominers(user_id, pc_id,amountmined) VALUES( @user_id, @pc_id, @amountmined)", {user_id = user_id, pc_id = idofmachine, amountmined = 0}, function() end)        
         else
             Sentryclient.notify(player, {"~r~Not enough money.."})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
     else
         print(user_id ..' Might Be Cheating, Take A Look')

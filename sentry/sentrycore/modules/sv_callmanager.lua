@@ -76,8 +76,8 @@ function CallManagerServer.GetUpdatedCoords(target)
     return GetEntityCoords(GetPlayerPed(tonumber(target)))
 end
 
-RegisterNetEvent('IFN:returnMe')
-AddEventHandler('IFN:returnMe', function(admin, ticket, reason)
+RegisterNetEvent('Sentry:returnMe')
+AddEventHandler('Sentry:returnMe', function(admin, ticket, reason)
     local source = source
     local name = GetPlayerName(source)
     userid = Sentry.getUserId(source)

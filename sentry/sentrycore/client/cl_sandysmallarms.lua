@@ -143,8 +143,8 @@ Citizen.CreateThread(function()
 -- [Function]
 
 
-RegisterNetEvent("IFN:PlaySound")
-AddEventHandler("IFN:PlaySound", function(status)
+RegisterNetEvent("Sentry:PlaySound")
+AddEventHandler("Sentry:PlaySound", function(status)
     if status == 1 then 
         PlaySoundFrontend(-1, "Hack_Success", "DLC_HEIST_BIOLAB_PREP_HACKING_SOUNDS", 0)
     end

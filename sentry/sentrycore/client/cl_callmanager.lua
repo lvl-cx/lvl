@@ -87,7 +87,7 @@ RageUI.CreateWhile(1.0, true, function()
                                         SetEntityCoords(PlayerPedId(), targetCoords)
                                        -- notify("~g~You earned £3000 for taking a staff ticket! ❤️")
                                        notify("~g~You have taken a staff ticket! ❤️")
-                                        TriggerServerEvent("IFN:returnMe", v[1], v[2], v[3])
+                                        TriggerServerEvent("Sentry:returnMe", v[1], v[2], v[3])
                                     
                                     
                                     

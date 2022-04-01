@@ -1,7 +1,7 @@
 local comaAnim = {}
 local in_coma = false
-local coma_left = 60
-local secondsTilBleedout = 60
+local coma_left = 2
+local secondsTilBleedout = 2
 local playerCanRespawn = false 
 local calledNHS = false
 local deathString = ""
@@ -164,13 +164,15 @@ Citizen.CreateThread(function()
             scaleform = Initialize("mp_big_message_freemode")
 		    DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
    
-            DrawAdvancedTextOutline(0.605, 0.554, 0.005, 0.0028, 0.37, "You are dying...", 255, 255, 255, 255, 6, 0)
+        
 		  
             if secondsTilBleedout > 0 then
                 DrawAdvancedTextOutline(0.605, 0.523, 0.005, 0.0028, 0.4, "Respawn available in ("..secondsTilBleedout.." seconds)", 255, 255, 255, 255, 7, 0)
+                DrawAdvancedTextOutline(0.605, 0.554, 0.005, 0.0028, 0.37, "You are dying...", 255, 255, 255, 255, 6, 0)
             else
                 playerCanRespawn = true
-                DrawAdvancedTextOutline(0.605, 0.513, 0.005, 0.0028, 0.4, "Press [E] to respawn!", 255, 255, 255, 255, 7, 0)
+                DrawAdvancedTextOutline(0.605, 0.523, 0.005, 0.0028, 0.4, "Press [E] to respawn!", 255, 255, 255, 255, 7, 0)
+                DrawAdvancedTextOutline(0.605, 0.554, 0.005, 0.0028, 0.4, "Press [G] to Enter Gulag (£50,000)!", 255, 255, 255, 255, 7, 0)
             end
             DisableControlAction(0,323,true)
             DisableControlAction(0,182,true)
@@ -178,6 +180,51 @@ Citizen.CreateThread(function()
         end
         Wait(0)
     end 
+end)
+
+Citizen.CreateThread(function()
+    while true do 
+        if in_coma then
+            if secondsTilBleedout < 0 then
+                if IsControlJustPressed(0, 58) then
+                    TriggerEvent('Sentry:EnterGulag')
+                end
+            end
+        end
+        Citizen.Wait(1)
+    end
+end)
+
+waitingplayers = {}
+
+local waiting = true
+AddEventHandler('Sentry:EnterGulag', function()
+    TriggerEvent('Sentry:FixClient')
+    Citizen.Wait(1000)
+    SetEntityCoords(PlayerPedId(), -958.54998779297,-779.13513183594,17.836122512817)
+    TriggerServerEvent('Sentry:SearchForPlayer')
+    while waiting do
+
+
+            if waitingplayers[2] == nil then 
+                FreezeEntityPosition(PlayerPedId(), true)
+                bank_drawTxt(0.85, 1.40, 1.0,1.0,0.5, "Waiting for Gulag Opponent...", 255, 17, 0, 255)
+                SetEntityCoords(PlayerPedId(), -958.54998779297,-779.13513183594,17.836122512817)
+            
+            else
+                TriggerServerEvent('TeleportThem', waitingplayers[1], waitingplayers[2])
+                waiting = false
+            end
+      
+        Wait(0)
+    end
+end)
+
+
+
+RegisterNetEvent('Sentry:ReceiveSearch')
+AddEventHandler('Sentry:ReceiveSearch', function(args)
+    table.insert(waitingplayers, args)
 end)
 
 Citizen.CreateThread(function()
@@ -225,8 +272,8 @@ function tSentry.isInComa()
     return in_coma
 end
 
-RegisterNetEvent("IFN:FixClient")
-AddEventHandler("IFN:FixClient", function()
+RegisterNetEvent("Sentry:FixClient")
+AddEventHandler("Sentry:FixClient", function()
     local resurrectspamm = true
     Citizen.CreateThread(function()
         while true do 

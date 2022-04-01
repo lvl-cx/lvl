@@ -13,7 +13,7 @@ local LootBagID = nil;
 local LootBagIDNew = nil;
 local LootBagCoords = nil;
 local PlayerInComa = false;
-local model = GetHashKey('rustbag1')
+local model = GetHashKey('xm_prop_x17_bag_med_01a')
 tSentry = Proxy.getInterface("Sentry")
 
 

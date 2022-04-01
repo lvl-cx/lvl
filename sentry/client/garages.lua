@@ -55,7 +55,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Button("~g~[Claim Starter Car]", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         FirstSpawn = false
-                        TriggerEvent("IFN:PlaySound",  1)
+                        TriggerEvent("Sentry:PlaySound",  1)
                         notify('~g~The Starter Car is now in your Garage!')
                         TriggerServerEvent('Sentry:GiveStarterCar')
 

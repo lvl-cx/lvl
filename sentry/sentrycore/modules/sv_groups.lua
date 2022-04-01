@@ -105,9 +105,9 @@ AddEventHandler('Sentry:SellLicense', function(group)
                                             Sentry.addUserGroup(tonumber(userid), group)
 
                                             Sentryclient.notify(source, {'~g~Sold ' .. group .. ' License for £' .. price .. ' to ' .. GetPlayerName(target) .. ' ~w~[ID: ' .. userid .. ']'})
-                                            TriggerClientEvent("IFN:PlaySound", source, 1)
+                                            TriggerClientEvent("Sentry:PlaySound", source, 1)
                                             Sentryclient.notify(target, {'~g~Bought ' .. group .. ' License for £' .. price .. ' from ' .. GetPlayerName(source) .. ' ~w~[ID: ' .. user_id .. ']'})
-                                            TriggerClientEvent("IFN:PlaySound", target, 1)
+                                            TriggerClientEvent("Sentry:PlaySound", target, 1)
                                         else
                                             Sentryclient.notify(source, {'~r~User does not have enough money.'})
                                             Sentryclient.notify(target, {'~r~You do not have enough money.'})
@@ -115,7 +115,7 @@ AddEventHandler('Sentry:SellLicense', function(group)
                                     else
                                         Sentryclient.notify(source, {'~r~User Denied.'})
                                         Sentryclient.notify(target, {'~r~You Denied.'})
-                                        TriggerClientEvent("IFN:PlaySound", source, 2)
+                                        TriggerClientEvent("Sentry:PlaySound", source, 2)
                                     end
                                 end)
                             else

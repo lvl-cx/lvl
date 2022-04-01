@@ -14,11 +14,11 @@ AddEventHandler('PD:BuyWeapon', function(hash)
     if #(playerCoords - coords) <= 5.0 then 
         if Sentry.hasPermission(userid, 'cop.keycard') then
             GiveWeaponToPed(source, hash, 250, false, false)
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
             Sentryclient.notify(source, {"~g~Paid ".. '£0'})
         else
             Sentryclient.notify(source,{'~r~You are not PD/ Clocked on!'})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
 
     else 
@@ -39,12 +39,12 @@ AddEventHandler('PD:BuyArmour', function()
     
     
             SetPedArmour(source, 96)
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
             Sentryclient.notify(source, {"~g~Paid ".. '£0'})
 
         else
             Sentryclient.notify(source,{'~r~You are not PD/ Clocked on!'})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
     else 
         Sentry.banConsole(userid,"perm","Cheating/ Triggering Events")

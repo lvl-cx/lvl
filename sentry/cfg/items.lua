@@ -19,6 +19,10 @@ cfg.items = {
   -- [LSD]
   ["LSD"] = {"LSD", "", nil, 4},
   ["acid"] = {"Lysergic Acid", "", nil, 1}, 
+  -- [Armour Store]
+  ["body_armor"] = {"Level 4 Armour Plate", "", nil, 5}, -- no choices
+  ["body_armor2"] = {"Level 2 Armour Plate", "", nil, 5}, -- no choices
+  ["body_armor3"] = {"Level 1 Armour Plate", "", nil, 5}, -- no choices
 }
 
 local function load_item_pack(name)

@@ -483,7 +483,7 @@ AddEventHandler('Sentry:InComa', function()
         if in_coma then
             Wait(1500)
             local user_id = Sentry.getUserId({source})
-            local model = GetHashKey('rustbag1')
+            local model = GetHashKey('xm_prop_x17_bag_med_01a')
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)

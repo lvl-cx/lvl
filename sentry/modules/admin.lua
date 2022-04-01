@@ -413,7 +413,7 @@ AddEventHandler('Sentry:RevivePlayer', function(admin, target)
         }
         }}), { ["Content-Type"] = "application/json" })
         Sentryclient.notify(target,{'~g~' .. GetPlayerName(admin) .. ' revived you ~w~[ID: ' .. user_id .. ']'})
-        TriggerClientEvent('IFN:FixClient',target)
+        TriggerClientEvent('Sentry:FixClient',target)
         TriggerClientEvent('Sentry:Notify', admin, 'Revived Player')
     end
 end)

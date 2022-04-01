@@ -17,16 +17,16 @@ AddEventHandler('CitySmall:BuyWeapon', function(price, hash)
 
             if Sentry.tryPayment(userid, price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
-                TriggerClientEvent("IFN:PlaySound", source, 1)
+                TriggerClientEvent("Sentry:PlaySound", source, 1)
                 Sentryclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
             else 
                 Sentryclient.notify(source, {"~r~Not enough money."})
-                TriggerClientEvent("IFN:PlaySound", source, 2)
+                TriggerClientEvent("Sentry:PlaySound", source, 2)
             end
 
         else
             Sentryclient.notify(source,{'~r~Not enough Weight.'})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
     else 
         Sentry.banConsole(userid,"perm","Cheating/ Triggering Events")
@@ -47,11 +47,11 @@ AddEventHandler('CitySmall:BuyArmour', function()
         
         if Sentry.tryPayment(userid, 25000) then
             SetPedArmour(source, 25)
-            TriggerClientEvent("IFN:PlaySound", source, 1)
+            TriggerClientEvent("Sentry:PlaySound", source, 1)
             Sentryclient.notify(source, {"~g~Paid ".. '£25,000'})
         else 
             Sentryclient.notify(source, {"~r~Not enough money."})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
 
     else 

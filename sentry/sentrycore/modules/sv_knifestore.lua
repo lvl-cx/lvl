@@ -17,16 +17,16 @@ AddEventHandler('KnifeStore:BuyWeapon', function(price, hash)
 
             if Sentry.tryPayment(userid, price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
-                TriggerClientEvent("IFN:PlaySound", source, 1)
+                TriggerClientEvent("Sentry:PlaySound", source, 1)
                 Sentryclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
             else 
                 Sentryclient.notify(source, {"~r~Not enough money."})
-                TriggerClientEvent("IFN:PlaySound", source, 2)
+                TriggerClientEvent("Sentry:PlaySound", source, 2)
             end
             
         else
             Sentryclient.notify(source,{'~r~Not enough Weight.'})
-            TriggerClientEvent("IFN:PlaySound", source, 2)
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         end
     else 
         Sentry.banConsole(userid,"perm","Cheating/ Triggering Events")

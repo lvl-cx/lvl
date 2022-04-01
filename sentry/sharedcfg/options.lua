@@ -19,5 +19,5 @@ SentryConfig.ServerName = "Sentry" -- Controls the name that is displayed on war
 SentryConfig.PlayerSavingTime = 3000 -- Time in milliseconds to update Player saving
 ---------------
 SentryConfig.LootBags = true; -- Enables loot bags and disables looting. 
-SentryConfig.DisplayNamelLootbag = true; -- Enables notification of who's lootbag you have opened
+SentryConfig.DisplayNamelLootbag = false; -- Enables notification of who's lootbag you have opened
 -- Thanks to JamesUK#6793 for the many options provided here.

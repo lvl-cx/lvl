@@ -23,7 +23,7 @@ AddEventHandler('whoIs', function(vehicle, price)
         MySQL.query("Sentry/get_vehicle", {user_id = user_id, vehicle = vehicle}, function(pvehicle, affected)
             if #pvehicle > 0 then
                 Sentryclient.notify(player,{"~r~Vehicle already owned."})
-                TriggerClientEvent("IFN:PlaySound", player, 2)
+                TriggerClientEvent("Sentry:PlaySound", player, 2)
             else
 
                 if Sentry.tryFullPayment(user_id, price) then
@@ -44,11 +44,11 @@ AddEventHandler('whoIs', function(vehicle, price)
                 end)
 
                     Sentryclient.notify(player,{"You paid ~g~£"..price.."~w~."})
-                    TriggerClientEvent("IFN:PlaySound", player, 1)
+                    TriggerClientEvent("Sentry:PlaySound", player, 1)
                     
                 else
                     Sentryclient.notify(player,{"~r~Not enough money."})
-                    TriggerClientEvent("IFN:PlaySound", player, 2)
+                    TriggerClientEvent("Sentry:PlaySound", player, 2)
                 end
             end
         end)
