@@ -192,7 +192,7 @@ RegisterCommand("return", function()
             notify("~g~Returned.")
             takenticket = false
             TriggerEvent('staffOn:false')
-            TriggerEvent("TRP:OMioDioMode",false)
+            TriggerEvent("Sentry:OMioDioMode",false)
             isInTicket = false
     
     else 
@@ -203,14 +203,14 @@ end)
 RegisterNetEvent("staffon")
 AddEventHandler("staffon", function()
 
-    TriggerEvent("TRP:OMioDioMode",true)
+    TriggerEvent("Sentry:OMioDioMode",true)
     isInTicket = true
 end)
 
 RegisterNetEvent("staffoff")
 AddEventHandler("staffoff", function()
 
-    TriggerEvent("TRP:OMioDioMode",false)
+    TriggerEvent("Sentry:OMioDioMode",false)
     isInTicket = false
 end)
 

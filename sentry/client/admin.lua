@@ -120,8 +120,8 @@ AddEventHandler("TpToWaypoint", teleportToWaypoint)
 OMioDioMode = false
 adminTicketSavedCustomization = nil
 savedAdminTicketGuns = nil
-RegisterNetEvent("TRP:OMioDioMode")
-AddEventHandler("TRP:OMioDioMode",function(DioMode)
+RegisterNetEvent("Sentry:OMioDioMode")
+AddEventHandler("Sentry:OMioDioMode",function(DioMode)
 	print("Activating Oh Mio Dio: " .. tostring(DioMode))
 	OMioDioMode = DioMode
 	if not OMioDioMode then

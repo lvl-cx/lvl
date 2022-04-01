@@ -88,7 +88,7 @@ AddEventHandler('Sentry:returnMe', function(admin, ticket, reason)
 
     --Sentry.giveBankMoney(userid, 3000)
     Sentryclient.notify(ticket,{'~g~An Admin has Taken your Ticket!'})
-    TriggerClientEvent("TRP:OMioDioMode",source,true)
+    TriggerClientEvent("Sentry:OMioDioMode",source,true)
 
 
 
