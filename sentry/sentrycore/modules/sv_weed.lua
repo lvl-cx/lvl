@@ -48,6 +48,8 @@ AddEventHandler('Sentry:ProcessWeed', function()
     end
 end)
 
+local commision = 0
+local finalID = nil
 RegisterNetEvent('Sentry:SellWeed')
 AddEventHandler('Sentry:SellWeed', function()
     local user_id = Sentry.getUserId(source)
@@ -57,12 +59,32 @@ AddEventHandler('Sentry:SellWeed', function()
       if Sentry.tryGetInventoryItem(user_id,'weed', 1) then
         if user_id ~= nil then
 
-        local price = 15000 -- [Per Piece Price]
-        Sentry.giveMoney(user_id,price)
+        local price = 500 -- [Per Piece Price]
+        finalCommision = price * (commision / 100)
+        Sentry.giveMoney(user_id,price+finalCommision)
 
-        Sentryclient.notify(source, {"~g~Successfully sold 1 weed for £" .. price})
+        Sentryclient.notify(source, {"~g~Sold 1 weed for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+
+        if finalID ~= nil then
+          exports['ghmattimysql']:execute("SELECT * FROM ganginfo WHERE userid = @uid", {uid = Sentry.getUserId(finalID)}, function(result)
+            fundsavailable = result
+            for k,v in pairs(fundsavailable) do 
+                AvailableGangFunds = v.gangfunds
+    
+                local moneyleft = AvailableGangFunds + finalCommision
+                exports.ghmattimysql:execute("UPDATE ganginfo SET gangfunds = @money WHERE userid = @userid", {money = moneyleft, userid = Sentry.getUserId(finalID)})
+    
+            end
+          end)
+          Sentryclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+        end
 
         end
       end
     end
 end)
+
+function SendWeed(som, userid2)
+  commision = som 
+  finalID = userid2
+end

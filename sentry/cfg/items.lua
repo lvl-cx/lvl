@@ -11,13 +11,13 @@ cfg.items = {
   ["golddust"] = {"Gold Dust", "", nil, 1}, 
   ["gold"] = {"Gold", "", nil, 4},
   --[Dui]
-  ["golddust"] = {"Gold Dust", "", nil, 1}, 
-  ["gold"] = {"Gold", "", nil, 4},
+  ["crystal"] = {"Diamond Crystal", "", nil, 1}, 
+  ["diamond"] = {"Diamond", "", nil, 4},
   -- [Heroin]
   ["heroin"] = {"Heroin", "", nil, 4}, 
   ["opium"] = {"Opium", "", nil, 1},
   -- [LSD]
-  ["LSD"] = {"LSD", "", nil, 4},
+  ["lsd"] = {"LSD", "", nil, 4},
   ["acid"] = {"Lysergic Acid", "", nil, 1}, 
   -- [Armour Store]
   ["body_armor"] = {"Level 4 Armour Plate", "", nil, 5}, -- no choices

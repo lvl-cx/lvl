@@ -48,6 +48,8 @@ AddEventHandler('Sentry:ProcessCocaine', function()
     end
 end)
 
+local commision = 0
+local finalID = nil
 RegisterNetEvent('Sentry:SellCocaine')
 AddEventHandler('Sentry:SellCocaine', function()
     local user_id = Sentry.getUserId(source)
@@ -57,12 +59,23 @@ AddEventHandler('Sentry:SellCocaine', function()
       if Sentry.tryGetInventoryItem(user_id,'cocaine', 1) then
         if user_id ~= nil then
 
-        local price = 15000 -- [Per Piece Price]
-        Sentry.giveMoney(user_id,price)
-
-        Sentryclient.notify(source, {"~g~Successfully sold 1 cocaine for £" .. price})
+          local price = 500 -- [Per Piece Price]
+          finalCommision = price * (commision / 100)
+          Sentry.giveMoney(user_id,price+finalCommision)
+  
+          Sentryclient.notify(source, {"~g~Sold 1 cocaine for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+  
+          if finalID ~= nil then
+            Sentry.giveBankMoney(Sentry.getUserId(finalID),finalCommision)
+            Sentryclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+          end
 
         end
       end
     end
 end)
+
+function SendCocaine(som, userid2)
+  commision = som 
+  finalID = userid2
+end

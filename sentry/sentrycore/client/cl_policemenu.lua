@@ -86,7 +86,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SentryPDMenu', 'objectmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                RageUI.List("Spawn Object", listObjects, index.object, nil, {}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Spawn Object", listObjects, index.object, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected, Index)
                     if (Selected) then
                         if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                         spawnObject(objects[Index][2])

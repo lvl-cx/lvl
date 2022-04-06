@@ -98,7 +98,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
-
 LargeArmsMenu = false
 Citizen.CreateThread(function() 
     while true do

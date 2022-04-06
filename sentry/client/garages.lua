@@ -39,7 +39,7 @@ function DeleteCar(veh)
     end
 end
 
-local FirstSpawn = true
+local FirstSpawn = false
 
 RegisterNetEvent('FirstSpawn')
 AddEventHandler('FirstSpawn', function(bool)

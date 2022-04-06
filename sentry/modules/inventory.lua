@@ -219,11 +219,6 @@ function Sentry.giveInventoryItem(user_id,idname,amount,notify)
       data.inventory[idname] = {amount=amount}
     end
 
-    if Sentry.computeItemsWeight(data.inventory) > 15 then
-      TriggerClientEvent("equipBackpack", source)
-    else
-      TriggerClientEvent("removeBackpack", source)
-    end
 
     -- notify
     if notify then

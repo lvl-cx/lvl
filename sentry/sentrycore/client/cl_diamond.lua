@@ -131,14 +131,14 @@ RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('SellerMenu', 'main')) then
       RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
     
-    RageUI.Button("Sell Gold" , nil, {}, true, function(Hovered, Active, Selected)
+    RageUI.Button("Sell Gold" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
         if Selected then
  
             TriggerServerEvent('Sentry:SellGold')
         end
     end)
 
-    RageUI.Button("Sell Diamond" , nil, {}, true, function(Hovered, Active, Selected)
+    RageUI.Button("Sell Diamond" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
       if Selected then
 
           TriggerServerEvent('Sentry:SellDiamond')
@@ -151,21 +151,10 @@ end)
 
 -- [Blips]
 
-Citizen.CreateThread(function()
-  diamond = AddBlipForCoord(1222.3013916016,-2995.5390625,5.8653602600098)
-  SetBlipSprite(diamond, 431)
-  SetBlipScale(diamond, 0.8)
-  SetBlipDisplay(diamond, 2)
-  SetBlipColour(diamond, 2)
-  SetBlipAsShortRange(diamond, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Seller")
-  EndTextCommandSetBlipName(diamond)
-  end)
 
 Citizen.CreateThread(function()
   blip = AddBlipForCoord(Drugs.Diamond.Gather.x,Drugs.Diamond.Gather.y,Drugs.Diamond.Gather.z)
-  SetBlipSprite(blip, 617)
+  SetBlipSprite(blip, 616)
   SetBlipScale(blip, 0.6)
   SetBlipDisplay(blip, 2)
   SetBlipColour(blip, 3)
@@ -177,7 +166,7 @@ end)
 
 Citizen.CreateThread(function()
   blip = AddBlipForCoord(Drugs.Diamond.Process.x,Drugs.Diamond.Process.y,Drugs.Diamond.Process.z)
-  SetBlipSprite(blip, 617)
+  SetBlipSprite(blip, 616)
   SetBlipScale(blip, 0.6)
   SetBlipDisplay(blip, 2)
   SetBlipColour(blip, 3)

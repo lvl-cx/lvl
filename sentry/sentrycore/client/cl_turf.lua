@@ -1,0 +1,512 @@
+local inTurf = false
+local secondsRemaining = 0
+
+local TakenTurf = false
+
+RegisterNetEvent('Sentry:TakenTurf')
+AddEventHandler('Sentry:TakenTurf', function(isnTurf)
+	
+	inTurf = true
+	turf = isnTurf
+	secondsRemaining = 10
+	TakenTurf = false
+
+	TakeComission()
+	TakeComissionWeed()
+	TakeComissionCocaine()
+	TakeComissionLSD()
+	TakeComissionHeroin()
+
+end)
+
+RegisterNetEvent('Sentry:OutOfZone')
+AddEventHandler('Sentry:OutOfZone', function(isnTurf)
+	inTurf = false
+	notify("~r~The The turf cap was cancelled, you will receive nothing.")
+	TakenTurf = false
+	inZone = false
+end)
+
+RegisterNetEvent('Sentry:PlayerDied')
+AddEventHandler('Sentry:PlayerDied', function(isnTurf)
+	inTurf = false
+	notify("~r~The turf cap was cancelled, you died!")
+	TakenTurf = false
+	inTurfName = ""
+	secondsRemaining = 0
+
+	inZone = false
+	
+end)
+
+RegisterNetEvent('Sentry:TurfComplete')
+AddEventHandler('Sentry:TurfComplete', function(reward, name)
+	inTurf = false
+	secondsRemaining = 0
+	if name == 'Global Weapon Trader' then
+		TakenTurf = true
+	end
+
+	if name == 'Weed' then
+		TakenTurfWeed = true
+	end
+
+	if name == 'Cocaine' then
+		TakenTurfCocaine = true
+	end
+
+	if name == 'LSD' then
+		TakenTurfLSD = true
+	end
+	if name == 'Heroin' then
+		TakenTurfHeroin = true
+	end
+	inZone = false
+end)
+
+
+function TakeComission()
+	Citizen.CreateThread(function() 
+		while true do
+			if TakenTurf then
+				local v1 = vector3(-86.27645111084,834.51782226562,235.92004394531)
+				
+					if inTurf == false then
+						if isInArea(v1, 1.4) then 
+							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+							if IsControlJustPressed(0, 51) then 
+								changeComision()
+							end
+						end
+					end
+				
+			end
+			Citizen.Wait(0)
+		end
+	end)
+	
+end
+
+function TakeComissionWeed()
+	Citizen.CreateThread(function() 
+		while true do
+			if TakenTurfWeed then
+				local v1 = vector3(100.96116638184,-1958.7907714844,20.790607452393)
+				
+					if inTurf == false then
+						if isInArea(v1, 1.4) then 
+							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+							if IsControlJustPressed(0, 51) then 
+								changeComision2()
+							end
+						end
+					end
+				
+			end
+			Citizen.Wait(0)
+		end
+	end)
+	
+end
+
+function TakeComissionCocaine()
+	Citizen.CreateThread(function() 
+		while true do
+			if TakenTurfCocaine then
+				local v1 = vector3(121.41984558105,-1307.7109375,29.23345375061)
+				
+					if inTurf == false then
+						if isInArea(v1, 1.4) then 
+							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+							if IsControlJustPressed(0, 51) then 
+								changeComision3()
+							end
+						end
+					end
+				
+			end
+			Citizen.Wait(0)
+		end
+	end)
+	
+end
+
+function TakeComissionLSD()
+	Citizen.CreateThread(function() 
+		while true do
+			if TakenTurfLSD then
+				local v1 = vector3(2485.8977050781,-405.85736083984,93.73526763916)
+				
+					if inTurf == false then
+						if isInArea(v1, 1.4) then 
+							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+							if IsControlJustPressed(0, 51) then 
+								changeComision4()
+							end
+						end
+					end
+				
+			end
+			Citizen.Wait(0)
+		end
+	end)
+	
+end
+
+function TakeComissionHeroin()
+	Citizen.CreateThread(function() 
+		while true do
+			if TakenTurfHeroin then
+				local v1 = vector3(3577.2836914062,3649.7709960938,33.888595581055)
+				
+					if inTurf == false then
+						if isInArea(v1, 1.4) then 
+							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+							if IsControlJustPressed(0, 51) then 
+								changeComision5()
+							end
+						end
+					end
+				
+			end
+			Citizen.Wait(0)
+		end
+	end)
+	
+end
+
+RegisterNetEvent("Sentry:DontIt")
+AddEventHandler("Sentry:DontIt", function(bool)
+	TakenTurf = bool 
+end)
+
+RegisterNetEvent("Sentry:DontItWeed")
+AddEventHandler("Sentry:DontItWeed", function(bool)
+	TakenTurfWeed = bool 
+end)
+
+RegisterNetEvent("Sentry:DontItCocaine")
+AddEventHandler("Sentry:DontItCocaine", function(bool)
+	TakenTurfCocaine = bool 
+end)
+
+
+RegisterNetEvent("Sentry:DontItLSD")
+AddEventHandler("Sentry:DontItLSD", function(bool)
+	TakenTurfLSD = bool 
+end)
+
+RegisterNetEvent("Sentry:DontItHeroin")
+AddEventHandler("Sentry:DontItHeroin", function(bool)
+	TakenTurfHeroin = bool 
+end)
+
+
+function changeComision()
+    
+	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local resultID = GetOnscreenKeyboardResult()
+		if  resultID then
+            TriggerServerEvent("Sentry:ChangeCommision", tonumber(resultID))
+			
+		end
+    end
+	return false
+
+end
+
+function changeComision2()
+    
+	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local resultID = GetOnscreenKeyboardResult()
+		if  resultID then
+            TriggerServerEvent("Sentry:ChangeCommisionWeed", tonumber(resultID))
+			
+		end
+    end
+	return false
+
+end
+
+function changeComision3()
+    
+	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local resultID = GetOnscreenKeyboardResult()
+		if  resultID then
+            TriggerServerEvent("Sentry:ChangeCommisionCocaine", tonumber(resultID))
+			
+		end
+    end
+	return false
+
+end
+
+function changeComision4()
+    
+	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local resultID = GetOnscreenKeyboardResult()
+		if  resultID then
+            TriggerServerEvent("Sentry:ChangeCommisionLSD", tonumber(resultID))
+			
+		end
+    end
+	return false
+
+end
+
+function changeComision5()
+    
+	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
+    while (UpdateOnscreenKeyboard() == 0) do
+        DisableAllControlActions(0);
+        Wait(0);
+    end
+    if (GetOnscreenKeyboardResult()) then
+        local resultID = GetOnscreenKeyboardResult()
+		if  resultID then
+            TriggerServerEvent("Sentry:ChangeCommisionHeroin", tonumber(resultID))
+			
+		end
+    end
+	return false
+
+end
+
+
+
+Citizen.CreateThread(function()
+	while true do
+		if inTurf then
+			Citizen.Wait(1000)
+			if(secondsRemaining > 0)then
+				secondsRemaining = secondsRemaining - 1
+			end
+		end
+
+		Citizen.Wait(0)
+	end
+end)
+
+inZone = false
+
+Citizen.CreateThread(function()
+	while true do
+		local pos = GetEntityCoords(GetPlayerPed(-1), true)
+
+		for k,v in pairs(turfs)do
+			local pos2 = v.position
+			local pos3 = v.capturf 
+
+			if (Vdist(pos.x, pos.y, pos.z, pos3.x, pos3.y, pos3.z) < 1.4) then
+				if not inTurf then
+					
+					
+					if (Vdist(pos.x, pos.y, pos.z, pos3.x, pos3.y, pos3.z) < 1.4) then
+						
+						local scaleform = RequestScaleformMovie("MP_BIG_MESSAGE_FREEMODE")
+						
+						if HasScaleformMovieLoaded(scaleform) then
+							
+	
+							PushScaleformMovieFunction(scaleform, "SHOW_SHARD_WASTED_MP_MESSAGE")
+							BeginTextComponent("STRING")
+							AddTextComponentString("Press [E] to take turf")
+							EndTextComponent()
+							PopScaleformMovieFunctionVoid()
+	
+	
+						   
+							  DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+						   
+						   
+	
+		
+						end
+						
+						inZone = true
+						if (IsControlJustReleased(1, 51)) then
+							TriggerServerEvent('Sentry:TakeTurf', k)
+							istakingturf = v.nameofturf
+						end
+					elseif (Vdist(pos.x, pos.y, pos.z, pos2.x, pos2.y, pos2.z) > 1.4) then
+						inZone = false
+					end
+				end
+			end
+		end
+
+		if inTurf then		
+			
+			drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. "~w~ seconds remaining", 255, 255, 255, 255)
+			
+			
+			local pos2 = turfs[turf].position
+			local ped = GetPlayerPed(-1)
+
+			
+            if IsEntityDead(ped) then
+			TriggerServerEvent('Sentry:PlayerDied', turf)
+
+			elseif (Vdist(pos.x, pos.y, pos.z, pos2.x, pos2.y, pos2.z) > turfs[turf].radius) then
+				TriggerServerEvent('Sentry:TooFar', turf)
+			end
+		end
+
+		Citizen.Wait(0)
+	end
+end)
+
+
+RegisterNetEvent("Sentry:MakeTurfTrue")
+AddEventHandler("Sentry:MakeTurfTrue", function(isit)
+	if isit then
+		inTurf = true
+	else 
+		inTurf = false 
+	end
+end)
+
+-- [Zone Events]
+RegisterNetEvent('HeroinZone')
+AddEventHandler('HeroinZone', function(isnTurf)
+
+	while true do
+		if inTurf then
+			DrawMarker(1, 3565.6037597656,3662.1218261719,33.951766967773-10, 0, 0, 0, 0, 0, 0, 60.001, 60.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
+		end	
+
+		Citizen.Wait(1) 
+	end
+end)
+
+RegisterNetEvent('LSDZone')
+AddEventHandler('LSDZone', function(isnTurf)
+	while true do
+		if inTurf then
+			DrawMarker(1, 2479.939453125,-412.90567016602,93.735107421875-10, 0, 0, 0, 0, 0, 0, 80.001, 80.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
+		end
+
+		Citizen.Wait(1) 
+	end
+end)
+
+RegisterNetEvent('GlobalTraderZone')
+AddEventHandler('GlobalTraderZone', function(isnTurf)
+	while true do
+		if inTurf then 
+			DrawMarker(1, -93.742729187012,879.74108886719,236.20074462891-10, 0, 0, 0, 0, 0, 0, 100.001, 100.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
+		end
+
+		Citizen.Wait(1) 
+	end
+end)
+
+RegisterNetEvent('WeedZone')
+AddEventHandler('WeedZone', function(isnTurf)
+	while true do
+		if inTurf then 
+			DrawMarker(1, 103.15713500977,-1938.5643310547,20.803695678711-10, 0, 0, 0, 0, 0, 0, 100.001, 100.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
+		end
+
+		Citizen.Wait(1) 
+	end
+end)
+
+RegisterNetEvent('CocaineZone')
+AddEventHandler('CocaineZone', function(isnTurf)
+	while true do
+		if inTurf then 
+			DrawMarker(1, 134.72003173828,-1306.8198242188,29.04651260376-10, 0, 0, 0, 0, 0, 0, 100.001, 100.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
+		end
+
+		Citizen.Wait(1) 
+	end
+end)
+
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(0)
+		-- [Turf Markers]
+		DrawMarker(24, 3580.8835449219,3647.9147949219,33.888610839844+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Heroin]
+		DrawMarker(24, 2487.8530273438,-403.55877685547,93.735229492188+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0)  -- [LSD]
+		DrawMarker(24, -96.505516052246,833.08752441406,235.72334289551+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.8, 0.8, 0.6, 255, 34, 0, 220, false, true, 0, 0, 0, 0, 0) -- [Global Weapon Trader]
+		DrawMarker(24, 103.01790618896,-1958.5435791016,20.781145095825+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Weed]
+		DrawMarker(24, 125.75616455078,-1304.6053466797,29.233455657959+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Cocaine]
+		if TakenTurf then
+			DrawMarker(30, -86.27645111084,834.51782226562,235.92004394531+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Global Weapon Trader Taken Commision]
+		end	
+		if TakenTurfWeed then
+			DrawMarker(30, 100.96116638184,-1958.7907714844,20.790607452393+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Weds Trader]
+		end		
+		if TakenTurfCocaine then
+			DrawMarker(30, 121.41984558105,-1307.7109375,29.23345375061+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Cocaine Trader]
+		end		
+		if TakenTurfLSD then
+			DrawMarker(30, 2485.8977050781,-405.85736083984,93.73526763916+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [LSD Trader]
+		end	
+		if TakenTurfHeroin then
+			DrawMarker(30, 3577.2836914062,3649.7709960938,33.888595581055+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Heroin Trader]
+		end			
+			
+	end
+end)
+
+function alert(str)
+	SetTextComponentFormat("STRING")
+	AddTextComponentString(str)
+	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+end
+
+function drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
+    SetTextFont(0)
+    SetTextProportional(0)
+    SetTextScale(scale, scale)
+    SetTextColour(r, g, b, a)
+    SetTextDropShadow(0, 0, 0, 0,255)
+    SetTextEdge(1, 0, 0, 0, 255)
+    SetTextDropShadow()
+    if(outline)then
+	    SetTextOutline()
+	end
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(x - width/2, y - height/2 + 0.005)
+end
+
+-- [Blip]
+Citizen.CreateThread(function()
+    blip = AddBlipForCoord(-96.406372070312,833.00939941406,235.7233581543)
+    SetBlipSprite(blip, 431)
+    SetBlipScale(blip, 0.7)
+    SetBlipDisplay(blip, 2)
+    SetBlipColour(blip, 1)
+    SetBlipAsShortRange(blip, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString('Global Weapon Trader')
+    EndTextCommandSetBlipName(blip)
+end)

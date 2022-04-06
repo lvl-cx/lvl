@@ -2,8 +2,8 @@
 local cfg = {}
 
 -- start wallet/bank values
-cfg.open_wallet = 1000
-cfg.open_bank = 20000
+cfg.open_wallet = 5000
+cfg.open_bank = 200000
 
 cfg.display_css = [[
 .div_money{
