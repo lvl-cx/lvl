@@ -48,6 +48,7 @@ function tSentry.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle ty
             vehicles[vtype] = {vtype, name, nveh} -- set current vehicule
             print(name, nveh)
             TriggerServerEvent("LSC:applyModifications", name, nveh)
+            TriggerServerEvent("Sentry:PayVehicleTax")
             CreateThread(function()
                 local aJ = true;
                 SetTimeout(5000, function()
