@@ -269,3 +269,43 @@ AddEventHandler( 'KneelHU', function()
         end     
     end
 end )
+
+-- Remove random GTA UI'S --
+
+Citizen.CreateThread(function()
+    while true do
+      Citizen.Wait(0)
+      HideHudComponentThisFrame( 7 ) -- Area Name
+      HideHudComponentThisFrame( 9 ) -- Street Name
+      HideHudComponentThisFrame( 3 ) -- SP Cash display 
+      HideHudComponentThisFrame( 4 )  -- MP Cash display
+      HideHudComponentThisFrame( 13 ) -- Cash changes
+      HideHudComponentThisFrame( 6 ) -- Veh Name
+      HideHudComponentThisFrame( 8 ) -- Veh Class
+    end
+  end)
+ -------------------------------------------------------------------
+--Listed below are the integers and the corresponding HUD component--
+ -------------------------------------------------------------------
+-- 1 : WANTED_STARS
+-- 2 : WEAPON_ICON
+-- 3 : CASH
+-- 4 : MP_CASH
+-- 5 : MP_MESSAGE
+-- 6 : VEHICLE_NAME
+-- 7 : AREA_NAME
+-- 8 : VEHICLE_CLASS
+-- 9 : STREET_NAME
+-- 10 : HELP_TEXT
+-- 11 : FLOATING_HELP_TEXT_1
+-- 12 : FLOATING_HELP_TEXT_2
+-- 13 : CASH_CHANGE
+-- 14 : RETICLE
+-- 15 : SUBTITLE_TEXT
+-- 16 : RADIO_STATIONS
+-- 17 : SAVING_GAME
+-- 18 : GAME_STREAM
+-- 19 : WEAPON_WHEEL
+-- 20 : WEAPON_WHEEL_STATS
+-- 21 : HUD_COMPONENTS
+-- 22 : HUD_WEAPONS
