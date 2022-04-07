@@ -9,8 +9,8 @@ local LootBagEntities = {}
 local InventoryCoolDown = {}
 
 
-RegisterNetEvent('Sentry:FetchPersonalInventory')
-AddEventHandler('Sentry:FetchPersonalInventory', function()
+RegisterNetEvent('Infinite:FetchPersonalInventory')
+AddEventHandler('Infinite:FetchPersonalInventory', function()
     local source = source
     if not InventorySpamTrack[source] then
         InventorySpamTrack[source] = true;
@@ -22,7 +22,7 @@ AddEventHandler('Sentry:FetchPersonalInventory', function()
             for i,v in pairs(data.inventory) do
                 FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
             end
-            TriggerClientEvent('Sentry:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
+            TriggerClientEvent('Infinite:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
             InventorySpamTrack[source] = false;
         else 
             print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
@@ -31,7 +31,7 @@ AddEventHandler('Sentry:FetchPersonalInventory', function()
 end)
 
 
-AddEventHandler('Sentry:RefreshInventory', function(source)
+AddEventHandler('Infinite:RefreshInventory', function(source)
     local UserId = Sentry.getUserId({source}) 
     local data = Sentry.getUserDataTable({UserId})
     if data and data.inventory then
@@ -39,14 +39,14 @@ AddEventHandler('Sentry:RefreshInventory', function(source)
         for i,v in pairs(data.inventory) do
             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
         end
-        TriggerClientEvent('Sentry:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
+        TriggerClientEvent('Infinite:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
     else 
         print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
 end)
 
-RegisterNetEvent('Sentry:GiveItem')
-AddEventHandler('Sentry:GiveItem', function(itemId, itemLoc)
+RegisterNetEvent('Infinite:GiveItem')
+AddEventHandler('Infinite:GiveItem', function(itemId, itemLoc)
     local source = source
     if not itemId then  Sentryclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
@@ -56,8 +56,8 @@ AddEventHandler('Sentry:GiveItem', function(itemId, itemLoc)
     end
 end)
 
-RegisterNetEvent('Sentry:TrashItem')
-AddEventHandler('Sentry:TrashItem', function(itemId, itemLoc)
+RegisterNetEvent('Infinite:TrashItem')
+AddEventHandler('Infinite:TrashItem', function(itemId, itemLoc)
     local source = source
     if not itemId then  Sentryclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
@@ -67,12 +67,22 @@ AddEventHandler('Sentry:TrashItem', function(itemId, itemLoc)
     end
 end)
 
-RegisterNetEvent('Sentry:FetchTrunkInventory')
-AddEventHandler('Sentry:FetchTrunkInventory', function(spawnCode)
+RegisterServerEvent("ORP:flashLights")
+AddEventHandler("ORP:flashLights", function(nearestVeh)
+    local nearestVeh = nearestVeh
+    TriggerClientEvent("ORP:flashCarLightsAlarm", -1, nearestVeh)
+
+end) 
+
+RegisterNetEvent('Infinite:FetchTrunkInventory')
+AddEventHandler('Infinite:FetchTrunkInventory', function(spawnCode, vehid)
     local source = source
-    local user_id = Sentry.getUserId({source})
+    local idz = NetworkGetEntityFromNetworkId(vehid)
+    local user_id = Sentry.getUserId({NetworkGetEntityOwner(idz)})
+   print(user_id)
     if InventoryCoolDown[source] then Sentryclient.notify(source, {'~r~The server is still processing your request.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
+    print(carformat)
     Sentry.getSData({carformat, function(cdata)
         local processedChest = {};
         cdata = json.decode(cdata) or {}
@@ -81,26 +91,41 @@ AddEventHandler('Sentry:FetchTrunkInventory', function(spawnCode)
             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
         end
         local maxVehKg = Inventory.vehicle_chest_weights[spawnCode] or Inventory.default_vehicle_chest_weight
-        TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+        TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
     end})
+end)
+
+RegisterNetEvent('IFN:LockPick')
+AddEventHandler('IFN:LockPick', function()
+    user_id = Sentry.getUserId({source})
+           
+           if Sentry.tryGetInventoryItem({user_id, "lockpick", 1, true}) then
+                 TriggerClientEvent('IFN:whatIsThis', source)
+   
+           end
+       
+
 end)
 
 
 
-RegisterNetEvent('Sentry:UseItem')
-AddEventHandler('Sentry:UseItem', function(itemId, itemLoc)
+
+
+RegisterNetEvent('Infinite:UseItem')
+AddEventHandler('Infinite:UseItem', function(itemId, itemLoc)
     local source = source
     if not itemId then    Sentryclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         Sentry.RunInventoryTask({source, itemId})
+        
     else
         Sentryclient.notify(source, {'~r~You need to have this item on you to use it.'})
     end
 end)
 
 
-RegisterNetEvent('Sentry:MoveItem')
-AddEventHandler('Sentry:MoveItem', function(inventoryType, itemId, inventoryInfo, Lootbag)
+RegisterNetEvent('Infinite:MoveItem')
+AddEventHandler('Infinite:MoveItem', function(inventoryType, itemId, inventoryInfo, Lootbag)
     local source = source
     local UserId = Sentry.getUserId({source}) 
     local data = Sentry.getUserDataTable({UserId})
@@ -130,8 +155,8 @@ AddEventHandler('Sentry:MoveItem', function(inventoryType, itemId, inventoryInfo
                                 FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                             end
                             local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                            TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                            TriggerEvent('Sentry:RefreshInventory', source)
+                            TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                            TriggerEvent('Infinite:RefreshInventory', source)
                             InventoryCoolDown[source] = false;
                             Sentry.setSData({carformat, json.encode(cdata)})
                         else 
@@ -160,8 +185,8 @@ AddEventHandler('Sentry:MoveItem', function(inventoryType, itemId, inventoryInfo
                         FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                     end
                     local maxVehKg = 200
-                    TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
-                    TriggerEvent('Sentry:RefreshInventory', source)
+                    TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                    TriggerEvent('Infinite:RefreshInventory', source)
                 else 
                     Sentryclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
@@ -192,8 +217,8 @@ AddEventHandler('Sentry:MoveItem', function(inventoryType, itemId, inventoryInfo
                                     FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                                 end
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                                TriggerEvent('Sentry:RefreshInventory', source)
+                                TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                                TriggerEvent('Infinite:RefreshInventory', source)
                                 InventoryCoolDown[source] = nil;
                                 Sentry.setSData({carformat, json.encode(cdata)})
                             else 
@@ -219,8 +244,8 @@ end)
 
 
 
-RegisterNetEvent('Sentry:MoveItemX')
-AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInfo, Lootbag)
+RegisterNetEvent('Infinite:MoveItemX')
+AddEventHandler('Infinite:MoveItemX', function(inventoryType, itemId, inventoryInfo, Lootbag)
     local source = source
     local UserId = Sentry.getUserId({source}) 
     local data = Sentry.getUserDataTable({UserId})
@@ -230,52 +255,58 @@ AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInf
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
             InventoryCoolDown[source] = true;
-            TriggerClientEvent('Sentry:ToggleNUIFocus', source, false)
+            TriggerClientEvent('Infinite:ToggleNUIFocus', source, false)
             Sentry.prompt({source, 'How many ' .. Sentry.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                 Quantity = parseInt(Quantity)
-                TriggerClientEvent('Sentry:ToggleNUIFocus', source, true)
-                if Quantity then
-                    local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                    Sentry.getSData({carformat, function(cdata)
-                        cdata = json.decode(cdata) or {}
-                        if cdata[itemId] and Quantity <= cdata[itemId].amount  then
-                            local weightCalculation = Sentry.getInventoryWeight({UserId})+(Sentry.getItemWeight({itemId}) * Quantity)
-                            if weightCalculation <= Sentry.getInventoryMaxWeight({UserId}) then
-                                if cdata[itemId].amount > Quantity then
-                                    cdata[itemId].amount = cdata[itemId].amount - Quantity; 
-                                    Sentry.giveInventoryItem({UserId, itemId, Quantity, true})
+        
+                
+                    TriggerClientEvent('Infinite:ToggleNUIFocus', source, true)
+                    if Quantity >= 1 then
+                        local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
+                        Sentry.getSData({carformat, function(cdata)
+                            cdata = json.decode(cdata) or {}
+                            if cdata[itemId] and Quantity <= cdata[itemId].amount  then
+                                local weightCalculation = Sentry.getInventoryWeight({UserId})+(Sentry.getItemWeight({itemId}) * Quantity)
+                                if weightCalculation <= Sentry.getInventoryMaxWeight({UserId}) then
+                                    if cdata[itemId].amount > Quantity then
+                                        cdata[itemId].amount = cdata[itemId].amount - Quantity; 
+                                        Sentry.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    else 
+                                        cdata[itemId] = nil;
+                                        Sentry.giveInventoryItem({UserId, itemId, Quantity, true})
+                                    end 
+                                    local FormattedInventoryData = {}
+                                    for i, v in pairs(cdata) do
+                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
+                                    end
+                                    local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
+                                    TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                                    TriggerEvent('Infinite:RefreshInventory', source)
+                                    InventoryCoolDown[source] = nil;
+                                    Sentry.setSData({carformat, json.encode(cdata)})
                                 else 
-                                    cdata[itemId] = nil;
-                                    Sentry.giveInventoryItem({UserId, itemId, Quantity, true})
-                                end 
-                                local FormattedInventoryData = {}
-                                for i, v in pairs(cdata) do
-                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
+                                    InventoryCoolDown[source] = nil;
+                                    Sentryclient.notify(source, {'~r~You do not have enough inventory space.'})
                                 end
-                                local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                                TriggerEvent('Sentry:RefreshInventory', source)
-                                InventoryCoolDown[source] = nil;
-                                Sentry.setSData({carformat, json.encode(cdata)})
                             else 
                                 InventoryCoolDown[source] = nil;
-                                Sentryclient.notify(source, {'~r~You do not have enough inventory space.'})
+                                Sentryclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                             end
-                        else 
-                            InventoryCoolDown[source] = nil;
-                            Sentryclient.notify(source, {'~r~You are trying to move more then there actually is!'})
-                        end
-                    end})
-                else 
-                    Sentryclient.notify(source, {'~r~Invalid input!'})
-                end
+                        end})
+                    else
+                        InventoryCoolDown[source] = nil;
+                        Sentryclient.notify(source, {'~r~Invalid Amount!'})
+                    end
+  
+             
+    
             end})
         elseif inventoryType == "LootBag" then    
             if LootBagEntities[inventoryInfo].Items[itemId] then 
-                TriggerClientEvent('Sentry:ToggleNUIFocus', source, false)
+                TriggerClientEvent('Infinite:ToggleNUIFocus', source, false)
                 Sentry.prompt({source, 'How many ' .. Sentry.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                     Quantity = parseInt(Quantity)
-                    TriggerClientEvent('Sentry:ToggleNUIFocus', source, true)
+                    TriggerClientEvent('Infinite:ToggleNUIFocus', source, true)
                     if Quantity then
                         local weightCalculation = Sentry.getInventoryWeight({UserId})+(Sentry.getItemWeight({itemId}) * Quantity)
                         if weightCalculation <= Sentry.getInventoryMaxWeight({UserId}) then
@@ -292,8 +323,8 @@ AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInf
                                     FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                                 end
                                 local maxVehKg = 200
-                                TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
-                                TriggerEvent('Sentry:RefreshInventory', source)
+                                TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                                TriggerEvent('Infinite:RefreshInventory', source)
                             else 
                                 Sentryclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                             end 
@@ -311,10 +342,10 @@ AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInf
             if not Lootbag then
                 if data.inventory[itemId] then
                     InventoryCoolDown[source] = true;
-                    TriggerClientEvent('Sentry:ToggleNUIFocus', source, false)
+                    TriggerClientEvent('Infinite:ToggleNUIFocus', source, false)
                     Sentry.prompt({source, 'How many ' .. Sentry.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                         Quantity = parseInt(Quantity)
-                        TriggerClientEvent('Sentry:ToggleNUIFocus', source, true)
+                        TriggerClientEvent('Infinite:ToggleNUIFocus', source, true)
                         if Quantity then
                             local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
                             Sentry.getSData({carformat, function(cdata)
@@ -336,8 +367,8 @@ AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInf
                                             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                                         end
                                         local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                        TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                                        TriggerEvent('Sentry:RefreshInventory', source)
+                                        TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                                        TriggerEvent('Infinite:RefreshInventory', source)
                                         InventoryCoolDown[source] = nil;
                                         Sentry.setSData({carformat, json.encode(cdata)})
                                     else 
@@ -364,8 +395,8 @@ AddEventHandler('Sentry:MoveItemX', function(inventoryType, itemId, inventoryInf
 end)
 
 
-RegisterNetEvent('Sentry:MoveItemAll')
-AddEventHandler('Sentry:MoveItemAll', function(inventoryType, itemId, inventoryInfo, Lootbag)
+RegisterNetEvent('Infinite:MoveItemAll')
+AddEventHandler('Infinite:MoveItemAll', function(inventoryType, itemId, inventoryInfo, vehid)
     local source = source
     local UserId = Sentry.getUserId({source}) 
     local data = Sentry.getUserDataTable({UserId})
@@ -375,21 +406,23 @@ AddEventHandler('Sentry:MoveItemAll', function(inventoryType, itemId, inventoryI
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
             InventoryCoolDown[source] = true;
-            local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
+                local idz = NetworkGetEntityFromNetworkId(vehid)
+             local user_id = Sentry.getUserId({NetworkGetEntityOwner(idz)})
+            local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. user_id
             Sentry.getSData({carformat, function(cdata)
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
-                    local weightCalculation = Sentry.getInventoryWeight({UserId})+(Sentry.getItemWeight({itemId}) * cdata[itemId].amount)
-                    if weightCalculation <= Sentry.getInventoryMaxWeight({UserId}) then
-                        Sentry.giveInventoryItem({UserId, itemId, cdata[itemId].amount, true})
+                    local weightCalculation = Sentry.getInventoryWeight({user_id})+(Sentry.getItemWeight({itemId}) * cdata[itemId].amount)
+                    if weightCalculation <= Sentry.getInventoryMaxWeight({user_id}) then
+                        Sentry.giveInventoryItem({user_id, itemId, cdata[itemId].amount, true})
                         cdata[itemId] = nil;
                         local FormattedInventoryData = {}
                         for i, v in pairs(cdata) do
                             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                         end
                         local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                        TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                        TriggerEvent('Sentry:RefreshInventory', source)
+                        TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                        TriggerEvent('Infinite:RefreshInventory', source)
                         InventoryCoolDown[source] = nil;
                         Sentry.setSData({carformat, json.encode(cdata)})
                     else 
@@ -413,8 +446,8 @@ AddEventHandler('Sentry:MoveItemAll', function(inventoryType, itemId, inventoryI
                             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                         end
                         local maxVehKg = 200
-                        TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
-                        TriggerEvent('Sentry:RefreshInventory', source)
+                        TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
+                        TriggerEvent('Infinite:RefreshInventory', source)
                     else 
                         Sentryclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                     end 
@@ -448,8 +481,8 @@ AddEventHandler('Sentry:MoveItemAll', function(inventoryType, itemId, inventoryI
                                     FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
                                 end
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
-                                TriggerEvent('Sentry:RefreshInventory', source)
+                                TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
+                                TriggerEvent('Infinite:RefreshInventory', source)
                                 InventoryCoolDown[source] = nil;
                                 Sentry.setSData({carformat, json.encode(cdata)})
                             else 
@@ -483,7 +516,7 @@ AddEventHandler('Sentry:InComa', function()
         if in_coma then
             Wait(1500)
             local user_id = Sentry.getUserId({source})
-            local model = GetHashKey('xm_prop_x17_bag_med_01a')
+            local model = GetHashKey('prop_cs_heist_bag_01')
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
@@ -511,7 +544,7 @@ AddEventHandler('Sentry:LootBag', function(netid)
     local source = source
     Sentryclient.isInComa(source, {}, function(in_coma) 
         if not in_coma then
-            if LootBagEntities[netid] and #(GetEntityCoords(LootBagEntities[netid][1]) - GetEntityCoords(GetPlayerPed(source))) < 2.0 then
+            if LootBagEntities[netid] and not LootBagEntities[netid][3] and #(GetEntityCoords(LootBagEntities[netid][1]) - GetEntityCoords(GetPlayerPed(source))) < 5.0 then
                 LootBagEntities[netid][3] = true;
                 local user_id = Sentry.getUserId({source})
                 if user_id ~= nil then
@@ -519,7 +552,8 @@ AddEventHandler('Sentry:LootBag', function(netid)
                     OpenInv(source, netid, LootBagEntities[netid].Items)
                     Sentryclient.notify(source,{"~g~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
                 end
- 
+            else
+                --Sentryclient.notify(source, {'~r~This loot bag is already being looted.'})
             end
         else 
             Sentryclient.notify(source, {'~r~You cannot open this while dead silly.'})
@@ -534,7 +568,7 @@ Citizen.CreateThread(function()
             if v[5] then 
                 local coords = GetEntityCoords(GetPlayerPed(v[5]))
                 local objectcoords = GetEntityCoords(v[1])
-                if #(objectcoords - coords) > 2.0 then
+                if #(objectcoords - coords) > 5.0 then
                     CloseInv(v[5])
                     Wait(3000)
                     v[3] = false; 
@@ -545,8 +579,8 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('Sentry:CloseLootbag')
-AddEventHandler('Sentry:CloseLootbag', function()
+RegisterNetEvent('Infinite:CloseLootbag')
+AddEventHandler('Infinite:CloseLootbag', function()
     local source = source
     for i,v in pairs(LootBagEntities) do 
         if v[5] and v[5] == source then 
@@ -559,7 +593,7 @@ AddEventHandler('Sentry:CloseLootbag', function()
 end)
 
 function CloseInv(source)
-    TriggerClientEvent('Sentry:InventoryOpen', source, false, false)
+    TriggerClientEvent('Infinite:InventoryOpen', source, false, false)
 end
 
 function OpenInv(source, netid, LootBagItems)
@@ -570,18 +604,18 @@ function OpenInv(source, netid, LootBagItems)
         for i,v in pairs(data.inventory) do
             FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
         end
-        TriggerClientEvent('Sentry:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
+        TriggerClientEvent('Infinite:FetchPersonalInventory', source, FormattedInventoryData, Sentry.computeItemsWeight({data.inventory}), Sentry.getInventoryMaxWeight({UserId}))
         InventorySpamTrack[source] = false;
     else 
         print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
-    TriggerClientEvent('Sentry:InventoryOpen', source, true, true)
+    TriggerClientEvent('Infinite:InventoryOpen', source, true, true)
     local FormattedInventoryData = {}
     for i, v in pairs(LootBagItems) do
         FormattedInventoryData[i] = {amount = v.amount, ItemName = Sentry.getItemName({i}), Weight = Sentry.getItemWeight({i})}
     end
     local maxVehKg = 200
-    TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagItems}), maxVehKg)
+    TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({LootBagItems}), maxVehKg)
     print(json.encode(FormattedInventoryData))
 end
 

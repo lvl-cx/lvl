@@ -78,8 +78,8 @@ window.addEventListener('message', function(event) {
         invType = undefined;
         ClearPersonalInventory();
         ClearSecondaryInventory();
-        $('#PersonalInventoryWeight').text(`WEIGHT: 0.00/0.00KG`)
-        $('#SecondInventoryWeight').text(`WEIGHT: 0.00/0.00KG`)
+        $('#PersonalInventoryWeight').text(`0.00/0.00KG`)
+        $('#SecondInventoryWeight').text(`0.00/0.00KG`)
     }
     if (msg.action == "loadItems") {
         ClearPersonalInventory();
@@ -92,7 +92,7 @@ window.addEventListener('message', function(event) {
             $(newItem).show();
             $(newItem).attr("id", key)
         }
-        $('#PersonalInventoryWeight').text(`WEIGHT: ${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}KG`)
+        $('#PersonalInventoryWeight').text(`${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}KG`)
         $('.ItemTable').each(function(i, obj) {
             if (!$(this).hasClass("ExampleTable")) {
                 $(this).click(function() {
