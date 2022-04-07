@@ -57,7 +57,7 @@ AddEventHandler('Sentry:SellDiamond', function()
       if Sentry.tryGetInventoryItem(user_id,'diamond', 1) then
         if user_id ~= nil then
 
-        local price = 15000 -- [Per Piece Price]
+        local price = 10000 -- [Per Piece Price]
         Sentry.giveMoney(user_id,price)
 
         Sentryclient.notify(source, {"~g~Successfully sold 1 diamond for £" .. price})

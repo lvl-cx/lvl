@@ -59,11 +59,11 @@ AddEventHandler('Sentry:SellHeroin', function()
       if Sentry.tryGetInventoryItem(user_id,'heroin', 1) then
         if user_id ~= nil then
 
-          local price = 500 -- [Per Piece Price]
+          local price = 20000 -- [Per Piece Price]
           finalCommision = price * (commision / 100)
           Sentry.giveMoney(user_id,price+finalCommision)
   
-          Sentryclient.notify(source, {"~g~Sold 1 cocaine for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+          Sentryclient.notify(source, {"~g~Sold 1 heroin for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
   
           if finalID ~= nil then
             exports['ghmattimysql']:execute("SELECT * FROM ganginfo WHERE userid = @uid", {uid = Sentry.getUserId(finalID)}, function(result)

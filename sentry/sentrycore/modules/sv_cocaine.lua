@@ -59,7 +59,7 @@ AddEventHandler('Sentry:SellCocaine', function()
       if Sentry.tryGetInventoryItem(user_id,'cocaine', 1) then
         if user_id ~= nil then
 
-          local price = 500 -- [Per Piece Price]
+          local price = 1250 -- [Per Piece Price]
           finalCommision = price * (commision / 100)
           Sentry.giveMoney(user_id,price+finalCommision)
   

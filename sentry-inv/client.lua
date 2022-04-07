@@ -13,7 +13,7 @@ local LootBagID = nil;
 local LootBagIDNew = nil;
 local LootBagCoords = nil;
 local PlayerInComa = false;
-local model = GetHashKey('prop_cs_heist_bag_01')
+local model = GetHashKey('xm_prop_x17_bag_med_01a')
 tSentry = Proxy.getInterface("Sentry")
 
 RegisterNetEvent('openBoot')
@@ -320,7 +320,7 @@ local LootBagIDNew2 = nil;
 local MoneydropIDNew2 = nil;
 local Entity2, farCoordsX2, farCoordsY2, farCoordsZ2 = nil,nil,nil,nil
 local EntityType2 = nil
-local model2 = GetHashKey('prop_cs_heist_bag_01')
+local model2 = GetHashKey('xm_prop_x17_bag_med_01a')
 
 
 Citizen.CreateThread(function()
@@ -337,11 +337,11 @@ Citizen.CreateThread(function()
                     local entityModel2 = GetEntityModel(Entity2)
                     local coords2 = GetEntityCoords(PlayerPedId())
                
-                    if `prop_cs_heist_bag_01` == entityModel2 then
+                    if `xm_prop_x17_bag_med_01a` == entityModel2 then
                        
                         if IsControlJustReleased(1, 38) then
                       
-                            local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('prop_cs_heist_bag_01'), false, false, false)
+                            local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('xm_prop_x17_bag_med_01a'), false, false, false)
                             local MoneydropIDNew2 = ObjToNet(MoneydropID2)
                             TriggerServerEvent('Sentry:LootBag', LootBagIDNew)
                             Wait(1000)
