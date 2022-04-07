@@ -285,6 +285,10 @@ function tSentry.playSound(dict,name)
   PlaySound(-1,name,dict,0,0,1)
 end
 
+function tSentry.playFrontendSound(dict, name)
+  PlaySoundFrontend(-1, dict, name, 0)
+end
+
 --[[
 -- not working
 function tSentry.setMovement(dict)

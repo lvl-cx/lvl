@@ -568,10 +568,25 @@ end
 
 RegisterNetEvent("Sentry:HasVIP")
 AddEventHandler("Sentry:HasVIP", function()
-    
     local source = source 
-    userid = Sentry.getUserId(source)
+    local userid = Sentry.getUserId(source)
+
     if Sentry.hasGroup(userid, "VIP") then 
         TriggerClientEvent("Sentry:OpenVIPGarage", source)
+    end
+end)
+
+RegisterNetEvent("Sentry:PayVehicleTax")
+AddEventHandler("Sentry:PayVehicleTax", function()
+    local user_id = Sentry.getUserId(source)
+
+    if user_id ~= nil then
+        local bank = Sentry.getBankMoney(user_id)
+        local payment = bank / 1000
+        if Sentry.tryBankPayment(user_id, payment) then
+            Sentryclient.notify(source,{"~g~Paid £"..math.floor(payment).." vehicle tax."})
+        else
+            Sentryclient.notify(source,{"~r~Its fine... Tax payers will pay your vehicle tax instead."})
+        end
     end
 end)

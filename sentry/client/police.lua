@@ -17,8 +17,11 @@ function tSentry.toggleHandcuff()
 
   SetEnableHandcuffs(GetPlayerPed(-1), handcuffed)
   if handcuffed then
+    cuffs = CreateObject(GetHashKey("p_cs_cuffs_02_s"), GetEntityCoords(PlayerPedId(), true), true, true, true)
+    AttachEntityToEntity(cuffs, PlayerPedId(), GetPedBoneIndex(PlayerPedId(), 60309), -0.055, 0.06, 0.04, 265.0, 155.0, 80.0, true, false, false, false, 0, true)
     tSentry.playAnim(true,{{"mp_arresting","idle",1}},true)
   else
+    DeleteEntity(cuffs)
     tSentry.stopAnim(true)
     SetPedStealthMovement(GetPlayerPed(-1),false,"") 
   end
@@ -88,6 +91,12 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
+
+    while not HasModelLoaded(GetHashKey("p_cs_cuffs_02_s")) do
+      RequestModel(GetHashKey("p_cs_cuffs_02_s"))
+      Citizen.Wait(100)
+    end
+
     if handcuffed then
       SetPedStealthMovement(GetPlayerPed(-1),true,"")
       DisableControlAction(0,21,true) -- disable sprint
@@ -104,6 +113,7 @@ Citizen.CreateThread(function()
       DisableControlAction(0,143,true) -- disable melee
       DisableControlAction(0,75,true) -- disable exit vehicle
       DisableControlAction(27,75,true) -- disable exit vehicle
+      DisableControlAction(1,323,true) -- disable x button
     end
   end
 end)
