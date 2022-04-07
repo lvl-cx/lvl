@@ -303,13 +303,13 @@ function Sentry.ReLoadChar(source)
                         tmpdata.spawns = 0
                         local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                         MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
-                        print("[Sentry] "..name.." joined (user_id = "..user_id..")")
+                        print("[Sentry] "..name.." joined (Perm ID: "..user_id..")")
                         TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                         TriggerClientEvent("Sentry:CheckIdRegister", source)
                     end)
                 end)
             else -- already connected
-                print("[Sentry] "..name.." re-joined (user_id = "..user_id..")")
+                print("[Sentry] "..name.." re-joined (Perm ID: "..user_id..")")
                 TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                 TriggerClientEvent("Sentry:CheckIdRegister", source)
                 local tmpdata = Sentry.getUserTmpTable(user_id)
@@ -522,9 +522,9 @@ function Sentry.ban(adminsource,permid,time,reason)
             banTime = banTime  + (60 * 60 * tonumber(time))  
             Sentry.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
             Sentry.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
-            Sentryclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+            Sentryclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
         else 
-            Sentryclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+            Sentryclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             Sentry.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
             Sentry.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
         end
@@ -532,10 +532,10 @@ function Sentry.ban(adminsource,permid,time,reason)
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            Sentryclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+            Sentryclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             Sentry.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         else 
-            Sentryclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+            Sentryclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             Sentry.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         end
     end
@@ -550,9 +550,9 @@ function Sentry.banConsole(permid,time,reason)
             banTime = banTime  + (60 * 60 * tonumber(time))  
             Sentry.setBanned(permid,true,banTime,reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
             Sentry.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
-            print("~g~Success banned! User PermID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
         else 
-            print("~g~Success banned! User PermID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             Sentry.setBanned(permid,true,"perm",reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
             Sentry.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
         end
@@ -560,10 +560,10 @@ function Sentry.banConsole(permid,time,reason)
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            print("~g~Success banned! User PermID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             Sentry.setBanned(permid,true,banTime,reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
         else 
-            print("~g~Success banned! User PermID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             Sentry.setBanned(permid,true,"perm",reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
         end
     end
@@ -655,8 +655,8 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
         Sentry.getUserIdByIdentifiers(ids, function(user_id)
             Sentry.IdentifierBanCheck(source, user_id, function(status, id)
                 if status then
-                    print("[Sentry] User rejected for attempting to evade ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
-                    deferrals.done("[Sentry]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. id)
+                    print("[Sentry] User rejected for attempting to evade. Perm ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
+                    deferrals.done("[Sentry]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your Perm ID which is: " .. id)
                     return 
                 end
             end)
@@ -700,7 +700,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                             
                                             -- trigger join
-                                            print("[Sentry] "..name.." joined (user_id = "..user_id..")")
+                                            print("[Sentry] "..name.." joined (Perm ID: "..user_id..")")
                                             TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                                             deferrals.done()
                                         end)
@@ -709,7 +709,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     if Sentry.CheckTokens(source, user_id) then 
                                         deferrals.done("[Sentry]: You are banned from this server, please do not try to evade your ban.")
                                     end
-                                    print("[Sentry] "..name.." re-joined (user_id = "..user_id..")")
+                                    print("[Sentry] "..name.." re-joined (Perm ID: "..user_id..")")
                                     TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                                     deferrals.done()
                                     
@@ -720,8 +720,8 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                 
                                 Debug.pend()
                             else
-                                print("[Sentry] "..name.." rejected: not whitelisted (user_id = "..user_id..")")
-                                deferrals.done("[Sentry] Not whitelisted (user_id = "..user_id..").")
+                                print("[Sentry] "..name.." rejected: not whitelisted (Perm ID: "..user_id..")")
+                                deferrals.done("[Sentry] Not whitelisted (Perm ID: "..user_id..").")
                             end
                         end)
                     else
@@ -761,13 +761,13 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                                 
                                                 -- trigger join
-                                                print("[Sentry] "..name.." joined after his ban expired. (user_id = "..user_id..")")
+                                                print("[Sentry] "..name.." joined after his ban expired. (Perm ID: "..user_id..")")
                                                 TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                                                 deferrals.done()
                                             end)
                                         end)
                                     else -- already connected
-                                        print("[Sentry] "..name.." re-joined after his ban expired.  (user_id = "..user_id..")")
+                                        print("[Sentry] "..name.." re-joined after his ban expired. (Perm ID: "..user_id..")")
                                         TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                                         deferrals.done()
                                         
@@ -777,10 +777,10 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     end
                                     return 
                                 end
-                                print("[Sentry] "..name.." rejected: banned (user_id = "..user_id..")")
+                                print("[Sentry] "..name.." rejected: banned (Perm ID: "..user_id..")")
                                 deferrals.done("[Sentry] You have been banned from this server.\nYour ban will expire on the: " .. os.date("%c", bantime) .. "\nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
                             else 
-                                print("[Sentry] "..name.." rejected: banned (user_id = "..user_id..")")
+                                print("[Sentry] "..name.." rejected: banned (Perm ID: "..user_id..")")
                                 deferrals.done("[Sentry] You have been banned from this server.\nYour ban will expire: Never, you have been permanently banned \nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
                             end
                         end)
@@ -814,15 +814,15 @@ AddEventHandler("playerDropped",function(reason)
         -- save user data table
         Sentry.setUData(user_id,"Sentry:datatable",json.encode(Sentry.getUserDataTable(user_id)))
         
-        print("[Sentry] "..GetPlayerName(source).." disconnected (user_id = "..user_id..")")
+        print("[Sentry] "..GetPlayerName(source).." disconnected (Perm ID: "..user_id..")")
         Sentry.users[Sentry.rusers[user_id]] = nil
         Sentry.rusers[user_id] = nil
         Sentry.user_tables[user_id] = nil
         Sentry.user_tmp_tables[user_id] = nil
         Sentry.user_sources[user_id] = nil
-        print('[Sentry] Player Leaving Save:  Saved data for: ' .. GetPlayerName(source))
+        print('[Sentry] Saved data for: ' .. GetPlayerName(source) .. " (Perm ID: "..user_id..")")
     else 
-        print('[Sentry] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
+        print('[Sentry] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' (NIL ID)')
     end
     Sentryclient.removePlayer(-1,{source})
 end)
