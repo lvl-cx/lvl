@@ -301,16 +301,15 @@ function Sentry.ReLoadChar(source)
                     Sentry.getLastLogin(user_id, function(last_login)
                         tmpdata.last_login = last_login or ""
                         tmpdata.spawns = 0
-                        local ep = GetPlayerEndpoint(source)
-                        local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
+                        local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                         MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
-                        print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") joined (user_id = "..user_id..")")
+                        print("[Sentry] "..name.." joined (user_id = "..user_id..")")
                         TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                         TriggerClientEvent("Sentry:CheckIdRegister", source)
                     end)
                 end)
             else -- already connected
-                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") re-joined (user_id = "..user_id..")")
+                print("[Sentry] "..name.." re-joined (user_id = "..user_id..")")
                 TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                 TriggerClientEvent("Sentry:CheckIdRegister", source)
                 local tmpdata = Sentry.getUserTmpTable(user_id)
@@ -697,12 +696,11 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             tmpdata.spawns = 0
                                             
                                             -- set last login
-                                            local ep = GetPlayerEndpoint(source)
-                                            local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
+                                            local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                                             MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                             
                                             -- trigger join
-                                            print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") joined (user_id = "..user_id..")")
+                                            print("[Sentry] "..name.." joined (user_id = "..user_id..")")
                                             TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                                             deferrals.done()
                                         end)
@@ -711,7 +709,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     if Sentry.CheckTokens(source, user_id) then 
                                         deferrals.done("[Sentry]: You are banned from this server, please do not try to evade your ban.")
                                     end
-                                    print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") re-joined (user_id = "..user_id..")")
+                                    print("[Sentry] "..name.." re-joined (user_id = "..user_id..")")
                                     TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                                     deferrals.done()
                                     
@@ -722,7 +720,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                 
                                 Debug.pend()
                             else
-                                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") rejected: not whitelisted (user_id = "..user_id..")")
+                                print("[Sentry] "..name.." rejected: not whitelisted (user_id = "..user_id..")")
                                 deferrals.done("[Sentry] Not whitelisted (user_id = "..user_id..").")
                             end
                         end)
@@ -759,18 +757,17 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 tmpdata.spawns = 0
                                                 
                                                 -- set last login
-                                                local ep = Sentry.getPlayerEndpoint(source)
-                                                local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
+                                                local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                                                 MySQL.execute("Sentry/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                                 
                                                 -- trigger join
-                                                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") joined after his ban expired. (user_id = "..user_id..")")
+                                                print("[Sentry] "..name.." joined after his ban expired. (user_id = "..user_id..")")
                                                 TriggerEvent("Sentry:playerJoin", user_id, source, name, tmpdata.last_login)
                                                 deferrals.done()
                                             end)
                                         end)
                                     else -- already connected
-                                        print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") re-joined after his ban expired.  (user_id = "..user_id..")")
+                                        print("[Sentry] "..name.." re-joined after his ban expired.  (user_id = "..user_id..")")
                                         TriggerEvent("Sentry:playerRejoin", user_id, source, name)
                                         deferrals.done()
                                         
@@ -780,22 +777,22 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     end
                                     return 
                                 end
-                                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") rejected: banned (user_id = "..user_id..")")
+                                print("[Sentry] "..name.." rejected: banned (user_id = "..user_id..")")
                                 deferrals.done("[Sentry] You have been banned from this server.\nYour ban will expire on the: " .. os.date("%c", bantime) .. "\nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
                             else 
-                                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") rejected: banned (user_id = "..user_id..")")
+                                print("[Sentry] "..name.." rejected: banned (user_id = "..user_id..")")
                                 deferrals.done("[Sentry] You have been banned from this server.\nYour ban will expire: Never, you have been permanently banned \nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
                             end
                         end)
                     end
                 end)
             else
-                print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") rejected: identification error")
+                print("[Sentry] "..name.." rejected: identification error")
                 deferrals.done("[Sentry] Identification error.")
             end
         end)
     else
-        print("[Sentry] "..name.." ("..Sentry.getPlayerEndpoint(source)..") rejected: missing identifiers")
+        print("[Sentry] "..name.." rejected: missing identifiers")
         deferrals.done("[Sentry] Missing identifiers.")
     end
     Debug.pend()
@@ -817,7 +814,7 @@ AddEventHandler("playerDropped",function(reason)
         -- save user data table
         Sentry.setUData(user_id,"Sentry:datatable",json.encode(Sentry.getUserDataTable(user_id)))
         
-        print("[Sentry] "..Sentry.getPlayerEndpoint(source).." disconnected (user_id = "..user_id..")")
+        print("[Sentry] "..GetPlayerName(source).." disconnected (user_id = "..user_id..")")
         Sentry.users[Sentry.rusers[user_id]] = nil
         Sentry.rusers[user_id] = nil
         Sentry.user_tables[user_id] = nil
