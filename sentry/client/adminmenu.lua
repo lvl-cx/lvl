@@ -1677,6 +1677,18 @@ AddEventHandler('SentryAdmin:Spectate', function(plr,tpcoords)
 		SetEveryoneIgnorePlayer(playerPed, true)	
 		
         Spectating = true
+
+        while Spectating do
+            local targetSpeedMph = GetEntitySpeed(targetPed) * 2.236936
+
+            DrawAdvancedText(0.322, 0.828, 0.025, 0.0048, 0.5, "Health: "..GetEntityHealth(targetPed), 255, 0, 0, 255, 6, 0)
+            DrawAdvancedText(0.320, 0.850, 0.025, 0.0048, 0.5, "Armour: "..GetPedArmour(targetPed), 255, 0, 0, 255, 6, 0)
+            if IsPedSittingInAnyVehicle(targetPed) then
+                DrawAdvancedText(0.320, 0.872, 0.025, 0.0048, 0.5, "Speed: "..math.floor(targetSpeedMph), 255, 0, 0, 255, 6, 0)
+            end
+            Wait(0)
+        end
+
         tSentry.notify('~g~Spectating Player.')
     else 
         NetworkSetInSpectatorMode(false, targetPed)
