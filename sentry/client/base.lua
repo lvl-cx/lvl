@@ -343,4 +343,3 @@ AddEventHandler('Sentry:CheckIdRegister', function()
     TriggerEvent('playerSpawned', GetEntityCoords(PlayerPedId()))
 end)
 
-

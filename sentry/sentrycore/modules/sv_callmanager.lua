@@ -31,17 +31,6 @@ AddEventHandler('GetPermission', function()
 end)
 
 
-function CallManagerServer.RemoveTicket(index, Type)
-    if Type == "admin" then
-        adminTickets[index] = nil
-    elseif Type == "nhs" then
-        nhsCalls[index] = nil
-    else
-        pdCalls[index] = nil
-    end
-    TriggerClientEvent('CallManager:Table', -1, adminTickets, nhsCalls, pdCalls)
-end
-
 
 RegisterNetEvent('RemoveTicket')
 AddEventHandler('RemoveTicket', function(index, Type)
@@ -86,16 +75,12 @@ AddEventHandler('CallManager:AddNHSCalls', function(Reason)
     TriggerClientEvent('CallManager:Table', -1, adminTickets, nhsCalls, pdCalls)
 end)
 
-function CallManagerServer.GetUpdatedCoords(target)
-    local source = source
-    local target = target
-    return GetEntityCoords(GetPlayerPed(tonumber(target)))
-end
 
 RegisterNetEvent('GetUpdatedCoords')
 AddEventHandler('GetUpdatedCoords', function(target)
     local source = source
     local target = target
+    user_id = Sentry.getUserId(source)
     TriggerClientEvent('rGetUpdatedCoords', source, GetEntityCoords(GetPlayerPed(tonumber(target))))
 
 end)
@@ -109,12 +94,10 @@ AddEventHandler('Sentry:returnMe', function(admin, ticket, reason)
     local name = GetPlayerName(source)
     local tuserid = Sentry.getUserId(ticket)
     local tname = GetPlayerName(ticket)
-
-    --Sentry.giveBankMoney(userid, 3000)
-    Sentryclient.notify(ticket,{'~g~An Admin has Taken your Ticket!'})
+    Sentryclient.notify(source, {'~g~You have received £5,000 for taking a ticket.'})
+    Sentry.giveBankMoney(userid, 5000)
+    Sentryclient.notify(ticket,{'~g~An Admin has Taken your Ticket! ~w~[Name: ' .. name .. ' | ID: ' .. userid .. ']'})
     TriggerClientEvent("Sentry:OMioDioMode",source,true)
-
-
 
 end)
 

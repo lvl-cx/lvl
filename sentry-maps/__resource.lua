@@ -26,3 +26,5 @@ data_file 'DLC_ITYP_REQUEST' 'gg02_props.ytyp'
 data_file 'DLC_ITYP_REQUEST' 'gg02.ytyp'
 
 data_file 'DLC_ITYP_REQUEST' 'builderdef.ytyp'
+
+data_file 'DLC_ITYP_REQUEST' 'stream/prop_car_airbag.ytyp'

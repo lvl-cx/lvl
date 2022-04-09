@@ -83,11 +83,9 @@ RageUI.CreateWhile(1.0, true, function()
                             if not isInTicket then
                                     savedCoords = GetEntityCoords(PlayerPedId())
                                 
-                                    TriggerServerEvent('GetUpdatedCoords', v[2])
-                                    Wait(500)
+                                        TriggerServerEvent('GetUpdatedCoords', v[2])
+                                        Wait(100)
                                         SetEntityCoords(PlayerPedId(), targetCoords)
-                                       -- notify("~g~You earned £3000 for taking a staff ticket! ❤️")
-                                       notify("~g~You have taken a staff ticket! ❤️")
                                         TriggerServerEvent("Sentry:returnMe", v[1], v[2], v[3])
                                     
                                     
@@ -111,8 +109,7 @@ end)
 
 RegisterNetEvent('rGetUpdatedCoords')
 AddEventHandler('rGetUpdatedCoords', function(coords)
-    print(coords)
- targetCoords = coords
+    targetCoords = coords
 end)
 
 RageUI.CreateWhile(1.0, true, function()
@@ -120,12 +117,13 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if pdCalls ~= nil then
             for k,v in pairs(pdCalls) do
-                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]),nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if (Selected) then
                    
         
                             TriggerServerEvent('RemoveTicket', k, "pd")
                             TriggerServerEvent('GetUpdatedCoords', v[2])
+                            Wait(100)
                                 SetNewWaypoint(targetCoords.x, targetCoords.y)
                  
                         
@@ -150,6 +148,7 @@ RageUI.CreateWhile(1.0, true, function()
     
                             TriggerServerEvent('RemoveTicket', k, "nhs")
                             TriggerServerEvent('GetUpdatedCoords', v[2])
+                            Wait(100)
                                 SetNewWaypoint(targetCoords.x, targetCoords.y)
                      
                         end
