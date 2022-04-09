@@ -12,7 +12,7 @@ AddEventHandler('Rebel:BuyWeapon', function(price, hash)
     local playerCoords = GetEntityCoords(ped)
 
     if #(playerCoords - coords) <= 5.0 then 
-        if Sentry.hasPermission(userid, 'rebel.guns') then
+        if Sentry.hasPermission(userid, 'rebel.whitelist') then
         
             if Sentry.tryPayment({userid, price}) then
                 GiveWeaponToPed(source, hash, 250, false, false)
@@ -41,7 +41,7 @@ AddEventHandler('Rebel:BuyArmour', function()
     local playerCoords = GetEntityCoords(ped)
 
     if #(playerCoords - coords) <= 5.0 then 
-        if Sentry.hasPermission(userid, 'rebel.guns') then
+        if Sentry.hasPermission(userid, 'rebel.whitelist') then
         
             if Sentry.tryPayment(userid, 100000) then
                 SetPedArmour(source, 96)
