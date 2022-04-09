@@ -7,7 +7,7 @@ RegisterCommand('showwarnings', function(player, args)
     local user_id = Sentry.getUserId(player)
     local permID =  tonumber(args[1])
     if permID ~= nil then
-        if Sentry.hasPermission(user_id,"player.kick") then
+        if Sentry.hasPermission(user_id,"admin.kick") then
             sentrywarningstables = getsentryWarnings(permID,player)
             TriggerClientEvent("sentry:showWarningsOfUser",player,sentrywarningstables)
         end
@@ -40,7 +40,7 @@ AddEventHandler("sentry:warnPlayer",function(target_id,warningReason)
 	local source = source
 	local user_id = Sentry.getUserId(source)
         local adminName = GetPlayerName(source)
-	if Sentry.hasPermission(user_id,"player.kick") then
+	if Sentry.hasPermission(user_id,"admin.kick") then
 		warning = "Warning"
 		warningDate = getCurrentDate()
 		exports['ghmattimysql']:execute("INSERT INTO sentry_warnings (`user_id`, `warning_type`, `duration`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, 0, @admin, @warning_date,@reason);", {user_id = target_id,warning_type = warning, admin = adminName, warning_date = warningDate, reason = warningReason}, function() end)
@@ -60,7 +60,7 @@ AddEventHandler("sentry:removewarningPlayer",function(target_id,warningID)
 	local source = source
 	local user_id = Sentry.getUserId(source)
         local adminName = GetPlayerName(source)
-	if Sentry.hasPermission(user_id,"player.kick") then
+	if Sentry.hasPermission(user_id,"admin.kick") then
 		warning = "Warning"
 		warningDate = getCurrentDate()
 		exports['ghmattimysql']:execute("INSERT INTO sentry_warnings (`user_id`, `warning_type`, `duration`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, 0, @admin, @warning_date,@reason);", {user_id = target_id,warning_type = warning, admin = adminName, warning_date = warningDate, reason = warningReason}, function() end)
