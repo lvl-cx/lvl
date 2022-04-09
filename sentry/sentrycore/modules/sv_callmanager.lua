@@ -7,11 +7,14 @@ adminTickets = {}
 nhsCalls = {}
 pdCalls = {}
 
-function CallManagerServer.GetTickets()
+RegisterNetEvent('GetTickets')
+AddEventHandler('GetTickets', function()
     TriggerClientEvent('CallManager:Table', -1, adminTickets, nhsCalls, pdCalls)
-end
+end)
 
-function CallManagerServer.GetPermissions()
+
+RegisterNetEvent('GetPermission')
+AddEventHandler('GetPermission', function()
     adminPerm = false
     nhsPerm = false
     pdPerm = false
@@ -24,8 +27,8 @@ function CallManagerServer.GetPermissions()
     if Sentry.hasPermission(user_id, "cop.keycard") then
         pdPerm = true;
     end
-    return adminPerm, pdPerm, nhsPerm
-end
+    TriggerClientEvent('RecievePerms', source, adminPerm, pdPerm, nhsPerm)
+end)
 
 
 function CallManagerServer.RemoveTicket(index, Type)
@@ -38,6 +41,19 @@ function CallManagerServer.RemoveTicket(index, Type)
     end
     TriggerClientEvent('CallManager:Table', -1, adminTickets, nhsCalls, pdCalls)
 end
+
+
+RegisterNetEvent('RemoveTicket')
+AddEventHandler('RemoveTicket', function(index, Type)
+    if Type == "admin" then
+        adminTickets[index] = nil
+    elseif Type == "nhs" then
+        nhsCalls[index] = nil
+    else
+        pdCalls[index] = nil
+    end
+    TriggerClientEvent('CallManager:Table', -1, adminTickets, nhsCalls, pdCalls)
+end)
 
 local AdminCooldown = {}
 
@@ -75,6 +91,14 @@ function CallManagerServer.GetUpdatedCoords(target)
     local target = target
     return GetEntityCoords(GetPlayerPed(tonumber(target)))
 end
+
+RegisterNetEvent('GetUpdatedCoords')
+AddEventHandler('GetUpdatedCoords', function(target)
+    local source = source
+    local target = target
+    TriggerClientEvent('rGetUpdatedCoords', source, GetEntityCoords(GetPlayerPed(tonumber(target))))
+
+end)
 
 RegisterNetEvent('Sentry:returnMe')
 AddEventHandler('Sentry:returnMe', function(admin, ticket, reason)

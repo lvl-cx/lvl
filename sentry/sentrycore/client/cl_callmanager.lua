@@ -82,8 +82,9 @@ RageUI.CreateWhile(1.0, true, function()
                         else
                             if not isInTicket then
                                     savedCoords = GetEntityCoords(PlayerPedId())
-                            
-                                    CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+                                
+                                    TriggerServerEvent('GetUpdatedCoords', v[2])
+                                    Wait(500)
                                         SetEntityCoords(PlayerPedId(), targetCoords)
                                        -- notify("~g~You earned £3000 for taking a staff ticket! ❤️")
                                        notify("~g~You have taken a staff ticket! ❤️")
@@ -93,11 +94,11 @@ RageUI.CreateWhile(1.0, true, function()
                                     
                                         -- [Ticket Webhook]
                                         -- [Godmode & Clothing]
-                                    end)
+    
                                 
                                     takenticket = true
                                     isInTicket = true
-                                    CallManagerServer.RemoveTicket({k, "admin"})
+                                    TriggerServerEvent('RemoveTicket', k, "admin")
                             end
                         end
                     end
@@ -108,6 +109,12 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
+RegisterNetEvent('rGetUpdatedCoords')
+AddEventHandler('rGetUpdatedCoords', function(coords)
+    print(coords)
+ targetCoords = coords
+end)
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("callmanager", "police")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
@@ -116,10 +123,11 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if (Selected) then
                    
-                            CallManagerServer.RemoveTicket({k, "pd"})
-                            CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+        
+                            TriggerServerEvent('RemoveTicket', k, "pd")
+                            TriggerServerEvent('GetUpdatedCoords', v[2])
                                 SetNewWaypoint(targetCoords.x, targetCoords.y)
-                            end)
+                 
                         
                     end
                 end, RMenu:Get('callmanager', 'police'))
@@ -139,10 +147,11 @@ RageUI.CreateWhile(1.0, true, function()
                         if v[2] == GetPlayerServerId(PlayerId()) then
                             notify("~r~You can't take your own Call!")
                         else
-                            CallManagerServer.RemoveTicket({k, "nhs"})
-                            CallManagerServer.GetUpdatedCoords({v[2]}, function(targetCoords)
+    
+                            TriggerServerEvent('RemoveTicket', k, "nhs")
+                            TriggerServerEvent('GetUpdatedCoords', v[2])
                                 SetNewWaypoint(targetCoords.x, targetCoords.y)
-                            end)
+                     
                         end
                     end
                 end, RMenu:Get('callmanager', 'nhs'))
@@ -157,16 +166,19 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if IsControlJustPressed(1, callmanager.Key) then
     
-            CallManagerServer.GetPermissions({}, function(admin, pd, nhs)
-                isPlayerAdmin = admin;
-                isPlayerPD = pd;
-                isPlayerNHS = nhs;
-            end)
+            TriggerServerEvent('GetPermission')
 
-            CallManagerServer.GetTickets()
+            TriggerServerEvent('GetTickets')
             RageUI.Visible(RMenu:Get('callmanager', 'main'), not RageUI.Visible(RMenu:Get('callmanager', 'main')))
         end
     end
+end)
+
+RegisterNetEvent('RecievePerms')
+AddEventHandler('RecievePerms', function(admin, pd, nhs)
+    isPlayerAdmin = admin;
+    isPlayerPD = pd;
+    isPlayerNHS = nhs;
 end)
 
 RegisterNetEvent('CallManager:Table')
