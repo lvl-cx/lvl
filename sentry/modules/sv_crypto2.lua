@@ -92,7 +92,6 @@ end
 
 RegisterServerEvent("SentryCrypto:buy_crypto_system")
 AddEventHandler("SentryCrypto:buy_crypto_system", function(system)
-    print('yo')
     local player = source
     local price = system.price
     local idofmachine = system.id
@@ -102,7 +101,7 @@ AddEventHandler("SentryCrypto:buy_crypto_system", function(system)
     local x,y,z = table.unpack(cfg.coords)
     local system_coords = vector3(x,y,z)
     if #(player_coords - system_coords) < 7 then
-        if Sentry.tryPayment(user_id,system.price) then
+        if Sentry.tryBankPayment(user_id,system.price) then
             Sentryclient.notify(player, {"~g~You bought a System For £"..price})
         
             TriggerClientEvent("Sentry:PlaySound", source, 1)
