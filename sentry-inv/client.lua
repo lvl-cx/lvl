@@ -29,7 +29,7 @@ AddEventHandler('openBoot', function()
 
         tSentry.vc_openDoor({VehTypeC, 5})
         inventoryType = 'CarBoot'
-        TriggerServerEvent('Infinite:FetchTrunkInventory', NVeh, NetworkGetNetworkIdFromEntity(nearestVeh))
+        TriggerServerEvent('Sentry:FetchTrunkInventory', NVeh, NetworkGetNetworkIdFromEntity(nearestVeh))
     else
         notify("~r~This is not your Vehicle!")
     end
@@ -39,7 +39,7 @@ local LootBagCrouchLoop = false;
 RegisterCommand('inventory', function()
     if not tSentry.isInComa({}) then
         if not inventoryOpen then
-            TriggerServerEvent('Infinite:FetchPersonalInventory')
+            TriggerServerEvent('Sentry:FetchPersonalInventory')
             inventoryOpen = true; 
             SetNuiFocus(true, true)
             SetNuiFocusKeepInput(true)
@@ -54,7 +54,7 @@ RegisterCommand('inventory', function()
             --     tSentry.vc_openDoor({VehTypeC, 5})
             --     inventoryType = 'CarBoot'
             --     
-            --     TriggerServerEvent('Infinite:FetchTrunkInventory', NVeh)
+            --     TriggerServerEvent('Sentry:FetchTrunkInventory', NVeh)
             -- end
 
         else
@@ -73,7 +73,7 @@ RegisterCommand('inventory', function()
                 if debug then 
                     print('Requested lootbag to close.')
                 end
-                TriggerServerEvent('Infinite:CloseLootbag')
+                TriggerServerEvent('Sentry:CloseLootbag')
                 IsLootBagOpening = false;
                 ResetPedMovementClipset(PlayerPedId(), 0.30 )
                 LootBagCrouchLoop = false;
@@ -92,8 +92,8 @@ function LoadAnimDict(dict)
     end
 end
 
-RegisterNetEvent('Infinite:InventoryOpen')
-AddEventHandler('Infinite:InventoryOpen', function(toggle, lootbag)
+RegisterNetEvent('Sentry:InventoryOpen')
+AddEventHandler('Sentry:InventoryOpen', function(toggle, lootbag)
     IsLootBagOpening = lootbag
     if IsLootBagOpening then
         LoadAnimDict('amb@medic@standing@kneel@base')
@@ -117,23 +117,23 @@ AddEventHandler('Infinite:InventoryOpen', function(toggle, lootbag)
 end)
 
 
-RegisterNetEvent('Infinite:ToggleNUIFocus')
-AddEventHandler('Infinite:ToggleNUIFocus', function(value)
+RegisterNetEvent('Sentry:ToggleNUIFocus')
+AddEventHandler('Sentry:ToggleNUIFocus', function(value)
     --print('focus', value)
     SetNuiFocus(value, value)
     SetNuiFocusKeepInput(value)
 end)
 
-RegisterNetEvent('Infinite:SendSecondaryInventoryData')
-AddEventHandler('Infinite:SendSecondaryInventoryData', function(InventoryData, CurrentKG, MaxKg)
+RegisterNetEvent('Sentry:SendSecondaryInventoryData')
+AddEventHandler('Sentry:SendSecondaryInventoryData', function(InventoryData, CurrentKG, MaxKg)
     SendNUIMessage({action = 'loadSecondaryItems', items = InventoryData, CurrentKG = CurrentKG, MaxKG = MaxKg, invType = inventoryType})
     if debug then
         print('Sent secondary inventory data to client.')
     end
 end)
 
-RegisterNetEvent('Infinite:FetchPersonalInventory')
-AddEventHandler('Infinite:FetchPersonalInventory', function(table, CurrentKG, MaxKG)
+RegisterNetEvent('Sentry:FetchPersonalInventory')
+AddEventHandler('Sentry:FetchPersonalInventory', function(table, CurrentKG, MaxKG)
     SendNUIMessage({action = 'loadItems', items = table, CurrentKG = CurrentKG, MaxKG = MaxKG})
     if debug then
         print('Sent inventory data to client.')
@@ -141,7 +141,7 @@ AddEventHandler('Infinite:FetchPersonalInventory', function(table, CurrentKG, Ma
 end)
 
 RegisterNUICallback('UseBtn', function(data, cb)
-    TriggerServerEvent('Infinite:UseItem', data.itemId, data.invType)
+    TriggerServerEvent('Sentry:UseItem', data.itemId, data.invType)
     cb(true);
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 
@@ -150,13 +150,13 @@ RegisterNUICallback('UseBtn', function(data, cb)
 end)
 
 RegisterNUICallback('TrashBtn', function(data, cb)
-    TriggerServerEvent('Infinite:TrashItem', data.itemId, data.invType)
+    TriggerServerEvent('Sentry:TrashItem', data.itemId, data.invType)
     cb(true);
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 end)
 
 RegisterNUICallback('GiveBtn', function(data, cb)
-    TriggerServerEvent('Infinite:GiveItem', data.itemId, data.invType)
+    TriggerServerEvent('Sentry:GiveItem', data.itemId, data.invType)
     cb(true)
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 end)
@@ -164,9 +164,9 @@ end)
 
 RegisterNUICallback('MoveBtn', function(data, cb)
     if not IsLootBagOpening then
-        TriggerServerEvent('Infinite:MoveItem', data.invType, data.itemId, VehTypeA)
+        TriggerServerEvent('Sentry:MoveItem', data.invType, data.itemId, VehTypeA)
     else 
-        TriggerServerEvent('Infinite:MoveItem', 'LootBag', data.itemId, LootBagIDNew)
+        TriggerServerEvent('Sentry:MoveItem', 'LootBag', data.itemId, LootBagIDNew)
     end
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
     cb(true)
@@ -174,9 +174,9 @@ end)
 
 RegisterNUICallback('MoveXBtn', function(data, cb)
     if not IsLootBagOpening then
-        TriggerServerEvent('Infinite:MoveItemX', data.invType, data.itemId, VehTypeA)
+        TriggerServerEvent('Sentry:MoveItemX', data.invType, data.itemId, VehTypeA)
     else 
-        TriggerServerEvent('Infinite:MoveItemX', 'LootBag', data.itemId, LootBagIDNew)
+        TriggerServerEvent('Sentry:MoveItemX', 'LootBag', data.itemId, LootBagIDNew)
     end
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
     cb(true)
@@ -186,9 +186,9 @@ end)
 RegisterNUICallback('MoveAllBtn', function(data, cb)
     if not IsLootBagOpening then
         local nearestVeh2 = Sentry.getNearestVehicle({3})
-        TriggerServerEvent('Infinite:MoveItemAll', data.invType, data.itemId, VehTypeA, NetworkGetNetworkIdFromEntity(nearestVeh2))
+        TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, VehTypeA, NetworkGetNetworkIdFromEntity(nearestVeh2))
     else 
-        TriggerServerEvent('Infinite:MoveItemAll', 'LootBag', data.itemId, LootBagIDNew)
+        TriggerServerEvent('Sentry:MoveItemAll', 'LootBag', data.itemId, LootBagIDNew)
     end
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
     cb(true)
@@ -489,13 +489,13 @@ end)
 
     
 
-RegisterNetEvent('IFN:LockPick2')
-AddEventHandler('IFN:LockPick2', function()
-    TriggerServerEvent('IFN:LockPick')
+RegisterNetEvent('Sentry:LockPick2')
+AddEventHandler('Sentry:LockPick2', function()
+    TriggerServerEvent('Sentry:LockPick')
 end)
 
-RegisterNetEvent('IFN:whatIsThis')
-AddEventHandler('IFN:whatIsThis', function()
+RegisterNetEvent('Sentry:whatIsThis')
+AddEventHandler('Sentry:whatIsThis', function()
       local chance = math.random(1,3)
       local nearestVeh = Sentry.getNearestVehicle({3})
         hasDoneIt = false
@@ -612,7 +612,7 @@ AddEventHandler('IFN:whatIsThis', function()
             
                        inventoryType = 'CarBoot'
                        
-                       TriggerServerEvent('Infinite:FetchTrunkInventory', GetEntityArchetypeName(nearestVeh), NetworkGetNetworkIdFromEntity(nearestVeh))
+                       TriggerServerEvent('Sentry:FetchTrunkInventory', GetEntityArchetypeName(nearestVeh), NetworkGetNetworkIdFromEntity(nearestVeh))
 
                        
           

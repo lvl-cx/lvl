@@ -55,9 +55,9 @@ Citizen.CreateThread(function()
             end
 
             if timeLeft ~= 0 then
-                combatTimerDrawTxt(1.1, 1.44, 1.0, 1.0, 0.7, timeLeft .. " seconds remaining", 255, 0, 0, 255)
+                DrawAdvancedText(0.931, 0.914, 0.005, 0.0028, 0.49, timeLeft .. " seconds remaining", 217, 217, 217, 255, 7, 0)
             elseif timeLeft == 0 then
-                combatTimerDrawTxt(1.1, 1.44, 1.0, 1.0, 0.7, "combat timer ended", 255, 0, 0, 255)
+                DrawAdvancedText(0.931, 0.914, 0.005, 0.0028, 0.49, "combat timer ended", 217, 217, 217, 255, 7, 0)
             end
         end
     end
@@ -80,20 +80,4 @@ function isInArea(v, dis)
     else 
         return false
     end
-end
-
-function combatTimerDrawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
-    SetTextFont(7)
-    SetTextProportional(0)
-    SetTextScale(scale, scale)
-    SetTextColour(r, g, b, a)
-    SetTextDropShadow(255, 0, 0, 0, 255)
-    SetTextEdge(255, 0, 0, 0, 255)
-    SetTextDropShadow()
-    if outline then
-	    SetTextOutline()
-	end
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(x - width/2, y - height/2 + 0.005)
 end
