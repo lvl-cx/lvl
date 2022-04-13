@@ -92,6 +92,25 @@ function LoadAnimDict(dict)
     end
 end
 
+RegisterNetEvent("Jud:OpenHomeStorage")
+AddEventHandler("Jud:OpenHomeStorage", function(toggle)
+    if toggle == true then
+        TriggerServerEvent('Sentry:FetchPersonalInventory')
+        inventoryOpen = true; 
+        SetNuiFocus(true, true)
+        SetNuiFocusKeepInput(true)
+        SendNUIMessage({action = 'InventoryDisplay', showInv = true})
+        inventoryType = 'Housing'
+        TriggerServerEvent('Jud:FetchHouseInventory')
+    else
+        inventoryOpen = false;
+        SetNuiFocus(false, false)
+        SetNuiFocusKeepInput(false)
+        SendNUIMessage({action = 'InventoryDisplay', showInv = false})
+        inventoryType = nil;
+    end
+end)
+
 RegisterNetEvent('Sentry:InventoryOpen')
 AddEventHandler('Sentry:InventoryOpen', function(toggle, lootbag)
     IsLootBagOpening = lootbag
@@ -161,10 +180,13 @@ RegisterNUICallback('GiveBtn', function(data, cb)
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 end)
 
-
 RegisterNUICallback('MoveBtn', function(data, cb)
     if not IsLootBagOpening then
-        TriggerServerEvent('Sentry:MoveItem', data.invType, data.itemId, VehTypeA)
+        if inventoryType == 'CarBoot' then
+            TriggerServerEvent('Sentry:MoveItem', data.invType, data.itemId, VehTypeA)
+        elseif inventoryType == "Housing" then
+            TriggerServerEvent('Sentry:MoveItem', data.invType, data.itemId, "home")
+        end
     else 
         TriggerServerEvent('Sentry:MoveItem', 'LootBag', data.itemId, LootBagIDNew)
     end
@@ -174,7 +196,11 @@ end)
 
 RegisterNUICallback('MoveXBtn', function(data, cb)
     if not IsLootBagOpening then
-        TriggerServerEvent('Sentry:MoveItemX', data.invType, data.itemId, VehTypeA)
+        if inventoryType == 'CarBoot' then
+            TriggerServerEvent('Sentry:MoveItemX', data.invType, data.itemId, VehTypeA)
+        elseif inventoryType == "Housing" then
+            TriggerServerEvent('Sentry:MoveItemX', data.invType, data.itemId, "home")
+        end
     else 
         TriggerServerEvent('Sentry:MoveItemX', 'LootBag', data.itemId, LootBagIDNew)
     end
@@ -185,15 +211,17 @@ end)
 
 RegisterNUICallback('MoveAllBtn', function(data, cb)
     if not IsLootBagOpening then
-        local nearestVeh2 = Sentry.getNearestVehicle({3})
-        TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, VehTypeA, NetworkGetNetworkIdFromEntity(nearestVeh2))
+        if inventoryType == 'CarBoot' then
+            TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, VehTypeA)
+        elseif inventoryType == "Housing" then
+            TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, "home")
+        end
     else 
         TriggerServerEvent('Sentry:MoveItemAll', 'LootBag', data.itemId, LootBagIDNew)
     end
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
     cb(true)
 end)
-
 
 
 Citizen.CreateThread(function()
