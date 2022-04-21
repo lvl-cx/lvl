@@ -24,10 +24,13 @@ function C_Hud()
     if health == 0.98 then health = 1.0 end
     local armor = GetPedArmour(userid) / 100.0
     if armor == 95 / 100.0 then armor = 100 / 100.0 end
-
-    drawRct(UI.Left_x, UI.Bottom_y - 0.017, UI.Width, 0.028, 0, 0, 0, 50) -- [Transparent Backround]
-    drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.015, (UI.Width -0.002) * health , 0.009, 37, 255, 0 , 250) -- [Health Bat]
-    drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.002, (UI.Width - 0.002) * armor , 0.009, 0, 183, 255, 250) -- [Armour Bar]
+    
+    drawRct(0.015000015497208 + 0.521 , 0.98499998450278 - 0.045, (0.14062499895226 - 0.002) * 100 / 100.0 , 0.013, 0, 0, 0, 150) -- [Black Bar]
+    drawRct(0.015000015497208 + 0.321 , 0.98499998450278 - 0.045, (0.14062499895226 -0.002) * 100 / 100.0 , 0.013, 0, 0, 0, 150) -- [Black Bar 2]
+    drawRct(0.015000015497208 + 0.321 , 0.98499998450278 - 0.045, (0.14062499895226 - 0.002) * health , 0.013, 63, 205, 89 , 250) -- [Health Bat]
+    drawRct(0.015000015497208 + 0.521 , 0.98499998450278 - 0.045, (0.14062499895226 - 0.002) * armor , 0.013, 109, 207, 246, 250) -- [Armour Bar]
+    print(UI.Width)
+    bank_drawTxt(0.984, 1.429, 1.0,1.0,0.3, GetEntityHealth(PlayerPedId()) .. " | " .. GetPedArmour(PlayerPedId()) * 2, 255, 255, 255, 255)
 
 end
 
@@ -54,7 +57,7 @@ function GetMinimapAnchor()
 end
 
 function drawRct(x,y,Width,height,r,g,b,a)
-    DrawRect(x+Width/2,y+height/2,Width,height,r,g,b,a,0)
+    DrawRect(x+Width/2,y+height/2,Width,height,r,g,b,a,5)
 end
 
 
