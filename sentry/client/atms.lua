@@ -1,27 +1,31 @@
 local cfg = module("cfg/atms")
 RMenu.Add('SentryATM', 'main', RageUI.CreateMenu("", "~g~Sentry ATM",1300, 50, 'atm', 'atm'))
+RMenu.Add("SentryATM", "submenuwithdraw", RageUI.CreateSubMenu(RMenu:Get('SentryATM', 'main',  1300, 50)))
+RMenu.Add("SentryATM", "submenudeposit", RageUI.CreateSubMenu(RMenu:Get('SentryATM', 'main',  1300, 50)))
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SentryATM', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button("Deposit", nil, {}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Deposit", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
-                    AddTextEntry('FMMC_MPM_NC', "Enter Amount to Deposit")
-                    DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                    while (UpdateOnscreenKeyboard() == 0) do
-                        DisableAllControlActions(0);
-                        Wait(0);
-                    end
-                    if (GetOnscreenKeyboardResult()) then
-                        local result = GetOnscreenKeyboardResult()
-                        if result then 
-                            result = tonumber(result)
-                            TriggerServerEvent('Sentry:Deposit', result)
-                            PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
-                        end
-                    end
+
                 end
-            end)
-            RageUI.Button("Withdraw", nil, {}, true, function(Hovered, Active, Selected) 
+            end, RMenu:Get("SentryATM", "submenudeposit"))
+      
+            RageUI.Button("Withdraw", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                if Selected then 
+
+                end
+            end, RMenu:Get("SentryATM", "submenuwithdraw"))
+        end)
+    end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('SentryATM', 'submenuwithdraw')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Separator("~g~Current Action: Withdrawing", function() end)
+            RageUI.Button("Custom Amount", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     AddTextEntry('FMMC_MPM_NC', "Enter Amount to Withdraw")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -39,9 +43,77 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
+
+            RageUI.Button("Withdraw All", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                if Selected then 
+                    AddTextEntry('FMMC_MPM_NC', "Type [Yes] to confirm withdrawal of full amount.")
+                    DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                    while (UpdateOnscreenKeyboard() == 0) do
+                        DisableAllControlActions(0);
+                        Wait(0);
+                    end
+                    if (GetOnscreenKeyboardResult()) then
+                        local result = GetOnscreenKeyboardResult()
+                        if result then 
+                            if string.upper(result) == 'YES' then
+                                TriggerServerEvent('Sentry:WithdrawAll')
+                                PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
+                            end
+                        end
+                    end
+                end
+            end)
         end)
     end
 end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('SentryATM', 'submenudeposit')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Separator("~g~Current Action: Depositing", function() end)
+            RageUI.Button("Custom Amount", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                if Selected then 
+                    AddTextEntry('FMMC_MPM_NC', "Enter Amount to Deposit")
+                    DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                    while (UpdateOnscreenKeyboard() == 0) do
+                        DisableAllControlActions(0);
+                        Wait(0);
+                    end
+                    if (GetOnscreenKeyboardResult()) then
+                        local result = GetOnscreenKeyboardResult()
+                        if result then 
+                            result = tonumber(result)
+                            TriggerServerEvent('Sentry:Deposit', result)
+                            PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
+                        end
+                    end
+                end
+            end)
+
+            RageUI.Button("Deposit All", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                if Selected then 
+                    AddTextEntry('FMMC_MPM_NC', "Type [Yes] to confirm deposit of full amount.")
+                    DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                    while (UpdateOnscreenKeyboard() == 0) do
+                        DisableAllControlActions(0);
+                        Wait(0);
+                    end
+                    if (GetOnscreenKeyboardResult()) then
+                        local result = GetOnscreenKeyboardResult()
+                        if result then 
+                            if string.upper(result) == 'YES' then
+                                TriggerServerEvent('Sentry:DepositAll')
+                                PlaySoundFrontend(-1, "Bomb_Disarmed", "GTAO_Speed_Convoy_Soundset", 0)
+                            end
+                        end
+                    end
+                end
+            end)
+
+        end)
+    end
+end)
+
 
 
 Citizen.CreateThread(function()

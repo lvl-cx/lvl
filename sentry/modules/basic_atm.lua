@@ -41,7 +41,7 @@ RegisterNetEvent('Sentry:Withdraw')
 AddEventHandler('Sentry:Withdraw', function(amount)
     local source = source
     amount = parseInt(amount)
-    if onesync ~= "off" then    
+   
         --Onesync allows extra security behind events should enable it if it's not already.
         local ped = GetPlayerPed(source)
         local playerCoords = GetEntityCoords(ped)
@@ -62,20 +62,7 @@ AddEventHandler('Sentry:Withdraw', function(amount)
                 end
             end
         end
-    else
-        if amount > 0 then
-            local user_id = Sentry.getUserId(source)
-            if user_id ~= nil then
-                if Sentry.tryWithdraw(user_id, amount) then
-                    Sentryclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
-                else
-                    Sentryclient.notify(source, {lang.atm.withdraw.not_enough()})
-                end
-            end
-        else
-            Sentryclient.notify(source, {lang.common.invalid_value()})
-        end
-    end
+
 end)
 
 
@@ -83,7 +70,7 @@ RegisterNetEvent('Sentry:Deposit')
 AddEventHandler('Sentry:Deposit', function(amount)
     local source = source
     amount = parseInt(amount)
-    if onesync ~= "off" then    
+
         --Onesync allows extra security behind events should enable it if it's not already.
         local ped = GetPlayerPed(source)
         local playerCoords = GetEntityCoords(ped)
@@ -104,20 +91,64 @@ AddEventHandler('Sentry:Deposit', function(amount)
                 end
             end
         end
-    else
-        if amount > 0 then
-            local user_id = Sentry.getUserId(source)
-            if user_id ~= nil then
-                if Sentry.tryDeposit(user_id, amount) then
-                    Sentryclient.notify(source, {lang.atm.deposit.deposited({amount})})
+
+end)
+
+RegisterNetEvent('Sentry:WithdrawAll')
+AddEventHandler('Sentry:WithdrawAll', function()
+    local source = source
+    userid = Sentry.getUserId(source)
+    amount = Sentry.getBankMoney(userid)
+    if onesync ~= "off" then    
+        --Onesync allows extra security behind events should enable it if it's not already.
+        local ped = GetPlayerPed(source)
+        local playerCoords = GetEntityCoords(ped)
+        for i, v in pairs(cfg.atms) do
+            local coords = vec3(v[1], v[2], v[3])
+            if #(playerCoords - coords) <= 5.0 then
+            
+                    local user_id = Sentry.getUserId(source)
+                    if user_id ~= nil then
+                        if Sentry.tryWithdraw(user_id, amount) then
+                            Sentryclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
+                        else
+                            Sentryclient.notify(source, {lang.atm.withdraw.not_enough()})
+                        end
+                    end
+   
+            end
+        end
+
+    end
+end)
+
+
+RegisterNetEvent('Sentry:DepositAll')
+AddEventHandler('Sentry:DepositAll', function()
+    local source = source
+    userid = Sentry.getUserId(source)
+    amount = Sentry.getMoney(userid)
+
+        --Onesync allows extra security behind events should enable it if it's not already.
+        local ped = GetPlayerPed(source)
+        local playerCoords = GetEntityCoords(ped)
+        for i, v in pairs(cfg.atms) do
+            local coords = vec3(v[1], v[2], v[3])
+            if #(playerCoords - coords) <= 5.0 then
+                if amount > 0 then
+                    local user_id = Sentry.getUserId(source)
+                    if user_id ~= nil then
+                        if Sentry.tryDeposit(user_id, amount) then
+                            Sentryclient.notify(source, {lang.atm.deposit.deposited({amount})})
+                        else
+                            Sentryclient.notify(source, {lang.money.not_enough()})
+                        end
+                    end
                 else
-                    Sentryclient.notify(source, {lang.money.not_enough()})
+                    Sentryclient.notify(source, {lang.common.invalid_value()})
                 end
             end
-        else
-            Sentryclient.notify(source, {lang.common.invalid_value()})
         end
-    end
 end)
 
 local function atm_choice_withdraw(player, choice)
