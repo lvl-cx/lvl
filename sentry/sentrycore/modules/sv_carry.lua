@@ -3,7 +3,6 @@ local carrying = {}
 local carried = {}
 --carried[targetSource] = source, targetSource is being carried by source
 
-
 RegisterServerEvent("CarryPeople:sync")
 AddEventHandler("CarryPeople:sync", function(targetSrc)
 	local targetSrc = targetSrc
@@ -50,34 +49,34 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 
-RegisterServerEvent("Sentry:CarryRequest")
-AddEventHandler("Sentry:CarryRequest", function(targetSrc)
+RegisterServerEvent("Infinite:CarryRequest")
+AddEventHandler("Infinite:CarryRequest", function(targetSrc)
 	local senderSrc = source
 	local targetSrc = targetSrc
 	local senderSrcName = GetPlayerName(senderSrc)
 	userid = Sentry.getUserId(senderSrc)
 	if Sentry.hasPermission(userid, 'staffon.perm') then 
-		TriggerClientEvent("Sentry:StartCarry",senderSrc,targetSrc)
+		TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
 	else
 		Sentryclient.notify(targetSrc,{"Player: ~b~"..senderSrcName.."~w~ is trying to carry you, press ~g~=~w~ to accept or ~r~-~w~ to refuse"})
 		Sentryclient.notify(senderSrc,{"Sent carry request to Temp ID: "..targetSrc})
-		TriggerClientEvent('Sentry:CarryTargetAsk', targetSrc, senderSrc)
+		TriggerClientEvent('Infinite:CarryTargetAsk', targetSrc, senderSrc)
 	end
 
 end)
 
-RegisterServerEvent("Sentry:CarryAccepted")
-AddEventHandler("Sentry:CarryAccepted", function(senderSrc)
+RegisterServerEvent("Infinite:CarryAccepted")
+AddEventHandler("Infinite:CarryAccepted", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)
 	Sentryclient.notify(targetSrc,{"~g~Carry request accepted."})
 	Sentryclient.notify(senderSrc,{"~g~Your carry request to "..targetSrcName.." has been accepted."})
-	TriggerClientEvent("Sentry:StartCarry",senderSrc,targetSrc)
+	TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
 end)
 
-RegisterServerEvent("Sentry:CarryDeclined")
-AddEventHandler("Sentry:CarryDeclined", function(senderSrc)
+RegisterServerEvent("Infinite:CarryDeclined")
+AddEventHandler("Infinite:CarryDeclined", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)
