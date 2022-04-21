@@ -75,6 +75,7 @@ AddEventHandler("Sentry:ChangeCommision", function(com)
 				SendLargeArms2(com, source)
 				SendLargeArms3(com, source)
 				SendLargeArms4(com, source)
+				TriggerClientEvent('GlobalrecieveTurf', -1, com)
 			end
 		else
 			Sentryclient.notify(source,{"~r~You cannot go higher than 35%."})

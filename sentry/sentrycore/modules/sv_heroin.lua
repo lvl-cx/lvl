@@ -87,4 +87,5 @@ end)
 function SendHeroin(som, userid2)
   commision = som 
   finalID = userid2
+  TriggerClientEvent('HeroinrecieveTurf', -1, tostring(commision))
 end

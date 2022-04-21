@@ -78,4 +78,5 @@ end)
 function SendCocaine(som, userid2)
   commision = som 
   finalID = userid2
+  TriggerClientEvent('CocainerecieveTurf', -1, tostring(commision))
 end

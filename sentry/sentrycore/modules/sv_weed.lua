@@ -87,4 +87,5 @@ end)
 function SendWeed(som, userid2)
   commision = som 
   finalID = userid2
+  TriggerClientEvent('WeedrecieveTurf', -1, tostring(commision))
 end

@@ -87,4 +87,5 @@ end)
 function SendLSD(som, userid2)
   commision = som 
   finalID = userid2
+  TriggerClientEvent('LSDrecieveTurf', tostring(commision))
 end
