@@ -43,7 +43,7 @@ Citizen.CreateThread(function() -- coma thread
             TriggerEvent('Sentry:IsInMoneyComa', true)
             TriggerServerEvent('Sentry:InComa')
             Sentryserver.MoneyDrop()
-            TriggerEvent('GBRP:3Seconds')
+            TriggerEvent('Sentry:3Seconds')
 
             --TriggerServerEvent("Server:SoundToRadius", source, 20.0f, "Untitled", 0.4f);
             TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
@@ -172,7 +172,6 @@ Citizen.CreateThread(function()
             else
                 playerCanRespawn = true
                 DrawAdvancedTextOutline(0.605, 0.523, 0.005, 0.0028, 0.4, "Press [E] to respawn!", 255, 255, 255, 255, 7, 0)
-                DrawAdvancedTextOutline(0.605, 0.554, 0.005, 0.0028, 0.4, "Press [G] to Enter Gulag (£50,000)!", 255, 255, 255, 255, 7, 0)
             end
             DisableControlAction(0,323,true)
             DisableControlAction(0,182,true)
@@ -180,51 +179,6 @@ Citizen.CreateThread(function()
         end
         Wait(0)
     end 
-end)
-
-Citizen.CreateThread(function()
-    while true do 
-        if in_coma then
-            if secondsTilBleedout < 0 then
-                if IsControlJustPressed(0, 58) then
-                    TriggerEvent('Sentry:EnterGulag')
-                end
-            end
-        end
-        Citizen.Wait(1)
-    end
-end)
-
-waitingplayers = {}
-
-local waiting = true
-AddEventHandler('Sentry:EnterGulag', function()
-    TriggerEvent('Sentry:FixClient')
-    Citizen.Wait(1000)
-    SetEntityCoords(PlayerPedId(), -958.54998779297,-779.13513183594,17.836122512817)
-    TriggerServerEvent('Sentry:SearchForPlayer')
-    while waiting do
-
-
-            if waitingplayers[2] == nil then 
-                FreezeEntityPosition(PlayerPedId(), true)
-                bank_drawTxt(0.85, 1.40, 1.0,1.0,0.5, "Waiting for Gulag Opponent...", 255, 17, 0, 255)
-                SetEntityCoords(PlayerPedId(), -958.54998779297,-779.13513183594,17.836122512817)
-            
-            else
-                TriggerServerEvent('TeleportThem', waitingplayers[1], waitingplayers[2])
-                waiting = false
-            end
-      
-        Wait(0)
-    end
-end)
-
-
-
-RegisterNetEvent('Sentry:ReceiveSearch')
-AddEventHandler('Sentry:ReceiveSearch', function(args)
-    table.insert(waitingplayers, args)
 end)
 
 Citizen.CreateThread(function()
@@ -243,8 +197,8 @@ Citizen.CreateThread(function()
     end
 end) 
 
-RegisterNetEvent("GBRP:3Seconds")
-AddEventHandler("GBRP:3Seconds", function()
+RegisterNetEvent("Sentry:3Seconds")
+AddEventHandler("Sentry:3Seconds", function()
     DeathAnim = 3
     while DeathAnim <= 3 and DeathAnim >= 0 do
         Wait(1000)

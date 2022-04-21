@@ -73,7 +73,7 @@ Citizen.CreateThread(function()
                             
                                 local MoneydropID = GetClosestObjectOfType(coords, 10.5, GetHashKey('prop_poly_bag_money'), false, false, false)
                                 local MoneydropIDNew = ObjToNet(MoneydropID)
-                                TriggerServerEvent('vRP:Moneydrop', MoneydropIDNew)
+                                TriggerServerEvent('Sentry:Moneydrop', MoneydropIDNew)
                                 Wait(1000)
                             end
                         end

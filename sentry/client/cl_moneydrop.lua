@@ -42,11 +42,3 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('checkAmmo')
-AddEventHandler('checkAmmo', function()
-    if IsPedArmed(PlayerPedId(), 4) then 
-        TriggerServerEvent('sendAmmo', true)
-    else
-        TriggerServerEvent('sendAmmo', false)
-    end
-end)

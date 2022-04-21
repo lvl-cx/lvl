@@ -591,6 +591,6 @@ RadialMenu.prototype.handleCenterClick = function () {
         self.returnToParentMenu();
     } else {
         self.close();
-        $.post(`http://IFN-Radial/closemenu`, JSON.stringify({}));
+        $.post(`http://sentry-radial/closemenu`, JSON.stringify({}));
     }
 };
