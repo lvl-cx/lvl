@@ -1,8 +1,9 @@
-RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "Immersive Gang Menu", 1300, 50, "gang", "gang"))
+RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "~g~Sentry Gang Menu", 1300, 50, "gang", "gang"))
 RMenu.Add("gangmenu", "funds", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "invite", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "members", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "logs", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
+RMenu.Add("gangmenu", "turf", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "leavegang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "disbandgang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "selectedmember", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "members", 1300, 50)))
@@ -58,6 +59,12 @@ local gangranks = {
     "Recruit",
 }
 
+local lsdturf = 0
+local herointurf = 0
+local cocaineturf = 0 
+local weedturf = 0
+local globalturf = 0
+
 RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     RageUI.IsVisible(RMenu:Get('gangmenu', 'main'), true, false, true, function()
         RageUI.ButtonWithStyle("Gang Members", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
@@ -77,10 +84,11 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
             end, RMenu:Get('gangmenu', 'invite'))
         end
 
-        RageUI.ButtonWithStyle("Gang Logs", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+
+        RageUI.ButtonWithStyle("Turf Info", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
-        end, RMenu:Get('gangmenu', 'logs'))
+        end, RMenu:Get('gangmenu', 'turf'))
 
         RageUI.ButtonWithStyle("Leave Gang", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
             if Selected then
@@ -214,6 +222,16 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
         RageUI.Separator("Coming Soon!", function() end)
     end)
 
+    RageUI.IsVisible(RMenu:Get("gangmenu", "turf"),true, false,true,function()
+        RMenu:Get("gangmenu", "turf"):SetSubtitle("~g~Current Turf Info")
+        RageUI.Separator("~g~LSD Turf: " .. lsdturf .. '%', function() end)
+        RageUI.Separator("~g~Heroin Turf: " .. herointurf .. '%', function() end)
+        RageUI.Separator("~g~Cocaine Turf: " .. cocaineturf .. '%', function() end)
+        RageUI.Separator("~g~Weed Turf: " .. weedturf .. '%', function() end)
+        RageUI.Separator("~g~Global Weapon Trader Turf: " .. globalturf .. '%', function() end)
+    end)
+
+
     RageUI.IsVisible(RMenu:Get("gangmenu", "leavegang"),true, false,true,function()
         RMenu:Get("gangmenu", "leavegang"):SetSubtitle("Leave Gang!")
         RageUI.ButtonWithStyle("Are you sure you want to leave!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
@@ -291,13 +309,38 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     end)
 end)
 
+
+RegisterNetEvent('LSDrecieveTurf')
+AddEventHandler('LSDrecieveTurf', function(lsd)
+    lsdturf = lsd
+end)
   
+RegisterNetEvent('HeroinrecieveTurf')
+AddEventHandler('HeroinrecieveTurf', function(heroin)
+    herointurf = heroin 
+end)
+
+RegisterNetEvent('CocainerecieveTurf')
+AddEventHandler('CocainerecieveTurf', function(cocaine)
+    cocaineturf = cocaine
+end)
+
+RegisterNetEvent('WeedrecieveTurf')
+AddEventHandler('WeedrecieveTurf', function(weed)
+    weedturf = weed
+end)
+
+RegisterNetEvent('GlobalrecieveTurf')
+AddEventHandler('GlobalrecieveTurf', function(global2)
+    globalturf = global2
+end)
+
 RegisterCommand("gangmenu", function()
     TriggerServerEvent("GetGangInfo")
 end)
 RegisterKeyMapping("gangmenu", "Gang Menu", "keyboard", "F5")
 
-RMenu.Add('gangmenu', 'notingang', RageUI.CreateMenu("", "Create Gang", 1300, 50, "gang", "gang"))
+RMenu.Add('gangmenu', 'notingang', RageUI.CreateMenu("", "~g~Sentry Gang Menu", 1300, 50, "gang", "gang"))
 RMenu.Add("gangmenu", "creategang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "notingang", 1300, 50)))
 RMenu.Add("gangmenu", "joingang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "notingang", 1300, 50)))
 RMenu.Add("gangmenu", "confirmgang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "creategang", 1300, 50)))
