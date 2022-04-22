@@ -10,7 +10,7 @@ function tSentry.addBlip(x,y,z,idtype,idcolor,text)
   SetBlipSprite(blip, idtype) -- Sets the displayed sprite(https://docs.fivem.net/docs/game-references/blips/) for a specific blip.
   SetBlipAsShortRange(blip, true) -- Sets whether or not the specified blip should only be displayed when nearby, or on the minimap.
   SetBlipColour(blip,idcolor) --Set Blip Color
-  SetBlipScale(blip, 0.6) -- Set Blip Size on Map
+  SetBlipScale(blip, 0.5) -- Set Blip Size on Map
   SetBlipDisplay(blip,6) -- Shows the blip in map and minimap
 
   if text ~= nil then
