@@ -121,7 +121,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     end)
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "funds"),true, false,true,function()
-        RMenu:Get("gangmenu", "funds"):SetSubtitle("Funds Tab")
+        RMenu:Get("gangmenu", "funds"):SetSubtitle("~g~Sentry Funds Tab")
         if MyRank == "Enforcer" or MyRank == "Owner" then
             RageUI.ButtonWithStyle("Withdraw", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -139,6 +139,8 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                             if result then 
                                 result = result
                                 TriggerServerEvent("WithdrawFunds", result)
+                                Wait(1000)
+                                TriggerServerEvent("GetGangInfo")
                             end
                         end
                     else
@@ -163,6 +165,8 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                         if result then 
                             result = result
                             TriggerServerEvent("DepositFunds", result)
+                            Wait(1000)
+                            TriggerServerEvent("GetGangInfo")
                         end
                     end
                 else
@@ -170,7 +174,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                 end
             end
         end)
-        RageUI.Separator("Gang Funds: £" ..Comma(GangFunds), function() end)
+        --RageUI.Separator("Gang Funds: £" ..Comma(GangFunds), function() end)
     end)
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "invite"),true, false,true,function()

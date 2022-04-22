@@ -368,5 +368,4 @@ Citizen.CreateThread(function()
             );
         ]]
     )
-    print("Gang Menu tables iniatlised")
 end)
