@@ -5,6 +5,21 @@ local EntityType = nil
 local crosshairStatus = false
 local model = GetHashKey('prop_poly_bag_money')
 
+RegisterNetEvent('Crosshair')
+AddEventHandler('Crosshair', function(enable)
+    if not crosshairStatus and enable then
+        crosshairStatus = true
+        SendNUIMessage({
+            crosshair = enable
+        })
+    elseif crosshairStatus and not enable then
+        crosshairStatus = false
+        SendNUIMessage({
+            crosshair = enable
+        })
+    end
+end)
+
 function Crosshair(enable)
     if not crosshairStatus and enable then
         crosshairStatus = true
