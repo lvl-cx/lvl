@@ -51,7 +51,7 @@ end
                 if v.Money == 0 then
                     if DoesEntityExist(v[1]) then 
                         DeleteEntity(v[1])
-                        print('Deleted MoneyDrop')
+
                         MoneydropEntities[i] = nil;
                     end
                 end
