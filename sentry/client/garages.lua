@@ -24,7 +24,7 @@ RMenu.Add('SentryGarages', 'scrap_vehicle_confirmation',  RageUI.CreateSubMenu(R
 RMenu.Add('SentryGarages', 'rented_vehicles_out_manage',  RageUI.CreateSubMenu(RMenu:Get("SentryGarages", "rented_vehicles")))
 RMenu.Add('SentryGarages', 'rented_vehicles_out_manage_submenu',  RageUI.CreateSubMenu(RMenu:Get("SentryGarages", "rented_vehicles_out_manage")))
 RMenu:Get('SentryGarages', 'owned_vehicles'):SetSubtitle("~g~Sentry Vehicle Categories")
-RMenu:Get('SentryGarages', 'scrap_vehicle_confirmation'):SetSubtitle("Are you sure you want to scrap this vehicle?")
+RMenu:Get('SentryGarages', 'scrap_vehicle_confirmation'):SetSubtitle("~g~Are you sure you want to scrap this vehicle?")
 --Created by JamesUK#6793 :)
 
 EnableVeh = true
@@ -39,7 +39,7 @@ function DeleteCar(veh)
     end
 end
 
-local FirstSpawn = false
+local FirstSpawn = true
 
 RegisterNetEvent('FirstSpawn')
 AddEventHandler('FirstSpawn', function(bool)
@@ -143,7 +143,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Selected then 
                             SelectedCar.spawncode = i 
                             SelectedCar.name = v[1]
-                            RMenu:Get('SentryGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("Options for " .. v[1])
+                            RMenu:Get('SentryGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~g~Options for " .. v[1])
                         end
                         if Active then 
                             Hovered_Vehicles = i
@@ -154,7 +154,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Selected then 
                             SelectedCar.spawncode = i 
                             SelectedCar.name = v[1]
-                            RMenu:Get('SentryGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("Options for " .. v[1])
+                            RMenu:Get('SentryGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~g~Options for " .. v[1])
                         end
                         if Active then 
                             Hovered_Vehicles = i
