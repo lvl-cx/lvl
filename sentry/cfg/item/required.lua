@@ -156,7 +156,6 @@ end
 
 
 for i,v in pairs(SentryAmmoTypes) do
-  print(i)
   
   items[i] = {wammo_name,wammo_desc,wammo_choices,wammo_weight}
   
