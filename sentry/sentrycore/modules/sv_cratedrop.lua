@@ -45,26 +45,26 @@ RegisterServerEvent('openLootCrate', function(playerCoords, boxCoords)
                     Sentry.giveMoney(user_id,200000)
 
                     TriggerClientEvent('chat:addMessage', -1, {
-                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^3Legendary]' .. '</div>',
+                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^3Legendary]' .. '</div>',
                         args = { playerName, msg }
                     })
                 elseif lootrandom == 2 then 
                     -- [Epic]
                     TriggerClientEvent('chat:addMessage', -1, {
-                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^6Epic]' .. '</div>',
+                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^6Epic]' .. '</div>',
                         args = { playerName, msg }
                     })
 
                 elseif lootrandom == 3 then 
                     -- [Uncommon]
                     TriggerClientEvent('chat:addMessage', -1, {
-                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^5Uncommon]' .. '</div>',
+                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^5Uncommon]' .. '</div>',
                         args = { playerName, msg }
                     })
                 elseif lootrandom == 4 then 
                     -- [Common]
                     TriggerClientEvent('chat:addMessage', -1, {
-                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^9Common]' .. '</div>',
+                        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^9Common]' .. '</div>',
                         args = { playerName, msg }
                     })
                 end
