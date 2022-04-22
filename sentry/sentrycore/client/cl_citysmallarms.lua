@@ -53,10 +53,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CitySmallArms", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
-        RageUI.Separator("~g~Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("~g~Current Gunstore: " .. citysmall.name, function() end)
-        RageUI.Separator("Are you sure you want to purchase this Weapon?", function() end)
+        RageUI.Separator("Weapon Name: ~g~" .. cName, function() end)
+        RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("Current Gunstore: ~g~" .. citysmall.name, function() end)
 
         RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -77,10 +76,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CitySmallArms", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~g~Armour Plate: " .. 'Level 1 [25%]', function() end)
-            RageUI.Separator("~g~Armour Plate Price: £" .. '25,000', function() end)
-            RageUI.Separator("~g~Current Gunstore: " .. citysmall.name, function() end)
-            RageUI.Separator("Are you sure you want to purchase this Armour Plate?", function() end)
+            RageUI.Separator("Armour Plate: ~g~" .. 'Level 1 [25%]', function() end)
+            RageUI.Separator("Armour Plate Price: ~g~£" .. '25,000', function() end)
+            RageUI.Separator("Current Gunstore: ~g~" .. citysmall.name, function() end)
         RageUI.Button("Confirm" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
 

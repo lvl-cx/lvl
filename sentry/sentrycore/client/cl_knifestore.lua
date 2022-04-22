@@ -43,10 +43,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("KnifeStoreMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("~g~Weapon Name: " .. cName, function() end)
-        RageUI.Separator("~g~Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("~g~Current Gunstore: " .. knifestore.name, function() end)
-        RageUI.Separator("Are you sure you want to purchase this Knife?", function() end)
+        RageUI.Separator("Weapon Name: ~g~" .. cName, function() end)
+        RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("Current Gunstore: ~g~" .. knifestore.name, function() end)
         RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
             if Selected then
 

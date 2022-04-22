@@ -56,6 +56,7 @@ AddEventHandler('LargeArms:BuyArmour', function()
             SetPedArmour(source, 50)
             TriggerClientEvent("Sentry:PlaySound", source, 1)
             Sentryclient.notify(source, {"~g~Purchased Level 2 Armour. Paid £" .. tostring(50000 + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+            TriggerClientEvent('Sentry:SetVest', source)
             if finalID ~= nil then
                 Sentry.giveBankMoney(Sentry.getUserId(finalID),finalCommision)
                 Sentryclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
