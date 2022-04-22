@@ -9,6 +9,8 @@ local currentOutfit = nil
 local currentHousePrice = 0
 local wardrobe = {}
 
+local playerName = '[Not Owned]'
+
 RMenu.Add("JudHousing", "main", RageUI.CreateMenu("", "~g~Sentry Housing", 1350, 50, 'housing', 'housing'))
 RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "~g~Sentry Housing", 1350, 50, 'housing', 'housing'))
 RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~g~Sentry Housing Wardrobe", 1350, 50, 'wardrobe', 'wardrobe'))
@@ -20,8 +22,10 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get("JudHousing", "main")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~g~Current House: " .. currentHome, function() end)
-            RageUI.Separator("~g~Current House Price: £" .. currentHousePrice, function() end)
+            RageUI.Separator("Current House: ~g~" .. currentHome, function() end)
+            RageUI.Separator("Current House Price: ~g~£" .. currentHousePrice, function() end)
+            RageUI.Separator("House Owner ID: ~g~" .. playerName, function() end)
+    
             RageUI.Button("Enter Home", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Enter", currentHome)
@@ -138,6 +142,7 @@ Citizen.CreateThread(function()
             end
 
             if isInArea(v.entry_point, 0.8) and isInMenu == false then 
+                TriggerServerEvent('GrabHouseInfo', currentHome)
                 currentHome = k
                 currentHousePrice = v.buy_price
                 RMenu:Get("JudHousing", "main"):SetSubtitle("~g~Sentry Housing")
@@ -170,11 +175,12 @@ Citizen.CreateThread(function()
                 --Wardrobe
 
                 if inHome then
-                    DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.8, 0.8, 0.8, 0, 0, 255, 250, false, true, 2, false, "clothing", "clothing", false)
+                    DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.6, 0.6, 0.6, 0, 191, 255, 1.0,false, false, 2, true, "clothing", "clothing", false)
                 end
 
                 if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and inHome then
                     TriggerServerEvent("JudHousing:LoadWardrobe")
+                    Wait(200)
                     currentHome = k
                     RageUI.Visible(RMenu:Get("JudHousing", "wardrobe"), true)
                     isInWardrobeMenu = true
@@ -206,6 +212,11 @@ Citizen.CreateThread(function()
             end
         end
     end
+end)
+
+RegisterNetEvent('ReceiveHouseInfo')
+AddEventHandler('ReceiveHouseInfo', function(name)
+    playerName = name
 end)
 
 RegisterNetEvent("JudHousing:UpdateInHome")

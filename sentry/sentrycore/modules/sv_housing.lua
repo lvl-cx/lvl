@@ -75,7 +75,6 @@ RegisterNetEvent("JudHousing:Buy")
 AddEventHandler("JudHousing:Buy", function(house)
     local user_id = Sentry.getUserId(source)
     local player = Sentry.getUserSource(user_id)
-
     for k, v in pairs(cfg.homes) do
         if house == k then
             Sentry.getUserByAddress(house,1,function(noowner) --check if house already has a owner
@@ -99,6 +98,16 @@ AddEventHandler("JudHousing:Buy", function(house)
         end
     end
 end)
+
+
+RegisterNetEvent('GrabHouseInfo')
+AddEventHandler('GrabHouseInfo', function(house)
+    local source = source
+    Sentry.getUserByAddress(house, 1, function(huser_id)
+        TriggerClientEvent('ReceiveHouseInfo', source, tostring(huser_id))
+    end)
+end)
+
 
 RegisterNetEvent("JudHousing:Enter")
 AddEventHandler("JudHousing:Enter", function(house)
@@ -245,7 +254,7 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
 
     Sentry.getUData(user_id, "Sentry:home:wardrobe", function(data)
         local sets = json.decode(data)
-
+                                                                                                            
         if sets == nil then --check if user has no current wardrobe data and creates empty table
             sets = {}
         end
@@ -308,6 +317,8 @@ AddEventHandler("Sentry:playerSpawn",function(user_id, source, first_spawn)
 
                 if owner == user_id then -- check if owner is user
                     Sentryclient.addBlip(source,{x,y,z,374,1,k}) -- add blip for owner of home, 374,1 red house symbol
+               
+                    TriggerClientEvent('HouseRespawn',source,k,v.entry_point)
                 end
             end)
         end
