@@ -39,7 +39,35 @@ function Sentrybm.setArmour(armour,vest)
  -- PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
   local n = math.floor(armour)
   SetPedArmour(player,n)
+
+  if vest then
+      if(GetEntityModel(player) == GetHashKey("mp_m_freemode_01")) then
+        SetPedComponentVariation(player, 9, 4, 1, 2) 
+      elseif (GetEntityModel(player) == GetHashKey("mp_f_freemode_01")) then
+        SetPedComponentVariation(player, 9, 6, 1, 2)
+      end
+    end
+
+
 end
+
+Citizen.CreateThread(function()
+  local player = GetPlayerPed(-1)
+  while true do
+    Citizen.Wait(1000)
+
+	  if Sentrybm.getArmour() == 0 then
+	   
+	      SetPedComponentVariation(GetPlayerPed(-1), 9, 0, 1, 2)
+    else
+      if(GetEntityModel(player) == GetHashKey("mp_m_freemode_01")) then
+        SetPedComponentVariation(player, 9, 4, 1, 2) 
+      elseif (GetEntityModel(player) == GetHashKey("mp_f_freemode_01")) then
+        SetPedComponentVariation(player, 9, 6, 1, 2)
+      end
+    end
+  end
+end)
 
 function Sentrybm.getHealth()
   return GetEntityHealth(GetPlayerPed(-1))
