@@ -6,9 +6,8 @@ AddEventHandler("Sentry:BuyStoreItem", function(item, price, amount, x)
     local coords = vector3(x)
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
-
     if #(playerCoords - coords) <= 5.0 then 
-        if Sentry.getInventoryWeight(userid) <= 25 then
+        if Sentry.getInventoryWeight(user_id) <= 25 then
             if Sentry.tryPayment(user_id,price) then
                 Sentry.giveInventoryItem(user_id, item, amount, false)
                 Sentryclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
