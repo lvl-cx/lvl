@@ -10,9 +10,9 @@ local moneyDisplay = 0
 local bankMoneyDisplay = 0
 local voiceChatProximity = 2
 proximityIdToString = {
-    [1] = "",
-    [2] = "",
-    [3] = "",
+    [1] = "Whispering",
+    [2] = "Talking",
+    [3] = "Shouting",
 }
 prox = 35.01
 
@@ -49,6 +49,25 @@ function showhudUI(flag)
     showhud = flag
   })
 end
+
+local toggleui = false
+RegisterCommand('toggleui', function()
+    if not toggleui then 
+        toggleui = true
+        SendNUIMessage({
+            showhud = false
+          })
+          DisplayRadar(false)
+          TriggerEvent('ArmourHud', false)
+    else
+        toggleui = false
+        SendNUIMessage({
+            showhud = true
+          })
+          DisplayRadar(true)
+          TriggerEvent('ArmourHud', true)
+    end
+end)
 
 function getMinimapAnchor()
     SetScriptGfxAlign(string.byte('L'), string.byte('B'))
