@@ -1,6 +1,6 @@
 rebellicense = false
 
-RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "~g~Sentry Spawn Menu",1300, 50))
+RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "~g~Sentry Spawn Menu",1300, 50, 'spawn', 'spawn'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SpawnMenu', 'main')) then
@@ -74,6 +74,18 @@ RageUI.CreateWhile(1.0, true, function()
 					end
 				end)
 			end
+			if houseName == nil then 
+
+			else
+				RageUI.Button(houseName, nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+					if Active then
+						SetNewWaypoint(location)
+					end
+					if Selected then	
+						SetEntityCoords(PlayerPedId(), location)
+					end
+				end)
+			end
 		end)
     end
 end)
@@ -142,4 +154,10 @@ AddEventHandler('Sentry:PoliceChecked', function(policeallowed)
     elseif not policeallowed then
         policeenabled = false
     end
+end)
+
+RegisterNetEvent('HouseRespawn')
+AddEventHandler('HouseRespawn', function(name,vector)
+	location = vector3(vector)
+	houseName = name
 end)
