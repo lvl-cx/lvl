@@ -62,6 +62,17 @@ AddEventHandler('Sentry:OpenSettings', function()
     end
 end)
 
+RegisterServerEvent('Sentry:OpenSettings')
+AddEventHandler('Sentry:OpenSettings', function()
+    local source = source
+    local user_id = Sentry.getUserId(source)
+    if user_id ~= nil and Sentry.hasPermission(user_id, "admin.menu") then
+        TriggerClientEvent("Sentry:OpenSettingsMenu", source, true)
+    else
+        TriggerClientEvent("Sentry:OpenSettingsMenu", source, false)
+    end
+end)
+
 RegisterServerEvent("Sentry:GetPlayerData")
 AddEventHandler("Sentry:GetPlayerData",function()
     local source = source

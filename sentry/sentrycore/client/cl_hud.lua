@@ -16,20 +16,31 @@ end)
   
 -- [Functions]
 
+local showHud = true
 function C_Hud()
-    local userid = PlayerPedId()
-    local UI = GetMinimapAnchor()
-    local health = (GetEntityHealth(userid) - 100) / 100.0
-    if health < 0 then health = 0.0 end
-    if health == 0.98 then health = 1.0 end
-    local armor = GetPedArmour(userid) / 100.0
-    if armor == 95 / 100.0 then armor = 100 / 100.0 end
-
-    drawRct(UI.Left_x, UI.Bottom_y - 0.017, UI.Width, 0.028, 0, 0, 0, 50) -- [Transparent Backround]
-    drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.015, (UI.Width -0.002) * health , 0.009, 37, 255, 0 , 250) -- [Health Bat]
-    drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.002, (UI.Width - 0.002) * armor , 0.009, 0, 183, 255, 250) -- [Armour Bar]
-
+    if showHud then
+        local userid = PlayerPedId()
+        local UI = GetMinimapAnchor()
+        local health = (GetEntityHealth(userid) - 100) / 100.0
+        local health2 = GetEntityHealth(userid) 
+        if health < 0 then health = 0.0 end
+        if health == 0.98 then health = 1.0 end
+        local armor = GetPedArmour(userid) / 100.0
+        if armor == 96 / 100.0 then armor = 100 / 100.0 end
+        if health < 0.5 then r,g,b = 224, 0, 0 elseif health < 0.75 then r,g,b = 224, 213, 0 elseif health < 1.1 then r,g,b = 37, 255, 0 end
+        --drawRct(UI.Left_x, UI.Bottom_y - 0.017, UI.Width, 0.028, 0, 0, 0, 50) -- [Transparent Backround]
+        drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.002, (UI.Width - 0.002) * 1 , 0.009, 0, 0, 0, 100) -- [Armour Bar 2]
+        drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.015, (UI.Width -0.002) * 1 , 0.009, 0, 0, 0, 100) -- [Health Bar 2]
+        drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.015, (UI.Width -0.002) * health , 0.009, r, g, b, 250) -- [Health Bar]
+        drawRct(UI.Left_x + 0.001 , UI.Bottom_y - 0.002, (UI.Width - 0.002) * armor , 0.009, 0, 183, 255, 250) -- [Armour Bar]
+    end
 end
+
+RegisterNetEvent('ArmourHud')
+AddEventHandler('ArmourHud', function(bool)
+    showHud = bool
+end)
+
 
 function GetMinimapAnchor()
     local safezone = GetSafeZoneSize()
