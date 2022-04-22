@@ -3,7 +3,10 @@
 dealership = {}
 
 dealership.guns = {
-    {spawncode = "sanchez", vehname = "Sanchez", vehdesc = "", price = 3000},
+
+    {spawncode = "Adder", vehname = "Adder", vehdesc = "", price = 0},
+    {spawncode = "NineF", vehname = "NineF", vehdesc = "", price = 0},
+    {spawncode = "Deluxo", vehname = "Deluxo", vehdesc = "", price = 0},
 }
 
 dealership.guns2 = {
@@ -59,12 +62,14 @@ RageUI.CreateWhile(1.0, true, function()
     RageUI.CreateWhile(1.0, true, function()
         if RageUI.Visible(RMenu:Get("DealershipMenu", "sim")) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+                RageUI.Separator("Currently Viewing: ~g~" .. 'Dealership Vehicles', function() end)
         for i , p in pairs(dealership.guns) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "~g~£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
                     
                     cPrice = p.price
                     cHash = p.spawncode
+                    cName = p.vehname
         
                 end
                 if Active then 
@@ -80,6 +85,7 @@ end)
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
+        RageUI.Separator("Currently Viewing: ~g~" .. 'Police Vehicles', function() end)
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(dealership.guns2) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
@@ -103,7 +109,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("~g~Are you sure?")
-
+        RageUI.Separator("Currently Vehicle: ~g~" .. cName, function() end)
+        RageUI.Separator("Vehicle Price: ~g~" .. cPrice, function() end)
         RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 -- [Event Here]

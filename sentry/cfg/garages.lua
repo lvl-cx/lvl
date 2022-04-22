@@ -20,6 +20,9 @@ cfg.garage_types = {
   ["Main Vehicles"]  = {  -- 150k price cap
     _config = {vtype="Car",blipid=50,blipcolor=4},
     ["Sanchez"] = {"Sanchez",0, ""},
+    ["Adder"] = {"Adder",0, ""},
+    ["NineF"] = {"NineF",0, ""},
+    ["Deluxo"] = {"Deluxo",0, ""},
   },
   
 }
