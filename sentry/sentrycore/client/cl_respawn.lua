@@ -5,6 +5,7 @@ RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "~g~Sentry Spawn Menu",1300
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SpawnMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+			FreezeEntityPosition(PlayerPedId(), true)
 			RageUI.Button("St Thomas Medical Center", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(364.56402587891,-591.74749755859)
@@ -118,11 +119,9 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 
 		if isRespawnMenuOpen then
-			FreezeEntityPosition(PlayerPedId(-1), true)
+
 			RageUI.Visible(RMenu:Get("SpawnMenu", "main"), true)
-		else
-			FreezeEntityPosition(PlayerPedId(-1), false)
-			Citizen.Wait(500)
+
 		end
 	end
 end)
