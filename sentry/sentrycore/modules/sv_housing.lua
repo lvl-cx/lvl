@@ -170,7 +170,7 @@ AddEventHandler("JudHousing:Sell", function(house)
             Sentryclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
                 usrList = ""
                 for k, v in pairs(nplayers) do
-                    usrList = usrList .. "[" .. Sentry.getUserId(k) .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
+                    usrList = usrList .. "[" .. Sentry.getUserId({k}) .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
                 end
                 if usrList ~= "" then
                     Sentry.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, target_id) --ask for id
@@ -252,7 +252,7 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
 
         Sentryclient.getCustomization(player,{},function(custom)
             sets[outfitName] = custom --add outfit to table
-            Sentry.setUData(user_id,"Sentry:home:wardrobe",json.encode(sets)) --add outfit to database
+            Sentry.setUData({user_id,"Sentry:home:wardrobe",json.encode(sets)}) --add outfit to database
             Sentryclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
             TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
         end)
@@ -273,7 +273,7 @@ AddEventHandler("JudHousing:RemoveOutfit", function(outfitName)
 
         sets[outfitName] = nil --replaces outfit in table with nil
 
-        Sentry.setUData(user_id,"Sentry:home:wardrobe",json.encode(sets)) --add new table to db
+        Sentry.setUData({user_id,"Sentry:home:wardrobe",json.encode(sets)}) --add new table to db
         Sentryclient.notify(player,{"~r~Remove outfit "..outfitName.." from wardrobe!"})
         TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
     end)

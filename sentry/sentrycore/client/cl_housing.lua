@@ -9,10 +9,10 @@ local currentOutfit = nil
 local currentHousePrice = 0
 local wardrobe = {}
 
-RMenu.Add("JudHousing", "main", RageUI.CreateMenu("", "~g~Sentry Housing", 1350, 50, 'housing', 'housing'))
-RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "~g~Sentry Housing", 1350, 50, 'housing', 'housing'))
-RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~g~Sentry Housing Wardrobe", 1350, 50, 'wardrobe', 'wardrobe'))
-RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "", "~g~Sentry Housing Wardrobe", 1350, 50))
+RMenu.Add("JudHousing", "main", RageUI.CreateMenu("Housing", "", 1350, 50))
+RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("Housing", "", 1350, 50))
+RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("Housing", "~b~Wardrobe", 1350, 50))
+RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "Housing", "~b~Wardrobe", 1350, 50))
 
 RageUI.CreateWhile(1.0, true, function()
 
@@ -20,21 +20,20 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get("JudHousing", "main")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~g~Current House: " .. currentHome, function() end)
-            RageUI.Separator("~g~Current House Price: £" .. currentHousePrice, function() end)
-            RageUI.Button("Enter Home", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+
+            RageUI.Button("Enter Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Enter", currentHome)
                 end
             end)
 
-            RageUI.Button("Buy Home", nil, {RightLabel = "~g~£"..currentHousePrice}, true, function(Hovered, Active, Selected)
+            RageUI.Button("Buy Home", nil, {RightLabel = "£"..currentHousePrice}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Buy", currentHome)
                 end
             end)
 
-            RageUI.Button("Sell Home", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Sell", currentHome)
                 end
@@ -47,9 +46,8 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get("JudHousing", "leave")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~g~Current House: " .. currentHome, function() end)
-            RageUI.Separator("~g~Current House Price: £" .. currentHousePrice, function() end)
-            RageUI.Button("Leave Home", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+
+            RageUI.Button("Leave Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Leave", currentHome)
                 end
@@ -64,16 +62,16 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
             for k, v in pairs(wardrobe) do
-                RageUI.Button(k, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button(k, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         currentOutfit = k
                     end
                 end, RMenu:Get("JudHousing", "wardrobesub"))
             end
 
-            RageUI.Button("[Save Current Outfit]", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("~g~Save Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    AddTextEntry("FMMC_MPM_NC", "Enter Outfit Name:")
+                    AddTextEntry("FMMC_MPM_NC", "Outfit Name")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
                     while (UpdateOnscreenKeyboard() == 0) do
                         DisableAllControlActions(0);
@@ -96,7 +94,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("JudHousing", "wardrobesub")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
-            RageUI.Button("Equip Outfit", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     for k, v in pairs(wardrobe) do
                         if k == currentOutfit then
@@ -106,7 +104,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end, RMenu:Get("JudHousing", "wardrobe"))
 
-            RageUI.Button("Remove Outfit", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
                 end
@@ -133,20 +131,19 @@ Citizen.CreateThread(function()
             --Enter Home
 
             if isInArea(v.entry_point, 100) then
-                --DrawMarker(20, v.entry_point, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0, 255, 60, true, false, 2, true)
-                DrawMarker(2,  v.entry_point, 0, 0, 0, 0, 0, 0, 0.6, 0.3, 0.3, 0, 209, 17, 150, true, true, 0, 0, 0, 0, 0)
+                DrawMarker(20, v.entry_point, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0, 255, 60, true, false, 2, true)
             end
 
             if isInArea(v.entry_point, 0.8) and isInMenu == false then 
                 currentHome = k
                 currentHousePrice = v.buy_price
-                RMenu:Get("JudHousing", "main"):SetSubtitle("~g~Sentry Housing")
+                RMenu:Get("JudHousing", "main"):SetSubtitle("~b~" .. currentHome)
                 RageUI.Visible(RMenu:Get("JudHousing", "main"), true)
                 isInMenu = true
             end
 
             if isInArea(v.entry_point, 0.8) == false and isInMenu and currentHome == k then
-                RageUI.ActuallyCloseAll()
+                RageUI.Visible(RMenu:Get("JudHousing", "main"), false)
                 isInMenu = false
             end
 
@@ -155,13 +152,11 @@ Citizen.CreateThread(function()
                 --Chest
 
                 if inHome then
-        
-                    --DrawMarker(2,  v.chest_point, 0, 0, 0, 0, 0, 0, 0.6, 0.3, 0.3, 0, 209, 17, 150, true, true, 0, 0, 0, 0, 0)
-                    DrawMarker(2,  v.chest_point, 0, 0, 0, 0, 0, 0, 0.6, 0.3, 0.3, 46, 112, 255, 150, true, true, 0, 0, 0, 0, 0)
+                    DrawMarker(20, v.chest_point, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0, 255, 60, true, false, 2, true)
                 end
 
                 if isInArea(v.chest_point, 0.8) and inHome then
-                    alert("Press ~INPUT_VEH_HORN~ To Open House Chest")
+                    alert("Press ~INPUT_VEH_HORN~ To Open House Chest!")
                     if IsControlJustPressed(0, 51) then
                         TriggerServerEvent("JudHousing:OpenChest", currentHome)
                     end
@@ -170,7 +165,7 @@ Citizen.CreateThread(function()
                 --Wardrobe
 
                 if inHome then
-                    DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.8, 0.8, 0.8, 0, 0, 255, 250, false, true, 2, false, "clothing", "clothing", false)
+                    DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.8, 0.8, 0.8, 0, 0, 255, 60, false, true, 2, false, "clothing", "clothing", false)
                 end
 
                 if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and inHome then
@@ -181,26 +176,25 @@ Citizen.CreateThread(function()
                 end
 
                 if isInArea(v.wardrobe_point, 0.8) == false and isInWardrobeMenu and currentHome == k and inHome then
-                    RageUI.ActuallyCloseAll()
+                    RageUI.Visible(RMenu:Get("JudHousing", "wardrobe"), false)
                     isInWardrobeMenu = false
                 end
 
                 --Leave Home
 
                 if inHome then
-                    DrawMarker(2,  v.leave_point, 0, 0, 0, 0, 0, 0, 0.6, 0.3, 0.3, 0, 209, 17, 150, true, true, 0, 0, 0, 0, 0)
+                    DrawMarker(20, v.leave_point, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0, 255, 60, true, false, 2, true)
                 end
 
                 if isInArea(v.leave_point, 0.8) and isInLeaveMenu == false and inHome then
                     currentHome = k
-                    RMenu:Get("JudHousing", "leave"):SetSubtitle("~g~Sentry Housing")
+                    RMenu:Get("JudHousing", "leave"):SetSubtitle("~b~" .. currentHome)
                     RageUI.Visible(RMenu:Get("JudHousing", "leave"), true)
                     isInLeaveMenu = true
                 end
 
                 if isInArea(v.leave_point, 0.8) == false and isInLeaveMenu and currentHome == k and inHome then
-  
-                    RageUI.ActuallyCloseAll()
+                    RageUI.Visible(RMenu:Get("JudHousing", "leave"), false)
                     isInLeaveMenu = false
                 end
             end
