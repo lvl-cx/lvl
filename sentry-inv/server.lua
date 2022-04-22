@@ -75,14 +75,11 @@ AddEventHandler("ORP:flashLights", function(nearestVeh)
 end) 
 
 RegisterNetEvent('Sentry:FetchTrunkInventory')
-AddEventHandler('Sentry:FetchTrunkInventory', function(spawnCode, vehid)
+AddEventHandler('Sentry:FetchTrunkInventory', function(spawnCode)
     local source = source
-    local idz = NetworkGetEntityFromNetworkId(vehid)
-    local user_id = Sentry.getUserId({NetworkGetEntityOwner(idz)})
-   print(user_id)
+    local user_id = Sentry.getUserId({source})
     if InventoryCoolDown[source] then Sentryclient.notify(source, {'~r~The server is still processing your request.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
-    print(carformat)
     Sentry.getSData({carformat, function(cdata)
         local processedChest = {};
         cdata = json.decode(cdata) or {}
@@ -111,22 +108,6 @@ AddEventHandler('Jud:FetchHouseInventory', function()
         TriggerClientEvent('Sentry:SendSecondaryInventoryData', source, FormattedInventoryData, Sentry.computeItemsWeight({cdata}), maxVehKg)
     end})
 end)
-
-RegisterNetEvent('Sentry:LockPick')
-AddEventHandler('Sentry:LockPick', function()
-    user_id = Sentry.getUserId({source})
-           
-           if Sentry.tryGetInventoryItem({user_id, "lockpick", 1, true}) then
-                 TriggerClientEvent('Sentry:whatIsThis', source)
-   
-           end
-       
-
-end)
-
-
-
-
 
 RegisterNetEvent('Sentry:UseItem')
 AddEventHandler('Sentry:UseItem', function(itemId, itemLoc)

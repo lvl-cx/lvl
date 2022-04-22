@@ -16,25 +16,6 @@ local PlayerInComa = false;
 local model = GetHashKey('xm_prop_x17_bag_med_01a')
 tSentry = Proxy.getInterface("Sentry")
 
-RegisterNetEvent('openBoot')
-AddEventHandler('openBoot', function()
-    local nearestVeh = Sentry.getNearestVehicle({3})
-    local VehInRadius, VehType, NVeh = tSentry.getNearestOwnedVehicle({3.5})
-    if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
-        ExecuteCommand('inventory')
-        BootCar = GetEntityCoords(PlayerPedId())
-        VehTypeC = VehType
-        VehTypeA = NVeh
-
-
-        tSentry.vc_openDoor({VehTypeC, 5})
-        inventoryType = 'CarBoot'
-        TriggerServerEvent('Sentry:FetchTrunkInventory', NVeh, NetworkGetNetworkIdFromEntity(nearestVeh))
-    else
-        notify("~r~This is not your Vehicle!")
-    end
-end)
-
 local LootBagCrouchLoop = false;
 RegisterCommand('inventory', function()
     if not tSentry.isInComa({}) then
@@ -44,18 +25,18 @@ RegisterCommand('inventory', function()
             SetNuiFocus(true, true)
             SetNuiFocusKeepInput(true)
             SendNUIMessage({action = 'InventoryDisplay', showInv = true})
-            -- local VehInRadius, VehType, NVeh = tSentry.getNearestOwnedVehicle({3.5})
-            -- if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
-            --     BootCar = GetEntityCoords(PlayerPedId())
-            --     VehTypeC = VehType
-            --     VehTypeA = NVeh
--- 
--- 
-            --     tSentry.vc_openDoor({VehTypeC, 5})
-            --     inventoryType = 'CarBoot'
-            --     
-            --     TriggerServerEvent('Sentry:FetchTrunkInventory', NVeh)
-            -- end
+            local VehInRadius, VehType, NVeh = tSentry.getNearestOwnedVehicle({3.5})
+            if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
+                BootCar = GetEntityCoords(PlayerPedId())
+                VehTypeC = VehType
+                VehTypeA = NVeh
+
+
+                tSentry.vc_openDoor({VehTypeC, 5})
+                inventoryType = 'CarBoot'
+                
+                TriggerServerEvent('Sentry:FetchTrunkInventory', NVeh)
+            end
 
         else
             inventoryOpen = false;
@@ -212,7 +193,8 @@ end)
 RegisterNUICallback('MoveAllBtn', function(data, cb)
     if not IsLootBagOpening then
         if inventoryType == 'CarBoot' then
-            TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, VehTypeA)
+            local nearestVeh2 = Sentry.getNearestVehicle({3})
+            TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, VehTypeA, NetworkGetNetworkIdFromEntity(nearestVeh2))
         elseif inventoryType == "Housing" then
             TriggerServerEvent('Sentry:MoveItemAll', data.invType, data.itemId, "home")
         end
@@ -366,7 +348,7 @@ Citizen.CreateThread(function()
                     local coords2 = GetEntityCoords(PlayerPedId())
                
                     if `xm_prop_x17_bag_med_01a` == entityModel2 then
-                       
+                        TriggerEvent('Crosshair', true)
                         if IsControlJustReleased(1, 38) then
                       
                             local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('xm_prop_x17_bag_med_01a'), false, false, false)
@@ -377,10 +359,10 @@ Citizen.CreateThread(function()
                     end
                     
                 else
-                  
+                    TriggerEvent('Crosshair', false)
                 end
             else
-                
+                TriggerEvent('Crosshair', false)
             end
         end
         Citizen.Wait(0)
@@ -495,175 +477,5 @@ function getNearestVehicle(radius)
       if not IsEntityAVehicle(veh) then veh = GetClosestVehicle(x+0.0001,y+0.0001,z+0.0001, radius+0.0001, 0, 4+2+1) end -- cars
       return veh
     end
-  end
-lightsFlash = true
-RegisterNetEvent("ORP:flashCarLightsAlarm")
-AddEventHandler("ORP:flashCarLightsAlarm", function(vehicle)
-    local vehicleToFlash = vehicle
-
-    while lightsFlash == true do
-        SetVehicleLights(vehicleToFlash, 2)
-        Wait(750)
-        SetVehicleLights(vehicleToFlash, 1)
-        Wait(750)
-    end
-
-    SetVehicleLights(vehicleToFlash, 0)
-
-    local vehicleToFlash = nil
-    local vehicle = nil
-end)
-
-
-    
-
-RegisterNetEvent('Sentry:LockPick2')
-AddEventHandler('Sentry:LockPick2', function()
-    TriggerServerEvent('Sentry:LockPick')
-end)
-
-RegisterNetEvent('Sentry:whatIsThis')
-AddEventHandler('Sentry:whatIsThis', function()
-      local chance = math.random(1,3)
-      local nearestVeh = Sentry.getNearestVehicle({3})
-        hasDoneIt = false
-     
-   
-
-            
-   
-               RequestAnimDict('anim@amb@clubhouse@tutorial@bkr_tut_ig3@')
-               while not HasAnimDictLoaded('anim@amb@clubhouse@tutorial@bkr_tut_ig3@') do
-                   Citizen.Wait(0)
-               end
-               TaskPlayAnim(GetPlayerPed(-1), 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@' , 'machinic_loop_mechandplayer' ,8.0, -8.0, -1, 1, 0, false, false, false )
-               soundID2 = GetSoundId()
-               PlaySoundFromEntity(soundID2, "Countdown", nearestVeh, "GTAO_Speed_Race_Sounds", true, 0) --When the crate is nearby it beeps remove if you want
-               TriggerEvent('omgLol')
-               notify('~y~Lockpick will be finished in 60s.')
-               Wait(10*1000)
-               if not hasDoneIt then
-               notify('~y~Lockpick Progress: 10%')
-               else
-                StopSound(soundID2)
-                ReleaseSoundId(soundID2)
-                return notify('~r~You have Cancelled the Lockpick!')
-               end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 20%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 30%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 40%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 50%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 60%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 70%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 80%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-
-               Wait(10*1000)
-               if not hasDoneIt then
-                notify('~y~Lockpick Progress: 90%')
-                else
-                    StopSound(soundID2)
-                    ReleaseSoundId(soundID2)
-                 return notify('~r~You have Cancelled the Lockpick!')
-                end
-
-               Wait(10*1000)
-               StopSound(soundID2)
-               ReleaseSoundId(soundID2)
-
-          
-               ClearPedTasks(GetPlayerPed(-1))
-               if chance == 3 then
-                   local veh = NetworkGetEntityOwner(nearestVeh)
-        
-                   local model = GetEntityModel(nearestVeh)
-                   
-                   local displaytext = GetDisplayNameFromVehicleModel(model)
-                   
-                   --
-       
-                       ExecuteCommand('inventory')
-    
-                       BootCar = GetEntityCoords(PlayerPedId())
-                       VehTypeA = GetEntityArchetypeName(nearestVeh)
-                       VehTypeC = nearestVeh
-               
-               
-            
-                       inventoryType = 'CarBoot'
-                       
-                       TriggerServerEvent('Sentry:FetchTrunkInventory', GetEntityArchetypeName(nearestVeh), NetworkGetNetworkIdFromEntity(nearestVeh))
-
-                       
-          
-                   --
-                   
-                   Sentry.notify({"~g~You were succesful in picking this car."})
-           
-               else
-                   
-                   Sentry.notify({"~r~You were unsuccesful in picking this car."})
-                
-               end
-   
-       local nearestVeh = nil
-end)
-
-AddEventHandler('omgLol', function()
-    while true do 
-        if IsControlPressed(1, 154) then 
-
-            hasDoneIt = true
-        end
-        Citizen.Wait(1)
-    end
-end)
+end
 
