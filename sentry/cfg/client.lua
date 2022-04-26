@@ -26,7 +26,7 @@ cfg.controls = {
     right = {3,175},
     select = {3,176},
     cancel = {3,177},
-    open = {3,311}, -- K to open the menu
+    open = {3,31123}, -- K to open the menu
   },
   request = {
     yes = {0,83}, -- +

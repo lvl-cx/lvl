@@ -1,8 +1,8 @@
 local Groups = {}
 
 
-RMenu.Add('GroupMenu', 'groups',  RageUI.CreateMenu("", "~g~Sentry License Menu", 700, 150, "groups", "groups"))
-RMenu.Add("GroupMenu", "sell", RageUI.CreateSubMenu(RMenu:Get('GroupMenu', 'groups',  700, 150)))
+RMenu.Add('GroupMenu', 'groups',  RageUI.CreateMenu("", "~g~Sentry License Menu", 1300, 50, "groups", "groups"))
+RMenu.Add("GroupMenu", "sell", RageUI.CreateSubMenu(RMenu:Get('GroupMenu', 'groups',  1300, 50)))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('GroupMenu', 'groups')) then

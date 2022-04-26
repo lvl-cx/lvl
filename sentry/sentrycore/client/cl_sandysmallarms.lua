@@ -179,13 +179,18 @@ function isInArea(v, dis)
     end
 end
 
+local clothingID = 4
+local index = 0
 RegisterNetEvent('Sentry:SetVest')
 AddEventHandler('Sentry:SetVest', function()
     player = GetPlayerPed(-1)
-    if(GetEntityModel(player) == GetHashKey("mp_m_freemode_01")) then
-        SetPedComponentVariation(player, 9, 4, 1, 2) 
-      elseif (GetEntityModel(player) == GetHashKey("mp_f_freemode_01")) then
-        SetPedComponentVariation(player, 9, 6, 1, 2)
-      end
+    SetPedComponentVariation(player, 9, clothingID, index, 0) 
+end)
+
+
+RegisterNetEvent('Sentry:ChangeArmour2')
+AddEventHandler('Sentry:ChangeArmour2', function(id, indexz)
+  clothingID = id
+  index = indexz
 end)
 

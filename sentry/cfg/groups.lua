@@ -121,6 +121,7 @@ cfg.groups = {
         "group.remove.moderator",
         "group.remove.trial",
 		"group.remove",
+		"founder.perm",
 		
 		"admin.whitelisted",
 		"admin.tickets",
@@ -1251,6 +1252,16 @@ cfg.groups = {
   -- [Staff On/ Off Flag]
   ["staffon"] = {},
   ["staffoff"] = {},
+
+  -- [Cosmetics]
+  	-- [Watches]
+	["Rolex"] = {},
+	["AP"] = {},
+	-- [Chain]
+	["Gold Chain"] = {},
+	-- [Vests]
+	["Ultimate Vest"] = {},
+	["Common Vest"] = {},
 
 }
 

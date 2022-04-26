@@ -259,7 +259,7 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
             sets = {}
         end
 
-        Sentryclient.getCustomization(player,{},function(custom)
+        Sentryclient.getCustomization2(player,{},function(custom)
             sets[outfitName] = custom --add outfit to table
             Sentry.setUData(user_id,"Sentry:home:wardrobe",json.encode(sets)) --add outfit to database
             Sentryclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})

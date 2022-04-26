@@ -1,7 +1,7 @@
 local comaAnim = {}
 local in_coma = false
-local coma_left = 2
-local secondsTilBleedout = 2
+local coma_left = 90
+local secondsTilBleedout = 90
 local playerCanRespawn = false 
 local calledNHS = false
 local deathString = ""
@@ -13,7 +13,7 @@ local DeathAnim = 100
 Citizen.CreateThread(function()
   while true do 
     if IsDisabledControlJustPressed(0,38) then
-      if playerCanRespawn and in_coma and secondsTilBleedout < 2 then
+      if playerCanRespawn and in_coma and secondsTilBleedout < 1 then
         tSentry.respawnPlayer()
       end
       Wait(1000)
@@ -78,31 +78,6 @@ Citizen.CreateThread(function() -- coma thread
             TaskPlayAnim(GetPlayerPed(-1), comaAnim.dict, comaAnim.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0 )
         end
 
-        if health > cfg.coma_threshold and in_coma then --Revive check
-            if IsEntityDead(GetPlayerPed(-1)) then
-                local x,y,z = tSentry.getPosition()
-                NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(GetPlayerPed(-1)), true, true, false)
-                Wait(0)
-            end
-        
-            playerCanRespawn = false 
-            DeathString = ""
-            tSentry.disableComa()
-            DeathAnim = 100 
-
-            SetEntityInvincible(GetPlayerPed(-1),false)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
-            Citizen.CreateThread(function()
-                Wait(500)
-                ClearPedSecondaryTask(GetPlayerPed(-1))
-                ClearPedTasks(GetPlayerPed(-1))
-            end)    
-        end 
-
-        local health = GetEntityHealth(GetPlayerPed(-1))
-        if health <= cfg.coma_threshold and not in_coma then 
-            SetEntityHealth(GetPlayerPed(-1),0)
-        end
     end
 end)
 
@@ -160,19 +135,28 @@ end
 Citizen.CreateThread(function()
     while true do 
         if in_coma then
-
-            scaleform = Initialize("mp_big_message_freemode")
-		    DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
-   
-        
-		  
+			if not calledNHS then
+				if IsControlJustPressed(1, 51) then
+					calledNHS = true
+					notify('~g~NHS called to your approximate location')
+					TriggerServerEvent('Sentry:recieveNHSCall2')
+				end
+			end
+            DrawRect(0.51, 0.748, 0.38, 0.036, 0, 0, 0, 150)
+            DrawRect(0.494, 0.75, 1.125, 0.17, 0, 0, 0, 150)
+            DrawRect(0.494, 0.75, 1.125, 0.17, 17, 1, 1, 1)
+            DrawRect(0.51, 0.748, 0.38*(secondsTilBleedout*0.011), 0.036, 180, 18, 32, 255)
+            DrawAdvancedText(0.607, 0.696, 0.005, 0.0028, 0.62, DeathString, 255, 255, 255, 255, 7, 0)
+            if not calledNHS then
+				DrawAdvancedText(1.041, 0.803, 0.005, 0.0028, 0.37, "Press [E] to call the NHS", 255, 255, 255, 255, 6, 0)
+			end     
             if secondsTilBleedout > 0 then
-                DrawAdvancedTextOutline(0.605, 0.523, 0.005, 0.0028, 0.4, "Respawn available in ("..secondsTilBleedout.." seconds)", 255, 255, 255, 255, 7, 0)
-                DrawAdvancedTextOutline(0.605, 0.554, 0.005, 0.0028, 0.37, "You are dying...", 255, 255, 255, 255, 6, 0)
+                DrawAdvancedText(0.605, 0.803, 0.005, 0.0028, 0.37, "Respawn available in ("..secondsTilBleedout.." seconds)", 255, 255, 255, 255, 6, 0)
             else
-                playerCanRespawn = true
-                DrawAdvancedTextOutline(0.605, 0.523, 0.005, 0.0028, 0.4, "Press [E] to respawn!", 255, 255, 255, 255, 7, 0)
+                playerCanRespawn = true    
+                DrawAdvancedText(0.605, 0.803, 0.005, 0.0028, 0.37, "Press [E] to respawn!", 255, 255, 255, 255, 6, 0)
             end
+            DrawAdvancedText(0.605, 0.752, 0.005, 0.0028, 0.37, "You are dying... Call the NHS now", 255, 255, 255, 255, 6, 0)
             DisableControlAction(0,323,true)
             DisableControlAction(0,182,true)
             DisableControlAction(0,37,true)
@@ -180,7 +164,6 @@ Citizen.CreateThread(function()
         Wait(0)
     end 
 end)
-
 Citizen.CreateThread(function()
     while true do 
         if in_coma then

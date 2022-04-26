@@ -178,6 +178,37 @@ function tSentry.getCustomization()
   return custom
 end
 
+function tSentry.getCustomization2()
+  local ped = GetPlayerPed(-1)
+
+  local custom = {}
+
+  custom.modelhash = GetEntityModel(ped)
+
+  -- ped parts
+
+
+  for i=0,6 do -- index limit to 20
+    custom[i] = {GetPedDrawableVariation(ped,i), GetPedTextureVariation(ped,i), GetPedPaletteVariation(ped,i)}
+  end
+
+
+    custom[8] = {GetPedDrawableVariation(ped,8), GetPedTextureVariation(ped,8), GetPedPaletteVariation(ped,8)}
+    for i=10,20 do -- index limit to 20
+      custom[i] = {GetPedDrawableVariation(ped,i), GetPedTextureVariation(ped,i), GetPedPaletteVariation(ped,i)}
+    end
+
+  -- props
+  for i=0,5 do -- index limit to 10
+    custom["p"..i] = {GetPedPropIndex(ped,i), math.max(GetPedPropTextureIndex(ped,i),0)}
+  end
+  for i=7,10 do -- index limit to 10
+    custom["p"..i] = {GetPedPropIndex(ped,i), math.max(GetPedPropTextureIndex(ped,i),0)}
+  end
+
+  return custom
+end
+
 -- partial customization (only what is set is changed)
 function tSentry.setCustomization(custom) -- indexed [drawable,texture,palette] components or props (p0...) plus .modelhash or .model
   local exit = TUNNEL_DELAYED() -- delay the return values

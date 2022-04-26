@@ -39,6 +39,7 @@ function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
 
+local clothingPerm = false
 
 RageUI.CreateWhile(1.0, true, function()
     
@@ -502,7 +503,18 @@ RageUI.CreateWhile(1.0, true, function()
                 if Active then
                     SelectedOption = 7;
                     --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index),  255, 255, 255, 255, 6, 0)
-                    SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
+                    if not clothingPerm then
+                        for i,v in pairs(cosmetics.cfg) do
+                            if v.type == 'Chain' then
+                                if Accessory.Index == v.clothingid then
+                                else
+                                    SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
+                                end
+                            end
+                        end
+                    else
+                        SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
+                    end
                 end
                 if Selected then 
                     if Accessory.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index)-1) then 
@@ -527,21 +539,23 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Vest", Kevlar.Max, Kevlar.Index, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index), { }, true, function(Hovered, Active, Selected, Index)
-                Kevlar.Index = Index
-                if Active then
-                    SelectedOption = 9;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
-                    SetPedComponentVariation(PlayerPedId(), 9, Kevlar.Index, Kevlar.TextureIndex, 0)
-                end
-                if Selected then 
-                    if Kevlar.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index)-1) then 
-                        Kevlar.TextureIndex = 0;
-                    else 
-                        Kevlar.TextureIndex = Kevlar.TextureIndex + 1
+            if clothingPerm then
+                RageUI.List("Vest", Kevlar.Max, Kevlar.Index, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index), { }, true, function(Hovered, Active, Selected, Index)
+                    Kevlar.Index = Index
+                    if Active then
+                        SelectedOption = 9;
+                        --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
+                        SetPedComponentVariation(PlayerPedId(), 9, Kevlar.Index, Kevlar.TextureIndex, 0)
                     end
-                end
-            end)
+                    if Selected then 
+                        if Kevlar.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index)-1) then 
+                            Kevlar.TextureIndex = 0;
+                        else 
+                            Kevlar.TextureIndex = Kevlar.TextureIndex + 1
+                        end
+                    end
+                end)
+            end
             RageUI.List("Badges", Badge.Max, Badge.Index, '~g~Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Badge.Index = Index
                 if Active then
@@ -617,21 +631,23 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Watches", Watches.Max, Watches.Index, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index), { }, true, function(Hovered, Active, Selected, Index)
-                Watches.Index = Index
-                if Active then
-                    SelectedOption = "watches";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
-                    SetPedPropIndex(PlayerPedId(), 6, Watches.Index, Watches.TextureIndex, 0)
-                end
-                if Selected then 
-                    if Watches.TextureIndex >= (GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index)-1) then 
-                        Watches.TextureIndex = 0;
-                    else 
-                        Watches.TextureIndex = Watches.TextureIndex + 1
+            if clothingPerm then
+                RageUI.List("Watches", Watches.Max, Watches.Index, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index), { }, true, function(Hovered, Active, Selected, Index)
+                    Watches.Index = Index
+                    if Active then
+                        SelectedOption = "watches";
+                        --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, '~g~Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
+                        SetPedPropIndex(PlayerPedId(), 6, Watches.Index, Watches.TextureIndex, 0)
                     end
-                end
-            end)
+                    if Selected then 
+                        if Watches.TextureIndex >= (GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index)-1) then 
+                            Watches.TextureIndex = 0;
+                        else 
+                            Watches.TextureIndex = Watches.TextureIndex + 1
+                        end
+                    end
+                end)
+            end
             RageUI.List("Bracelets", Bracelets.Max, Bracelets.Index, '~g~Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index), { }, true, function(Hovered, Active, Selected, Index)
                 Bracelets.Index = Index
                 if Active then
@@ -649,6 +665,12 @@ RageUI.CreateWhile(1.0, true, function()
             end)
         end)
     end
+end)
+
+RegisterNetEvent('Sentry:ClothingPerms')
+AddEventHandler('Sentry:ClothingPerms', function(bool)
+    print(bool)
+    clothingPerm = bool
 end)
 
 local cfg = module("cfg/skinshops")
@@ -705,6 +727,7 @@ Citizen.CreateThread(function()
         end
         if not MenuOpen and inMarker then 
             MenuOpen = true
+            TriggerServerEvent('Sentry:HasFounder')
             RageUI.Visible(RMenu:Get('SentryClothing', 'main'), true) 
             PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
             Face.Index = GetPedDrawableVariation(ped, 0)

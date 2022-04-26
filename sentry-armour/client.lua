@@ -31,22 +31,18 @@ function Sentrybm.getArmour()
 end
 
 
-
+local clothingID = 4
+local index = 0
 function Sentrybm.setArmour(armour,vest)
-  
   local player = GetPlayerPed(-1)
-  TaskPlayAnim(player, 'clothingtie', 'try_tie_negative_a', 3.0, 3.0, 2000, true, 0, false, false, false)
+
  -- PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
   local n = math.floor(armour)
   SetPedArmour(player,n)
 
   if vest then
-      if(GetEntityModel(player) == GetHashKey("mp_m_freemode_01")) then
-        SetPedComponentVariation(player, 9, 4, 1, 2) 
-      elseif (GetEntityModel(player) == GetHashKey("mp_f_freemode_01")) then
-        SetPedComponentVariation(player, 9, 6, 1, 2)
-      end
-    end
+        SetPedComponentVariation(player, 9, clothingID, index, 0) 
+  end
 
 
 end
@@ -58,15 +54,21 @@ Citizen.CreateThread(function()
 
 	  if Sentrybm.getArmour() == 0 then
 	   
-	      SetPedComponentVariation(GetPlayerPed(-1), 9, 0, 1, 2)
+	      SetPedComponentVariation(GetPlayerPed(-1), 9, 0, 0, 0)
+      
     else
-      if(GetEntityModel(player) == GetHashKey("mp_m_freemode_01")) then
-        SetPedComponentVariation(player, 9, 4, 1, 2) 
-      elseif (GetEntityModel(player) == GetHashKey("mp_f_freemode_01")) then
-        SetPedComponentVariation(player, 9, 6, 1, 2)
-      end
+
+      SetPedComponentVariation(player, 9, clothingID, index, 0) 
+
     end
   end
+end)
+
+
+RegisterNetEvent('Sentry:ChangeArmour')
+AddEventHandler('Sentry:ChangeArmour', function(id, indexz)
+  clothingID = id
+  index = indexz
 end)
 
 function Sentrybm.getHealth()

@@ -22,10 +22,10 @@ local lang = {
   money = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
-    given = "Given ~r~{1}$.",
-    received = "Received ~g~{1}$.",
+    given = "Given ~r~£{1}.",
+    received = "Received ~g~£{1}.",
     not_enough = "~r~Not enough money.",
-    paid = "Paid ~r~{1}$.",
+    paid = "Paid ~r~£{1}.",
     give = {
       title = "Give money",
       description = "Give money to the nearest player.",
@@ -242,7 +242,7 @@ local lang = {
       }
     },
     identity = {
-      info = "<em>Name: </em>{1}<br /><em>First name: </em>{2}<br /><em>Age: </em>{3}<br /><em>Registration n°: </em>{4}<br /><em>Phone: </em>{5}<br /><em>Business: </em>{6}<br /><em>Business capital: </em>{7} $<br /><em>Address: </em>{9}, {8}"
+      info =  "<em>Name: </em>{1}<br /><em>Perm ID: </em>{3}<br /><em>Registration n°: </em>{4}<br /><em>Phone: </em>{5}<br />"
     }
   },
   emergency = {

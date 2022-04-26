@@ -204,6 +204,18 @@ AddEventHandler("Sentry:addGroup",function(perm, selgroup)
     end
 end)
 
+RegisterNetEvent('Sentry:HasFounder')
+AddEventHandler('Sentry:HasFounder', function()
+    local source = source 
+    user_id = Sentry.getUserId(source)
+
+    if Sentry.hasGroup(user_id, 'founder') then 
+        TriggerClientEvent('Sentry:ClothingPerms', source, true)
+    else
+        TriggerClientEvent('Sentry:ClothingPerms', source, false)
+    end
+end)
+
 RegisterServerEvent("Sentry:removeGroup")
 AddEventHandler("Sentry:removeGroup",function(perm, selgroup)
     local user_id = Sentry.getUserId(source)
