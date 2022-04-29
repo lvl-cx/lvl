@@ -581,7 +581,7 @@ AddEventHandler("ATM:PayVehicleTax", function()
 
     if user_id ~= nil then
         local bank = ATM.getBankMoney(user_id)
-        local payment = bank / 1000
+        local payment = bank / 10000
         if ATM.tryBankPayment(user_id, payment) then
             ATMclient.notify(source,{"~g~Paid £"..math.floor(payment).." vehicle tax."})
         else

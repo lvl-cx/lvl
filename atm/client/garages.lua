@@ -51,18 +51,6 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ATMGarages', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
-            if FirstSpawn then
-                RageUI.Button("~g~[Claim Starter Car]", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then 
-                        FirstSpawn = false
-                        TriggerEvent("ATM:PlaySound",  1)
-                        notify('~g~The Starter Car is now in your Garage!')
-                        TriggerServerEvent('ATM:GiveStarterCar')
-
-          
-                    end
-                end)
-            end
             RageUI.Button("Owned Vehicles", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     if Table_Type == nil or not Table_Type then 

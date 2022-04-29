@@ -1,4 +1,4 @@
-RMenu.Add('CivMenu', 'main', RageUI.CreateMenu("", "~g~ATM CIV Menu",1300, 50))
+RMenu.Add('CivMenu', 'main', RageUI.CreateMenu("", "~g~ATM CIV Menu",1300, 50, 'civ', 'civ'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('CivMenu', 'main')) then

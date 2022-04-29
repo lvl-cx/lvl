@@ -1208,6 +1208,131 @@ cfg.groups = {
     "sco.armoury",
   },
 
+  
+  -- [[ NHS Clocked On Groups ]]--
+
+  ["Head Chief Medical Officer Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Assistant Chief Medical Officer Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Deputy Chief Medical Officer Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Captain Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Consultant Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Specialist Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Senior Doctor Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Junior Doctor Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Critical Care Paramedic Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Paramedic Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  ["Trainee Paramedic Clocked"] = {
+    "nhs.revive",
+	"nhs.heal",
+	"nhs.menu",
+  },
+
+  --[[ NHS Clock On Groups ]]--
+  ["Head Chief Medical Officer"] = {
+    "hcmo.clockon",
+	"clockon.nhs",
+  },
+
+  ["Assistant Chief Medical Officer"] = {
+    "acmo.clockon",
+	"clockon.nhs",
+  },
+
+  ["Deputy Chief Medical Officer"] = {
+    "dcmo.clockon",
+	"clockon.nhs",
+  },
+
+  ["Captain"] = {
+    "capt.clockon",
+	"clockon.nhs",
+  },
+
+  ["Consultant"] = {
+    "consultant.clockon",
+	"clockon.nhs",
+  },
+
+  ["Specialist"] = {
+    "specialist.clockon",
+	"clockon.nhs",
+  },
+
+  ["Senior Doctor"] = {
+    "srdoctor.clockon",
+	"clockon.nhs",
+  },
+
+  ["Junior Doctor"] = {
+    "jrdoctor.clockon",
+	"clockon.nhs",
+  },
+
+  ["Critical Care Paramedic"] = {
+    "ccp.clockon",
+	"clockon.nhs",
+  },
+
+  ["Paramedic"] = {
+    "paramedic.clockon",
+	"clockon.nhs",
+  },
+
+  ["Trainee Paramedic"] = {
+    "tparamedic.clockon",
+	"clockon.nhs",
+  },
+
   -- [Drug Groups]
   ["Scrap"] = {
     "scrap.job",

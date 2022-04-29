@@ -1,150 +1,117 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
 body {
     margin: 0;
     user-select: none;
 }
 
 #MainInventoryContainer {
-    width: 60em;
-    height: 33.2em;
-    background: rgba(0, 0, 0, 0.568);
-    border-radius: 10px;
+    width: 76em;
+    height: 40em;
+    background: rgba(6, 7, 8, 0.568);
     position: fixed;
     top: 50%;
     left: 50%;
-    
+    border: solid 0.1em #3FCD59;
     transform: translate(-50%, -50%);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,800;1,100;1,200&display=swap');
+#PersonalInventorySpaceContainer {
+    background-color: rgba(6, 7, 8, 0.4);
+    position: relative;
+    top: 4em;
+    left: 3em;
+    width: 27em;
+    height: 30em;
+}
+
+#SecondInventorySpaceContainer {
+    background-color: rgba(6, 7, 8, 0.4);
+    position: relative;
+    left: 45.3em;
+    height: 30em;
+    bottom: 25.9em;
+    width: 27em;
+}
+
+#SecondInventoryLine {
+    background: grey;
+    width: 100%;
+    height: 0.2em;
+    bottom: 22em;
+    position: relative;
 }
 
 @font-face {
     font-family: inventoryFont;
-    src: url(./assets/Thedus-Wide.otf);
-}
-
-#MainInventoryTitle {
-    color: white;
-    font-family: 'inventoryFont', sans-serif;
-    position: relative;
-    left: 13.5em;
-    top: 0.6em;
-    font-size: 1.6em;
-}
-
-#MainInventoryLine {
-
-}
-
-#PersonalInventorySpaceContainer {
-    width: 28em;
-    height: 28em;
-    border-radius: 10px;
-    background-color: rgb(0 0 0 / 48%);
-    left: 0.7em;
-    position: relative;
-}
-
-#SecondInventorySpaceContainer {
-    width: 28em;
-    height: 28em;
-    border-radius: 10px;
-    background-color: rgb(0 0 0 / 48%);
-    left: 31em;
-    bottom: 28.0em;
-    position: relative;
-}
-
-#SecondInventoryLine {
-
+    src: url(./assets/pricedown.otf);
 }
 
 #ButtonRow1 {
-    width: 34em;
-    height: 1em;
+    width: 15.3em;
+    height: auto;
     position: relative;
-    bottom: 28.7em;
-    left: 0.0em;
+    bottom: 52em;
+    left: 32em;
+    float: left;
 }
 
 #ButtonRow1>div {
-    width: 8.85em;
-    float: left;
+    width: 10em;
     height: 3em;
+    float: left;
     margin-left: 0.8em;
-    background-color: rgb(0 0 0 / 48%);
+    margin-bottom: 0.6em;
+    background-color: rgba(6, 7, 8, 0.4);
+    border: solid 0.1em #3FCD59;
     text-align: center;
     justify-content: center;
-    border-radius: 10px;
 }
 
 #ButtonRow1>div>span {
     color: white;
-    font-family: 'inventoryFont', sans-serif;
+    font-family: 'Poppins', sans-serif;
     position: relative;
-    top: 0.9em;
-}
-
-#ButtonRow2 {
-    width: 54em;
-    height: 4em;
-    position: relative;
-    bottom: 34.3em;
-    left: 30.0em;
-}
-
-#ButtonRow2>div {
-    width: 8.9em;
-    float: left;
-    height: 3em;
-    margin-left: 0.8em;
-    background-color: rgb(0 0 0 / 48%);
-    text-align: center;
-    justify-content: center;
-    border-radius: 10px;
-}
-
-#ButtonRow2>div>span {
-    color: white;
-    font-family: 'inventoryFont', sans-serif;
-    position: relative;
-    top: 0.9em;
+    font-weight: 600;
+    font-size: 1em;
+    top: 0.2em;
 }
 
 #InventoryLogo {
     position: relative;
-    bottom: 63.3em;
-    width: 4.8em;
-    height: 4.6em;
-    right:2.0em;
-    opacity: 0;
+    width: 5em;
+    height: 4em;
+    left: 35em;
+    top: 1em;
+}
+
+#InventoryLine {
+    width: 91%;
+    background: #3FCD59;
+    height: 0.09em;
+    position: relative;
+    left: 3em;
+    top: 2em;
 }
 
 #InventoryText {
-    font-family: 'inventoryFont', sans-serif;
-    color: white;
+    font-family: 'Poppins', sans-serif;
+    color: #3FCD59;
     position: relative;
-    font-size: 0.6em;
-    bottom: 42.3em;
-    left: 38em;
+    font-size: 0.8em;
+    bottom: 32em;
+    left: 24.5em;
 }
 
 #SecondInventoryWeight {
-    bottom: 29.5em;
-    color: rgb(138, 138, 138);
-    border-radius: 2px;
-    font-family: 'inventoryFont', sans-serif;
-    position: relative;
-    font-size: 1em;
-    left: 45.0em;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
 #PersonalInventoryWeight {
-    bottom: 29.5em;
-    color: rgb(138, 138, 138);
-    font-family: 'inventoryFont', sans-serif;
-    position: relative;
-    font-size: 1em;
-    left: 27.0em;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
 table {
@@ -162,9 +129,11 @@ tbody {
 td {
     padding: 0em;
     text-align: center;
-    font-family: 'inventoryFont', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     justify-content: center;
-    font-size: 1.0em;
+    font-size: 0.8em;
+    border: none;
 }
 
 th {
@@ -173,12 +142,13 @@ th {
 
 th {
     padding: 0.4em;
+    color: white;
+    font-family: 'Poppins', sans-serif;
 }
 
 #HeaderTable {
     height: 1em;
     color: white;
-    font-family: 'inventoryFont', sans-serif;
     font-size: 0.8em;
 }
 
@@ -191,15 +161,17 @@ th {
 }
 
 .ItemSelected {
-    background-color: #080808;
+    border: none;
+    background-color: #3FCD59;
 }
 
 #ndInventoryText {
     position: fixed;
-    color: rgb(88, 88, 88);
-    font-family: 'inventoryFont', sans-serif;
+    color: white;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.2em;
-    top: 11em;
-    left: 28em;
+    opacity: 0.6;
+    top: 17.5em;
+    left: 41em;
     width: 52em;
-}
+}c

@@ -246,7 +246,7 @@ RageUI.CreateWhile(1.0, true, function()
 
                     end, RMenu:Get("CosmeticMenu", "marketplace"))
 
-                    RageUI.Separator("~g~discord.gg/atmgta - #market-place", function() end)
+                    RageUI.Separator("~g~discord.gg/atmwrld - #market-place", function() end)
                 end
             end
     end)            

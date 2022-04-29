@@ -1,20 +1,8 @@
 UnallowlistedVehicles = {
     -- ["SPAWNCODE"] = PERMID,
-
-    -- [CALLUM CARS]
-    ["sanchez"] = 1,
-    ["tkmansory"] = 1,
-    -- [OHASIS CARS]
-    ["rs3d"] = 2,
-    ["regaliad"] = 2,
     -- [MANAGEMENT CARS]
-    ["tonkat"] = 3,
-    ["takioman"] = 7,
-    ["aivisman"] = 175,
+    ["hycadeevo"] = 1,
     -- [PAID LOCKS]
-    ["R8C"] = 5,
-    ["urustc"] = 5,
-    ["venatus"] = 16,
 }
 
 local userid = 0

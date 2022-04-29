@@ -8,71 +8,62 @@
 
 <body>
     <div style="display: none;" id="MainInventoryContainer">
-        <h1 id="MainInventoryTitle"></h1>
-        <div id="MainInventoryLine"></div>
+        <img id="InventoryLogo" src="./assets/atmlogo.png" alt="">
+        <div id="InventoryLine"></div>
         <div id="PersonalInventorySpaceContainer">
             <table id="PersonalInventoryTable">
-                <tr style="border-bottom: solid thin grey;" id="HeaderTable">
-                    <th>ITEM</th>
-                    <th>AMOUNT</th>
-                    <th>WEIGHT</th>
+                <tr style="border-bottom:solid 0.1em #3FCD59;" id="HeaderTable">
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Weight</th>
                 </tr>
                 <tr style="display: none;" class="ItemTable ExampleTable">
                     <td class="ItemName">AK-47</td>
                     <td class="ItemQuantity">1</td>
-                    <td class="ItemKG">5.0KG</td>
+                    <td class="ItemKG">5.0kg</td>
                 </tr>
                 <tr class="ItemTable">
                     <td>AK-47</td>
                     <td>1</td>
-                    <td>5.0KG</td>
+                    <td>5.0kg</td>
                 </tr>
             </table>
         </div>
         <div id="SecondInventorySpaceContainer">
-            <h1 id="ndInventoryText">Second Inventory Not Available</h1>
+            <h1 id="ndInventoryText">Second Inventory is unavailable</h1>
             <table id="SecondaryInventoryTable">
-                <tr style="border-bottom: solid thin grey;" id="HeaderTable">
-                    <th>ITEM</th>
-                    <th>AMOUNT</th>
-                    <th>WEIGHT</th>
+                <tr style="border-bottom:solid 0.1em #3FCD59;" id="HeaderTable">
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Weight</th>
                 </tr>
                 <tr style="display: none;" class="ItemSecondTable ExampleSecondTable">
                     <td class="ItemName">AK-47</td>
                     <td class="ItemQuantity">1</td>
-                    <td class="ItemKG">5.0KG</td>
+                    <td class="ItemKG">5.0kg</td>
                 </tr>
             </table>
         </div>
-        <div style="width: 17em;
-        right: 10.4em;
-        position: relative;
-        text-align: center;
-        height: 0.1em;">
-            <span id="PersonalInventoryWeight">0.00/30KG</span>
-        </div>
         <div style="    width: 17em;
-        position: relative;
+        position: fixed;
         text-align: center;
-        height: 1.1em;
-        left: 1.9em;">
-            <span id="SecondInventoryWeight">0.00/30KG</span>
+        height: 0.1em;
+        left: -3em;
+        top: 6.5em;">
+            <span id="PersonalInventoryWeight">0/30kg</span>
         </div>
-        <div id="SecondInventoryLine"></div>
+        <div style=" width: 17em;
+        position: fixed;
+        text-align: center;
+        height: 0.1em;
+        left: 39em;
+        top: 6.5em;">
+            <span id="SecondInventoryWeight">0/30kg</span>
+        </div>
         <div id="ButtonRow1">
-            <div id="GiveBtn">
-                <span>GIVE</span>
-            </div>
-            <div id="DropBtn">
-                <span>DROP</span>
-            </div>
             <div id="UseBtn">
                 <span>USE</span>
             </div>
-        </div>
-        <img id="InventoryLogo" src="./assets/logo.png" alt="">
- 
-        <div id="ButtonRow2">
             <div id="MoveBtn">
                 <span>MOVE</span>
             </div>
@@ -80,9 +71,16 @@
                 <span>MOVE X</span>
             </div>
             <div id="MoveAllBtn">
-                <span style="top: 0.9em;">MOVE ALL</span>
+                <span style="top: 0.2em;">MOVE ALL</span>
+            </div>
+            <div id="GiveBtn">
+                <span>GIVE</span>
+            </div>
+            <div id="DropBtn">
+                <span>TRASH</span>
             </div>
         </div>
+        <span id="InventoryText">Press L to Close</span>
     </div>
 </body>
 

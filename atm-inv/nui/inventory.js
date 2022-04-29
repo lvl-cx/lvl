@@ -70,6 +70,7 @@ $(document).ready(function() {
 
 window.addEventListener('message', function(event) {
     var msg = event.data;
+    console.log('NUI! Debug: ' + msg.action)
     if (msg.action == "InventoryDisplay" && msg.showInv) {
         $('#MainInventoryContainer').show();
         $('#ndInventoryText').show();
@@ -78,8 +79,10 @@ window.addEventListener('message', function(event) {
         invType = undefined;
         ClearPersonalInventory();
         ClearSecondaryInventory();
-        $('#PersonalInventoryWeight').text(`0.00/0.00KG`)
-        $('#SecondInventoryWeight').text(`0.00/0.00KG`)
+        $('#PersonalInventoryWeight').text(`0/0kg`)
+        $('#SecondInventoryWeight').text(`0/0kg`)
+        $('#SecondInventoryWeight').hide();
+        $('#PersonalInventoryWeight').css('color', 'white');
     }
     if (msg.action == "loadItems") {
         ClearPersonalInventory();
@@ -87,12 +90,19 @@ window.addEventListener('message', function(event) {
             let newItem = $('.ExampleTable').clone().appendTo("#PersonalInventoryTable");
             $(newItem).find(".ItemName").text(msg.items[key].ItemName)
             $(newItem).find(".ItemQuantity").text(msg.items[key].amount)
-            $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "KG")
+            $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "kg")
             $(newItem).removeClass('ExampleTable')
             $(newItem).show();
             $(newItem).attr("id", key)
         }
-        $('#PersonalInventoryWeight').text(`${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}KG`)
+        if (msg.CurrentKG < 15) {
+            $('#PersonalInventoryWeight').css('color', 'white');
+        } else if (msg.CurrentKG < 25) {
+            $('#PersonalInventoryWeight').css('color', 'white');
+        } else if (msg.CurrentKG > 25) {
+            $('#PersonalInventoryWeight').css('color', 'white');
+        }
+        $('#PersonalInventoryWeight').text(`${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}kg`)
         $('.ItemTable').each(function(i, obj) {
             if (!$(this).hasClass("ExampleTable")) {
                 $(this).click(function() {
@@ -117,12 +127,13 @@ window.addEventListener('message', function(event) {
             let newItem = $('.ExampleSecondTable').clone().appendTo("#SecondaryInventoryTable");
             $(newItem).find(".ItemName").text(msg.items[key].ItemName)
             $(newItem).find(".ItemQuantity").text(msg.items[key].amount)
-            $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "KG")
+            $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "kg")
             $(newItem).removeClass('ExampleSecondTable')
             $(newItem).show();
             $(newItem).attr("id", key)
         }
-        $('#SecondInventoryWeight').text(`WEIGHT: ${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}KG`)
+        $('#SecondInventoryWeight').show();
+        $('#SecondInventoryWeight').text(`${(msg.CurrentKG).toFixed(2)}/${msg.MaxKG}kg`)
         $('.ItemSecondTable').each(function(i, obj) {
             if (!$(this).hasClass("ExampleSecondTable")) {
                 $(this).click(function() {

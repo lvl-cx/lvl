@@ -2,6 +2,9 @@ local cfg = module("cfg/player_state")
 local log_config = module("servercfg/cfg_webhooks")
 local lang = ATM.lang
 
+RegisterCommand('cutscene', function(source)
+    TriggerClientEvent("ATM:StartCutscene", source)
+end)
 -- client -> server events
 AddEventHandler("ATM:playerSpawn", function(user_id, source, first_spawn)
     Debug.pbegin("playerSpawned_player_state")
@@ -34,6 +37,7 @@ AddEventHandler("ATM:playerSpawn", function(user_id, source, first_spawn)
             }
             -- [First Spawn things go here]
             TriggerClientEvent('FirstSpawn', player, true)
+            TriggerClientEvent('ATM:StartTutorial', player)
         end
 
         if data.position ~= nil then -- teleport to saved pos
