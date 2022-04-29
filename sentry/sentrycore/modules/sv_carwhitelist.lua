@@ -1,0 +1,5 @@
+RegisterNetEvent('Sentry:SendID')
+AddEventHandler('Sentry:SendID', function()
+  user_id = Sentry.getUserId(source)
+  TriggerClientEvent('Sentry:UserID', source, user_id)
+end)

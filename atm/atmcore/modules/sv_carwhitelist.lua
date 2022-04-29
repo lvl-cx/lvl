@@ -1,5 +1,0 @@
-RegisterNetEvent('ATM:SendID')
-AddEventHandler('ATM:SendID', function()
-  user_id = ATM.getUserId(source)
-  TriggerClientEvent('ATM:UserID', source, user_id)
-end)
