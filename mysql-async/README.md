@@ -1,10 +1,10 @@
 ### Introduction
 
-This mysql-async Library for sentry intends to provide function to connect to a MySQL in a Sync and Async way.
+This mysql-async Library for lvl intends to provide function to connect to a MySQL in a Sync and Async way.
 
 ### Documentation
 
-Check out https://brouznouf.github.io/sentry-mysql-async/ for a complete documentation.
+Check out https://brouznouf.github.io/lvl-mysql-async/ for a complete documentation.
 
 ### Questions
 For help and support questions, please use [Discord](https://discord.gg/AXcxRjt). I would like to keep the issues in this repository for bugs and feature requests only.
@@ -16,7 +16,7 @@ If you wish to support GHMatti for whatever reason use the **[Patreon](https://w
 Make sure you provide all information possible when reporting an issue.
 
 ### Changelog
-For a detailed changelog either check the commits or read https://github.com/brouznouf/sentry-mysql-async/releases
+For a detailed changelog either check the commits or read https://github.com/brouznouf/lvl-mysql-async/releases
 
 ### Contributing
 Help to expand sensibly on the middleware is always welcome. 

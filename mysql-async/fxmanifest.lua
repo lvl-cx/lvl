@@ -7,7 +7,7 @@ name 'mysql-async'
 description 'MySQL Middleware for lua.'
 author 'Joel Wurtz & Matthias Mandelartz'
 version '3.3.2'
-url 'https://github.com/brouznouf/sentry-mysql-async'
+url 'https://github.com/brouznouf/lvl-mysql-async'
 
 server_script 'mysql-async.js'
 client_script 'mysql-async-client.lua'

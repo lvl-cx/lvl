@@ -11,7 +11,7 @@ const remark = {
 
 module.exports = {
   siteName: 'mysql-async Documentation',
-  pathPrefix: '/sentry-mysql-async',
+  pathPrefix: '/lvl-mysql-async',
   plugins: [
     {
       use: '@gridsome/source-filesystem',

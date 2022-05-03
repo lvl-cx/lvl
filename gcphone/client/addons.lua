@@ -5,7 +5,7 @@
 -- Time: 00:39
 -- Made for CiviliansNetwork
 --
-Sentry = Proxy.getInterface("Sentry")
+LVL = Proxy.getInterface("LVL")
 
 RegisterNetEvent('service:call')
 AddEventHandler('service:call', function(data)

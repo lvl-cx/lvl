@@ -86,7 +86,7 @@ function AddEmoteMenu(menu)
       table.insert(EmoteTable, Config.Languages[lang]['favoriteemotes'])
     else
       table.insert(EmoteTable, "keybinds")
-      keyinfo =  NativeUI.CreateItem(Config.Languages[lang]['keybinds'], Config.Languages[lang]['keybindsinfo'].." /emotebind [~y~num4-9~w~] [~g~emotename~w~]")
+      keyinfo =  NativeUI.CreateItem(Config.Languages[lang]['keybinds'], Config.Languages[lang]['keybindsinfo'].." /emotebind [~y~num4-9~w~] [~b~emotename~w~]")
       submenu:AddItem(keyinfo)
     end
 
@@ -117,9 +117,9 @@ function AddEmoteMenu(menu)
       for a,b in pairsByKeys(DP.Shared) do
         x,y,z,otheremotename = table.unpack(b)
         if otheremotename == nil then
-          shareitem = NativeUI.CreateItem(z, "/nearby (~g~"..a.."~w~)")
+          shareitem = NativeUI.CreateItem(z, "/nearby (~b~"..a.."~w~)")
         else 
-          shareitem = NativeUI.CreateItem(z, "/nearby (~g~"..a.."~w~) "..Config.Languages[lang]['makenearby'].." (~y~"..otheremotename.."~w~)")
+          shareitem = NativeUI.CreateItem(z, "/nearby (~b~"..a.."~w~) "..Config.Languages[lang]['makenearby'].." (~y~"..otheremotename.."~w~)")
         end
         sharemenu:AddItem(shareitem)
         table.insert(ShareTable, a)
