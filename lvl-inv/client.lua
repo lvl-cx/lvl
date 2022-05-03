@@ -96,6 +96,7 @@ RegisterNetEvent('LVL:InventoryOpen')
 AddEventHandler('LVL:InventoryOpen', function(toggle, lootbag)
     IsLootBagOpening = lootbag
     if IsLootBagOpening then
+        TriggerEvent("LVL:PlaySound", "zipper")
         LoadAnimDict('amb@medic@standing@kneel@base')
         LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
