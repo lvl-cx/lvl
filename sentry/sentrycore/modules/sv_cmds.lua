@@ -59,7 +59,7 @@ RegisterCommand('ooc', function(source, args, rawCommand)
   }
 }}), { ["Content-Type"] = "application/json" })  if Sentry.hasGroup(user_id, 'founder') then
     TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1Founder^7 {0}: {1}</div>',
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Founder^7 {0}: {1}</div>',
       args = { playerName, msg }
     })
   elseif Sentry.hasGroup(user_id, 'commanager') then
@@ -68,7 +68,6 @@ RegisterCommand('ooc', function(source, args, rawCommand)
       args = { playerName, msg }
     })
   
-    ---
   elseif Sentry.hasGroup(user_id, 'trialstaff') then
     TriggerClientEvent('chat:addMessage', -1, {
       template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Trial Staff^7 {0}: {1}</div>',
@@ -109,6 +108,32 @@ RegisterCommand('ooc', function(source, args, rawCommand)
       template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
       args = { playerName, msg }
     })
+  elseif Sentry.hasGroup(user_id, 'Champion') then
+    TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3 {0}^7: {1}</div>',
+      args = { playerName, msg }
+    })
+
+  elseif Sentry.hasGroup(user_id, 'Warrior') then
+    TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
+      args = { playerName, msg }
+    })
+  elseif Sentry.hasGroup(user_id, 'Soldier') then
+    TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^4 {0}^7: {1}</div>',
+      args = { playerName, msg }
+    })
+  elseif Sentry.hasGroup(user_id, 'Recruit') then
+    TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2 {0}^7: {1}</div>',
+      args = { playerName, msg }
+    })
+  elseif Sentry.hasGroup(user_id, 'Starter') then
+    TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
+      args = { playerName, msg }
+    })
   else
     TriggerClientEvent('chat:addMessage', -1, {
         template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | {0}: {1}</div>',
@@ -133,36 +158,88 @@ RegisterCommand('/', function(source, args, rawCommand)
       }
   }
 }}), { ["Content-Type"] = "application/json" })  if Sentry.hasGroup(user_id, 'founder') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1Founder^7 {0}: {1}</div>',
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Founder^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'commanager') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^6Community Manager^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+
+elseif Sentry.hasGroup(user_id, 'trialstaff') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Trial Staff^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+
+elseif Sentry.hasGroup(user_id, 'moderator') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Moderator^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+
+elseif Sentry.hasGroup(user_id, 'srmoderator') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Senior Moderator^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+
+elseif Sentry.hasGroup(user_id, 'administrator') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Administratorr^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+
+  ---
+elseif Sentry.hasGroup(user_id, 'staffmanager') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Staff Manager^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'headadmin') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'senioradmin') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'Champion') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3 {0}^7: {1}</div>',
+    args = { playerName, msg }
+  })
+
+elseif Sentry.hasGroup(user_id, 'Warrior') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'Soldier') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^4 {0}^7: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'Recruit') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2 {0}^7: {1}</div>',
+    args = { playerName, msg }
+  })
+elseif Sentry.hasGroup(user_id, 'Starter') then
+  TriggerClientEvent('chat:addMessage', -1, {
+    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
+    args = { playerName, msg }
+  })
+else
+  TriggerClientEvent('chat:addMessage', -1, {
+      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | {0}: {1}</div>',
       args = { playerName, msg }
-    })
-  elseif Sentry.hasGroup(user_id, 'commanager') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^6Community Manager^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif Sentry.hasGroup(user_id, 'staffmanager') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Staff Manager^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif Sentry.hasGroup(user_id, 'headadmin') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif Sentry.hasGroup(user_id, 'senioradmin') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  else
-    TriggerClientEvent('chat:addMessage', -1, {
-        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | {0}: {1}</div>',
-        args = { playerName, msg }
-    })
-  end
+  })
+end
 end, false)
 
 

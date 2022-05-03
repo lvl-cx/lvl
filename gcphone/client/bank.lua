@@ -14,7 +14,7 @@ end
 --  Function APP BANK
 --====================================================================================
 
--- FOR ATM for the banking resource
+-- FOR Sentry for the banking resource
 RegisterNetEvent('banking:updateBalance')
 AddEventHandler('banking:updateBalance', function(account)
   if account ~= nil then

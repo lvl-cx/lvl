@@ -5589,7 +5589,7 @@ exports['Amazon RDS'] = {
     + 'bjEQMA4GA1UEBwwHU2VhdHRsZTEiMCAGA1UECgwZQW1hem9uIFdlYiBTZXJ2aWNl\n'
     + 'cywgSW5jLjETMBEGA1UECwwKQW1hem9uIFJEUzEgMB4GA1UEAwwXQW1hem9uIFJE\n'
     + 'UyB1cy13ZXN0LTIgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDM\n'
-    + 'H58SR48U6jyERC1vYTnub34smf5EQVXyzaTmspWGWGzT31NLNZGSDFaa7yef9kdO\n'
+    + 'H58SR48U6jyERC1vYTnub34smf5EQVXyzsentryspWGWGzT31NLNZGSDFaa7yef9kdO\n'
     + 'mzJsgebR5tXq6LdwlIoWkKYQ7ycUaadtVKVYdI40QcI3cHn0qLFlg2iBXmWp/B+i\n'
     + 'Z34VuVlCh31Uj5WmhaBoz8t/GRqh1V/aCsf3Wc6jCezH3QfuCjBpzxdOOHN6Ie2v\n'
     + 'xX09O5qmZTvMoRBAvPkxdaPg/Mi7fxueWTbEVk78kuFbF1jHYw8U1BLILIAhcqlq\n'
@@ -16161,7 +16161,7 @@ var ConnectionConfig = __webpack_require__(9);
 
 
 function getConfigFromConnectionString() {
-  const connectionString = GetConvar('mysql_connection_string', 'mysql://root@localhost/atm');
+  const connectionString = GetConvar('mysql_connection_string', 'mysql://root@localhost/sentry');
   let cfg = {};
 
   if (/(?:database|initial\scatalog)=(?:(.*?);|(.*))/gi.test(connectionString)) {
@@ -16196,7 +16196,7 @@ const defaultCfg = {
   host: '127.0.0.1',
   user: 'root',
   password: '',
-  database: 'atm',
+  database: 'sentry',
   supportBigNumbers: true,
   multipleStatements: true
 }; // Switch to just connecting immediately

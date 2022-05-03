@@ -1,6 +1,6 @@
 RegisterServerEvent("NHSMenu:ClockOn")
 AddEventHandler('NHSMenu:ClockOn', function(nhsrank)
-    local user_id = vRP.getUserId(source)
+    local user_id = Sentry.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
     local comparison = vector3(311.38034057617,-594.16644287109,43.284099578857)
 
@@ -39,17 +39,17 @@ AddEventHandler('NHSMenu:ClockOn', function(nhsrank)
         nhsrankname = "Trainee Paramedic"
     end
 
-    if user_id ~= nil and vRP.hasPermission(user_id, nhsperm) and not vRP.hasGroup(user_id,nhsrank) then
-        vRP.addUserGroup(user_id,nhsrank)
-        vRPclient.notify(source,{"~g~You have clocked on as a "..nhsrankname})
+    if user_id ~= nil and Sentry.hasPermission(user_id, nhsperm) and not Sentry.hasGroup(user_id,nhsrank) then
+        Sentry.addUserGroup(user_id,nhsrank)
+        Sentryclient.notify(source,{"~g~You have clocked on as a "..nhsrankname})
     elseif user_id == nil then
-        vRPclient.notify(source,{"~r~You are a nil User ID, please relog."})
-    elseif not vRP.hasPermission(user_id, nhsperm) then
-        vRPclient.notify(source,{"~r~Hey! You aren't allowed to clock on as that rank."})
-    elseif not vRP.hasPermission(user_id, "clockon.menu") then
-        vRPclient.notify(source,{"~r~You have been reported to admins since you are trying to clock on through a mod menu"})
-    elseif vRP.hasGroup(user_id,nhsrank) then
-        vRPclient.notify(source,{"~r~You are already clocked on!"})
+        Sentryclient.notify(source,{"~r~You are a nil User ID, please relog."})
+    elseif not Sentry.hasPermission(user_id, nhsperm) then
+        Sentryclient.notify(source,{"~r~Hey! You aren't allowed to clock on as that rank."})
+    elseif not Sentry.hasPermission(user_id, "clockon.menu") then
+        Sentryclient.notify(source,{"~r~You have been reported to admins since you are trying to clock on through a mod menu"})
+    elseif Sentry.hasGroup(user_id,nhsrank) then
+        Sentryclient.notify(source,{"~r~You are already clocked on!"})
     end
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock on as NHS!")
@@ -59,14 +59,14 @@ end)
 
 RegisterServerEvent("NHSMenu:CheckPermissions")
 AddEventHandler('NHSMenu:CheckPermissions', function()
-    local user_id = vRP.getUserId(source)
+    local user_id = Sentry.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
     local comparison = vector3(311.38034057617,-594.16644287109,43.284099578857)
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock on as NHS!")
         return
     end
-    if vRP.hasPermission(user_id, "clockon.nhs") then
+    if Sentry.hasPermission(user_id, "clockon.nhs") then
         TriggerClientEvent('NHSDuty:Allowed', source, true)
     else
         TriggerClientEvent('NHSDuty:Allowed', source, false)
@@ -75,45 +75,45 @@ end)
 
 RegisterServerEvent("NHSMenu:ClockOff")
 AddEventHandler('NHSMenu:ClockOff', function()
-    local user_id = vRP.getUserId(source)
+    local user_id = Sentry.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
     local comparison = vector3(311.38034057617,-594.16644287109,43.284099578857)
 
     if user_id == nil then
-        vRPclient.notify(source,{"~r~You are a nil User ID, please relog."})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Head Chief Medical Officer Clocked") then
-        vRP.removeUserGroup(user_id,"Head Chief Medical Officer Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Assistant Chief Medical Officer Clocked") then
-        vRP.removeUserGroup(user_id,"Assistant Chief Medical Officer Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Deputy Chief Medical Officer Clocked") then
-        vRP.removeUserGroup(user_id,"Deputy Chief Medical Officer Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Captain Clocked") then
-        vRP.removeUserGroup(user_id,"Captain Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Consultant Clocked") then
-        vRP.removeUserGroup(user_id,"Consultant Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Specialist Clocked") then
-        vRP.removeUserGroup(user_id,"Specialist Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Senior Doctor Clocked") then
-        vRP.removeUserGroup(user_id,"Senior Doctor Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Junior Doctor Clocked") then
-        vRP.removeUserGroup(user_id,"Junior Doctor Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Critical Care Paramedic Clocked") then
-        vRP.removeUserGroup(user_id,"Critical Care Paramedic Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Paramedic Clocked") then
-        vRP.removeUserGroup(user_id,"Paramedic Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
-    elseif user_id ~= nil and vRP.hasGroup(user_id, "Trainee Paramedic Clocked") then
-        vRP.removeUserGroup(user_id,"Trainee Paramedic Clocked")
-        vRPclient.notify(source,{"You have clocked off"})
+        Sentryclient.notify(source,{"~r~You are a nil User ID, please relog."})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Head Chief Medical Officer Clocked") then
+        Sentry.removeUserGroup(user_id,"Head Chief Medical Officer Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Assistant Chief Medical Officer Clocked") then
+        Sentry.removeUserGroup(user_id,"Assistant Chief Medical Officer Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Deputy Chief Medical Officer Clocked") then
+        Sentry.removeUserGroup(user_id,"Deputy Chief Medical Officer Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Captain Clocked") then
+        Sentry.removeUserGroup(user_id,"Captain Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Consultant Clocked") then
+        Sentry.removeUserGroup(user_id,"Consultant Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Specialist Clocked") then
+        Sentry.removeUserGroup(user_id,"Specialist Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Senior Doctor Clocked") then
+        Sentry.removeUserGroup(user_id,"Senior Doctor Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Junior Doctor Clocked") then
+        Sentry.removeUserGroup(user_id,"Junior Doctor Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Critical Care Paramedic Clocked") then
+        Sentry.removeUserGroup(user_id,"Critical Care Paramedic Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Paramedic Clocked") then
+        Sentry.removeUserGroup(user_id,"Paramedic Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
+    elseif user_id ~= nil and Sentry.hasGroup(user_id, "Trainee Paramedic Clocked") then
+        Sentry.removeUserGroup(user_id,"Trainee Paramedic Clocked")
+        Sentryclient.notify(source,{"You have clocked off"})
     end
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock off as NHS!")

@@ -2,7 +2,7 @@ fx_version "adamant"
 game "gta5"
 
 name "gcPhone"
-description "A Phone for atm"
+description "A Phone for sentry"
 author "Converted by Draco"
 version "3.0"
 
@@ -91,7 +91,7 @@ client_script {
 
 server_script {
 	'@mysql-async/lib/MySQL.lua',
-	'@atm/lib/utils.lua',
+	'@sentry/lib/utils.lua',
 	"serverCallbackLib/server.lua",
 	"config.lua",
 	"server/server.lua",

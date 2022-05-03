@@ -5,7 +5,7 @@
 -- Time: 00:39
 -- Made for CiviliansNetwork
 --
-ATM = Proxy.getInterface("ATM")
+Sentry = Proxy.getInterface("Sentry")
 
 RegisterNetEvent('service:call')
 AddEventHandler('service:call', function(data)

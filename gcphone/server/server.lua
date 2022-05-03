@@ -1,15 +1,15 @@
-local Tunnel = module("atm", "lib/Tunnel")
-local Proxy = module("atm", "lib/Proxy")
+local Tunnel = module("sentry", "lib/Tunnel")
+local Proxy = module("sentry", "lib/Proxy")
 local htmlEntities = module("lib/htmlEntities")
 
-ATM = Proxy.getInterface("ATM")
-ATMclient = Tunnel.getInterface("ATM", "gcphone")
+Sentry = Proxy.getInterface("Sentry")
+Sentryclient = Tunnel.getInterface("Sentry", "gcphone")
 
 math.randomseed(os.time()) 
 
 draCB.RegisterServerCallback('gcPhone:hasPhone', function(source, cb, data)
-    local user_id = ATM.getUserId({source})
-    if ATM.getInventoryItemAmount({user_id,"aphone"}) > 0 then
+    local user_id = Sentry.getUserId({source})
+    if Sentry.getInventoryItemAmount({user_id,"aphone"}) > 0 then
         cb(true)
     else
         cb(false)
@@ -56,10 +56,10 @@ end) --]]
 --  Utils
 --====================================================================================
 function getSourceFromIdentifier(identifier, cb)
-    return ATM.getUserSource({identifier})
+    return Sentry.getUserSource({identifier})
 end
 function getNumberPhone(identifier)
-    local result = MySQL.Sync.fetchAll("SELECT atm_user_identities.phone FROM atm_user_identities WHERE atm_user_identities.user_id = @identifier", {
+    local result = MySQL.Sync.fetchAll("SELECT sentry_user_identities.phone FROM sentry_user_identities WHERE sentry_user_identities.user_id = @identifier", {
         ['@identifier'] = identifier
     })
     if result[1] ~= nil then
@@ -68,7 +68,7 @@ function getNumberPhone(identifier)
     return nil
 end
 function getIdentifierByPhoneNumber(phone_number) 
-    local result = MySQL.Sync.fetchAll("SELECT atm_user_identities.user_id FROM atm_user_identities WHERE atm_user_identities.phone = @phone_number", {
+    local result = MySQL.Sync.fetchAll("SELECT sentry_user_identities.user_id FROM sentry_user_identities WHERE sentry_user_identities.phone = @phone_number", {
         ['@phone_number'] = phone_number
     })
     if result[1] ~= nil then
@@ -79,7 +79,7 @@ end
 
 
 function getPlayerID(source)
-    local player = ATM.getUserId({source})
+    local player = Sentry.getUserId({source})
     return player
 end
 function getIdentifiant(id)
@@ -98,7 +98,7 @@ function getOrGeneratePhoneNumber (sourcePlayer, identifier, cb)
             myPhoneNumber = getPhoneRandomNumber()
             local id = getIdentifierByPhoneNumber(myPhoneNumber)
         until id == nil
-        MySQL.Async.insert("UPDATE atm_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", { 
+        MySQL.Async.insert("UPDATE sentry_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", { 
             ['@myPhoneNumber'] = myPhoneNumber,
             ['@identifier'] = identifier
         }, function ()
@@ -183,7 +183,7 @@ end)
 --  Messages
 --====================================================================================
 function getMessages(identifier)
-    local result = MySQL.Sync.fetchAll("SELECT phone_messages.* FROM phone_messages LEFT JOIN atm_user_identities ON atm_user_identities.user_id = @identifier WHERE phone_messages.receiver = atm_user_identities.phone", {
+    local result = MySQL.Sync.fetchAll("SELECT phone_messages.* FROM phone_messages LEFT JOIN sentry_user_identities ON sentry_user_identities.user_id = @identifier WHERE phone_messages.receiver = sentry_user_identities.phone", {
          ['@identifier'] = identifier
     })
     return result
@@ -215,9 +215,9 @@ function addMessage(source, identifier, phone_number, message)
     local sourcePlayer = tonumber(source)
     local otherIdentifier = getIdentifierByPhoneNumber(phone_number)
     local myPhone = getNumberPhone(identifier)
-    if otherIdentifier ~= nil and ATM.getUserSource({otherIdentifier}) ~= nil then 
+    if otherIdentifier ~= nil and Sentry.getUserSource({otherIdentifier}) ~= nil then 
         local tomess = _internalAddMessage(myPhone, phone_number, message, 0)
-        TriggerClientEvent("gcPhone:receiveMessage", tonumber(ATM.getUserSource({otherIdentifier})), tomess)
+        TriggerClientEvent("gcPhone:receiveMessage", tonumber(Sentry.getUserSource({otherIdentifier})), tomess)
     end
     local memess = _internalAddMessage(phone_number, myPhone, message, 1)
     TriggerClientEvent("gcPhone:receiveMessage", sourcePlayer, memess)
@@ -296,7 +296,7 @@ AddEventHandler('gcPhone:deleteALL', function()
     TriggerClientEvent("appelsDeleteAllHistorique", sourcePlayer, {})
 end)
 
-AddEventHandler('gcPhone:deleteALLATMIdentity', function(src,user_id,num)
+AddEventHandler('gcPhone:deleteALLSentryIdentity', function(src,user_id,num)
     deleteAllMessage(user_id)
     deleteAllContact(user_id)
     appelsDeleteAllHistorique(user_id)
@@ -415,8 +415,8 @@ AddEventHandler('gcPhone:internal_startCall', function(source, phone_number, rtc
 
     if is_valid == true then
         -- getSourceFromIdentifier(destPlayer, function (srcTo)
-        if ATM.getUserSource({destPlayer}) ~= nil then
-            srcTo = tonumber(ATM.getUserSource({destPlayer}))
+        if Sentry.getUserSource({destPlayer}) ~= nil then
+            srcTo = tonumber(Sentry.getUserSource({destPlayer}))
 
             if srcTo ~= nil then
                 AppelsEnCours[indexCall].receiver_src = srcTo
@@ -571,7 +571,7 @@ end)
 --====================================================================================
 --  OnLoad
 --====================================================================================
-AddEventHandler("ATM:playerSpawn",function(user_id, source, first_spawn)
+AddEventHandler("Sentry:playerSpawn",function(user_id, source, first_spawn)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     getOrGeneratePhoneNumber(sourcePlayer, identifier, function (myPhoneNumber)
@@ -579,7 +579,7 @@ AddEventHandler("ATM:playerSpawn",function(user_id, source, first_spawn)
         TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
         TriggerClientEvent("gcPhone:allMessage", sourcePlayer, getMessages(identifier))
     end)
-    local bankM = ATM.getBankMoney({user_id})
+    local bankM = Sentry.getBankMoney({user_id})
     TriggerClientEvent('gcphone:setAccountMoney',source,bankM)
 end)
 
@@ -780,21 +780,21 @@ end
 RegisterServerEvent('gcPhone:moneyTransfer')
 AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
     local source = source
-    userid = ATM.getUserId({source})
-    reciever = ATM.getUserSource({tonumber(num)})
-    num = ATM.getUserId({reciever})
+    userid = Sentry.getUserId({source})
+    reciever = Sentry.getUserSource({tonumber(num)})
+    num = Sentry.getUserId({reciever})
     if tostring(amount) == tostring(tonumber(amount)) then
         if num == nil then
-            ATMclient.notify(source, {"~r~This ID does not exist/ is offline!"})
-            TriggerClientEvent("ATM:PlaySound", source, 2)
+            Sentryclient.notify(source, {"~r~This ID does not exist/ is offline!"})
+            TriggerClientEvent("Sentry:PlaySound", source, 2)
         else
         
             if userid == tonumber(num) then 
-                ATMclient.notify(source, {"~r~Unable to send money to yourself!"})
-                TriggerClientEvent("ATM:PlaySound", source, 2)
+                Sentryclient.notify(source, {"~r~Unable to send money to yourself!"})
+                TriggerClientEvent("Sentry:PlaySound", source, 2)
             else
             
-                if ATM.tryBankPayment({userid, tonumber(amount)}) then 
+                if Sentry.tryBankPayment({userid, tonumber(amount)}) then 
                     webhook = "https://discord.com/api/webhooks/930536791369474069/TBx4EgRkg_19gIJlfe0l6YGwkcSaX5O61wsBpfj2v0PluxklOTwEAQbaSKr3ueJE0Z3r"
        
                     PerformHttpRequest(webhook, function(err, text, headers) 
@@ -809,20 +809,20 @@ AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
                     }
                 }}), { ["Content-Type"] = "application/json" })
 
-                    ATMclient.notify(source, {"~g~Successfully transfered: ~w~£" .. amount .. " ~g~to ~w~" .. ATM.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
-                    TriggerClientEvent("ATM:PlaySound", source, 1)
-                    ATM.giveBankMoney({tonumber(num), tonumber(amount)})
+                    Sentryclient.notify(source, {"~g~Successfully transfered: ~w~£" .. amount .. " ~g~to ~w~" .. Sentry.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
+                    TriggerClientEvent("Sentry:PlaySound", source, 1)
+                    Sentry.giveBankMoney({tonumber(num), tonumber(amount)})
                 
-                    ATMclient.notify(reciever, {"~g~You have recieved: ~w~£" .. amount .. "~g~ from ~w~".. ATM.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
-                    TriggerClientEvent("ATM:PlaySound", reciever, 1)
+                    Sentryclient.notify(reciever, {"~g~You have recieved: ~w~£" .. amount .. "~g~ from ~w~".. Sentry.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
+                    TriggerClientEvent("Sentry:PlaySound", reciever, 1)
                 
                     else 
-                    ATMclient.notify(source, {"~r~You do not have enough money complete transaction!"})
-                    TriggerClientEvent("ATM:PlaySound", source, 2)
+                    Sentryclient.notify(source, {"~r~You do not have enough money complete transaction!"})
+                    TriggerClientEvent("Sentry:PlaySound", source, 2)
                 end
             end
         end
     else
-        ATMclient.notify(source,{'~r~The value you entered is not a number!'})
+        Sentryclient.notify(source,{'~r~The value you entered is not a number!'})
     end
 end)

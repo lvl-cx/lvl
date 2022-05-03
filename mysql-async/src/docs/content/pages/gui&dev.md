@@ -5,7 +5,7 @@ id: 51
 ## GUI & Dev
 
 With administration rights on your server, if you are unsure how to get those check the
-[step-by-step guide on setting up FXServer](https://docs.atm.net/docs/server-manual/setting-up-a-server/),
+[step-by-step guide on setting up FXServer](https://docs.sentry.net/docs/server-manual/setting-up-a-server/),
 you can type in the command `mysql` into the console to open the GUI. You can open that console via the <kbd>F8</kbd> key.
 It should show you a concise summary of how your server is doing.
 

@@ -9,7 +9,7 @@ const defaultCfg = {
   host: '127.0.0.1',
   user: 'root',
   password: '',
-  database: 'atm',
+  database: 'sentry',
   supportBigNumbers: true,
   multipleStatements: true,
 };

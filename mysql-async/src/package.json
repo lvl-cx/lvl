@@ -1,7 +1,7 @@
 {
   "name": "mysql-async",
   "version": "3.3.2",
-  "description": "atm-mysql-async",
+  "description": "sentry-mysql-async",
   "private": true,
   "scripts": {
     "build": "webpack --progress",

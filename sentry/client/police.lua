@@ -114,6 +114,7 @@ Citizen.CreateThread(function()
       DisableControlAction(0,75,true) -- disable exit vehicle
       DisableControlAction(27,75,true) -- disable exit vehicle
       DisableControlAction(1,323,true) -- disable x button
+      DisableControlAction(1,22,true)
     end
   end
 end)

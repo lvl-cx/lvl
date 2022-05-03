@@ -7,7 +7,7 @@ function MySQL.createCommand(queryname, query)
     if not Queries[queryname] then 
         Queries[queryname] = query
     else 
-        print('VRP_DB_DRIVER: Error query already exists.')
+        print('Sentry_DB_DRIVER: Error query already exists.')
     end 
 end
 
@@ -19,7 +19,7 @@ function MySQL.execute(queryname, variables)
             exports['ghmattimysql']:execute(Queries[queryname])
         end 
     else 
-        print('VRP_DB_DRIVER: Error query does not exist!')
+        print('Sentry_DB_DRIVER: Error query does not exist!')
     end 
 end
 
@@ -33,7 +33,7 @@ function MySQL.asyncQuery(queryname, variables)
             return rows
         end 
     else 
-        print('VRP_DB_DRIVER: Error query does not exist!')
+        print('Sentry_DB_DRIVER: Error query does not exist!')
         cb({{},nil})
     end 
 end
@@ -50,7 +50,7 @@ function MySQL.query(queryname, variables, cb)
             end)
         end 
     else 
-        print('VRP_DB_DRIVER: Error query does not exist!')
+        print('Sentry_DB_DRIVER: Error query does not exist!')
         cb({{},nil})
     end 
 end
