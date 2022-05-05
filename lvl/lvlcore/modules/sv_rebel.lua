@@ -17,7 +17,7 @@ AddEventHandler('Rebel:BuyWeapon', function(price, hash)
             if LVL.tryPayment(userid, price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~b~Paid ".. '£' ..tostring(price)})
+                LVLclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})
                 TriggerClientEvent("LVL:PlaySound", source, 2)
@@ -46,7 +46,7 @@ AddEventHandler('Rebel:BuyArmour', function()
             if LVL.tryPayment(userid, 100000) then
                 SetPedArmour(source, 96)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~b~Purchased Level 4 Armour. Paid £" .. '100,000'})
+                LVLclient.notify(source, {"~g~Purchased Level 4 Armour. Paid £" .. '100,000'})
                 TriggerClientEvent('LVL:SetVest', source)
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})

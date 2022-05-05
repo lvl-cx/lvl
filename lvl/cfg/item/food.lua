@@ -44,7 +44,7 @@ local function gen(ftype, vary_hunger, vary_thirst)
           if vary_thirst ~= 0 then LVL.varyThirst(user_id,vary_thirst) end
 
           if ftype == "drink" then
-            LVLclient.notify(player,{"~b~ Drinking "..name.."."})
+            LVLclient.notify(player,{"~g~ Drinking "..name.."."})
             play_drink(player)
           elseif ftype == "eat" then
             LVLclient.notify(player,{"~o~ Eating "..name.."."})

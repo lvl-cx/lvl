@@ -23,22 +23,22 @@ Config.ShowAllGasStations = true
 -- Configure the strings as you wish here.
 Config.Strings = {
 	ExitVehicle = "Exit the vehicle to refuel",
-	EToRefuel = "Press ~b~E ~w~to refuel vehicle",
+	EToRefuel = "Press ~g~E ~w~to refuel vehicle",
 	JerryCanEmpty = "Jerry can is empty",
 	FullTank = "Tank is full",
-	PurchaseJerryCan = "Press ~b~E ~w~to purchase a jerry can for ~b~$" .. Config.JerryCanCost,
-	CancelFuelingPump = "Press ~b~E ~w~to cancel the fueling",
-	CancelFuelingJerryCan = "Press ~b~E ~w~to cancel the fueling",
+	PurchaseJerryCan = "Press ~g~E ~w~to purchase a jerry can for ~g~$" .. Config.JerryCanCost,
+	CancelFuelingPump = "Press ~g~E ~w~to cancel the fueling",
+	CancelFuelingJerryCan = "Press ~g~E ~w~to cancel the fueling",
 	NotEnoughCash = "Not enough cash",
-	RefillJerryCan = "Press ~b~E ~w~ to refill the jerry can for ",
+	RefillJerryCan = "Press ~g~E ~w~ to refill the jerry can for ",
 	NotEnoughCashJerryCan = "Not enough cash to refill jerry can",
 	JerryCanFull = "Jerry can is full",
 	TotalCost = "Cost",
 }
 
 if not Config.UseESX then
-	Config.Strings.PurchaseJerryCan = "Press ~b~E ~w~to grab a jerry can"
-	Config.Strings.RefillJerryCan = "Press ~b~E ~w~ to refill the jerry can"
+	Config.Strings.PurchaseJerryCan = "Press ~g~E ~w~to grab a jerry can"
+	Config.Strings.RefillJerryCan = "Press ~g~E ~w~ to refill the jerry can"
 end
 
 Config.PumpModels = {

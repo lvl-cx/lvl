@@ -51,7 +51,7 @@ AddEventHandler('LVLCrypto:Withdraw:Crypto', function(system)
         if #(player_coords - manage_spot) < 5 then
             exports['ghmattimysql']:executeSync("UPDATE c_cryptominers SET amountmined = 0 WHERE user_id = @user_id AND machineid = @machineid", {user_id = user_id, machineid = system.machineid}, function() end)
             LVL.giveBankMoney(user_id, CalculateBitcoin(system.amountmined))
-            LVLclient.notify(source, {"~b~Withdraw Successfull: £"..amount_bank})
+            LVLclient.notify(source, {"~g~Withdraw Successfull: £"..amount_bank})
             TriggerClientEvent("LVL:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
@@ -75,7 +75,7 @@ AddEventHandler('LVLCrypto:Sell:System', function(system)
             exports['ghmattimysql']:executeSync("DELETE FROM c_cryptominers WHERE user_id = @user_id AND machineid = @machineid", {user_id = user_id, machineid = system.machineid}, function()end)
             LVL.giveMoney(user_id,sell_amount)
 
-            LVLclient.notify(source, {"~b~You have sold a System for £".. sell_amount})
+            LVLclient.notify(source, {"~g~You have sold a System for £".. sell_amount})
             TriggerClientEvent("LVL:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
@@ -102,7 +102,7 @@ AddEventHandler("LVLCrypto:buy_crypto_system", function(system)
     local system_coords = vector3(x,y,z)
     if #(player_coords - system_coords) < 7 then
         if LVL.tryBankPayment(user_id,system.price) then
-            LVLclient.notify(player, {"~b~You bought a System For £"..price})
+            LVLclient.notify(player, {"~g~You bought a System For £"..price})
         
             TriggerClientEvent("LVL:PlaySound", source, 1)
             exports['ghmattimysql']:executeSync("INSERT INTO c_cryptominers(user_id, pc_id,amountmined) VALUES( @user_id, @pc_id, @amountmined)", {user_id = user_id, pc_id = idofmachine, amountmined = 0}, function() end)        

@@ -21,10 +21,10 @@ AddEventHandler('KnifeStore:BuyWeapon', function(price, hash)
             if LVL.tryPayment(userid, finalCommision + price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~b~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
                 if finalID ~= nil then
                     LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                    LVLclient.notify(finalID,{"~b~You have been given ~w~£" .. finalCommision.. "~b~."})
+                    LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
                 end
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})

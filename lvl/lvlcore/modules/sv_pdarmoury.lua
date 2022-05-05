@@ -15,7 +15,7 @@ AddEventHandler('PD:BuyWeapon', function(hash)
         if LVL.hasPermission(userid, 'cop.keycard') then
             GiveWeaponToPed(source, hash, 250, false, false)
             TriggerClientEvent("LVL:PlaySound", source, 1)
-            LVLclient.notify(source, {"~b~Paid ".. '£0'})
+            LVLclient.notify(source, {"~g~Paid ".. '£0'})
         else
             LVLclient.notify(source,{'~r~You are not PD/ Clocked on!'})
             TriggerClientEvent("LVL:PlaySound", source, 2)
@@ -40,7 +40,7 @@ AddEventHandler('PD:BuyArmour', function()
     
             SetPedArmour(source, 96)
             TriggerClientEvent("LVL:PlaySound", source, 1)
-            LVLclient.notify(source, {"~b~Paid ".. '£0'})
+            LVLclient.notify(source, {"~g~Paid ".. '£0'})
 
         else
             LVLclient.notify(source,{'~r~You are not PD/ Clocked on!'})

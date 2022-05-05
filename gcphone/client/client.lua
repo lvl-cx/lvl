@@ -168,7 +168,7 @@ function showFixePhoneHelper (coords)
       coords.x, coords.y, coords.z, 1)
     if dist <= 2.0 then
       SetTextComponentFormat("STRING")
-      AddTextComponentString("~b~" .. data.name .. ' ~o~' .. number .. '~n~~INPUT_PICKUP~~w~ Use')
+      AddTextComponentString("~g~" .. data.name .. ' ~o~' .. number .. '~n~~INPUT_PICKUP~~w~ Use')
       DisplayHelpTextFromStringLabel(0, 0, 0, -1)
       if IsControlJustPressed(1, KeyTakeCall) then
         startFixeCall(number)
@@ -299,7 +299,7 @@ AddEventHandler("gcPhone:receiveMessage", function(message)
           text = '~o~New message from ~y~'.. message.transmitter
           for _,contact in pairs(contacts) do
             if contact.number == message.transmitter then
-              text = '~o~New message from ~b~'.. contact.display
+              text = '~o~New message from ~g~'.. contact.display
               break
             end
           end

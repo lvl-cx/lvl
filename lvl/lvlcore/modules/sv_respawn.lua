@@ -54,7 +54,7 @@ AddEventHandler("LVLTP:MissionRow",function()
        if LVL.hasPermission(user_id, "police.service") then
        LVLclient.teleport(source, {428.19479370117,-981.58215332031,30.710285186768})
        else
-       TriggerClientEvent('showNotification', source,"~b~".. "~r~You don't have permission to do that or your not on duty")
+       TriggerClientEvent('showNotification', source,"~g~".. "~r~You don't have permission to do that or your not on duty")
        end
 end)
 
@@ -70,7 +70,7 @@ AddEventHandler("LVLTP:PaletoPD",function()
        if LVL.hasPermission(user_id, "police.service") then
        LVLclient.teleport(source, {-439.23,6020.6,31.49})
        else
-       TriggerClientEvent('showNotification', source,"~b~".. "~r~You don't have permission to do that or your not on duty")
+       TriggerClientEvent('showNotification', source,"~g~".. "~r~You don't have permission to do that or your not on duty")
        end
 end)
 
@@ -86,7 +86,7 @@ AddEventHandler("LVLTP:Vespucci",function()
        if LVL.hasPermission(user_id, "police.service") then
        LVLclient.teleport(source, {-1061.13,-827.26,19.21})
        else
-       TriggerClientEvent('showNotification', source,"~b~".. "~r~You don't have permission to do that or your not on duty")
+       TriggerClientEvent('showNotification', source,"~g~".. "~r~You don't have permission to do that or your not on duty")
        end
 end)
 
@@ -103,7 +103,7 @@ AddEventHandler("LVLTP:Rebel",function()
        if LVL.hasPermission(user_id, "rebel.license") then
        LVLclient.teleport(source, {3312.1791992188,5175.7817382812,19.614547729492})
        else
-       TriggerClientEvent('showNotification', source,"~b~".. "~r~You don't have permission to do")
+       TriggerClientEvent('showNotification', source,"~g~".. "~r~You don't have permission to do")
        end
 end)
 

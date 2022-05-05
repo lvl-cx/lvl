@@ -1,22 +1,22 @@
-RMenu.Add('CivMenu', 'main', RageUI.CreateMenu("", "~b~LVL CIV Menu",1300, 50))
+RMenu.Add('CivMenu', 'main', RageUI.CreateMenu("", "~g~LVL CIV Menu",1300, 50))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('CivMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
-            RageUI.Button("Ask ID", nil, { RightLabel = "~b~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Ask ID", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('LVL:AskID')
                 end
             end)
 
-			RageUI.Button("Give Money", nil, { RightLabel = "~b~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("Give Money", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('LVL:GiveMoney')
                 end
             end)
 
-			RageUI.Button("Search Player", nil, { RightLabel = "~b~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("Search Player", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('LVL:SearchPlr')
                 end

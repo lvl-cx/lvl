@@ -522,9 +522,9 @@ function LVL.ban(adminsource,permid,time,reason)
             banTime = banTime  + (60 * 60 * tonumber(time))  
             LVL.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
             LVL.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
-            LVLclient.notify(adminsource,{"~b~Successfully banned Perm ID:" .. permid})
+            LVLclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
         else 
-            LVLclient.notify(adminsource,{"~b~Successfully banned Perm ID:" .. permid})
+            LVLclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             LVL.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
             LVL.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
         end
@@ -532,10 +532,10 @@ function LVL.ban(adminsource,permid,time,reason)
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            LVLclient.notify(adminsource,{"~b~Successfully banned Perm ID:" .. permid})
+            LVLclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             LVL.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         else 
-            LVLclient.notify(adminsource,{"~b~Successfully banned Perm ID:" .. permid})
+            LVLclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
             LVL.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         end
     end
@@ -550,9 +550,9 @@ function LVL.banConsole(permid,time,reason)
             banTime = banTime  + (60 * 60 * tonumber(time))  
             LVL.setBanned(permid,true,banTime,reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
             LVL.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
-            print("~b~Successfully banned Perm ID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
         else 
-            print("~b~Successfully banned Perm ID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             LVL.setBanned(permid,true,"perm",reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
             LVL.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
         end
@@ -560,10 +560,10 @@ function LVL.banConsole(permid,time,reason)
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            print("~b~Successfully banned Perm ID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             LVL.setBanned(permid,true,banTime,reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
         else 
-            print("~b~Successfully banned Perm ID:" .. permid)
+            print("~g~Successfully banned Perm ID:" .. permid)
             LVL.setBanned(permid,true,"perm",reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
         end
     end

@@ -41,7 +41,7 @@ AddEventHandler('NHSMenu:ClockOn', function(nhsrank)
 
     if user_id ~= nil and LVL.hasPermission(user_id, nhsperm) and not LVL.hasGroup(user_id,nhsrank) then
         LVL.addUserGroup(user_id,nhsrank)
-        LVLclient.notify(source,{"~b~You have clocked on as a "..nhsrankname})
+        LVLclient.notify(source,{"~g~You have clocked on as a "..nhsrankname})
     elseif user_id == nil then
         LVLclient.notify(source,{"~r~You are a nil User ID, please relog."})
     elseif not LVL.hasPermission(user_id, nhsperm) then

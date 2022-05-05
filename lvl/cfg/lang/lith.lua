@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">€</span> {1}",
     bdisplay = "<span class=\"symbol\">€</span> {1}",
     given = "Duota ~r~{1}€.",
-    received = "Gauta ~b~{1}€.",
+    received = "Gauta ~g~{1}€.",
     not_enough = "~r~Nepakanka pinigų.",
     paid = "Sumokėta ~r~{1}€.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Duoti daiktą artimiausiui žaidėjui.",
       prompt = "Duoti: (daugiausiai {1}):",
       given = "Duota ~r~{1} ~s~{2}.",
-      received = "Gauta ~b~{1} ~s~{2}.",
+      received = "Gauta ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "Išmesti",
@@ -82,7 +82,7 @@ local lang = {
       title = "Nusiimti pinigų",
       description = "Galėsite nusiimti pinigų iš banko",
       prompt = "Įrašykite sumą kiek norėsite nusiimti:",
-      withdrawn = "~b~{1}€ ~s~buvo nuimta iš banko.",
+      withdrawn = "~g~{1}€ ~s~buvo nuimta iš banko.",
       not_enough = "~r~Tu neturi pakankamai pinigų banke."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "Pinigų plovimas",
       description = "Naudok savo biznį pinigų plovimui.",
       prompt = "Įveskite sumą kiek norite įdėti pinigų (daugiausiai {1} €): ",
-      laundered = "~b~{1}€ ~s~praplauti.",
+      laundered = "~g~{1}€ ~s~praplauti.",
       not_enough = "~r~Nepakanka nešvarių pinigų."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "Atidarykite savo biznį, minimalus kapitalas {1} €.",
       prompt_name = "Biznio pavadinimas (pakeisti bus negalima, daugiausiai {1} raidžių):",
       prompt_capital = "Pradinis kapitalas (min {1})",
-      created = "~b~Biznis sukurtas."
+      created = "~g~Biznis sukurtas."
       
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "Uždaryti biznį",
         description = "Uždaryti artimiausio žaidėjo biznį.",
         request = "Ar tikrai uždarote biznį {3} savininko {1} {2} ?",
-        closed = "~b~Biznis uždarytas."
+        closed = "~g~Biznis uždarytas."
       },
       trackveh = {
         title = "Surasti transportą",
         description = "Surasti transporto priemonę pagal registracijos numerį.",
         prompt_reg = "Įveskite registracijos numerį:",
         prompt_note = "Įveskite sekimo pastabą / priežastį:",
-        tracking = "~b~Sekimas pradėtas.",
-        track_failed = "~b~Sekimas {1}~s~ ({2}) ~n~~r~nepavyko.",
+        tracking = "~g~Sekimas pradėtas.",
+        track_failed = "~g~Sekimas {1}~s~ ({2}) ~n~~r~nepavyko.",
         tracked = "Sekamas {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "Išvalyti įrašus",
           description = "Išvalyti policijos įrašus pagal registracijos numerį.",
-          deleted = "~b~Policijos įrašai ištrinti"
+          deleted = "~g~Policijos įrašai ištrinti"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "Konfiskuoti ginklus",
           description = "Konfiskuoti artimiausio žaidėjo ginklus",
-          seized = "~b~Tavo ginklai buvo konfiskuoti."
+          seized = "~g~Tavo ginklai buvo konfiskuoti."
         },
         items = {
           title = "Konfiskuoti nelegalius",
           description = "Konfiskuoti neteisėtus daiktus",
-          seized = "~b~Jūsų neteisėta medžiaga buvo konfiskuota."
+          seized = "~g~Jūsų neteisėta medžiaga buvo konfiskuota."
         }
       },
       jail = {
         title = "Kalėjimas",
         description = "Pasodinti arba paleisti artimiausią žaidėja iš kalėjimo.",
         not_found = "~r~Nerastas kalėjimas.",
-        jailed = "~b~Pasodintas.",
-        unjailed = "~b~Paleistas.",
-        notify_jailed = "~b~Tu buvai pasodintas į kalėjimą.",
-        notify_unjailed = "~b~Tu buvai paleistas iš kalėjimo."
+        jailed = "~g~Pasodintas.",
+        unjailed = "~g~Paleistas.",
+        notify_jailed = "~g~Tu buvai pasodintas į kalėjimą.",
+        notify_unjailed = "~g~Tu buvai paleistas iš kalėjimo."
       },
       fine = {
         title = "Bauda",
         description = "Pasiulyti artimiausiui žaidėjui bauda.",
-        fined = "~b~Sumokėjo ~s~{2} € už ~b~{1}.",
-        notify_fined = "~b~Tau buvo paskirta bauda ~s~ {2} € už ~b~{1}.",
+        fined = "~g~Sumokėjo ~s~{2} € už ~g~{1}.",
+        notify_fined = "~g~Tau buvo paskirta bauda ~s~ {2} € už ~g~{1}.",
         record = "[Bauda] {2} € už {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "➕ Pridėti",
         prompt_number = "Įveskite telefono numerį kad pridėtumėte:",
         prompt_name = "Įveskite varda:",
-        added = "~b~Telefono numeris buvo pridėtas."
+        added = "~g~Telefono numeris buvo pridėtas."
       },
       sendsms = {
         title = "Siūsti SMS",
         prompt = "Įveskite žinutę (daugiausiai {1} raidžių):",
-        sent = "~b~ Nusiusta n°{1}.",
+        sent = "~g~ Nusiusta n°{1}.",
         not_sent = "~r~ n°{1} nepasiekemas."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "SMS istorija",
       description = "Gauta SMS istorija.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-pozicija ~b~ {1}"
+      notify = "SMS-pozicija ~g~ {1}"
     },
     service = {
       title = "Tarnyba",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "Prikti",
       description = "Įsigykite namą čia, kaina yra {1} €.",
-      bought = "~b~Nupirkta.",
+      bought = "~g~Nupirkta.",
       full = "~r~Vieta yra pilna.",
       have_home = "~r~Jau turite namus."
     },
     sell = {
       title = "Parduoti",
       description = "Parduok savo namus už {1} €",
-      sold = "~b~Parduota.",
+      sold = "~g~Parduota.",
       no_home = "~r~Tu neturi namų čia."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "Pradėkite statymą su šalia esančiais žaidėjais, nugalėtojas bus atsitiktinai parinktas.",
         prompt = "Statymo suma:",
         request = "[Statymas] Ar norite statyti {1} € ?",
-        started = "~b~Statymas prasidėjo."
+        started = "~g~Statymas prasidėjo."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "Paklausti atidaryti bagažine",
-      asked = "~b~Klausiama...",
+      asked = "~g~Klausiama...",
       request = "Ar norite atidaryti bagažine ?"
     },
     replace = {
@@ -447,7 +447,7 @@ local lang = {
     informer = {
       title = "Neteisėtas informatorius",
       description = "{1} $",
-      bought = "~b~Pozicija išsiųsta į jūsų GPS."
+      bought = "~g~Pozicija išsiųsta į jūsų GPS."
     }
   },
   mission = {
@@ -460,10 +460,10 @@ local lang = {
   aptitude = {
     title = "Įgūdžiai",
     description = "Parodyti įgūdžius.",
-    lose_exp = "Įgūdis ~b~{1}/{2} ~r~-{3} ~s~prarasti exp.",
-    earn_exp = "Įgūdis ~b~{1}/{2} ~b~+{3} ~s~gauti exp.",
-    level_down = "Įgūdis ~b~{1}/{2} ~r~prarasti lygį ({3}).",
-    level_up = "Aptitude ~b~{1}/{2} ~b~pasikelti lygį ({3}).",
+    lose_exp = "Įgūdis ~g~{1}/{2} ~r~-{3} ~s~prarasti exp.",
+    earn_exp = "Įgūdis ~g~{1}/{2} ~g~+{3} ~s~gauti exp.",
+    level_down = "Įgūdis ~g~{1}/{2} ~r~prarasti lygį ({3}).",
+    level_up = "Aptitude ~g~{1}/{2} ~g~pasikelti lygį ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | exp {2} | lvl {3} | progresas {4}%"

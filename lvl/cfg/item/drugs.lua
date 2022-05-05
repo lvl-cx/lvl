@@ -19,7 +19,7 @@ pills_choices["Take"] = {function(player,choice)
         if not in_coma then
           if LVL.tryGetInventoryItem(user_id,"pills",1) then
             LVLclient.varyHealth(player,{25})
-            LVLclient.notify(player,{"~b~ Taking pills."})
+            LVLclient.notify(player,{"~g~ Taking pills."})
             play_drink(player)
             LVL.closeMenu(player)
           end
@@ -44,7 +44,7 @@ smoke_choices["Take"] = {function(player,choice)
   if user_id ~= nil then
     if LVL.tryGetInventoryItem(user_id,"weed",1) then
 	  LVL.varyHunger(user_id,(20))
-      LVLclient.notify(player,{"~b~ smoking weed."})
+      LVLclient.notify(player,{"~g~ smoking weed."})
       play_smoke(player)
       LVL.closeMenu(player)
     end
@@ -67,7 +67,7 @@ smell_choices["Take"] = {function(player,choice)
   if user_id ~= nil then
     if LVL.tryGetInventoryItem(user_id,"cocaine",1) then
 	  LVL.varyThirst(user_id,(20))
-      LVLclient.notify(player,{"~b~ smell cocaine."})
+      LVLclient.notify(player,{"~g~ smell cocaine."})
       play_smell(player)
       LVL.closeMenu(player)
     end
@@ -90,7 +90,7 @@ lsd_choices["Take"] = {function(player,choice)
   if user_id ~= nil then
     if LVL.tryGetInventoryItem(user_id,"lsd",1) then
 	  LVL.varyThirst(user_id,(20))
-      LVLclient.notify(player,{"~b~ Taking lsd."})
+      LVLclient.notify(player,{"~g~ Taking lsd."})
       play_lsd(player)
       LVL.closeMenu(player)
     end

@@ -53,7 +53,7 @@ local choice_service = {function(player,choice)
       LVLclient.notify(player,{"~r~Off service"})
 	else
 	  LVL.addUserGroup({user_id,service})
-      LVLclient.notify(player,{"~b~On service"})
+      LVLclient.notify(player,{"~g~On service"})
 	end
   end
 end, "Go on/off service"}
@@ -240,7 +240,7 @@ local ch_hack = {function(player,choice)
             LVLclient.notify(nplayer,{"Hacked ~r~".. amount .."£."})
 		    LVL.giveInventoryItem({user_id,"dirty_money",amount,true})
 		  else
-            LVLclient.notify(nplayer,{"~b~Hacking attempt failed."})
+            LVLclient.notify(nplayer,{"~g~Hacking attempt failed."})
             LVLclient.notify(player,{"~r~Hacking attempt failed."})
 		  end
         else
@@ -273,7 +273,7 @@ local ch_mug = {function(player,choice)
               LVLclient.notify(player,{lang.money.not_enough()})
             end
 		  else
-            LVLclient.notify(nplayer,{"~b~Mugging attempt failed."})
+            LVLclient.notify(nplayer,{"~g~Mugging attempt failed."})
             LVLclient.notify(player,{"~r~Mugging attempt failed."})
 		  end
         else
@@ -455,7 +455,7 @@ function jail_clock(target_id,timer)
 	  end)
 	  LVLclient.teleport(target,{425.7607421875,-978.73425292969,30.709615707397}) -- teleport to outside jail
 	  LVLclient.setHandcuffed(target,{false})
-      LVLclient.notify(target,{"~b~You have been set free."})
+      LVLclient.notify(target,{"~g~You have been set free."})
 	  LVL.setUData({tonumber(target_id),"LVL:jail:time",json.encode(-1)})
     end
   end
@@ -490,7 +490,7 @@ local ch_jail = {function(player,choice)
 					end)
 				    LVLclient.teleport(target,{1641.5477294922,2570.4819335938,45.564788818359}) -- teleport to inside jail
 				    LVLclient.notify(target,{"~r~You have been sent to jail."})
-				    LVLclient.notify(player,{"~b~You sent a player to jail."})
+				    LVLclient.notify(player,{"~g~You sent a player to jail."})
 				    LVL.setHunger({tonumber(target_id),0})
 				    LVL.setThirst({tonumber(target_id),0})
 				    jail_clock(tonumber(target_id),tonumber(jail_time))
@@ -530,8 +530,8 @@ local ch_unjail = {function(player,choice)
 	            local target = LVL.getUserSource({tonumber(target_id)})
 				if target ~= nil then
 	              unjailed[target] = tonumber(target_id)
-				  LVLclient.notify(player,{"~b~Target will be released soon."})
-				  LVLclient.notify(target,{"~b~Someone lowered your sentence."})
+				  LVLclient.notify(player,{"~g~Target will be released soon."})
+				  LVLclient.notify(target,{"~g~Someone lowered your sentence."})
 				  LVLbm.logInfoToFile("jailLog.txt",user_id .. " freed "..target_id.." from a " .. custom .. " minutes sentence")
 				else
 				  LVLclient.notify(player,{"~r~That ID seems invalid."})
@@ -671,7 +671,7 @@ local ch_godmode = {function(player,choice)
 	  LVLclient.notify(player,{"~r~Godmode deactivated."})
 	else
 	  gods[player] = user_id
-	  LVLclient.notify(player,{"~b~Godmode activated."})
+	  LVLclient.notify(player,{"~g~Godmode activated."})
 	end
   end
 end, "Toggles admin godmode."}
@@ -761,7 +761,7 @@ function LVLbm.chargePhoneNumber(user_id,phone)
 				  if my_directory_name == "unknown" then
 				    my_directory_name = identity.phone
 				  end
-			      local text = "~b~" .. my_directory_name .. "~w~ is charging you ~r~£" .. charge .. "~w~ for his services."
+			      local text = "~g~" .. my_directory_name .. "~w~ is charging you ~r~£" .. charge .. "~w~ for his services."
 				  LVL.request({target,text,600,function(req_player,ok)
 				    if ok then
 					  local target_bank = LVL.getBankMoney({target_id}) - tonumber(charge)
@@ -769,16 +769,16 @@ function LVLbm.chargePhoneNumber(user_id,phone)
 		              if target_bank>0 then
 					    LVL.setBankMoney({user_id,my_bank})
 					    LVL.setBankMoney({target_id,target_bank})
-					    LVLclient.notify(player,{"You charged ~y~£"..charge.." ~w~from ~b~"..directory_name .."~w~ for your services."})
-						LVLclient.notify(target,{"~b~"..my_directory_name.."~w~ charged you ~r~£"..charge.."~w~ for his services."})
+					    LVLclient.notify(player,{"You charged ~y~£"..charge.." ~w~from ~g~"..directory_name .."~w~ for your services."})
+						LVLclient.notify(target,{"~g~"..my_directory_name.."~w~ charged you ~r~£"..charge.."~w~ for his services."})
 					    --LVLbm.logInfoToFile("mchargeLog.txt",user_id .. " mobile charged "..target_id.." the amount of " .. charge .. ", user bank post-payment for "..user_id.." equals £"..my_bank.." and for "..user_id.." equals £"..target_bank)
 					    LVL.closeMenu({player})
                       else
                         LVLclient.notify(target,{lang.money.not_enough()})
-                        LVLclient.notify(player,{"~b~" .. directory_name .. "~w~ tried to, but~r~ can't~w~ pay for your services."})
+                        LVLclient.notify(player,{"~g~" .. directory_name .. "~w~ tried to, but~r~ can't~w~ pay for your services."})
                       end
 				    else
-                      LVLclient.notify(player,{"~b~" .. directory_name .. "~r~ refused~w~ to pay for your services."})
+                      LVLclient.notify(player,{"~g~" .. directory_name .. "~r~ refused~w~ to pay for your services."})
 				    end
 				  end})
 				end})
@@ -813,7 +813,7 @@ function LVLbm.payPhoneNumber(user_id,phone)
 		    local target = LVL.getUserSource({target_id})
 			if target ~= nil then
 			  LVL.setBankMoney({user_id,my_bank})
-              LVLclient.notify(player,{"~b~You tranfered ~r~£"..transfer.." ~b~to ~b~"..directory_name})
+              LVLclient.notify(player,{"~g~You tranfered ~r~£"..transfer.." ~g~to ~g~"..directory_name})
 			  local target_bank = LVL.getBankMoney({target_id}) + tonumber(transfer)
 			  LVL.setBankMoney({target_id,target_bank})
 			  LVLbm.logInfoToFile("mpayLog.txt",user_id .. " mobile paid "..target_id.." the amount of " .. transfer .. ", user bank post-payment for "..user_id.." equals £"..my_bank.." and for "..user_id.." equals £"..target_bank)
@@ -822,7 +822,7 @@ function LVLbm.payPhoneNumber(user_id,phone)
 			    if my_directory_name == "unknown" then
 		          my_directory_name = identity.phone
 			    end
-                LVLclient.notify(target,{"~b~You received ~y~£"..transfer.." ~b~from ~b~"..my_directory_name})
+                LVLclient.notify(target,{"~g~You received ~y~£"..transfer.." ~g~from ~g~"..my_directory_name})
 			  end})
               LVL.closeMenu({player})
 			else
@@ -925,7 +925,7 @@ local ch_freeze = {function(player,choice)
 	    if target_id ~= nil and target_id ~= "" then 
 	      local target = LVL.getUserSource({tonumber(target_id)})
 		  if target ~= nil then
-		    LVLclient.notify(player,{"~b~You un/froze that player."})
+		    LVLclient.notify(player,{"~g~You un/froze that player."})
 		    BMclient.loadFreeze(target,{true,true,true})
 		  else
 		    LVLclient.notify(player,{"~r~That ID seems invalid."})
@@ -938,7 +938,7 @@ local ch_freeze = {function(player,choice)
 	  LVLclient.getNearestPlayer(player,{10},function(nplayer)
         local nuser_id = LVL.getUserId({nplayer})
         if nuser_id ~= nil then
-		  LVLclient.notify(player,{"~b~You un/froze that player."})
+		  LVLclient.notify(player,{"~g~You un/froze that player."})
 		  BMclient.loadFreeze(nplayer,{true,false,false})
         else
           LVLclient.notify(player,{lang.common.no_player_near()})

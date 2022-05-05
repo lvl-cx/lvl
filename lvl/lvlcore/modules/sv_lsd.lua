@@ -63,7 +63,7 @@ AddEventHandler('LVL:SellLSD', function()
           finalCommision = price * (commision / 100)
           LVL.giveMoney(user_id,price+finalCommision)
   
-          LVLclient.notify(source, {"~b~Sold 1 LSD for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+          LVLclient.notify(source, {"~g~Sold 1 LSD for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
   
           if finalID ~= nil then
             exports['ghmattimysql']:execute("SELECT * FROM ganginfo WHERE userid = @uid", {uid = LVL.getUserId(finalID)}, function(result)
@@ -76,7 +76,7 @@ AddEventHandler('LVL:SellLSD', function()
       
               end
             end)
-            LVLclient.notify(finalID,{"~b~You have been given ~w~£" .. finalCommision.. "~b~."})
+            LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
           end
 
         end

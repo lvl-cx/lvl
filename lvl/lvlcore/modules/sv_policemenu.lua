@@ -68,7 +68,7 @@ AddEventHandler('LVL:Seize', function()
                 if nuser_id ~= nil then
                   RemoveAllPedWeapons(nplayer, true)
                   LVL.clearInventory(nuser_id) 
-                  LVLclient.notify(player, {'~b~Seized players weapons'})
+                  LVLclient.notify(player, {'~g~Seized players weapons'})
                   LVLclient.notify(nplayer, {'~r~Your weapons were seized'})
                 else
                     LVLclient.notify(player,{"~r~There is no player nearby"})
@@ -150,7 +150,7 @@ function jail_clock(target_id,timer)
 	  end)
 	  LVLclient.teleport(target,{425.7607421875,-978.73425292969,30.709615707397}) -- teleport to outside jail
 	  LVLclient.setHandcuffed(target,{false})
-      LVLclient.notify(target,{"~b~You have been set free."})
+      LVLclient.notify(target,{"~g~You have been set free."})
 	  LVL.setUData({tonumber(target_id),"LVL:jail:time",json.encode(-1)})
     end
   end
@@ -188,7 +188,7 @@ AddEventHandler('LVL:JailPlayer', function()
                       end)
                       LVLclient.teleport(target,{1709.5927734375,2571.8068847656,50.189060211182}) -- teleport to inside jail
                       LVLclient.notify(target,{"~r~You have been sent to jail."})
-                      LVLclient.notify(player,{"~b~You sent a player to jail."})
+                      LVLclient.notify(player,{"~g~You sent a player to jail."})
                       jail_clock(tonumber(target_id),tonumber(jail_time))
                       local user_id = LVL.getUserId(player)
                     else
@@ -231,8 +231,8 @@ AddEventHandler('LVL:UnJailPlayer', function()
 	            local target = LVL.getUserSource(tonumber(target_id))
 				if target ~= nil then
 	              unjailed[target] = tonumber(target_id)
-				  LVLclient.notify(player,{"~b~Target will be released soon."})
-				  LVLclient.notify(target,{"~b~Someone lowered your sentence."})
+				  LVLclient.notify(player,{"~g~Target will be released soon."})
+				  LVLclient.notify(target,{"~g~Someone lowered your sentence."})
 				else
 				  LVLclient.notify(player,{"~r~That ID seems invalid."})
 				end

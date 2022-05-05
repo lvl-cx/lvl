@@ -20,7 +20,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)
 
                 LVL.addUserGroup(userid,job)
 
-                LVLclient.notify(source, {"~b~Purchased " .. job .. " License for ".. '£' ..tostring(priceshow) .. " ❤️"})
+                LVLclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..tostring(priceshow) .. " ❤️"})
                 TriggerClientEvent("LVL:PlaySound", source, 1)
 
                 else 

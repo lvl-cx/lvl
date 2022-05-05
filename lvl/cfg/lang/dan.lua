@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">DKK</span> {1}",
 	bdisplay = "<span class=\"symbol\">DKK</span> {1}",
     given = "Givet ~r~{1} DKK.",
-    received = "Modtaget ~b~{1} DKK.",
+    received = "Modtaget ~g~{1} DKK.",
     not_enough = "~r~Ikke nok penge.",
     paid = "Betalt ~r~{1} DKK.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Giv ting til den nærmeste spiller.",
       prompt = "Antal du ønsker at give (maks {1}):",
       given = "Givet ~r~{1} ~s~{2}.",
-      received = "Modtaget ~b~{1} ~s~{2}.",
+      received = "Modtaget ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "Ødelæg",
@@ -82,7 +82,7 @@ local lang = {
       title = "Hæv",
       description = "Hæv penge fra din konto",
       prompt = "Beløb du ønsker at hæve..",
-      withdrawn = "~b~{1} DKK ~s~Hævet.",
+      withdrawn = "~g~{1} DKK ~s~Hævet.",
       not_enough = "~r~Der er desværre ikke nok penge på din konto."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "Hvidvaskning",
       description = "Brug dit firma til hvidvaskning af penge.",
       prompt = "Beløb du ønsker at hvidvaske (Maks {1} DKK): ",
-      laundered = "~b~{1} DKK ~s~vasket.",
+      laundered = "~g~{1} DKK ~s~vasket.",
       not_enough = "~r~Du har ikke nok sorte penge."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "Åben Firma, minimums kapitalapitalet er {1} DKK.",
       prompt_name = "Firmanavn (Kan ikke skiftes, maks {1} karakterer):",
       prompt_capital = "Start kapital (minimum {1} DKK)",
-      created = "~b~Firma oprettet."
+      created = "~g~Firma oprettet."
       
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "Luk virksomhed",
         description = "Luk virksomheden på den nærmeste spiller.",
         request = "Er du sikker på du ønsker at lukke virksomheden - {3} EJET AF {1} {2} ?",
-        closed = "~b~Firmaet er nu lukket."
+        closed = "~g~Firmaet er nu lukket."
       },
       trackveh = {
         title = "Efterlys et køretøj",
         description = "Efterlys et køretøj, med CPR-NUMMER.",
         prompt_reg = "Skriv den nummerplade du ønsker at efetlyse.",
         prompt_note = "Beskriv din grund til at efterlyse dette køretøj.",
-        tracking = "~b~Efterlysning af køretøjet er sat igang.",
-        track_failed = "~b~Efterlysning af {1}~s~ ({2}) ~n~~r~Mislykket.",
+        tracking = "~g~Efterlysning af køretøjet er sat igang.",
+        track_failed = "~g~Efterlysning af {1}~s~ ({2}) ~n~~r~Mislykket.",
         tracked = "Efterlysning af {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "Tøm CPR Register",
           description = "Tøm den lagrede CPR register-liste.",
-          deleted = "~b~Registeret blev tømt"
+          deleted = "~g~Registeret blev tømt"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "Beslaglæg våben",
           description = "",
-          seized = "~b~Dine våben er blevet beslaglagt."
+          seized = "~g~Dine våben er blevet beslaglagt."
         },
         items = {
           title = "Beslaglæg illegale ting",
           description = "",
-          seized = "~b~Dine ulovlige genstande er blevet beslaglagt."
+          seized = "~g~Dine ulovlige genstande er blevet beslaglagt."
         }
       },
       jail = {
         title = "Fængsel",
         description = "Fængsel/frifind nærmeste spiller.",
         not_found = "~r~Du står ikke på stationen.",
-        jailed = "~b~Fængslet.",
-        unjailed = "~b~Frifundet.",
-        notify_jailed = "~b~Du blev fængslet.",
-        notify_unjailed = "~b~Du blev frifundet."
+        jailed = "~g~Fængslet.",
+        unjailed = "~g~Frifundet.",
+        notify_jailed = "~g~Du blev fængslet.",
+        notify_unjailed = "~g~Du blev frifundet."
       },
       fine = {
         title = "Bøde",
         description = "",
-        fined = "~b~Bøde ~s~{2} DKK for ~b~{1}.",
-        notify_fined = "~b~Du modtog en bøde ~s~ {2} DKK for ~b~{1}.",
+        fined = "~g~Bøde ~s~{2} DKK for ~g~{1}.",
+        notify_fined = "~g~Du modtog en bøde ~s~ {2} DKK for ~g~{1}.",
         record = "[Politiet] {2} DKK for {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "- Tilføj kontakt",
         prompt_number = "Mobilnummer",
         prompt_name = "Fulde navn",
-        added = "~b~Kontakten blev tilføjet."
+        added = "~g~Kontakten blev tilføjet."
       },
       sendsms = {
         title = "Send en SMS",
         prompt = "Skriv din besked (maks {1})",
-        sent = "~b~ Beskeden blev sendt til {1}.",
+        sent = "~g~ Beskeden blev sendt til {1}.",
         not_sent = "~r~ {1} Ikke tilgængelig."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "Indbakke",
       description = "",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "BESKED~b~ {1}:~s~ ~n~{2}"
+      notify = "BESKED~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Lokalisering ~b~ {1}"
+      notify = "SMS-Lokalisering ~g~ {1}"
     },
     service = {
       title = "Servicering",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "Køb",
       description = "Køb en lejlighed her, prisen er {1} DKK.",
-      bought = "~b~Købt.",
+      bought = "~g~Købt.",
       full = "~r~Boligblokken er desværre fuld.",
       have_home = "~r~Du har allerede en lejlighed."
     },
     sell = {
       title = "Sælg",
       description = "Sælg dit hjem for {1} DKK",
-      sold = "~b~Solgt.",
+      sold = "~g~Solgt.",
       no_home = "~r~Du har ikke en adresse her."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "Start et pokerspil med de andre spillere i nærheden, vinderen findes tilfældigt.",
         prompt = "Stats:",
         request = "[BUD] Ønsker du at satse {1} DKK?",
-        started = "~b~Spil startet."
+        started = "~g~Spil startet."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "Spørg om at åbne baggagerum",
-      asked = "~b~Spørger...",
+      asked = "~g~Spørger...",
       request = "Vil du åbne bagagerummet?"
     },
     replace = {
@@ -447,7 +447,7 @@ local lang = {
     informer = {
       title = "Illegal informer",
       description = "{1} DKK",
-      bought = "~b~Position sendt til din GPS."
+      bought = "~g~Position sendt til din GPS."
     }
   },
   mission = {
@@ -460,10 +460,10 @@ local lang = {
   aptitude = {
     title = "Informationer",
     description = "Vis informationer.",
-    lose_exp = "Fædighed: ~b~{1}/{2} ~r~-{3} ~s~XP.",
-    earn_exp = "Fædighed: ~b~{1}/{2} ~b~+{3} ~s~XP.",
-    level_down = "Fædighed: ~b~{1}/{2} ~r~tabte niveau ({3}).",
-    level_up = "Fædighed: ~b~{1}/{2} ~b~niveau op ({3}).",
+    lose_exp = "Fædighed: ~g~{1}/{2} ~r~-{3} ~s~XP.",
+    earn_exp = "Fædighed: ~g~{1}/{2} ~g~+{3} ~s~XP.",
+    level_down = "Fædighed: ~g~{1}/{2} ~r~tabte niveau ({3}).",
+    level_up = "Fædighed: ~g~{1}/{2} ~g~niveau op ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "{1} (Level {3})"

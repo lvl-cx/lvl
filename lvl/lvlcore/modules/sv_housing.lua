@@ -83,7 +83,7 @@ AddEventHandler("JudHousing:Buy", function(house)
                         if address == nil then --not already got a home
                             if LVL.tryFullPayment(user_id,v.buy_price) then --try payment
                                 LVL.setUserAddress(user_id,house,1) --set address
-                                LVLclient.notify(player,{"~b~You bought "..k.."!"}) --notify
+                                LVLclient.notify(player,{"~g~You bought "..k.."!"}) --notify
                             else
                                 LVLclient.notify(player,{"~r~You do not have enough money to buy "..k.."!"}) --not enough money
                             end
@@ -130,7 +130,7 @@ AddEventHandler("JudHousing:Enter", function(house)
                     LVLclient.notify(player,{"~r~You do not own this home, Knocked on door!"})
                     LVL.request(hplayer,name.." knocked on your door!", 30, function(v,ok) --knock on door
                         if ok then
-                            LVLclient.notify(player,{"~b~Doorbell Accepted!"}) --doorbell accepted
+                            LVLclient.notify(player,{"~g~Doorbell Accepted!"}) --doorbell accepted
                             LVL.accessHome(user_id, house, 1, function(ok) --enter home
                                 if not ok then
                                     LVLclient.notify(player,{"~r~Unable to enter home!"}) --notify unable to enter home for whatever reason
@@ -197,8 +197,8 @@ AddEventHandler("JudHousing:Sell", function(house)
                                                     LVL.setUserAddress(buyer_id, house, 1) --give house
                                                     LVL.removeUserAddress(user_id) -- remove house
                                                     LVL.giveBankMoney(user_id, amount) --give money to original owner
-                                                    LVLclient.notify(player,{"~b~You have successfully sold "..house.." to ".. GetPlayerName(target).." for £"..amount.."!"}) --notify original owner
-                                                    LVLclient.notify(target,{"~b~"..GetPlayerName(player).." has successfully sold you "..house.." for £"..amount.."!"}) --notify new owner
+                                                    LVLclient.notify(player,{"~g~You have successfully sold "..house.." to ".. GetPlayerName(target).." for £"..amount.."!"}) --notify original owner
+                                                    LVLclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you "..house.." for £"..amount.."!"}) --notify new owner
                                                 else
                                                     LVLclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
                                                     LVLclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
@@ -262,7 +262,7 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
         LVLclient.getCustomization2(player,{},function(custom)
             sets[outfitName] = custom --add outfit to table
             LVL.setUData(user_id,"LVL:home:wardrobe",json.encode(sets)) --add outfit to database
-            LVLclient.notify(player,{"~b~Saved outfit "..outfitName.." to wardrobe!"})
+            LVLclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
             TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
         end)
     end)

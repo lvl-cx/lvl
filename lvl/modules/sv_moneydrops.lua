@@ -31,7 +31,7 @@ end
                 if MoneydropEntities[netid].Money ~= 0 then
                     --print("YES")
                     LVL.giveMoney(user_id,MoneydropEntities[netid].Money)
-                    LVLclient.notify(source,{"~b~You have taken £"..tonumber(MoneydropEntities[netid].Money)})
+                    LVLclient.notify(source,{"~g~You have taken £"..tonumber(MoneydropEntities[netid].Money)})
                     MoneydropEntities[netid].Money = 0
                 else
                     --print("NO")

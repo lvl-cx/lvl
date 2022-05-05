@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">$</span> {1}",	
 	bdisplay = "<span class=\"symbol\">$</span> {1}",
     given = "Ai dat ~r~{1}$.",
-    received = "Ai primit ~b~{1}$.",
+    received = "Ai primit ~g~{1}$.",
     not_enough = "~r~Nu ai suficienti bani.",
     paid = "Ai platit ~r~{1}$.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Ofera obiecte celui mai apropiat jucator.",
       prompt = "Numar oferit (max {1}):",
       given = "Ai oferit ~r~{1} ~s~{2}.",
-      received = "Ai primit ~b~{1} ~s~{2}.",
+      received = "Ai primit ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "Arunca",
@@ -82,7 +82,7 @@ local lang = {
       title = "Extrage",
       description = "Scoate din banca in portofel",
       prompt = "Introduceti suma de bani pentru extragere:",
-      withdrawn = "~b~{1}$ ~s~extrasi.",
+      withdrawn = "~g~{1}$ ~s~extrasi.",
       not_enough = "~r~Nu ai suficienti bani in banca."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "Spalare de bani",
       description = "Foloseste-ti afacerea pentru a spala bani murdari.",
       prompt = "Suma de bani murdari de spalat (max {1} $): ",
-      laundered = "~b~{1}$ ~s~spalati.",
+      laundered = "~g~{1}$ ~s~spalati.",
       not_enough = "~r~Nu ai destui bani murdari."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "Deschide o afacere, capitalul minim este {1} $.",
       prompt_name = "Numele afacerii (nu poate fi schimbat ulterior, max {1} caractere):",
       prompt_capital = "Capital initial (min {1})",
-      created = "~b~Afacere creata."
+      created = "~g~Afacere creata."
 
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "Inchide afacere",
         description = "Inchide afacerea celui mai apropiat jucator.",
         request = "Esti sigur ca vrei sa inchizi afacerea {3} detinuta de {1} {2} ?",
-        closed = "~b~Afacere inchisa."
+        closed = "~g~Afacere inchisa."
       },
       trackveh = {
         title = "Urmareste vehiculul",
         description = "Urmareste un vehicul dupa nr. inmatriculare.",
         prompt_reg = "Introdu nr. de inmatriculare:",
         prompt_note = "Introdu motivul urmaririi:",
-        tracking = "~b~Urmarirea a inceput.",
-        track_failed = "~b~Urmarirea lui {1}~s~ ({2}) ~n~~r~a esuat.",
+        tracking = "~g~Urmarirea a inceput.",
+        track_failed = "~g~Urmarirea lui {1}~s~ ({2}) ~n~~r~a esuat.",
         tracked = "Urmarit {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "Curata cazierul",
           description = "Curata cazierul dupa nr. inregistrare.",
-          deleted = "~b~Cazierul curatat"
+          deleted = "~g~Cazierul curatat"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "Confisca armele",
           description = "Confisca armele celui mai apropiat jucator",
-          seized = "~b~Armele tale au fost confiscate."
+          seized = "~g~Armele tale au fost confiscate."
         },
         items = {
           title = "Confisca obiecte ilegale",
           description = "Confisca obiectele ilegale",
-          seized = "~b~Obiectele tale ilegale au fost confiscate."
+          seized = "~g~Obiectele tale ilegale au fost confiscate."
         }
       },
       jail = {
         title = "Aresteaza",
         description = "Baga/Scoate de la inchisoare cel mai apropiat jucator.",
         not_found = "~r~Nicio inchisoare gasita.",
-        jailed = "~b~A fost inchis.",
-        unjailed = "~b~A fost eliberat.",
-        notify_jailed = "~b~Ai fost inchis.",
-        notify_unjailed = "~b~Ai fost eliberat."
+        jailed = "~g~A fost inchis.",
+        unjailed = "~g~A fost eliberat.",
+        notify_jailed = "~g~Ai fost inchis.",
+        notify_unjailed = "~g~Ai fost eliberat."
       },
       fine = {
         title = "Amendeaza",
         description = "Amendeaza cel mai apropiat jucator.",
-        fined = "~b~Ai dat amenda ~s~{2} $ pentru ~b~{1}.",
-        notify_fined = "~b~Ai fost amendat ~s~ {2} $ pentru ~b~{1}.",
+        fined = "~g~Ai dat amenda ~s~{2} $ pentru ~g~{1}.",
+        notify_fined = "~g~Ai fost amendat ~s~ {2} $ pentru ~g~{1}.",
         record = "[Amenda] {2} $ pentru {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "> Adauga",
         prompt_number = "Adauga numarul:",
         prompt_name = "Adauga numele:",
-        added = "~b~Numar salvat."
+        added = "~g~Numar salvat."
       },
       sendsms = {
         title = "Trimite SMS",
         prompt = "Introdu mesajul (max {1} caractere):",
-        sent = "~b~ Trimis catre n°{1}.",
+        sent = "~g~ Trimis catre n°{1}.",
         not_sent = "~r~ n°{1} indisponibil."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "Istoric SMS",
       description = "Istoricul SMS-urilor primite.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Pozitie ~b~ {1}"
+      notify = "SMS-Pozitie ~g~ {1}"
     },
     service = {
       title = "Servicii",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "Cumpara",
       description = "Cumpara o casa aici, pretul este {1} $.",
-      bought = "~b~Cumparata.",
+      bought = "~g~Cumparata.",
       full = "~r~Indisponibil.",
       have_home = "~r~Ai deja o casa."
     },
     sell = {
       title = "Vinde",
       description = "Vinde casa pentru {1} $",
-      sold = "~b~Vanduta.",
+      sold = "~g~Vanduta.",
       no_home = "~r~Nu este casa ta."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "Fa un pariu cu jucatorii de langa tine, castigatorul e ales aleatoriu.",
         prompt = "Suma pariului:",
         request = "[BET] Vrei sa pariezi {1} $ ?",
-        started = "~b~Pariul a inceput."
+        started = "~g~Pariul a inceput."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "Cere sa deschida portbagajul",
-      asked = "~b~Asteapta...",
+      asked = "~g~Asteapta...",
       request = "Vrei sa deschizi portbagajul ?"
     },
     replace = {
@@ -451,7 +451,7 @@ local lang = {
     informer = {
       title = "Informator ilegal",
       description = "{1} $",
-      bought = "~b~Pozitie marcata pe GPS."
+      bought = "~g~Pozitie marcata pe GPS."
     }
   },
   mission = {
@@ -464,10 +464,10 @@ local lang = {
   aptitude = {
     title = "Abilitati",
     description = "Vezi abilitatile.",
-    lose_exp = "Abilitatea ~b~{1}/{2} ~r~-{3} ~s~exp.",
-    earn_exp = "Abilitatea ~b~{1}/{2} ~b~+{3} ~s~exp.",
-    level_down = "Abilitatea ~b~{1}/{2} ~r~nivel pierdut ({3}).",
-    level_up = "Abilitatea ~b~{1}/{2} ~b~nivel crescut ({3}).",
+    lose_exp = "Abilitatea ~g~{1}/{2} ~r~-{3} ~s~exp.",
+    earn_exp = "Abilitatea ~g~{1}/{2} ~g~+{3} ~s~exp.",
+    level_down = "Abilitatea ~g~{1}/{2} ~r~nivel pierdut ({3}).",
+    level_up = "Abilitatea ~g~{1}/{2} ~g~nivel crescut ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | EXP {2} | LVL {3} | progress {4}%"

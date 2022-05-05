@@ -18,7 +18,7 @@ AddEventHandler('Ammo:BuyAmmo', function(price, hash, amount)
            -- GiveWeaponToPed(source, hash, 250, false, false)
             LVL.giveInventoryItem(userid, hash, amount, false)
             TriggerClientEvent("LVL:PlaySound", source, 1)
-            LVLclient.notify(source, {"~b~Paid ".. '£' ..tostring(price)})
+            LVLclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
         else 
             LVLclient.notify(source, {"~r~Not enough money."})
             TriggerClientEvent("LVL:PlaySound", source, 2)

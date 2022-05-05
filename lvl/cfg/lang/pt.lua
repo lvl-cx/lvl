@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">€</span> {1}",
     bdisplay = "<span class=\"symbol\">€</span> {1}",
     given = "Enviado ~r~{1}€.",
-    received = "Recebido ~b~{1}€.",
+    received = "Recebido ~g~{1}€.",
     not_enough = "~r~Dinheiro insuficiente.",
     paid = "Pago ~r~{1}€.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Enviar item para o jogador mais proxímo.",
       prompt = "Quantidade que deseja enviar (max {1}):",
       given = "Enviado ~r~{1} ~s~{2}.",
-      received = "Recebido ~b~{1} ~s~{2}.",
+      received = "Recebido ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "Destruír",
@@ -82,7 +82,7 @@ local lang = {
       title = "Carteira",
       description = "enviar dinheiro da banco para o carteira",
       prompt = "Coloque a quantidade que deseja retirar:",
-      withdrawn = "~b~{1}€ ~s~retirado.",
+      withdrawn = "~g~{1}€ ~s~retirado.",
       not_enough = "~r~Você não tem dinheiro no banco."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "Lavagem de dinheiro",
       description = "Usar sua empresa para lavar dinheiro sujo.",
       prompt = "Quantidade que deseja lavar de dinheiro (max {1} €): ",
-      laundered = "~b~{1}€ ~s~lavado.",
+      laundered = "~g~{1}€ ~s~lavado.",
       not_enough = "~r~Não dinheiro sujo para lavar."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "Abra seu negócio, o capital mínimo é {1} €.",
       prompt_name = "Nome da empresa (Não é possível mudar depois, max {1} chars):",
       prompt_capital = "Capital Inicial (min {1})",
-      created = "~b~Negócios criados."
+      created = "~g~Negócios criados."
       
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "Fechar empresa",
         description = "Fechar o negócio do jogador mais próximo.",
         request = "Você tem certeza de fechar o negócio? {3} comprado por {1} {2} ?",
-        closed = "~b~Empresa fechada."
+        closed = "~g~Empresa fechada."
       },
       trackveh = {
         title = "Rastrear",
         description = "Acompanhe um veículo pelo seu número de registro.",
         prompt_reg = "Insira o número de registro:",
         prompt_note = "Insira uma nota de rastreamento / motivo:",
-        tracking = "~b~O rastreamento começou.",
-        track_failed = "~b~Rastreamento de {1}~s~ ({2}) ~n~~r~Falhou.",
+        tracking = "~g~O rastreamento começou.",
+        track_failed = "~g~Rastreamento de {1}~s~ ({2}) ~n~~r~Falhou.",
         tracked = "Monitorados {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "Limpar registros",
           description = "Registros policiais claros por número de registo.",
-          deleted = "~b~Registros policiais eliminados"
+          deleted = "~g~Registros policiais eliminados"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "Apreender armas",
           description = "Apreender as armas de jogador mais próximas",
-          seized = "~b~Suas armas foram apreendidas."
+          seized = "~g~Suas armas foram apreendidas."
         },
         items = {
           title = "Apreender os ilegais",
           description = "Apreender itens ilegais",
-          seized = "~b~Seu material ilegal foi apreendido."
+          seized = "~g~Seu material ilegal foi apreendido."
         }
       },
       jail = {
         title = "Cadeia",
         description = "Cadeia / Soltar para o jogador mais próximo dentro / da prisão mais próxima.",
         not_found = "~r~Sem cadeias por perto.",
-        jailed = "~b~Preso.",
-        unjailed = "~b~Solto.",
-        notify_jailed = "~b~Você está sendo preso.",
-        notify_unjailed = "~b~Você está sendo solto."
+        jailed = "~g~Preso.",
+        unjailed = "~g~Solto.",
+        notify_jailed = "~g~Você está sendo preso.",
+        notify_unjailed = "~g~Você está sendo solto."
       },
       fine = {
         title = "Multar",
         description = "Multar jogador maís proxímo.",
-        fined = "~b~Multar ~s~{2} € por ~b~{1}.",
-        notify_fined = "~b~Você está sendo multado ~s~ {2} € por ~b~{1}.",
+        fined = "~g~Multar ~s~{2} € por ~g~{1}.",
+        notify_fined = "~g~Você está sendo multado ~s~ {2} € por ~g~{1}.",
         record = "[Multa] {2} € por {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "➕ Adicionar",
         prompt_number = "Digite o número de telefone para adicionar:",
         prompt_name = "Digite o nome da entrada:",
-        added = "~b~Entrada adicionada."
+        added = "~g~Entrada adicionada."
       },
       sendsms = {
         title = "Enviar SMS",
         prompt = "Coloque a mensagem (max {1} chars):",
-        sent = "~b~ Enviar para n°{1}.",
+        sent = "~g~ Enviar para n°{1}.",
         not_sent = "~r~ n°{1} indisponível."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "Histórico SMS",
       description = "Histórico de SMS recebido.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Posição ~b~ {1}"
+      notify = "SMS-Posição ~g~ {1}"
     },
     service = {
       title = "Serviço",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "Comprar",
       description = "Compre uma casa aqui, o preço é {1} €.",
-      bought = "~b~Comprou.",
+      bought = "~g~Comprou.",
       full = "~r~O lugar está cheio.",
       have_home = "~r~Você já tem uma casa."
     },
     sell = {
       title = "Vender",
       description = "Vender sua casa para {1} €",
-      sold = "~b~Vendido.",
+      sold = "~g~Vendido.",
       no_home = "~r~Você não tem uma casa aqui."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "Comece uma aposta com os jogadores perto de você, o vencedor será selecionado aleatoriamente.",
         prompt = "Valor da aposta:",
         request = "[BET] Você quer apostar {1} € ?",
-        started = "~b~Aposta iniciada."
+        started = "~g~Aposta iniciada."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "Peça para abrir o porta malas",
-      asked = "~b~Perguntado...",
+      asked = "~g~Perguntado...",
       request = "Você quer abrir o porta-malas ?"
     },
     replace = {
@@ -447,7 +447,7 @@ local lang = {
     informer = {
       title = "Informante ilegal",
       description = "{1} €",
-      bought = "~b~Posição enviada ao seu GPS."
+      bought = "~g~Posição enviada ao seu GPS."
     }
   },
   mission = {
@@ -460,10 +460,10 @@ local lang = {
   aptitude = {
     title = "Aptidões",
     description = "Mostrar aptidões.",
-    lose_exp = "Aptidão ~b~{1}/{2} ~r~-{3} ~s~exp.",
-    earn_exp = "Aptidão ~b~{1}/{2} ~b~+{3} ~s~exp.",
-    level_down = "Aptidão ~b~{1}/{2} ~r~level perdido ({3}).",
-    level_up = "Aptidão ~b~{1}/{2} ~b~level aumentado ({3}).",
+    lose_exp = "Aptidão ~g~{1}/{2} ~r~-{3} ~s~exp.",
+    earn_exp = "Aptidão ~g~{1}/{2} ~g~+{3} ~s~exp.",
+    level_down = "Aptidão ~g~{1}/{2} ~r~level perdido ({3}).",
+    level_up = "Aptidão ~g~{1}/{2} ~g~level aumentado ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | exp {2} | lvl {3} | progresso {4}%"

@@ -264,7 +264,7 @@ Citizen.CreateThread(function()
   Wait(5000)
     if ecooldown == true then
       ecooldown = false
-      notify("~b~Emote cooldown ended")
+      notify("~g~Emote cooldown ended")
     end
   end
 end)

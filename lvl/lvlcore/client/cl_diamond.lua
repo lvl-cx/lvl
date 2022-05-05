@@ -125,20 +125,20 @@ Citizen.CreateThread(function()
 end)
 
 -- [RageUI Menu]
-RMenu.Add('SellerMenu', 'main', RageUI.CreateMenu("", "~b~LVL Seller",1300, 50, "seller", "seller"))
+RMenu.Add('SellerMenu', 'main', RageUI.CreateMenu("", "~g~LVL Seller",1300, 50, "seller", "seller"))
 
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('SellerMenu', 'main')) then
       RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
     
-    RageUI.Button("Sell Gold" , nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+    RageUI.Button("Sell Gold" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
         if Selected then
  
             TriggerServerEvent('LVL:SellGold')
         end
     end)
 
-    RageUI.Button("Sell Diamond" , nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+    RageUI.Button("Sell Diamond" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
       if Selected then
 
           TriggerServerEvent('LVL:SellDiamond')

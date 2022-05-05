@@ -33,7 +33,7 @@ RegisterCommand("seat", function(_, args)
 
     if seatIndex < -1 or seatIndex >= 4 then
         SetNotificationTextEntry('STRING')
-        AddTextComponentString("~r~Seat ~b~" .. (seatIndex + 1) .. "~r~ is not recognized")
+        AddTextComponentString("~r~Seat ~g~" .. (seatIndex + 1) .. "~r~ is not recognized")
         DrawNotification(true, true)
     else
         local ped = PlayerPedId()

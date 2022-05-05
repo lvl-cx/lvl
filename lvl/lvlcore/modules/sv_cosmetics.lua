@@ -12,7 +12,7 @@ AddEventHandler('LVL:BuyCosmetic', function(cosmeticdata)
             else
                 if LVL.tryBankPayment(user_id, v.price) then 
                     LVL.addUserGroup(user_id, v.item)
-                    LVLclient.notify(source, {'~b~Bought ' .. v.item .. ' for for £' .. tostring(getMoneyStringFormatted(v.price))})
+                    LVLclient.notify(source, {'~g~Bought ' .. v.item .. ' for for £' .. tostring(getMoneyStringFormatted(v.price))})
                     TriggerClientEvent("LVL:PlaySound", source, 1)
                 else 
                     LVLclient.notify(source, {'~r~Not enough money.'})
@@ -33,7 +33,7 @@ AddEventHandler('LVL:RefundCosmetic', function(cosmeticdata)
             if LVL.hasGroup(user_id, v.item) then 
                 LVL.removeUserGroup(user_id, v.item)  
                 LVL.giveBankMoney(user_id, v.price * 0.25)
-                LVLclient.notify(source, {'~b~Refunded ' .. v.item .. ' Cosmetic for £' .. tostring(v.price * 0.25)})
+                LVLclient.notify(source, {'~g~Refunded ' .. v.item .. ' Cosmetic for £' .. tostring(v.price * 0.25)})
                 TriggerClientEvent('LVL:ResetCosmetics', source, v.type)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
             end
@@ -62,7 +62,7 @@ AddEventHandler('LVL:SellCosmeticToPlayer', function(cosmeticdata)
                                         if tonumber(price) >= 0 then 
      
                                            
-                                                LVLclient.notify(source, {'~b~Sent Request.'})
+                                                LVLclient.notify(source, {'~g~Sent Request.'})
                                                 LVL.request(target,GetPlayerName(source).." wants to sell: " ..v.item.. " Cosmetic for £"..price, 10, function(target,ok)
                                                     if ok then
                                                         if LVL.tryBankPayment(tonumber(userid), tonumber(price)) then
@@ -70,9 +70,9 @@ AddEventHandler('LVL:SellCosmeticToPlayer', function(cosmeticdata)
                                                             LVL.removeUserGroup(user_id, v.item)
                                                             LVL.addUserGroup(tonumber(userid), v.item)
                                                         
-                                                            LVLclient.notify(source, {'~b~Sold ' .. v.item .. ' Cosmetic for £' .. getMoneyStringFormatted(price) .. ' to ' .. GetPlayerName(target) .. ' ~w~[ID: ' .. userid .. ']'})
+                                                            LVLclient.notify(source, {'~g~Sold ' .. v.item .. ' Cosmetic for £' .. getMoneyStringFormatted(price) .. ' to ' .. GetPlayerName(target) .. ' ~w~[ID: ' .. userid .. ']'})
                                                             TriggerClientEvent("LVL:PlaySound", source, 1)
-                                                            LVLclient.notify(target, {'~b~Bought ' .. v.item .. ' Cosmetic for £' .. getMoneyStringFormatted(price) .. ' from ' .. GetPlayerName(source) .. ' ~w~[ID: ' .. user_id .. ']'})
+                                                            LVLclient.notify(target, {'~g~Bought ' .. v.item .. ' Cosmetic for £' .. getMoneyStringFormatted(price) .. ' from ' .. GetPlayerName(source) .. ' ~w~[ID: ' .. user_id .. ']'})
                                                             TriggerClientEvent("LVL:PlaySound", target, 1)
                                                             TriggerClientEvent('LVL:ResetCosmetics', source, v.type)
                                                         else
@@ -136,7 +136,7 @@ AddEventHandler('LVL:CosmeticMarketPlace', function(cosmeticdata, price, message
                         },
                   }
                   }}), { ["Content-Type"] = "application/json" })
-                  LVLclient.notify(source, {'Listed ~b~' .. v.item .. ' ~w~onto ~b~#market-place ~w~for ~b~£' .. getMoneyStringFormatted(price)})
+                  LVLclient.notify(source, {'Listed ~g~' .. v.item .. ' ~w~onto ~g~#market-place ~w~for ~g~£' .. getMoneyStringFormatted(price)})
                   TriggerClientEvent("LVL:PlaySound", source, 1)
             end
         end

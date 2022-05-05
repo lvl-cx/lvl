@@ -14,7 +14,7 @@ local takenticket = false
 local isPlayerNHS = false
 local isPlayerPD = false
 
-RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~b~LVL Call Manager', 1300, 50, 'manager', 'manager'))
+RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~g~LVL Call Manager', 1300, 50, 'manager', 'manager'))
 RMenu.Add("callmanager", "admin", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
 RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
 RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
@@ -24,7 +24,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('callmanager', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if isPlayerAdmin then
-            RageUI.Button("Admin Tickets", nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("Admin Tickets", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                 if (Hovered) then
 
                 end
@@ -38,7 +38,7 @@ RageUI.CreateWhile(1.0, true, function()
         end
 
         if isPlayerPD then 
-            RageUI.Button("Police Calls", nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("Police Calls", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                 if (Hovered) then
 
                 end
@@ -53,7 +53,7 @@ RageUI.CreateWhile(1.0, true, function()
         end
 
         if isPlayerNHS then
-            RageUI.Button("NHS Calls", nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("NHS Calls", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                 if (Hovered) then
 
                 end
@@ -75,7 +75,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if adminCalls ~= nil then
             for k,v in pairs(adminCalls) do
-                RageUI.Button(string.format("[%s] %s" .. "  :  " .. v[3], v[2], v[1]), nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button(string.format("[%s] %s" .. "  :  " .. v[3], v[2], v[1]), nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         if v[2] == GetPlayerServerId(PlayerId()) then
                             notify("~r~You can't take your own Call!")
@@ -117,7 +117,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if pdCalls ~= nil then
             for k,v in pairs(pdCalls) do
-                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]),nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]),nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if (Selected) then
                    
         
@@ -140,7 +140,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if nhsCalls ~= nil then
             for k,v in pairs(nhsCalls) do
-                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button(string.format("[ %s ] %s" .. "  :  " .. v[3], v[2], v[1]), "Press ~r~[ENTER] ~w~To accept  ~r~" .. v[1] .. "'s ~w~call!", {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         if v[2] == GetPlayerServerId(PlayerId()) then
                             notify("~r~You can't take your own Call!")
@@ -200,7 +200,7 @@ RegisterCommand("return", function()
 
   
             SetEntityCoords(PlayerPedId(), savedCoords)
-            notify("~b~Returned.")
+            notify("~g~Returned.")
             takenticket = false
             TriggerEvent('staffOn:false')
             TriggerEvent("LVL:OMioDioMode",false)

@@ -50,7 +50,7 @@ AddEventHandler('PoliceMenu:ClockOn', function(policerank)
 
     if user_id ~= nil and LVL.hasPermission(user_id, policeperm) and not LVL.hasGroup(user_id,policerank) then
         LVL.addUserGroup(user_id,policerank)
-        LVLclient.notify(source,{"~b~You have clocked on as a "..policename})
+        LVLclient.notify(source,{"~g~You have clocked on as a "..policename})
     elseif user_id == nil then
         LVLclient.notify(source,{"~r~You are a nil User ID, please relog."})
     elseif not LVL.hasPermission(user_id, policeperm) then

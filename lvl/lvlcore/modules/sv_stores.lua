@@ -10,7 +10,7 @@ AddEventHandler("LVL:BuyStoreItem", function(item, price, amount, x)
         if LVL.getInventoryWeight(user_id) <= 25 then
             if LVL.tryPayment(user_id,price) then
                 LVL.giveInventoryItem(user_id, item, amount, false)
-                LVLclient.notify(source, {"~b~Paid ".. '£' ..tostring(price)})
+                LVLclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
                 TriggerClientEvent("LVL:PlaySound", source, 1)
             else
                 LVLclient.notify(source, {"~r~Not enough money."})

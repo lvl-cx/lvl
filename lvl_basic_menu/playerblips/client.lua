@@ -27,7 +27,7 @@ AddEventHandler('showBlips', function()
 	showblip = not showblip
 	if showblip then
 		showsprite = true
-		LVL.notify({"~b~Blips enabled"})
+		LVL.notify({"~g~Blips enabled"})
 	else
 		showsprite = false
 		LVL.notify({"~r~Blips disabled"})
@@ -38,7 +38,7 @@ RegisterNetEvent('showSprites')
 AddEventHandler('showSprites', function()
 	showsprite = not showsprite
 	if showsprite then
-		LVL.notify({"~b~Sprites enabled"})
+		LVL.notify({"~g~Sprites enabled"})
 	else
 		LVL.notify({"~r~Sprites disabled"})
 	end

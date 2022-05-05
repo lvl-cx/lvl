@@ -529,7 +529,7 @@ local choice_store_weapons = {function(player, choice)
                         LVL.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
                     end
                 end
-                LVLclient.notify(player,{"~b~Weapons Stored"})
+                LVLclient.notify(player,{"~g~Weapons Stored"})
                 SetTimeout(10000,function()
                     isStoring[player] = nil 
                 end)
@@ -637,7 +637,7 @@ local choice_store_weapons = function(player, choice)
                           end
                         end
                     end
-                    LVLclient.notify(player,{"~b~Weapons Stored"})
+                    LVLclient.notify(player,{"~g~Weapons Stored"})
                     SetTimeout(3000,function()
                          isStoring[player] = nil 
                      end)

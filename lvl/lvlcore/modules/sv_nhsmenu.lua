@@ -30,8 +30,8 @@ AddEventHandler('Eclipse:PerformCPR', function()
                         SetTimeout(15000, function()
                           TriggerClientEvent('Eclipse:FixPlayer',nplayer)
                           LVLclient.varyHealth(nplayer, 50) -- heal 50
-                          LVLclient.notify(nplayer,{"~b~You have been revived by an NHS Member, free of charge"})
-                          LVLclient.notify(player,{"~b~You revived someone, as a reward, here is £10,000 into your bank"})
+                          LVLclient.notify(nplayer,{"~g~You have been revived by an NHS Member, free of charge"})
+                          LVLclient.notify(player,{"~g~You revived someone, as a reward, here is £10,000 into your bank"})
                           LVL.giveBankMoney(player,10000)
                         end)
                     else
@@ -56,8 +56,8 @@ AddEventHandler('Eclipse:HealPlayer', function()
                 LVLclient.playAnim(player, {false, revive_seq, false}) -- anim
                 SetTimeout(10000, function()
                     LVLclient.varyHealth(nplayer, 100) -- heal 100
-                    LVLclient.notify(nplayer,{"~b~You have been healed by an NHS Member, free of charge"})
-                    LVLclient.notify(player,{"~b~You healed someone, as a reward, here is £5,000 into your bank"})
+                    LVLclient.notify(nplayer,{"~g~You have been healed by an NHS Member, free of charge"})
+                    LVLclient.notify(player,{"~g~You healed someone, as a reward, here is £5,000 into your bank"})
                     LVL.giveBankMoney(player,5000)
                 end)
             else

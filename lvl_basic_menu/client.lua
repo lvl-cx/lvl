@@ -37,7 +37,7 @@ function LVLbm.loadFreeze(notify,god,ghost)
 	  unfrozen = false
 	else
 	  if notify then
-	    LVL.notify({"~b~You've been unfrozen."})
+	    LVL.notify({"~g~You've been unfrozen."})
 	  end
 	  unfrozen = true
 	  invincible = false
@@ -68,14 +68,14 @@ function LVLbm.lockpickVehicle(wait,any)
 			end 
 			ClearPedTasksImmediately(GetPlayerPed(-1))
 			
-			LVL.notify({"~b~Vehicle unlocked."})
+			LVL.notify({"~g~Vehicle unlocked."})
 			
 			-- ties to the hotkey lock system
 			local plate = GetVehicleNumberPlateText(vehicleHandle)
 			HKserver.lockSystemUpdate({1, plate})
 			HKserver.playSoundWithinDistanceOfEntityForEveryone({vehicleHandle, 10, "unlock", 1.0})
 		  else
-			LVL.notify({"~b~Vehicle already unlocked."})
+			LVL.notify({"~g~Vehicle already unlocked."})
 		  end
 		else
 			LVL.notify({"~r~Too far away from vehicle."})
@@ -89,7 +89,7 @@ function LVLbm.spawnVehicle(model)
     local mhash = GetHashKey(model)
     while not HasModelLoaded(mhash) and i < 1000 do
 	  if math.fmod(i,100) == 0 then
-	    LVL.notify({"~b~Loading vehicle model."})
+	    LVL.notify({"~g~Loading vehicle model."})
 	  end
       RequestModel(mhash)
       Citizen.Wait(30)
@@ -106,7 +106,7 @@ function LVLbm.spawnVehicle(model)
       Citizen.InvokeNative(0xAD738C3085FE7E11, nveh, true, true) -- set as mission entity
       SetVehicleHasBeenOwnedByPlayer(nveh,true)
       SetModelAsNoLongerNeeded(mhash)
-	  LVL.notify({"~b~Vehicle spawned."})
+	  LVL.notify({"~g~Vehicle spawned."})
 	else
 	  LVL.notify({"~r~Vehicle model invalid."})
 	end
@@ -153,7 +153,7 @@ function LVLbm.deleteVehicleInFrontOrInside(offset)
     Citizen.InvokeNative(0xAD738C3085FE7E11, veh, false, true) -- set not as mission entity
     SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(veh))
     Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(veh))
-    LVL.notify({"~b~Vehicle deleted."})
+    LVL.notify({"~g~Vehicle deleted."})
   else
     LVL.notify({"~r~Too far away from vehicle."})
   end
@@ -168,7 +168,7 @@ function LVLbm.deleteNearestVehicle(radius)
     Citizen.InvokeNative(0xAD738C3085FE7E11, veh, false, true) -- set not as mission entity
     SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(veh))
     Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(veh))
-    LVL.notify({"~b~Vehicle deleted."})
+    LVL.notify({"~g~Vehicle deleted."})
   else
     LVL.notify({"~r~Too far away from vehicle."})
   end

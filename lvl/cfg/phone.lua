@@ -23,8 +23,8 @@ cfg.services = {
     alert_time = 30, -- 5 minutes
     alert_permission = "police.service",
     alert_notify = "~r~Police alert:~n~~s~",
-    notify = "~b~You called the police.",
-    answer_notify = "~b~The police is coming."
+    notify = "~g~You called the police.",
+    answer_notify = "~g~The police is coming."
   },
   ["emergency"] = {
     blipid = 153,
@@ -32,8 +32,8 @@ cfg.services = {
     alert_time = 30, -- 5 minutes
     alert_permission = "emergency.service",
     alert_notify = "~r~Emergency alert:~n~~s~",
-    notify = "~b~You called the emergencies.",
-    answer_notify = "~b~The emergencies are coming."
+    notify = "~g~You called the emergencies.",
+    answer_notify = "~g~The emergencies are coming."
   },
   ["uber"] = {
     blipid = 198,

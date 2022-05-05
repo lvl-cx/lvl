@@ -573,25 +573,25 @@ function RageUI.Render(instructionalButton)
             if RageUI.Settings.Debug then
                 up = nil
                 if RageUI.CurrentMenu.Controls.Up.Pressed then
-                    up = "~b~True~s~"
+                    up = "~g~True~s~"
                 else
                     up = "~r~False~s~"
                 end
                 down = nil
                 if RageUI.CurrentMenu.Controls.Down.Pressed then
-                    down = "~b~True~s~"
+                    down = "~g~True~s~"
                 else
                     down = "~r~False~s~"
                 end
                 left = nil
                 if RageUI.CurrentMenu.Controls.Left.Pressed then
-                    left = "~b~True~s~"
+                    left = "~g~True~s~"
                 else
                     left = "~r~False~s~"
                 end
                 right = nil
                 if RageUI.CurrentMenu.Controls.Right.Pressed then
-                    right = "~b~True~s~"
+                    right = "~g~True~s~"
                 else
                     right = "~r~False~s~"
                 end

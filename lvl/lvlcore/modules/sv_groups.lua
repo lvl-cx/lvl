@@ -7,7 +7,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 5000000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £5,000,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £5,000,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end 
@@ -15,7 +15,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 2500000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -23,7 +23,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 125000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -31,7 +31,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 2500000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £2,500,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -39,7 +39,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 1250000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £1,250,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £1,250,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -47,7 +47,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 250000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £250,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £250,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -55,7 +55,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 125000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £125,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -63,7 +63,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 50000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £50,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £50,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -71,7 +71,7 @@ AddEventHandler('LVL:RefundLicense', function(group)
         if LVL.hasGroup(user_id, group) then
             LVL.removeUserGroup(user_id, group)
             LVL.giveBankMoney(user_id, 25000)
-            LVLclient.notify(source, {'~b~You have refunded ' .. group .. ' for £25,000 ~w~[25% of License Price]'})
+            LVLclient.notify(source, {'~g~You have refunded ' .. group .. ' for £25,000 ~w~[25% of License Price]'})
         else
             LVLclient.notify(source, {'~r~Error, You do not have this License.'})
         end
@@ -95,7 +95,7 @@ AddEventHandler('LVL:SellLicense', function(group)
                         local target = LVL.getUserSource(tonumber(userid))
                         if price == tostring(tonumber(price)) then
                             if tonumber(price) >= 0 then 
-                                LVLclient.notify(source, {'~b~Sent Request.'})
+                                LVLclient.notify(source, {'~g~Sent Request.'})
                                 LVL.request(target,GetPlayerName(source).." wants to sell: " ..group.. " License for £"..price, 10, function(target,ok)
                                     if ok then
                                         
@@ -104,9 +104,9 @@ AddEventHandler('LVL:SellLicense', function(group)
                                             LVL.removeUserGroup(user_id, group)
                                             LVL.addUserGroup(tonumber(userid), group)
 
-                                            LVLclient.notify(source, {'~b~Sold ' .. group .. ' License for £' .. price .. ' to ' .. GetPlayerName(target) .. ' ~w~[ID: ' .. userid .. ']'})
+                                            LVLclient.notify(source, {'~g~Sold ' .. group .. ' License for £' .. price .. ' to ' .. GetPlayerName(target) .. ' ~w~[ID: ' .. userid .. ']'})
                                             TriggerClientEvent("LVL:PlaySound", source, 1)
-                                            LVLclient.notify(target, {'~b~Bought ' .. group .. ' License for £' .. price .. ' from ' .. GetPlayerName(source) .. ' ~w~[ID: ' .. user_id .. ']'})
+                                            LVLclient.notify(target, {'~g~Bought ' .. group .. ' License for £' .. price .. ' from ' .. GetPlayerName(source) .. ' ~w~[ID: ' .. user_id .. ']'})
                                             TriggerClientEvent("LVL:PlaySound", target, 1)
                                         else
                                             LVLclient.notify(source, {'~r~User does not have enough money.'})

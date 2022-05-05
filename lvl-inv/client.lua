@@ -317,7 +317,7 @@ end)
 --     while true do 
 --         Wait(0)
 --         if NearLootBag then 
---             Draw3DText(LootBagCoords, "~b~~w~[~r~E~w~] to loot")
+--             Draw3DText(LootBagCoords, "~g~~w~[~r~E~w~] to loot")
 --             if IsControlJustPressed(0, 38) then
 --                 TriggerServerEvent('LVL:LootBag', LootBagIDNew)
 --             end

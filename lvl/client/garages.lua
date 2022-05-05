@@ -11,7 +11,7 @@ local veh = nil
 local cantload = {}
 local vehname = nil 
 --Created by JamesUK#6793 :)
-RMenu.Add('LVLGarages', 'main', RageUI.CreateMenu("", "~b~LVL Garage Menu",1300, 50, 'garage', 'garage'))
+RMenu.Add('LVLGarages', 'main', RageUI.CreateMenu("", "~g~LVL Garage Menu",1300, 50, 'garage', 'garage'))
 RMenu.Add('LVLGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "main")))
 RMenu.Add('LVLGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "main")))
 RMenu.Add('LVLGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "rented_vehicles")))
@@ -23,8 +23,8 @@ RMenu.Add('LVLGarages', 'owned_vehicles_submenu_manage',  RageUI.CreateSubMenu(R
 RMenu.Add('LVLGarages', 'scrap_vehicle_confirmation',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "owned_vehicles_submenu_manage")))
 RMenu.Add('LVLGarages', 'rented_vehicles_out_manage',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "rented_vehicles")))
 RMenu.Add('LVLGarages', 'rented_vehicles_out_manage_submenu',  RageUI.CreateSubMenu(RMenu:Get("LVLGarages", "rented_vehicles_out_manage")))
-RMenu:Get('LVLGarages', 'owned_vehicles'):SetSubtitle("~b~LVL Vehicle Categories")
-RMenu:Get('LVLGarages', 'scrap_vehicle_confirmation'):SetSubtitle("~b~Are you sure you want to scrap this vehicle?")
+RMenu:Get('LVLGarages', 'owned_vehicles'):SetSubtitle("~g~LVL Vehicle Categories")
+RMenu:Get('LVLGarages', 'scrap_vehicle_confirmation'):SetSubtitle("~g~Are you sure you want to scrap this vehicle?")
 --Created by JamesUK#6793 :)
 
 EnableVeh = true
@@ -52,18 +52,18 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
             if FirstSpawn then
-                RageUI.Button("~b~[Claim Starter Car]", nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("~g~[Claim Starter Car]", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         FirstSpawn = false
                         TriggerEvent("LVL:PlaySound",  1)
-                        notify('~b~The Starter Car is now in your Garage!')
+                        notify('~g~The Starter Car is now in your Garage!')
                         TriggerServerEvent('LVL:GiveStarterCar')
 
           
                     end
                 end)
             end
-            RageUI.Button("Owned Vehicles", nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Owned Vehicles", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     if Table_Type == nil or not Table_Type then 
                         Table_Type = true;
@@ -71,8 +71,8 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end, RMenu:Get("LVLGarages", "owned_vehicles"))
-            RageUI.Button("Rented Vehicles", nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("LVLGarages", "rented_vehicles"))
-            RageUI.Button("Store Vehicle", nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Rented Vehicles", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("LVLGarages", "rented_vehicles"))
+            RageUI.Button("Store Vehicle", nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     tLVL.despawnGarageVehicle(garage_type,250)
                 end
@@ -84,7 +84,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             selected_category = v.vehicles
                         end
@@ -96,11 +96,11 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLGarages', 'buy_vehicles_submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(selected_category) do 
-                RageUI.Button(v[1], nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button(v[1], nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         SelectedCar.spawncode = i 
                         SelectedCar.name = v[1]
-                        RMenu:Get('LVLGarages', 'buy_vehicles_submenu_manage'):SetSubtitle("~b~" .. v[1] .. ' Price: $' .. v[2])
+                        RMenu:Get('LVLGarages', 'buy_vehicles_submenu_manage'):SetSubtitle("~g~" .. v[1] .. ' Price: $' .. v[2])
                     end
                     if Active then 
                         Hovered_Vehicles = i
@@ -126,7 +126,7 @@ RageUI.CreateWhile(1.0, true, function()
             RentedVeh = false;
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             selected_category = v.vehicles
                         end
@@ -143,7 +143,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Selected then 
                             SelectedCar.spawncode = i 
                             SelectedCar.name = v[1]
-                            RMenu:Get('LVLGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~b~Options for " .. v[1])
+                            RMenu:Get('LVLGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~g~Options for " .. v[1])
                         end
                         if Active then 
                             Hovered_Vehicles = i
@@ -154,7 +154,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Selected then 
                             SelectedCar.spawncode = i 
                             SelectedCar.name = v[1]
-                            RMenu:Get('LVLGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~b~Options for " .. v[1])
+                            RMenu:Get('LVLGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~g~Options for " .. v[1])
                         end
                         if Active then 
                             Hovered_Vehicles = i
@@ -166,7 +166,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('LVLGarages', 'owned_vehicles_submenu_manage')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button('Spawn Vehicle', nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Spawn Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then 
                     tLVL.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()))
                     DeleteCar(veh)
@@ -178,7 +178,7 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             if not RentedVeh then 
             
-                RageUI.Button('Rent out Vehicle', nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button('Rent out Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('LVL:RentVehicle', SelectedCar.spawncode) 
                     end
@@ -186,7 +186,7 @@ RageUI.CreateWhile(1.0, true, function()
                     
                     end
                 end)
-                RageUI.Button('Sell Vehicle', nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                RageUI.Button('Sell Vehicle', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         TriggerServerEvent('LVL:SellVehicle', SelectedCar.spawncode)
                     end
@@ -215,13 +215,13 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLGarages', 'rented_vehicles')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
-            RageUI.Button('Rented Vehicles Out', nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Rented Vehicles Out', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then
                     Table_Type = nil;
                     TriggerServerEvent('LVL:FetchVehiclesOut')
                 end
             end,RMenu:Get("LVLGarages", "rented_vehicles_out_manage"))
-            RageUI.Button('Rented Vehicles In', nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Rented Vehicles In', nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                 if Selected then
                     Table_Type = nil;
                     RentedVeh = true;
@@ -236,7 +236,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true; 
                             selected_category = v.vehicles
@@ -260,7 +260,7 @@ RageUI.CreateWhile(1.0, true, function()
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = '~b~→'}, true, function(Hovered, Active, Selected)
+                    RageUI.Button(i, nil, {RightLabel = '~g~→'}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true; 
                             selected_category = v.vehicles

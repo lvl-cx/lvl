@@ -1,4 +1,4 @@
-RMenu.Add('LVLPDMenu', 'main', RageUI.CreateMenu("", "~b~LVL Police Menu", 1300, 50, 'police', 'police'))
+RMenu.Add('LVLPDMenu', 'main', RageUI.CreateMenu("", "~g~LVL Police Menu", 1300, 50, 'police', 'police'))
 RMenu.Add('LVLPDMenu', 'objectmenu',  RageUI.CreateSubMenu(RMenu:Get("LVLPDMenu", "main")))
 
 local index = {
@@ -30,48 +30,48 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLPDMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                RageUI.Button("Object Menu" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) end, RMenu:Get('LVLPDMenu', 'objectmenu'))
-                RageUI.Button("Cuff Nearest Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Object Menu" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) end, RMenu:Get('LVLPDMenu', 'objectmenu'))
+                RageUI.Button("Cuff Nearest Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:Handcuff')
                     end
                 end)
-                RageUI.Button("Drag Nearest Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Drag Nearest Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:Drag')
                     end
                 end)
-                RageUI.Button("Search Nearest Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Search Nearest Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:SearchPlayer')
                     end
                 end)
-                RageUI.Button("Seize Items" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Seize Items" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:Seize')
                     end
                 end)
-                RageUI.Button("Put Player in Vehicle" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Put Player in Vehicle" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:PutPlrInVeh')
                     end
                 end)
-                RageUI.Button("Remove Player From Vehicle" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Remove Player From Vehicle" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:TakeOutOfVehicle')
                     end
                 end)
-                RageUI.Button("Fine Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Fine Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:Fine')
                     end
                 end)
-                RageUI.Button("Jail Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Jail Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:JailPlayer')
                     end
                 end)
-                RageUI.Button("Unjail Player" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Unjail Player" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:UnJailPlayer')
                     end
@@ -86,7 +86,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLPDMenu', 'objectmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                RageUI.List("Spawn Object", listObjects, index.object, nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected, Index)
+                RageUI.List("Spawn Object", listObjects, index.object, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected, Index)
                     if (Selected) then
                         if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                         spawnObject(objects[Index][2])
@@ -96,7 +96,7 @@ RageUI.CreateWhile(1.0, true, function()
                         index.object = Index;
                     end
                 end)
-                RageUI.Button("Delete Object" , nil, { RightLabel = '~b~→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Delete Object" , nil, { RightLabel = '~g~→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                         deleteObject()
@@ -186,7 +186,7 @@ function tLVL.loadFreeze(notify,god,ghost)
 	  unfrozen = false
 	else
 	  if notify then
-	    LVL.notify({"~b~You've been unfrozen."})
+	    LVL.notify({"~g~You've been unfrozen."})
 	  end
 	  unfrozen = true
 	  invincible = false

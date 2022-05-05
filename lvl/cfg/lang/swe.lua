@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
     given = "Ger ~r~{1}$.",
-    received = "Mottagen ~b~{1}$.",
+    received = "Mottagen ~g~{1}$.",
     not_enough = "~r~förlite med pengar.",
     paid = "betald ~r~{1}$.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Ge objekt till närmaste spelare.",
       prompt = "Belopp att ge (max {1}):",
       given = "Ger ~r~{1} ~s~{2}.",
-      received = "Mottagen ~b~{1} ~s~{2}.",
+      received = "Mottagen ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "skräp",
@@ -82,7 +82,7 @@ local lang = {
       title = "Ta ut",
       description = "bank till spelare",
       prompt = "skriv in summan du vill ta ut:",
-      withdrawn = "~b~{1}$ ~s~withdrawn.",
+      withdrawn = "~g~{1}$ ~s~withdrawn.",
       not_enough = "~r~du har inte tillräckligt med pengar på banken."
     }
   },
@@ -108,7 +108,7 @@ local lang = {
       title = "Pengatvätt",
       description = "Använd ditt företag för att tvätta smutsiga pengar.",
       prompt = "Mängden smutsiga pengar som tvättas (max {1} $): ",
-      laundered = "~b~{1}$ ~s~tvättas.",
+      laundered = "~g~{1}$ ~s~tvättas.",
       not_enough = "~r~Inte tillräckligt smutspengar."
     },
     open = {
@@ -116,7 +116,7 @@ local lang = {
       description = "Öppna ditt Företag , minsta Kapital {1} $.",
       prompt_name = "Företags namn (Kan inte ändras tillbaka, max {1} chars):",
       prompt_capital = "Startkapital (min {1})",
-      created = "~b~Företaget skapats."
+      created = "~g~Företaget skapats."
       
     }
   },
@@ -156,15 +156,15 @@ local lang = {
         title = "Stäng Företag",
         description = "Stäng Företaget för närmste spelare.",
         request = "Är du säker på att du vill stänga ditt företag? {3} owned by {1} {2} ?",
-        closed = "~b~Företag Stängt."
+        closed = "~g~Företag Stängt."
       },
       trackveh = {
         title = "Spåra Fordon",
         description = "Spåra ett fordon med sitt registreringsnummer.",
         prompt_reg = "Skriv in registreringsnummer:",
         prompt_note = "Ange en spårning anteckning/orsak:",
-        tracking = "~b~Spårning started.",
-        track_failed = "~b~Spårning av {1}~s~ ({2}) ~n~~r~Misslyckandes.",
+        tracking = "~g~Spårning started.",
+        track_failed = "~g~Spårning av {1}~s~ ({2}) ~n~~r~Misslyckandes.",
         tracked = "Spårad {1} ({2})"
       },
       records = {
@@ -175,7 +175,7 @@ local lang = {
         delete = {
           title = "Rensa uppgifter",
           description = "Rensa polisregister med registreringsnummer.",
-          deleted = "~b~Polisens register raderas"
+          deleted = "~g~Polisens register raderas"
         }
       }
     },
@@ -211,28 +211,28 @@ local lang = {
         weapons = {
           title = "Ta Vapen",
           description = "Ta Närmste spelares Vapen",
-          seized = "~b~Dina vapen har beslagtagits."
+          seized = "~g~Dina vapen har beslagtagits."
         },
         items = {
           title = "Gripa illegaler",
           description = "beslagtagits olagliga föremål",
-          seized = "~b~Dina olagliga saker har beslagtagits."
+          seized = "~g~Dina olagliga saker har beslagtagits."
         }
       },
       jail = {
         title = "Fängelse",
         description = "sätt / släpp närmste spelare I/från Närmste Fängelse.",
         not_found = "~r~inget fängelse hittades.",
-        jailed = "~b~Fängslad.",
-        unjailed = "~b~Fritagen.",
-        notify_jailed = "~b~Du har blivit fängslad.",
-        notify_unjailed = "~b~Du har blivit Fri Släppt."
+        jailed = "~g~Fängslad.",
+        unjailed = "~g~Fritagen.",
+        notify_jailed = "~g~Du har blivit fängslad.",
+        notify_unjailed = "~g~Du har blivit Fri Släppt."
       },
       fine = {
         title = "Böter",
         description = "Bötfäll närmste spelare.",
-        fined = "~b~bötfälld ~s~{2} $ for ~b~{1}.",
-        notify_fined = "~b~Du har blivit bötfälld ~s~ {2} $ for ~b~{1}.",
+        fined = "~g~bötfälld ~s~{2} $ for ~g~{1}.",
+        notify_fined = "~g~Du har blivit bötfälld ~s~ {2} $ for ~g~{1}.",
         record = "[Böter] {2} $ for {1}"
       },
       store_weapons = {
@@ -262,12 +262,12 @@ local lang = {
         title = "➕ adda",
         prompt_number = "Skriv in Telefon nummer för att adda:",
         prompt_name = "Skriv Namn på spelare's nummer:",
-        added = "~b~Nummer Lagts till."
+        added = "~g~Nummer Lagts till."
       },
       sendsms = {
         title = "skicka SMS",
         prompt = "Skriv ett SMS (max {1} chars):",
-        sent = "~b~ Skickat till Nummer{1}.",
+        sent = "~g~ Skickat till Nummer{1}.",
         not_sent = "~r~ Nummer{1} inte tillgänglig."
       },
       sendpos = {
@@ -281,10 +281,10 @@ local lang = {
       title = "SMS Historik",
       description = "Mottagna SMS-historik.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Position ~b~ {1}"
+      notify = "SMS-Position ~g~ {1}"
     },
     service = {
       title = "tjänst",
@@ -311,14 +311,14 @@ local lang = {
     buy = {
       title = "Köp",
       description = "Köp ett hem här, price is {1} $.",
-      bought = "~b~Köpt.",
+      bought = "~g~Köpt.",
       full = "~r~Platsen är full.",
       have_home = "~r~Du äger redan ett Hem."
     },
     sell = {
       title = "sälj",
       description = "Sälja ditt hem för {1} $",
-      sold = "~b~Sålt.",
+      sold = "~g~Sålt.",
       no_home = "~r~Du har inget hem här."
     },
     intercom = {
@@ -354,7 +354,7 @@ local lang = {
         description = "Starta ett bet med spelare nära dig, Vinnaren blir Slumpmässigt vald.",
         prompt = "Lägg summa:",
         request = "[BET] vill du lägga ett bet {1} $ ?",
-        started = "~b~Bettet har lagts."
+        started = "~g~Bettet har lagts."
       }
     }
   },
@@ -411,7 +411,7 @@ local lang = {
     },
     asktrunk = {
       title = "Fråga om att öppen bagagelucka",
-      asked = "~b~Frågar...",
+      asked = "~g~Frågar...",
       request = "Vill Du öppna bagageluckan ?"
     },
     replace = {
@@ -446,7 +446,7 @@ local lang = {
     informer = {
       title = "Olaglig Angivare",
       description = "{1} $",
-      bought = "~b~Position skickad till din GPS."
+      bought = "~g~Position skickad till din GPS."
     }
   },
   mission = {
@@ -459,10 +459,10 @@ local lang = {
   aptitude = {
     title = "färdigheter",
     description = "visa färdigheter.",
-    lose_exp = "färdigheter ~b~{1}/{2} ~r~-{3} ~s~exp.",
-    earn_exp = "färdigheter ~b~{1}/{2} ~b~+{3} ~s~exp.",
-    level_down = "färdigheter ~b~{1}/{2} ~r~lose level ({3}).",
-    level_up = "färdigheter ~b~{1}/{2} ~b~level up ({3}).",
+    lose_exp = "färdigheter ~g~{1}/{2} ~r~-{3} ~s~exp.",
+    earn_exp = "färdigheter ~g~{1}/{2} ~g~+{3} ~s~exp.",
+    level_down = "färdigheter ~g~{1}/{2} ~r~lose level ({3}).",
+    level_up = "färdigheter ~g~{1}/{2} ~g~level up ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | exp {2} | lvl {3} | framsteg {4}%"

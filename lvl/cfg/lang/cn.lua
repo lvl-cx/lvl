@@ -25,7 +25,7 @@ local lang = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
     given = "Given ~r~{1}$.",
-    received = "Received ~b~{1}$.",
+    received = "Received ~g~{1}$.",
     not_enough = "~r~沒有足夠的金錢",
     paid = "Paid ~r~{1}$.",
     give = {
@@ -44,7 +44,7 @@ local lang = {
       description = "向最近的玩家提供物品.",
       prompt = "要給予的金額 (max {1}):",
       given = "給定 ~r~{1} ~s~{2}.",
-      received = "收到 ~b~{1} ~s~{2}.",
+      received = "收到 ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "垃圾",
@@ -84,7 +84,7 @@ local lang = {
       title = "取款",
       description = "取款",
       prompt = "輸入取款金額:",
-      withdrawn = "~b~{1}$ ~s~取出.",
+      withdrawn = "~g~{1}$ ~s~取出.",
       not_enough = "~r~你沒有足夠的錢在銀行."
     }
   },
@@ -111,7 +111,7 @@ local lang = {
       title = "洗錢",
       description = "用你的生意洗黑錢.",
       prompt = "洗黑錢金額 (max {1} $): ",
-      laundered = "~b~{1}$ ~s~清洗.",
+      laundered = "~g~{1}$ ~s~清洗.",
       not_enough = "~r~沒有足够的錢."
     },
     open = {
@@ -119,7 +119,7 @@ local lang = {
       description = "打開您的業務, 最低資本是 {1} $.",
       prompt_name = "業務名稱 (can't change after, max {1} chars):",
       prompt_capital = "初始資本 (min {1})",
-      created = "~b~業務創建."
+      created = "~g~業務創建."
       
     }
   },
@@ -159,15 +159,15 @@ local lang = {
         title = "關閉業務",
         description = "關閉最近的玩家的業務.",
         request = "是否確實要關閉 {3}  擁有的業務 {1} {2} ?",
-        closed = "~b~業務關閉."
+        closed = "~g~業務關閉."
       },
       trackveh = {
         title = "履帶車輛",
         description = "用車牌號追蹤車輛.",
         prompt_reg = "輸入註冊號:",
         prompt_note = "輸入跟蹤說明/原因:",
-        tracking = "~b~開始跟蹤.",
-        track_failed = "~b~跟蹤 {1}~s~ ({2}) ~n~~r~失敗.",
+        tracking = "~g~開始跟蹤.",
+        track_failed = "~g~跟蹤 {1}~s~ ({2}) ~n~~r~失敗.",
         tracked = "跟蹤 {1} ({2})"
       },
       records = {
@@ -178,7 +178,7 @@ local lang = {
         delete = {
           title = "清除記錄",
           description = "按登記號碼清除警方紀錄.",
-          deleted = "~b~警方記錄已刪除"
+          deleted = "~g~警方記錄已刪除"
         }
       }
     },
@@ -214,28 +214,28 @@ local lang = {
         weapons = {
           title = "奪取武器",
           description = "抓住最近玩家的武器",
-          seized = "~b~你的武器被沒收了."
+          seized = "~g~你的武器被沒收了."
         },
         items = {
           title = "抓住非法移民",
           description = "沒收違法物品",
-          seized = "~b~你的非法物品已被查封."
+          seized = "~g~你的非法物品已被查封."
         }
       },
       jail = {
         title = "監獄",
         description = "監獄/ UnJail離最近的監獄最近的玩家.",
         not_found = "~r~沒有發現監獄.",
-        jailed = "~b~入獄.",
-        unjailed = "~b~被判入獄.",
-        notify_jailed = "~b~你被监禁了.",
-        notify_unjailed = "~b~您已被判入獄."
+        jailed = "~g~入獄.",
+        unjailed = "~g~被判入獄.",
+        notify_jailed = "~g~你被监禁了.",
+        notify_unjailed = "~g~您已被判入獄."
       },
       fine = {
         title = "法恩",
         description = "罚款最近的玩家.",
-        fined = "~b~罰款 ~s~{2} $ for~b~{1}.",
-        notify_fined = "~b~你被罰款了 ~s~ {2} $ for ~b~{1}.",
+        fined = "~g~罰款 ~s~{2} $ for~g~{1}.",
+        notify_fined = "~g~你被罰款了 ~s~ {2} $ for ~g~{1}.",
         record = "[罰款] {2} $ for {1}"
       },
       store_weapons = {
@@ -265,12 +265,12 @@ local lang = {
         title = "➕ add",
         prompt_number = "輸入要添加的電話號碼:",
         prompt_name = "輸入條目名:",
-        added = "~b~條目添加."
+        added = "~g~條目添加."
       },
       sendsms = {
         title = "發送短信",
         prompt = "輸入消息 (max {1} chars):",
-        sent = "~b~ 發送到 n°{1}.",
+        sent = "~g~ 發送到 n°{1}.",
         not_sent = "~r~ n°{1} 不可用."
       },
       sendpos = {
@@ -284,10 +284,10 @@ local lang = {
       title = "簡訊的歷史",
       description = "收到簡訊的歷史.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "短訊~b~ {1}:~s~ ~n~{2}"
+      notify = "短訊~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "簡訊-位置 ~b~ {1}"
+      notify = "簡訊-位置 ~g~ {1}"
     },
     service = {
       title = "服務",
@@ -314,14 +314,14 @@ local lang = {
     buy = {
       title = "買",
       description = "在這裡買一個家，價格是 {1} $.",
-      bought = "~b~購買.",
+      bought = "~g~購買.",
       full = "~r~這地方滿了.",
       have_home = "~r~你已經有了家."
     },
     sell = {
       title = "賣",
       description = "賣你的房子 {1} $",
-      sold = "~b~出售.",
+      sold = "~g~出售.",
       no_home = "~r~你在這裡沒有家."
     },
     intercom = {
@@ -357,7 +357,7 @@ local lang = {
         description = "與你附近的玩家開始下注, 贏家將被隨機選中.",
         prompt = "投注金額:",
         request = "[打賭] 你想賭 {1} $ ?",
-        started = "~b~開始下注."
+        started = "~g~開始下注."
       }
     }
   },
@@ -414,7 +414,7 @@ local lang = {
     },
     asktrunk = {
       title = "打開後備箱",
-      asked = "~b~詢問...",
+      asked = "~g~詢問...",
       request = "你要打開行李箱嗎 ?"
     },
     replace = {
@@ -449,7 +449,7 @@ local lang = {
     informer = {
       title = "違法者",
       description = "{1} $",
-      bought = "~b~位置發送到您的全球定位系統."
+      bought = "~g~位置發送到您的全球定位系統."
     }
   },
   mission = {
@@ -462,10 +462,10 @@ local lang = {
   aptitude = {
     title = "能力",
     description = "顯示能力.",
-    lose_exp = "資質 ~b~{1}/{2} ~r~-{3} ~s~經驗.",
-    earn_exp = "資質 ~b~{1}/{2} ~b~+{3} ~s~經驗.",
-    level_down = "資質 ~b~{1}/{2} ~r~下降 ({3}).",
-    level_up = "資質 ~b~{1}/{2} ~b~提升 ({3}).",
+    lose_exp = "資質 ~g~{1}/{2} ~r~-{3} ~s~經驗.",
+    earn_exp = "資質 ~g~{1}/{2} ~g~+{3} ~s~經驗.",
+    level_down = "資質 ~g~{1}/{2} ~r~下降 ({3}).",
+    level_up = "資質 ~g~{1}/{2} ~g~提升 ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | 经验 {2} | lvl {3} | 进展 {4}%"

@@ -35,7 +35,7 @@ local playHeadshotSounds = false
 RegisterCommand("hs", function()
     playHeadshotSounds = not playHeadshotSounds
     if playHeadshotSounds then
-        LVLNotify("~y~Experimental Hitmarkers Are Now ~b~Enabled")
+        LVLNotify("~y~Experimental Hitmarkers Are Now ~g~Enabled")
     else
         LVLNotify("~y~Experimental Hitmarkers Are Now ~r~Disabled")
     end
@@ -47,7 +47,7 @@ RegisterNetEvent("LVL:Settings:Hitsounds")
 AddEventHandler("LVL:Settings:Hitsounds", function(bool)
     playHeadshotSounds = bool
     if playHeadshotSounds then
-        LVLNotify("~y~Experimental Hitmarkers Are Now ~b~Enabled")
+        LVLNotify("~y~Experimental Hitmarkers Are Now ~g~Enabled")
     else
         LVLNotify("~y~Experimental Hitmarkers Are Now ~r~Disabled")
     end

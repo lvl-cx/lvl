@@ -1065,7 +1065,7 @@ AddEventHandler("Blackjack:blackjackPush",function(tableId)
         TaskPlayAnim(dealerPed, "anim_casino_b@amb@casino@games@blackjack@dealer", "reaction_impartial", 3.0, 1.0, -1, 2, 0, 0, 0, 0 )
         annoyedIPushed()
         canExitBlackjack = true
-        drawNativeNotification("~b~You pushed!")
+        drawNativeNotification("~g~You pushed!")
         drawCurrentHand = false
         currentHand = 0
         dealersHand = 0
@@ -1080,7 +1080,7 @@ AddEventHandler("Blackjack:blackjackWin",function(tableId)
         TaskPlayAnim(dealerPed, "anim_casino_b@amb@casino@games@blackjack@dealer", "reaction_good", 3.0, 1.0, -1, 2, 0, 0, 0, 0 )
         happyIWon()
         canExitBlackjack = true
-        drawNativeNotification("~b~You win!")
+        drawNativeNotification("~g~You win!")
         drawCurrentHand = false
         currentHand = 0
         dealersHand = 0

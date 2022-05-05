@@ -63,11 +63,11 @@ AddEventHandler('LVL:SellCocaine', function()
           finalCommision = price * (commision / 100)
           LVL.giveMoney(user_id,price+finalCommision)
   
-          LVLclient.notify(source, {"~b~Sold 1 cocaine for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+          LVLclient.notify(source, {"~g~Sold 1 cocaine for £" .. tostring(price - finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
   
           if finalID ~= nil then
             LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-            LVLclient.notify(finalID,{"~b~You have been given ~w~£" .. finalCommision.. "~b~."})
+            LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
           end
 
         end

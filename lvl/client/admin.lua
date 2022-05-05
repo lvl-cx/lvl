@@ -110,7 +110,7 @@ local function teleportToWaypoint()
                 end
             end
             DoScreenFadeIn(250)
-            tLVL.notify('~b~Teleported success!')
+            tLVL.notify('~g~Teleported success!')
         end
     end)
 end
@@ -238,7 +238,7 @@ function DeleteGivenVehicle( veh, timeoutMax )
 
             -- The vehicle has been banished from the face of the Earth!
             if ( not DoesEntityExist( veh ) ) then 
-                Notify( "~b~Vehicle deleted." )
+                Notify( "~g~Vehicle deleted." )
             end 
 
             -- Increase the timeout counter and make the system wait
@@ -251,7 +251,7 @@ function DeleteGivenVehicle( veh, timeoutMax )
             end 
         end 
     else 
-        Notify( "~b~Vehicle deleted." )
+        Notify( "~g~Vehicle deleted." )
     end 
 end 
 

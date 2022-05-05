@@ -138,7 +138,7 @@ Citizen.CreateThread(function()
 			if not calledNHS then
 				if IsControlJustPressed(1, 51) then
 					calledNHS = true
-					notify('~b~NHS called to your approximate location')
+					notify('~g~NHS called to your approximate location')
 					TriggerServerEvent('LVL:recieveNHSCall2')
 				end
 			end

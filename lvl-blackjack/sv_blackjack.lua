@@ -98,7 +98,7 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
                         --print("GameId: " .. tostring(gameId) .. " source: " .. tostring(source) .. " has placed a bet of " .. tostring(betAmount))
                         TriggerClientEvent("Blackjack:successBlackjackBet",source)
                         TriggerClientEvent("Blackjack:syncChipsPropBlackjack",-1,betAmount,chairId)
-                        TriggerClientEvent("blackjack:notify",source,"~b~Bet placed: " .. tostring(betAmount) .. " chips.")
+                        TriggerClientEvent("blackjack:notify",source,"~g~Bet placed: " .. tostring(betAmount) .. " chips.")
                     else 
                         TriggerClientEvent("blackjack:notify",source,"~r~Not enough chips!")
                     end
@@ -369,7 +369,7 @@ for i=0,31,1 do
                                                     if playerPing ~= nil then
                                                         if playerPing > 0 then
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
-                                                            TriggerClientEvent("blackjack:notify",source,"~b~+"..tostring(potentialWinAmount).." chips")
+                                                            TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
                                                                 TriggerClientEvent('chat:addMessage', -1, {
                                                                     template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!" .. '</div>',
@@ -385,7 +385,7 @@ for i=0,31,1 do
                                                     if playerPing ~= nil then
                                                         if playerPing > 0 then
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
-                                                            TriggerClientEvent("blackjack:notify",source,"~b~+"..tostring(potentialWinAmount).." chips")
+                                                            TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
                                                                 TriggerClientEvent('chat:addMessage', -1, {
                                                                     template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!" .. '</div>',
@@ -401,7 +401,7 @@ for i=0,31,1 do
                                                     if playerPing ~= nil then
                                                         if playerPing > 0 then
                                                             TriggerClientEvent("Blackjack:blackjackPush",source,tableId)
-                                                            TriggerClientEvent("blackjack:notify",source,"~b~+0 chips")
+                                                            TriggerClientEvent("blackjack:notify",source,"~g~+0 chips")
                                                         end
                                                     end
                                                 else

@@ -144,7 +144,7 @@ AddEventHandler('LVL:BuyVehicle', function(vehicle)
         for a, z in pairs(v) do
             if a ~= "_config" and a == vehicle then
                 if LVL.tryFullPayment(user_id,z[2]) then 
-                    LVLclient.notify(source,{'~b~You have purchased: ' .. z[1] .. ' for: $' .. z[2]})
+                    LVLclient.notify(source,{'~g~You have purchased: ' .. z[1] .. ' for: $' .. z[2]})
                     LVL.getUserIdentity(user_id, function(identity)					
                         MySQL.execute("LVL/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
                     end)
@@ -221,8 +221,8 @@ AddEventHandler('LVL:SellVehicle', function(veh)
                                                                     MySQL.execute("LVL/sell_vehicle_player", {user_id = user_id, registration = "P "..identity.registration, oldUser = playerID, vehicle = name}) 
                                                                 end)
                                                                 LVL.giveBankMoney(playerID, amount)
-                                                                LVLclient.notify(player,{"~b~You have successfully sold the vehicle to ".. GetPlayerName(target).." for $"..amount.."!"})
-                                                                LVLclient.notify(target,{"~b~"..GetPlayerName(player).." has successfully sold you the car for $"..amount.."!"})
+                                                                LVLclient.notify(player,{"~g~You have successfully sold the vehicle to ".. GetPlayerName(target).." for $"..amount.."!"})
+                                                                LVLclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you the car for $"..amount.."!"})
                                                                 TriggerClientEvent('LVL:CloseGarage', player)
                                                             else
                                                                 LVLclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
@@ -299,8 +299,8 @@ AddEventHandler('LVL:RentVehicle', function(veh)
                                                                             MySQL.execute("LVL/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
                                                                         end)
                                                                         LVL.giveBankMoney(playerID, amount)
-                                                                        LVLclient.notify(player,{"~b~You have successfully rented the vehicle to ".. GetPlayerName(target).." for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
-                                                                        LVLclient.notify(target,{"~b~"..GetPlayerName(player).." has successfully rented you the car for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                        LVLclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                        LVLclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
                                                                         TriggerClientEvent('LVL:CloseGarage', player)
                                                                     else
                                                                         LVLclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
@@ -583,7 +583,7 @@ AddEventHandler("LVL:PayVehicleTax", function()
         local bank = LVL.getBankMoney(user_id)
         local payment = bank / 1000
         if LVL.tryBankPayment(user_id, payment) then
-            LVLclient.notify(source,{"~b~Paid £"..math.floor(payment).." vehicle tax."})
+            LVLclient.notify(source,{"~g~Paid £"..math.floor(payment).." vehicle tax."})
         else
             LVLclient.notify(source,{"~r~Its fine... Tax payers will pay your vehicle tax instead."})
         end

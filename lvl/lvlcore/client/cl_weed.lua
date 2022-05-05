@@ -125,13 +125,13 @@ Citizen.CreateThread(function()
 end)
 
 -- [RageUI Menu]
-RMenu.Add('WeedMenu', 'Weed Seller', RageUI.CreateMenu("", "~b~LVL Weed Seller",1300, 50, "weed", "weed"))
+RMenu.Add('WeedMenu', 'Weed Seller', RageUI.CreateMenu("", "~g~LVL Weed Seller",1300, 50, "weed", "weed"))
 
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('WeedMenu', 'Weed Seller')) then
       RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
     
-    RageUI.Button("Sell Weed" , nil, {RightLabel = "~b~→"}, true, function(Hovered, Active, Selected)
+    RageUI.Button("Sell Weed" , nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
         if Selected then
  
             TriggerServerEvent('LVL:SellWeed')

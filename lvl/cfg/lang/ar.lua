@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
     given = "Given ~r~{1}$.",
-    received = "Received ~b~{1}$.",
+    received = "Received ~g~{1}$.",
     not_enough = "~r~Not enough money.",
     paid = "Paid ~r~{1}$.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "اعطاء محتويات من الحقيبة لاقرب شخص.",
       prompt = "كمية المعطاه (max {1}):",
       given = "Given ~r~{1} ~s~{2}.",
-      received = "Received ~b~{1} ~s~{2}.",
+      received = "Received ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "تخلص منها",
@@ -82,7 +82,7 @@ local lang = {
       title = "سحب",
       description = "سحب من حسابك",
       prompt = "المبلغ الذي تريد سحبة:",
-      withdrawn = "~b~{1}$ ~s~withdrawn.",
+      withdrawn = "~g~{1}$ ~s~withdrawn.",
       not_enough = "~r~You don't have enough money in bank."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "غسيل الاموال",
       description = "استخدم شركتك لغسل الاموال.",
       prompt = "المبلغ الذي تريد غسلة (max {1} $): ",
-      laundered = "~b~{1}$ ~s~laundered.",
+      laundered = "~g~{1}$ ~s~laundered.",
       not_enough = "~r~Not enough dirty money."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "اقل رأس مال لفتح شركة {1} $.",
       prompt_name = "Business name (can't change after, max {1} chars):",
       prompt_capital = "Initial capital (min {1})",
-      created = "~b~Business created."
+      created = "~g~Business created."
       
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "اغلاق الشركة",
         description = "اغلاق شركة اقرب شخص.",
         request = "هل انت واثق من اغلاق الشركة {3} owned by {1} {2} ?",
-        closed = "~b~Business closed."
+        closed = "~g~Business closed."
       },
       trackveh = {
         title = "تتبع المركبة",
         description = "تتبع المركبة برقم اللوحة.",
         prompt_reg = "ادخل رقم اللوحة:",
         prompt_note = "ادخال سبب البحث عن لوحة:",
-        tracking = "~b~Tracking started.",
-        track_failed = "~b~Tracking of {1}~s~ ({2}) ~n~~r~Failed.",
+        tracking = "~g~Tracking started.",
+        track_failed = "~g~Tracking of {1}~s~ ({2}) ~n~~r~Failed.",
         tracked = "Tracked {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "مسح السجلات",
           description = "مسح السجل بأستخدام رقم الاستمارة.",
-          deleted = "~b~Police records deleted"
+          deleted = "~g~Police records deleted"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "الاستيلاء على الأسلحة",
           description = "الاستيلاء على الاسلحة من اقرب شخص",
-          seized = "~b~Your weapons have been seized."
+          seized = "~g~Your weapons have been seized."
         },
         items = {
           title = "الاستيلاءعلى الممنوعات",
           description = "الاستيلاء على الممنوعات من اقرب شخص",
-          seized = "~b~Your illegal stuff has been seized."
+          seized = "~g~Your illegal stuff has been seized."
         }
       },
       jail = {
         title = "Jail",
         description = "سجن او خروج من سجن لاقرب شخص.",
         not_found = "~r~No jail found.",
-        jailed = "~b~Jailed.",
-        unjailed = "~b~Unjailed.",
-        notify_jailed = "~b~You have been jailed.",
-        notify_unjailed = "~b~You have been unjailed."
+        jailed = "~g~Jailed.",
+        unjailed = "~g~Unjailed.",
+        notify_jailed = "~g~You have been jailed.",
+        notify_unjailed = "~g~You have been unjailed."
       },
       fine = {
         title = "Fine المخالفات",
         description = "اعطاء لاقرب شخص مخالفة.",
-        fined = "~b~Fined ~s~{2} $ for ~b~{1}.",
-        notify_fined = "~b~You have been fined ~s~ {2} $ for ~b~{1}.",
+        fined = "~g~Fined ~s~{2} $ for ~g~{1}.",
+        notify_fined = "~g~You have been fined ~s~ {2} $ for ~g~{1}.",
         record = "[Fine] {2} $ for {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "➕ اضافة",
         prompt_number = "ادخل رقم الجوال للاضافة:",
         prompt_name = "ادخل الاسم:",
-        added = "~b~Entry added."
+        added = "~g~Entry added."
       },
       sendsms = {
         title = "ارسال رسالة",
         prompt = "اكتب رسالتك:",
-        sent = "~b~ Sent to n°{1}.",
+        sent = "~g~ Sent to n°{1}.",
         not_sent = "~r~ n°{1} unavailable."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "سجل الرسائل",
       description = "الرسائل الواردة.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Position ~b~ {1}"
+      notify = "SMS-Position ~g~ {1}"
     },
     service = {
       title = "الخدمات المدنية ",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "شراء",
       description = "اشتر بيت هنا , سعره {1} ريال.",
-      bought = "~b~Bought.",
+      bought = "~g~Bought.",
       full = "~r~The place is full.",
       have_home = "~r~You already have a home."
     },
     sell = {
       title = "بيع",
       description = "بع بيتك بسعر {1} ريال",
-      sold = "~b~Sold.",
+      sold = "~g~Sold.",
       no_home = "~r~You don't have a home here."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "أبدء الرهان مع لاعب قريب منك و الفائز يكون عشوائي.",
         prompt = "Bet amount:",
         request = "{1} [طاولة الرهان] هل تريد بدء الرهان",
-        started = "~b~Bet started."
+        started = "~g~Bet started."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "طلب فتح الشنطة",
-      asked = "~b~Asking...",
+      asked = "~g~Asking...",
       request = "هل تريد فتح شنطة السيارة ؟"
     },
     replace = {
@@ -451,7 +451,7 @@ local lang = {
     informer = {
       title = "Illegal Informer",
       description = "{1} $",
-      bought = "~b~Position sent to your GPS."
+      bought = "~g~Position sent to your GPS."
     }
   },
   mission = {
@@ -464,10 +464,10 @@ local lang = {
   aptitude = {
     title = "كفاءة",
     description = "اظهار كفاءتك.",
-    lose_exp = "Aptitude ~b~{1}/{2} ~r~-{3} ~s~exp.",
-    earn_exp = "Aptitude ~b~{1}/{2} ~b~+{3} ~s~exp.",
-    level_down = "Aptitude ~b~{1}/{2} ~r~lose level ({3}).",
-    level_up = "Aptitude ~b~{1}/{2} ~b~level up ({3}).",
+    lose_exp = "Aptitude ~g~{1}/{2} ~r~-{3} ~s~exp.",
+    earn_exp = "Aptitude ~g~{1}/{2} ~g~+{3} ~s~exp.",
+    level_down = "Aptitude ~g~{1}/{2} ~r~lose level ({3}).",
+    level_up = "Aptitude ~g~{1}/{2} ~g~level up ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | exp {2} | lvl {3} | progress {4}%"

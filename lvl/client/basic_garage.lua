@@ -282,7 +282,7 @@ function tLVL.vc_toggleLock(vtype)
         else -- lock
             SetVehicleDoorsLocked(veh, 2)
             SetVehicleDoorsLockedForAllPlayers(veh, true)
-            tLVL.notify("~b~Vehicle locked.")
+            tLVL.notify("~g~Vehicle locked.")
         end
     end
 end

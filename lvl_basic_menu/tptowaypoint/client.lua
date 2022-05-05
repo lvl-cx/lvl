@@ -56,7 +56,7 @@ local function teleportToWaypoint()
 	end
 
 	SetEntityCoordsNoOffset(targetPed, x,y,z, 0, 0, 1)
-	LVL.notify({"~b~ Teleported to waypoint."})
+	LVL.notify({"~g~ Teleported to waypoint."})
 end
 RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)

@@ -367,7 +367,7 @@ AddEventHandler('iens:repair', function()
 		local ped =PlayerPedId()
 		vehicle = GetVehiclePedIsIn(ped, false)
 		if IsNearMechanic() then
-			notification("~b~The mechanic is fixing your car, please wait.")
+			notification("~g~The mechanic is fixing your car, please wait.")
 			Citizen.Wait(30000)
 			if IsNearMechanic() then
 				SetVehicleUndriveable(vehicle,false)
@@ -376,7 +376,7 @@ AddEventHandler('iens:repair', function()
 				healthEngineLast=1000.0
 				healthPetrolTankLast=1000.0
 				SetVehicleEngineOn(vehicle, true, false )
-				notification("~b~The mechanic repaired your car!")
+				notification("~g~The mechanic repaired your car!")
 			else
 				notification("~r~You left the mechanic!")
 			end

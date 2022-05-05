@@ -744,7 +744,7 @@ AddEventHandler('LVL:LootBag', function(netid)
                 if user_id ~= nil then
                     LootBagEntities[netid][5] = source
                     OpenInv(source, netid, LootBagEntities[netid].Items)
-                    LVLclient.notify(source,{"~b~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
+                    LVLclient.notify(source,{"~g~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
                 end
             else
                 --LVLclient.notify(source, {'~r~This loot bag is already being looted.'})

@@ -192,12 +192,12 @@ AddEventHandler("LVL:addGroup",function(perm, selgroup)
             }
             }}), { ["Content-Type"] = "application/json" })
             LVL.addUserGroup(perm, "pov")
-            LVLclient.notify(source,{'~b~Added group to POV List'})
+            LVLclient.notify(source,{'~g~Added group to POV List'})
             LVLclient.notify(permsource,{'~r~You were added to POV List ~w~[ID: ' .. admin_perm .. ' ]'})
         else
             LVL.addUserGroup(perm, selgroup)
-            LVLclient.notify(source,{'~b~Added group to user'})
-            LVLclient.notify(permsource,{'~b~You have been given: ~w~' .. selgroup .. ' ~b~group ~w~[ID: ' .. admin_perm .. ' ]'})
+            LVLclient.notify(source,{'~g~Added group to user'})
+            LVLclient.notify(permsource,{'~g~You have been given: ~w~' .. selgroup .. ' ~g~group ~w~[ID: ' .. admin_perm .. ' ]'})
         end
     else
         print("Stop trying to add a group u fucking cheater")
@@ -376,7 +376,7 @@ AddEventHandler("LVL:Unban",function(perm1)
     if LVL.hasPermission(admin_id, perm2) then
 
         ExecuteCommand('unban ' .. perm1)
-        LVLclient.notify(source,{'~b~Unbanned ID: ' .. perm1})
+        LVLclient.notify(source,{'~g~Unbanned ID: ' .. perm1})
         webhook = "https://discord.com/api/webhooks/934896907703189544/vye_gVk3G5bbBSkOXDQ0BmjKiQv4XLhpdd5HJjD5NfePDQ-qalaHd27l_i38xGVWLy11"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
@@ -435,7 +435,7 @@ AddEventHandler('LVL:RevivePlayer', function(admin, target)
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
-        LVLclient.notify(target,{'~b~' .. GetPlayerName(admin) .. ' revived you ~w~[ID: ' .. user_id .. ']'})
+        LVLclient.notify(target,{'~g~' .. GetPlayerName(admin) .. ' revived you ~w~[ID: ' .. user_id .. ']'})
         TriggerClientEvent('LVL:FixClient',target)
         TriggerClientEvent('LVL:Notify', admin, 'Revived Player')
     end
@@ -645,7 +645,7 @@ AddEventHandler('LVL:GiveMoney2', function()
             LVL.prompt(source,"Amount:","",function(source,amount) 
                 amount = parseInt(amount)
                 LVL.giveMoney(user_id, amount)
-                LVLclient.notify(source,{"You have gave youself ~b~£" .. amount})
+                LVLclient.notify(source,{"You have gave youself ~g~£" .. amount})
             end)
         end
 
@@ -773,7 +773,7 @@ AddEventHandler('LVL:AddCar', function(id, car)
             LVL.getUserIdentity(userid, function(identity)					
                 exports['ghmattimysql']:execute("INSERT IGNORE INTO lvl_user_vehicles(user_id,vehicle,vehicle_plate) VALUES(@user_id,@vehicle,@registration)", {user_id = id, vehicle = car, registration = "P "..identity.registration})
             end)
-            LVLclient.notify(source,{'~b~Successfully added Player\'s car'})
+            LVLclient.notify(source,{'~g~Successfully added Player\'s car'})
         else 
             LVLclient.notify(source,{'~r~Failed to add Player\'s car'})
         end

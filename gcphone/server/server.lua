@@ -809,11 +809,11 @@ AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
                     }
                 }}), { ["Content-Type"] = "application/json" })
 
-                    LVLclient.notify(source, {"~b~Successfully transfered: ~w~£" .. amount .. " ~b~to ~w~" .. LVL.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
+                    LVLclient.notify(source, {"~g~Successfully transfered: ~w~£" .. amount .. " ~g~to ~w~" .. LVL.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
                     TriggerClientEvent("LVL:PlaySound", source, 1)
                     LVL.giveBankMoney({tonumber(num), tonumber(amount)})
                 
-                    LVLclient.notify(reciever, {"~b~You have recieved: ~w~£" .. amount .. "~b~ from ~w~".. LVL.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
+                    LVLclient.notify(reciever, {"~g~You have recieved: ~w~£" .. amount .. "~g~ from ~w~".. LVL.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
                     TriggerClientEvent("LVL:PlaySound", reciever, 1)
                 
                     else 

@@ -189,7 +189,7 @@ function tLVL.StoreWeaponsDead()
                         end
                     end
                 end
-                LVLclient.notify(player,{"~b~Weapons Stored"})
+                LVLclient.notify(player,{"~g~Weapons Stored"})
                 SetTimeout(10000,function()
                     isStoring[player] = nil 
                 end)

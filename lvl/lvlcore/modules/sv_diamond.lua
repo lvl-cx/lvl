@@ -60,7 +60,7 @@ AddEventHandler('LVL:SellDiamond', function()
         local price = 10000 -- [Per Piece Price]
         LVL.giveMoney(user_id,price)
 
-        LVLclient.notify(source, {"~b~Successfully sold 1 diamond for £" .. price})
+        LVLclient.notify(source, {"~g~Successfully sold 1 diamond for £" .. price})
 
         end
       end

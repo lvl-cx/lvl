@@ -23,7 +23,7 @@ local lang = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
     given = "Annettu ~r~{1}$.",
-    received = "Saatu ~b~{1}$.",
+    received = "Saatu ~g~{1}$.",
     not_enough = "~r~Ei tarpeeksi rahaa.",
     paid = "Maksettu ~r~{1}$.",
     give = {
@@ -42,7 +42,7 @@ local lang = {
       description = "Anna tavaroita lähimmälle pelaajalle.",
       prompt = "Annettava määrä(max {1}):",
       given = "Annettu ~r~{1} ~s~{2}.",
-      received = "Saatu ~b~{1} ~s~{2}.",
+      received = "Saatu ~g~{1} ~s~{2}.",
     },
     trash = {
       title = "roska",
@@ -82,7 +82,7 @@ local lang = {
       title = "Nosta",
       description = "pankista lompakkoon",
       prompt = "Anna nostettavan rahan määrä:",
-      withdrawn = "~b~{1}$ ~s~nostettu.",
+      withdrawn = "~g~{1}$ ~s~nostettu.",
       not_enough = "~r~Sinulla ei ole tarpeeksi rahaa pankissa."
     }
   },
@@ -109,7 +109,7 @@ local lang = {
       title = "Rahan pesu",
       description = "Käytä yritystäsi rahanpesuun.",
       prompt = "Määrä likaista rahaa pestävänä (max {1} $): ",
-      laundered = "~b~{1}$ ~s~pestynä.",
+      laundered = "~g~{1}$ ~s~pestynä.",
       not_enough = "~r~Ei tarpeeksi likaistarahaa."
     },
     open = {
@@ -117,7 +117,7 @@ local lang = {
       description = "Avaa yrityksesi, minimi pääoma on {1} $.",
       prompt_name = "Yrityksen nimi (ei voi vaihtaa myöhemmin, max {1} merkkiä):",
       prompt_pääoma = "Alku pääoma (min {1})",
-      created = "~b~yritys luotu."
+      created = "~g~yritys luotu."
       
     }
   },
@@ -157,15 +157,15 @@ local lang = {
         title = "Sulje yritys",
         description = "Sulje lähimmän pelaajan yritys.",
         request = "Oletko varma että haluat poistaa yrityksen. {3} Omistaja {1} {2} ?",
-        closed = "~b~yritys suljettu."
+        closed = "~g~yritys suljettu."
       },
       trackveh = {
         title = "Jäljitä kulkuneuvo",
         description = "Jäljitä kulkuneuvo sen rekisterinumerolla.",
         prompt_reg = "Anna rekisterinumero:",
         prompt_note = "Anna jäljitys merkintä/syy:",
-        tracking = "~b~Jäljitys aloitettu.",
-        track_failed = "~b~Jäljitys {1}~s~ ({2}) ~n~~r~Epäonnistui.",
+        tracking = "~g~Jäljitys aloitettu.",
+        track_failed = "~g~Jäljitys {1}~s~ ({2}) ~n~~r~Epäonnistui.",
         tracked = "Jäljitetty {1} ({2})"
       },
       records = {
@@ -176,7 +176,7 @@ local lang = {
         delete = {
           title = "Siivoa kirjaukset",
           description = "Siivoa poliisi rekisteröinnit rekisterinumeron mukaan.",
-          deleted = "~b~Poliisi kirjaukset poistettu"
+          deleted = "~g~Poliisi kirjaukset poistettu"
         }
       }
     },
@@ -212,28 +212,28 @@ local lang = {
         weapons = {
           title = "takavarikoi aseita",
           description = "Takavarikoi lähimmän pelaajan ase",
-          seized = "~b~Aseesi on takavarikoitu."
+          seized = "~g~Aseesi on takavarikoitu."
         },
         items = {
           title = "Takavarkoi laittomat",
           description = "Takavarikoi laittomat esineet",
-          seized = "~b~Sinun laittomat tavarasi on takavarikoitu."
+          seized = "~g~Sinun laittomat tavarasi on takavarikoitu."
         }
       },
       jail = {
         title = "Vankila",
         description = "Vankiloi/Poista vankilasta lähinpelaaja vankilasta/lähiimästä vankilasta.",
         not_found = "~r~Vankilaa ei löydetty.",
-        jailed = "~b~Vankiloitu.",
-        unjailed = "~b~Poistettu vankilasta.",
-        notify_jailed = "~b~Sinut on vankiloitu.",
-        notify_unjailed = "~b~Sinut on poistettu vankilasta."
+        jailed = "~g~Vankiloitu.",
+        unjailed = "~g~Poistettu vankilasta.",
+        notify_jailed = "~g~Sinut on vankiloitu.",
+        notify_unjailed = "~g~Sinut on poistettu vankilasta."
       },
       fine = {
         title = "Sakko",
         description = "Sakota lähintä pelaajaa.",
-        fined = "~b~Sakotettu  ~s~{2} $  ~b~{1}.",
-        notify_fined = "~b~Sinua on sakotettu ~s~ {2} $  ~b~{1}.",
+        fined = "~g~Sakotettu  ~s~{2} $  ~g~{1}.",
+        notify_fined = "~g~Sinua on sakotettu ~s~ {2} $  ~g~{1}.",
         record = "[Sakko] {2} $  {1}"
       },
       store_weapons = {
@@ -263,12 +263,12 @@ local lang = {
         title = "➕ LIsää",
         prompt_number = "Anna lisättävä puhelinnumero:",
         prompt_name = "Anna merkinnän nimi:",
-        added = "~b~Merkintä lisätty."
+        added = "~g~Merkintä lisätty."
       },
       sendsms = {
         title = "Lähetä SMS",
         prompt = "Lähetä viesti (max {1} merkkiä):",
-        sent = "~b~ Lähetä n°{1}.",
+        sent = "~g~ Lähetä n°{1}.",
         not_sent = "~r~ n°{1} ei saatavilla."
       },
       sendpos = {
@@ -282,10 +282,10 @@ local lang = {
       title = "SMS historia",
       description = "Vastaan otettu SMS historia.",
       info = "<em>{1}</em><br /><br />{2}",
-      notify = "SMS~b~ {1}:~s~ ~n~{2}"
+      notify = "SMS~g~ {1}:~s~ ~n~{2}"
     },
     smspos = {
-      notify = "SMS-Sijainti ~b~ {1}"
+      notify = "SMS-Sijainti ~g~ {1}"
     },
     service = {
       title = "Palavelu",
@@ -312,14 +312,14 @@ local lang = {
     buy = {
       title = "Osta",
       description = "Osta täältä talo, hinta {1} $.",
-      bought = "~b~Ostettu.",
+      bought = "~g~Ostettu.",
       full = "~r~Tämä paikka on täynnä.",
       have_home = "~r~Sinulla on jo koti."
     },
     sell = {
       title = "Myy",
       description = "Myy kotisi hintaan {1} $",
-      sold = "~b~Myyty.",
+      sold = "~g~Myyty.",
       no_home = "~r~Sinulla ei ole kotia täällä."
     },
     intercom = {
@@ -355,7 +355,7 @@ local lang = {
         description = "Aloita uhkapeli lähelläolevien pelaajien kanssa, voittaja valitaan satunnaisesti.",
         prompt = "Panoksen määrä:",
         request = "[BET] Haluatko uhkapelata {1} $ ?",
-        started = "~b~Uhkapeli aloitettu."
+        started = "~g~Uhkapeli aloitettu."
       }
     }
   },
@@ -412,7 +412,7 @@ local lang = {
     },
     asktrunk = {
       title = "Kysy takakontin avausta",
-      asked = "~b~Kysytään...",
+      asked = "~g~Kysytään...",
       request = "Haluatko avata takakontin ?"
     },
     replace = {
@@ -447,7 +447,7 @@ local lang = {
     informer = {
       title = "laiton tiedoittaja",
       description = "{1} $",
-      bought = "~b~Sijainti lähetetty GPS:ssääsi."
+      bought = "~g~Sijainti lähetetty GPS:ssääsi."
     }
   },
   mission = {
@@ -460,10 +460,10 @@ local lang = {
   aptitude = {
     title = "Kyvyt",
     description = "Näytä kyvyt.",
-    lose_exp = "Kyky ~b~{1}/{2} ~r~-{3} ~s~exp.",
-    earn_exp = "Kyky ~b~{1}/{2} ~b~+{3} ~s~exp.",
-    level_down = "kyky ~b~{1}/{2} ~r~menetä tasoa ({3}).",
-    level_up = "kyky ~b~{1}/{2} ~b~taso ylös ({3}).",
+    lose_exp = "Kyky ~g~{1}/{2} ~r~-{3} ~s~exp.",
+    earn_exp = "Kyky ~g~{1}/{2} ~g~+{3} ~s~exp.",
+    level_down = "kyky ~g~{1}/{2} ~r~menetä tasoa ({3}).",
+    level_up = "kyky ~g~{1}/{2} ~g~taso ylös ({3}).",
     display = {
       group = "{1}: ",
       aptitude = "--- {1} | exp {2} | lvl {3} | edistyminen {4}%"

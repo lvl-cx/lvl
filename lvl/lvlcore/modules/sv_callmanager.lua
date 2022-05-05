@@ -94,9 +94,9 @@ AddEventHandler('LVL:returnMe', function(admin, ticket, reason)
     local name = GetPlayerName(source)
     local tuserid = LVL.getUserId(ticket)
     local tname = GetPlayerName(ticket)
-    LVLclient.notify(source, {'~b~You have received £5,000 for taking a ticket.'})
+    LVLclient.notify(source, {'~g~You have received £5,000 for taking a ticket.'})
     LVL.giveBankMoney(userid, 5000)
-    LVLclient.notify(ticket,{'~b~An Admin has Taken your Ticket! ~w~[Name: ' .. name .. ' | ID: ' .. userid .. ']'})
+    LVLclient.notify(ticket,{'~g~An Admin has Taken your Ticket! ~w~[Name: ' .. name .. ' | ID: ' .. userid .. ']'})
     TriggerClientEvent("LVL:OMioDioMode",source,true)
 
 end)
@@ -105,7 +105,7 @@ RegisterCommand("staffon", function(source)
     user_id = LVL.getUserId(source)
     if LVL.hasPermission(user_id, "admin.tickets") then
         TriggerClientEvent("staffon", source)
-        LVLclient.notify(source,{"~b~You are now on Duty!"})
+        LVLclient.notify(source,{"~g~You are now on Duty!"})
     else
         LVLclient.notify(source,{"~r~You do not have permissions to do this!"})
     end
