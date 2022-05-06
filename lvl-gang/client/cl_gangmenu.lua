@@ -1,4 +1,4 @@
-RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "~g~LVL Gang Menu", 1300, 50, "gang", "gang"))
+RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "~w~LVL Gang Menu", 1300, 50, "gang", "gang"))
 RMenu.Add("gangmenu", "funds", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "invite", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "members", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
@@ -67,42 +67,42 @@ local globalturf = 0
 
 RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     RageUI.IsVisible(RMenu:Get('gangmenu', 'main'), true, false, true, function()
-        RageUI.ButtonWithStyle("Gang Members", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Gang Members", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'members'))
 
-        RageUI.ButtonWithStyle("Gang Funds", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Gang Funds", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'funds'))
 
         if MyRank == "Owner" or MyRank == "Enforcer" then
-            RageUI.ButtonWithStyle("Invite Members", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Invite Members", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                 end
             end, RMenu:Get('gangmenu', 'invite'))
         end
 
 
-        RageUI.ButtonWithStyle("Turf Info", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Turf Info", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'turf'))
 
-        RageUI.ButtonWithStyle("Leave Gang", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Leave Gang", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'leavegang'))
 
         if MyRank == "Owner" then
-            RageUI.ButtonWithStyle("Disband the Gang", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Disband the Gang", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                 end
             end, RMenu:Get('gangmenu', 'disbandgang'))
         end
 
-        RageUI.Separator("~g~Gang Info", function() end)
+        RageUI.Separator("~w~Gang Info", function() end)
         RageUI.Separator("Gang Name: " ..GangName, function() end)
         RageUI.Separator("Gang Funds: £" ..Comma(GangFunds), function() end)
         RageUI.Separator("Gang Creator: " ..GangLeader, function() end)
@@ -112,7 +112,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     RageUI.IsVisible(RMenu:Get("gangmenu", "members"),true, false,true,function()
         RMenu:Get("gangmenu", "members"):SetSubtitle("Members Tab")
         for k,v in pairs(GangMemberTable) do 
-            RageUI.ButtonWithStyle("Name: " ..v.name.. " | Rank: " ..v.rank, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Name: " ..v.name.. " | Rank: " ..v.rank, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     SelectedMember = v
                 end
@@ -121,9 +121,9 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     end)
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "funds"),true, false,true,function()
-        RMenu:Get("gangmenu", "funds"):SetSubtitle("~g~LVL Funds Tab")
+        RMenu:Get("gangmenu", "funds"):SetSubtitle("~w~LVL Funds Tab")
         if MyRank == "Enforcer" or MyRank == "Owner" then
-            RageUI.ButtonWithStyle("Withdraw", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Withdraw", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     local PedCoords = GetEntityCoords(PlayerPedId())
                     local bank = vector3(148.94, -1040.05, 29.38)
@@ -149,7 +149,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                 end
             end)
         end
-        RageUI.ButtonWithStyle("Deposit", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Deposit", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 local PedCoords = GetEntityCoords(PlayerPedId())
                 local bank = vector3(148.94, -1040.05, 29.38)
@@ -179,7 +179,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "invite"),true, false,true,function()
         RMenu:Get("gangmenu", "invite"):SetSubtitle("Invite Members!")
-        RageUI.ButtonWithStyle("Members Perm ID - " .. MembersPermInvIs, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Members Perm ID - " .. MembersPermInvIs, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 AddTextEntry('FMMC_MPM_NC', "Perm ID")
                 DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -195,7 +195,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                 end
             end
         end)
-        RageUI.ButtonWithStyle("Confirm", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Confirm", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
                 MembersPermToInv = MembersPermInvIs
             end
@@ -208,12 +208,12 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
         RMenu:Get("gangmenu", "confirminvite"):SetSubtitle("Confirm Invite!")
         RageUI.Separator("Members Perm ID: " ..MembersPermToInv, function() end)
 
-        RageUI.ButtonWithStyle("Are you sure you want to Confirm!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Are you sure you want to Confirm!", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerServerEvent("MemberInvites", MembersPermToInv, wow, wow2)
             end
         end)
-        RageUI.ButtonWithStyle("Cancel", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Cancel", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerEvent("closemenu")
                 RageUI.Visible(RMenu:Get('gangmenu', 'invite'), not RageUI.Visible(RMenu:Get('gangmenu', 'main')))
@@ -227,18 +227,18 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     end)
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "turf"),true, false,true,function()
-        RMenu:Get("gangmenu", "turf"):SetSubtitle("~g~Current Turf Info")
-        RageUI.Separator("~g~LSD Turf: " .. lsdturf .. '%', function() end)
-        RageUI.Separator("~g~Heroin Turf: " .. herointurf .. '%', function() end)
-        RageUI.Separator("~g~Cocaine Turf: " .. cocaineturf .. '%', function() end)
-        RageUI.Separator("~g~Weed Turf: " .. weedturf .. '%', function() end)
-        RageUI.Separator("~g~Global Weapon Trader Turf: " .. globalturf .. '%', function() end)
+        RMenu:Get("gangmenu", "turf"):SetSubtitle("~w~Current Turf Info")
+        RageUI.Separator("~w~LSD Turf: " .. lsdturf .. '%', function() end)
+        RageUI.Separator("~w~Heroin Turf: " .. herointurf .. '%', function() end)
+        RageUI.Separator("~w~Cocaine Turf: " .. cocaineturf .. '%', function() end)
+        RageUI.Separator("~w~Weed Turf: " .. weedturf .. '%', function() end)
+        RageUI.Separator("~w~Global Weapon Trader Turf: " .. globalturf .. '%', function() end)
     end)
 
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "leavegang"),true, false,true,function()
         RMenu:Get("gangmenu", "leavegang"):SetSubtitle("Leave Gang!")
-        RageUI.ButtonWithStyle("Are you sure you want to leave!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Are you sure you want to leave!", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 if ActiveMembers == 1 then 
                     Notify("Cannot leave gang as you are the last person")
@@ -251,7 +251,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                 end
             end
         end)
-        RageUI.ButtonWithStyle("Cancel Leaving", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Cancel Leaving", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 RageUI.Visible(RMenu:Get('gangmenu', 'main'), not RageUI.Visible(RMenu:Get('gangmenu', 'main')))
             end
@@ -261,13 +261,13 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     RageUI.IsVisible(RMenu:Get("gangmenu", "selectedmember"),true, false,true,function()
         RMenu:Get("gangmenu", "selectedmember"):SetSubtitle("Name: " ..SelectedMember.name.. " Rank: " ..SelectedMember.rank)
         if MyRank == "Owner" then 
-            RageUI.ButtonWithStyle("Update Rank", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Update Rank", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                 end
             end, RMenu:Get('gangmenu', 'updaterank'))
         end
         if MyRank == "Enforcer" or MyRank == "Owner" then
-            RageUI.ButtonWithStyle("Kick", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Kick", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     if MyName == SelectedMember.name then
                         Notify("Cannot Kick yourself")
@@ -282,7 +282,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
     RageUI.IsVisible(RMenu:Get("gangmenu", "updaterank"),true, false,true,function()
         RMenu:Get("gangmenu", "updaterank"):SetSubtitle("Name: " ..SelectedMember.name.. " Rank: " ..SelectedMember.rank)
         for k,v in pairs(gangranks) do
-            RageUI.ButtonWithStyle(v, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle(v, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     if SelectedMember.rank == v then
                         Notify("They already have this rank!")
@@ -296,7 +296,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
 
     RageUI.IsVisible(RMenu:Get("gangmenu", "disbandgang"),true, false,true,function()
         RMenu:Get("gangmenu", "disbandgang"):SetSubtitle("Disband Gang!")
-        RageUI.ButtonWithStyle("Are you sure you want to Disband!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Are you sure you want to Disband!", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if ActiveMembers == 1 then 
                 if Selected then
                     TriggerServerEvent("DisbandGang", GangName, GangLeader, GangFunds, MemberName, MemberUserId)
@@ -305,7 +305,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'main'), nil, function()
                 Notify("There are more people in the gang, you need to be the only one!")
             end
         end)
-        RageUI.ButtonWithStyle("Cancel Disbanding", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Cancel Disbanding", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 RageUI.Visible(RMenu:Get('gangmenu', 'main'), not RageUI.Visible(RMenu:Get('gangmenu', 'main')))
             end
@@ -344,7 +344,7 @@ RegisterCommand("gangmenu", function()
 end)
 RegisterKeyMapping("gangmenu", "Gang Menu", "keyboard", "F5")
 
-RMenu.Add('gangmenu', 'notingang', RageUI.CreateMenu("", "~g~LVL Gang Menu", 1300, 50, "gang", "gang"))
+RMenu.Add('gangmenu', 'notingang', RageUI.CreateMenu("", "~w~LVL Gang Menu", 1300, 50, "gang", "gang"))
 RMenu.Add("gangmenu", "creategang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "notingang", 1300, 50)))
 RMenu.Add("gangmenu", "joingang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "notingang", 1300, 50)))
 RMenu.Add("gangmenu", "confirmgang", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "creategang", 1300, 50)))
@@ -353,12 +353,12 @@ RMenu.Add("gangmenu", "joingangconfirm", RageUI.CreateSubMenu(RMenu:Get("gangmen
 RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
     RageUI.IsVisible(RMenu:Get('gangmenu', 'notingang'), true, false, true, function()
 
-        RageUI.ButtonWithStyle("Create Gang", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Create Gang", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'creategang'))
 
-        RageUI.ButtonWithStyle("Join Gang", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Join Gang", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
             end
         end, RMenu:Get('gangmenu', 'joingang'))
@@ -373,7 +373,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
             RageUI.Separator("None", function() end)
         else 
             for k,v in pairs(GangInvites) do
-                RageUI.ButtonWithStyle('Gang Name: ' ..v.gangname.. ' Gang Leader: ' ..v.gangleader, "", { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle('Gang Name: ' ..v.gangname.. ' Gang Leader: ' ..v.gangleader, "", { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         GangNameToJoin = v.gangname 
                         GangLeaderToJoin = v.gangleader
@@ -394,12 +394,12 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
         swag2 = GangLeaderToJoin
         swag3 = GangPersonInvitedBy
         id = UserIDinDatabase
-        RageUI.ButtonWithStyle("Are you sure you want to join this gang!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Are you sure you want to join this gang!", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerServerEvent("joininggang", swag, swag2, swag3, id)
             end
         end)
-        RageUI.ButtonWithStyle("Cancel joining", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Cancel joining", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerEvent("closemenu")
                 RageUI.Visible(RMenu:Get('gangmenu', 'joingang'), not RageUI.Visible(RMenu:Get('gangmenu', 'main')))
@@ -409,7 +409,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
 
 
     RageUI.IsVisible(RMenu:Get('gangmenu', 'creategang'), true, false, true, function()
-        RageUI.ButtonWithStyle("Gang Name - " .. CreatedGangName, nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Gang Name - " .. CreatedGangName, nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
                 AddTextEntry('FMMC_MPM_NA', "Enter Gang Name")
                 DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter Gang Name", "", "", "", "", 30)
@@ -421,14 +421,14 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
                     local result = GetOnscreenKeyboardResult()
                     if result then
                         CreatedGangName = result
-                        notify('~g~You have set name as: ~w~[' .. CreatedGangName .. ']')
+                        notify('~w~You have set name as: ~w~[' .. CreatedGangName .. ']')
                     end
                 end
 
             end
         end)
 
-        RageUI.ButtonWithStyle("Your Name - " .. CreatedGangLeader, nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Your Name - " .. CreatedGangLeader, nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
             if Selected then
                 AddTextEntry('FMMC_MPM_NA', "Enter Gang Leader (Your Name)")
                 DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter Gang Leader (Your Name)", "", "", "", "", 30)
@@ -445,7 +445,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
             end
         end)
         if CreatedGangLeader ~= '[Name]' and CreatedGangName ~= '[Name]' then
-            RageUI.ButtonWithStyle("Confirm", nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Confirm", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     Leader = CreatedGangLeader
@@ -460,12 +460,12 @@ RageUI.CreateWhile(1.0, RMenu:Get('gangmenu', 'creategang'), nil, function()
         RageUI.Separator("Gang Name: " ..Name, function() end)
         RageUI.Separator("Gang Leader: " ..Leader, function() end)
 
-        RageUI.ButtonWithStyle("Are you sure you want to Confirm!", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Are you sure you want to Confirm!", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerServerEvent("creategang", Name, Leader)
             end
         end)
-        RageUI.ButtonWithStyle("Cancel Disbanding", nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected)
+        RageUI.ButtonWithStyle("Cancel Disbanding", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 TriggerEvent("closemenu")
                 RageUI.Visible(RMenu:Get('gangmenu', 'creategang'), not RageUI.Visible(RMenu:Get('gangmenu', 'main')))

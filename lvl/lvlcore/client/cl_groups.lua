@@ -1,7 +1,7 @@
 local Groups = {}
 
 
-RMenu.Add('GroupMenu', 'groups',  RageUI.CreateMenu("", "~g~LVL License Menu", 1300, 50, "groups", "groups"))
+RMenu.Add('GroupMenu', 'groups',  RageUI.CreateMenu("", "~w~LVL License Menu", 1300, 50, "groups", "groups"))
 RMenu.Add("GroupMenu", "sell", RageUI.CreateSubMenu(RMenu:Get('GroupMenu', 'groups',  1300, 50)))
 
 RageUI.CreateWhile(1.0, true, function()
@@ -10,7 +10,7 @@ RageUI.CreateWhile(1.0, true, function()
 
 
         for i,v in pairs(Groups) do 
-            RageUI.Button(i, nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button(i, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     SelectedGroup = i;
                 end
@@ -27,66 +27,66 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if SelectedGroup == 'Heroin' then 
                 -- [Illegal Licenses]
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£10,000,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£10,000,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '2,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '2,500,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'LSD' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£20,000,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£20,000,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '5,000,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '5,000,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Cocaine' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£500,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£500,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '125,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '125,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Weed' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£200,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£200,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
                 
-                RageUI.Button('Refund License - ~g~[£' .. '50,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '50,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Rebel' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£10,000,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£10,000,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '2,500,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '2,500,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Gang' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£500,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Illegal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£500,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Illegal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '125,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '125,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
@@ -94,22 +94,22 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('GroupMenu', 'groups'))
                 -- [Legal Licenses]
             elseif SelectedGroup == 'Diamond' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£5,000,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£5,000,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '1,250,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '1,250,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Gold' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£1,000,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£1,000,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '250,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '250,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         if string.upper(Confirm()) == 'YES' then
                             TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
@@ -120,11 +120,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Scrap' then 
-                RageUI.Separator("~g~License Name: " .. SelectedGroup, function() end)
-                RageUI.Separator("~g~Price of License: " .. '£100,000', function() end)
-                RageUI.Separator("~g~License Type: " .. 'Legal License', function() end)
+                RageUI.Separator("~w~License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("~w~Price of License: " .. '£100,000', function() end)
+                RageUI.Separator("~w~License Type: " .. 'Legal License', function() end)
 
-                RageUI.Button('Refund License - ~g~[£' .. '25,000' ..']', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button('Refund License - ~w~[£' .. '25,000' ..']', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('LVL:RefundLicense', SelectedGroup)
 
@@ -132,7 +132,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('GroupMenu', 'groups'))
             end
 
-            RageUI.Button('Sell License to Nearest Player', nil, {RightLabel = "~g~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button('Sell License to Nearest Player', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                    TriggerServerEvent('LVL:SellLicense', SelectedGroup)
                 end
