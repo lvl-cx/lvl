@@ -49,7 +49,7 @@ AddEventHandler("crateDrop", function(c)
         true)
     radiusBlip = AddBlipForRadius(Coords, 200.0)
     SetBlipColour(radiusBlip, 1)
-    SetBlipAlpha(radiusBlip, 128)
+    SetBlipAlpha(radiusBlip, 180)
 
     crateBlip = AddBlipForEntity(activeCrate)
     SetBlipSprite(crateBlip, 478)

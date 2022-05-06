@@ -87,16 +87,16 @@ RegisterServerEvent('updateLoot', function(source, item, amount)
     if #currentLoot == 0 then
         if not used then
             used = true
-            TriggerClientEvent('chatMessage', -1, "^1[Infinite RP]: ^0 ", {66, 72, 245}, lootedMsg, "alert")
+            TriggerClientEvent('chatMessage', -1, "^1[LVL]: ^0 ", {66, 72, 245}, lootedMsg, "alert")
         end
     end
 
-            TriggerClientEvent('Infinite:SendSecondaryInventoryData', source, currentLoot, LVL.computeItemsWeight({currentLoot}), 30)
+            TriggerClientEvent('LVL:SendSecondaryInventoryData', source, currentLoot, LVL.computeItemsWeight({currentLoot}), 30)
 end) 
 
 Citizen.CreateThread(function()
     while (true) do
-        Wait(1000 * 100)
+        Wait(1000 * 3600)
 
             local num = math.random(1, #Coords)
             local coords = Coords[num]
@@ -121,7 +121,7 @@ Citizen.CreateThread(function()
         -- end)
 
         -- Wait(stayTime * 1000 + 500)
-        Wait(1000 * 400)
+        Wait(1000 * 3600)
         TriggerClientEvent("removeCrate", -1)
         Wait(1000)
   
