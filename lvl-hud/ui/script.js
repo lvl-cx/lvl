@@ -38,12 +38,12 @@ $(document).ready(function(){
 
     // Clock based on user's local hour
     function updateClock() {
-    var now = new Date(),
-        time = (now.getHours()<10?'0':'') + now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
-
-    document.getElementById('hour').innerHTML = [time];
-   
-    }
-    updateClock();
+        var now = new Date(),
+            time = (now.getHours()<10?'0':'') + now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
+    
+        document.getElementById('hour').innerHTML = [time];
+        setTimeout(updateClock, 1000);
+        }
+        updateClock();
 
 });
