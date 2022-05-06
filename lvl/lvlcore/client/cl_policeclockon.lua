@@ -1,108 +1,108 @@
-RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "~g~LVL Clock On Menu", 1300, 50 ,'clockon', 'clockon'))
+RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "~w~LVL Clock On Menu", 1300, 50 ,'clockon', 'clockon'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('PoliceDutyMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
-            RageUI.Button("Commissioner" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Commissioner" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Commissioner Clocked")
                     ExecuteCommand('blips')
                 end
             end)
             
-            RageUI.Button("Deputy Commissioner" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Deputy Commissioner" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Deputy Commissioner Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Assistant Commissioner" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Assistant Commissioner" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Assistant Commissioner Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Deputy Assistant Commissioner" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Deputy Assistant Commissioner" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Deputy Assistant Commissioner Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Commander" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Commander" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Commander Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Chief Superintendent" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Chief Superintendent" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Chief Superintendent Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Superintendent" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Superintendent" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Superintendent Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Chief Inspector" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Chief Inspector" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Chief Inspector Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Inspector" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Inspector" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Inspector Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Sergeant" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Sergeant" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Sergeant Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Special Police Constable" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Special Police Constable" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Special Police Constable Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Senior Police Constable" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Senior Police Constable" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Senior Police Constable Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Police Constable" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Police Constable" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "Police Constable Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("Police Community Support Officer" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("Police Community Support Officer" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOn', "PCSO Clocked")
                     ExecuteCommand('blips')
                 end
             end)
 
-            RageUI.Button("[Clock Off]" , nil, { RightLabel = "~g~→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("[Clock Off]" , nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOff')
                     --[[ PD Armoury Weapons ]]--

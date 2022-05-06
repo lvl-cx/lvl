@@ -1,70 +1,70 @@
-RMenu.Add('NHSDutyMenu', 'main', RageUI.CreateMenu("NHS", "~g~NHS Duty Menu", 1250,100))
+RMenu.Add('NHSDutyMenu', 'main', RageUI.CreateMenu("NHS", "~w~NHS Duty Menu", 1250,100))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('NHSDutyMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = true, instructionalButton = true}, function()
 
-            RageUI.Button("~g~Head Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Head Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Head Chief Medical Officer Clocked")
                 end
             end)
             
-            RageUI.Button("~g~Assistant Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Assistant Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Assistant Chief Medical Officer Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Deputy Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Deputy Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Deputy Chief Medical Officer Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Captain" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Captain" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Captain Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Consultant" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Consultant" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Consultant Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Specialist" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Specialist" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Specialist Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Senior Doctor" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Senior Doctor" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Senior Doctor Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Junior Doctor" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Junior Doctor" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Junior Doctor Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Critical Care Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Critical Care Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Critical Care Paramedic Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Paramedic Clocked")
                 end
             end)
 
-            RageUI.Button("~g~Trainee Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~w~Trainee Paramedic" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOn', "Trainee Paramedic Clocked")
                 end
