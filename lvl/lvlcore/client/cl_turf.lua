@@ -8,7 +8,7 @@ AddEventHandler('LVL:TakenTurf', function(isnTurf)
 	
 	inTurf = true
 	turf = isnTurf
-	secondsRemaining = 10
+	secondsRemaining = 300
 	TakenTurf = false
 
 	TakeComission()
