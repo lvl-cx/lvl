@@ -85,8 +85,8 @@ end)
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
-        RageUI.Separator("Currently Viewing: ~w~" .. 'Police Vehicles', function() end)
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RageUI.Separator("Currently Viewing: ~w~" .. 'Police Vehicles', function() end)
         for i , p in pairs(dealership.guns2) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
