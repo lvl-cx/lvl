@@ -2,7 +2,7 @@ AddEventHandler('chat:addMessage', function(source, args, rawCommand)
   local playerName = GetPlayerName(source)
   local user_id = LVL.getUserId(source)
   local msg = rawCommand
-  local webhook = "https://discord.com/api/webhooks/932223493368602654/0XV-wIPnjnAW-wcY6d7Mu2EV4FpDx7R_585gAXgz-78_MFVypxvbdMQuLvwgTYwwfVBt"
+  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
   PerformHttpRequest(webhook, function(err, text, headers) 
   end, "POST", json.encode({username = "LVL Roleplay", embeds = {
     {
@@ -24,7 +24,7 @@ RegisterCommand('anon', function(source, args, rawCommand)
     local playerName = GetPlayerName(source)
     local user_id = LVL.getUserId(source)
     local msg = rawCommand:sub(5)
-    local webhook = "https://discord.com/api/webhooks/932223533709402142/UZlQT1JB23ngOD1piF-WEQbJ-4rQWdOxpWDWrskowsJi6AtU6fzQoiGR1UhhM_YKU6bi"
+    local webhook = "https://discord.com/api/webhooks/972458970449076264/c7fmXpy5MCIi8Wb-sJp5YmM6c5IK5fCnK5B-SBEfgrVKVjVN7bXnzpcbbBWBa7RD5eyi"
     PerformHttpRequest(webhook, function(err, text, headers) 
     end, "POST", json.encode({username = "LVL Roleplay", embeds = {
       {
@@ -46,7 +46,7 @@ RegisterCommand('ooc', function(source, args, rawCommand)
   local playerName = GetPlayerName(source)
   local msg = rawCommand:sub(5)
   local user_id = LVL.getUserId(source)
-  local webhook = "https://discord.com/api/webhooks/932223609706016778/NUVEtsAZq_z1oGNvKbfwZRMKWjHVil9e38xs4uIUIwmoDWUtU1kLDZIXremBBvpdDHfU"
+  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
   PerformHttpRequest(webhook, function(err, text, headers) 
   end, "POST", json.encode({username = "LVL Roleplay", embeds = {
     {
@@ -146,7 +146,7 @@ RegisterCommand('/', function(source, args, rawCommand)
   local playerName = GetPlayerName(source)
   local msg = rawCommand:sub(2)
   local user_id = LVL.getUserId(source)
-  local webhook = "https://discord.com/api/webhooks/932223609706016778/NUVEtsAZq_z1oGNvKbfwZRMKWjHVil9e38xs4uIUIwmoDWUtU1kLDZIXremBBvpdDHfU"
+  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
   PerformHttpRequest(webhook, function(err, text, headers) 
   end, "POST", json.encode({username = "LVL Roleplay", embeds = {
     {

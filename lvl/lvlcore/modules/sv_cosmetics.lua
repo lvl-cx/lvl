@@ -121,7 +121,7 @@ AddEventHandler('LVL:CosmeticMarketPlace', function(cosmeticdata, price, message
                   end
                 end
                 url = v.url
-                webhook = "https://discord.com/api/webhooks/967472206756069376/rWpnwVTJTKl3Udz2FELcdhVEtUM_apdAAEQ99sqO_psDpjQusgY_XDZnMTItogd0gXSH"
+                webhook = "https://discord.com/api/webhooks/972459190020890715/v2D0xPXtQECtTRFSYyBDnXtMyEFczOvfaksXdB77iiKL-rFMqJ1ykXVJq19lihp2VA-L"
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "LVL Market", embeds = {
                     {

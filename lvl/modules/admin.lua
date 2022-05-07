@@ -179,7 +179,7 @@ AddEventHandler("LVL:addGroup",function(perm, selgroup)
         elseif selgroup == "vip" and not LVL.hasPermission(admin_perm, "group.add.vip") then
             LVLclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "pov" and not LVL.hasGroup(perm, "pov") then
-            webhook = "https://discord.com/api/webhooks/934896508036321302/QImWOhrrQixTQoaeEw3FD_gjpdDXf3buT-l_hLNFitI1ej9lJxfr4D8200y98CbD3Ivw"
+            webhook = "https://discord.com/api/webhooks/972459362603905064/WYpnUCMoTsB1n1QLwbkcLP4Hj5WCrbjlCAN5SFj2x4F7sv8MnZHGq9gqzKg4JE0obfm5"
             PerformHttpRequest(webhook, function(err, text, headers) 
             end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                 {
@@ -244,7 +244,7 @@ AddEventHandler("LVL:removeGroup",function(perm, selgroup)
         elseif selgroup == "vipgarage" and not LVL.hasPermission(user_id, "group.remove.vipgarage") then
             LVLclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "pov" and LVL.hasGroup(perm, "pov") then
-            webhook = "https://discord.com/api/webhooks/930515250690809936/3uENxi2b7yzVXBixV74Ll2Lt9mRmv6YKdhHDQVjwyoSzmKOk6Qad0lxDcGpe791o5iAj"
+            webhook = "https://discord.com/api/webhooks/972459449111412737/V6R-FlM_hb7Xxrx59WeZSwDkoGuJL82_KaawOKet_OcjJ3VG5Cqm83pq7ZzFWLzFYRPc"
             PerformHttpRequest(webhook, function(err, text, headers) 
             end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                 {
@@ -287,7 +287,7 @@ AddEventHandler('LVL:BanPlayer', function(admin, target, reason, duration)
                 saveBanLog(target_id, GetPlayerName(admin), reason, duration)
                 print(admin, target_id)
                 TriggerEvent('LVL:BanPlayerLog', target, GetPlayerName(admin), reason, duration)
-                webhook = "https://discord.com/api/webhooks/931165102240047135/JvE9_fXK0m9Jy0YnylbralzY27Fnc_NHzibpX4V-cCiUXaWhZydiBnZcpbRVQJWN0mKe"
+                webhook = "https://discord.com/api/webhooks/972459521354129508/JcxZS3i86KRtw3XWKzp4Lrgg3D_MzKK5pzBmzGH9Hw-N6XEQyin-c--NIR_-KqUc-yHM"
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                     {
@@ -314,7 +314,7 @@ AddEventHandler('LVL:KickPlayer', function(admin, target, reason, tempid)
     local perm = admincfg.buttonsEnabled["kick"][2]
     local admin_id = LVL.getUserId(admin)
     if LVL.hasPermission(admin_id, perm) then
-        webhook = "https://discord.com/api/webhooks/930515850123960380/I5YU8Z1MA6rQ0SLCsqJ30-94jjJ4ZEYZWuxKckAcBNZmQ0b66OBLp3LMrfSIrnXUc9OO"
+        webhook = "https://discord.com/api/webhooks/972459583564046356/1UzhnvoG90OcTkrB7uxuWn4o-z5D1z_t2Y31k2HPvnEA-Pmq0rst5vEro2PHDrqP6UIN"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -341,7 +341,7 @@ AddEventHandler('LVL:KickPlayerNoF10', function(admin, target, reason)
     if LVL.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/930515850123960380/I5YU8Z1MA6rQ0SLCsqJ30-94jjJ4ZEYZWuxKckAcBNZmQ0b66OBLp3LMrfSIrnXUc9OO"
+        webhook = "https://discord.com/api/webhooks/972459583564046356/1UzhnvoG90OcTkrB7uxuWn4o-z5D1z_t2Y31k2HPvnEA-Pmq0rst5vEro2PHDrqP6UIN"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -377,7 +377,7 @@ AddEventHandler("LVL:Unban",function(perm1)
 
         ExecuteCommand('unban ' .. perm1)
         LVLclient.notify(source,{'~g~Unbanned ID: ' .. perm1})
-        webhook = "https://discord.com/api/webhooks/934896907703189544/vye_gVk3G5bbBSkOXDQ0BmjKiQv4XLhpdd5HJjD5NfePDQ-qalaHd27l_i38xGVWLy11"
+        webhook = "https://discord.com/api/webhooks/972459719228801094/eE-TzQnM5ZNvxF79NiAHZACVt8JE4fXhXoIDhGQ9SedwQIuraTOz45pPYk5vBmniswtB"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -400,7 +400,7 @@ AddEventHandler('LVL:SlapPlayer', function(admin, target)
     if LVL.hasPermission(admin_id, "admin.slap") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/930515984723378177/wklMHwU-Pv4YDDXymMApwVLplEwfunEXclpgMFV3RL5aN5pBSzcOiJXw5dEeDbL8us5l"
+        webhook = "https://discord.com/api/webhooks/972459782298562560/QEOx3l8eOC0R0gm_migPDX0awEJpExBudkHsmVcG8JQ41BLWqWvIVntyE-zQfp9rnDR6"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -423,7 +423,7 @@ AddEventHandler('LVL:RevivePlayer', function(admin, target)
     if LVL.hasPermission(admin_id, "admin.revive") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/930516091451629588/CfBWLbFYvryiWHoDko6cvh4avRMXvE9JKxGyrPGVnytV8EiUSBiz63BzfnGmakPPAiwZ"
+        webhook = "https://discord.com/api/webhooks/972459842348384266/jSpDOLulfADM_FH5y-JAsjrV29FMI_k5hJGZUD8XJhtRToSkJEhkqdngVp6J4PCq-hoV"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -449,7 +449,7 @@ AddEventHandler('LVL:FreezeSV', function(admin, newtarget, isFrozen)
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
         if isFrozen then
-            webhook = "https://discord.com/api/webhooks/916729659704635393/Dw4uZkCu-NpiaggBLtrI64_1vFIzFf9oMHLlHvou05zsXmbSnSomvm49Wa-zYu768gSC"
+            webhook = "https://discord.com/api/webhooks/972459950490153010/jZ9oxG1k09vuLZgrkMfkvcZDz5qSUTCT83ajvWTjt0x0_0MuiWqOvLTU5Tur9E96Obm5"
             PerformHttpRequest(webhook, function(err, text, headers) 
             end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                 {
@@ -462,7 +462,7 @@ AddEventHandler('LVL:FreezeSV', function(admin, newtarget, isFrozen)
             }
             }}), { ["Content-Type"] = "application/json" })
         else
-            webhook = "https://discord.com/api/webhooks/906655854739210250/xGDY3OXAQBhDFkCAJ4CT1rlNqkqJoaJh8-HGrMiAjqvp4KiNdtplkJNlsbgYcDXfBeHC"
+            webhook = "https://discord.com/api/webhooks/972459950490153010/jZ9oxG1k09vuLZgrkMfkvcZDz5qSUTCT83ajvWTjt0x0_0MuiWqOvLTU5Tur9E96Obm5"
             PerformHttpRequest(webhook, function(err, text, headers) 
             end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                 {
@@ -488,7 +488,7 @@ AddEventHandler('LVL:TeleportToPlayer', function(source, newtarget)
     if LVL.hasPermission(user_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/930518910271381554/tXeSuSe5-Yy1OfT9DcDHQ449QlmOD6zmNZ-qs-EEf0kTe2eKnR_w7UGFL9rtyXoJSwkS"
+        webhook = "https://discord.com/api/webhooks/972460044199292948/0Bptqphabn93ZnlwvEjlmABlROR0fkMxMwM4Pm8WgiiblmAnjNgXMt8iNnk2tIFoAl2O"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -511,7 +511,7 @@ AddEventHandler('LVL:TeleportToMe', function(source, newtarget)
     if LVL.hasPermission(user_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/930519041989279814/GkyW8iKAmqxi_Fclpf7b4t-jxcbF10M9vI5UtryojcriuU6S9y2kzret9zQSLl-Ae0u2"
+        webhook = "https://discord.com/api/webhooks/972460165477572618/79b2T4aal8wXAckeByMSQ34LoeiocehSBq9t3AkLtB7ribxU7fZeeVddBt3hohnN6Bb5"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -542,7 +542,7 @@ AddEventHandler('LVLAdmin:Bring', function(id)
                 local playerOtherName = GetPlayerName(SelectedPlrSource)
                 SetEntityCoords(otherPlr, pedCoords)
 
-                webhook = "https://discord.com/api/webhooks/930519041989279814/GkyW8iKAmqxi_Fclpf7b4t-jxcbF10M9vI5UtryojcriuU6S9y2kzret9zQSLl-Ae0u2"
+                webhook = "https://discord.com/api/webhooks/972460236919164928/XPomsqyHRpDMHx3dZSeQmcz1KnjSEb7ZGCp_5zAAlUWUaBlEsZrL8bWg8u4qYO1qhVew"
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "LVL Roleplay", embeds = {
                     {
@@ -574,7 +574,7 @@ AddEventHandler('LVL:SpectateCheck', function(newtarget)
     if LVL.hasPermission(user_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/930519177054281818/_KuFaoWpYWOnha6Z-DPFj1XgiutVBXY2KqpylFZAoykCgZ5a2Ep3xl9EJuWZwbiiU7U3"
+        webhook = "https://discord.com/api/webhooks/972460295740092426/aS_D3qgtBVcAra7oSHkZqAArMTEn9ZqBB7r9SDyFvsmL_9lZ7Acxx1zfnQ4MuJF-0NTY"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -663,7 +663,7 @@ AddEventHandler("LVL:Teleport2AdminIsland",function(id)
     if LVL.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(id)
-        webhook = "https://discord.com/api/webhooks/930519622598418432/4oFqM6dfybFGjqshX056PsBERieRxivEoDGdjGuG8-OrytpQE3cfEAfT1zrH8mCLcKV8"
+        webhook = "https://discord.com/api/webhooks/972460369564008519/t4rA6hQvMQcmhOhT8t8SQhPfSz_c6rtX4fvnvQsMjWiDZTGUrfj-3gO-819oTBVTKi5h"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -719,7 +719,7 @@ AddEventHandler("LVL:returnplayer",function(id)
     if LVL.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(id)
-        webhook = "https://discord.com/api/webhooks/930519734783467570/znozZqv4Rmzfia47r6RV-S8-4-ycfk_geYe2W1720znvWxVNT9LAMvSHVXZuRyPnEaHJ"
+        webhook = "https://discord.com/api/webhooks/972460428317851648/GQlChr2DzuCuVUnq-Nb_IuY-AmxYVKpqqG3yASMt-_vEn_5qhZ6HJldYP-3mgxOrnNCy"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {
@@ -757,7 +757,7 @@ AddEventHandler('LVL:AddCar', function(id, car)
     if LVL.hasPermission(userid, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(SelectedPlrSource)
-        webhook = "https://discord.com/api/webhooks/930520128750252094/RRn7n7uqgP7_Zd8Z82NnfelvcUrik4Q5KHuRW9DvOSWmyOnCXL1-TSA69Wa9RQLju2P_"
+        webhook = "https://discord.com/api/webhooks/972460494604607508/z1bbH0pbI7dGEy9oLG8vxf9R66Rzi6d5gDcoT2E3njkZ91mAupdOrNML_z6K1ACK9Qlj"
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "LVL Roleplay", embeds = {
             {

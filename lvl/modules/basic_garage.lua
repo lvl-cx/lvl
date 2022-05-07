@@ -37,22 +37,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-
-RegisterNetEvent('LVL:GiveStarterCar')
-AddEventHandler('LVL:GiveStarterCar', function()
-    local source = source
-    local user_id = LVL.getUserId(source)
-    
-    MySQL.query("LVL/get_vehicle", {user_id = user_id, vehicle = 'Sanchez'}, function(pvehicle, affected)
-  
-            LVL.getUserIdentity(user_id, function(identity)
-                MySQL.execute("LVL/add_vehicle", {user_id = user_id, vehicle = 'Sanchez', registration = "P "..identity.registration})
-    
-            end)            
-     
-    end)
-end)
-
 RegisterNetEvent('LVL:FetchCars')
 AddEventHandler('LVL:FetchCars', function(owned, type)
     local source = source
@@ -581,7 +565,7 @@ AddEventHandler("LVL:PayVehicleTax", function()
 
     if user_id ~= nil then
         local bank = LVL.getBankMoney(user_id)
-        local payment = bank / 1000
+        local payment = bank / 10000
         if LVL.tryBankPayment(user_id, payment) then
             LVLclient.notify(source,{"~g~Paid £"..math.floor(payment).." vehicle tax."})
         else

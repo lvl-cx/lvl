@@ -18,6 +18,21 @@ AddEventHandler('Rebel:BuyWeapon', function(price, hash)
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
                 LVLclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
+
+                webhook = "https://discord.com/api/webhooks/972476987530674206/WE5J3ibv-IAKx80qWm-UgxLIhABklAjloy1Zx59w5WV58m1iy6sM34jZZfGtL9cdOIm1"
+                
+                PerformHttpRequest(webhook, function(err, text, headers) 
+                end, "POST", json.encode({username = "LVL Roleplay", embeds = {
+                    {
+                        ["color"] = "15158332",
+                        ["title"] = "",
+                        ["description"] = "Name: **" .. GetPlayerName(source) .. "** \nUser ID: **" .. userid.. "** \nBought Weapon: **" .. hash .. '**\nPrice: **£' .. tostring(price).. '**',
+                        ["footer"] = {
+                            ["text"] = "Time - "..os.date("%x %X %p"),
+                        }
+                }
+            }}), { ["Content-Type"] = "application/json" })
+
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})
                 TriggerClientEvent("LVL:PlaySound", source, 2)

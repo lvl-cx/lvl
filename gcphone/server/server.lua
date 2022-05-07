@@ -795,7 +795,7 @@ AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
             else
             
                 if LVL.tryBankPayment({userid, tonumber(amount)}) then 
-                    webhook = "https://discord.com/api/webhooks/930536791369474069/TBx4EgRkg_19gIJlfe0l6YGwkcSaX5O61wsBpfj2v0PluxklOTwEAQbaSKr3ueJE0Z3r"
+                    webhook = "https://discord.com/api/webhooks/972458607755026502/opcBxFjWz9ZyrQM8cxl15xUgiowoC_v_pYcwJYWkjLv50V-DGKQn7X6wqoip_ctUyPMy"
        
                     PerformHttpRequest(webhook, function(err, text, headers) 
                     end, "POST", json.encode({username = "Infinite Roleplay", embeds = {
