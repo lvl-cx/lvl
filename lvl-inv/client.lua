@@ -13,7 +13,7 @@ local LootBagID = nil;
 local LootBagIDNew = nil;
 local LootBagCoords = nil;
 local PlayerInComa = false;
-local model = GetHashKey('xm_prop_x17_bag_med_01a')
+local model = GetHashKey('prop_big_bag_01')
 tLVL = Proxy.getInterface("LVL")
 
 local LootBagCrouchLoop = false;
@@ -331,7 +331,7 @@ local LootBagIDNew2 = nil;
 local MoneydropIDNew2 = nil;
 local Entity2, farCoordsX2, farCoordsY2, farCoordsZ2 = nil,nil,nil,nil
 local EntityType2 = nil
-local model2 = GetHashKey('xm_prop_x17_bag_med_01a')
+local model2 = GetHashKey('prop_big_bag_01')
 
 
 Citizen.CreateThread(function()
@@ -348,11 +348,11 @@ Citizen.CreateThread(function()
                     local entityModel2 = GetEntityModel(Entity2)
                     local coords2 = GetEntityCoords(PlayerPedId())
                
-                    if `xm_prop_x17_bag_med_01a` == entityModel2 then
+                    if `prop_big_bag_01` == entityModel2 then
                         TriggerEvent('Crosshair', true)
                         if IsControlJustReleased(1, 38) then
                       
-                            local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('xm_prop_x17_bag_med_01a'), false, false, false)
+                            local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('prop_big_bag_01'), false, false, false)
                             local MoneydropIDNew2 = ObjToNet(MoneydropID2)
                             TriggerServerEvent('LVL:LootBag', LootBagIDNew)
                             Wait(1000)

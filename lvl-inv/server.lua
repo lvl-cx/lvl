@@ -710,7 +710,7 @@ AddEventHandler('LVL:InComa', function()
         if in_coma then
             Wait(1500)
             local user_id = LVL.getUserId({source})
-            local model = GetHashKey('xm_prop_x17_bag_med_01a')
+            local model = GetHashKey('prop_big_bag_01')
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
