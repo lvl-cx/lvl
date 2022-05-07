@@ -26,6 +26,21 @@ AddEventHandler('SandySmall:BuyWeapon', function(price, hash)
                     LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
                     LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
                 end
+
+                webhook = "https://discord.com/api/webhooks/972477157387403285/amx-pPsAKI-ecYGqx6X_yJuVrBj90VKmgemWGPau0dAevUNn5TPECeLKSYLVygYtbfW1"
+                
+                PerformHttpRequest(webhook, function(err, text, headers) 
+                end, "POST", json.encode({username = "LVL Roleplay", embeds = {
+                    {
+                        ["color"] = "15158332",
+                        ["title"] = "",
+                        ["description"] = "Name: **" .. GetPlayerName(source) .. "** \nUser ID: **" .. userid.. "** \nBought Weapon: **" .. hash .. '**\nPrice: **£' .. tostring(price).. '**',
+                        ["footer"] = {
+                            ["text"] = "Time - "..os.date("%x %X %p"),
+                        }
+                }
+            }}), { ["Content-Type"] = "application/json" })
+
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})
                 TriggerClientEvent("LVL:PlaySound", source, 2)
