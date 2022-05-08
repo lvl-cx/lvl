@@ -57,7 +57,7 @@ function tLVL.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type 
             saveCarBlip = AddBlipForEntity(as)
             SetBlipSprite(saveCarBlip, 56)
             SetBlipDisplay(saveCarBlip, 4)
-            SetBlipScale(saveCarBlip, 1.0)
+            SetBlipScale(saveCarBlip, 0.6)
             SetBlipColour(saveCarBlip, 2)
             SetBlipAsShortRange(saveCarBlip, true)
 
