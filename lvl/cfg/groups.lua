@@ -1246,22 +1246,26 @@ cfg.groups = {
   -- [Donator Groups]
 
   	["Starter"] = {
-		"vip.guns",
+		"vip.perm",
+	},
+
+	["VIP"] = {
+		"vip.perm",
 	},
 
 	["Recruit"] = {
-		"vip.guns",
+		"vip.perm",
 	},
 
 	["Soldier"] = {
-		"vip.guns",
+		"vip.perm",
 	},
 
 	["Warrior"] = {
-		"vip.guns",
+		"vip.perm",
 	},
 	["Champion"] = {
-		"vip.guns",
+		"vip.perm",
 	},
 
   -- [Staff On/ Off Flag]

@@ -1,275 +1,81 @@
-AddEventHandler('chat:addMessage', function(source, args, rawCommand)
-  local playerName = GetPlayerName(source)
-  local user_id = LVL.getUserId(source)
-  local msg = rawCommand
-  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
-  PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "LVL Roleplay", embeds = {
-    {
-      ["color"] = "15158332",
-      ["title"] = "Message: "..msg,
-      ["description"] = "Name: **"..playerName.."** \nPermID: **"..user_id.."** \nType: **Tweet**",
-      ["footer"] = {
-        ["text"] = "Time - "..os.date("%x %X %p"),
-      }
-  }
-}}), { ["Content-Type"] = "application/json" })
-  TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(28, 160, 242, 0.6); border-radius: 8px;"><i class="fab fa-twitter"></i> Twitter | @{0}: {1}</div>',
-      args = { playerName, msg }
-  })
+function chatlogs(source, msg, type)
+	local source = source
+	local player_id = LVL.getUserId(source)
+	local player_name = GetPlayerName(source)
+	local logs = "https://discord.com/api/webhooks/790968758088499220/R7G6CkcRJXpWAf1NXRj4eaLNdyUzVn339cn3-_aZ7fiCRrOfmlY2BxpWz0r7H2DSKCM0"
+	local communtiylogo = "https://media.discordapp.net/attachments/772609930825957421/787302041194201098/oll.png" --Must end with .png or .jpg
+	local curdate = os.time()
+	local timestamp = os.date("%c", curdate)
+	local communityname = "LVL Chat Logs | "..timestamp
+	local command = {
+		{
+			["color"] = "8663711",
+			["title"] = type,
+			["description"] = "**Player Name - **"..player_name.."\n**Perm ID - **"..player_id.."\n**Message - **"..msg,
+			["footer"] = {
+			["text"] = communityname,
+			["icon_url"] = communtiylogo,
+			},
+		}
+	}
+	PerformHttpRequest(logs, function(err, text, headers) end, 'POST', json.encode({username = "LVL Staff Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
+end
+
+
+
+--Dispatch Message
+RegisterCommand("anon", function(source, args, raw)
+    if #args <= 0 then return end
+    local message = table.concat(args, " ")
+	TriggerClientEvent('chatMessage', -1, "^8^*Anonymous:^r", { 255, 0, 0 }, message)
+	chatlogs(source, message, "Annon")
 end)
 
-RegisterCommand('anon', function(source, args, rawCommand)
-    local playerName = GetPlayerName(source)
-    local user_id = LVL.getUserId(source)
-    local msg = rawCommand:sub(5)
-    local webhook = "https://discord.com/api/webhooks/972458970449076264/c7fmXpy5MCIi8Wb-sJp5YmM6c5IK5fCnK5B-SBEfgrVKVjVN7bXnzpcbbBWBa7RD5eyi"
-    PerformHttpRequest(webhook, function(err, text, headers) 
-    end, "POST", json.encode({username = "LVL Roleplay", embeds = {
-      {
-          ["color"] = "15158332",
-          ["title"] = "Message: "..msg,
-          ["description"] = "Name: **"..playerName.."** \nPermID: **"..user_id.."** \nType: **Anonymous**",
-          ["footer"] = {
-            ["text"] = "Time - "..os.date("%x %X %p"),
-          }
-      }
-  }}), { ["Content-Type"] = "application/json" })
-    TriggerClientEvent('chat:addMessage', -1, {
-        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(2, 160, 242, 0.6); border-radius: 8px;"><i class="fab fa-twitter"></i> Twitter | @^1Anonymous^7: {1}</div>',
-        args = { playerName, msg }
-    })
-end, false)
+--OOC Message
+RegisterCommand("ooc", function(source, args, raw)
+    if #args <= 0 then return end
+    local message = table.concat(args, " ")
+	TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .." : " , { 128, 128, 128 }, message, "ooc")
+	chatlogs(source, message, "OOC")
+end)
 
-RegisterCommand('ooc', function(source, args, rawCommand)
-  local playerName = GetPlayerName(source)
-  local msg = rawCommand:sub(5)
-  local user_id = LVL.getUserId(source)
-  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
-  PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "LVL Roleplay", embeds = {
-    {
-      ["color"] = "15158332",
-      ["title"] = "Message: "..msg,
-      ["description"] = "Name: **"..playerName.."** \nPermID: **"..user_id.."** \nType: **OOC**",
-      ["footer"] = {
-        ["text"] = "Time - "..os.date("%x %X %p"),
-      }
-  }
-}}), { ["Content-Type"] = "application/json" })  if LVL.hasGroup(user_id, 'founder') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Founder^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'commanager') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^6Community Manager^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  
-  elseif LVL.hasGroup(user_id, 'trialstaff') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Trial Staff^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
+RegisterCommand("/", function(source, args, raw)
+    if #args <= 0 then return end
+    local message = table.concat(args, " ")
+	TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .." : " , { 128, 128, 128 }, message, "ooc")
+	chatlogs(source, message, "OOC")
+end)
 
-  elseif LVL.hasGroup(user_id, 'moderator') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Moderator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-
-  elseif LVL.hasGroup(user_id, 'srmoderator') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Senior Moderator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-
-  elseif LVL.hasGroup(user_id, 'administrator') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Administratorr^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-
-    ---
-  elseif LVL.hasGroup(user_id, 'staffmanager') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Staff Manager^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'headadmin') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'senioradmin') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'Champion') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3 {0}^7: {1}</div>',
-      args = { playerName, msg }
-    })
-
-  elseif LVL.hasGroup(user_id, 'Warrior') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'Soldier') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^4 {0}^7: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'Recruit') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2 {0}^7: {1}</div>',
-      args = { playerName, msg }
-    })
-  elseif LVL.hasGroup(user_id, 'Starter') then
-    TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
-      args = { playerName, msg }
-    })
-  else
-    TriggerClientEvent('chat:addMessage', -1, {
-        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | {0}: {1}</div>',
-        args = { playerName, msg }
-    })
-  end
-end, false)
-
-RegisterCommand('/', function(source, args, rawCommand)
-  local playerName = GetPlayerName(source)
-  local msg = rawCommand:sub(2)
-  local user_id = LVL.getUserId(source)
-  local webhook = "https://discord.com/api/webhooks/972458913347829820/FaSRQDXudQ0ynsLEKI2ATbXwVf_6Wl8U-TNtX9tdNCQpNmbBGCDnkIuaduGZK9OiZaEq"
-  PerformHttpRequest(webhook, function(err, text, headers) 
-  end, "POST", json.encode({username = "LVL Roleplay", embeds = {
-    {
-      ["color"] = "15158332",
-      ["title"] = "Message: "..msg,
-      ["description"] = "Name: **"..playerName.."** \nPermID: **"..user_id.."** \nType: **OOC**",
-      ["footer"] = {
-        ["text"] = "Time - "..os.date("%x %X %p"),
-      }
-  }
-}}), { ["Content-Type"] = "application/json" })  if LVL.hasGroup(user_id, 'founder') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Founder^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'commanager') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^6Community Manager^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-
-elseif LVL.hasGroup(user_id, 'trialstaff') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Trial Staff^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-
-elseif LVL.hasGroup(user_id, 'moderator') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Moderator^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-
-elseif LVL.hasGroup(user_id, 'srmoderator') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2Senior Moderator^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-
-elseif LVL.hasGroup(user_id, 'administrator') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^8Administratorr^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-
-  ---
-elseif LVL.hasGroup(user_id, 'staffmanager') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^5Staff Manager^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'headadmin') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'senioradmin') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3Head Administrator^7 {0}: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'Champion') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^3 {0}^7: {1}</div>',
-    args = { playerName, msg }
-  })
-
-elseif LVL.hasGroup(user_id, 'Warrior') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'Soldier') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^4 {0}^7: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'Recruit') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^2 {0}^7: {1}</div>',
-    args = { playerName, msg }
-  })
-elseif LVL.hasGroup(user_id, 'Starter') then
-  TriggerClientEvent('chat:addMessage', -1, {
-    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | ^1 {0}^7: {1}</div>',
-    args = { playerName, msg }
-  })
-else
-  TriggerClientEvent('chat:addMessage', -1, {
-      template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(0, 0, 0, 0.6); border-radius: 8px;"><i class="fas fa-globe"></i> OOC | {0}: {1}</div>',
-      args = { playerName, msg }
-  })
-end
-end, false)
+RegisterCommand("announce", function(source, args, raw)
+	local source = source
+	local user_id = LVL.getUserId(source)
+	if LVL.hasPermission(user_id,"admin.menu") then
+		if #args <= 0 then return end
+    	local message = table.concat(args, " ")
+		TriggerClientEvent('chatMessage', -1, "^7Announce: " , { 128, 128, 128 }, message, "alert")
+		chatlogs(source, message, "Announce")
+	end
+end)
 
 
+--Chat Proximity
+AddEventHandler('chatMessage', function(source, name, message)
+    if string.sub(message, 1, string.len("/")) ~= "/" then
+        local name = GetPlayerName(source)
+	TriggerClientEvent("sendProxMsg", -1, source, name, message)
+    end
+    CancelEvent()
+end)
+
+--Function
 function stringsplit(inputstr, sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t={} ; i=1
-  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
-    t[i] = str
-    i = i + 1
-  end
-  return t
+	if sep == nil then
+		sep = "%s"
+	end
+	local t={} ; i=1
+	for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+		t[i] = str
+		i = i + 1
+	end
+	return t
 end
-
-RegisterCommand('clear', function(source, args, rawCommand)
-  local user_id = LVL.getUserId(source)
-  if LVL.hasPermission(user_id, 'admin.ban') then
-    TriggerClientEvent('chat:clear',source)
-  else
-    LVLclient.notify(source,{"~r~You do not have permission to use this command."})
-  end
-end, false)
-
-RegisterServerEvent("LVL:ClockingOff")
-AddEventHandler("LVL:ClockingOff", function()
-	print("Player has clocked off")
-	TriggerClientEvent("LVL:ClockingOff123", source)
-end)
-
-RegisterCommand("clockingoff", function()
-	TriggerEvent("LVL:ClockingOff")
-end)

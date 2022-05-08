@@ -2,7 +2,7 @@
 
 knifestore = {}
 
-knifestore.location = vector3(-676.46417236328,-878.25500488281,24.473949432373)
+knifestore.location = vector3(21.854759216309,-1107.3658447266,29.797010421753)
 
 local commision = 0
 local finalID = nil

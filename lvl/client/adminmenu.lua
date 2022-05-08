@@ -118,7 +118,7 @@ local getStaffGroupsGroupIds = {
     ["trialstaff"] = "Trial Staff",
 }
 local getUserGroupsGroupIds = {
-    ["Starter"] = "Starter",
+    ["VIP"] = "VIP",
     ["Recruit"] = "Recruit",
     ["Soldier"] = "Soldier",
     ["Warrior"] = "Warrior",

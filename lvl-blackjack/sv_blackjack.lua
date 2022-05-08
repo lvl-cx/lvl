@@ -256,10 +256,7 @@ for i=0,31,1 do
                                                     TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(lostAmount).." chips")
                                                     if lostAmount > 10000000 then
                                         
-                                                        TriggerClientEvent('chat:addMessage', -1, {
-                                                            template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(lostAmount)) .. " chips!" .. '</div>',
-                                                            args = { playerName, msg }
-                                                          })
+                                                        TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(lostAmount)) .. " chips!")
                                         
                                                     end
                                                 elseif currentHand < 21 then
@@ -387,10 +384,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chat:addMessage', -1, {
-                                                                    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!" .. '</div>',
-                                                                    args = { playerName, msg }
-                                                                  })
+                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!")
                                                             end
                                                         end
                                                     end
@@ -412,10 +406,6 @@ for i=0,31,1 do
                                                             TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(potentialPushAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
                                                                 TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!")
-                                                                TriggerClientEvent('chat:addMessage', -1, {
-                                                                    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!" .. '</div>',
-                                                                    args = { playerName, msg }
-                                                                  })
                                                             end
                                                         end
                                                     end

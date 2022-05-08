@@ -17,7 +17,7 @@ AddEventHandler('LVL:TooFar', function(isnTurf)
 			isPlayerInTurf[source] = nil
 
 			TriggerClientEvent('chat:addMessage', -1, {
-				template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
+				template = 'Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
 				args = { playerName, msg }
 			  })
 			TriggerClientEvent("LVL:MakeTurfTrue", -1, false)
@@ -45,7 +45,7 @@ AddEventHandler('LVL:PlayerDied', function(isnTurf)
 			TriggerClientEvent('LVL:PlayerDied', source)
 			isPlayerInTurf[source] = nil
 			TriggerClientEvent('chat:addMessage', -1, {
-				template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
+				template = 'Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
 				args = { playerName, msg }
 			  })
 
@@ -66,7 +66,7 @@ AddEventHandler("LVL:ChangeCommision", function(com)
 		if com <= 35 then
 			if com >= 0 then
 				TriggerClientEvent('chat:addMessage', -1, {
-					template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Global Weapon Trader" .. '</div>',
+					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Global Weapon Trader" .. '</div>',
 					args = { playerName, msg }
 				  })
 			  
@@ -89,7 +89,7 @@ AddEventHandler("LVL:ChangeCommisionWeed", function(com)
 		if com <= 35 then
 			if com >= 0 then
 				TriggerClientEvent('chat:addMessage', -1, {
-					template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller" .. '</div>',
+					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller" .. '</div>',
 					args = { playerName, msg }
 				  })
 			  
@@ -109,7 +109,7 @@ AddEventHandler("LVL:ChangeCommisionCocaine", function(com)
 		if com <= 35 then
 			if com >= 0 then
 				TriggerClientEvent('chat:addMessage', -1, {
-					template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller" .. '</div>',
+					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller" .. '</div>',
 					args = { playerName, msg }
 				  })
 			  
@@ -129,7 +129,7 @@ AddEventHandler("LVL:ChangeCommisionLSD", function(com)
 		if com <= 35 then
 			if com >= 0 then
 				TriggerClientEvent('chat:addMessage', -1, {
-					template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller" .. '</div>',
+					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller" .. '</div>',
 					args = { playerName, msg }
 				  })
 			  
@@ -149,7 +149,7 @@ AddEventHandler("LVL:ChangeCommisionHeroin", function(com)
 		if com <= 35 then
 			if com >= 0 then
 				TriggerClientEvent('chat:addMessage', -1, {
-					template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller" .. '</div>',
+					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller" .. '</div>',
 					args = { playerName, msg }
 				  })
 			  
@@ -183,7 +183,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 
 			-- [Chat Message]
 			TriggerClientEvent('chat:addMessage', -1, {
-			template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "Turf capture started at ^3" .. turf.nameofturf .. " ^0by ^3 '" .. GetPlayerName(player) .. "'" .. '</div>',
+			template = ' Turfs^7: ' .. "Turf capture started at ^3" .. turf.nameofturf .. " ^0by ^3 '" .. GetPlayerName(player) .. "'" .. '</div>',
 			args = { playerName, msg }
 			})
 			
@@ -231,7 +231,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 						
 			
 						  TriggerClientEvent('chat:addMessage', -1, {
-							template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Turfs^7: ' .. "Turf capture sucessful at ^2" .. turf.nameofturf .. "^0!" .. "'" .. '</div>',
+							template = ' Turfs^7: ' .. "Turf capture sucessful at ^2" .. turf.nameofturf .. "^0!" .. "'" .. '</div>',
 							args = { playerName, msg }
 						  })
 

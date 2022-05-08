@@ -17,7 +17,7 @@ end)
 RegisterServerEvent('LVL:ActivateZone')
 AddEventHandler('LVL:ActivateZone', function(message, speed, radius, x, y, z)
     TriggerClientEvent('chat:addMessage', -1, {
-        template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(171, 7, 7, 0.6); border-radius: 7px;"><i class="fas fa-exclamation-triangle"></i> MET Police: {0}</div>',
+        template = 'MET Police: {0}</div>',
         args = { message }
     })
     TriggerClientEvent('LVL:ZoneCreated', -1, speed, radius, x, y, z)

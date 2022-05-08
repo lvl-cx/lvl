@@ -4,9 +4,16 @@ dealership = {}
 
 dealership.guns = {
 
-    {spawncode = "Adder", vehname = "Adder", vehdesc = "", price = 0},
-    {spawncode = "NineF", vehname = "NineF", vehdesc = "", price = 0},
-    {spawncode = "Deluxo", vehname = "Deluxo", vehdesc = "", price = 0},
+    {spawncode = "zoeesport", vehname = "Zoee Sport", vehdesc = "", price = 3000},
+    {spawncode = "XADV", vehname = "XADV", vehdesc = "", price = 5000},
+    {spawncode = "w115200d", vehname = "W115200D", vehdesc = "", price = 30000},
+    {spawncode = "subwrx", vehname = "SubWRX", vehdesc = "", price = 15000},
+    {spawncode = "sjtoyota", vehname = "SJ Toyota", vehdesc = "", price = 100000},
+    {spawncode = "rs6", vehname = "RS6", vehdesc = "", price = 35000},
+    {spawncode = "m13fortwo", vehname = "M13 Fortwo", vehdesc = "", price = 60000},
+    {spawncode = "jcwc", vehname = "JCWC", vehdesc = "", price = 80000}, 
+    {spawncode = "avalon", vehname = "Avalon", vehdesc = "", price = 5000},
+    {spawncode = "al18", vehname = "AL18", vehdesc = "", price = 150000},
 }
 
 dealership.guns2 = {
@@ -93,6 +100,7 @@ RageUI.CreateWhile(1.0, true, function()
                     
                     cPrice = p.price
                     cHash = p.spawncode
+                    cName = p.vehname
         
                 end
                 if Active then 

@@ -1,9 +1,9 @@
 -- [CFG]
 knifestore = {}
 
-knifestore.location = vector3(-676.46417236328,-878.25500488281,24.473949432373)
+knifestore.location = vector3(21.854759216309,-1107.3658447266,29.797010421753)
 
-knifestore.marker = vector3(-676.46417236328,-878.25500488281,24.473949432373-0.98)
+knifestore.marker = vector3(21.854759216309,-1107.3658447266,29.797010421753-0.98)
 
 knifestore.name = 'Knife Store'
 
@@ -15,9 +15,11 @@ RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~w~LVL " .. knifestor
 RMenu.Add("KnifeStoreMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('KnifeStoreMenu', 'main',  1300, 50)))
 
 knifestore.guns = {
-    {name = "M1911", price = 60000, hash = "WEAPON_M1911"},
-    {name = "FNP", price = 70000, hash = "WEAPON_FNP"},
-    {name = "PDW", price = 150000, hash = "WEAPON_PDW"},
+    {name = "Baseball Bat", price = 1000, hash = "WEAPON_baseballbat"},
+    {name = "Fireaxe", price = 1500, hash = "WEAPON_fireaxe"},
+    {name = "Cleaver", price = 800, hash = "WEAPON_kitchenknife"},
+    {name = "Rambo", price = 600, hash = "WEAPON_rambo"},
+    {name = "shovel", price = 1200, hash = "WEAPON_shovel"},
 }
 
 -- [Actual Menu]
