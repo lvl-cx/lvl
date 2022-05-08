@@ -125,7 +125,7 @@ AddEventHandler('LVL:CosmeticMarketPlace', function(cosmeticdata, price, message
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "LVL Market", embeds = {
                     {
-                        ["color"] = "3319890",
+                        ["color"] = "7393516",
                         ["title"] = "LVL Market Place",
                         ["image"] = {
                             ["url"] = url,

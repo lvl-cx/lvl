@@ -41,7 +41,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "buycosmetics")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Cosmetic Shop Day: ~w~1", function() end)
+            RageUI.Separator("Cosmetic Shop", function() end)
             RageUI.Button('Standard Items', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "standard"))
 
