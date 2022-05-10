@@ -8,6 +8,10 @@ local blips = {
 	{title="[Admin Island]", colour=2, id=1, pos=vector3(3492.4116210938,2579.2509765625,13.129757881165),dist=200,nonRP=false,setBit=false}, -- [Admin Island]
 	{title="[Casino]", colour=2, id=1, pos=vector3(1134.6573486328,251.09861755371,-51.035732269287),dist=100,nonRP=false,setBit=false}, -- [Casino]
 }
+
+local function ShowInfo(text)
+	exports['lvl-notify']:DoHudText('success', text)
+end
      
 local PaletoHospital = AddBlipForRadius(-254.16650390625,6324.3740234375,39.203189849854, 30.0)
 SetBlipColour(PaletoHospital, 2)
@@ -163,10 +167,10 @@ greenzoneTimer = 0
 Citizen.CreateThread(function()
 	while true do
 		if showEnterGreenzone and greenzoneTimer > 0 then
-			TriggerEvent("LVLNotify:Success",nil,"You have entered a Greenzone!","top-right",nil,true)
+			ShowInfo("You have entered the greenzone")
 		end
 		if showExitGreenzone and greenzoneTimer > 0 then
-			TriggerEvent("LVLNotify:Negative",nil,"You have entered a exited a Greenzone!","top-right",nil,true)
+			ShowInfo("You have left a greenzone")
 		end
 		Wait(0)
 	end
@@ -178,22 +182,3 @@ Citizen.CreateThread(function()
 		Wait(0)
 	end
 end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

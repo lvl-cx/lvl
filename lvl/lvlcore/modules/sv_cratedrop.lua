@@ -110,7 +110,7 @@ Citizen.CreateThread(function()
             TriggerClientEvent('crateDrop', -1, coords)
             --TriggerClientEvent('chatMessage', -1, "^1[Infinite RP]: ^0", {66, 72, 245}, dropMsg, "alert")
             TriggerClientEvent('chat:addMessage', -1, {
-                template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> Supply Drops^7: ' .. dropMsg .. '</div>',
+                template = 'Supply Drops^7: ' .. dropMsg .. '</div>',
                 args = { playerName, msg }
               })
             used = false
