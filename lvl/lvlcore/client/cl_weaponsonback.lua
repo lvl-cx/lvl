@@ -6,22 +6,36 @@
  -- x,y,z are offsets
  WeaponsOnBackConfig.RealWeapons = {
 
-     {name = 'WEAPON_REMINGTON870', 		bone = 24818, x = 0.02,    y = -0.12,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sg_remington870'}, -- ME
-	 {name = 'WEAPON_WINCHESTER12', 			    bone = 24818, x = -0.22,    y = -0.15,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sg_winchester12'}, -- ME
-	 {name = 'WEAPON_DEADPOOLSHOTTY', 			    bone = 24818, x = -0.22,    y = -0.15,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sg_deadpoolshotgun'}, -- ME
-	 {name = 'WEAPON_VECTOR', 		        bone = 24818, x = 0.05,    y = -0.12,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sb_vector'}, -- ME
-	 {name = 'WEAPON_MP5X', 		        bone = 24818, x = 0.05,    y = -0.12,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sb_mp5x'}, -- ME
-	 {name = 'WEAPON_AKKAL', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_akkal'}, -- ME
-	 {name = 'WEAPON_GALIL', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_galil'}, -- ME
-	 {name = 'WEAPON_R5', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_r5'}, -- ME
-	 {name = 'WEAPON_AR18', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_AR18'}, -- ME
-	 {name = 'WEAPON_GUNGNIR', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_sr_GUNGNIR'}, -- ME
-	 {name = 'WEAPON_AN94', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_AN94'}, -- ME
-	 {name = 'WEAPON_SPAR16', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_sr_SPAR16'}, -- ME
-	 {name = 'WEAPON_G36', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_sr_G36'}, -- ME
-	 {name = 'WEAPON_SIGMCX', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_sigmcx'}, -- ME
-	 {name = 'WEAPON_SCARL', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_scarl'}, -- ME
-	 {name = 'WEAPON_MOSIN', 				bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_mosin'}, -- ME
+-- shotgun --
+     {name = 'WEAPON_MOSS', 		bone = 24818, x = 0.02,    y = -0.12,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sg_moss'},
+	 {name = 'WEAPON_ITACHA', 		bone = 24818, x = 0.02,    y = -0.12,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'shotgun', 	model = 'w_sg_itacha'},
+
+
+-- melees --
+	 {name = 'WEAPON_CRUTCH', 			        bone = 24818, x = -0.35,    y = -0.15, 	z = 0.13,     xRot = 190.0, yRot = 180.0, zRot = 105.0, category = 'melee', 	model = 'w_me_crutch'},
+	 {name = 'WEAPON_FIREAXE', 			        bone = 24818, x = -0.35,    y = -0.15, 	z = 0.13,     xRot = 190.0, yRot = 180.0, zRot = 105.0, category = 'melee', 	model = 'w_me_fireaxe'},
+	 {name = 'WEAPON_SHOVEL', 			        bone = 24818, x = -0.35,    y = -0.15, 	z = 0.13,     xRot = 190.0, yRot = 180.0, zRot = 105.0, category = 'melee', 	model = 'w_me_shovel'},
+	 {name = 'WEAPON_SLEDGE', 			        bone = 24818, x = -0.35,    y = -0.15, 	z = 0.13,     xRot = 190.0, yRot = 180.0, zRot = 105.0, category = 'melee', 	model = 'w_me_sledge'},
+-- snipers --
+	 {name = 'WEAPON_BORA', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_bora'},
+-- assault rifle --
+	 {name = 'WEAPON_LR300', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_lr300'},
+	 {name = 'WEAPON_VANDALG', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_vandalg'},
+	 {name = 'WEAPON_ar15', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_ar15'},
+	 {name = 'WEAPON_M16A1', 			        bone = 24818, x = -0.12,    y = -0.14,     z = -0.13,     xRot = 100.0, yRot = -3.0, zRot = 5.0, category = 'assault', 	model = 'w_ar_M16A1'},
+
+
+-- smg --
+	 {name = 'WEAPON_MP5A5', 	        bone = 58271, x = -0.01, y = 0.1,  z = -0.07, xRot = -55.0,  yRot = 0.10, zRot = 0.0, category = 'smg', 	model = 'w_sb_mp5a5'},
+	 {name = 'WEAPON_MAC11', 	        bone = 58271, x = -0.01, y = 0.1,  z = -0.07, xRot = -55.0,  yRot = 0.10, zRot = 0.0, category = 'smg', 	model = 'w_sb_mac11'},
+	 {name = 'WEAPON_PPSH', 	        bone = 58271, x = -0.01, y = 0.1,  z = -0.07, xRot = -55.0,  yRot = 0.10, zRot = 0.0, category = 'smg', 	model = 'w_sb_ppsh'},
+	 {name = 'WEAPON_UMP45', 	        bone = 58271, x = -0.01, y = 0.1,  z = -0.07, xRot = -55.0,  yRot = 0.10, zRot = 0.0, category = 'smg', 	model = 'w_sb_ump45'},
+
+
+-- Police Weapons Front --
+	 {name = 'WEAPON_M4A1', 			bone = 24818, x = -0.04,    y = 0.25,     z = 0.05,     xRot = -2.0, yRot = 324.50, zRot = 185.75, category = 'assault',     model = 'w_ar_genericm4a1'},
+	 {name = 'WEAPON_SPAR17', 			bone = 24818, x = -0.04,    y = 0.25,     z = 0.05,     xRot = -2.0, yRot = 324.50, zRot = 185.75, category = 'assault',     model = 'w_ar_spar17'},
+	 {name = 'WEAPON_MCX', 			bone = 24818, x = -0.04,    y = 0.25,     z = 0.05,     xRot = -2.0, yRot = 324.50, zRot = 185.75, category = 'assault',     model = 'w_ar_mcx'},
 
  }
  

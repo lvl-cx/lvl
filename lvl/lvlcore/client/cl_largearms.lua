@@ -16,11 +16,10 @@ RMenu.Add("LargeArms", "confirm", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'm
 RMenu.Add("LargeArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  1300, 50)))
 
 largearms.guns = {
-    {name = "Winchester", price = 400000, hash = "WEAPON_WINCHESTER12"},
-    {name = "SCAR-H", price = 800000, hash = "WEAPON_SCAR"},
-    {name = "AK-KAL", price = 700000, hash = "WEAPON_akkal"},
-    {name = "PPSH", price = 400000, hash = "WEAPON_PPSH"},
-    {name = "Mosin Nagant", price = 600000, hash = "WEAPON_MOSIN"},
+    {name = "LR-300", price = 750000, hash = "WEAPON_LR300"},
+    {name = "PPSH", price = 500000, hash = "WEAPON_PPSH"},
+    {name = "UMP45", price = 400000, hash = "WEAPON_UMP45"},
+    {name = "Itacha 37", price = 350000, hash = "WEAPON_ITACHA"},
 }
 
 -- [Actual Menu]

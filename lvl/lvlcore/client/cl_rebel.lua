@@ -16,10 +16,10 @@ RMenu.Add("Rebel", "confirma", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  
 RMenu.Add("Rebel", "confirm", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
 
 rebel.guns = {
-    {name = "AK-74U", price = 700000, hash = "WEAPON_AK74U"},
-    {name = "AR-18", price = 825000, hash = "WEAPON_AR18"},
-    {name = "R5", price = 825000, hash = "WEAPON_R5"},
-    {name = "SVD", price = 650000, hash = "WEAPON_SVD"},
+    {name = "Vandal Gold", price = 825000, hash = "WEAPON_VANDALG"},
+    {name = "AR-15 Hotshot Welde", price = 750000, hash = "WEAPON_ar15"},
+    {name = "Colt M16A1", price = 700000, hash = "WEAPON_M16A1"},
+    {name = "Deagle", price = 500000, hash = "WEAPON_DEAGLE"},
 }
 
 -- [Actual Menu]

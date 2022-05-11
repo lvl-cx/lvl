@@ -17,8 +17,9 @@ RMenu.Add("CitySmallArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('CitySmall
 
 citysmall.guns = {
     {name = "M1911", price = 60000, hash = "WEAPON_M1911"},
-    {name = "FNP", price = 70000, hash = "WEAPON_FNP"},
-    {name = "PDW", price = 150000, hash = "WEAPON_PDW"},
+    {name = "Beretta M9", price = 50000, hash = "WEAPON_BERETTA"},
+    {name = "DDP Revolver", price = 30000, hash = "WEAPON_REVOLVERS"},
+    {name = "MAC-11", price = 120000, hash = "WEAPON_MAC11"},
 }
 
 -- [Actual Menu]
