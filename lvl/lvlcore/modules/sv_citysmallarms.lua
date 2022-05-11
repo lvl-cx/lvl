@@ -21,10 +21,10 @@ AddEventHandler('CitySmall:BuyWeapon', function(price, hash)
             if LVL.tryPayment(userid, finalCommision + price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " +" .. commision .. "% Commision!"})
                 if finalID ~= nil then
                     LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                    LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+                    LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
                 end
             else 
                 LVLclient.notify(source, {"~r~Not enough money."})
@@ -56,11 +56,11 @@ AddEventHandler('CitySmall:BuyArmour', function()
         if LVL.tryPayment(userid, 25000 + finalCommision) then
             SetPedArmour(source, 25)
             TriggerClientEvent("LVL:PlaySound", source, 1)
-            LVLclient.notify(source, {"~g~Purchased Level 1 Armour. Paid £" .. tostring(25000 + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+            LVLclient.notify(source, {"~g~Purchased Level 1 Armour. Paid £" .. tostring(25000 + finalCommision) .. " +" .. commision .. "% Commision!"})
             TriggerClientEvent('LVL:SetVest', source)
             if finalID ~= nil then
                 LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+                LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
             end
         else 
             LVLclient.notify(source, {"~r~Not enough money."})

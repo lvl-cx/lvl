@@ -11,7 +11,7 @@ armoury.banner = 'armoury'
 
 -- [Start of RageUI]
 
-RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~w~LVL " .. armoury.name, 1300, 50, armoury.banner, armoury.banner))
+RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "LVL " .. armoury.name, 1300, 50, armoury.banner, armoury.banner))
 RMenu.Add("PDArmoury", "confirm", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 RMenu.Add("PDArmoury", "confirma", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 
@@ -27,7 +27,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('PDArmoury', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(armoury.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '~w~→'}, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '→'}, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cHash = p.hash
@@ -37,7 +37,7 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("PDArmoury", "confirm"))
         end
 
-        RageUI.Button("Level 4 Armour ~w~[100%]" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "confirma"))
+        RageUI.Button("Level 4 Armour [100%]" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "confirma"))
     end) 
 end
 end)
@@ -45,11 +45,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("PDArmoury", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Armour Plate: ~w~" .. 'Level 4 [100%]', function() end)
-            RageUI.Separator("Armour Plate Price: ~w~£" .. '0', function() end)
-            RageUI.Separator("Current Gunstore: ~w~" .. armoury.name, function() end)
+            RageUI.Separator("Armour Plate: " .. 'Level 4 [100%]', function() end)
+            RageUI.Separator("Armour Plate Price: £" .. '0', function() end)
+            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('PD:BuyArmour')
@@ -57,7 +57,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("PDArmoury", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
        
 
     end) 
@@ -69,11 +69,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("PDArmoury", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Weapon Name: ~w~" .. cName, function() end)
-            RageUI.Separator("Weapon Price: ~w~£0", function() end)
-            RageUI.Separator("Current Gunstore: ~w~" .. armoury.name, function() end)
+            RageUI.Separator("Weapon Name: " .. cName, function() end)
+            RageUI.Separator("Weapon Price: £0", function() end)
+            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('PD:BuyWeapon', cHash)
@@ -81,7 +81,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("PDArmoury", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
+        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("PDArmoury", "main"))
        
 
     end) 

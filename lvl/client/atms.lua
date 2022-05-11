@@ -1,18 +1,18 @@
 local cfg = module("cfg/atms")
-RMenu.Add('LVLATM', 'main', RageUI.CreateMenu("", "~w~LVL ATM",1300, 50, 'atm', 'atm'))
+RMenu.Add('LVLATM', 'main', RageUI.CreateMenu("", "LVL ATM",1300, 50, 'atm', 'atm'))
 RMenu.Add("LVLATM", "submenuwithdraw", RageUI.CreateSubMenu(RMenu:Get('LVLATM', 'main',  1300, 50)))
 RMenu.Add("LVLATM", "submenudeposit", RageUI.CreateSubMenu(RMenu:Get('LVLATM', 'main',  1300, 50)))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLATM', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button("Deposit", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Deposit", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
 
                 end
             end, RMenu:Get("LVLATM", "submenudeposit"))
       
-            RageUI.Button("Withdraw", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Withdraw", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
 
                 end
@@ -24,8 +24,8 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLATM', 'submenuwithdraw')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~w~Current Action: Withdrawing", function() end)
-            RageUI.Button("Custom Amount", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Separator("Current Action: Withdrawing", function() end)
+            RageUI.Button("Custom Amount", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     AddTextEntry('FMMC_MPM_NC', "Enter Amount to Withdraw")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -44,7 +44,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
 
-            RageUI.Button("Withdraw All", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Withdraw All", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     AddTextEntry('FMMC_MPM_NC', "Type [Yes] to confirm withdrawal of full amount.")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -70,8 +70,8 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LVLATM', 'submenudeposit')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~w~Current Action: Depositing", function() end)
-            RageUI.Button("Custom Amount", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Separator("Current Action: Depositing", function() end)
+            RageUI.Button("Custom Amount", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     AddTextEntry('FMMC_MPM_NC', "Enter Amount to Deposit")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -90,7 +90,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
 
-            RageUI.Button("Deposit All", nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button("Deposit All", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     AddTextEntry('FMMC_MPM_NC', "Type [Yes] to confirm deposit of full amount.")
                     DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)

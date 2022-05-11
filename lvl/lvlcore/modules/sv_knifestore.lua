@@ -21,10 +21,10 @@ AddEventHandler('KnifeStore:BuyWeapon', function(price, hash)
             if LVL.tryPayment(userid, finalCommision + price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " +" .. commision .. "% Commision!"})
                 if finalID ~= nil then
                     LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                    LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+                    LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
                 end
 
                 webhook = "https://discord.com/api/webhooks/972472536292032542/80NuAnch1kP6ElcCnFX8XuTf7hjbOp-ZgaqReQH05IhX8IE968D9MCrGzq4LBHsSoWZB"

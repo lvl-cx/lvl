@@ -32,7 +32,7 @@ dealership.guns2 = {
     {spawncode = "wf20", vehname = "Armed Van", vehdesc = "", price = 1},
 }
 
-RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "~w~LVL Dealership Menu", 1300, 50, 'garage', 'garage'))
+RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "LVL Dealership Menu", 1300, 50, 'garage', 'garage'))
 RMenu.Add("DealershipMenu", "sim", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
 RMenu.Add("DealershipMenu", "police", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
 RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'sim',  1300, 50)))
@@ -43,7 +43,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('DealershipMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
       
-            RageUI.Button('Dealership Vehicles', nil, { RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+            RageUI.Button('Dealership Vehicles', nil, { RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 if Selected then
  
         
@@ -51,7 +51,7 @@ RageUI.CreateWhile(1.0, true, function()
         
             end, RMenu:Get("DealershipMenu", "sim"))
             if hasPoliceRole then
-                RageUI.Button('Police Vehicles', nil, { RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button('Police Vehicles', nil, { RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                     
                     
@@ -69,9 +69,9 @@ RageUI.CreateWhile(1.0, true, function()
     RageUI.CreateWhile(1.0, true, function()
         if RageUI.Visible(RMenu:Get("DealershipMenu", "sim")) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-                RageUI.Separator("Currently Viewing: ~w~" .. 'Dealership Vehicles', function() end)
+                RageUI.Separator("Currently Viewing: " .. 'Dealership Vehicles', function() end)
         for i , p in pairs(dealership.guns) do 
-            RageUI.Button(p.vehname, nil, { RightLabel = "~w~£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
                     
                     cPrice = p.price
@@ -93,7 +93,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Currently Viewing: ~w~" .. 'Police Vehicles', function() end)
+        RageUI.Separator("Currently Viewing: " .. 'Police Vehicles', function() end)
         for i , p in pairs(dealership.guns2) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -116,17 +116,17 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("~w~Are you sure?")
-        RageUI.Separator("Currently Vehicle: ~w~" .. cName, function() end)
-        RageUI.Separator("Vehicle Price: ~w~" .. cPrice, function() end)
-        RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+        RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("Are you sure?")
+        RageUI.Separator("Currently Vehicle: " .. cName, function() end)
+        RageUI.Separator("Vehicle Price: " .. cPrice, function() end)
+        RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 -- [Event Here]
                 TriggerServerEvent('whoIs',cHash, cPrice)
             end
         end, RMenu:Get("DealershipMenu", "main"))
         
-        RageUI.Button("Test Drive" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Test Drive" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then   
                 testdrivetimer = 30
                 local mhash = GetHashKey(cHash)

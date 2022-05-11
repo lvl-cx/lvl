@@ -5,7 +5,7 @@ data = {}
 -- - Chain
 -- - Vest
 
-RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~w~LVL Cosmetic Menu", 1300, 50, "cosmetics", "cosmetics"))
+RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "LVL Cosmetic Menu", 1300, 50, "cosmetics", "cosmetics"))
 RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 
@@ -24,10 +24,10 @@ RMenu.Add("CosmeticMenu", "marketplace", RageUI.CreateSubMenu(RMenu:Get("Cosmeti
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "main")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button('Buy Cosmetics', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button('Buy Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "buycosmetics"))
 
-            RageUI.Button('Your Cosmetics', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button('Your Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     TriggerServerEvent('LVL:GetCosmetic')
                 end
@@ -42,10 +42,10 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "buycosmetics")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Cosmetic Shop", function() end)
-            RageUI.Button('Standard Items', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button('Standard Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "standard"))
 
-            RageUI.Button('Limited Time Items', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+            RageUI.Button('Limited Time Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "limited"))
 
     end) 
@@ -56,10 +56,10 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "limited")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Cosmetic shop will reset: ~w~" .. 'Tommorow', function() end)
+            RageUI.Separator("Cosmetic shop will reset: " .. 'Tommorow', function() end)
             for i,v in pairs(cosmetics.limitedshop) do 
 
-                RageUI.Button(v.item, nil, {RightLabel = "~w~£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
+                RageUI.Button(v.item, nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         CosmeticPrice = v.price
                         CosmeticItem = v.item 
@@ -75,10 +75,10 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "standard")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~w~These items will always be in the cosmetic shop", function() end)
+            RageUI.Separator("These items will always be in the cosmetic shop", function() end)
             for i,v in pairs(cosmetics.shop) do 
 
-                RageUI.Button(v.item , nil, {RightLabel = "~w~£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected) 
+                RageUI.Button(v.item , nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         CosmeticPrice = v.price
                         CosmeticItem = v.item 
@@ -97,17 +97,17 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(cosmetics.shop) do 
                 if CosmeticItem == v.item then
-                    RageUI.Separator("Cosmetic Name: ~w~" .. v.item, function() end)
-                    RageUI.Separator("Cosmetic Price: ~w~£" .. getMoneyStringFormatted(v.price), function() end)
-                    RageUI.Separator("~w~Are you sure you want to purchase this cosmetic?", function() end)
+                    RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
+                    RageUI.Separator("Cosmetic Price: £" .. getMoneyStringFormatted(v.price), function() end)
+                    RageUI.Separator("Are you sure you want to purchase this cosmetic?", function() end)
 
-                    RageUI.Button('Confirm', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('LVL:BuyCosmetic', v.item)
                         end
                     end, RMenu:Get("CosmeticMenu", "standard"))
 
-                    RageUI.Button('Decline', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end
@@ -126,17 +126,17 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(cosmetics.limitedshop) do 
                 if CosmeticItem == v.item then
-                    RageUI.Separator("Cosmetic Name: ~w~" .. v.item, function() end)
-                    RageUI.Separator("Cosmetic Price: ~w~£" .. v.price, function() end)
-                    RageUI.Separator("~w~Are you sure you want to purchase this cosmetic?", function() end)
+                    RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
+                    RageUI.Separator("Cosmetic Price: £" .. v.price, function() end)
+                    RageUI.Separator("Are you sure you want to purchase this cosmetic?", function() end)
 
-                    RageUI.Button('Confirm', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('LVL:BuyCosmetic', v.item)
                         end
                     end, RMenu:Get("CosmeticMenu", "limited"))
 
-                    RageUI.Button('Decline', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end
@@ -154,7 +154,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "cosmetics")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(data) do 
-                RageUI.Button(i, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                RageUI.Button(i, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         SelectedCosmetic = i;
                     end
@@ -174,10 +174,10 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(cosmetics.cfg) do
                 if SelectedCosmetic == v.item then 
-                    RageUI.Separator("Cosmetic Name: ~w~" .. v.item, function() end)
-                    RageUI.Separator("Cosmetic Price: ~w~£" .. tostring(getMoneyStringFormatted(v.price)), function() end)
-                    RageUI.Separator("Cosmetic Type: ~w~" .. v.type, function() end)
-                    RageUI.Separator("Cosmetic Refund Price: ~w~£" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
+                    RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
+                    RageUI.Separator("Cosmetic Price: £" .. tostring(getMoneyStringFormatted(v.price)), function() end)
+                    RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
+                    RageUI.Separator("Cosmetic Refund Price: £" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
                     -- [Equip Cosmetic]
                     if v.type == 'Watch' then
                         if GetPedPropIndex(PlayerPedId(), 6) == v.clothingid then WatchEquip = true else WatchEquip = false end
@@ -230,7 +230,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end)
                     end
                     -- [Other Options]
-                    RageUI.Button('Sell Cosmetic to player', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Sell Cosmetic to player', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then
 
                             TriggerServerEvent('LVL:SellCosmeticToPlayer', v.item)
@@ -238,15 +238,15 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end)
 
-                    RageUI.Button('Refund Cosmetic ~w~[25% Back]', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Refund Cosmetic [25% Back]', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                     end, RMenu:Get("CosmeticMenu", "refundconfirm"))
 
 
-                    RageUI.Button('List on LVL Market Place', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('List on LVL Market Place', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
 
                     end, RMenu:Get("CosmeticMenu", "marketplace"))
 
-                    RageUI.Separator("~w~discord.gg/LVL - #market-place", function() end)
+                    RageUI.Separator("discord.gg/LVL - #market-place", function() end)
                 end
             end
     end)            
@@ -261,11 +261,11 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(cosmetics.cfg) do 
                 if SelectedCosmetic == v.item then
-                    RageUI.Separator("Cosmetic Name: ~w~" .. v.item, function() end)
-                    RageUI.Separator("Cosmetic Type: ~w~" .. v.type, function() end)
-                    RageUI.Separator("Cosmetic Price: ~w~£" .. tostring(getMoneyStringFormatted(v.price)), function() end)
+                    RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
+                    RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
+                    RageUI.Separator("Cosmetic Price: £" .. tostring(getMoneyStringFormatted(v.price)), function() end)
 
-                    RageUI.Button('Enter Listing Price - ~w~£' .. listingprice, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Enter Listing Price - £' .. listingprice, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             listingpriceresult = KeyboardInput("Enter Listing Price:", "", 10)
 
@@ -280,7 +280,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
 
-                    RageUI.Button('Enter Custom Message - ~w~' .. listingmessage, nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Enter Custom Message - ' .. listingmessage, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             listingmessageresult = KeyboardInput("Enter Listing Price [Max 50 Words]:", "", 50)
                             if listingmessageresult == nil then 
@@ -290,7 +290,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
 
-                    RageUI.Button('Confirm', 'Listing Price: ~w~£' .. listingprice .. '\n~w~Listing Message: ~w~' .. listingmessage .. '\n~w~Item Name: ~w~' .. v.item, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Confirm', 'Listing Price: £' .. listingprice .. '\nListing Message: ' .. listingmessage .. '\nItem Name: ' .. v.item, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             if cooldown <= 0 then 
                                 TriggerServerEvent('LVL:CosmeticMarketPlace', v.item, tonumber(listingprice), listingmessage)
@@ -323,19 +323,19 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(cosmetics.cfg) do 
                 if SelectedCosmetic == v.item then
-                    RageUI.Separator("Cosmetic Name: ~w~" .. v.item, function() end)
-                    RageUI.Separator("Cosmetic Type: ~w~" .. v.type, function() end)
-                    RageUI.Separator("Cosmetic Refund Price: ~w~£" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
-                    RageUI.Separator("~w~Are you sure you want to refund this ?", function() end)
+                    RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
+                    RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
+                    RageUI.Separator("Cosmetic Refund Price: £" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
+                    RageUI.Separator("Are you sure you want to refund this ?", function() end)
 
-                    RageUI.Button('Confirm', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('LVL:RefundCosmetic', v.item)
                             TriggerServerEvent('LVL:GetCosmetic')
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
 
-                    RageUI.Button('Decline', nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end

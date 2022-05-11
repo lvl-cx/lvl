@@ -96,7 +96,7 @@ AddEventHandler('LVL:returnMe', function(admin, ticket, reason)
     local tname = GetPlayerName(ticket)
     LVLclient.notify(source, {'~g~You have received £5,000 for taking a ticket.'})
     LVL.giveBankMoney(userid, 5000)
-    LVLclient.notify(ticket,{'~g~An Admin has Taken your Ticket! ~w~[Name: ' .. name .. ' | ID: ' .. userid .. ']'})
+    LVLclient.notify(ticket,{'~g~An Admin has Taken your Ticket! [Name: ' .. name .. ' | ID: ' .. userid .. ']'})
     TriggerClientEvent("LVL:OMioDioMode",source,true)
 
 end)

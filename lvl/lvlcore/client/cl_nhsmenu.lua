@@ -1,17 +1,17 @@
-RMenu.Add('EclipseNHSMenu', 'main', RageUI.CreateMenu("Eclipse NHS", "~w~NHS Menu",1250,100))
+RMenu.Add('EclipseNHSMenu', 'main', RageUI.CreateMenu("Eclipse NHS", "NHS Menu",1250,100))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('EclipseNHSMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = true, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
 
-                RageUI.Button("Perform Cardiopulmonary Resuscitation (CPR)" , "~w~Perform CPR on the nearest player in a coma", { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Perform Cardiopulmonary Resuscitation (CPR)" , "Perform CPR on the nearest player in a coma", { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         eclipse_server_callback('Eclipse:PerformCPR')
                     end
                 end)
 
-                RageUI.Button("Heal Nearest Player", "~w~Heal the nearest player", { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
+                RageUI.Button("Heal Nearest Player", "Heal the nearest player", { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
                   if Selected then 
                       eclipse_server_callback('Eclipse:HealPlayer')
                   end

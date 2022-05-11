@@ -1,12 +1,12 @@
 rebellicense = false
 
-RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "~w~LVL Spawn Menu",1300, 50, 'spawn', 'spawn'))
+RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "LVL Spawn Menu",1300, 50, 'spawn', 'spawn'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SpawnMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 			FreezeEntityPosition(PlayerPedId(), true)
-			RageUI.Button("St Thomas Medical Center", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("St Thomas Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(364.56402587891,-591.74749755859)
 				end
@@ -14,7 +14,7 @@ RageUI.CreateWhile(1.0, true, function()
 					TriggerServerEvent("LVLTP:StThomas")
 				end
 			end)
-			RageUI.Button("Legion Gunstore", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("Legion Gunstore", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(281.16030883789,-992.70983886719,33.449813842773)
 				end
@@ -22,7 +22,7 @@ RageUI.CreateWhile(1.0, true, function()
 					TriggerServerEvent("LVLTP:Legion")
 				end
 			end)
-			RageUI.Button("Paleto Bay Medical Center", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("Paleto Bay Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(-246.71606445313,6330.7153320313)
 				end
@@ -30,7 +30,7 @@ RageUI.CreateWhile(1.0, true, function()
 					TriggerServerEvent("LVLTP:Paleto")
 				end
 			end)
-			RageUI.Button("Sandy Shores Medical Center", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+			RageUI.Button("Sandy Shores Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(1841.5405273438,3668.8037109375)
 				end
@@ -39,7 +39,7 @@ RageUI.CreateWhile(1.0, true, function()
 				end
 			end)
 			if policeenabled then
-				RageUI.Button("Mission Row PD", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+				RageUI.Button("Mission Row PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 					if Active then
 						SetNewWaypoint(428.19479370117,-981.58215332031,30.710285186768)
 					end
@@ -47,7 +47,7 @@ RageUI.CreateWhile(1.0, true, function()
 						TriggerServerEvent("LVLTP:MissionRow")
 					end
 				end)
-				RageUI.Button("Paleto PD", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+				RageUI.Button("Paleto PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 					if Active then
 						SetNewWaypoint(-439.23,6020.6,31.49)
 					end
@@ -55,7 +55,7 @@ RageUI.CreateWhile(1.0, true, function()
 						TriggerServerEvent("LVLTP:PaletoPD")
 					end
 				end)
-				RageUI.Button("Vespucci PD", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+				RageUI.Button("Vespucci PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 					if Active then
 						SetNewWaypoint(-1061.13,-827.26,19.21)
 					end
@@ -65,7 +65,7 @@ RageUI.CreateWhile(1.0, true, function()
 				end)
 			end
 			if rebellicense then 
-				RageUI.Button("Rebel Diner", nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+				RageUI.Button("Rebel Diner", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 					if Active then
 						SetNewWaypoint(1582.0557861328,6450.7368164062,25.175634384155)
 					end
@@ -77,7 +77,7 @@ RageUI.CreateWhile(1.0, true, function()
 			if houseName == nil then 
 
 			else
-				RageUI.Button(houseName, nil, { RightLabel = "~w~→" }, true, function(Hovered, Active, Selected)
+				RageUI.Button(houseName, nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 					if Active then
 						SetNewWaypoint(location)
 					end

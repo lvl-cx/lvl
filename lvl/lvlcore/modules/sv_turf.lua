@@ -70,7 +70,7 @@ AddEventHandler("LVL:ChangeCommision", function(com)
 					args = { playerName, msg }
 				  })
 			  
-				LVLclient.notify(source,{"~g~You changed commision to ~w~" .. com .. "%~g~."})
+				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendLargeArms(com, source)
 				SendLargeArms2(com, source)
 				SendLargeArms3(com, source)
@@ -93,7 +93,7 @@ AddEventHandler("LVL:ChangeCommisionWeed", function(com)
 					args = { playerName, msg }
 				  })
 			  
-				LVLclient.notify(source,{"~g~You changed commision to ~w~" .. com .. "%~g~."})
+				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendWeed(com, source)
 
 			end
@@ -113,7 +113,7 @@ AddEventHandler("LVL:ChangeCommisionCocaine", function(com)
 					args = { playerName, msg }
 				  })
 			  
-				LVLclient.notify(source,{"~g~You changed commision to ~w~" .. com .. "%~g~."})
+				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendCocaine(com, source)
 
 			end
@@ -133,7 +133,7 @@ AddEventHandler("LVL:ChangeCommisionLSD", function(com)
 					args = { playerName, msg }
 				  })
 			  
-				LVLclient.notify(source,{"~g~You changed commision to ~w~" .. com .. "%~g~."})
+				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendLSD(com, source)
 
 			end
@@ -153,7 +153,7 @@ AddEventHandler("LVL:ChangeCommisionHeroin", function(com)
 					args = { playerName, msg }
 				  })
 			  
-				LVLclient.notify(source,{"~g~You changed commision to ~w~" .. com .. "%~g~."})
+				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendHeroin(com, source)
 
 			end
@@ -176,7 +176,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 		  local turf = turfs[isnTurf]
 
 			if (os.time() - turf.lastisnTurfed) < 150 and turf.lastisnTurfed ~= 0 then
-				LVLclient.notify(player,{"~r~This Turf has already been capped recently. Please wait another: ~w~" .. (150 - (os.time() - turf.lastisnTurfed)) .. " ~r~seconds."})
+				LVLclient.notify(player,{"~r~This Turf has already been capped recently. Please wait another: " .. (150 - (os.time() - turf.lastisnTurfed)) .. " ~r~seconds."})
 
 				return
 			end

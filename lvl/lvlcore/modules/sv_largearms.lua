@@ -21,10 +21,10 @@ AddEventHandler('LargeArms:BuyWeapon', function(price, hash)
             if LVL.tryPayment(userid, finalCommision + price) then
                 GiveWeaponToPed(source, hash, 250, false, false)
                 TriggerClientEvent("LVL:PlaySound", source, 1)
-                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+                LVLclient.notify(source, {"~g~Purchased Weapon. Paid £" .. tostring(price + finalCommision) .. " +" .. commision .. "% Commision!"})
                 if finalID ~= nil then
                     LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                    LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+                    LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
                 end
 
                 webhook = "https://discord.com/api/webhooks/972475411067994202/8b3h5tTb_Tz7-hkFirrS00YHPnTTq7RuH2iHKyJNEH4cpbKsvokxsvVC39er7mjWjQCf"
@@ -70,11 +70,11 @@ AddEventHandler('LargeArms:BuyArmour', function()
         if LVL.tryPayment(userid, 50000 + finalCommision) then
             SetPedArmour(source, 50)
             TriggerClientEvent("LVL:PlaySound", source, 1)
-            LVLclient.notify(source, {"~g~Purchased Level 2 Armour. Paid £" .. tostring(50000 + finalCommision) .. " ~w~+" .. commision .. "% Commision!"})
+            LVLclient.notify(source, {"~g~Purchased Level 2 Armour. Paid £" .. tostring(50000 + finalCommision) .. " +" .. commision .. "% Commision!"})
             TriggerClientEvent('LVL:SetVest', source)
             if finalID ~= nil then
                 LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
-                LVLclient.notify(finalID,{"~g~You have been given ~w~£" .. finalCommision.. "~g~."})
+                LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
             end
         else 
             LVLclient.notify(source, {"~r~Not enough money."})

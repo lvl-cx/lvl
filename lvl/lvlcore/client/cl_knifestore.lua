@@ -11,7 +11,7 @@ knifestore.banner = 'knife'
 
 -- [Start of RageUI]
 
-RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~w~LVL " .. knifestore.name, 1300, 50, knifestore.banner, knifestore.banner))
+RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "LVL " .. knifestore.name, 1300, 50, knifestore.banner, knifestore.banner))
 RMenu.Add("KnifeStoreMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('KnifeStoreMenu', 'main',  1300, 50)))
 
 knifestore.guns = {
@@ -28,7 +28,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('KnifeStoreMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(knifestore.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '~w~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -45,9 +45,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("KnifeStoreMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Weapon Name: ~w~" .. cName, function() end)
-        RageUI.Separator("Weapon Price: ~w~£" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("Current Gunstore: ~w~" .. knifestore.name, function() end)
+        RageUI.Separator("Weapon Name: " .. cName, function() end)
+        RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("Current Gunstore: " .. knifestore.name, function() end)
         RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
             if Selected then
 

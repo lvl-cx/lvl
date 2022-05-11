@@ -362,7 +362,7 @@ Citizen.CreateThread(function()
 
 		if inTurf then		
 			
-			drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. "~w~ seconds remaining", 255, 255, 255, 255)
+			drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 255, 255, 255, 255)
 			
 			
 			local pos2 = turfs[turf].position

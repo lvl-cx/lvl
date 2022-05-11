@@ -32,7 +32,7 @@ AddEventHandler('whoIs', function(vehicle, price)
                     MySQL.execute("LVL/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
                 end)
 
-                    LVLclient.notify(player,{"You paid ~g~£"..price.."~w~."})
+                    LVLclient.notify(player,{"You paid ~g~£"..price.."."})
                     TriggerClientEvent("LVL:PlaySound", player, 1)
                     
                 else

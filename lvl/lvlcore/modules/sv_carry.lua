@@ -58,7 +58,7 @@ AddEventHandler("Infinite:CarryRequest", function(targetSrc)
 	if LVL.hasPermission(userid, 'staffon.perm') then 
 		TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
 	else
-		LVLclient.notify(targetSrc,{"Player: ~g~"..senderSrcName.."~w~ is trying to carry you, press ~g~=~w~ to accept or ~r~-~w~ to refuse"})
+		LVLclient.notify(targetSrc,{"Player: ~g~"..senderSrcName.." is trying to carry you, press ~g~= to accept or ~r~- to refuse"})
 		LVLclient.notify(senderSrc,{"Sent carry request to Temp ID: "..targetSrc})
 		TriggerClientEvent('Infinite:CarryTargetAsk', targetSrc, senderSrc)
 	end

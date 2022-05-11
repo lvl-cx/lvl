@@ -1,13 +1,13 @@
 local cfg = module("lvlcore/cfg/cfg_stores")
 
-RMenu.Add('LVLStores', 'main', RageUI.CreateMenu("", "~w~LVL Shop", 1300, 50, 'shop', 'shop'))
+RMenu.Add('LVLStores', 'main', RageUI.CreateMenu("", "LVL Shop", 1300, 50, 'shop', 'shop'))
 RMenu.Add("LVLStores", "confirm", RageUI.CreateSubMenu(RMenu:Get('LVLStores', 'main',  1300, 50)))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LVLStores", "main")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for k, v in pairs(cfg.shopItems) do
-                RageUI.Button(v.name, nil, {RightLabel = "~w~£".. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
+                RageUI.Button(v.name, nil, {RightLabel = "£".. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
                     if Selected then
                         cPrice = v.price
                         cHash = v.itemID
@@ -28,9 +28,9 @@ local Index = 1
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LVLStores", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Item Name: ~w~" .. cName, function() end)
-        RageUI.Separator("Item Price: ~w~£" .. getMoneyStringFormatted(cPrice * Index), function() end)
-        RageUI.Separator("Item Description: ~w~" .. cDescription, function() end)
+        RageUI.Separator("Item Name: " .. cName, function() end)
+        RageUI.Separator("Item Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
+        RageUI.Separator("Item Description: " .. cDescription, function() end)
         --RageUI.Separator("Are you sure you want to purchase this Item?", function() end)
         RageUI.List(cName, ShopAMT, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
             if Hovered then
@@ -39,7 +39,7 @@ RageUI.CreateWhile(1.0, true, function()
 
             Index = AIndex
         end)
-        RageUI.Button("Confirm Purchase" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Confirm Purchase" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent("LVL:BuyStoreItem", cHash, cPrice * Index, tonumber(Index), cLoaction)

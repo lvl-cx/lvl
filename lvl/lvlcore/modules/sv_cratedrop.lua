@@ -41,7 +41,7 @@ RegisterServerEvent('openLootCrate', function(playerCoords, boxCoords)
                     LVL.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_HK45', 1, true)
                     LVL.giveInventoryItem(user_id, '9mm Bullets', 250, true)
                     LVL.giveInventoryItem(user_id, "body_armor", 3, true)
-                    LVLclient.notify(source,{'Received ~g~£200,000 ~w~Cash.'})
+                    LVLclient.notify(source,{'Received ~g~£200,000 Cash.'})
                     LVL.giveMoney(user_id,200000)
 
                     TriggerClientEvent('chat:addMessage', -1, {

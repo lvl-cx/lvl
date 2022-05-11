@@ -11,7 +11,7 @@ licensecentre.banner = 'job'
 
 -- [Start of RageUI]
 
-RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~w~LVL " .. licensecentre.name, 1300, 50, licensecentre.banner, licensecentre.banner))
+RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "LVL " .. licensecentre.name, 1300, 50, licensecentre.banner, licensecentre.banner))
 RMenu.Add("LicenseCentre", "dlicenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
 RMenu.Add("LicenseCentre", "licenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
 RMenu.Add("LicenseCentre", "confirm", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'licenses',  1300, 50)))
@@ -42,8 +42,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LicenseCentre', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
-        RageUI.Button("Illegal Licenses" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "dlicenses"))
-        RageUI.Button("Legal Licenses" , nil, {RightLabel = "~w~→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "licenses"))
+        RageUI.Button("Illegal Licenses" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "dlicenses"))
+        RageUI.Button("Legal Licenses" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "licenses"))
     end) 
 end
 end)
@@ -52,7 +52,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LicenseCentre", "dlicenses")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(licensecentre.dlicenses) do 
-            RageUI.Button(p.name , nil, { RightLabel = '~w~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -71,7 +71,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LicenseCentre", "licenses")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(licensecentre.licenses) do 
-            RageUI.Button(p.name , nil, { RightLabel = '~w~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -92,20 +92,20 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
         if cGroup == 'Diamond' then 
-            RageUI.Separator("Diamond Price: ~w~£5,000,000", function() end)
-            RageUI.Separator("Per Peice: ~w~£10,000", function() end)
-            RageUI.Separator("One 200KG Run: ~w~£500,000", function() end)
-            RageUI.Separator("One 300KG Run: ~w~£750,000", function() end)
+            RageUI.Separator("Diamond Price: £5,000,000", function() end)
+            RageUI.Separator("Per Peice: £10,000", function() end)
+            RageUI.Separator("One 200KG Run: £500,000", function() end)
+            RageUI.Separator("One 300KG Run: £750,000", function() end)
         elseif cGroup == 'Gold' then 
-            RageUI.Separator("Gold Price: ~w~£1,000,000", function() end)
-            RageUI.Separator("Per Peice: ~w~£2,500", function() end)
-            RageUI.Separator("One 200KG Run: ~w~£125,000", function() end)
-            RageUI.Separator("One 300KG Run: ~w~£187,500", function() end)
+            RageUI.Separator("Gold Price: £1,000,000", function() end)
+            RageUI.Separator("Per Peice: £2,500", function() end)
+            RageUI.Separator("One 200KG Run: £125,000", function() end)
+            RageUI.Separator("One 300KG Run: £187,500", function() end)
         elseif cGroup == 'Scrap' then 
-            RageUI.Separator("Scrap Price: ~w~£100,000", function() end)
-            RageUI.Separator("Per Peice: ~w~£250", function() end)
-            RageUI.Separator("One 200KG Run: ~w~£12,500", function() end)
-            RageUI.Separator("One 300KG Run: ~w~£18,750", function() end)
+            RageUI.Separator("Scrap Price: £100,000", function() end)
+            RageUI.Separator("Per Peice: £250", function() end)
+            RageUI.Separator("One 200KG Run: £12,500", function() end)
+            RageUI.Separator("One 300KG Run: £18,750", function() end)
         end
         RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -127,33 +127,33 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
         if cGroup == 'LSD' then 
-            RageUI.Separator("~w~LSD Price: £20,000,000", function() end)
-            RageUI.Separator("~w~Per Peice: £40,000", function() end)
-            RageUI.Separator("~w~One 200KG Run: £2,000,000", function() end)
-            RageUI.Separator("~w~One 300KG Run: £3,000,000", function() end)
+            RageUI.Separator("LSD Price: £20,000,000", function() end)
+            RageUI.Separator("Per Peice: £40,000", function() end)
+            RageUI.Separator("One 200KG Run: £2,000,000", function() end)
+            RageUI.Separator("One 300KG Run: £3,000,000", function() end)
         elseif cGroup == 'Heroin' then 
-            RageUI.Separator("~w~Heroin Price: £10,000,000", function() end)
-            RageUI.Separator("~w~Per Peice: £20,000", function() end)
-            RageUI.Separator("~w~One 200KG Run: £1,000,000", function() end)
-            RageUI.Separator("~w~One 300KG Run: £1,500,000", function() end)
+            RageUI.Separator("Heroin Price: £10,000,000", function() end)
+            RageUI.Separator("Per Peice: £20,000", function() end)
+            RageUI.Separator("One 200KG Run: £1,000,000", function() end)
+            RageUI.Separator("One 300KG Run: £1,500,000", function() end)
         elseif cGroup == 'Weed' then 
-            RageUI.Separator("~w~Heroin Price: £200,000", function() end)
-            RageUI.Separator("~w~Per Peice: £500", function() end)
-            RageUI.Separator("~w~One 200KG Run: £25,000", function() end)
-            RageUI.Separator("~w~One 300KG Run: £37,500", function() end)
+            RageUI.Separator("Heroin Price: £200,000", function() end)
+            RageUI.Separator("Per Peice: £500", function() end)
+            RageUI.Separator("One 200KG Run: £25,000", function() end)
+            RageUI.Separator("One 300KG Run: £37,500", function() end)
         elseif cGroup == 'Cocaine' then 
-            RageUI.Separator("~w~Cocaine Price: £500,000", function() end)
-            RageUI.Separator("~w~Per Peice: £1,250", function() end)
-            RageUI.Separator("~w~One 200KG Run: £62,500", function() end)
-            RageUI.Separator("~w~One 300KG Run: £93,750", function() end)
+            RageUI.Separator("Cocaine Price: £500,000", function() end)
+            RageUI.Separator("Per Peice: £1,250", function() end)
+            RageUI.Separator("One 200KG Run: £62,500", function() end)
+            RageUI.Separator("One 300KG Run: £93,750", function() end)
         elseif cGroup == 'Gang' then 
-            RageUI.Separator("~w~Gang License: £500,000", function() end)
-            RageUI.Separator("~w~Access to Large Arms", function() end)
-            RageUI.Separator("~w~Access to create gang using F5", function() end)
-            RageUI.Separator("~w~Access to take turfs & change commision", function() end)
+            RageUI.Separator("Gang License: £500,000", function() end)
+            RageUI.Separator("Access to Large Arms", function() end)
+            RageUI.Separator("Access to create gang using F5", function() end)
+            RageUI.Separator("Access to take turfs & change commision", function() end)
         elseif cGroup == 'Rebel' then 
-            RageUI.Separator("~w~Rebel License: £10,000,000", function() end)
-            RageUI.Separator("~w~Access to Rebel Gunstore", function() end)
+            RageUI.Separator("Rebel License: £10,000,000", function() end)
+            RageUI.Separator("Access to Rebel Gunstore", function() end)
      
         end
         
