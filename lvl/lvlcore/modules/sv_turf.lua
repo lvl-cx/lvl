@@ -16,10 +16,7 @@ AddEventHandler('LVL:TooFar', function(isnTurf)
 			TriggerClientEvent('LVL:OutOfZone', source)
 			isPlayerInTurf[source] = nil
 
-			TriggerClientEvent('chat:addMessage', -1, {
-				template = 'Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
-				args = { playerName, msg }
-			  })
+			TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. "alert")
 			TriggerClientEvent("LVL:MakeTurfTrue", -1, false)
 			completedTurf = false
 			TriggerClientEvent("LVL:DontIt", -1, false)
@@ -44,10 +41,7 @@ AddEventHandler('LVL:PlayerDied', function(isnTurf)
 		if(isPlayerInTurf[source])then
 			TriggerClientEvent('LVL:PlayerDied', source)
 			isPlayerInTurf[source] = nil
-			TriggerClientEvent('chat:addMessage', -1, {
-				template = 'Turfs^7: ' .. "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. '</div>',
-				args = { playerName, msg }
-			  })
+			TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "Turf capture sucessful at ^2" .."Turf capture failed at ^3" .. turf.nameofturf .. "alert")
 
 			TriggerClientEvent("LVL:MakeTurfTrue", -1, false)
 			TriggerClientEvent("LVL:DontIt", -1, false)
@@ -65,10 +59,7 @@ AddEventHandler("LVL:ChangeCommision", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chat:addMessage', -1, {
-					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Global Weapon Trader" .. '</div>',
-					args = { playerName, msg }
-				  })
+				TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Global Weapon Trader", "alert")
 			  
 				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendLargeArms(com, source)
@@ -88,10 +79,7 @@ AddEventHandler("LVL:ChangeCommisionWeed", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chat:addMessage', -1, {
-					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller" .. '</div>',
-					args = { playerName, msg }
-				  })
+				TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller", "alert")
 			  
 				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendWeed(com, source)
@@ -108,10 +96,7 @@ AddEventHandler("LVL:ChangeCommisionCocaine", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chat:addMessage', -1, {
-					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller" .. '</div>',
-					args = { playerName, msg }
-				  })
+				TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller", "alert")
 			  
 				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendCocaine(com, source)
@@ -128,10 +113,7 @@ AddEventHandler("LVL:ChangeCommisionLSD", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chat:addMessage', -1, {
-					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller" .. '</div>',
-					args = { playerName, msg }
-				  })
+				TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller", "alert")
 			  
 				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendLSD(com, source)
@@ -148,10 +130,7 @@ AddEventHandler("LVL:ChangeCommisionHeroin", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chat:addMessage', -1, {
-					template = ' Turfs^7: ' .. "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller" .. '</div>',
-					args = { playerName, msg }
-				  })
+				TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller", "alert")
 			  
 				LVLclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendHeroin(com, source)
@@ -182,10 +161,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 			end
 
 			-- [Chat Message]
-			TriggerClientEvent('chat:addMessage', -1, {
-			template = ' Turfs^7: ' .. "Turf capture started at ^3" .. turf.nameofturf .. " ^0by ^3 '" .. GetPlayerName(player) .. "'" .. '</div>',
-			args = { playerName, msg }
-			})
+			TriggerClientEvent('chatMessage', source, "^7[^1LVL^7]:", {255, 255, 255}, "Turf capture started at ^3" .. turf.nameofturf .. " ^0by ^3 '" .. GetPlayerName(player), "alert")
 			
 			completedTurf = false
 			TriggerClientEvent("LVL:MakeTurfTrue", -1, true)
@@ -229,11 +205,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 				  	if(user_id) then
 
 						
-			
-						  TriggerClientEvent('chat:addMessage', -1, {
-							template = ' Turfs^7: ' .. "Turf capture sucessful at ^2" .. turf.nameofturf .. "^0!" .. "'" .. '</div>',
-							args = { playerName, msg }
-						  })
+						TriggerClientEvent('chatMessage', savedSource, "^7[^1LVL^7]:", {255, 255, 255}, "Turf capture sucessful at ^2" .. turf.nameofturf .. "^0!" .. "'", "alert")
 
 		
 					 	TriggerClientEvent('LVL:TurfComplete', savedSource, turf.reward, turf.nameofturf)

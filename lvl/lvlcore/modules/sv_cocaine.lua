@@ -66,7 +66,16 @@ AddEventHandler('LVL:SellCocaine', function()
           LVLclient.notify(source, {"~g~Sold 1 cocaine for £" .. tostring(price - finalCommision) .. " +" .. commision .. "% Commision!"})
   
           if finalID ~= nil then
-            LVL.giveBankMoney(LVL.getUserId(finalID),finalCommision)
+            exports['ghmattimysql']:execute("SELECT * FROM ganginfo WHERE userid = @uid", {uid = LVL.getUserId(finalID)}, function(result)
+              fundsavailable = result
+              for k,v in pairs(fundsavailable) do 
+                  AvailableGangFunds = v.gangfunds
+      
+                  local moneyleft = AvailableGangFunds + finalCommision
+                  exports.ghmattimysql:execute("UPDATE ganginfo SET gangfunds = @money WHERE userid = @userid", {money = moneyleft, userid = LVL.getUserId(finalID)})
+      
+              end
+            end)
             LVLclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
           end
 
