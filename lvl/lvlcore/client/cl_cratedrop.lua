@@ -41,6 +41,10 @@ AddEventHandler("crateDrop", function(c)
     SetDamping(activeCrate, 2, 0.1)
     SetEntityVelocity(activeCrate, 0.0, 0.0, -0.3)
 
+    FreezeEntityPosition(activeCrate, true)
+    Wait(2000)
+    FreezeEntityPosition(activeCrate, false)
+
     activeParachute = CreateObject(GetHashKey(models[1]), Coords, false, true, true)
     SetEntityLodDist(activeParachute, 10000)
     SetEntityVelocity(activeParachute, 0.0, 0.0, -0.3)
