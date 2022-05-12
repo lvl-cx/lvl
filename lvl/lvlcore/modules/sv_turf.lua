@@ -199,7 +199,7 @@ AddEventHandler('LVL:TakeTurf', function(isnTurf)
 		  	isPlayerInTurf[player] = isnTurf
 		  	local savedSource = player
 			
-		  	SetTimeout(10 * 1000, function()
+		  	SetTimeout(300 * 1000, function()
 			  	if(isPlayerInTurf[savedSource]) then
 					
 				  	if(user_id) then
