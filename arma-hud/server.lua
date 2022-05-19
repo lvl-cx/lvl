@@ -1,0 +1,19 @@
+local Tunnel = module("arma", "lib/Tunnel")
+local Proxy = module("arma", "lib/Proxy")
+
+ARMA = Proxy.getInterface("ARMA")
+ARMAclient = Tunnel.getInterface("ARMA","ARMA_fuel")
+
+RegisterServerEvent('update:bank')
+AddEventHandler('update:bank', function()
+    local user_id = ARMA.getUserId({source})
+    local bank = ARMA.getBankMoney({user_id})
+    TriggerClientEvent('bank:setDisplayBankMoney', source, bank)
+end)
+
+RegisterServerEvent('update:cash')
+AddEventHandler('update:cash', function()
+    local user_id = ARMA.getUserId({source})
+    local wallet = ARMA.getMoney({user_id})
+    TriggerClientEvent('cash:setDisplayMoney', source, wallet)
+end)

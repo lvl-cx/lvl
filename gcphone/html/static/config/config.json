@@ -1,5 +1,5 @@
 {
-  "reseau": "LVL",
+  "reseau": "ARMA",
   "warningMessageCount": 250,
   "themeColor": "#007aff",
   "themeColorTitle": "#f7f7f7",
@@ -73,13 +73,13 @@
   },
 
   "sonido": {
-    "Astronomia": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/ring.ogg",
-    "Safaera": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/safaera.ogg",
-    "Bella Ciao": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/bella_ciao.ogg",
-    "Casa Papel": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/casa_papel.ogg",
-    "Iphone 11": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/iphone_11.ogg",
-    "Tusa": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/tusa.ogg",
-    "XXXTentacion": "https://github.com/DracoDragon88/gcphone_lvl/raw/v3.0/ringtones/xtentacion.ogg"
+    "Astronomia": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/ring.ogg",
+    "Safaera": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/safaera.ogg",
+    "Bella Ciao": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/bella_ciao.ogg",
+    "Casa Papel": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/casa_papel.ogg",
+    "Iphone 11": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/iphone_11.ogg",
+    "Tusa": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/tusa.ogg",
+    "XXXTentacion": "https://github.com/DracoDragon88/gcphone_arma/raw/v3.0/ringtones/xtentacion.ogg"
   },
 
   "coque_default": {
@@ -100,7 +100,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "Police"
           }
@@ -120,7 +120,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "111"
           }
@@ -133,7 +133,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "Lawyer"
           }
@@ -146,7 +146,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "Mechanic"
           }
@@ -159,7 +159,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "News"
           }
@@ -172,7 +172,7 @@
       "subMenu": [
         {
           "title": "Send a message",
-          "eventName": "lvl_addons_gcphone:call",
+          "eventName": "arma_addons_gcphone:call",
           "type": {
             "number": "Taxi"
           }

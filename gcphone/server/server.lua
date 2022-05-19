@@ -1,15 +1,15 @@
-local Tunnel = module("lvl", "lib/Tunnel")
-local Proxy = module("lvl", "lib/Proxy")
+local Tunnel = module("arma", "lib/Tunnel")
+local Proxy = module("arma", "lib/Proxy")
 local htmlEntities = module("lib/htmlEntities")
 
-LVL = Proxy.getInterface("LVL")
-LVLclient = Tunnel.getInterface("LVL", "gcphone")
+ARMA = Proxy.getInterface("ARMA")
+ARMAclient = Tunnel.getInterface("ARMA", "gcphone")
 
 math.randomseed(os.time()) 
 
 draCB.RegisterServerCallback('gcPhone:hasPhone', function(source, cb, data)
-    local user_id = LVL.getUserId({source})
-    if LVL.getInventoryItemAmount({user_id,"aphone"}) > 0 then
+    local user_id = ARMA.getUserId({source})
+    if ARMA.getInventoryItemAmount({user_id,"aphone"}) > 0 then
         cb(true)
     else
         cb(false)
@@ -56,10 +56,10 @@ end) --]]
 --  Utils
 --====================================================================================
 function getSourceFromIdentifier(identifier, cb)
-    return LVL.getUserSource({identifier})
+    return ARMA.getUserSource({identifier})
 end
 function getNumberPhone(identifier)
-    local result = MySQL.Sync.fetchAll("SELECT lvl_user_identities.phone FROM lvl_user_identities WHERE lvl_user_identities.user_id = @identifier", {
+    local result = MySQL.Sync.fetchAll("SELECT arma_user_identities.phone FROM arma_user_identities WHERE arma_user_identities.user_id = @identifier", {
         ['@identifier'] = identifier
     })
     if result[1] ~= nil then
@@ -68,7 +68,7 @@ function getNumberPhone(identifier)
     return nil
 end
 function getIdentifierByPhoneNumber(phone_number) 
-    local result = MySQL.Sync.fetchAll("SELECT lvl_user_identities.user_id FROM lvl_user_identities WHERE lvl_user_identities.phone = @phone_number", {
+    local result = MySQL.Sync.fetchAll("SELECT arma_user_identities.user_id FROM arma_user_identities WHERE arma_user_identities.phone = @phone_number", {
         ['@phone_number'] = phone_number
     })
     if result[1] ~= nil then
@@ -79,7 +79,7 @@ end
 
 
 function getPlayerID(source)
-    local player = LVL.getUserId({source})
+    local player = ARMA.getUserId({source})
     return player
 end
 function getIdentifiant(id)
@@ -98,7 +98,7 @@ function getOrGeneratePhoneNumber (sourcePlayer, identifier, cb)
             myPhoneNumber = getPhoneRandomNumber()
             local id = getIdentifierByPhoneNumber(myPhoneNumber)
         until id == nil
-        MySQL.Async.insert("UPDATE lvl_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", { 
+        MySQL.Async.insert("UPDATE arma_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", { 
             ['@myPhoneNumber'] = myPhoneNumber,
             ['@identifier'] = identifier
         }, function ()
@@ -183,7 +183,7 @@ end)
 --  Messages
 --====================================================================================
 function getMessages(identifier)
-    local result = MySQL.Sync.fetchAll("SELECT phone_messages.* FROM phone_messages LEFT JOIN lvl_user_identities ON lvl_user_identities.user_id = @identifier WHERE phone_messages.receiver = lvl_user_identities.phone", {
+    local result = MySQL.Sync.fetchAll("SELECT phone_messages.* FROM phone_messages LEFT JOIN arma_user_identities ON arma_user_identities.user_id = @identifier WHERE phone_messages.receiver = arma_user_identities.phone", {
          ['@identifier'] = identifier
     })
     return result
@@ -215,9 +215,9 @@ function addMessage(source, identifier, phone_number, message)
     local sourcePlayer = tonumber(source)
     local otherIdentifier = getIdentifierByPhoneNumber(phone_number)
     local myPhone = getNumberPhone(identifier)
-    if otherIdentifier ~= nil and LVL.getUserSource({otherIdentifier}) ~= nil then 
+    if otherIdentifier ~= nil and ARMA.getUserSource({otherIdentifier}) ~= nil then 
         local tomess = _internalAddMessage(myPhone, phone_number, message, 0)
-        TriggerClientEvent("gcPhone:receiveMessage", tonumber(LVL.getUserSource({otherIdentifier})), tomess)
+        TriggerClientEvent("gcPhone:receiveMessage", tonumber(ARMA.getUserSource({otherIdentifier})), tomess)
     end
     local memess = _internalAddMessage(phone_number, myPhone, message, 1)
     TriggerClientEvent("gcPhone:receiveMessage", sourcePlayer, memess)
@@ -296,7 +296,7 @@ AddEventHandler('gcPhone:deleteALL', function()
     TriggerClientEvent("appelsDeleteAllHistorique", sourcePlayer, {})
 end)
 
-AddEventHandler('gcPhone:deleteALLLVLIdentity', function(src,user_id,num)
+AddEventHandler('gcPhone:deleteALLARMAIdentity', function(src,user_id,num)
     deleteAllMessage(user_id)
     deleteAllContact(user_id)
     appelsDeleteAllHistorique(user_id)
@@ -415,8 +415,8 @@ AddEventHandler('gcPhone:internal_startCall', function(source, phone_number, rtc
 
     if is_valid == true then
         -- getSourceFromIdentifier(destPlayer, function (srcTo)
-        if LVL.getUserSource({destPlayer}) ~= nil then
-            srcTo = tonumber(LVL.getUserSource({destPlayer}))
+        if ARMA.getUserSource({destPlayer}) ~= nil then
+            srcTo = tonumber(ARMA.getUserSource({destPlayer}))
 
             if srcTo ~= nil then
                 AppelsEnCours[indexCall].receiver_src = srcTo
@@ -571,7 +571,7 @@ end)
 --====================================================================================
 --  OnLoad
 --====================================================================================
-AddEventHandler("LVL:playerSpawn",function(user_id, source, first_spawn)
+AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     getOrGeneratePhoneNumber(sourcePlayer, identifier, function (myPhoneNumber)
@@ -579,7 +579,7 @@ AddEventHandler("LVL:playerSpawn",function(user_id, source, first_spawn)
         TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
         TriggerClientEvent("gcPhone:allMessage", sourcePlayer, getMessages(identifier))
     end)
-    local bankM = LVL.getBankMoney({user_id})
+    local bankM = ARMA.getBankMoney({user_id})
     TriggerClientEvent('gcphone:setAccountMoney',source,bankM)
 end)
 
@@ -780,21 +780,21 @@ end
 RegisterServerEvent('gcPhone:moneyTransfer')
 AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
     local source = source
-    userid = LVL.getUserId({source})
-    reciever = LVL.getUserSource({tonumber(num)})
-    num = LVL.getUserId({reciever})
+    userid = ARMA.getUserId({source})
+    reciever = ARMA.getUserSource({tonumber(num)})
+    num = ARMA.getUserId({reciever})
     if tostring(amount) == tostring(tonumber(amount)) then
         if num == nil then
-            LVLclient.notify(source, {"~r~This ID does not exist/ is offline!"})
-            TriggerClientEvent("LVL:PlaySound", source, 2)
+            ARMAclient.notify(source, {"~r~This ID does not exist/ is offline!"})
+            TriggerClientEvent("ARMA:PlaySound", source, 2)
         else
         
             if userid == tonumber(num) then 
-                LVLclient.notify(source, {"~r~Unable to send money to yourself!"})
-                TriggerClientEvent("LVL:PlaySound", source, 2)
+                ARMAclient.notify(source, {"~r~Unable to send money to yourself!"})
+                TriggerClientEvent("ARMA:PlaySound", source, 2)
             else
             
-                if LVL.tryBankPayment({userid, tonumber(amount)}) then 
+                if ARMA.tryBankPayment({userid, tonumber(amount)}) then 
                     webhook = "https://discord.com/api/webhooks/972458607755026502/opcBxFjWz9ZyrQM8cxl15xUgiowoC_v_pYcwJYWkjLv50V-DGKQn7X6wqoip_ctUyPMy"
        
                     PerformHttpRequest(webhook, function(err, text, headers) 
@@ -809,20 +809,20 @@ AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
                     }
                 }}), { ["Content-Type"] = "application/json" })
 
-                    LVLclient.notify(source, {"~g~Successfully transfered: ~w~£" .. amount .. " ~g~to ~w~" .. LVL.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
-                    TriggerClientEvent("LVL:PlaySound", source, 1)
-                    LVL.giveBankMoney({tonumber(num), tonumber(amount)})
+                    ARMAclient.notify(source, {"~g~Successfully transfered: ~w~£" .. amount .. " ~g~to ~w~" .. ARMA.getPlayerName({reciever}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. num .. " ~r~]"})
+                    TriggerClientEvent("ARMA:PlaySound", source, 1)
+                    ARMA.giveBankMoney({tonumber(num), tonumber(amount)})
                 
-                    LVLclient.notify(reciever, {"~g~You have recieved: ~w~£" .. amount .. "~g~ from ~w~".. LVL.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
-                    TriggerClientEvent("LVL:PlaySound", reciever, 1)
+                    ARMAclient.notify(reciever, {"~g~You have recieved: ~w~£" .. amount .. "~g~ from ~w~".. ARMA.getPlayerName({source}) .. " ~r~ ~n~ ~n~[ID: ~w~" .. userid .. " ~r~]"})
+                    TriggerClientEvent("ARMA:PlaySound", reciever, 1)
                 
                     else 
-                    LVLclient.notify(source, {"~r~You do not have enough money complete transaction!"})
-                    TriggerClientEvent("LVL:PlaySound", source, 2)
+                    ARMAclient.notify(source, {"~r~You do not have enough money complete transaction!"})
+                    TriggerClientEvent("ARMA:PlaySound", source, 2)
                 end
             end
         end
     else
-        LVLclient.notify(source,{'~r~The value you entered is not a number!'})
+        ARMAclient.notify(source,{'~r~The value you entered is not a number!'})
     end
 end)

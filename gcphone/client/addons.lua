@@ -5,7 +5,7 @@
 -- Time: 00:39
 -- Made for CiviliansNetwork
 --
-LVL = Proxy.getInterface("LVL")
+ARMA = Proxy.getInterface("ARMA")
 
 RegisterNetEvent('service:call')
 AddEventHandler('service:call', function(data)
