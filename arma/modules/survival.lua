@@ -1,0 +1,153 @@
+local cfg = module("cfg/survival")
+local lang = ARMA.lang
+
+-- api
+
+function ARMA.getHunger(user_id)
+    local data = ARMA.getUserDataTable(user_id)
+    if data then
+        return data.hunger
+    end
+
+    return 0
+end
+
+function ARMA.getThirst(user_id)
+    local data = ARMA.getUserDataTable(user_id)
+    if data then
+        return data.thirst
+    end
+
+    return 0
+end
+
+function ARMA.setHunger(user_id, value)
+    local data = ARMA.getUserDataTable(user_id)
+    if data then
+        data.hunger = value
+        if data.hunger < 0 then
+            data.hunger = 0
+        elseif data.hunger > 100 then
+            data.hunger = 100
+        end
+
+        -- update bar
+        local source = ARMA.getUserSource(user_id)
+        ARMAclient.setProgressBarValue(source, {"ARMA:hunger", data.hunger})
+        if data.hunger >= 100 then
+            ARMAclient.setProgressBarText(source, {"ARMA:hunger", lang.survival.starving()})
+        else
+            ARMAclient.setProgressBarText(source, {"ARMA:hunger", ""})
+        end
+    end
+end
+
+function ARMA.setThirst(user_id, value)
+    local data = ARMA.getUserDataTable(user_id)
+    if data then
+        data.thirst = value
+        if data.thirst < 0 then
+            data.thirst = 0
+        elseif data.thirst > 100 then
+            data.thirst = 100
+        end
+
+        -- update bar
+        local source = ARMA.getUserSource(user_id)
+        ARMAclient.setProgressBarValue(source, {"ARMA:thirst", data.thirst})
+        if data.thirst >= 100 then
+            ARMAclient.setProgressBarText(source, {"ARMA:thirst", lang.survival.thirsty()})
+        else
+            ARMAclient.setProgressBarText(source, {"ARMA:thirst", ""})
+        end
+    end
+end
+
+function ARMA.varyHunger(user_id, variation)
+
+end
+
+function ARMA.varyThirst(user_id, variation)
+
+end
+
+-- tunnel api (expose some functions to clients)
+
+function tARMA.varyHunger(variation)
+
+end
+
+function tARMA.varyThirst(variation)
+
+end
+
+-- tasks
+
+-- hunger/thirst increase
+function task_update()
+    for k, v in pairs(ARMA.users) do
+        ARMA.varyHunger(v, cfg.hunger_per_minute)
+        ARMA.varyThirst(v, cfg.thirst_per_minute)
+    end
+
+    SetTimeout(60000, task_update)
+end
+
+
+-- handlers
+
+-- init values
+AddEventHandler("ARMA:playerJoin", function(user_id, source, name, last_login)
+    local data = ARMA.getUserDataTable(user_id)
+    if data.hunger == nil then
+        data.hunger = 0
+        data.thirst = 0
+    end
+end)
+
+
+---- revive
+local revive_seq = {{"amb@medic@standing@kneel@enter", "enter", 1}, {"amb@medic@standing@kneel@idle_a", "idle_a", 1},
+                    {"amb@medic@standing@kneel@exit", "exit", 1}}
+
+local choice_revive = {function(player, choice)
+    local user_id = ARMA.getUserId(player)
+    if user_id ~= nil then
+        ARMAclient.getNearestPlayer(player, {10}, function(nplayer)
+            local nuser_id = ARMA.getUserId(nplayer)
+            if nuser_id ~= nil then
+                ARMAclient.isInComa(nplayer, {}, function(in_coma)
+                    if in_coma then
+                        if ARMA.tryGetInventoryItem(user_id, "medkit", 1, true) then
+                            ARMAclient.playAnim(player, {false, revive_seq, false}) -- anim
+                            SetTimeout(15000, function()
+                                ARMAclient.varyHealth(nplayer, {50}) -- heal 50
+                            end)
+                        end
+                    else
+                        ARMAclient.notify(player, {lang.emergency.menu.revive.not_in_coma()})
+                    end
+                end)
+            else
+                ARMAclient.notify(player, {lang.common.no_player_near()})
+            end
+        end)
+    end
+end, lang.emergency.menu.revive.description()}
+
+RegisterNetEvent('ARMA:SearchForPlayer')
+AddEventHandler('ARMA:SearchForPlayer', function()
+    TriggerClientEvent('ARMA:ReceiveSearch', -1, source)
+end)
+
+RegisterNetEvent('TeleportThem')
+AddEventHandler('TeleportThem', function(one, two)
+    Wait(500)
+    ARMAclient.teleport(one, {-934.38214111328,-782.61444091797,15.921166419983})
+    ARMAclient.notify(one, {'Number One'})
+    ARMAclient.teleport(two, {-948.12878417969,-801.18139648438,15.921133995056})
+    ARMAclient.notify(two, {'Number Two'})
+end)
+
+
+

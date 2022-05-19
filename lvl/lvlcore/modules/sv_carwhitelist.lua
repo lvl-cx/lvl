@@ -1,5 +1,0 @@
-RegisterNetEvent('LVL:SendID')
-AddEventHandler('LVL:SendID', function()
-  user_id = LVL.getUserId(source)
-  TriggerClientEvent('LVL:UserID', source, user_id)
-end)
