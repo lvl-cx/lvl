@@ -1,0 +1,191 @@
+<html>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <body>
+<<<<<<< HEAD
+        <div class="backdrop">
+			<div class="centre_image">
+				<img src="images/main_background.png" class="main_background" id="mainBackgroundImage">
+				<img src="images/background_1.png" class="gta_background_image" style="display:none;" id="backgroundImage">
+                <img src="images/image_1.png" class="gta_character_image" style="display:none;" id="characterImage">
+			</div>
+        </div>
+        <audio id="Loading" autoplay loop >
+            <source src="music/tune.webm" type="audio/ogg">
+        </audio>    
+    </body>
+
+    <script type="text/javascript">
+
+        // this will actually restart the loading bar a lot, making multiple loading bars is an exercise to the reader... for now.
+        // for a set of possible events, see https://github.com/citizenfx/fivem/blob/master/code/components/loading-screens-five/src/LoadingScreens.cpp
+        
+        
+        setTimeout(function(){ 
+            $('#mainBackgroundImage').fadeOut(2000).queue(function() {
+                $('#mainBackgroundImage').show
+                $('#backgroundImage').fadeIn();
+                $('#characterImage').fadeIn();
+            });
+        }, 3000);
+
+        var elem = document.getElementById("characterImage"); 
+        var pos = 50;
+        var id = setInterval(frame, 0);
+        var direction = 0.01;
+        var stage = 1;
+
+
+        //clearInterval(id);
+        function frame() {
+        if (pos > 70.0 && stage == 1) {
+            direction = 0.01;
+            $('#backgroundImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                stage = 2;
+                img.attr('src', "images/background_2.png");
+                $("#backgroundImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });
+            $('#characterImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                elem.style.left = 35 + '%';
+                pos = 35;
+                stage = 2;
+                img.attr('src', "images/image_2.png");
+                $("#characterImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });
+        } else if (pos > 60.0 && stage == 2) {
+            direction = 0.01;
+            $('#backgroundImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                stage = 3;
+                img.attr('src', "images/background_3.png");
+                $("#backgroundImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });
+            $('#characterImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                elem.style.left = 25 + '%';
+                pos = 25;
+                stage = 3;
+                img.attr('src', "images/image_3.png");
+                $("#characterImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });
+        } else if (pos > 60.0 && stage == 3) {
+            direction = -0.01;
+            $('#backgroundImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/background_4.png");
+                stage = 4;
+                $("#backgroundImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });         
+            });
+            $('#characterImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/image_4.png");
+                elem.style.left = 80 + '%';
+                pos = 80;
+                stage = 4;
+                $("#characterImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });
+        } else if (pos < 50.0 && stage == 4) {
+            direction = 0.01;
+            $('#backgroundImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/background_2.png");
+                stage = 5;
+                $("#backgroundImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });         
+            });
+            $('#characterImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/image_5.png");
+                elem.style.left = 55 + '%';
+                pos = 55;
+                stage = 5;
+                $("#characterImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });        
+        } else if (pos > 70.0 && stage == 5) {
+            direction = 0.01;
+            $('#backgroundImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/background_1.png");
+                stage = 1;
+                $("#backgroundImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });         
+            });
+            $('#characterImage').fadeOut(1000).queue(function() {
+                var img = $(this);
+                img.attr('src', "images/image_1.png");
+                elem.style.left = 40 + '%';
+                pos = 40;
+                stage = 1;
+                $("#characterImage").on('load', function(){
+                    img.fadeIn(1000);
+                    img.dequeue();
+                });
+            });        
+        } else {
+            pos = pos + direction; 
+            //console.log("element pos: " + pos);
+            elem.style.left = pos + '%'; 
+        }
+    }
+    </script>
+
+=======
+        <video autoplay muted loop id="video">
+            <source src="video.mp4" type="video/mp4" width=1920 height=1080>
+        </video>
+    </body>
+    <audio id="song" autoplay loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
+>>>>>>> parent of e60ce37 (sean wanted a special loading screen)
+    <script>
+    var vid = document.getElementById("song");
+    vid.volume = 1
+    </script>
+    </html>
+    
+    <script>
+    var counter=0;
+    document.getElementById("song").volume = 0.5;
+    document.body.onkeyup = function(e){
+        if(counter == 0){
+            if(e.keyCode == 32){
+                document.getElementById("song").pause();
+                counter = 1;
+            }
+        }else{
+            if(e.keyCode == 32){
+                document.getElementById("song").play();
+                counter = 0;
+            }
+        }
+    }
+    </script>
+
+</html>

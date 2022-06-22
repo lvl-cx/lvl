@@ -100,8 +100,8 @@ AddEventHandler("ARMATP:Rebel",function()
        print(GetPlayerName(source).." is trying to cheat")
        return
        end
-       if ARMA.hasPermission(user_id, "rebel.license") then
-       ARMAclient.teleport(source, {3312.1791992188,5175.7817382812,19.614547729492})
+       if ARMA.hasPermission(user_id, "rebel.whitelist") then
+       ARMAclient.teleport(source, {1581.3220214844,6444.6928710938,24.946676254272})
        else
        TriggerClientEvent('showNotification', source,"~g~".. "~r~You don't have permission to do")
        end
@@ -110,7 +110,7 @@ end)
 RegisterServerEvent("ARMA:RebelCheck")
 AddEventHandler("ARMA:RebelCheck",function()
        local user_id = ARMA.getUserId(source)
-       if ARMA.hasPermission(user_id, "rebel.license") then
+       if ARMA.hasPermission(user_id, "rebel.whitelist") then
               TriggerClientEvent('ARMA:RebelChecked', source, true)
        else
               TriggerClientEvent('ARMA:RebelChecked', source, false)

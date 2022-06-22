@@ -10,7 +10,7 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    border: solid 0.1em #70d0ec;
+    border: solid 0.1em #fafb93;
     transform: translate(-50%, -50%);
 }
 
@@ -62,7 +62,7 @@ body {
     margin-left: 0.8em;
     margin-bottom: 0.6em;
     background-color: rgba(6, 7, 8, 0.4);
-    border: solid 0.1em #70d0ec;
+    border: solid 0.1em #fafb93;
     text-align: center;
     justify-content: center;
 }
@@ -86,7 +86,7 @@ body {
 
 #InventoryLine {
     width: 91%;
-    background: #70d0ec;
+    background: #fafb93;
     height: 0.09em;
     position: relative;
     left: 3em;
@@ -95,7 +95,7 @@ body {
 
 #InventoryText {
     font-family: 'Poppins', sans-serif;
-    color: #70d0ec;
+    color: #fafb93;
     position: relative;
     font-size: 0.8em;
     bottom: 32em;
@@ -162,7 +162,7 @@ th {
 
 .ItemSelected {
     border: none;
-    background-color: #70d0ec;
+    background-color: #fafb93;
 }
 
 #ndInventoryText {

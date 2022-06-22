@@ -1,13 +1,120 @@
 local noclip = false
-local noclip_speed = 5.0
+local whitelist = false
+local blips = false
+local delgun = false
+
+config = {
+    controls = {
+        up = 44,  -- [[W]]
+        down = 38, -- [[S]]
+        goForward = 32,  -- [[W]]
+        goBackward = 33, -- [[S]]
+        changeSpeed = 21, -- [[L-Shift]]
+        decreasespeed = 19,
+    },
+
+    speeds = {
+        {label = "Very Slow", speed = 0.1},
+        {label = "Slow", speed = 0.5},
+        {label = "Normal", speed = 2},
+        {label = "Fast", speed = 4},
+        {label = "Very Fast", speed = 6},
+        {label = "Extremely Fast", speed = 10},
+        {label = "Extremely Fast v2.0", speed = 20},
+        {label = "Max Speed", speed = 25}
+    },
+        bgR = 0, 
+        bgG = 0, 
+        bgB = 0, 
+        bgA = 80, 
+}
+
+RegisterKeyMapping('noclip', 'Staff Noclip', 'keyboard', 'F4')       
+RegisterCommand('noclip', function(source, args, RawCommand)
+    TriggerServerEvent('ARMA:noClip')
+end)
+
+
+function setupScaleform(scaleform)
+
+    local scaleform = RequestScaleformMovie(scaleform)
+
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(1)
+    end
+
+    PushScaleformMovieFunction(scaleform, "CLEAR_ALL")
+    PopScaleformMovieFunctionVoid()
+    
+    PushScaleformMovieFunction(scaleform, "SET_CLEAR_SPACE")
+    PushScaleformMovieFunctionParameterInt(200)
+    PopScaleformMovieFunctionVoid()
+
+
+    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+    PushScaleformMovieFunctionParameterInt(1)
+    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.goBackward, true))
+    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.goForward, true))
+    BeginTextCommandScaleformString("STRING")
+    AddTextComponentScaleform("Go Forwards/Backwards")
+    EndTextCommandScaleformString()
+    PopScaleformMovieFunctionVoid()
+
+
+    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
+    PushScaleformMovieFunctionParameterInt(4)
+    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.decreasespeed, true))
+    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.changeSpeed, true))
+    BeginTextCommandScaleformString("STRING")
+    AddTextComponentScaleform("Increase/Decrease Speed ("..config.speeds[index].label..")")
+    EndTextCommandScaleformString()
+    PopScaleformMovieFunctionVoid()
+
+
+    PushScaleformMovieFunction(scaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
+    PopScaleformMovieFunctionVoid()
+
+    return scaleform
+end
+
+function DisableControls()
+    DisableControlAction(0, 30, true)
+    DisableControlAction(0, 31, true)
+    DisableControlAction(0, 32, true)
+    DisableControlAction(0, 33, true)
+    DisableControlAction(0, 34, true)
+    DisableControlAction(0, 35, true)
+    DisableControlAction(0, 266, true)
+    DisableControlAction(0, 267, true)
+    DisableControlAction(0, 268, true)
+    DisableControlAction(0, 269, true)
+    DisableControlAction(0, 44, true)
+    DisableControlAction(0, 74, true)
+ 
+end
 
 function tARMA.toggleNoclip()
+    inRedZone = false
     noclip = not noclip
-    local ped = GetPlayerPed(-1)
+    if IsPedInAnyVehicle(PlayerPedId(), true) then
+        ped = GetVehiclePedIsIn(PlayerPedId(), true)
+    else
+        ped = GetPlayerPed(-1)
+    end
     if noclip then -- set
+        SetPedCanRagdoll(ped, false)
+        SetEntityInvincible(ped, true)
+        SetPlayerInvincible(ped, true)
         SetEntityVisible(ped, false, false)
+        SetEntityCollision(ped, false)
     else -- unset
-        SetEntityVisible(ped, true, false)
+        SetPedCanRagdoll(ped,true)
+        SetEntityInvincible(ped, false)
+        SetPlayerInvincible(ped, false)
+        SetEntityVisible(ped, true, true)
+        SetEntityCollision(ped, true)
+        FreezeEntityPosition(ped, false)
+        
     end
 end
 
@@ -15,41 +122,89 @@ function tARMA.isNoclip()
     return noclip
 end
 
--- noclip/invisibility
+
+
+index = 1 -- DONT TOUCH OR JIMMY SAVIL WILL TOUCH YOU
+
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Citizen.Wait(1)
         if noclip then
-            local ped = GetPlayerPed(-1)
+            --buttons = setupScaleform("instructional_buttons")
+
+            currentSpeed = config.speeds[index].speed
+            if IsPedInAnyVehicle(PlayerPedId(), false) then
+                noclipEntity = GetVehiclePedIsIn(PlayerPedId(), false)
+            else
+                noclipEntity = PlayerPedId()
+            end
+
+            SetEntityCollision(noclipEntity, not noclip, not noclip)
+            FreezeEntityPosition(noclipEntity, noclip)
+            SetEntityInvincible(noclipEntity, noclip)
+            SetVehicleRadioEnabled(noclipEntity, not noclip) -- [[Stop radio from appearing when going upwards.]]
+        end
+
+        if noclip then
+            --DrawScaleformMovieFullscreen(buttons)
+
+            local yoff = 0.0
+            local zoff = 0.0
             local x, y, z = tARMA.getPosition()
             local dx, dy, dz = tARMA.getCamDirection()
-            local speed = noclip_speed
+            
 
-            -- reset velocity
-            SetEntityVelocity(ped, 0.0001, 0.0001, 0.0001)
-
-            -- forward
-            if IsControlPressed(0, 32) then -- MOVE UP
-                x = x + speed * dx
-                y = y + speed * dy
-                z = z + speed * dz
+            if IsControlJustPressed(1, config.controls.changeSpeed) then
+                if index ~= #config.speeds then
+                    index = index+1
+                    currentSpeed = config.speeds[index].speed
+                -- else
+                --     currentSpeed = config.speeds[1].speed
+                --     index = 1
+                end
+                --setupScaleform("instructional_buttons")
             end
 
-            -- backward
-            if IsControlPressed(0, 269) then -- MOVE DOWN
-                x = x - speed * dx
-                y = y - speed * dy
-                z = z - speed * dz
-            end
 
-            SetEntityCoordsNoOffset(ped, x, y, z, true, true, true)
+            if IsControlJustPressed(1, config.controls.decreasespeed) then
+                if index ~= 1 then
+                    index = index-1
+                    currentSpeed = config.speeds[index].speed
+                -- else
+                --     currentSpeed = config.speeds[1].speed
+                --     index = #config.speeds
+                end
+                --setupScaleform("instructional_buttons")
+            end
+				
+				DisableControls()
+
+			if IsDisabledControlPressed(0, config.controls.goForward) then
+                x = x + currentSpeed * dx
+                y = y + currentSpeed * dy
+                z = z + currentSpeed * dz
+			end
+			
+            if IsDisabledControlPressed(0, config.controls.goBackward) then
+                x = x - currentSpeed * dx
+                y = y - currentSpeed * dy
+                z = z - currentSpeed * dz
+			end
+		
+            local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(GetPlayerPed(-1))
+            local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, x,y, zoff * (currentSpeed + 0.3))
+			SetEntityHeading(noclipEntity, heading)
+            SetEntityCoordsNoOffset(noclipEntity, x, y, z, true, true, false)
+           
         end
     end
 end)
 
 
-
-
+RegisterNetEvent('ToggleAdminNoclip')
+AddEventHandler('ToggleAdminNoclip', function(source)
+    tARMA.toggleNoclip()
+end)
 
 local function teleportToWaypoint()
     --Credits: https://gist.github.com/samyh89/32a780abcd1eea05ab32a61985857486
@@ -114,86 +269,185 @@ local function teleportToWaypoint()
         end
     end)
 end
+
 RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
 OMioDioMode = false
 adminTicketSavedCustomization = nil
 savedAdminTicketGuns = nil
-RegisterNetEvent("ARMA:OMioDioMode")
-AddEventHandler("ARMA:OMioDioMode",function(DioMode)
-	print("Activating Oh Mio Dio: " .. tostring(DioMode))
+savedArmour = 0
+Ticketcaller = nil
+permid = nil
+ticketStatus = false
+
+RegisterNetEvent("ARMA:vehicleMenu")
+AddEventHandler("ARMA:vehicleMenu",function(DioMode, isInTicket)
 	OMioDioMode = DioMode
+    ticketStatus = isInTicket
+    TriggerEvent('godmodebypass', OMioDioMode)
 	if not OMioDioMode then
-
-		SetEntityInvincible(GetPlayerPed(-1), false)
-		SetPlayerInvincible(PlayerId(), false)
-		SetPedCanRagdoll(GetPlayerPed(-1), true)
-		ClearPedBloodDamage(GetPlayerPed(-1))
-		ResetPedVisibleDamage(GetPlayerPed(-1))
-		ClearPedLastWeaponDamage(GetPlayerPed(-1))
-		SetEntityProofs(GetPlayerPed(-1), false, false, false, false, false, false, false, false)
-		SetEntityCanBeDamaged(GetPlayerPed(-1), true)
-		SetEntityHealth(GetPlayerPed(-1), 200)
-        
 		tARMA.setCustomization(adminTicketSavedCustomization)
-		tARMA.giveWeapons(savedAdminTicketGuns,true)
-        TriggerServerEvent("hello", false)
-
+        SetTimeout(1, function()
+            SetPedArmour(PlayerPedId(), savedArmour)
+        end)
 	else
+        savedArmour = GetPedArmour(PlayerPedId())
         adminTicketSavedCustomization = tARMA.getCustomization()
-		savedAdminTicketGuns = tARMA.getWeapons()
-        if GetEntityModel(PlayerPedId()) ~= GetHashKey("mp_m_freemode_01") then
-		    local mhash = "mp_m_freemode_01"
-		    RequestModel(mhash)
-		    Wait(100)
-            SetPlayerModel(PlayerId(), mhash)
-            SetModelAsNoLongerNeeded(mhash)
-        end
-
-        --SetPedComponentVariation(GetPlayerPed(-1),1,0,0,0) -- [Mask]
-        --SetPedComponentVariation(GetPlayerPed(-1),2,12,4,0) -- [Hair]
-        SetPedComponentVariation(GetPlayerPed(-1),3,33,0,0) -- [Hand]
-        SetPedComponentVariation(GetPlayerPed(-1),4,4,0,0) -- [Legs]
-        --SetPedComponentVariation(GetPlayerPed(-1),6,34,0,0) -- [Shoes]
-        --SetPedComponentVariation(GetPlayerPed(-1),7,0,2,0) -- [IDK]
-        SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
-       -- SetPedComponentVariation(GetPlayerPed(-1),9,0,0,0) -- [Nothing]
-        --SetPedComponentVariation(GetPlayerPed(-1),10,3,0,0) -- [Nothing]
-        SetPedComponentVariation(GetPlayerPed(-1),11,314,0,00) -- [Jacket]
-        TriggerServerEvent('hello', true)
         
-
-
+        gender = getModelGender()
+        if gender == "male" then
+            SetPedComponentVariation(GetPlayerPed(-1),3,1,0,0) -- [Arms]
+            SetPedComponentVariation(GetPlayerPed(-1),4,164,13,0) -- [Legs]
+            SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
+            SetPedComponentVariation(GetPlayerPed(-1),11,367,0,00) -- [Jacket]
+            SetPedComponentVariation(GetPlayerPed(-1),6,149,17,00) -- [Shoes]
+            SetPedComponentVariation(GetPlayerPed(-1),7,197,0,00) -- [Accessories]
+        elseif gender == "female" then
+            SetPedComponentVariation(GetPlayerPed(-1),3,3,0,0) -- [Arms]
+            SetPedComponentVariation(GetPlayerPed(-1),4,27,0,0) -- [Legs]
+            SetPedComponentVariation(GetPlayerPed(-1),8,14,0,0) -- [Undershirt]
+            SetPedComponentVariation(GetPlayerPed(-1),11,466,0,00) -- [Jacket]
+            SetPedComponentVariation(GetPlayerPed(-1),6,2,0,00) -- [Shoes]
+        end
 	end
 end)
 
-Citizen.CreateThread(function() 
-	while true do
-		if OMioDioMode then
-			SetEntityInvincible(GetPlayerPed(-1), true)
-			SetPlayerInvincible(PlayerId(), true)
-			SetPedCanRagdoll(GetPlayerPed(-1), false)
-			ClearPedBloodDamage(GetPlayerPed(-1))
-			ResetPedVisibleDamage(GetPlayerPed(-1))
-			ClearPedLastWeaponDamage(GetPlayerPed(-1))
-			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
-			SetEntityCanBeDamaged(GetPlayerPed(-1), false)
-			SetEntityHealth(GetPlayerPed(-1), 200)			
-			bank_drawTxt(0.85, 1.40, 1.0,1.0,0.5, "You are in Admin Mode, /staffoff or /return to go off duty.", 255, 17, 0, 255)
-		end
-		Wait(0)
-	end
-end)
-
-RegisterCommand( "dv", function()
-    if OMioDioMode then
-        TriggerEvent( "wk:deleteVehicle" )
-    else
-        notify('~r~Only Staff can Delete Vehicle!')
+function getModelGender()
+    local hashSkinMale = GetHashKey("mp_m_freemode_01")
+    local hashSkinFemale = GetHashKey("mp_f_freemode_01")
+    if GetEntityModel(PlayerPedId()) == hashSkinMale then
+        return "male"
+    elseif GetEntityModel(PlayerPedId()) == hashSkinFemale then
+        return "female"
     end
-end, false )
-TriggerEvent( "chat:addSuggestion", "/dv", "Deletes the vehicle you're sat in, or standing next to." )
+end
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if OMioDioMode then
+			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
+            if not ticketStatus then
+                drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
+            end
+        else
+            ticketStatus = false
+			SetEntityProofs(GetPlayerPed(-1), false, true, true, false, false, false, false)
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if IsControlPressed(1, 121) then -- Insert Key
+            TriggerServerEvent('ARMA:eulenLog')
+            Wait(1000)
+        end
+    end
+end)
+
+function drawNativeText(V)
+    BeginTextCommandPrint("STRING")
+    AddTextComponentSubstringPlayerName(V)
+    EndTextCommandPrint(100, 1)
+end
+
+
+RegisterCommand("dv", function()
+    local ped = GetPlayerPed( -1 )
+    if ( DoesEntityExist( ped ) and not IsEntityDead( ped ) ) then 
+        local pos = GetEntityCoords( ped )
+        if ( IsPedSittingInAnyVehicle( ped ) ) then 
+            local vehicle = GetVehiclePedIsIn( ped, false )
+            if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
+                DeleteGivenVehicle( vehicle, numRetries )
+            else 
+                Notify( "You must be in the driver's seat!" )
+            end 
+        else
+            Notify( "~o~You must be in a vehicle to delete it." )
+        end 
+    end 
+end)
+
+RegisterCommand("delgun", function()
+    if OMioDioMode then
+        delgun = not delgun
+        if delgun then
+            notify('~g~Delgun enabled.')
+            GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"), -1, false, true)
+        else
+            notify('~r~Delgun disabled.')
+            RemoveWeaponFromPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"))
+        end
+    end
+end, false)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if OMioDioMode and delgun then
+            if IsPlayerFreeAiming(PlayerId()) then
+                local aiming, entity = GetEntityPlayerIsFreeAimingAt(PlayerId())
+                if aiming then 
+                    DeleteEntity(entity)
+                    print("Entity: " ..entity)
+                end 
+            end
+            DisablePlayerFiring(PlayerId(), true)
+        else
+            delgun = false
+            RemoveWeaponFromPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"))
+        end
+    end
+end)
+
+
+RegisterNetEvent("ARMA:showBlips")
+AddEventHandler("ARMA:showBlips",function()
+    blips = not blips
+    if blips then
+        tARMA.notify("~g~Blips enabled")
+    else
+        tARMA.notify("~r~Blips disabled")
+        for k, v in ipairs(GetActivePlayers()) do
+            local Q = GetPlayerPed(v)
+            if GetPlayerPed(v) ~= GetPlayerPed(-1) then
+                Q = GetPlayerPed(v)
+                blip = GetBlipFromEntity(Q)
+                RemoveBlip(blip)
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if blips then
+            for k, v in ipairs(GetActivePlayers()) do
+                local ped = GetPlayerPed(v)
+                if ped ~= GetPlayerPed(-1) then
+                    local blip = GetBlipFromEntity(ped)
+                    if not DoesBlipExist(blip) then
+                        blip = AddBlipForEntity(ped)
+                        SetBlipSprite(blip, 1)
+                        Citizen.InvokeNative(0x5FBCA48327B914DF, blip, true)
+                        local R = GetVehiclePedIsIn(ped, false)
+                        Citizen.InvokeNative(0x5FBCA48327B914DF, blip, true)
+                        SetBlipRotation(blip, math.ceil(GetEntityHeading(R)))
+                        SetBlipNameToPlayerName(blip, P)
+                        SetBlipScale(blip, 0.85)
+                        SetBlipAlpha(blip, 255)
+                    end
+                end
+            end
+        end
+        Wait(1000)
+    end
+end)
+
 
 -- The distance to check in front of the player for a vehicle   
 local distanceToCheck = 5.0
@@ -202,26 +456,6 @@ local distanceToCheck = 5.0
 local numRetries = 5
 
 -- Add an event handler for the deleteVehicle event. Gets called when a user types in /dv in chat
-RegisterNetEvent( "wk:deleteVehicle" )
-AddEventHandler( "wk:deleteVehicle", function()
-    local ped = GetPlayerPed( -1 )
-
-    if ( DoesEntityExist( ped ) and not IsEntityDead( ped ) ) then 
-        local pos = GetEntityCoords( ped )
-
-        if ( IsPedSittingInAnyVehicle( ped ) ) then 
-            local vehicle = GetVehiclePedIsIn( ped, false )
-
-            if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
-                DeleteGivenVehicle( vehicle, numRetries )
-            else 
-                Notify( "You must be in the driver's seat!" )
-            end 
-        else
-             Notify( "~o~You must be in a vehicle to delete it." )
-        end 
-    end 
-end )
 
 function DeleteGivenVehicle( veh, timeoutMax )
     local timeout = 0 
@@ -273,7 +507,6 @@ function Notify( text )
     DrawNotification( false, false )
 end
 
-
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)
     SetTextProportional(0)
@@ -289,4 +522,5 @@ function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     AddTextComponentString(text)
     DrawText(x - width/2, y - height/2 + 0.005)
 end
+
 

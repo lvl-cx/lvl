@@ -10,6 +10,8 @@ cfg.groups = {
         "dev.spawnweapon",
         "dev.deletecar",
         "dev.fixcar",
+		"cardev.menu",
+		"dev.getcoords",
 
         "admin.menu",
         "admin.warn",
@@ -126,6 +128,9 @@ cfg.groups = {
 		"admin.whitelisted",
 		"admin.tickets",
 		
+		"cardev.menu",
+		"dev.getcoords",
+
 		"vehicle.delete",
 		"admin.teleport", -- [Access to Teleport to Legion etc]
 	},
@@ -378,6 +383,9 @@ cfg.groups = {
 	"staff.mode",
 	"admin.idsabovehead",
 	"vehicle.delete",
+  },
+  ["cardev"] = {
+	"cardev.menu",
   },
 
   -- [Police Groups]

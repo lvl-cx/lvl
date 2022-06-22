@@ -14,14 +14,6 @@ RageUI.CreateWhile(1.0, true, function()
 					TriggerServerEvent("ARMATP:StThomas")
 				end
 			end)
-			RageUI.Button("Legion Gunstore", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Active then
-					SetNewWaypoint(281.16030883789,-992.70983886719,33.449813842773)
-				end
-				if Selected then
-					TriggerServerEvent("ARMATP:Legion")
-				end
-			end)
 			RageUI.Button("Paleto Bay Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
 				if Active then
 					SetNewWaypoint(-246.71606445313,6330.7153320313)

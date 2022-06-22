@@ -28,7 +28,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('KnifeStoreMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(knifestore.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -45,10 +45,10 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("KnifeStoreMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Weapon Name: " .. cName, function() end)
-        RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("Current Gunstore: " .. knifestore.name, function() end)
-        RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+        RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
+        RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("Current Gunstore: ~r~" .. knifestore.name, function() end)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('KnifeStore:BuyWeapon', cPrice, cHash)
@@ -56,7 +56,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("KnifeStoreMenu", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("KnifeStoreMenu", "main"))
+        RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("KnifeStoreMenu", "main"))
        
 
     end) 

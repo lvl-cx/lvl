@@ -14,17 +14,15 @@ admincfg.buttonsEnabled = {
     ["warn"] = {true, "admin.warn"},      
     ["showwarn"] = {true, "admin.showwarn"},
     ["ban"] = {true, "admin.ban"},
+    ["unban"] = {true, "admin.unban"},
     ["kick"] = {true, "admin.kick"},
-    ["nof10kick"] = {true, "admin.nof10kick"},
     ["revive"] = {true, "admin.revive"},
     ["TP2"] = {true, "admin.tp2player"},
     ["TP2ME"] = {true, "admin.summon"},
-    ["TPLoc"] = {true, "admin.teleport"},
     ["FREEZE"] = {true, "admin.freeze"},
     ["spectate"] = {true, "admin.spectate"}, 
     ["SS"] = {true, "admin.screenshot"},
     ["slap"] = {true, "admin.slap"},
-    ["giveMoney"] = {true, "admin.givemoney"},
     ["addcar"] = {true, "admin.addcar"},
 
     --[[ Functions ]]
@@ -51,16 +49,7 @@ admincfg.buttonsEnabled = {
     ["devMenu"] = {true, "dev.menu"},
 }
 
-RegisterServerEvent('ARMA:OpenSettings')
-AddEventHandler('ARMA:OpenSettings', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil and ARMA.hasPermission(user_id, "admin.menu") then
-        TriggerClientEvent("ARMA:OpenSettingsMenu", source, true)
-    else
-        TriggerClientEvent("ARMA:OpenSettingsMenu", source, false)
-    end
-end)
+local whitelist = false
 
 RegisterServerEvent('ARMA:OpenSettings')
 AddEventHandler('ARMA:OpenSettings', function()
@@ -84,12 +73,18 @@ AddEventHandler("ARMA:GetPlayerData",function()
         useridz = {}
         for i, p in pairs(players) do
             if ARMA.getUserId(p) ~= nil then
-            name = GetPlayerName(p)
-            user_idz = ARMA.getUserId(p)
-            players_table[user_idz] = {name, p, user_idz}
-            table.insert (useridz, user_idz)
+                name = GetPlayerName(p)
+                user_idz = ARMA.getUserId(p)
+                data = ARMA.getUserDataTable(user_idz)
+                playtime = data.PlayerTime or 0
+                PlayerTimeInHours = playtime/60
+                if PlayerTimeInHours < 1 then
+                    PlayerTimeInHours = 0
+                end
+                players_table[user_idz] = {name, p, user_idz, math.ceil(PlayerTimeInHours)}
+                table.insert(useridz, user_idz)
             else
-                DropPlayer(p, "[ARMA] You Were Kicked")
+                DropPlayer(p, "ARMA - The server was unable to cache your ID, please rejoin.")
             end
          end
         if admincfg.IgnoreButtonPerms == false then
@@ -105,45 +100,144 @@ AddEventHandler("ARMA:GetPlayerData",function()
                 menu_btns_table[j] = true
             end
         end
-        TriggerClientEvent("ARMA:SendPlayersInfo", source, players_table, menu_btns_table)
+        TriggerClientEvent("ARMA:SendPlayerInfo", source, players_table, menu_btns_table)
     end
 end)
 
-RegisterServerEvent("ARMA:getGroups")
-AddEventHandler("ARMA:getGroups",function(temp, perm)
-    local user_groups = ARMA.getUserGroups(perm)
-    TriggerClientEvent("ARMA:gotgroups", source, user_groups)
+
+RegisterCommand("gethours", function(source, args)
+    local v = source
+    local UID = ARMA.getUserId(v)
+    local D = math.ceil(ARMA.getUserDataTable(UID).PlayerTime/60) or 0
+    if UID then
+        if D > 5000 then
+            DropPlayer(v, "[ARMA] You were permanently banned\nReason: Not Touching Grass\nYour ID: "..UID.."\nIf you believe this was a false ban, appeal @ www.idonttouchgrass.com")
+        elseif D > 4000 then
+            ARMAclient.notify(v,{"~g~You currently have ~b~"..D.." ~g~hours. Almost as bad as Jamo."})
+        elseif D > 3000 then
+            ARMAclient.notify(v,{"~g~You currently have ~b~"..D.." ~g~hours. Touch some fucking grass."})
+        elseif D > 2000 then
+            ARMAclient.notify(v,{"~g~You currently have ~b~"..D.." ~g~hours. Seriously, go outside."})
+        elseif D > 1000 then
+            ARMAclient.notify(v,{"~g~You currently have ~b~"..D.." ~g~hours. Go outside."})
+        else
+            ARMAclient.notify(v,{"~g~You currently have ~b~"..D.." ~g~hours."})
+        end
+    end
 end)
 
-RegisterServerEvent("ARMA:CheckPOV")
-AddEventHandler("ARMA:CheckPOV",function(userperm)
+RegisterCommand("sethours", function(source, args) 
+    if source == 0 then 
+        local data = ARMA.getUserDataTable(tonumber(args[1]))
+        data.PlayerTime = tonumber(args[2])*60
+        print(GetPlayerName(ARMA.getUserSource(tonumber(args[1]))).."'s hours have been set to: "..tonumber(args[2]))
+    end  
+end)
+
+
+
+RegisterNetEvent("Jud:GetNearbyPlayers")
+AddEventHandler("Jud:GetNearbyPlayers", function(dist)
+    local source = source
     local user_id = ARMA.getUserId(source)
+    local plrTable = {}
+
+    if ARMA.hasPermission(user_id, admincfg.perm) then
+        ARMAclient.getNearestPlayers(source, {dist}, function(nearbyPlayers)
+            for k, v in pairs(nearbyPlayers) do
+                data = ARMA.getUserDataTable(ARMA.getUserId(k))
+                playtime = data.PlayerTime or 0
+                PlayerTimeInHours = playtime/60
+                if PlayerTimeInHours < 1 then
+                    PlayerTimeInHours = 0
+                end
+                plrTable[ARMA.getUserId(k)] = {GetPlayerName(k), k, ARMA.getUserId(k), math.ceil(PlayerTimeInHours)}
+            end
+            TriggerClientEvent("Jud:ReturnNearbyPlayers", source, plrTable)
+        end)
+    end
+end)
+
+RegisterServerEvent("ARMA:whitelist")
+AddEventHandler("ARMA:whitelist",function(whitelist)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local name = GetPlayerName(source)
+    local whitelist = whitelist
+    if ARMA.hasPermission(user_id, 'dev.menu') then
+        if whitelist then
+            ARMAclient.notify(source,{"~g~Whitelist activated."})
+        else
+            ARMAclient.notify(source,{"~r~Whitelist deactivated."})
+        end
+        while true do
+            Citizen.Wait(0)
+            players = GetPlayers()
+            local source = source
+            if whitelist == true then
+                for k, v in pairs(players) do
+                    local user_id = ARMA.getUserId(v)
+                    if not ARMA.hasPermission(user_id, 'admin.tickets') then
+                        DropPlayer(v, "ARMA - Whitelist is currently enabled, please wait.")
+                    end
+                end
+            end
+        end
+    end
+end)
+
+RegisterServerEvent("ARMA:getWhitelist")
+AddEventHandler("ARMA:getWhitelist",function()
+    if whitelist then
+        return true
+    end
+end)
+
+RegisterServerEvent("ARMA:GetGroups")
+AddEventHandler("ARMA:GetGroups",function(temp, perm)
+    local user_groups = ARMA.getUserGroups(perm)
+    TriggerClientEvent("ARMA:GotGroups", source, user_groups)
+end)
+
+RegisterServerEvent("ARMA:CheckPov")
+AddEventHandler("ARMA:CheckPov",function(userperm)
+    local user_id = ARMA.getUserId(source)
+  
     if ARMA.hasPermission(user_id, "admin.menu") then
-        if ARMA.hasGroup(userperm, 'pov') then
-            TriggerClientEvent('ARMA:ReturnPOV', source, true)
-        elseif not ARMA.hasGroup(userperm, 'pov') then
-            TriggerClientEvent('ARMA:ReturnPOV', source, false)
+        if ARMA.hasPermission(userperm, 'pov.list') then
+            TriggerClientEvent('ARMA:ReturnPov', source, true)
+        elseif not ARMA.hasPermission(userperm, 'pov.list') then
+            TriggerClientEvent('ARMA:ReturnPov', source, false)
         end
     else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
+     end
+    
+end)
+
+
+RegisterServerEvent("wk:fixVehicle")
+AddEventHandler("wk:fixVehicle",function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.noclip') then
+        TriggerClientEvent('wk:fixVehicle', source)
     end
 end)
 
 local onesync = GetConvar('onesync', nil)
-RegisterNetEvent('ARMAAdmin:SpectatePlr')
-AddEventHandler('ARMAAdmin:SpectatePlr', function(id)
+RegisterNetEvent('ARMA:SpectatePlayer')
+AddEventHandler('ARMA:SpectatePlayer', function(id)
     local source = source 
     local SelectedPlrSource = ARMA.getUserSource(id) 
     local userid = ARMA.getUserId(source)
-    if ARMA.hasPermission(userid, 'admin.spectate') then
+    if ARMA.hasPermission(userid, "admin.spectate") then
         if SelectedPlrSource then  
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(SelectedPlrSource)
                 local pedCoords = GetEntityCoords(ped)
-                print(pedCoords)
-                TriggerClientEvent('ARMAAdmin:Spectate', source, SelectedPlrSource, pedCoords)
+                TriggerClientEvent('ARMA:Spectate', source, SelectedPlrSource, pedCoords)
             else 
-                TriggerClientEvent('ARMAAdmin:Spectate', source, SelectedPlrSource)  
+                TriggerClientEvent('ARMA:Spectate', source, SelectedPlrSource)
             end
         else 
             ARMAclient.notify(source,{"~r~This player may have left the game."})
@@ -151,8 +245,36 @@ AddEventHandler('ARMAAdmin:SpectatePlr', function(id)
     end
 end)
 
-RegisterServerEvent("ARMA:addGroup")
-AddEventHandler("ARMA:addGroup",function(perm, selgroup)
+RegisterServerEvent("ARMA:Giveweapon")
+AddEventHandler("ARMA:Giveweapon",function()
+    local source = source
+    local userid = ARMA.getUserId(source)
+    if ARMA.hasPermission(userid, "dev.menu") then
+        ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
+        GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
+        ARMAclient.notify(source,{"~g~Successfully spawned ~b~"..hash})
+    end)
+    end
+end)
+
+RegisterServerEvent("ARMA:GiveWeaponToPlayer")
+AddEventHandler("ARMA:GiveWeaponToPlayer",function()
+    local source = source
+    local userid = ARMA.getUserId(source)
+    if ARMA.hasPermission(userid, "dev.menu") then
+        ARMA.prompt(source,"Perm ID:","",function(source,permid) 
+            local permid = tonumber(permid)
+            local permsource = ARMA.getUserSource(permid)
+            ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
+                GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
+                ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
+            end)
+        end)
+    end
+end)
+
+RegisterServerEvent("ARMA:AddGroup")
+AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
     local admin_temp = source
     local admin_perm = ARMA.getUserId(admin_temp)
     local user_id = ARMA.getUserId(source)
@@ -161,6 +283,8 @@ AddEventHandler("ARMA:addGroup",function(perm, selgroup)
     local povName = GetPlayerName(permsource)
     if ARMA.hasPermission(user_id, "group.add") then
         if selgroup == "founder" and not ARMA.hasPermission(admin_perm, "group.add.founder") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
+        elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.add.operationsmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
         elseif selgroup == "staffmanager" and not ARMA.hasPermission(admin_perm, "group.add.staffmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
@@ -172,60 +296,49 @@ AddEventHandler("ARMA:addGroup",function(perm, selgroup)
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "administrator" and not ARMA.hasPermission(admin_perm, "group.add.administrator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
+        elseif selgroup == "srmoderator" and not ARMA.hasPermission(admin_perm, "group.add.srmoderator") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "moderator" and not ARMA.hasPermission(admin_perm, "group.add.moderator") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
+        elseif selgroup == "supportteam" and not ARMA.hasPermission(admin_perm, "group.add.supportteam") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "trialstaff" and not ARMA.hasPermission(admin_perm, "group.add.trial") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "vip" and not ARMA.hasPermission(admin_perm, "group.add.vip") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "pov" and not ARMA.hasGroup(perm, "pov") then
-            webhook = "https://discord.com/api/webhooks/972459362603905064/WYpnUCMoTsB1n1QLwbkcLP4Hj5WCrbjlCAN5SFj2x4F7sv8MnZHGq9gqzKg4JE0obfm5"
+        elseif selgroup == "pov" and not ARMA.hasGroup(perm, "group.add.pov") then
+            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
             PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+            end, "POST", json.encode({username = "ARMA", embeds = {
                 {
                     ["color"] = "15158332",
-                    ["title"] = playerName.." put "..povName.." onto the POV List.",
-                    ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..admin_perm.."** \nPlayer ID: **"..perm.."** \nPlayer Name: **"..povName.."**",
+                    ["title"] = "Added to POV List",
+                    ["description"] = "**Admin Name:** "..playerName.."**\nAdmin ID:** "..user_id.."\n**Player ID:** "..perm.."\n**Player Name:** "..povName,
                     ["footer"] = {
                         ["text"] = "Time - "..os.date("%x %X %p"),
                     }
             }
             }}), { ["Content-Type"] = "application/json" })
             ARMA.addUserGroup(perm, "pov")
-            ARMAclient.notify(source,{'~g~Added group to POV List'})
-            ARMAclient.notify(permsource,{'~r~You were added to POV List ~w~[ID: ' .. admin_perm .. ' ]'})
         else
             ARMA.addUserGroup(perm, selgroup)
-            ARMAclient.notify(source,{'~g~Added group to user'})
-            ARMAclient.notify(permsource,{'~g~You have been given: ~w~' .. selgroup .. ' ~g~group ~w~[ID: ' .. admin_perm .. ' ]'})
         end
     else
-        print("Stop trying to add a group u fucking cheater")
+        --print("Stop trying to add a group u fucking cheater")
     end
 end)
 
-RegisterNetEvent('ARMA:HasFounder')
-AddEventHandler('ARMA:HasFounder', function()
-    local source = source 
-    user_id = ARMA.getUserId(source)
-
-    if ARMA.hasGroup(user_id, 'founder') then 
-        TriggerClientEvent('ARMA:ClothingPerms', source, true)
-    else
-        TriggerClientEvent('ARMA:ClothingPerms', source, false)
-    end
-end)
-
-RegisterServerEvent("ARMA:removeGroup")
-AddEventHandler("ARMA:removeGroup",function(perm, selgroup)
+RegisterServerEvent("ARMA:RemoveGroup")
+AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
     local user_id = ARMA.getUserId(source)
     local admin_temp = source
-    local admin_perm = ARMA.getUserId(admin_temp)
     local permsource = ARMA.getUserSource(perm)
     local playerName = GetPlayerName(source)
     local povName = GetPlayerName(permsource)
     if ARMA.hasPermission(user_id, "group.remove") then
         if selgroup == "founder" and not ARMA.hasPermission(user_id, "group.remove.founder") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
+        elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.remove.operationsmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
         elseif selgroup == "staffmanager" and not ARMA.hasPermission(user_id, "group.remove.staffmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
@@ -237,124 +350,313 @@ AddEventHandler("ARMA:removeGroup",function(perm, selgroup)
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "administrator" and not ARMA.hasPermission(user_id, "group.remove.administrator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
+        elseif selgroup == "srmoderator" and not ARMA.hasPermission(user_id, "group.remove.srmoderator") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "moderator" and not ARMA.hasPermission(user_id, "group.remove.moderator") then
+            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
+        elseif selgroup == "supportteam" and not ARMA.hasPermission(user_id, "group.remove.supportteam") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "trialstaff" and not ARMA.hasPermission(user_id, "group.remove.trial") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "vipgarage" and not ARMA.hasPermission(user_id, "group.remove.vipgarage") then
+        elseif selgroup == "vip" and not ARMA.hasPermission(user_id, "group.remove.vip") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "pov" and ARMA.hasGroup(perm, "pov") then
-            webhook = "https://discord.com/api/webhooks/972459449111412737/V6R-FlM_hb7Xxrx59WeZSwDkoGuJL82_KaawOKet_OcjJ3VG5Cqm83pq7ZzFWLzFYRPc"
+        elseif selgroup == "pov" and ARMA.hasGroup(perm, "group.remove.pov") then
+            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
             PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+            end, "POST", json.encode({username = "ARMA", embeds = {
                 {
                     ["color"] = "15158332",
-                    ["title"] = playerName.." removed "..povName.." from the POV List.",
-                    ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..user_id.."** \nPlayer ID: **"..perm.."** \nPlayer Name: **"..povName.."**",
+                    ["title"] = "Removed from POV List",
+                    ["description"] = "**Admin Name:** "..playerName.."**\nAdmin ID:** "..user_id.."\n**Player ID:** "..perm.."\n**Player Name:** "..povName,
                     ["footer"] = {
                         ["text"] = "Time - "..os.date("%x %X %p"),
                     }
             }
             }}), { ["Content-Type"] = "application/json" })
             ARMA.removeUserGroup(perm, "pov")
-            ARMAclient.notify(source,{'~r~Removed POV List of user'})
-            ARMAclient.notify(permsource,{'~r~Someone removed you of POV List'})
         else
             ARMA.removeUserGroup(perm, selgroup)
-            ARMAclient.notify(source,{'~r~Removed group.'})
-            ARMAclient.notify(permsource,{'~r~Your group has been removed: ~w~' .. selgroup .. ' ~r~group ~w~[ID: ' .. admin_perm .. ' ]'})
         end
     else 
-        print("Stop trying to add a group u fucking cheater")
+        --print("Stop trying to add a group u fucking cheater")
     end
 end)
 
-RegisterServerEvent('ARMA:BanPlayer')
-AddEventHandler('ARMA:BanPlayer', function(admin, target, reason, duration)
+
+RegisterServerEvent('ARMA:CreateBanData')
+AddEventHandler('ARMA:CreateBanData', function(admin, target)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local targetsource = ARMA.getUserSource(target)
+    local name = GetPlayerName(targetsource)
+    if ARMA.hasPermission(user_id, "admin.ban") then
+        TriggerClientEvent('ARMA:openConfirmBan', source, target, name)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Create Ban Data')
+    end
+end)
+
+RegisterServerEvent('ARMA:BanPlayerConfirm')
+AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, reasons, duration)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local target = ARMA.getUserSource(target_id)
+    local admin_id = ARMA.getUserId(admin)
+    local adminName = GetPlayerName(source)
+    warningDate = getCurrentDate()
+    if ARMA.hasPermission(user_id, "admin.ban") then
+        local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
+        PerformHttpRequest(webhook, function(err, text, headers) 
+        end, "POST", json.encode({username = "ARMA", embeds = {
+            {
+                ["color"] = "15158332",
+                ["title"] = "Player Banned: ",
+                ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target_id.." \n**Reason(s):** "..reasons.."\n **Duration: ** "..duration,
+                ["footer"] = {
+                    ["text"] = "Time - "..os.date("%x %X %p"),
+                }
+        }
+        }}), { ["Content-Type"] = "application/json" })
+        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target)..'['..target_id..']'..' for '..reasons)
+        if tonumber(duration) >= 9000 then
+            ARMA.ban(source,target_id,"perm",reasons)
+            f10Ban(target_id, adminName, reasons, "-1")
+        else
+            ARMA.ban(source,target_id,duration,reasons)
+            f10Ban(target_id, adminName, reasons, duration)
+        end
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Ban Someone')
+    end
+end)
+
+
+RegisterServerEvent('ARMA:CustomBan')
+AddEventHandler('ARMA:CustomBan', function(admin, target)
+    local source = source
+    local user_id = ARMA.getUserId(source)
     local target = target
     local target_id = ARMA.getUserSource(target)
     local admin_id = ARMA.getUserId(admin)
-    local user_id = ARMA.getUserId(source)
+    local adminName = GetPlayerName(source)
+    warningDate = getCurrentDate()
     if ARMA.hasPermission(user_id, "admin.ban") then
-        if tonumber(duration) then 
-            local playerName = GetPlayerName(source)
-            local playerOtherName = GetPlayerName(target)
-            if tonumber(duration) == -1 then
-                ARMA.ban(source,target,"perm",reason or "No reason given")
-                saveBanLog(target_id, GetPlayerName(admin), reason, duration)
-            else
-                ARMA.ban(source,target,duration,reason or "No reason given")
-                saveBanLog(target_id, GetPlayerName(admin), reason, duration)
-                print(admin, target_id)
-                TriggerEvent('ARMA:BanPlayerLog', target, GetPlayerName(admin), reason, duration)
-                webhook = "https://discord.com/api/webhooks/972459521354129508/JcxZS3i86KRtw3XWKzp4Lrgg3D_MzKK5pzBmzGH9Hw-N6XEQyin-c--NIR_-KqUc-yHM"
+        ARMA.prompt(source,"Reason:","",function(source,Reason)
+            if Reason == "" then return end
+            ARMA.prompt(source,"Duration:","",function(source,Duration)
+                if Duration == "" then return end
+                Duration = parseInt(Duration)
+                ARMA.prompt(source,"Evidence:","",function(source,Evidence)  
+                    if Evidence == "" then return end
+                    videoclip = Evidence
+                    local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
+                    PerformHttpRequest(webhook, function(err, text, headers) 
+                    end, "POST", json.encode({username = "ARMA", embeds = {
+                        {
+                            ["color"] = "15158332",
+                            ["title"] = "Player Custom Banned: ",
+                            ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target.." \n**Reason:** "..Reason.."\n **Duration: ** "..Duration.." \n **Evidence: **" ..videoclip.. "",
+                            ["footer"] = {
+                                ["text"] = "Time - "..os.date("%x %X %p"),
+                            }
+                    }
+                    }}), { ["Content-Type"] = "application/json" })
+                    TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target_id)..'['..target..']'..' for '..Reason)
+                    if tonumber(Duration) == -1 then
+                        ARMA.ban(source,target,"perm",Reason)
+                        f10Ban(target, adminName, Reason, "-1")
+                    else
+                        ARMA.ban(source,target,Duration,Reason)
+                        f10Ban(target, adminName, Reason, Duration)
+                    end
+                end)
+            end)
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Ban Someone')
+    end
+end)
+
+RegisterServerEvent('ARMA:offlineban')
+AddEventHandler('ARMA:offlineban', function(admin)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local admin_id = ARMA.getUserId(admin)
+    local adminName = GetPlayerName(admin)
+    warningDate = getCurrentDate()
+    if ARMA.hasPermission(user_id, "admin.ban") then
+        ARMA.prompt(source,"Perm ID:","",function(source,permid)
+            if permid == "" then return end
+            permid = parseInt(permid)
+            ARMA.prompt(source,"Duration:","",function(source,Duration) 
+                if Duration == "" then return end
+                Duration = parseInt(Duration)
+                ARMA.prompt(source,"Reason:","",function(source,Reason) 
+                    if Reason == "" then return end
+                    ARMA.prompt(source,"Evidence:","",function(source,Evidence) 
+                        if Evidence == "" then return end
+                        videoclip = Evidence
+                        local target = permid
+                        local target_id = ARMA.getUserSource(target)
+                        local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
+                        PerformHttpRequest(webhook, function(err, text, headers) 
+                        end, "POST", json.encode({username = "ARMA", embeds = {
+                            {
+                                ["color"] = "15158332",
+                                ["title"] = "Player Offline Banned: ",
+                                ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target.." \n**Reason:** "..Reason.."\n **Duration: ** "..Duration.." \n **Evidence: **" ..videoclip.. "",
+                                ["footer"] = {
+                                    ["text"] = "Time - "..os.date("%x %X %p"),
+                                }
+                        }
+                        }}), { ["Content-Type"] = "application/json" })
+                        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have offline banned '..permid..' for '..Reason)
+                        if tonumber(Duration) == -1 then
+                            ARMA.ban(source,target,"perm",Reason)
+                            f10Ban(target, adminName, Reason, "-1")
+                        else
+                            ARMA.ban(source,target,Duration,Reason)
+                            f10Ban(target, adminName, Reason, Duration)
+                        end
+                    end)
+                end)
+            end)
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Ban Someone')
+    end
+end)
+
+
+RegisterServerEvent('ARMA:RequestScreenshot')
+AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
+    local target_id = ARMA.getUserId(target)
+    local target_name = GetPlayerName(target)
+    local admin_id = ARMA.getUserId(admin)
+    local admin_name = GetPlayerName(source)
+    local perm = admincfg.buttonsEnabled["SS"][2]
+    if ARMA.hasPermission(admin_id, perm) then
+        exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(target,
+        {
+        username = "ARMA Screenshot Logs",
+        avatar_url = "",
+        embeds = {
+            {
+                color = 11111111,
+                title = admin_name.."["..admin_id.."] Took a screenshot",
+                description = "**Admin Name:** " ..admin_name.. "\n**Admin ID:** " ..admin_id.. "\n**Player Name:** " ..target_name.. "\n**Player ID:** " ..target_id,
+                footer = {
+                    text = ""..os.date("%x %X %p"),
+                }
+            }
+        }
+        },
+        30000,
+        function(error)
+            if error then
+                return print("^1ERROR: " .. error)
+            end
+            print("Sent screenshot successfully")
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Successfully took a screenshot of ' ..target_name.. "'s screen.")
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Request Screenshot')
+    end   
+end)
+
+RegisterServerEvent('ARMA:noF10Kick')
+AddEventHandler('ARMA:noF10Kick', function()
+    local admin_id = ARMA.getUserId(source)
+    local perm2 = admincfg.buttonsEnabled["kick"][2]
+    playerName = GetPlayerName(source)
+    if ARMA.hasPermission(admin_id, perm2) then
+        ARMA.prompt(source,"Perm ID:","",function(source,permid) 
+            if permid == '' then return end
+            permid = parseInt(permid)
+            ARMA.prompt(source,"Reason:","",function(source,reason) 
+                if reason == '' then return end
+                local reason = reason
+                ARMAclient.notify(source,{'~g~Kicked ID: ' .. permid})
+                webhook = "https://discord.com/api/webhooks/975532585050574849/7UssunD4em2q8qazgLvdkc4NouRU6ybfPY4-ev6jBRIdMVe_WieN73DlHYsWFfZU3RXr"
                 PerformHttpRequest(webhook, function(err, text, headers) 
-                end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+                end, "POST", json.encode({username = "ARMA", embeds = {
                     {
                         ["color"] = "15158332",
-                        ["title"] = "Banned ID: "..target .." out of the server. Reason: "..reason,
-                        ["description"] = "Admin Name: **"..GetPlayerName(admin).."** \nAdmin ID: **"..ARMA.getUserId(admin).."** \nPlayer ID: **"..target.."** \nDescription: **Banned ID: "..target.." out of the server. Reason: "..reason.."**",
+                        ["title"] = "Kicked Player (No F10)",
+                        ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player ID:** "..permid,
                         ["footer"] = {
                             ["text"] = "Time - "..os.date("%x %X %p"),
                         }
                 }
                 }}), { ["Content-Type"] = "application/json" })
-                TriggerClientEvent('ARMA:Notify', admin, 'Banned Player')
-            end
-        end
+                DropPlayer(ARMA.getUserSource(permid), reason)
+            end)
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to No F10 Kick Someone')
     end
 end)
 
+
 RegisterServerEvent('ARMA:KickPlayer')
 AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
+    local source = source
     local target_id = ARMA.getUserSource(target)
     local target_permid = target
     local playerName = GetPlayerName(source)
     local playerOtherName = GetPlayerName(tempid)
     local perm = admincfg.buttonsEnabled["kick"][2]
     local admin_id = ARMA.getUserId(admin)
+    local adminName = GetPlayerName(admin)
+    local webhook = "https://discord.com/api/webhooks/975532585050574849/7UssunD4em2q8qazgLvdkc4NouRU6ybfPY4-ev6jBRIdMVe_WieN73DlHYsWFfZU3RXr"
     if ARMA.hasPermission(admin_id, perm) then
-        webhook = "https://discord.com/api/webhooks/972459583564046356/1UzhnvoG90OcTkrB7uxuWn4o-z5D1z_t2Y31k2HPvnEA-Pmq0rst5vEro2PHDrqP6UIN"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Kicked "..playerOtherName.." out of the server. Reason: "..reason,
-                ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..admin_id.."** \nPlayer ID: **"..target_permid.."** \nReason:" ..reason,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
-        ARMA.kick(target_id, "[ARMA] You have been kicked | Your ID is: "..target.." | Reason: "..reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
-        TriggerEvent("ARMA:saveKickLog",target,GetPlayerName(admin),reason)
-        TriggerClientEvent('ARMA:Notify', admin, 'Kicked Player')
-    end
-end)
-
-RegisterServerEvent('ARMA:KickPlayerNoF10')
-AddEventHandler('ARMA:KickPlayerNoF10', function(admin, target, reason)
-    local target_id = ARMA.getUserSource(target)
-    local target_permid = ARMA.getUserId(target)
-    local perm = admincfg.buttonsEnabled["kick"][2]
-    local admin_id = ARMA.getUserId(admin)
-    if ARMA.hasPermission(admin_id, perm) then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/972459583564046356/1UzhnvoG90OcTkrB7uxuWn4o-z5D1z_t2Y31k2HPvnEA-Pmq0rst5vEro2PHDrqP6UIN"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "No F10 Kicked "..playerOtherName.." out of the server. Reason: "..reason,
-                ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..admin_id.."** \nPlayer ID: **"..target_permid.."** \nDescription: **No F10 Kicked "..playerOtherName.." out of the server. Reason: "..reason.."**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
-        ARMA.kick(target_id, "[ARMA] You have been kicked | Your ID is: "..target.." | Reason: "..reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
-        TriggerClientEvent('ARMA:Notify', admin, 'Kicked Player')
+        ARMA.prompt(source,"Reason:","",function(source,Reason) 
+            if Reason == "" then return end
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = "15158332",
+                    ["title"] = "Player Kicked",
+                    ["description"] = "**Admin Name:** "..playerName.."\n**Admin ID:** "..admin_id.."\n**Player ID:** "..target_permid.."\n**Reason:** " ..Reason,
+                    ["footer"] = {
+                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+            ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
+            f10Kick(target_permid, adminName, Reason)
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Kicked Player')
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Kick Someone')
     end
 end)
 
@@ -362,82 +664,217 @@ RegisterServerEvent('ARMA:RemoveWarning')
 AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
     local admin_id = ARMA.getUserId(admin)
     local perm = admincfg.buttonsEnabled["removewarn"][2]
-    if ARMA.hasPermission(admin_id, perm) then
-        exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
-        TriggerClientEvent('ARMA:Notify', admin, 'Removed #'..warningid..' Warning ID')
+    if ARMA.hasPermission(admin_id, perm) then     
+        ARMA.prompt(source,"Warning ID:","",function(source,warningid) 
+            if warningid == "" then return end
+            exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Removed warning #'..warningid..'')
+            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = "15158332",
+                    ["title"] = admin.." removed warning ["..warningID.."]",
+                    ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..admin_id.."** \nWarning ID: **"..warningid.."**",
+                    ["footer"] = {
+                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Warning')
     end
 end)
 
 RegisterServerEvent("ARMA:Unban")
-AddEventHandler("ARMA:Unban",function(perm1)
+AddEventHandler("ARMA:Unban",function()
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["ban"][2]
+    local perm2 = admincfg.buttonsEnabled["unban"][2]
     playerName = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, perm2) then
-
-        ExecuteCommand('unban ' .. perm1)
-        ARMAclient.notify(source,{'~g~Unbanned ID: ' .. perm1})
-        webhook = "https://discord.com/api/webhooks/972459719228801094/eE-TzQnM5ZNvxF79NiAHZACVt8JE4fXhXoIDhGQ9SedwQIuraTOz45pPYk5vBmniswtB"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Unbanned ID: "..perm1,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..admin_id.."** \nDescription: **Unbanned ID: "..perm1.."**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
+        ARMA.prompt(source,"Perm ID:","",function(source,permid) 
+            if permid == '' then return end
+            permid = parseInt(permid)
+            ARMAclient.notify(source,{'~g~Unbanned ID: ' .. permid})
+            webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = "15158332",
+                    ["title"] = "Unbanned Player",
+                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player ID:** "..permid,
+                    ["footer"] = {
+                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+            ARMA.setBanned(permid,false)
+        end)
     else
-        print("Cheater tried fucking unbanning, the nerd")
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Unban Someone')
     end
 end)
+
+
+RegisterServerEvent("ARMA:getNotes")
+AddEventHandler("ARMA:getNotes",function(admin, player)
+    local source = source
+    local admin_id = ARMA.getUserId(source)
+    local perm2 = admincfg.buttonsEnabled["spectate"][2]
+    if ARMA.hasPermission(admin_id, perm2) then
+        exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
+            if result ~= nil then
+                TriggerClientEvent('ARMA:sendNotes', source, json.encode(result))
+            end
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Get Notes')
+    end
+end)
+
+RegisterServerEvent("ARMA:addNote")
+AddEventHandler("ARMA:addNote",function(admin, player)
+    local source = source
+    local admin_id = ARMA.getUserId(source)
+    local perm2 = admincfg.buttonsEnabled["spectate"][2]
+    local adminName = GetPlayerName(source)
+    local playerName = GetPlayerName(player)
+    local playerperm = ARMA.getUserId(player)
+    if ARMA.hasPermission(admin_id, perm2) then
+        ARMA.prompt(source,"Reason:","",function(source,text) 
+            if text == '' then return end
+            exports['ghmattimysql']:execute("INSERT INTO arma_user_notes (`user_id`, `text`, `admin_name`, `admin_id`) VALUES (@user_id, @text, @admin_name, @admin_id);", {user_id = playerperm, text = text, admin_name = adminName, admin_id = admin_id}, function() end) 
+            TriggerClientEvent('ARMA:NotifyPlayer', source, '~g~You have added a note to '..playerName..'('..playerperm..') with the reason '..text)
+            TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
+            webhook = "https://discord.com/api/webhooks/975532251611799584/EvA7NsuZxIPHjuZnXmz7jJxgmVvHhRflMxcunjuF54sR7wDMgnbw7_CXdVpea3nazaJ4"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = "15158332",
+                    ["title"] = "Added Note",
+                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player Name:** "..playerName.."\n**Player ID:** "..playerperm.."\n**Note:** "..text,
+                    ["footer"] = {
+                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Add Note')
+    end
+end)
+
+RegisterServerEvent("ARMA:removeNote")
+AddEventHandler("ARMA:removeNote",function(admin, player)
+    local source = source
+    local admin_id = ARMA.getUserId(source)
+    local perm2 = admincfg.buttonsEnabled["spectate"][2]
+    local playerName = GetPlayerName(player)
+    local playerperm = ARMA.getUserId(player)
+    if ARMA.hasPermission(admin_id, perm2) then
+        ARMA.prompt(source,"Note ID:","",function(source,noteid) 
+            if noteid == '' then return end
+            exports['ghmattimysql']:execute("DELETE FROM arma_user_notes WHERE note_id = @noteid", {noteid = noteid}, function() end)
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, '~g~You have removed note #'..noteid..' from '..playerName..'('..playerperm..')')
+            TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
+            webhook = "https://discord.com/api/webhooks/975532251611799584/EvA7NsuZxIPHjuZnXmz7jJxgmVvHhRflMxcunjuF54sR7wDMgnbw7_CXdVpea3nazaJ4"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = "15158332",
+                    ["title"] = "Removed Note",
+                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player Name:** "..playerName.."\n**Player ID:** "..playerperm.."\n**Note ID:** "..noteid,
+                    ["footer"] = {
+                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+        end)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Note')
+    end
+end)
+
+
 
 RegisterServerEvent('ARMA:SlapPlayer')
 AddEventHandler('ARMA:SlapPlayer', function(admin, target)
     local admin_id = ARMA.getUserId(admin)
+    local player_id = ARMA.getUserId(target)
     if ARMA.hasPermission(admin_id, "admin.slap") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/972459782298562560/QEOx3l8eOC0R0gm_migPDX0awEJpExBudkHsmVcG8JQ41BLWqWvIVntyE-zQfp9rnDR6"
+        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
         PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+        end, "POST", json.encode({username = "ARMA", embeds = {
             {
                 ["color"] = "15158332",
                 ["title"] = "Slapped "..playerOtherName,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Slapped "..playerOtherName.."**",
+                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                 ["footer"] = {
                     ["text"] = "Time - "..os.date("%x %X %p"),
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
         TriggerClientEvent('ARMA:SlapPlayer', target)
-        TriggerClientEvent('ARMA:Notify', admin, 'Slapped Player')
+        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Slapped Player')
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Slap Someone')
     end
 end)
 
 RegisterServerEvent('ARMA:RevivePlayer')
 AddEventHandler('ARMA:RevivePlayer', function(admin, target)
     local admin_id = ARMA.getUserId(admin)
+    local player_id = ARMA.getUserId(target)
     if ARMA.hasPermission(admin_id, "admin.revive") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/972459842348384266/jSpDOLulfADM_FH5y-JAsjrV29FMI_k5hJGZUD8XJhtRToSkJEhkqdngVp6J4PCq-hoV"
+        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
         PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+        end, "POST", json.encode({username = "ARMA", embeds = {
             {
                 ["color"] = "15158332",
                 ["title"] = "Revived "..playerOtherName,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Revived "..playerOtherName.."**",
+                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                 ["footer"] = {
                     ["text"] = "Time - "..os.date("%x %X %p"),
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
-        ARMAclient.notify(target,{'~g~' .. GetPlayerName(admin) .. ' revived you ~w~[ID: ' .. user_id .. ']'})
         TriggerClientEvent('ARMA:FixClient',target)
-        TriggerClientEvent('ARMA:Notify', admin, 'Revived Player')
+        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Revived Player')
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Revive Someone')
     end
 end)
 
@@ -445,38 +882,48 @@ RegisterServerEvent('ARMA:FreezeSV')
 AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
     local admin_id = ARMA.getUserId(admin)
     local perm = admincfg.buttonsEnabled["FREEZE"][2]
+    local player_id = ARMA.getUserId(newtarget)
     if ARMA.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
         if isFrozen then
-            webhook = "https://discord.com/api/webhooks/972459950490153010/jZ9oxG1k09vuLZgrkMfkvcZDz5qSUTCT83ajvWTjt0x0_0MuiWqOvLTU5Tur9E96Obm5"
+            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
             PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+            end, "POST", json.encode({username = "ARMA", embeds = {
                 {
                     ["color"] = "15158332",
                     ["title"] = "Froze "..playerOtherName,
-                    ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Froze "..playerOtherName.."**",
+                    ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                     ["footer"] = {
                         ["text"] = "Time - "..os.date("%x %X %p"),
                     }
             }
             }}), { ["Content-Type"] = "application/json" })
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Froze Player.')
+            ARMAclient.notify(newtarget, {'~g~You have been frozen.'})
         else
-            webhook = "https://discord.com/api/webhooks/972459950490153010/jZ9oxG1k09vuLZgrkMfkvcZDz5qSUTCT83ajvWTjt0x0_0MuiWqOvLTU5Tur9E96Obm5"
+            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
             PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+            end, "POST", json.encode({username = "ARMA", embeds = {
                 {
                     ["color"] = "15158332",
                     ["title"] = "Unfroze "..playerOtherName,
-                    ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Unfroze "..playerOtherName.."**",
+                    ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                     ["footer"] = {
                         ["text"] = "Time - "..os.date("%x %X %p"),
                     }
             }
             }}), { ["Content-Type"] = "application/json" })
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
+            ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
         end
-        TriggerClientEvent('ARMA:Freeze', newtarget, isFrozen)
-        TriggerClientEvent('ARMA:Notify', admin, 'Froze Player')
+        TriggerClientEvent('Infinite:Freeze', newtarget, isFrozen)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Freeze Someone')
     end
 end)
 
@@ -484,138 +931,105 @@ RegisterServerEvent('ARMA:TeleportToPlayer')
 AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
     local coords = GetEntityCoords(GetPlayerPed(newtarget))
     local user_id = ARMA.getUserId(source)
+    local player_id = ARMA.getUserId(newtarget)
     local perm = admincfg.buttonsEnabled["TP2"][2]
     if ARMA.hasPermission(user_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/972460044199292948/0Bptqphabn93ZnlwvEjlmABlROR0fkMxMwM4Pm8WgiiblmAnjNgXMt8iNnk2tIFoAl2O"
+        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
         PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+        end, "POST", json.encode({username = "ARMA", embeds = {
             {
                 ["color"] = "15158332",
                 ["title"] = "Teleported to "..playerOtherName,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Teleported to "..playerOtherName.."**",
+                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                 ["footer"] = {
                     ["text"] = "Time - "..os.date("%x %X %p"),
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
         TriggerClientEvent('ARMA:Teleport', source, coords)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport TO Someone')
     end
 end)
 
-RegisterServerEvent('ARMA:TeleportToMe')
-AddEventHandler('ARMA:TeleportToMe', function(source, newtarget)
+
+RegisterNetEvent('ARMA:BringPlayer')
+AddEventHandler('ARMA:BringPlayer', function(id)
+    local source = source 
+    local SelectedPlrSource = ARMA.getUserSource(id) 
     local user_id = ARMA.getUserId(source)
     local perm = admincfg.buttonsEnabled["TP2ME"][2]
     if ARMA.hasPermission(user_id, perm) then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/972460165477572618/79b2T4aal8wXAckeByMSQ34LoeiocehSBq9t3AkLtB7ribxU7fZeeVddBt3hohnN6Bb5"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Brang "..playerOtherName,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Brang "..playerOtherName.."**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-    }}), { ["Content-Type"] = "application/json" })
-        TriggerClientEvent('ARMA:Teleport2Me2', newtarget, source)
-    end
-end)
-
-
-RegisterNetEvent('ARMAAdmin:Bring')
-AddEventHandler('ARMAAdmin:Bring', function(id)
-    local source = source 
-    local SelectedPlrSource = ARMA.getUserSource(id) 
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasPermission(userid, 'admin.teleport') then
         if SelectedPlrSource then  
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(source)
                 local otherPlr = GetPlayerPed(SelectedPlrSource)
                 local pedCoords = GetEntityCoords(ped)
                 local playerOtherName = GetPlayerName(SelectedPlrSource)
+
+                local player_id = ARMA.getUserId(SelectedPlrSource)
+                local playerName = GetPlayerName(source)
+
                 SetEntityCoords(otherPlr, pedCoords)
 
-                webhook = "https://discord.com/api/webhooks/972460236919164928/XPomsqyHRpDMHx3dZSeQmcz1KnjSEb7ZGCp_5zAAlUWUaBlEsZrL8bWg8u4qYO1qhVew"
+                webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
                 PerformHttpRequest(webhook, function(err, text, headers) 
-                end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+                end, "POST", json.encode({username = "ARMA", embeds = {
                     {
                         ["color"] = "15158332",
                         ["title"] = "Brang "..playerOtherName,
-                        ["description"] = "Admin Name: **"..GetPlayerName(source).."** \nPermID: **"..userid.."** \nDescription: **Brang "..playerOtherName.."**",
+                        ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                         ["footer"] = {
                             ["text"] = "Time - "..os.date("%x %X %p"),
                         }
                 }
             }}), { ["Content-Type"] = "application/json" })
             else 
-                TriggerClientEvent('ARMAAdmin:Bring', SelectedPlrSource, false, id)  
+                TriggerClientEvent('ARMA:BringPlayer', SelectedPlrSource, false, id)  
             end
         else 
             ARMAclient.notify(source,{"~r~This player may have left the game."})
         end
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport Someone to Them')
     end
 end)
 
 playersSpectating = {}
 playersToSpectate = {}
 
-RegisterServerEvent('ARMA:SpectateCheck')
-AddEventHandler('ARMA:SpectateCheck', function(newtarget)
-    local admin_id = source
-    local user_id = ARMA.getUserId(source)
-    local perm = admincfg.buttonsEnabled["spectate"][2]
-    if ARMA.hasPermission(user_id, perm) then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/972460295740092426/aS_D3qgtBVcAra7oSHkZqAArMTEn9ZqBB7r9SDyFvsmL_9lZ7Acxx1zfnQ4MuJF-0NTY"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Started spectating "..playerOtherName,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Started spectating "..playerOtherName.."**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-    }}), { ["Content-Type"] = "application/json" })
-
-        TriggerClientEvent('ARMA:SpectateClient', source, newtarget)
-        
-    end
-end)
-
-RegisterServerEvent('ARMA:Prompt')
-AddEventHandler('ARMA:Prompt', function(shit)
-    local admin_id = source
-    local user_id = ARMA.getUserId(admin)
-    ARMA.prompt(source, "Clothing:", shit, function(player, PermID)
-    end)
-end)
-
-RegisterNetEvent('ARMADEV:GetCoords')
-AddEventHandler('ARMADEV:GetCoords', function()
+RegisterNetEvent('ARMA:GetCoords')
+AddEventHandler('ARMA:GetCoords', function()
     local source = source 
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasGroup(userid, "dev") then
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "dev.getcoords") then
         ARMAclient.getPosition(source,{},function(x,y,z)
             ARMA.prompt(source,"Copy the coordinates using Ctrl-A Ctrl-C",x..","..y..","..z,function(player,choice) end)
         end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Get Coords')
     end
 end)
 
 RegisterServerEvent('ARMA:Tp2Coords')
 AddEventHandler('ARMA:Tp2Coords', function()
     local source = source
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasGroup(userid, "dev") then
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "dev.tp2coords") then
         ARMA.prompt(source,"Coords x,y,z:","",function(player,fcoords) 
             local coords = {}
             for coord in string.gmatch(fcoords or "0,0,0","[^,]+") do
@@ -633,22 +1047,95 @@ AddEventHandler('ARMA:Tp2Coords', function()
                 ARMAclient.teleport(player,{x,y,z})
             end 
         end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport to Coords')
     end
 end)
 
-RegisterServerEvent('ARMA:GiveMoney2')
-AddEventHandler('ARMA:GiveMoney2', function()
+RegisterServerEvent('ARMA:GiveMoneyMenu')
+AddEventHandler('ARMA:GiveMoneyMenu', function()
     local source = source
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasGroup(userid, "dev") then
-        if user_id ~= nil then
-            ARMA.prompt(source,"Amount:","",function(source,amount) 
-                amount = parseInt(amount)
-                ARMA.giveMoney(user_id, amount)
-                ARMAclient.notify(source,{"You have gave youself ~g~£" .. amount})
-            end)
-        end
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "dev.givemoney") then
+        ARMA.prompt(source,"Perm ID:","",function(source,playerid) 
+            if playerid == '' then return end
+            if playerid ~= nil then
+                ARMA.prompt(source,"Amount:","",function(source,amount) 
+                    if amount == '' then return end
+                    amount = parseInt(amount)
+                    ARMA.giveBankMoney(tonumber(playerid), amount)
+                    ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~"..amount.." ~g~credits."})
+                    webhook = "https://discord.com/api/webhooks/975532406817833000/U4DT4s1sKp1dxxVrzl-pFZvNgv2F9SP0kv6YB8zsSeVA7sQPQSNclEsBDKWgBj6KUC9L"
+                    PerformHttpRequest(webhook, function(err, text, headers) 
+                    end, "POST", json.encode({username = "ARMA", embeds = {
+                        {
+                            ["color"] = "15158332",
+                            ["title"] = "Credit Logs",
+                            ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
+                            ["footer"] = {
+                                ["text"] = "Time - "..os.date("%x %X %p"),
+                            }
+                    }
+                }}), { ["Content-Type"] = "application/json" })
+                end)
+            end
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Give Money Menu')
+    end
+end)
 
+RegisterServerEvent('ARMA:GiveCratesMenu')
+AddEventHandler('ARMA:GiveCratesMenu', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "dev.givemoney") then
+        ARMA.prompt(source,"Perm ID:","",function(source,playerid) 
+            if playerid == '' then return end
+            if playerid ~= nil then
+                ARMA.prompt(source,"Amount:","",function(source,amount) 
+                    if amount == '' then return end
+                    amount = parseInt(amount)
+                    ARMAclient.notify(source, {"~g~You have given ID: "..playerid.." ~y~"..amount.." ~g~crates."})
+                    exports['ghmattimysql']:execute("SELECT * FROM `user_crates` WHERE user_id = @user_id", {user_id = user_id}, function(result)
+                        if result ~= nil then 
+                            for k,v in pairs(result) do
+                                if v.user_id == user_id then
+                                    crates = v.crates+amount
+                                    exports['ghmattimysql']:execute("UPDATE user_crates SET crates = @crates WHERE user_id = @user_id", {user_id = user_id, crates = crates}, function() end)
+                                end
+                            end
+                        end
+                    end)
+                    webhook = "https://discord.com/api/webhooks/975532406817833000/U4DT4s1sKp1dxxVrzl-pFZvNgv2F9SP0kv6YB8zsSeVA7sQPQSNclEsBDKWgBj6KUC9L"
+                    PerformHttpRequest(webhook, function(err, text, headers) 
+                    end, "POST", json.encode({username = "ARMA", embeds = {
+                        {
+                            ["color"] = "15158332",
+                            ["title"] = "Crate Logs",
+                            ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
+                            ["footer"] = {
+                                ["text"] = "Time - "..os.date("%x %X %p"),
+                            }
+                    }
+                }}), { ["Content-Type"] = "application/json" })
+                end)
+            end
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Give Money Menu')
     end
 end)
 
@@ -663,212 +1150,117 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
     if ARMA.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(id)
-        webhook = "https://discord.com/api/webhooks/972460369564008519/t4rA6hQvMQcmhOhT8t8SQhPfSz_c6rtX4fvnvQsMjWiDZTGUrfj-3gO-819oTBVTKi5h"
+        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
         PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
+        end, "POST", json.encode({username = "ARMA", embeds = {
             {
                 ["color"] = "15158332",
                 ["title"] = "Teleported "..playerOtherName.." to admin island",
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Teleported "..playerOtherName.." to admin island**",
+                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
                 ["footer"] = {
                     ["text"] = "Time - "..os.date("%x %X %p"),
                 }
         }
     }}), { ["Content-Type"] = "application/json" })
-        ARMAclient.getPosition(id, {}, function(x,y,z)
-            local location = tostring(x)..','..tostring(y)..','..tostring(z)
-            exports['ghmattimysql']:execute("INSERT INTO arma_tp_data (user_id, last_location) VALUES( @user_id, @location ) ON DUPLICATE KEY UPDATE `last_location` = @location", {user_id = id, location = location}, function() end)
-        end)
         local ped = GetPlayerPed(source)
         local ped2 = GetPlayerPed(id)
         SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
+        ARMAclient.notify(ARMA.getUserSource(player_id),{'~g~You are now in an admin situation, do not leave the game.'})
+        if playerName == playerOtherName then
+            TriggerClientEvent("staffon", source)
+        end
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport Someone to Admin Island')
     end
 end)
+
+RegisterServerEvent("ARMA:TeleportBackFromAdminZone")
+AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeAdminZone)
+    local admin = source
+    local admin_id = ARMA.getUserId(admin)
+    local perm = admincfg.buttonsEnabled["TP2"][2]
+    if ARMA.hasPermission(admin_id, perm) then
+        local ped = GetPlayerPed(id)
+        SetEntityCoords(ped, savedCoordsBeforeAdminZone)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport Someone Back from Admin Zone')
+    end
+end)
+
 
 RegisterServerEvent("ARMA:Teleport")
 AddEventHandler("ARMA:Teleport",function(id, coords)
     local admin = source
     local admin_id = ARMA.getUserId(admin)
-
     local perm = admincfg.buttonsEnabled["TP2"][2]
     if ARMA.hasPermission(admin_id, perm) then
-
         local ped = GetPlayerPed(source)
         local ped2 = GetPlayerPed(id)
         SetEntityCoords(ped2, coords)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport to Someone')
     end
 end)
 
 
-RegisterServerEvent("ARMA:Telepor2")
-AddEventHandler("ARMA:Telepor2",function(id)
 
-    local ped2 = GetPlayerPed(id)
-    SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
-   
-end)
-
-RegisterServerEvent("ARMA:returnplayer")
-AddEventHandler("ARMA:returnplayer",function(id)
-    local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    local admin_name = GetPlayerName(admin)
-    local player_id = ARMA.getUserId(id)
-    local player_name = GetPlayerName(id)
-    local perm = admincfg.buttonsEnabled["TP2"][2]
-    if ARMA.hasPermission(admin_id, perm) then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(id)
-        webhook = "https://discord.com/api/webhooks/972460428317851648/GQlChr2DzuCuVUnq-Nb_IuY-AmxYVKpqqG3yASMt-_vEn_5qhZ6HJldYP-3mgxOrnNCy"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Returned "..playerOtherName.." to previous location",
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..user_id.."** \nDescription: **Returned "..playerOtherName.." to previous location**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-    }}), { ["Content-Type"] = "application/json" })
-        exports['ghmattimysql']:execute("SELECT last_location FROM arma_tp_data WHERE user_id = @user_id", {user_id = id}, function(result)
-            local t = {}
-    
-            for i in result[1].last_location:gmatch("([^,%s]+)") do  
-                t[#t + 1] = i
-            end 
-    
-            local x = tonumber(t[1])
-            local y = tonumber(t[2])
-            local z = tonumber(t[3])
-            local coords = vector3(x,y,z)
-            TriggerClientEvent("ARMA:TPCoords", id, coords)
-        end)
-        exports['ghmattimysql']:execute("DELETE FROM arma_tp_data WHERE `user_id` = @user_id", {user_id = id}, function() end)        
-    end
-end)
 
 RegisterNetEvent('ARMA:AddCar')
-AddEventHandler('ARMA:AddCar', function(id, car)
-    local source = source 
-    local SelectedPlrSource = ARMA.getUserSource(id) 
+AddEventHandler('ARMA:AddCar', function()
+    local source = source
     local userid = ARMA.getUserId(source)
     local perm = admincfg.buttonsEnabled["addcar"][2]
     if ARMA.hasPermission(userid, perm) then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(SelectedPlrSource)
-        webhook = "https://discord.com/api/webhooks/972460494604607508/z1bbH0pbI7dGEy9oLG8vxf9R66Rzi6d5gDcoT2E3njkZ91mAupdOrNML_z6K1ACK9Qlj"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Gave "..playerOtherName.." a vehicle: "..car,
-                ["description"] = "Admin Name: **"..playerName.."** \nPermID: **"..userid.."** \nDescription: **Gave "..playerOtherName.." a vehicle: "..car.."**",
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-    }}), { ["Content-Type"] = "application/json" })
-        if SelectedPlrSource and car ~= "" then  
-            ARMA.getUserIdentity(userid, function(identity)					
-                exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate) VALUES(@user_id,@vehicle,@registration)", {user_id = id, vehicle = car, registration = "P "..identity.registration})
+        ARMA.prompt(source,"Add to Perm ID:","",function(source, permid)
+            if permid == "" then return end
+            local playerName = GetPlayerName(permid)
+            ARMA.prompt(source,"Car Spawncode:","",function(source, car) 
+                if car == "" then return end
+                local car = car
+                local adminName = GetPlayerName(source)
+                ARMA.prompt(source,"Locked:","",function(source, locked) 
+                if locked == '0' or locked == '1' then
+                    if permid and car ~= "" then  
+                        exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
+                        ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
+                        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
+                        PerformHttpRequest(webhook, function(err, text, headers) 
+                        end, "POST", json.encode({username = "ARMA", embeds = {
+                            {
+                                ["color"] = "15158332",
+                                ["title"] = "Added Car",
+                                ["description"] = "**Admin Name:** "..adminName.."\n**Admin ID:** "..userid.."\n**Player ID:** "..permid.."\n**Car Spawncode:** "..car,
+                                ["footer"] = {
+                                    ["text"] = "Time - "..os.date("%x %X %p"),
+                                }
+                        }}}), { ["Content-Type"] = "application/json" })
+                    else 
+                        ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
+                    end
+                else
+                    ARMAclient.notify(source,{'~g~Locked must be either 1 or 0'}) 
+                end
+                end)
             end)
-            ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-        else 
-            ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
-        end
-    end
-end)
-
-RegisterNetEvent('ARMA:PropCleanup')
-AddEventHandler('ARMA:PropCleanup', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.menu') then
-        TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", 'A Entity cleanup has been triggered!'}
-          })
-          Wait(0)
-          for i,v in pairs(GetAllObjects()) do 
-             DeleteEntity(v)
-          end
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "Entity Cleanup Completed! ^1( " .. GetPlayerName(source) .. " )"}
-          })
-        else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
-        ARMAclient.notify(source,{"~r~You can not perform this action!"})
-    end
-end)
-
-RegisterNetEvent('ARMA:DeAttachEntity')
-AddEventHandler('ARMA:DeAttachEntity', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.menu') then
-        TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", 'A Deattach cleanup has been triggered!'}
-          })
-          TriggerClientEvent("ARMAAdmin:EntityWipe", -1)
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", " Deattach Cleanup Completed ^1( " .. GetPlayerName(source) .. " )"}
-          })
-        else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
-        ARMAclient.notify(source,{"~r~You can not perform this action!"})
-    end
-end)
-
-RegisterNetEvent('ARMA:PedCleanup')
-AddEventHandler('ARMA:PedCleanup', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.menu') then
-          for i,v in pairs(GetAllPeds()) do 
-             DeleteEntity(v)
-          end
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "Ped Cleanup Completed ^1( " .. GetPlayerName(source) .. " )"  }
-          })
-        else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
-        ARMAclient.notify(source,{"~r~You can not perform this action!"})
-    end
-end)
-
-
-RegisterNetEvent('ARMA:VehCleanup')
-AddEventHandler('ARMA:VehCleanup', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.menu') then
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "A Vehicle Cleanup has been Triggered, please wait 30 seconds!"}
-          })
-          Wait(30000)
-          for i,v in pairs(GetAllVehicles()) do 
-             DeleteEntity(v)
-          end
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "Vehicle Cleanup Completed! ^1(" .. GetPlayerName(source) .. " )"}
-          })
-        else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
-        ARMAclient.notify(source,{"~r~You can not perform this action!"})
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        reason = "Type #11"
+        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Add Car')
     end
 end)
 
@@ -877,39 +1269,33 @@ AddEventHandler('ARMA:CleanAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.menu') then
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "A Vehicle, Ped, Enitity cleanup has been triggered!"}
-          })
-          Wait(0)
-          for i,v in pairs(GetAllVehicles()) do 
+        for i,v in pairs(GetAllVehicles()) do 
             DeleteEntity(v)
-         end
-         for i,v in pairs(GetAllPeds()) do 
-           DeleteEntity(v)
+        end
+        for i,v in pairs(GetAllPeds()) do 
+            DeleteEntity(v)
         end
         for i,v in pairs(GetAllObjects()) do
-           DeleteEntity(v)
+            DeleteEntity(v)
         end
-          TriggerClientEvent('chat:addMessage', -1, {
-            color = { 255, 0, 0},
-            multiline = true,
-            args = {"[ARMA]", "Vehicle, Ped, Entity Cleanup Completed ^1( " .. GetPlayerName(source) .. " )"}
-          })
-        else 
-        print(GetPlayerName(source) .. ' is cheating! He\'s triggering events without permission')
-        ARMAclient.notify(source,{"~r~You can not perform this action!"})
+        TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "Cleanup Completed by ^3" .. GetPlayerName(source) .. "^0!", "alert")
+    else 
+        ARMAclient.notify(source,{"~r~You cannot perform this action."})
     end
 end)
 
-RegisterNetEvent('hello')
-AddEventHandler('hello', function(bool)
+RegisterNetEvent('ARMA:noClip')
+AddEventHandler('ARMA:noClip', function()
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.noclip') then 
+        TriggerClientEvent('ToggleAdminNoclip',source)
+    end
+end)
+
+RegisterNetEvent("ARMA:checkBlips")
+AddEventHandler("ARMA:checkBlips",function(status)
     local source = source
-    userid = ARMA.getUserId(source)
-    if bool then
-        ARMA.addUserGroup(userid,'staffon')
-    else
-        ARMA.removeUserGroup(userid,'staffon')
+    if ARMA.hasPermission(user_id, 'group.add') then 
+        TriggerClientEvent('ARMA:showBlips', source)
     end
 end)

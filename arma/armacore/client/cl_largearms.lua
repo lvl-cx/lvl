@@ -28,7 +28,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LargeArms', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(largearms.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -39,7 +39,7 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("LargeArms", "confirm"))
         end
 
-        RageUI.Button("Level 2 Armour [50%]" , nil, {RightLabel = "£50,000"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Level 2 Armour ~b~[50%]" , nil, {RightLabel = "~g~£50,000"}, true, function(Hovered, Active, Selected)
             if Selected then
 
 
@@ -53,11 +53,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LargeArms", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Weapon Name: " .. cName, function() end)
-            RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-            RageUI.Separator("Current Gunstore: " .. largearms.name, function() end)
+            RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
+            RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
+            RageUI.Separator("Current Gunstore: ~r~" .. largearms.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('LargeArms:BuyWeapon', cPrice, cHash)
@@ -65,7 +65,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("LargeArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LargeArms", "main"))
+        RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LargeArms", "main"))
        
 
     end) 
@@ -76,11 +76,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LargeArms", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Armour Plate: " .. 'Level 2 [50%]', function() end)
-            RageUI.Separator("Armour Plate Price: £" .. '50,000', function() end)
-            RageUI.Separator("Current Gunstore: " .. largearms.name, function() end)
+            RageUI.Separator("Armour Plate: " .. 'Level 2 ~b~[50%]', function() end)
+            RageUI.Separator("Armour Plate Price: ~g~£" .. '50,000', function() end)
+            RageUI.Separator("Current Gunstore: ~r~" .. largearms.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('LargeArms:BuyArmour')
@@ -88,7 +88,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("LargeArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LargeArms", "main"))
+        RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("LargeArms", "main"))
        
 
     end) 

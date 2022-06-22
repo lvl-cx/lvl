@@ -27,7 +27,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SandySmallArms', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i , p in pairs(sandysmall.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
 
                     cPrice = p.price
@@ -38,7 +38,7 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("SandySmallArms", "confirm"))
         end
 
-        RageUI.Button("Level 1 Armour [25%]" , nil, {RightLabel = "£25,000"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("Level 1 Armour Plate ~b~[25%]" , nil, {RightLabel = "~g~£25,000"}, true, function(Hovered, Active, Selected)
             if Selected then
 
 
@@ -52,11 +52,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("SandySmallArms", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Weapon Name: " .. cName, function() end)
-            RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-            RageUI.Separator("Current Gunstore: " .. sandysmall.name, function() end)
+            RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
+            RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
+            RageUI.Separator("Current Gunstore: ~r~" .. sandysmall.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('SandySmall:BuyWeapon', cPrice, cHash)
@@ -64,7 +64,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("SandySmallArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
+        RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
        
 
     end) 
@@ -74,11 +74,11 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("SandySmallArms", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Armour Plate: " .. 'Level 1 [25%]', function() end)
-            RageUI.Separator("Armour Plate Price: £" .. '25,000', function() end)
-            RageUI.Separator("Current Gunstore: " .. sandysmall.name, function() end)
+            RageUI.Separator("Armour Plate: " .. 'Level 1 ~b~[25%]', function() end)
+            RageUI.Separator("Armour Plate Price: ~g~£" .. '25,000', function() end)
+            RageUI.Separator("Current Gunstore: ~r~" .. sandysmall.name, function() end)
         
-        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('SandySmall:BuyArmour')
@@ -86,7 +86,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end, RMenu:Get("SandySmallArms", "main"))
 
-        RageUI.Button("Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
+        RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("SandySmallArms", "main"))
        
 
     end) 

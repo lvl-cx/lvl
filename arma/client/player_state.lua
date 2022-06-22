@@ -24,6 +24,13 @@ Citizen.CreateThread(function()
   end
 end)
 
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(60000)
+    ARMAserver.UpdatePlayTime()
+  end
+end)
+
 -- def
 local weapon_types = {
 -- Small Arms

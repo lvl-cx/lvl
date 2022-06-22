@@ -168,6 +168,20 @@ function tARMA.updateArmour(armour)
     end
 end
 
+function tARMA.UpdatePlayTime()
+    local user_id = ARMA.getUserId(source)
+    if user_id ~= nil then
+        local data = ARMA.getUserDataTable(user_id)
+        if data ~= nil then
+            if data.PlayerTime ~= nil then
+                data.PlayerTime = tonumber(data.PlayerTime) + 1
+            else
+                data.PlayerTime = 1
+            end
+        end
+    end
+end
+
 local isStoring = {}
 function tARMA.StoreWeaponsDead()
     local player = source 

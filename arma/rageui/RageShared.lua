@@ -77,7 +77,9 @@ end---
 --- DateTime: 21/04/2019 21:20
 ---
 
-
+print("")
+print("^1Author : Dylan Malandain (iTexZoz)^0")
+print("^4Contributor : Parow, Frazzle.^0")
 
 ---round
 ---@param num number

@@ -28,7 +28,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('Ammo', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i , p in pairs(ammo.types) do 
-                RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+                RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                     if Selected then
 
                         cPrice = p.price
@@ -57,9 +57,9 @@ local Index = 1
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Ammo", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Ammo Type: " .. cName, function() end)
-            RageUI.Separator("Ammo Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
-            RageUI.Separator("Current Trader: " .. ammo.name, function() end)
+            RageUI.Separator("Ammo Type: ~b~" .. cName, function() end)
+            RageUI.Separator("Ammo Price: ~g~£" .. getMoneyStringFormatted(cPrice * Index), function() end)
+            RageUI.Separator("Current Trader: ~r~" .. ammo.name, function() end)
         
             RageUI.List(cName, AmmoNumbers, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
                 if Hovered then
@@ -68,7 +68,7 @@ RageUI.CreateWhile(1.0, true, function()
     
                 Index = AIndex
             end)
-        RageUI.Button("Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 
                 TriggerServerEvent('Ammo:BuyAmmo', cPrice * tonumber(Index), cName, tonumber(Index))
@@ -127,7 +127,17 @@ Citizen.CreateThread(function()
     EndTextCommandSetBlipName(blip)
 end)
 
-
-
+-- [Blip]
+Citizen.CreateThread(function()
+    blip = AddBlipForCoord(-1705.8489990234,8886.5810546875,28.723564147949)
+    SetBlipSprite(blip, 648)
+    SetBlipScale(blip, 0.6)
+    SetBlipDisplay(blip, 2)
+    SetBlipColour(blip, 1)
+    SetBlipAsShortRange(blip, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Oil Rig")
+    EndTextCommandSetBlipName(blip)
+end)
 
 

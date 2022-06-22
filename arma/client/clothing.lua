@@ -48,6 +48,12 @@ RageUI.CreateWhile(1.0, true, function()
            RageUI.Button("Change Clothing", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "clothingsubmenu"))
            RageUI.Button("Change Gender", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changegendersubmenu"))
            RageUI.Button("Change Ped", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changepedmenu"))
+           RageUI.Button("Barbers", nil, {}, true, function(Hovered, Active, Selected) 
+            if Selected then
+                TriggerEvent("ARMA:openBarberShop")
+                RageUI.ActuallyCloseAll()
+            end
+        end)
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'changegendersubmenu')) then 

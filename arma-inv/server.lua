@@ -710,7 +710,7 @@ AddEventHandler('ARMA:InComa', function()
         if in_coma then
             Wait(1500)
             local user_id = ARMA.getUserId({source})
-            local model = GetHashKey('prop_big_bag_01')
+            local model = GetHashKey('xs_prop_arena_bag_01')
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)

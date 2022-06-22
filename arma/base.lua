@@ -6,7 +6,6 @@ local Lang = module("lib/Lang")
 Debug = module("lib/Debug")
 
 local config = module("cfg/base")
-local log_config = module("servercfg/cfg_webhooks")
 local version = module("version")
 
 print("^5[ARMA]: ^7" .. 'Checking for ARMA Updates..')
@@ -52,6 +51,7 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_users(
     id INTEGER AUTO_INCREMENT,
     last_login VARCHAR(100),
+    username VARCHAR(100),
     whitelisted BOOLEAN,
     banned BOOLEAN,
     bantime VARCHAR(100) NOT NULL DEFAULT "",
@@ -86,31 +86,12 @@ Citizen.CreateThread(function()
     );
     ]])
     MySQL.SingleQuery([[
-    CREATE TABLE IF NOT EXISTS arma_srv_data(
-    dkey VARCHAR(100),
-    dvalue TEXT,
-    CONSTRAINT pk_srv_data PRIMARY KEY(dkey)
-    );
-    ]])
-    MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_user_moneys(
     user_id INTEGER,
-    wallet INTEGER,
-    bank INTEGER,
+    wallet bigint,
+    bank bigint,
     CONSTRAINT pk_user_moneys PRIMARY KEY(user_id),
     CONSTRAINT fk_user_moneys_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE
-    );
-    ]])
-    MySQL.SingleQuery([[
-    CREATE TABLE IF NOT EXISTS arma_user_business(
-    user_id INTEGER,
-    name VARCHAR(30),
-    description TEXT,
-    capital INTEGER,
-    laundered INTEGER,
-    reset_timestamp INTEGER,
-    CONSTRAINT pk_user_business PRIMARY KEY(user_id),
-    CONSTRAINT fk_user_business_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE
     );
     ]])
     MySQL.SingleQuery([[
@@ -121,18 +102,9 @@ Citizen.CreateThread(function()
     rented BOOLEAN NOT NULL DEFAULT 0,
     rentedid varchar(200) NOT NULL DEFAULT '',
     rentedtime varchar(2048) NOT NULL DEFAULT '',
+    locked BOOLEAN NOT NULL DEFAULT 0,
     CONSTRAINT pk_user_vehicles PRIMARY KEY(user_id,vehicle),
     CONSTRAINT fk_user_vehicles_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE
-    );
-    ]])
-    MySQL.SingleQuery([[
-    CREATE TABLE IF NOT EXISTS arma_user_homes(
-    user_id INTEGER,
-    home VARCHAR(100),
-    number INTEGER,
-    CONSTRAINT pk_user_homes PRIMARY KEY(user_id),
-    CONSTRAINT fk_user_homes_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE,
-    UNIQUE(home,number)
     );
     ]])
     MySQL.SingleQuery([[
@@ -161,6 +133,16 @@ Citizen.CreateThread(function()
     PRIMARY KEY (warning_id)
     )
     ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_user_notes (
+    note_id INT AUTO_INCREMENT,
+    user_id INT,
+    text VARCHAR(250),
+    admin_name VARCHAR(250),
+    admin_id INT,
+    PRIMARY KEY (note_id)
+    )
+    ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banreason varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banadmin varchar(100) NOT NULL DEFAULT ''; ")
@@ -171,7 +153,7 @@ Citizen.CreateThread(function()
 	MySQL.createCommand("ARMAls/update_vehicle_modifications", "update arma_user_vehicles set modifications = @modifications where user_id = @user_id and vehicle = @vehicle")
 	MySQL.createCommand("ARMAls/get_vehicle_modifications", "select modifications from arma_user_vehicles where user_id = @user_id and vehicle = @vehicle")
 	MySQL.execute("ARMAls/create_modifications_column")
-    print("[ARMA] init base tables")
+    print("[ARMA] - Base tables initialised.")
 end)
 
 
@@ -187,9 +169,6 @@ MySQL.createCommand("ARMA/select_identifier_byid_all","SELECT * FROM arma_user_i
 
 MySQL.createCommand("ARMA/set_userdata","REPLACE INTO arma_user_data(user_id,dkey,dvalue) VALUES(@user_id,@key,@value)")
 MySQL.createCommand("ARMA/get_userdata","SELECT dvalue FROM arma_user_data WHERE user_id = @user_id AND dkey = @key")
-
-MySQL.createCommand("ARMA/set_srvdata","REPLACE INTO arma_srv_data(dkey,dvalue) VALUES(@key,@value)")
-MySQL.createCommand("ARMA/get_srvdata","SELECT dvalue FROM arma_srv_data WHERE dkey = @key")
 
 MySQL.createCommand("ARMA/get_banned","SELECT banned FROM arma_users WHERE id = @user_id")
 MySQL.createCommand("ARMA/set_banned","UPDATE arma_users SET banned = @banned, bantime = @bantime,  banreason = @banreason,  banadmin = @banadmin WHERE id = @user_id")
@@ -273,6 +252,14 @@ function ARMA.getSourceIdKey(source)
 end
 
 function ARMA.getPlayerEndpoint(player)
+    if ARMAConfig.DoNotDisplayIps then 
+        return ""
+    end
+    return GetPlayerEP(player) or "0.0.0.0"
+end
+
+function ARMA.getPlayerIP(player)
+  
     return GetPlayerEP(player) or "0.0.0.0"
 end
 
@@ -301,15 +288,17 @@ function ARMA.ReLoadChar(source)
                     ARMA.getLastLogin(user_id, function(last_login)
                         tmpdata.last_login = last_login or ""
                         tmpdata.spawns = 0
+                        -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
+                        -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
                         local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                         MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
-                        print("[ARMA] "..name.." joined (Perm ID: "..user_id..")")
+                        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined (Perm ID = "..user_id..")")
                         TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
                         TriggerClientEvent("ARMA:CheckIdRegister", source)
                     end)
                 end)
             else -- already connected
-                print("[ARMA] "..name.." re-joined (Perm ID: "..user_id..")")
+                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined (Perm ID = "..user_id..")")
                 TriggerEvent("ARMA:playerRejoin", user_id, source, name)
                 TriggerClientEvent("ARMA:CheckIdRegister", source)
                 local tmpdata = ARMA.getUserTmpTable(user_id)
@@ -318,9 +307,6 @@ function ARMA.ReLoadChar(source)
         end
     end)
 end
-RegisterCommand("getmyid", function(source)
-    TriggerClientEvent('chatMessage', source, "[Server]", {255, 255, 255}, " Perm ID: " .. ARMA.getUserId(source) , "alert")
-end)
 
 -- This can only be used server side and is for the ARMA bot. 
 exports("armabot", function(method_name, params, cb)
@@ -407,22 +393,6 @@ function ARMA.getUData(user_id,key,cbr)
     end)
 end
 
-function ARMA.setSData(key,value)
-    MySQL.execute("ARMA/set_srvdata", {key = key, value = value})
-end
-
-function ARMA.getSData(key, cbr)
-    local task = Task(cbr,{""})
-    
-    MySQL.query("ARMA/get_srvdata", {key = key}, function(rows, affected)
-        if rows and #rows > 0 then
-            task({rows[1].dvalue})
-        else
-            task()
-        end
-    end)
-end
-
 -- return user data table for ARMA internal persistant connected user storage
 function ARMA.getUserDataTable(user_id)
     return ARMA.user_tables[user_id]
@@ -490,23 +460,11 @@ function ARMA.BanIdentifiers(user_id, value)
 end
 
 function ARMA.setBanned(user_id,banned,time,reason, admin)
-    if banned then
-        webhook = log_config.banlog
-        if webhook ~= nil then
-            if webhook ~= 'none' then
-                PerformHttpRequest(webhook, function(err, text, headers) end, "POST", json.encode({username = "Dunko ARMA Logs", embeds = {{["color"] = "15158332", ["title"] = 'Someone Has Been Banned', ["description"] = 'Players Perm-ID: **' .. user_id .. '**\nReason Player Was Banned: **' .. reason .. '**\nBanning Admin: **' ..admin .. '**', ["footer"] = {["text"] = "Time - "..os.date("%x %X %p"),}}}}), { ["Content-Type"] = "application/json" })
-            end
-        end
-        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = time, banreason = reason, banadmin = admin})
+    if banned then 
+        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = time, banreason = reason, banadmin = admin, banevidence})
         ARMA.BanIdentifiers(user_id, true)
         ARMA.BanTokens(user_id, true) 
-    else
-        webhook = log_config.unbanlog
-        if webhook ~= nil then
-            if webhook ~= 'none' then
-                PerformHttpRequest(webhook, function(err, text, headers) end, "POST", json.encode({username = "Dunko ARMA Logs", embeds = {{["color"] = "15158332", ["title"] = 'Someone Has Been Unbanned', ["description"] = 'Players Perm-ID: **' .. user_id .. '**', ["footer"] = {["text"] = "Time - "..os.date("%x %X %p"),}}}}), { ["Content-Type"] = "application/json" })
-            end
-        end
+    else 
         MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = "", banreason =  "", banadmin =  ""})
         ARMA.BanIdentifiers(user_id, false)
         ARMA.BanTokens(user_id, false) 
@@ -516,55 +474,67 @@ end
 function ARMA.ban(adminsource,permid,time,reason)
     local adminPermID = ARMA.getUserId(adminsource)
     local getBannedPlayerSrc = ARMA.getUserSource(tonumber(permid))
+    local adminname = GetPed
     if getBannedPlayerSrc then 
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
-            ARMAclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link") 
+            ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
         else 
-            ARMAclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
+            ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
             ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | Banning Admin: " ..  GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID ) 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "]") 
         end
     else 
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            ARMAclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
+            ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
             ARMA.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         else 
-            ARMAclient.notify(adminsource,{"~g~Successfully banned Perm ID:" .. permid})
-            ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
+            ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+            ARMA.setBanned(permid,true,"-1",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
         end
     end
 end
 
 function ARMA.banConsole(permid,time,reason)
-    local adminPermID = "Console Ban"
+    local adminPermID = "ARMA"
     local getBannedPlayerSrc = ARMA.getUserSource(tonumber(permid))
     if getBannedPlayerSrc then 
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            ARMA.setBanned(permid,true,banTime,reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. os.date("%c", banTime) .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
-            print("~g~Successfully banned Perm ID:" .. permid)
+            ARMA.setBanned(permid,true,banTime,reason,  adminPermID)
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
+            print("~g~Success banned! User PermID:" .. permid)
+            f10Ban(permid, adminPermID, reason, time)
         else 
-            print("~g~Successfully banned Perm ID:" .. permid)
-            ARMA.setBanned(permid,true,"perm",reason,  'Console' .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"You have been banned from this server. Your ban expires in: " .. "Never, you've been permanently banned." .. " Reason: " .. reason .. " | BanningAdmin: " ..  'Console' .. " | ID Of Admin: " .. adminPermID ) 
+            print("~g~Success banned! User PermID:" .. permid)
+            ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
+            f10Ban(permid, adminPermID, reason, "perm")
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
         end
-    else 
+    end
+end
+
+function ARMA.banDiscord(permid,time,reason,adminPermID)
+    local getBannedPlayerSrc = ARMA.getUserSource(tonumber(permid))
+    if getBannedPlayerSrc then 
         if tonumber(time) then 
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
-            print("~g~Successfully banned Perm ID:" .. permid)
-            ARMA.setBanned(permid,true,banTime,reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
+            ARMA.setBanned(permid,true,banTime,reason, adminPermID)
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
+            print("~g~Success banned! User PermID:" .. permid)
+            f10Ban(permid, adminPermID, reason, time)
         else 
-            print("~g~Successfully banned Perm ID:" .. permid)
-            ARMA.setBanned(permid,true,"perm",reason, 'Console' .. " | ID Of Admin: " .. adminPermID)
+            print("~g~Success banned! User PermID:" .. permid)
+            ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
+            f10Ban(permid, adminPermID, reason, "perm")
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
         end
     end
 end
@@ -615,14 +585,6 @@ end
 
 
 function ARMA.kick(source,reason)
-    webhook = log_config.kicklog
-    local user_id = ARMA.getUserId(source)
-    local playername = GetPlayerName(source)
-    if webhook ~= nil then
-        if webhook ~= 'none' then
-            PerformHttpRequest(webhook, function(err, text, headers) end, "POST", json.encode({username = "Dunko ARMA Logs", embeds = {{["color"] = "15158332", ["title"] = playername .. ' Has Been Kicked', ["description"] = 'Players Perm-ID: **' .. user_id .. '**\nReason Player Was Kicked: **' .. reason .. '**', ["footer"] = {["text"] = "Time - "..os.date("%x %X %p"),}}}}), { ["Content-Type"] = "application/json" })
-        end
-    end
     DropPlayer(source,reason)
 end
 
@@ -655,8 +617,8 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
         ARMA.getUserIdByIdentifiers(ids, function(user_id)
             ARMA.IdentifierBanCheck(source, user_id, function(status, id)
                 if status then
-                    print("[ARMA] User rejected for attempting to evade. Perm ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
-                    deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your Perm ID which is: " .. id)
+                    print("[ARMA] User rejected for attempting to evade ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
+                    deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. id)
                     return 
                 end
             end)
@@ -696,11 +658,13 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             tmpdata.spawns = 0
                                             
                                             -- set last login
+                                            -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
+                                            -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
                                             local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                                             MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                             
                                             -- trigger join
-                                            print("[ARMA] "..name.." joined (Perm ID: "..user_id..")")
+                                            print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined (Perm ID = "..user_id..")")
                                             TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
                                             deferrals.done()
                                         end)
@@ -709,7 +673,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     if ARMA.CheckTokens(source, user_id) then 
                                         deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
                                     end
-                                    print("[ARMA] "..name.." re-joined (Perm ID: "..user_id..")")
+                                    print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined (Perm ID = "..user_id..")")
                                     TriggerEvent("ARMA:playerRejoin", user_id, source, name)
                                     deferrals.done()
                                     
@@ -720,8 +684,8 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                 
                                 Debug.pend()
                             else
-                                print("[ARMA] "..name.." rejected: not whitelisted (Perm ID: "..user_id..")")
-                                deferrals.done("[ARMA] Not whitelisted (Perm ID: "..user_id..").")
+                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: not whitelisted (Perm ID = "..user_id..")")
+                                deferrals.done("[ARMA] Not whitelisted (Perm ID = "..user_id..").")
                             end
                         end)
                     else
@@ -757,17 +721,19 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 tmpdata.spawns = 0
                                                 
                                                 -- set last login
+                                                -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
+                                                -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
                                                 local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                                                 MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                                 
                                                 -- trigger join
-                                                print("[ARMA] "..name.." joined after his ban expired. (Perm ID: "..user_id..")")
+                                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined after his ban expired. (Perm ID = "..user_id..")")
                                                 TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
                                                 deferrals.done()
                                             end)
                                         end)
                                     else -- already connected
-                                        print("[ARMA] "..name.." re-joined after his ban expired. (Perm ID: "..user_id..")")
+                                        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined after his ban expired.  (Perm ID = "..user_id..")")
                                         TriggerEvent("ARMA:playerRejoin", user_id, source, name)
                                         deferrals.done()
                                         
@@ -777,22 +743,22 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     end
                                     return 
                                 end
-                                print("[ARMA] "..name.." rejected: banned (Perm ID: "..user_id..")")
-                                deferrals.done("[ARMA] You have been banned from this server.\nYour ban will expire on the: " .. os.date("%c", bantime) .. "\nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
+                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
+                                deferrals.done("[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", bantime) .. "\n\nReason: \n" .. banreason .. "\n\nYou have been banned by: " .. banadmin  .. "\n\n [Your ID: " .. user_id .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link")
                             else 
-                                print("[ARMA] "..name.." rejected: banned (Perm ID: "..user_id..")")
-                                deferrals.done("[ARMA] You have been banned from this server.\nYour ban will expire: Never, you have been permanently banned \nReason: " .. banreason .. "\n\nBanning Admin: " .. banadmin)
+                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
+                                deferrals.done("[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: \n" .. banreason .. "\n\nYou have been banned by: " .. banadmin  .. "\n\n [Your ID: " .. user_id .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link")
                             end
                         end)
                     end
                 end)
             else
-                print("[ARMA] "..name.." rejected: identification error")
+                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: identification error")
                 deferrals.done("[ARMA] Identification error.")
             end
         end)
     else
-        print("[ARMA] "..name.." rejected: missing identifiers")
+        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: missing identifiers")
         deferrals.done("[ARMA] Missing identifiers.")
     end
     Debug.pend()
@@ -801,31 +767,27 @@ end)
 AddEventHandler("playerDropped",function(reason)
     local source = source
     local user_id = ARMA.getUserId(source)
-    local playername = GetPlayerName(source)
-    webhook = log_config.leavelog
-    if webhook ~= nil then
-        if webhook ~= 'none' then
-            PerformHttpRequest(webhook, function(err, text, headers) end, "POST", json.encode({username = "Dunko ARMA Logs", embeds = {{["color"] = "15158332", ["title"] = playername .. ' Has Left The Server', ["description"] = 'His Perm-ID: **' .. user_id .. '\n** His Source Id: **' .. source .. '**', ["footer"] = {["text"] = "Time - "..os.date("%x %X %p"),}}}}), { ["Content-Type"] = "application/json" })
-        end
-    end
     if user_id ~= nil then
         TriggerEvent("ARMA:playerLeave", user_id, source)
         
         -- save user data table
         ARMA.setUData(user_id,"ARMA:datatable",json.encode(ARMA.getUserDataTable(user_id)))
         
-        print("[ARMA] "..GetPlayerName(source).." disconnected (Perm ID: "..user_id..")")
+        print("[ARMA] "..ARMA.getPlayerEndpoint(source).." disconnected (Perm ID = "..user_id..")")
         ARMA.users[ARMA.rusers[user_id]] = nil
         ARMA.rusers[user_id] = nil
         ARMA.user_tables[user_id] = nil
         ARMA.user_tmp_tables[user_id] = nil
         ARMA.user_sources[user_id] = nil
-        print('[ARMA] Saved data for: ' .. GetPlayerName(source) .. " (Perm ID: "..user_id..")")
+        print('[ARMA] Player Leaving Save:  Saved data for: ' .. GetPlayerName(source))
     else 
-        print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' (NIL ID)')
+        print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
     end
     ARMAclient.removePlayer(-1,{source})
 end)
+
+MySQL.createCommand("ARMA/setusername","UPDATE arma_users SET username = @username WHERE id = @user_id")
+--MySQL.createCommand("ARMA/setIP","UPDATE arma_users SET IP = @IP WHERE id = @user_id")
 
 RegisterServerEvent("ARMAcli:playerSpawned")
 AddEventHandler("ARMAcli:playerSpawned", function()
@@ -843,10 +805,15 @@ AddEventHandler("ARMAcli:playerSpawned", function()
                 ARMAclient.addPlayer(source,{v})
             end
             ARMAclient.addPlayer(-1,{source})
+            MySQL.execute("ARMA/setusername", {user_id = user_id, username = GetPlayerName(source)})
+            --MySQL.execute("ARMA/setIP", {user_id = user_id, IP = ARMA.getPlayerIP(source)})
         end
         TriggerEvent("ARMA:playerSpawn",user_id,player,first_spawn)
     end
     Debug.pend()
 end)
+
+
+
 
 RegisterServerEvent("ARMA:playerDied")
