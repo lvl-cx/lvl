@@ -7,11 +7,11 @@ ammo.marker = vector3(-458.36862182617,-2274.5075683594,8.5158195495605-0.98)
 
 ammo.name = 'Ammo Trader'
 
-ammo.banner = 'ammo'
+ammo.banner = 'rebel'
 
 -- [Start of RageUI]
 
-RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "ARMA " .. ammo.name, 1300, 50, ammo.banner, ammo.banner))
+RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "~b~" .. ammo.name, 1300, 50, ammo.banner, ammo.banner))
 RMenu.Add("Ammo", "confirm", RageUI.CreateSubMenu(RMenu:Get('Ammo', 'main',  1300, 50)))
 
 ammo.types = {
@@ -57,9 +57,9 @@ local Index = 1
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Ammo", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Ammo Type: ~b~" .. cName, function() end)
-            RageUI.Separator("Ammo Price: ~g~£" .. getMoneyStringFormatted(cPrice * Index), function() end)
-            RageUI.Separator("Current Trader: ~r~" .. ammo.name, function() end)
+            RageUI.Separator("Ammo Type: " .. cName, function() end)
+            RageUI.Separator("Ammo Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
+            RageUI.Separator("Current Trader: " .. ammo.name, function() end)
         
             RageUI.List(cName, AmmoNumbers, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
                 if Hovered then

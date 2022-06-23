@@ -1,4 +1,4 @@
-RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "ARMA Clock On Menu", 1300, 50 ,'clockon', 'clockon'))
+RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "~b~Clock On", 1300, 50 ,'clockon', 'clockon'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('PoliceDutyMenu', 'main')) then
@@ -102,7 +102,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
 
-            RageUI.Button("[Clock Off]" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~b~Clock Off" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('PoliceMenu:ClockOff')
                     --[[ PD Armoury Weapons ]]--
@@ -129,7 +129,7 @@ isInPoliceDutyMenu = false
 currentPoliceDutyMenu = nil
 Citizen.CreateThread(function() 
     while true do
-            local x,y,z = 441.87026977539,-981.13433837891,30.689609527588
+            local x,y,z = 447.89916992188,-976.43737792969,30.689336776733
             local dutymenu = vector3(x,y,z)
 
             if isInArea(dutymenu, 100.0) then 

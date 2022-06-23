@@ -2,7 +2,7 @@ RegisterServerEvent("PoliceMenu:ClockOn")
 AddEventHandler('PoliceMenu:ClockOn', function(policerank)
     local user_id = ARMA.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
-    local comparison = vector3(441.87026977539,-981.13433837891,30.689609527588)
+    local comparison = vector3(447.89916992188,-976.43737792969,30.689336776733)
 
     if policerank == "Commissioner Clocked" then
         policeperm = "commissioner.clockon"
@@ -70,7 +70,7 @@ RegisterServerEvent("PoliceMenu:CheckPermissions")
 AddEventHandler('PoliceMenu:CheckPermissions', function()
     local user_id = ARMA.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
-    local comparison = vector3(441.87026977539,-981.13433837891,30.689609527588)
+    local comparison = vector3(447.89916992188,-976.43737792969,30.689336776733)
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock on as Police!")
         return
@@ -86,7 +86,7 @@ RegisterServerEvent("PoliceMenu:ClockOff")
 AddEventHandler('PoliceMenu:ClockOff', function()
     local user_id = ARMA.getUserId(source)
     local coords = GetEntityCoords(GetPlayerPed(source))
-    local comparison = vector3(441.87026977539,-981.13433837891,30.689609527588)
+    local comparison = vector3(447.89916992188,-976.43737792969,30.689336776733)
 
     if user_id == nil then
         ARMAclient.notify(source,{"~r~You are a nil User ID, please relog."})

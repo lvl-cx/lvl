@@ -7,11 +7,11 @@ licensecentre.marker = vector3(-926.37622070312,-2037.8065185547,9.4023275375366
 
 licensecentre.name = 'Job Centre'
 
-licensecentre.banner = 'job'
+licensecentre.banner = 'groups'
 
 -- [Start of RageUI]
 
-RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "ARMA " .. licensecentre.name, 1300, 50, licensecentre.banner, licensecentre.banner))
+RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~b~" .. licensecentre.name, 1300, 50, licensecentre.banner, licensecentre.banner))
 RMenu.Add("LicenseCentre", "dlicenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
 RMenu.Add("LicenseCentre", "licenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  1300, 50)))
 RMenu.Add("LicenseCentre", "confirm", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'licenses',  1300, 50)))
