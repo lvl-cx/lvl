@@ -1,4 +1,4 @@
-RMenu.Add('ARMAPDMenu', 'main', RageUI.CreateMenu("", "~b~Police Menu", 1300, 50, 'police', 'police'))
+RMenu.Add('ARMAPDMenu', 'main', RageUI.CreateMenu("", "~b~Police", 1300, 50, 'police', 'police'))
 RMenu.Add('ARMAPDMenu', 'objectmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAPDMenu", "main")))
 RMenu.Add('ARMAPDMenu', 'cosmeticmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAPDMenu", "main")))
 
