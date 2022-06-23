@@ -7,7 +7,7 @@ local machines_owned = {}
 
 
 
-RMenu.Add('CryptoMiner', 'main', RageUI.CreateMenu("", "ARMA Crypto Systems",1300, 50, 'crypto', 'crypto'))
+RMenu.Add('CryptoMiner', 'main', RageUI.CreateMenu("", "~b~Crypto Systems",1300, 50, 'crypto', 'crypto'))
 RMenu.Add('CryptoMiner', 'buy_systems',  RageUI.CreateSubMenu(RMenu:Get("CryptoMiner", "main")))
 RMenu.Add('CryptoMiner', 'buy_systems_manage',  RageUI.CreateSubMenu(RMenu:Get("CryptoMiner", "buy_systems")))
 RMenu.Add('CryptoMiner', 'manage_systems',  RageUI.CreateSubMenu(RMenu:Get("CryptoMiner", "main")))

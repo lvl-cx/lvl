@@ -18,13 +18,13 @@ if Config.CustomMenuEnabled then
   _G.Object = Object
   local TextureThing = GetDuiHandle(Object)
   local Texture = CreateRuntimeTextureFromDuiHandle(RuntimeTXD, 'Custom_Menu_Head', TextureThing)
-  Menuthing = "Custom_Menu_Head"
+  Menuthing = "emotes"
 else
-  Menuthing = "shopui_title_sm_hangar"
+  Menuthing = "emotes"
 end
 
 _menuPool = NativeUI.CreatePool()
-mainMenu = NativeUI.CreateMenu("dp Emotes", "", menuPosition["x"], menuPosition["y"], Menuthing, Menuthing)
+mainMenu = NativeUI.CreateMenu("", "", menuPosition["x"], menuPosition["y"], Menuthing, Menuthing)
 _menuPool:Add(mainMenu)
 
 function ShowNotification(text)

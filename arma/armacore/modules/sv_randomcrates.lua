@@ -53,11 +53,11 @@ AddEventHandler('openRandomCrate', function()
                     ["title"] = "Crate Winnings",
                     ["description"] = "**User Name:** "..GetPlayerName(source).."\n**User PermID:** "..user_id.."\n**Prize:** "..randomPrize,
                     ["footer"] = {
-                      ["text"] = "GDM - "..os.date("%X"),
+                      ["text"] = "ARMA - "..os.date("%X"),
                     }
                 }
             }
-            PerformHttpRequest("https://discord.com/api/webhooks/986056660520939540/Y2rJ1YN3Bv0oyaJHqcA0SZ6m6KRZQB1S357nCamJGaatTB5r5unlo1MpwbEesKM5H3OU", function(err, text, headers) end, "POST", json.encode({username = "GDM", embeds = embed}), { ["Content-Type"] = "application/json" })
+            PerformHttpRequest("https://discord.com/api/webhooks/986056660520939540/Y2rJ1YN3Bv0oyaJHqcA0SZ6m6KRZQB1S357nCamJGaatTB5r5unlo1MpwbEesKM5H3OU", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = embed}), { ["Content-Type"] = "application/json" })
         end
     end
     TriggerClientEvent('randomCrateLoot', source, randomPrize)
@@ -74,6 +74,6 @@ Citizen.CreateThread(function()
                 PRIMARY KEY (`user_id`)
                 );
         ]])
-    print("[GDM] - Random Crates initialised")
+    print("[ARMA] - Random Crates initialised")
 end)
             
