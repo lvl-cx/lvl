@@ -769,10 +769,8 @@ AddEventHandler("playerDropped",function(reason)
     local user_id = ARMA.getUserId(source)
     if user_id ~= nil then
         TriggerEvent("ARMA:playerLeave", user_id, source)
-        
         -- save user data table
         ARMA.setUData(user_id,"ARMA:datatable",json.encode(ARMA.getUserDataTable(user_id)))
-        
         print("[ARMA] "..ARMA.getPlayerEndpoint(source).." disconnected (Perm ID = "..user_id..")")
         ARMA.users[ARMA.rusers[user_id]] = nil
         ARMA.rusers[user_id] = nil
@@ -780,6 +778,18 @@ AddEventHandler("playerDropped",function(reason)
         ARMA.user_tmp_tables[user_id] = nil
         ARMA.user_sources[user_id] = nil
         print('[ARMA] Player Leaving Save:  Saved data for: ' .. GetPlayerName(source))
+        local localday = os.date("%A (%d/%m/%Y) at %X")
+        local disconnect = {
+            {
+                ["color"] = "16448403",
+                ["title"] = GetPlayerName(source).."("..user_id..") Temp ID: "..source.." disconnected",
+                ["description"] = reason, 
+                ["footer"] = {
+                    ["text"] = "ARMA | Server #1 | "..localday,
+                },
+            }
+        }
+        PerformHttpRequest("https://discord.com/api/webhooks/989598411718287441/uZ7ZF0OuYmCxclciDSamKFybdT2rl9csJG1t1S8fhOrAFsTBOoORMCssw3XPU4WECUsg", function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = disconnect}), { ['Content-Type'] = 'application/json' })
     else 
         print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
     end
@@ -814,6 +824,21 @@ AddEventHandler("ARMAcli:playerSpawned", function()
 end)
 
 
-
+AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
+    local source = source
+    print(source)
+    local user_id = ARMA.getUserId(source)
+    local embed = {
+        {
+            ["color"] = "16448403",
+            ["title"] = GetPlayerName(source).."("..user_id..") Temp ID: "..source.." connected",
+            ["description"] = "",
+            ["footer"] = {
+                ["text"] = "ARMA | Server #1 | "..localday,
+            },
+        }
+    }
+    PerformHttpRequest(logs, function(err, text, headers) end, 'POST', json.encode({username = "Server Logs", embeds = embed}), { ['Content-Type'] = 'application/json' })
+end)
 
 RegisterServerEvent("ARMA:playerDied")
