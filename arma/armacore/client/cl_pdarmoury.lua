@@ -11,7 +11,7 @@ armoury.banner = 'armoury'
 
 -- [Start of RageUI]
 
-RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "ARMA " .. armoury.name, 1300, 50, armoury.banner, armoury.banner))
+RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~b~" .. armoury.name, 1300, 50, armoury.banner, armoury.banner))
 RMenu.Add("PDArmoury", "confirm", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 RMenu.Add("PDArmoury", "confirma", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 
@@ -53,8 +53,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("PDArmoury", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Armour Plate: " .. 'Level 4 ~b~[100%]', function() end)
-            RageUI.Separator("Armour Plate Price: ~g~Free" .. '', function() end)
-            RageUI.Separator("Current Gunstore: ~r~" .. armoury.name, function() end)
+            RageUI.Separator("Armour Plate Price: Free" .. '', function() end)
+            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -76,9 +76,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("PDArmoury", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
-            RageUI.Separator("Weapon Price: ~g~Free", function() end)
-            RageUI.Separator("Current Gunstore: ~r~" .. armoury.name, function() end)
+            RageUI.Separator("Weapon Name: " .. cName, function() end)
+            RageUI.Separator("Weapon Price: Free", function() end)
+            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then

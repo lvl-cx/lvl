@@ -32,7 +32,7 @@ dealership.guns2 = {
     {spawncode = "wf20", vehname = "Armed Van", vehdesc = "", price = 1},
 }
 
-RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "ARMA Dealership Menu", 1300, 50, 'garage', 'garage'))
+RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "~b~Dealership", 1300, 50, 'dealership', 'dealership'))
 RMenu.Add("DealershipMenu", "sim", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
 RMenu.Add("DealershipMenu", "police", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
 RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'sim',  1300, 50)))

@@ -121,11 +121,11 @@ AddEventHandler('ARMA:CosmeticMarketPlace', function(cosmeticdata, price, messag
                   end
                 end
                 url = v.url
-                webhook = "https://discord.com/api/webhooks/972459190020890715/v2D0xPXtQECtTRFSYyBDnXtMyEFczOvfaksXdB77iiKL-rFMqJ1ykXVJq19lihp2VA-L"
+                webhook = "https://discord.com/api/webhooks/989539362075189319/Fj3qpkFyfIQdQbh5JdFfIYJ05zn8Wk_fFJROhdnC0a74eigkqU_ZARZKF7SNqhTDFZeA"
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Market", embeds = {
                     {
-                        ["color"] = "7393516",
+                        ["color"] = "16448403",
                         ["title"] = "ARMA Market Place",
                         ["image"] = {
                             ["url"] = url,

@@ -37,7 +37,7 @@ admincfg.buttonsEnabled = {
     ["staffGroups"] = {true, "admin.staffAddGroups"},
     ["mpdGroups"] = {true, "admin.mpdAddGroups"},
     ["povGroups"] = {true, "admin.povAddGroups"},
-    ["licenseGroups"] = {true, "admin.licenseAddGroups"},
+    ["licenseGroups"] = {true, "dev.menu"},
     ["donoGroups"] = {true, "admin.donoAddGroups"},
     ["nhsGroups"] = {true, "admin.nhsAddGroups"},
 
@@ -1068,13 +1068,13 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
                     if amount == '' then return end
                     amount = parseInt(amount)
                     ARMA.giveBankMoney(tonumber(playerid), amount)
-                    ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~"..amount.." ~g~credits."})
+                    ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~£"..amount.." ~g~"})
                     webhook = "https://discord.com/api/webhooks/975532406817833000/U4DT4s1sKp1dxxVrzl-pFZvNgv2F9SP0kv6YB8zsSeVA7sQPQSNclEsBDKWgBj6KUC9L"
                     PerformHttpRequest(webhook, function(err, text, headers) 
                     end, "POST", json.encode({username = "ARMA", embeds = {
                         {
                             ["color"] = "15158332",
-                            ["title"] = "Credit Logs",
+                            ["title"] = "Money Give Logs",
                             ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
                             ["footer"] = {
                                 ["text"] = "Time - "..os.date("%x %X %p"),

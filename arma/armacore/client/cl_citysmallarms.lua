@@ -11,7 +11,7 @@ citysmall.banner = 'small'
 
 -- [Start of RageUI]
 
-RMenu.Add('CitySmallArms', 'main', RageUI.CreateMenu("", "ARMA " .. citysmall.name, 1300, 50, citysmall.banner, citysmall.banner))
+RMenu.Add('CitySmallArms', 'main', RageUI.CreateMenu("", "~b~" .. citysmall.name, 1300, 50, citysmall.banner, citysmall.banner))
 RMenu.Add("CitySmallArms", "confirm", RageUI.CreateSubMenu(RMenu:Get('CitySmallArms', 'main',  1300, 50)))
 RMenu.Add("CitySmallArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('CitySmallArms', 'main',  1300, 50)))
 
@@ -54,9 +54,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CitySmallArms", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
-        RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("Current Gunstore: ~r~" .. citysmall.name, function() end)
+        RageUI.Separator("Weapon Name: " .. cName, function() end)
+        RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+        RageUI.Separator("Current Gunstore: " .. citysmall.name, function() end)
 
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -78,8 +78,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CitySmallArms", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Armour Plate: " .. 'Level 1 ~b~[25%]', function() end)
-            RageUI.Separator("Armour Plate Price: ~g~£" .. '25,000', function() end)
-            RageUI.Separator("Current Gunstore: ~r~" .. citysmall.name, function() end)
+            RageUI.Separator("Armour Plate Price: £" .. '25,000', function() end)
+            RageUI.Separator("Current Gunstore: " .. citysmall.name, function() end)
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
 

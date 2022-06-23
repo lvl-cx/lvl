@@ -11,7 +11,7 @@ local veh = nil
 local cantload = {}
 local vehname = nil 
 --Created by JamesUK#6793 :)
-RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~w~ARMA Garage Menu",1300, 50, 'garage', 'garage'))
+RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Garage Menu",1300, 50, 'garage', 'garage'))
 RMenu.Add('ARMAGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
@@ -23,7 +23,7 @@ RMenu.Add('ARMAGarages', 'owned_vehicles_submenu_manage',  RageUI.CreateSubMenu(
 RMenu.Add('ARMAGarages', 'scrap_vehicle_confirmation',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage_submenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage")))
-RMenu:Get('ARMAGarages', 'owned_vehicles'):SetSubtitle("~w~ARMA Vehicle Categories")
+RMenu:Get('ARMAGarages', 'owned_vehicles'):SetSubtitle("~b~Vehicle Categories")
 RMenu:Get('ARMAGarages', 'scrap_vehicle_confirmation'):SetSubtitle("~w~Are you sure you want to scrap this vehicle?")
 --Created by JamesUK#6793 :)
 

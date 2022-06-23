@@ -11,7 +11,7 @@ rebel.banner = 'rebel'
 
 -- [Start of RageUI]
 
-RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "ARMA " .. rebel.name, 1300, 50, rebel.banner, rebel.banner))
+RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "~b~" .. rebel.name, 1300, 50, rebel.banner, rebel.banner))
 RMenu.Add("Rebel", "confirma", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
 RMenu.Add("Rebel", "confirm", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
 
@@ -55,8 +55,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Rebel", "confirma")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Armour Plate: " .. 'Level 4 ~b~[100%]', function() end)
-            RageUI.Separator("Armour Plate Price: ~g~£" .. '100,000', function() end)
-            RageUI.Separator("Current Gunstore: ~r~" .. rebel.name, function() end)
+            RageUI.Separator("Armour Plate Price: £" .. '100,000', function() end)
+            RageUI.Separator("Current Gunstore: " .. rebel.name, function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -77,9 +77,9 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("Rebel", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("Weapon Name: ~b~" .. cName, function() end)
-            RageUI.Separator("Weapon Price: ~g~£" .. getMoneyStringFormatted(cPrice), function() end)
-            RageUI.Separator("Current Gunstore: ~r~" .. rebel.name, function() end)
+            RageUI.Separator("Weapon Name: " .. cName, function() end)
+            RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
+            RageUI.Separator("Current Gunstore: " .. rebel.name, function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then

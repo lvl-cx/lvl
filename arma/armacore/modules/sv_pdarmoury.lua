@@ -56,7 +56,7 @@ AddEventHandler('PD:BuyArmour', function()
             SetPedArmour(source, 96)
             TriggerClientEvent("ARMA:PlaySound", source, 1)
             ARMAclient.notify(source, {"~g~Paid ".. '£0'})
-
+            TriggerClientEvent('ARMA:SetVest', source)
         else
             ARMAclient.notify(source,{'~r~You are not PD/ Clocked on!'})
             TriggerClientEvent("ARMA:PlaySound", source, 2)
@@ -65,5 +65,4 @@ AddEventHandler('PD:BuyArmour', function()
         ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
     end
 end)
-
 

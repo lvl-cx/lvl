@@ -1,8 +1,13 @@
-RMenu.Add('ARMAClothing', 'main', RageUI.CreateMenu("", "ARMA Clothing Menu",1300, 50, 'cstore', 'cstore'))
+local cfg = module("cfg/skinshops")
+local skinshops = cfg.skinshops 
+local peds = cfg.peds
+
+RMenu.Add('ARMAClothing', 'main', RageUI.CreateMenu("", "~b~Clothing Menu",1300, 100, "cstore", "cstore"))
 RMenu.Add('ARMAClothing', 'clothingsubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changegendersubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changepedmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
-
+RMenu.Add('ARMAClothing', 'wardrobesub',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
+RMenu.Add('wardrobesub', 'clothingsub',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "wardrobesub")))
 local Face = {Max = {}, Index = 0, TextureIndex = 0};
 local Mask = {Max = {}, Index = 0, TextureIndex = 0};
 local Hair = {Max = {}, Index = 0, TextureIndex = 0};
@@ -22,7 +27,7 @@ local Watches = {Max = {}, Index = 0, TextureIndex = 0};
 local Bracelets = {Max = {}, Index = 0, TextureIndex = 0};
 local SelectedOption = nil;
 local MenuOpen = false;
-
+wardrobe = {}
 
 
 function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
@@ -39,21 +44,29 @@ function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
 
-local clothingPerm = false
+RegisterNetEvent("clothingMenu:UpdateWardrobe")
+AddEventHandler("clothingMenu:UpdateWardrobe", function(newWardrobe)
+    wardrobe = newWardrobe
+end)
+
+RegisterNetEvent("clothingMenu:closeWardrobe")
+AddEventHandler("clothingMenu:closeWardrobe", function()
+    RageUI.CloseAll()
+end)
 
 RageUI.CreateWhile(1.0, true, function()
     
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-           RageUI.Button("Change Clothing", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "clothingsubmenu"))
-           RageUI.Button("Change Gender", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changegendersubmenu"))
-           RageUI.Button("Change Ped", nil, {RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changepedmenu"))
-           RageUI.Button("Barbers", nil, {}, true, function(Hovered, Active, Selected) 
-            if Selected then
-                TriggerEvent("ARMA:openBarberShop")
-                RageUI.ActuallyCloseAll()
-            end
-        end)
+            RageUI.Button("Change Clothing", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "clothingsubmenu"))
+            RageUI.Button("Change Gender", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changegendersubmenu"))
+            RageUI.Button("Change Ped", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changepedmenu"))
+            RageUI.Button("Wardrobe", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "wardrobesub"))
+            --RageUI.Button("Clear Prop Index", "~r~Clear all Props that are on your body!", {}, true, function(Hovered, Active, Selected) 
+            --    if Selected then 
+            --        ClearAllPedProps(PlayerPedId())
+            --    end
+            --end)
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'changegendersubmenu')) then 
@@ -66,8 +79,6 @@ RageUI.CreateWhile(1.0, true, function()
                         RequestModel(model)
                         Citizen.Wait(0)
                     end
-                    ExecuteCommand("storeweapons")
-                    Citizen.Wait(100)
                     SetPlayerModel(PlayerId(), model)
                     SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2) 
                 end
@@ -80,267 +91,93 @@ RageUI.CreateWhile(1.0, true, function()
                         RequestModel(model)
                         Citizen.Wait(0)
                     end
-                    ExecuteCommand("storeweapons")
-                    Citizen.Wait(100)
                     SetPlayerModel(PlayerId(), model)
                     SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2) 
-         
                 end
             end)
-
-            
-            
         end)
     end
+  
+    if RageUI.Visible(RMenu:Get('ARMAClothing', 'wardrobesub')) then 
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            TriggerServerEvent("JudHousing:LoadWardrobe")
+            for k, v in pairs(wardrobe) do
+            RageUI.Button(k, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
+                if Selected then 
+                    currentOutfit = k
+                    savedArmour = GetPedArmour(PlayerPedId())
+                end
+            end,RMenu:Get("wardrobesub", "clothingsub"))
+        end
+            RageUI.Button("~g~Save Outfit", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
+                if Selected then
+                    AddTextEntry("FMMC_MPM_NC", "Outfit Name")
+                DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                while (UpdateOnscreenKeyboard() == 0) do
+                    DisableAllControlActions(0);
+                    Wait(0);
+                end
+                if (GetOnscreenKeyboardResult()) then
+                    local result = GetOnscreenKeyboardResult()
+                    if result then
+                        TriggerServerEvent("JudHousing:SaveOutfit", result)
+                    end
+                end
+            end
+                
+            end)
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('wardrobesub', 'clothingsub')) then 
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    for k, v in pairs(wardrobe) do
+                        if k == currentOutfit then
+                          
+                            tARMA.setCustomization(v)
 
+                            SetTimeout(50, function()
+                                SetPedArmour(PlayerPedId(), savedArmour)
+                                TriggerServerEvent('ARMA:changeHairStyle')
+                            end)
+                           
+
+                        end
+                    end
+                end
+            end, RMenu:Get('ARMAClothing', 'wardrobesub'))
+    
+            RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
+                end
+            end, RMenu:Get('ARMAClothing', 'wardrobesub'))
+        end)
+    end
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'changepedmenu')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-
-			RageUI.Button("a_f_m_fatcult_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_f_m_fatcult_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_f_o_soucent_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_f_o_soucent_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_f_m_skidrow_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_f_m_skidrow_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_m_og_boss_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_m_og_boss_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_m_indian_01",nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_m_indian_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_m_genfat_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_m_genfat_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_y_business_02", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_y_business_02'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_o_tramp_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_o_tramp_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_o_genstreet_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_o_genstreet_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_m_hasjew_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_m_hasjew_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("a_m_m_farmer_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'a_m_m_farmer_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("s_f_y_clubbar_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 's_f_y_clubbar_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("u_m_y_babyd", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'u_m_y_babyd'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("u_m_y_staggrm_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'u_m_y_staggrm_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("u_m_y_prisoner_01", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'u_m_y_prisoner_01'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("u_m_y_mani", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'u_m_y_mani'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-				RageUI.Button("csb_stripper_02", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Selected then
-					local ped = 'csb_stripper_02'
-					local hash = GetHashKey(ped)
-					RequestModel(hash)
-					while not HasModelLoaded(hash)
-							do RequestModel(hash)
-								Citizen.Wait(0)
-							end	
-						ExecuteCommand('storeweapons') Citizen.Wait(100)  SetPlayerModel(PlayerId(), hash) SetEntityHealth(PlayerPedId(), 200) 
-
-					end
-
-				end)
-
-            
-            
+            for k, v in pairs(peds) do 
+                RageUI.Button(v, "", { RightLabel = "→" }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local ped = v
+                        local hash = GetHashKey(ped)
+                        RequestModel(hash)
+                        while not HasModelLoaded(hash) do 
+                            RequestModel(hash)
+                            Citizen.Wait(0)
+                        end    
+                        ExecuteCommand('storeallweapons') 
+                        Wait(750)
+                        SetPlayerModel(PlayerId(), hash)
+                        SetEntityHealth(PlayerPedId(), 200) 
+                    end
+                end)
+            end
         end)
     end
+
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'clothingsubmenu')) then
-        --DrawAdvancedText(0.949, 0.628, 0.005, 0.0028, 0.4, 'Press SPACE to input an ID',  255, 255, 255, 255, 6, 0)
         if IsControlJustPressed(0, 203) then 
                 AddTextEntry('FMMC_MPM_NA', "Enter Clothing ID")
                 DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 30)
@@ -357,7 +194,7 @@ RageUI.CreateWhile(1.0, true, function()
                         SetPedPropIndex(PlayerPedId(), 0, tonumber(result), Hats.TextureIndex, 0)
                     elseif SelectedOption == "glasses" then 
                         SetPedPropIndex(PlayerPedId(), 1, tonumber(result), Glasses.TextureIndex, 0)
-                    elseif SelectedOption == "earings" then
+                    elseif SelectedOption == "ear accessories" then
                         SetPedPropIndex(PlayerPedId(), 2, tonumber(result), Earings.TextureIndex, 0) 
                     elseif SelectedOption == "watches" then 
                         SetPedPropIndex(PlayerPedId(), 6, tonumber(result), Watches.TextureIndex, 0)
@@ -397,13 +234,13 @@ RageUI.CreateWhile(1.0, true, function()
         end
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             SetTextEntry_2("STRING")
-            AddTextComponentString("Press [SPACE] to input an ID")
-			EndTextCommandPrint(1000, 1)
-            RageUI.List("Face", Face.Max, Face.Index, 'Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index), { }, true, function(Hovered, Active, Selected, Index)
+            AddTextComponentString("Press [Space] to Change Index")
+            EndTextCommandPrint(1, 1)
+            RageUI.List("Face", Face.Max, Face.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Face.Index = Index
                 if Active then
                     SelectedOption = 0;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Face.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 0, Face.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 0, Face.Index, Face.TextureIndex, 0)
                 end
                 if Selected then 
@@ -414,11 +251,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Mask", Mask.Max, Mask.Index, 'Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Mask", Mask.Max, Mask.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Mask.Index = Index
                 if Active then
                     SelectedOption = 1;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Mask.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 1, Mask.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 1, Mask.Index, Mask.TextureIndex, 0)
                 end
                 if Selected then 
@@ -429,11 +266,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Hair", Hair.Max, Hair.Index, 'Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Hair", Hair.Max, Hair.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Hair.Index = Index
                 if Active then
                     SelectedOption = 2;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Hair.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 2, Hair.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 2, Hair.Index, Hair.TextureIndex, 0)
                 end
                 if Selected then 
@@ -444,11 +281,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Arms / Torso", Torso.Max, Torso.Index, 'Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Arms", Torso.Max, Torso.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Torso.Index = Index
                 if Active then
                     SelectedOption = 3;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Torso.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 3, Torso.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 3, Torso.Index, Torso.TextureIndex, 0)
                 end
                 if Selected then 
@@ -459,11 +296,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Legs", Legs.Max, Legs.Index, 'Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Legs", Legs.Max, Legs.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Legs.Index = Index
                 if Active then
                     SelectedOption = 4;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Legs.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 4, Legs.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 4, Legs.Index, Legs.TextureIndex, 0)
                 end
                 if Selected then 
@@ -474,11 +311,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Bags", Parachute.Max, Parachute.Index, 'Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Bags", Parachute.Max, Parachute.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Parachute.Index = Index
                 if Active then
                     SelectedOption = 5;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Parachute.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 5, Parachute.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 5, Parachute.Index, Parachute.TextureIndex, 0)
                 end
                 if Selected then 
@@ -489,11 +326,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Shoes", Shoes.Max, Shoes.Index, 'Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Shoes", Shoes.Max, Shoes.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Shoes.Index = Index
                 if Active then
                     SelectedOption = 6;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Shoes.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 6, Shoes.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 6, Shoes.Index, Shoes.TextureIndex, 0)
                 end
                 if Selected then 
@@ -504,23 +341,12 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Accessories", Accessory.Max, Accessory.Index, 'Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Accessories", Accessory.Max, Accessory.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Accessory.Index = Index
                 if Active then
                     SelectedOption = 7;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index),  255, 255, 255, 255, 6, 0)
-                    if not clothingPerm then
-                        for i,v in pairs(cosmetics.cfg) do
-                            if v.type == 'Chain' then
-                                if Accessory.Index == v.clothingid then
-                                else
-                                    SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
-                                end
-                            end
-                        end
-                    else
-                        SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
-                    end
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Accessory.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index),  255, 255, 255, 255, 6, 0)
+                    SetPedComponentVariation(PlayerPedId(), 7, Accessory.Index, Accessory.TextureIndex, 0)
                 end
                 if Selected then 
                     if Accessory.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 7, Accessory.Index)-1) then 
@@ -530,11 +356,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Undershirt", Undershirt.Max, Undershirt.Index, 'Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Under Shirt", Undershirt.Max, Undershirt.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Undershirt.Index = Index
                 if Active then
                     SelectedOption = 8;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Undershirt.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 8, Undershirt.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 8, Undershirt.Index, Undershirt.TextureIndex, 0)
                 end
                 if Selected then 
@@ -545,28 +371,26 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            if clothingPerm then
-                RageUI.List("Vest", Kevlar.Max, Kevlar.Index, 'Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index), { }, true, function(Hovered, Active, Selected, Index)
-                    Kevlar.Index = Index
-                    if Active then
-                        SelectedOption = 9;
-                        --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
-                        SetPedComponentVariation(PlayerPedId(), 9, Kevlar.Index, Kevlar.TextureIndex, 0)
+            RageUI.List("Vest", Kevlar.Max, Kevlar.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
+                Kevlar.Index = Index
+                if Active then
+                    SelectedOption = 9;
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Kevlar.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index),  255, 255, 255, 255, 6, 0)
+                    SetPedComponentVariation(PlayerPedId(), 9, Kevlar.Index, Kevlar.TextureIndex, 0)
+                end
+                if Selected then 
+                    if Kevlar.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index)-1) then 
+                        Kevlar.TextureIndex = 0;
+                    else 
+                        Kevlar.TextureIndex = Kevlar.TextureIndex + 1
                     end
-                    if Selected then 
-                        if Kevlar.TextureIndex > (GetNumberOfPedTextureVariations(PlayerPedId(), 9, Kevlar.Index)-1) then 
-                            Kevlar.TextureIndex = 0;
-                        else 
-                            Kevlar.TextureIndex = Kevlar.TextureIndex + 1
-                        end
-                    end
-                end)
-            end
-            RageUI.List("Badges", Badge.Max, Badge.Index, 'Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index), { }, true, function(Hovered, Active, Selected, Index)
+                end
+            end)
+            RageUI.List("Badges", Badge.Max, Badge.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Badge.Index = Index
                 if Active then
                     SelectedOption = 10;
-                   -- DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Badge.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 10, Badge.Index),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 10, Badge.Index, Badge.TextureIndex, 0)
                 end
                 if Selected then 
@@ -577,11 +401,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Shirts / Jackets", Torso2.Max, Torso2.Index, 'Texture Index: ' .. Torso2.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 11,  tonumber(Torso2.Index)), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Shirts/Jackets", Torso2.Max, Torso2.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Torso2.Index = Index
                 if Active then
                     SelectedOption = 11;
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, ),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Torso2.TextureIndex .. "/" .. GetNumberOfPedTextureVariations(PlayerPedId(), 11,  tonumber(Torso2.Index)),  255, 255, 255, 255, 6, 0)
                     SetPedComponentVariation(PlayerPedId(), 11, Torso2.Index, Torso2.TextureIndex, 0)
                 end
                 if Selected then 
@@ -592,11 +416,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Hats / Helmets", Hats.Max, Hats.Index, 'Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Hats", Hats.Max, Hats.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Hats.Index = Index
                 if Active then
                     SelectedOption = "hats";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Hats.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 0, Hats.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 0, Hats.Index, Hats.TextureIndex, 0)
                 end
                 if Selected then 
@@ -607,11 +431,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Glasses", Glasses.Max, Glasses.Index, 'Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Glasses", Glasses.Max, Glasses.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Glasses.Index = Index
                 if Active then
                     SelectedOption = "glasses";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Glasses.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 1, Glasses.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 1, Glasses.Index, Glasses.TextureIndex, 0)
                 end
                 if Selected then 
@@ -622,11 +446,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.List("Ear Accessories", Earings.Max, Earings.Index,  'Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index), { }, true, function(Hovered, Active, Selected, Index)
+            RageUI.List("Ear Accessories", Earings.Max, Earings.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Earings.Index = Index
                 if Active then
                     SelectedOption = "earings";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Earings.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 2, Earings.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 2, Earings.Index, Earings.TextureIndex, 0)
                 end
                 if Selected then 
@@ -637,28 +461,26 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            if clothingPerm then
-                RageUI.List("Watches", Watches.Max, Watches.Index, 'Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index), { }, true, function(Hovered, Active, Selected, Index)
-                    Watches.Index = Index
-                    if Active then
-                        SelectedOption = "watches";
-                        --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
-                        SetPedPropIndex(PlayerPedId(), 6, Watches.Index, Watches.TextureIndex, 0)
+            RageUI.List("Watches", Watches.Max, Watches.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
+                Watches.Index = Index
+                if Active then
+                    SelectedOption = "watches";
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Watches.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index),  255, 255, 255, 255, 6, 0)
+                    SetPedPropIndex(PlayerPedId(), 6, Watches.Index, Watches.TextureIndex, 0)
+                end
+                if Selected then 
+                    if Watches.TextureIndex >= (GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index)-1) then 
+                        Watches.TextureIndex = 0;
+                    else 
+                        Watches.TextureIndex = Watches.TextureIndex + 1
                     end
-                    if Selected then 
-                        if Watches.TextureIndex >= (GetNumberOfPedPropTextureVariations(PlayerPedId(), 6, Watches.Index)-1) then 
-                            Watches.TextureIndex = 0;
-                        else 
-                            Watches.TextureIndex = Watches.TextureIndex + 1
-                        end
-                    end
-                end)
-            end
-            RageUI.List("Bracelets", Bracelets.Max, Bracelets.Index, 'Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index), { }, true, function(Hovered, Active, Selected, Index)
+                end
+            end)
+            RageUI.List("Bracelets", Bracelets.Max, Bracelets.Index, nil, { }, true, function(Hovered, Active, Selected, Index)
                 Bracelets.Index = Index
                 if Active then
                     SelectedOption = "bracelets";
-                    --DrawAdvancedText(0.936, 0.589, 0.005, 0.0028, 0.4, 'Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index),  255, 255, 255, 255, 6, 0)
+                    DrawAdvancedText(0.813, 0.597, 0.00, 0.0028, 0.4, 'Texture Index: ' .. Bracelets.TextureIndex .. "/" .. GetNumberOfPedPropTextureVariations(PlayerPedId(), 7, Bracelets.Index),  255, 255, 255, 255, 6, 0)
                     SetPedPropIndex(PlayerPedId(), 7, Bracelets.Index, Bracelets.TextureIndex, 0)
                 end
                 if Selected then 
@@ -673,14 +495,6 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-RegisterNetEvent('ARMA:ClothingPerms')
-AddEventHandler('ARMA:ClothingPerms', function(bool)
-    print(bool)
-    clothingPerm = bool
-end)
-
-local cfg = module("cfg/skinshops")
-local skinshops = cfg.skinshops 
 
 
 Citizen.CreateThread(function()
@@ -688,9 +502,9 @@ Citizen.CreateThread(function()
         local x,y,z = v[2], v[3], v[4]
         local Blip = AddBlipForCoord(x, y, z)
         SetBlipSprite(Blip, 73)
-        SetBlipDisplay(Blip, 4)
-        SetBlipScale(Blip, 0.4)
-        SetBlipColour(Blip, 1)
+        SetBlipDisplay(Blip, 2)
+        SetBlipScale(Blip, 0.5)
+        SetBlipColour(Blip, 2)
         SetBlipAsShortRange(Blip, true)
         AddTextEntry("MAPBLIP", 'Clothing Store')
         BeginTextCommandSetBlipName("MAPBLIP")
@@ -710,8 +524,9 @@ Citizen.CreateThread(function()
 					Wait(1)
 				end
 			else
-			    DrawMarker(9, x, y, z, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.6, 0.6, 0.6, 0, 191, 255, 1.0,false, false, 2, true, "clothing", "clothing", false)
-               -- DrawMarker(28, x, y, z - 0.999999, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 10.0, 255, 0, 0, 20, 0, 0, 2, 0, 0, 0, false)
+               if #(vec(x, y, z) - GetEntityCoords(PlayerPedId())) < 20 then
+			        DrawMarker(9, x, y, z, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.6, 0.6, 0.6, 10, 255, 81, 1.0, false, false, 2, true, "dp_clothing", "top", false)
+                end
             end 
         end 
     end
@@ -728,14 +543,13 @@ Citizen.CreateThread(function()
             local x,y,z = v[2], v[3], v[4]
             if #(coords - vec3(x,y,z)) <= 1.0 then
                 inMarker = true 
+                TriggerServerEvent("JudHousing:LoadWardrobe")
                 break
             end    
         end
         if not MenuOpen and inMarker then 
             MenuOpen = true
-            TriggerServerEvent('ARMA:HasFounder')
             RageUI.Visible(RMenu:Get('ARMAClothing', 'main'), true) 
-            PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
             Face.Index = GetPedDrawableVariation(ped, 0)
             Face.TextureIndex = GetPedTextureVariation(ped, 0)
             Mask.Index = GetPedDrawableVariation(ped, 1)
@@ -863,7 +677,6 @@ Citizen.CreateThread(function()
         end
         if not inMarker and MenuOpen then
             RageUI.ActuallyCloseAll()
-            PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
             RageUI.Visible(RMenu:Get('ARMAClothing', 'clothingsubmenu'), false)
             RageUI.Visible(RMenu:Get('ARMAClothing', 'changegendersubmenu'), false)  
             RageUI.Visible(RMenu:Get('ARMAClothing', 'main'), false)
@@ -871,10 +684,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
-
-
-
---
-
-

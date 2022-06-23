@@ -5,7 +5,7 @@ data = {}
 -- - Chain
 -- - Vest
 
-RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "ARMA Cosmetic Menu", 1300, 50, "cosmetics", "cosmetics"))
+RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", 1300, 50, "cosmetics", "cosmetics"))
 RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 
@@ -246,7 +246,7 @@ RageUI.CreateWhile(1.0, true, function()
 
                     end, RMenu:Get("CosmeticMenu", "marketplace"))
 
-                    RageUI.Separator("discord.gg/ARMA - #market-place", function() end)
+                    RageUI.Separator("discord.gg/armarp - #market-place", function() end)
                 end
             end
     end)            

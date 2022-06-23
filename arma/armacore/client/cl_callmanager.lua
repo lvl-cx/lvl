@@ -14,7 +14,7 @@ local takenticket = false
 local isPlayerNHS = false
 local isPlayerPD = false
 
-RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", 'ARMA Call Manager', 1300, 50, 'manager', 'manager'))
+RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~b~Call Manager', 1300, 50, 'manager', 'manager'))
 RMenu.Add("callmanager", "admin", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
 RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
 RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))

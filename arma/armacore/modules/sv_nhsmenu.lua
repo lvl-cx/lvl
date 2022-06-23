@@ -1,11 +1,11 @@
 local lang = ARMA.lang
 
-RegisterServerEvent('Eclipse:OpenNHSMenu')
-AddEventHandler('Eclipse:OpenNHSMenu', function()
+RegisterServerEvent('ARMA:OpenNHSMenu')
+AddEventHandler('ARMA:OpenNHSMenu', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if user_id ~= nil and ARMA.hasPermission(user_id, "nhs.menu") then
-        TriggerClientEvent("Eclipse:NHSMenuOpened", source)
+        TriggerClientEvent("ARMA:NHSMenuOpened", source)
     elseif user_id ~= nil and ARMA.hasPermission(user_id, "clockon.nhs") then
       ARMAclient.notify(source,{"You are not on duty"})
     else
@@ -16,8 +16,8 @@ end)
 local revive_seq = {{"amb@medic@standing@kneel@enter", "enter", 1}, {"amb@medic@standing@kneel@idle_a", "idle_a", 1},
                     {"amb@medic@standing@kneel@exit", "exit", 1}}
 
-RegisterServerEvent('Eclipse:PerformCPR')
-AddEventHandler('Eclipse:PerformCPR', function()
+RegisterServerEvent('ARMA:PerformCPR')
+AddEventHandler('ARMA:PerformCPR', function()
     player = source
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil and ARMA.hasPermission(user_id, "nhs.revive") then
@@ -28,7 +28,7 @@ AddEventHandler('Eclipse:PerformCPR', function()
                     if in_coma then
                         ARMAclient.playAnim(player, {false, revive_seq, false}) -- anim
                         SetTimeout(15000, function()
-                          TriggerClientEvent('Eclipse:FixPlayer',nplayer)
+                          TriggerClientEvent('ARMA:FixPlayer',nplayer)
                           ARMAclient.varyHealth(nplayer, 50) -- heal 50
                           ARMAclient.notify(nplayer,{"~g~You have been revived by an NHS Member, free of charge"})
                           ARMAclient.notify(player,{"~g~You revived someone, as a reward, here is £10,000 into your bank"})
@@ -45,8 +45,8 @@ AddEventHandler('Eclipse:PerformCPR', function()
     end
 end)
 
-RegisterServerEvent('Eclipse:HealPlayer')
-AddEventHandler('Eclipse:HealPlayer', function()
+RegisterServerEvent('ARMA:HealPlayer')
+AddEventHandler('ARMA:HealPlayer', function()
     player = source
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil and ARMA.hasPermission(user_id, "nhs.revive") then

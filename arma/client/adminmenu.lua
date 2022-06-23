@@ -86,6 +86,9 @@ admincfg.buttonsEnabled = {
     ["getgroups"] = {true, "group.add"},
     ["staffGroups"] = {true, "admin.staffAddGroups"},
     ["povGroups"] = {true, "admin.povAddGroups"},
+    ["licenseGroups"] = {true, "dev.menu"},
+    ["mpdGroups"] = {true, "admin.mpdAddGroups"},
+    ["nhsGroups"] = {true, "admin.mpdAddGroups"},
     ["donoGroups"] = {true, "admin.donoAddGroups"},
 
     --[[ Vehicle Functions ]]
@@ -98,42 +101,45 @@ admincfg.buttonsEnabled = {
 
 menuColour = '~b~'
 
-RMenu.Add('adminmenu', 'main', RageUI.CreateMenu("", "~b~Admin Menu", 1300,100, "adminmenu","adminmenu"))
-RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", menuColour.."Settings Menu", 1300,100, "setting","setting")) 
-RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", menuColour..'Crosshair Settings',1300,100,"crosshair","crosshair"))
+RMenu.Add('adminmenu', 'main', RageUI.CreateMenu("", "~b~Admin Menu", 1300,100, "admin","admin"))
+RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", menuColour.."Settings Menu", 1300,100, "settings","settings")) 
+RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", menuColour..'Crosshair Settings',1300,100,"settings","settings"))
 
-RMenu.Add("adminmenu", "players", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"players","players"))
-RMenu.Add("adminmenu", "closeplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"players","players"))
-RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Search Menu',1300,100,"players","players"))
+RMenu.Add("adminmenu", "players", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "closeplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
 
 --[[ Functions ]]
-RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',1300,100,"functions","functions"))
-RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',1300,100,"functions","functions"))
+RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',1300,100,"admin","admin"))
 --[[ End of Functions ]]
 
 --[[ AntiCheat ]]
-RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AntiCheat Menu',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Types',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "acbannedplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Banned Players',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "acbanmenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Banned Player Submenu',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "acmanualbanlist", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Manual Ban',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "acmanualban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Choose an AC Type to ban for',1300,100,"anticheat","anticheat"))
-RMenu.Add("adminmenu", "confirmacban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Confirm AC Ban',1300,100,"anticheat","anticheat"))
+RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AntiCheat Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Types',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "acbannedplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Banned Players',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "acbanmenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Banned Player Submenu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "acmanualbanlist", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'AC Manual Ban',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "acmanualban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Choose an AC Type to ban for',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "confirmacban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Confirm AC Ban',1300,100,"admin","admin"))
 
-RMenu.Add("adminmenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Admin Player Interaction Menu',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "bansub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Select Ban Reasons',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',1300,100,"adminmenu","adminmenu"))
-RMenu.Add("adminmenu", "confirmban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Confirm Ban',1300,100,"adminmenu","adminmenu"))
+RMenu.Add("adminmenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "bansub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Select Ban Reasons',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "confirmban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Confirm Ban',1300,100,"admin","admin"))
 
 --[[groups]]
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu.Add("adminmenu", "staffGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu.Add("adminmenu", "UserGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu.Add("adminmenu", "POVGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
+RMenu.Add("adminmenu", "LicenseGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
+RMenu.Add("adminmenu", "MPDGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
+RMenu.Add("adminmenu", "NHSGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu.Add("adminmenu", "addgroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu.Add("adminmenu", "removegroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"group","group"))
 RMenu:Get('adminmenu', 'main')
@@ -158,6 +164,11 @@ local getUserGroupsGroupIds = {
     ["Soldier"] = "Soldier",
     ["Warrior"] = "Warrior",
     ["Champion"] = "Champion",
+}
+local getUserPOVGroups = {
+    ["pov"] = "POV List",
+}
+local getUserLicenseGroups = {
     ["Scrap"] = "Scrap",
     ["Weed"] = "Weed",
     ["Cocaine"] = "Cocaine",
@@ -168,8 +179,37 @@ local getUserGroupsGroupIds = {
     ["Gang"] = "Gang",
     ["Rebel"] = "Rebel",
 }
-local getUserPOVGroups = {
-    ["pov"] = "POV List",
+
+local getUserMPDGroups = {
+    ["Commissioner"] = "Commissioner",
+    ["Deputy Commissioner"] = "Deputy Commissioner",
+    ["Assistant Commissioner"] = "Assistant Commissioner",
+    ["Deputy Assistant Commissioner"] = "Deputy Assistant Commissioner",
+    ["Commander"] = "Commander",
+    ["Chief Superintendent"] = "Chief Superintendent",
+    ["Superintendent"] = "Superintendent",
+    ["Chief Inspector"] = "Chief Inspector",
+    ["Inspector"] = "Inspector",
+    ["Sergeant"] = "Sergeant",
+    ["Special Police Constable"] = "Special Police Constable",
+    ["Senior Police Constable"] = "Senior Police Constable",
+    ["Police Constable"] = "Police Constable",
+    ["PCSO"] = "PCSO",
+    ["SCO-19"] = "SCO-19",
+}
+
+local getUserNHSGroups = {
+    ["Head Chief Medical Officer"] = "Head Chief Medical Officer",
+    ["Assistant Chief Medical Officer"] = "Assistant Chief Medical Officer",
+    ["Deputy Chief Medical Officer"] = "Deputy Chief Medical Officer",
+    ["Captain"] = "Captain",
+    ["Consultant"] = "Consultant",
+    ["Specialist"] = "Specialist",
+    ["Senior Doctor"] = "Senior Doctor",
+    ["Junior Doctor"] = "Junior Doctor",
+    ["Critical Care Paramedic"] = "Critical Care Paramedic",
+    ["Paramedic"] = "Paramedic",
+    ["Trainee Paramedic"] = "Trainee Paramedic",
 }
 
 RageUI.CreateWhile(1.0, true, function()
@@ -505,7 +545,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("Give Credits","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button("Give Money","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
                     end
@@ -1166,8 +1206,32 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'POVGroups'))
             end
+            if admincfg.buttonsEnabled["licenseGroups"][1] and buttons["licenseGroups"] then
+                RageUI.Button("License Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                        RMenu:Get("adminmenu", "groups"):SetTitle("")
+                        RMenu:Get("adminmenu", "groups"):SetSubtitle("License Groups")
+                    end
+                end, RMenu:Get('adminmenu', 'LicenseGroups'))
+            end
+            if admincfg.buttonsEnabled["mpdGroups"][1] and buttons["mpdGroups"] then
+                RageUI.Button("MPD Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                        RMenu:Get("adminmenu", "groups"):SetTitle("")
+                        RMenu:Get("adminmenu", "groups"):SetSubtitle("MPD Groups")
+                    end
+                end, RMenu:Get('adminmenu', 'MPDGroups'))
+            end
+            if admincfg.buttonsEnabled["nhsGroups"][1] and buttons["nhsGroups"] then
+                RageUI.Button("NHS Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    if (Selected) then
+                        RMenu:Get("adminmenu", "groups"):SetTitle("")
+                        RMenu:Get("adminmenu", "groups"):SetSubtitle("NHS Groups")
+                    end
+                end, RMenu:Get('adminmenu', 'NHSGroups'))
+            end
             if admincfg.buttonsEnabled["donoGroups"][1] and buttons["donoGroups"] then
-                RageUI.Button("Main Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.Button("Donator Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'UserGroups'))
             end
         end) 
@@ -1230,6 +1294,84 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'POVGroups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getUserPOVGroups) do
+                if searchPlayerGroups[k] ~= nil then
+                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "removegroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'removegroup'))
+                else
+                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "addgroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'addgroup'))
+                end
+            end
+        end)
+    end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('adminmenu', 'LicenseGroups')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            for k,v in pairs(getUserLicenseGroups) do
+                if searchPlayerGroups[k] ~= nil then
+                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "removegroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'removegroup'))
+                else
+                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "addgroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'addgroup'))
+                end
+            end
+        end)
+    end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('adminmenu', 'MPDGroups')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            for k,v in pairs(getUserMPDGroups) do
+                if searchPlayerGroups[k] ~= nil then
+                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "removegroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'removegroup'))
+                else
+                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                        if (Selected) then
+                            RMenu:Get("adminmenu", "addgroup"):SetTitle("")
+                            RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
+                            selectedGroup = k
+                        end
+                    end, RMenu:Get('adminmenu', 'addgroup'))
+                end
+            end
+        end)
+    end
+end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('adminmenu', 'NHSGroups')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            for k,v in pairs(getUserNHSGroups) do
                 if searchPlayerGroups[k] ~= nil then
                     RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then

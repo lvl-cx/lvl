@@ -1,4 +1,4 @@
-RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "ARMA Gang Menu", 1300, 50, "gang", "gang"))
+RMenu.Add('gangmenu', 'main', RageUI.CreateMenu("", "~b~Gang Menu", 1300, 50, "gang", "gang"))
 RMenu.Add("gangmenu", "funds", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "invite", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
 RMenu.Add("gangmenu", "members", RageUI.CreateSubMenu(RMenu:Get("gangmenu", "main", 1300, 50)))
