@@ -1,8 +1,8 @@
-RMenu.Add('NHSDutyMenu', 'main', RageUI.CreateMenu("NHS", "NHS Duty Menu", 1250,100))
+RMenu.Add('NHSDutyMenu', 'main', RageUI.CreateMenu("", "~b~Clock On", 1250,100,'clockon', 'clockon'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('NHSDutyMenu', 'main')) then
-        RageUI.DrawContent({ header = true, glare = true, instructionalButton = true}, function()
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
             RageUI.Button("Head Chief Medical Officer" , nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -70,7 +70,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
             
-            RageUI.Button("~r~Clock Off" , nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+            RageUI.Button("~b~Clock Off" , nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent('NHSMenu:ClockOff')
                 end
