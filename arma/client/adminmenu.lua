@@ -217,26 +217,26 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
         hoveredPlayer = nil
         if admincfg.buttonsEnabled["adminMenu"][1] and buttons["adminMenu"] then
-            RageUI.Button("All Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("All Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'players'))
         end
         if admincfg.buttonsEnabled["adminMenu"][1] and buttons["adminMenu"] then
-            RageUI.Button("Nearby Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Nearby Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("Jud:GetNearbyPlayers", 250)
                 end
             end, RMenu:Get('adminmenu', 'closeplayers'))
         end
         if admincfg.buttonsEnabled["adminMenu"][1] and buttons["adminMenu"] then
-            RageUI.Button("Search Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Search Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchoptions'))
         end
         if admincfg.buttonsEnabled["adminMenu"][1] and buttons["adminMenu"] then
-            RageUI.Button("Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'functions'))
         end
         if admincfg.buttonsEnabled["adminMenu"][1] and buttons["adminMenu"] then
-            RageUI.Button("Settings", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Settings", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('SettingsMenu', 'MainMenu'))
         end
         end)
@@ -247,7 +247,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'players')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k, v in pairs(players) do
-                RageUI.Button(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         SelectedPlayer = players[k]
                         SelectedPerm = v[3]
@@ -262,7 +262,7 @@ RageUI.CreateWhile(1.0, true, function()
             if next(playersNearby) then
                 --RageUI.Separator("Nearby player distance: "..playersNearbyDistance.."m", function() end)
                 for i, v in pairs(playersNearby) do
-                    RageUI.Button(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             SelectedPlayer = playersNearby[i]
                             SelectedPerm = v[3]
@@ -339,7 +339,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.Button("~b~Crosshair Settings", "~b~Change your crosshair settings", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("~b~Crosshair Settings", "~b~Change your crosshair settings", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('SettingsMenu', 'crosshairsettings'))
        end)
     end
@@ -361,12 +361,12 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.Button("Edit Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Edit Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if (Selected) then
                     ExecuteCommand("crosse")
                 end
             end)
-            RageUI.Button("Reset Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Reset Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if (Selected) then
                     ExecuteCommand("crossr")
                 end
@@ -412,13 +412,13 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchoptions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             foundMatch = false
-            RageUI.Button("Search by Name", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Search by Name", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchname'))
-            RageUI.Button("Search by Perm ID", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Search by Perm ID", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchpermid'))
-            RageUI.Button("Search by Temp ID", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Search by Temp ID", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchtempid'))
-            RageUI.Button("Search History", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Search History", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchhistory'))
         end)
     end
@@ -429,14 +429,14 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'functions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("Get Coords", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GetCoords')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if admincfg.buttonsEnabled["kick"][1] and buttons["kick"] then                        
-                RageUI.Button("Kick (No F10)", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Kick (No F10)", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:noF10Kick')
                     end
@@ -453,14 +453,14 @@ RageUI.CreateWhile(1.0, true, function()
                 function()end)
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("TP To Coords","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("TP To Coords","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Tp2Coords")
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if admincfg.buttonsEnabled["ban"][1] and buttons["ban"] then
-                RageUI.Button("Offline Ban","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:offlineban', uid)
@@ -468,7 +468,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
             end
             if admincfg.buttonsEnabled["tp2waypoint"][1] and buttons["tp2waypoint"] then
-                RageUI.Button("TP To Waypoint", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local WaypointHandle = GetFirstBlipInfoId(8)
                         if DoesBlipExist(WaypointHandle) then
@@ -489,14 +489,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if admincfg.buttonsEnabled["unban"][1] and buttons["unban"] then
-                RageUI.Button("Unban Player","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Unban Player","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Unban")
                     end
                 end)
             end
             if admincfg.buttonsEnabled["removewarn"][1] and buttons["removewarn"] then
-                RageUI.Button("Remove Warning", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Remove Warning", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RemoveWarning', uid, result)
@@ -504,14 +504,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if admincfg.buttonsEnabled["getgroups"][1] and buttons["getgroups"] then
-                RageUI.Button("Toggle Blips", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Toggle Blips", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:checkBlips')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("~b~Developer Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("~b~Developer Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
         end)
@@ -524,42 +524,42 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'devfunctions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if admincfg.buttonsEnabled["spawnGun"][1] and buttons["spawnGun"] then
-                RageUI.Button("Spawn Weapon", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Spawn Weapon", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:Giveweapon')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["spawnGun"][1] and buttons["spawnGun"] then
-                RageUI.Button("Give Weapon", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Give Weapon", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["addcar"][1] and buttons["addcar"] then
-                RageUI.Button("Add Car", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("Give Money","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Give Money","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("Give Crates","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Give Crates","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveCratesMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
             if admincfg.buttonsEnabled["devMenu"][1] and buttons["devMenu"] then
-                RageUI.Button("AntiCheat","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("AntiCheat","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:getAnticheatData")
                     end
@@ -584,7 +584,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[3],searchforPermID) then
-                    RageUI.Button("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
                         end
@@ -610,7 +610,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[2], searchid) then
-                    RageUI.Button("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
                         end
@@ -633,7 +633,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(string.lower(v[1]), string.lower(SearchName)) then
-                    RageUI.Button("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
                         end
@@ -652,7 +652,7 @@ RageUI.CreateWhile(1.0, true, function()
                     for K = #h, #h - 10, -1 do
                         if h[K] then
                             if tonumber(h[K]) == v[3] then
-                                RageUI.Button("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                                RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                                     if Selected then
                                         SelectedPlayer = players[k]
                                     end
@@ -672,14 +672,14 @@ RageUI.CreateWhile(1.0, true, function()
             hoveredPlayer = nil
             RageUI.Separator("~y~Player must provide POV on request: "..povlist)
             if admincfg.buttonsEnabled["spectate"][1] and buttons["spectate"] then
-                RageUI.Button("Player Notes", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Player Notes", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:getNotes', uid, SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'notesub'))
             end              
             if admincfg.buttonsEnabled["kick"][1] and buttons["kick"] then
-                RageUI.Button("Kick Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Kick Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:KickPlayer', uid, SelectedPlayer[3], kickReason, SelectedPlayer[2])
@@ -687,13 +687,13 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["ban"][1] and buttons["ban"] then
-                RageUI.Button("Ban Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Ban Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                     end
                 end, RMenu:Get('adminmenu', 'bansub'))
             end
             if admincfg.buttonsEnabled["spectate"][1] and buttons["spectate"] then
-                RageUI.Button("Spectate Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Spectate Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         inRedZone = false
                         TriggerServerEvent('ARMA:SpectatePlayer', SelectedPlayer[3])
@@ -701,7 +701,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["revive"][1] and buttons["revive"] then
-                RageUI.Button("Revive", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Revive", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RevivePlayer', uid, SelectedPlayer[2])
@@ -709,7 +709,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end 
             if admincfg.buttonsEnabled["TP2"][1] and buttons["TP2"] then
-                RageUI.Button("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local newSource = GetPlayerServerId(PlayerId())
                         savedCoords1 = GetEntityCoords(PlayerPedId())
@@ -724,14 +724,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"] then
-                RageUI.Button("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:BringPlayer', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"] then
-                RageUI.Button("Teleport to Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport to Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         inRedZone = false
                         savedCoordsBeforeAdminZone = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(SelectedPlayer[2])))
@@ -740,21 +740,21 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"] then
-                RageUI.Button("Teleport Back from Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport Back from Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:TeleportBackFromAdminZone", SelectedPlayer[2], savedCoordsBeforeAdminZone)
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["TP2ME"][1] and buttons["TP2ME"] then
-                RageUI.Button("Teleport to Legion", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport to Legion", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Teleport", SelectedPlayer[2], vector3(151.61740112305,-1035.05078125,29.339416503906))
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["FREEZE"][1] and buttons["FREEZE"] then
-                RageUI.Button("Freeze", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Freeze", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         isFrozen = not isFrozen
@@ -763,7 +763,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["slap"][1] and buttons["slap"] then
-                RageUI.Button("Slap Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Slap Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:SlapPlayer', uid, SelectedPlayer[2])
@@ -771,14 +771,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["showwarn"][1] and buttons["showwarn"] then
-                RageUI.Button("Open F10 Warning Log", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Open F10 Warning Log", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         ExecuteCommand("sw " .. SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["SS"][1] and buttons["SS"] then
-                RageUI.Button("Take Screenshot", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Take Screenshot", "", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RequestScreenshot', uid , SelectedPlayer[2])
@@ -786,7 +786,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if admincfg.buttonsEnabled["getgroups"][1] and buttons["getgroups"] then
-                RageUI.Button("See Groups", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("See Groups", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[2], SelectedPlayer[3])
                     end
@@ -915,7 +915,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'bansub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if admincfg.buttonsEnabled["ban"][1] and buttons["ban"] then
-                RageUI.Button("~g~[Custom Ban Message]", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)            
+                RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)            
                         if Selected then
                             local uid = GetPlayerServerId(PlayerId())
                             TriggerServerEvent('ARMA:CustomBan', uid, SelectedPlayer[3])
@@ -933,7 +933,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end)
                 end
-                RageUI.Button('Create Ban Data', nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle('Create Ban Data', nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         bantargetname = SelectedPlayer[1]
                         bantarget =  SelectedPlayer[3]
@@ -957,13 +957,13 @@ RageUI.CreateWhile(1.0, true, function()
             else
                 RageUI.Separator('Total Length: '..banduration..' hours.')
             end
-            RageUI.Button("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     local uid = GetPlayerServerId(PlayerId())
                     TriggerServerEvent('ARMA:BanPlayerConfirm', uid, bantarget, banreasons, banduration, banevidence)
                 end
             end)
-            RageUI.Button("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     for i, p in pairs(warningbankick) do
                         if p.selected then 
@@ -993,12 +993,12 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end
             if admincfg.buttonsEnabled["warn"][1] and buttons["warn"] then
-                RageUI.Button("Add To Notes:", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Add To Notes:", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:addNote', uid, SelectedPlayer[2])
                     end
                 end)
-                RageUI.Button("Remove Note", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Remove Note", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:removeNote', uid, SelectedPlayer[2])
@@ -1034,11 +1034,11 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
-                RageUI.Button("Banned Players","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Banned Players","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'acbannedplayers'))
-                RageUI.Button("Ban Types","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Ban Types","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'actypes'))
-                RageUI.Button("Manual Ban","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Manual Ban","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'acmanualbanlist'))
             end   
         end)
@@ -1053,7 +1053,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for i, p in pairs(actypes) do
-                    RageUI.ButtonWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyleWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     end, RMenu:Get('adminmenu', 'anticheat'))
                 end
             end
@@ -1069,7 +1069,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for k, v in pairs(acbannedplayerstable) do
-                    RageUI.Button("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = acbannedplayerstable[k]
                         end
@@ -1088,7 +1088,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for k, v in pairs(players) do
-                    RageUI.Button(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
                             SelectedPerm = v[3]
@@ -1110,7 +1110,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for i, p in pairs(actypes) do
-                    RageUI.ButtonWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyleWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             acbanType = p.type
                         end
@@ -1128,13 +1128,13 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("~w~For the following reasons:")
             RageUI.Separator('Cheating Type #'..acbanType)
             RageUI.Separator('Duration: Permanent')
-            RageUI.Button("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("ARMA:acBan", SelectedPerm, 'Type #'..acbanType, SelectedName, SelectedPlayerSource)
                     notify('~g~AC Banned ID: '..SelectedPerm)
                 end
             end, RMenu:Get('adminmenu', 'anticheat'))
-            RageUI.Button("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'anticheat'))
         end)
     end
@@ -1147,12 +1147,12 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
-                RageUI.Button("Unban Player","Unban Selected User",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Unban Player","Unban Selected User",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         TriggerServerEvent('ARMA:acUnban', SelectedPlayer[2])
                     end
                 end, RMenu:Get("anticheat", "acbannedplayers"))
-                RageUI.Button("Check Warnings","Show F10 Warning Log",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Check Warnings","Show F10 Warning Log",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         ExecuteCommand("sw " .. SelectedPlayer[2])
                     end
@@ -1191,7 +1191,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if admincfg.buttonsEnabled["staffGroups"][1] and buttons["staffGroups"] then
-                RageUI.Button("Staff Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Staff Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
                         RMenu:Get("adminmenu", "groups"):SetSubtitle("Staff Groups")
@@ -1199,7 +1199,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'staffGroups'))
             end
             if admincfg.buttonsEnabled["povGroups"][1] and buttons["povGroups"] then
-                RageUI.Button("POV Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("POV Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
                         RMenu:Get("adminmenu", "groups"):SetSubtitle("POV Groups")
@@ -1207,7 +1207,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'POVGroups'))
             end
             if admincfg.buttonsEnabled["licenseGroups"][1] and buttons["licenseGroups"] then
-                RageUI.Button("License Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("License Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
                         RMenu:Get("adminmenu", "groups"):SetSubtitle("License Groups")
@@ -1215,7 +1215,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'LicenseGroups'))
             end
             if admincfg.buttonsEnabled["mpdGroups"][1] and buttons["mpdGroups"] then
-                RageUI.Button("MPD Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("MPD Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
                         RMenu:Get("adminmenu", "groups"):SetSubtitle("MPD Groups")
@@ -1223,7 +1223,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'MPDGroups'))
             end
             if admincfg.buttonsEnabled["nhsGroups"][1] and buttons["nhsGroups"] then
-                RageUI.Button("NHS Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("NHS Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
                         RMenu:Get("adminmenu", "groups"):SetSubtitle("NHS Groups")
@@ -1231,7 +1231,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'NHSGroups'))
             end
             if admincfg.buttonsEnabled["donoGroups"][1] and buttons["donoGroups"] then
-                RageUI.Button("Donator Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Donator Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'UserGroups'))
             end
         end) 
@@ -1243,7 +1243,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getStaffGroupsGroupIds) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1251,7 +1251,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1269,7 +1269,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getUserGroupsGroupIds) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1277,7 +1277,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1295,7 +1295,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getUserPOVGroups) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1303,7 +1303,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1321,7 +1321,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getUserLicenseGroups) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1329,7 +1329,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1347,7 +1347,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k,v in pairs(getUserMPDGroups) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1355,7 +1355,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1373,7 +1373,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for k,v in pairs(getUserNHSGroups) do
                 if searchPlayerGroups[k] ~= nil then
-                    RageUI.Button("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "removegroup"):SetTitle("")
                             RMenu:Get("adminmenu", "removegroup"):SetSubtitle("Remove Group")
@@ -1381,7 +1381,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get('adminmenu', 'removegroup'))
                 else
-                    RageUI.Button("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                         if (Selected) then
                             RMenu:Get("adminmenu", "addgroup"):SetTitle("")
                             RMenu:Get("adminmenu", "addgroup"):SetSubtitle("Add Group")
@@ -1397,7 +1397,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'addgroup')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Button("Add this group to user", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Add this group to user", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 if (Selected) then
                     TriggerServerEvent("ARMA:AddGroup",SelectedPerm,selectedGroup)
                 end
@@ -1409,7 +1409,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'removegroup')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Button("Remove user from group", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+            RageUI.ButtonWithStyle("Remove user from group", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 if (Selected) then
                     TriggerServerEvent("ARMA:RemoveGroup",SelectedPerm,selectedGroup)
                 end
