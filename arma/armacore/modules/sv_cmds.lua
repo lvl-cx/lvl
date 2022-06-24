@@ -2,7 +2,7 @@ local ChatCooldown = 0
 local lstmsg = nil
 
 --Dispatch Message
-RegisterCommand("vpn", function(source, args, raw)
+RegisterCommand("anon", function(source, args, raw)
     if #args <= 0 then 
 		return 
 	end
@@ -10,21 +10,46 @@ RegisterCommand("vpn", function(source, args, raw)
 	local name = GetPlayerName(source)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
-	local anonembeds = {
-        {
-            ["color"] = "270069",
-            ["title"] = ""..name.." | VPN Chat Logs",
-			["description"] = "**Name: **"..name.." \n**Perm ID: **"..user_id.."\n**Message: **"..message,
-            ["footer"] = {
-              ["text"] = "ARMA VPN Logs",
-            }
-        }
-    }
-
-	PerformHttpRequest("https://canary.discord.com/api/webhooks/852998905914720267/gOddyBcy-YYy0GcvvBxwOlmK66gxjWZVE4URzL2s8zdjarYbuoW_LmNxx4kWOKwUwZEz", function(err, text, headers) end, "POST", json.encode({username = "ARMA RP", embeds = anonembeds}), { ["Content-Type"] = "application/json" })
+	local command = {
+		{
+			["color"] = "16448403",
+			["title"] = "ARMA Chat Logs",
+			["description"] = "```"..message.."```",
+			["text"] = "ARMA Server #1",
+			["fields"] = {
+				{
+					["name"] = "Player Name",
+					["value"] = GetPlayerName(source),
+					["inline"] = true
+				},
+				{
+					["name"] = "Player TempID",
+					["value"] = source,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player PermID",
+					["value"] = user_id,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player Hours",
+					["value"] = "0 hours",
+					["inline"] = true
+				},
+				{
+					["name"] = "Chat Type",
+					["value"] = "Anon",
+					["inline"] = true
+				}
+			}
+		}
+	}
+	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if ChatCooldown == 0 then 
-		TriggerClientEvent('chatMessage', -1, "VPN |", { 255, 0, 0 }, message, "vpn")
+		TriggerClientEvent('chatMessage', -1, "^4Twitter @^1Anonymous: ", { 255, 0, 0 }, message, "ooc")
 		print()
 		ChatCooldown = 3
 	end
@@ -40,18 +65,43 @@ RegisterCommand("ooc", function(source, args, raw)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
 	lastmsg = message
-	local oocembeds = {
-        {
-            ["color"] = "270069",
-            ["title"] = ""..name.." | OOC Chat Logs",
-			["description"] = "**Name: **"..name.." \n**Perm ID: **"..user_id.."\n**Message: **"..message,
-            ["footer"] = {
-            ["text"] = "ARMA OOC Logs",
-            }
-        }
-    }
-
-	PerformHttpRequest("https://canary.discord.com/api/webhooks/852999162031112233/G3cFiB5pj6K2eAHTTbusrdFNHflSwaQGUEX0q1W3APDgqs5kOomNK1o5sHmRCsSpnKr6", function(err, text, headers) end, "POST", json.encode({username = "ARMA RP", embeds = oocembeds}), { ["Content-Type"] = "application/json" })
+	local command = {
+		{
+			["color"] = "16448403",
+			["title"] = "ARMA Chat Logs",
+			["description"] = "```"..lastmsg.."```",
+			["text"] = "ARMA Server #1",
+			["fields"] = {
+				{
+					["name"] = "Player Name",
+					["value"] = GetPlayerName(source),
+					["inline"] = true
+				},
+				{
+					["name"] = "Player TempID",
+					["value"] = source,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player PermID",
+					["value"] = user_id,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player Hours",
+					["value"] = "0 hours",
+					["inline"] = true
+				},
+				{
+					["name"] = "Chat Type",
+					["value"] = "OOC",
+					["inline"] = true
+				}
+			}
+		}
+	}
+	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
@@ -170,18 +220,43 @@ RegisterCommand("/", function(source, args, raw)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
 	lastmsg = message
-	local oocembeds = {
-        {
-            ["color"] = "270069",
-            ["title"] = ""..name.." | OOC Chat Logs",
-			["description"] = "**Name: **"..name.." \n**Perm ID: **"..user_id.."\n**Message: **"..message,
-            ["footer"] = {
-            ["text"] = "ARMA OOC Logs",
-            }
-        }
-    }
-
-	PerformHttpRequest("https://canary.discord.com/api/webhooks/852999162031112233/G3cFiB5pj6K2eAHTTbusrdFNHflSwaQGUEX0q1W3APDgqs5kOomNK1o5sHmRCsSpnKr6", function(err, text, headers) end, "POST", json.encode({username = "ARMA RP", embeds = oocembeds}), { ["Content-Type"] = "application/json" })
+	local command = {
+		{
+			["color"] = "16448403",
+			["title"] = "ARMA Chat Logs",
+			["description"] = "```"..lastmsg.."```",
+			["text"] = "ARMA Server #1",
+			["fields"] = {
+				{
+					["name"] = "Player Name",
+					["value"] = GetPlayerName(source),
+					["inline"] = true
+				},
+				{
+					["name"] = "Player TempID",
+					["value"] = source,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player PermID",
+					["value"] = user_id,
+					["inline"] = true
+				},
+				{
+					["name"] = "Player Hours",
+					["value"] = "0 hours",
+					["inline"] = true
+				},
+				{
+					["name"] = "Chat Type",
+					["value"] = "OOC",
+					["inline"] = true
+				}
+			}
+		}
+	}
+	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
@@ -307,23 +382,46 @@ RegisterCommand("announce", function(source, args, raw)
 		local source = source
 		local name = GetPlayerName(source)
 		local user_id = ARMA.getUserId(source)
-		local announceembed = {
+		local command = {
 			{
-				["color"] = "270069",
-				["title"] = ""..name.." | Announce Chat Logs",
-				["description"] = "**Name: **"..name.." \n**Perm ID: **"..user_id.."\n**Message: **"..message,
-				["footer"] = {
-				["text"] = "ARMA OOC Logs",
+				["color"] = "16448403",
+				["title"] = "ARMA Chat Logs",
+				["description"] = "```"..message.."```",
+				["text"] = "ARMA Server #1",
+				["fields"] = {
+					{
+						["name"] = "Player Name",
+						["value"] = GetPlayerName(source),
+						["inline"] = true
+					},
+					{
+						["name"] = "Player TempID",
+						["value"] = source,
+						["inline"] = true
+					},
+					{
+						["name"] = "Player PermID",
+						["value"] = user_id,
+						["inline"] = true
+					},
+					{
+						["name"] = "Player Hours",
+						["value"] = "0 hours",
+						["inline"] = true
+					},
+					{
+						["name"] = "Chat Type",
+						["value"] = "Announce",
+						["inline"] = true
+					}
 				}
 			}
 		}
-	
-		PerformHttpRequest("https://canary.discord.com/api/webhooks/852999304694988830/fjhaX-HLKeS5PpKMswofPlbIUHbr-sY6ZFFtb0pQ2rPlffAeSG2N8QKsAsnXWOgIU_ET", function(err, text, headers) end, "POST", json.encode({username = "ARMA RP", embeds = announceembed}), { ["Content-Type"] = "application/json" })
+		local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 		TriggerClientEvent('chatMessage', -1, "^7Announce: " , { 128, 128, 128 }, message, "alert")
 	end
 end)
-
-
 --Function
 function stringsplit(inputstr, sep)
 	if sep == nil then
