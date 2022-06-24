@@ -3,7 +3,6 @@ AddEventHandler('ARMA:hoursReward', function(reward)
     local source = source
     local user_id = ARMA.getUserId(source)
     local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
-
     if hours < reward then ARMAclient.notify(source,{'~r~You do not have enough hours to claim this reward.'}) return end
     if not ARMA.hasGroup(user_id, reward..'hrs') then
         if hours >= reward then
