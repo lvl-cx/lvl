@@ -1547,6 +1547,8 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
     end
 end)
 
+frozenplayers = {}
+
 RegisterServerEvent('ARMA:FreezeSV')
 AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
     local admin_id = ARMA.getUserId(admin)
@@ -1604,6 +1606,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             local webhook = "https://discord.com/api/webhooks/989687676858925097/mtHhI90umPUjLoRfnY0_lalnjSf6icT6zcI868r13nbDMhiD1HoNLVhmO0pNhMq1ODAV"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Froze Player.')
+            frozenplayers[user_id] = true
             ARMAclient.notify(newtarget, {'~g~You have been frozen.'})
         else
             local command = {
@@ -1655,6 +1658,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
+            frozenplayers[user_id] = nil
         end
         TriggerClientEvent('ARMA:Freeze', newtarget, isFrozen)
     else
