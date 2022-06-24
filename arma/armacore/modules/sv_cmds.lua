@@ -153,40 +153,34 @@ RegisterCommand("ooc", function(source, args, raw)
 													print()
 													ChatCooldown = 3
 												else
-													if ARMA.hasGroup(user_id, "king") then
+													if ARMA.hasGroup(user_id, "VIP") then
 														TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^1 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 														print()
 														ChatCooldown = 3
 													else
-														if ARMA.hasGroup(user_id, "presidential") then
+														if ARMA.hasGroup(user_id, "Recruit") then
 															TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^ |^9 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 															print()
 															ChatCooldown = 3
 														else
-															if ARMA.hasGroup(user_id, "boss") then
+															if ARMA.hasGroup(user_id, "Soldier") then
 																TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc") 
 																print()
 																ChatCooldown = 3
 															else
-																if ARMA.hasGroup(user_id, "executive") then
+																if ARMA.hasGroup(user_id, "Warrior") then
 																	TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^6 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 																	print()
 																	ChatCooldown = 3
 																else
-																	if ARMA.hasGroup(user_id, "supporter") then
+																	if ARMA.hasGroup(user_id, "Champion") then
 																		TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^5 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 																		print()
 																		ChatCooldown = 3
 																	else
-																		if ARMA.hasGroup(user_id, "vip") then
-																			TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^2 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
-																			print()
-																			ChatCooldown = 3
-																		else
-																			TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
-																			print()
-																			ChatCooldown = 3
-																		end
+																		TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+																		print()
+																		ChatCooldown = 3
 																	end
 																end
 															end
