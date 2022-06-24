@@ -1611,18 +1611,58 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
     if ARMA.hasPermission(user_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
+        local command = {
             {
-                ["color"] = "15158332",
-                ["title"] = "Teleported to "..playerOtherName,
-                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
+                ["color"] = "16448403",
+                ["title"] = "ARMA Teleport Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = source,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = user_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(ARMA.getUserSource(player_id)),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = ARMA.getUserSource(player_id),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = player_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Hours",
+                        ["value"] = "0 hours",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Teleport Type",
+                        ["value"] = "Teleport to Player",
+                        ["inline"] = true
+                    }
                 }
+            }
         }
-        }}), { ["Content-Type"] = "application/json" })
+        local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:Teleport', source, coords)
     else
         local player = ARMA.getUserSource(user_id)
@@ -1645,26 +1685,67 @@ AddEventHandler('ARMA:BringPlayer', function(id)
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(source)
                 local otherPlr = GetPlayerPed(SelectedPlrSource)
+                local otherPlrC = GetEntityCoords(otherPlr)
                 local pedCoords = GetEntityCoords(ped)
                 local playerOtherName = GetPlayerName(SelectedPlrSource)
 
                 local player_id = ARMA.getUserId(SelectedPlrSource)
                 local playerName = GetPlayerName(source)
-
+                
                 SetEntityCoords(otherPlr, pedCoords)
-
-                webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-                PerformHttpRequest(webhook, function(err, text, headers) 
-                end, "POST", json.encode({username = "ARMA", embeds = {
+                local otherPlrCN = GetEntityCoords(otherPlr)
+                local command = {
                     {
-                        ["color"] = "15158332",
-                        ["title"] = "Brang "..playerOtherName,
-                        ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                        ["footer"] = {
-                            ["text"] = "Time - "..os.date("%x %X %p"),
+                        ["color"] = "16448403",
+                        ["title"] = "ARMA Teleport Logs",
+                        ["description"] = "",
+                        ["text"] = "ARMA Server #1",
+                        ["fields"] = {
+                            {
+                                ["name"] = "Admin Name",
+                                ["value"] = GetPlayerName(source),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin TempID",
+                                ["value"] = source,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin PermID",
+                                ["value"] = user_id,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player Name",
+                                ["value"] = GetPlayerName(ARMA.getUserSource(id)),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player TempID",
+                                ["value"] = ARMA.getUserSource(id),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player PermID",
+                                ["value"] = id,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player Hours",
+                                ["value"] = "0 hours",
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Teleport Type",
+                                ["value"] = "Teleport to me",
+                                ["inline"] = true
+                            }
                         }
+                    }
                 }
-            }}), { ["Content-Type"] = "application/json" })
+                local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             else 
                 TriggerClientEvent('ARMA:BringPlayer', SelectedPlrSource, false, id)  
             end
@@ -1744,18 +1825,58 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
                     amount = parseInt(amount)
                     ARMA.giveBankMoney(tonumber(playerid), amount)
                     ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~£"..amount.." ~g~"})
-                    webhook = "https://discord.com/api/webhooks/975532406817833000/U4DT4s1sKp1dxxVrzl-pFZvNgv2F9SP0kv6YB8zsSeVA7sQPQSNclEsBDKWgBj6KUC9L"
-                    PerformHttpRequest(webhook, function(err, text, headers) 
-                    end, "POST", json.encode({username = "ARMA", embeds = {
+                    local command = {
                         {
-                            ["color"] = "15158332",
-                            ["title"] = "Money Give Logs",
-                            ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
-                            ["footer"] = {
-                                ["text"] = "Time - "..os.date("%x %X %p"),
+                            ["color"] = "16448403",
+                            ["title"] = "ARMA Developer Logs",
+                            ["description"] = "",
+                            ["text"] = "ARMA Server #1",
+                            ["fields"] = {
+                                {
+                                    ["name"] = "Admin Name",
+                                    ["value"] = GetPlayerName(source),
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin TempID",
+                                    ["value"] = source,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin PermID",
+                                    ["value"] = user_id,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player Name",
+                                    ["value"] = GetPlayerName(ARMA.getUserSource(playerid)),
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player TempID",
+                                    ["value"] = ARMA.getUserSource(playerid),
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player PermID",
+                                    ["value"] = playerid,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player Hours",
+                                    ["value"] = "0 hours",
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Amount Given",
+                                    ["value"] = amount,
+                                    ["inline"] = true
+                                }
                             }
+                        }
                     }
-                }}), { ["Content-Type"] = "application/json" })
+                    local webhook = "https://discord.com/api/webhooks/989693266221989888/KSmFxjdtydw57u5jKHW7PoImRwRKxLfMOKLqXaqu3SeETIO4hlhwHtEh5DTo0DLGyo0V"
+                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                 end)
             end
         end)
@@ -1825,18 +1946,58 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
     if ARMA.hasPermission(admin_id, perm) then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(id)
-        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
+        local command = {
             {
-                ["color"] = "15158332",
-                ["title"] = "Teleported "..playerOtherName.." to admin island",
-                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
+                ["color"] = "16448403",
+                ["title"] = "ARMA Teleport Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = source,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = admin_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = player_name,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = player_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Hours",
+                        ["value"] = "0 hours",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Teleport Type",
+                        ["value"] = "Teleport to Admin Island",
+                        ["inline"] = true
+                    }
                 }
+            }
         }
-    }}), { ["Content-Type"] = "application/json" })
+        local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         local ped = GetPlayerPed(source)
         local ped2 = GetPlayerPed(id)
         SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
