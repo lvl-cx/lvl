@@ -2040,9 +2040,6 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
         local ped2 = GetPlayerPed(id)
         SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
         ARMAclient.notify(ARMA.getUserSource(player_id),{'~g~You are now in an admin situation, do not leave the game.'})
-        if playerName == playerOtherName then
-            TriggerClientEvent("staffon", source)
-        end
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)

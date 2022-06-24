@@ -101,11 +101,15 @@ AddEventHandler('ARMA:returnMe', function(admin, ticket, reason)
 
 end)
 
+staffedon = {}
+
 RegisterCommand("staffon", function(source)
-    user_id = ARMA.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
+        if staffedon[user_id] == true then ARMAclient.notify(source,{"~r~Already staffon'd"}) return end
         TriggerClientEvent("staffon", source)
         ARMAclient.notify(source,{"~g~You are now on Duty!"})
+        staffedon[user_id] = true
     else
         ARMAclient.notify(source,{"~r~You do not have permissions to do this!"})
     end
@@ -114,8 +118,10 @@ end)
 RegisterCommand("staffoff", function(source)
     user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
+        if staffedon[user_id] == nil then ARMAclient.notify(source,{"~r~Not staffon'd"}) return end
         TriggerClientEvent("staffoff", source)
         ARMAclient.notify(source,{"~r~You are now off Duty!"})
+        staffedon[user_id] = nil
     else
         ARMAclient.notify(source,{"~r~You do not have permissions to do this!"})
     end
