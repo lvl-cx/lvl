@@ -95,6 +95,13 @@ Citizen.CreateThread(function()
     );
     ]])
     MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_srv_data(
+    dkey VARCHAR(100),
+    dvalue TEXT,
+    CONSTRAINT pk_srv_data PRIMARY KEY(dkey)
+    );
+    ]])
+    MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_user_vehicles(
     user_id INTEGER,
     vehicle VARCHAR(100),
@@ -169,6 +176,9 @@ MySQL.createCommand("ARMA/select_identifier_byid_all","SELECT * FROM arma_user_i
 
 MySQL.createCommand("ARMA/set_userdata","REPLACE INTO arma_user_data(user_id,dkey,dvalue) VALUES(@user_id,@key,@value)")
 MySQL.createCommand("ARMA/get_userdata","SELECT dvalue FROM arma_user_data WHERE user_id = @user_id AND dkey = @key")
+
+MySQL.createCommand("ARMA/set_srvdata","REPLACE INTO ARMA_srv_data(dkey,dvalue) VALUES(@key,@value)")
+MySQL.createCommand("ARMA/get_srvdata","SELECT dvalue FROM ARMA_srv_data WHERE dkey = @key")
 
 MySQL.createCommand("ARMA/get_banned","SELECT banned FROM arma_users WHERE id = @user_id")
 MySQL.createCommand("ARMA/set_banned","UPDATE arma_users SET banned = @banned, bantime = @bantime,  banreason = @banreason,  banadmin = @banadmin WHERE id = @user_id")
@@ -386,6 +396,22 @@ function ARMA.getUData(user_id,key,cbr)
     
     MySQL.query("ARMA/get_userdata", {user_id = user_id, key = key}, function(rows, affected)
         if #rows > 0 then
+            task({rows[1].dvalue})
+        else
+            task()
+        end
+    end)
+end
+
+function ARMA.setSData(key,value)
+    MySQL.execute("ARMA/set_srvdata", {key = key, value = value})
+end
+
+function ARMA.getSData(key, cbr)
+    local task = Task(cbr,{""})
+    
+    MySQL.query("ARMA/get_srvdata", {key = key}, function(rows, affected)
+        if rows and #rows > 0 then
             task({rows[1].dvalue})
         else
             task()
