@@ -817,7 +817,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
                 }
             }
         }
-        PerformHttpRequest("https://discord.com/api/webhooks/984787989001564232/RzBHWCi3zQ8rzhmAcpHhXpNpKSxvTiexXLZDzNxv-BD1pl4_apGy8Ga3Zlw1ziikfiN0", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
+        PerformHttpRequest("https://discord.com/api/webhooks/989598411718287441/uZ7ZF0OuYmCxclciDSamKFybdT2rl9csJG1t1S8fhOrAFsTBOoORMCssw3XPU4WECUsg", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
         if first_spawn then
             for k,v in pairs(ARMA.user_sources) do
                 ARMAclient.addPlayer(source,{v})
