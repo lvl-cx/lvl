@@ -767,6 +767,13 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
+            if admincfg.buttonsEnabled["slap"][1] and buttons["slap"] then
+                RageUI.ButtonWithStyle("Force Clock Off", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent('ARMA:ForceClockOff', SelectedPlayer[2])
+                    end
+                end, RMenu:Get('adminmenu', 'submenu'))
+            end
             if admincfg.buttonsEnabled["showwarn"][1] and buttons["showwarn"] then
                 RageUI.ButtonWithStyle("Open F10 Warning Log", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -1590,11 +1597,11 @@ function KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
 	end
 	if UpdateOnscreenKeyboard() ~= 2 then
 		local result = GetOnscreenKeyboardResult() 
-		Citizen.Wait(500) 
+		Citizen.Wait(1) 
 		blockinput = false 
 		return result 
 	else
-		Citizen.Wait(500)
+		Citizen.Wait(1)
 		blockinput = false 
 		return nil 
 	end
