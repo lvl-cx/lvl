@@ -324,6 +324,48 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
             ARMAclient.notify(source,{'~g~User clocked off'})
             ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
         end
+        local command = {
+            {
+                ["color"] = "16448403",
+                ["title"] = "ARMA Faction Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = source,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = user_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = player_name,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = player_temp,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = player_perm,
+                        ["inline"] = true
+                    }
+                }
+            }
+        }
+        local webhook = "https://discord.com/api/webhooks/989737592490692640/hboLIKeEI6xxY8wbcnJz0_P7ZWu7UC6PLwU5NZOoRjPEcsMv4mtxyP_t9oc6tiujjOuz"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         --anticheat
     end
