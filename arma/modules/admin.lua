@@ -307,21 +307,123 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
         elseif selgroup == "vip" and not ARMA.hasPermission(admin_perm, "group.add.vip") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "pov" and not ARMA.hasGroup(perm, "group.add.pov") then
-            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Added to POV List",
-                    ["description"] = "**Admin Name:** "..playerName.."**\nAdmin ID:** "..user_id.."\n**Player ID:** "..perm.."\n**Player Name:** "..povName,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Group Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = user_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(permsource),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = permsource,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = perm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Hours",
+                            ["value"] = "0 hours",
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Group",
+                            ["value"] = selgroup,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Type",
+                            ["value"] = "Added",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.addUserGroup(perm, "pov")
         else
             ARMA.addUserGroup(perm, selgroup)
+            local command = {
+                {
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Group Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = user_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(permsource),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = permsource,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = perm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Hours",
+                            ["value"] = "0 hours",
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Group",
+                            ["value"] = selgroup,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Type",
+                            ["value"] = "Added",
+                            ["inline"] = true
+                        }
+                    }
+                }
+            }
+            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
     else
         --print("Stop trying to add a group u fucking cheater")
@@ -361,21 +463,118 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
         elseif selgroup == "vip" and not ARMA.hasPermission(user_id, "group.remove.vip") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         elseif selgroup == "pov" and ARMA.hasGroup(perm, "group.remove.pov") then
-            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Removed from POV List",
-                    ["description"] = "**Admin Name:** "..playerName.."**\nAdmin ID:** "..user_id.."\n**Player ID:** "..perm.."\n**Player Name:** "..povName,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Group Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = user_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(permsource),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = permsource,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = perm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Hours",
+                            ["value"] = "0 hours",
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Group Removed",
+                            ["value"] = selgroup,
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.removeUserGroup(perm, "pov")
         else
             ARMA.removeUserGroup(perm, selgroup)
+            local command = {
+                {
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Group Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = user_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(permsource),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = permsource,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = perm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Hours",
+                            ["value"] = "0 hours",
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Group",
+                            ["value"] = selgroup,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Type",
+                            ["value"] = "Removed",
+                            ["inline"] = true
+                        }
+                    }
+                }
+            }
+            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
     else 
         --print("Stop trying to add a group u fucking cheater")
@@ -409,18 +608,63 @@ AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, reasons, dur
     local adminName = GetPlayerName(source)
     warningDate = getCurrentDate()
     if ARMA.hasPermission(user_id, "admin.ban") then
-        local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
+        local command = {
             {
-                ["color"] = "15158332",
-                ["title"] = "Player Banned: ",
-                ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target_id.." \n**Reason(s):** "..reasons.."\n **Duration: ** "..duration,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
+                ["color"] = "16448403",
+                ["title"] = "ARMA Ban Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = adminName,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = source,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = admin_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(target),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = target,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = target_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Hours",
+                        ["value"] = "0 hours",
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Ban Reason(s)",
+                        ["value"] = reasons,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Ban Duration",
+                        ["value"] = duration.." hours",
+                        ["inline"] = true
+                    }
                 }
+            }
         }
-        }}), { ["Content-Type"] = "application/json" })
+        local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target)..'['..target_id..']'..' for '..reasons)
         if tonumber(duration) >= 9000 then
             ARMA.ban(source,target_id,"perm",reasons)
@@ -457,18 +701,63 @@ AddEventHandler('ARMA:CustomBan', function(admin, target)
                 ARMA.prompt(source,"Evidence:","",function(source,Evidence)  
                     if Evidence == "" then return end
                     videoclip = Evidence
-                    local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
-                    PerformHttpRequest(webhook, function(err, text, headers) 
-                    end, "POST", json.encode({username = "ARMA", embeds = {
+                    local command = {
                         {
-                            ["color"] = "15158332",
-                            ["title"] = "Player Custom Banned: ",
-                            ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target.." \n**Reason:** "..Reason.."\n **Duration: ** "..Duration.." \n **Evidence: **" ..videoclip.. "",
-                            ["footer"] = {
-                                ["text"] = "Time - "..os.date("%x %X %p"),
+                            ["color"] = "16448403",
+                            ["title"] = "ARMA Custom Ban Logs",
+                            ["description"] = "",
+                            ["text"] = "ARMA Server #1",
+                            ["fields"] = {
+                                {
+                                    ["name"] = "Admin Name",
+                                    ["value"] = adminName,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin TempID",
+                                    ["value"] = source,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin PermID",
+                                    ["value"] = admin_id,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player Name",
+                                    ["value"] = GetPlayerName(target_id),
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player TempID",
+                                    ["value"] = target_id,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player PermID",
+                                    ["value"] = target,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Player Hours",
+                                    ["value"] = "0 hours",
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Ban Reason(s)",
+                                    ["value"] = Reason,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Ban Duration",
+                                    ["value"] = Duration.." hours",
+                                    ["inline"] = true
+                                }
                             }
+                        }
                     }
-                    }}), { ["Content-Type"] = "application/json" })
+                    local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                     TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target_id)..'['..target..']'..' for '..Reason)
                     if tonumber(Duration) == -1 then
                         ARMA.ban(source,target,"perm",Reason)
@@ -510,18 +799,63 @@ AddEventHandler('ARMA:offlineban', function(admin)
                         videoclip = Evidence
                         local target = permid
                         local target_id = ARMA.getUserSource(target)
-                        local webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
-                        PerformHttpRequest(webhook, function(err, text, headers) 
-                        end, "POST", json.encode({username = "ARMA", embeds = {
+                        local command = {
                             {
-                                ["color"] = "15158332",
-                                ["title"] = "Player Offline Banned: ",
-                                ["description"] = "**Admin Name: **"..GetPlayerName(admin).. "\n**Admin ID: **"..ARMA.getUserId(admin).." \n**Player ID: **"..target.." \n**Reason:** "..Reason.."\n **Duration: ** "..Duration.." \n **Evidence: **" ..videoclip.. "",
-                                ["footer"] = {
-                                    ["text"] = "Time - "..os.date("%x %X %p"),
+                                ["color"] = "16448403",
+                                ["title"] = "ARMA Offline Ban Logs",
+                                ["description"] = "",
+                                ["text"] = "ARMA Server #1",
+                                ["fields"] = {
+                                    {
+                                        ["name"] = "Admin Name",
+                                        ["value"] = adminName,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Admin TempID",
+                                        ["value"] = source,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Admin PermID",
+                                        ["value"] = admin_id,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Player Name",
+                                        ["value"] = GetPlayerName(target_id),
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Player TempID",
+                                        ["value"] = target_id,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Player PermID",
+                                        ["value"] = target,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Player Hours",
+                                        ["value"] = "0 hours",
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Ban Reason(s)",
+                                        ["value"] = Reason,
+                                        ["inline"] = true
+                                    },
+                                    {
+                                        ["name"] = "Ban Duration",
+                                        ["value"] = Duration.." hours",
+                                        ["inline"] = true
+                                    }
                                 }
+                            }
                         }
-                        }}), { ["Content-Type"] = "application/json" })
+                        local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+                        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have offline banned '..permid..' for '..Reason)
                         if tonumber(Duration) == -1 then
                             ARMA.ban(source,target,"perm",Reason)
@@ -597,18 +931,63 @@ AddEventHandler('ARMA:noF10Kick', function()
                 if reason == '' then return end
                 local reason = reason
                 ARMAclient.notify(source,{'~g~Kicked ID: ' .. permid})
-                webhook = "https://discord.com/api/webhooks/975532585050574849/7UssunD4em2q8qazgLvdkc4NouRU6ybfPY4-ev6jBRIdMVe_WieN73DlHYsWFfZU3RXr"
-                PerformHttpRequest(webhook, function(err, text, headers) 
-                end, "POST", json.encode({username = "ARMA", embeds = {
+                local command = {
                     {
-                        ["color"] = "15158332",
-                        ["title"] = "Kicked Player (No F10)",
-                        ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player ID:** "..permid,
-                        ["footer"] = {
-                            ["text"] = "Time - "..os.date("%x %X %p"),
+                        ["color"] = "16448403",
+                        ["title"] = "ARMA Kick Logs",
+                        ["description"] = "",
+                        ["text"] = "ARMA Server #1",
+                        ["fields"] = {
+                            {
+                                ["name"] = "Admin Name",
+                                ["value"] = GetPlayerName(source),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin TempID",
+                                ["value"] = source,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin PermID",
+                                ["value"] = admin_id,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player Name",
+                                ["value"] = GetPlayerName(ARMA.getUserSource(permid)),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player TempID",
+                                ["value"] = ARMA.getUserSource(permid),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player PermID",
+                                ["value"] = permid,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player Hours",
+                                ["value"] = "0 hours",
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Kick Reason(s)",
+                                ["value"] = reason,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Kick Type",
+                                ["value"] = "No F10",
+                                ["inline"] = true
+                            }
                         }
+                    }
                 }
-                }}), { ["Content-Type"] = "application/json" })
+                local webhook = "https://discord.com/api/webhooks/989682406636269638/jog19dzFLJjbiZX4Fw0gf6pkBbz6cyyf6Z2-q3ChtcZXfMtG-bUPulBKmpBIYptQ9DC2"
+                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                 DropPlayer(ARMA.getUserSource(permid), reason)
             end)
         end)
@@ -636,17 +1015,63 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
     if ARMA.hasPermission(admin_id, perm) then
         ARMA.prompt(source,"Reason:","",function(source,Reason) 
             if Reason == "" then return end
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Player Kicked",
-                    ["description"] = "**Admin Name:** "..playerName.."\n**Admin ID:** "..admin_id.."\n**Player ID:** "..target_permid.."\n**Reason:** " ..Reason,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Kick Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(source),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = playerOtherName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = target_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = target,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Hours",
+                            ["value"] = "0 hours",
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Kick Reason(s)",
+                            ["value"] = Reason,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Kick Type",
+                            ["value"] = "F10",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989682406636269638/jog19dzFLJjbiZX4Fw0gf6pkBbz6cyyf6Z2-q3ChtcZXfMtG-bUPulBKmpBIYptQ9DC2"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
             f10Kick(target_permid, adminName, Reason)
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Kicked Player')
@@ -669,18 +1094,38 @@ AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
             if warningid == "" then return end
             exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Removed warning #'..warningid..'')
-            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = admin.." removed warning ["..warningID.."]",
-                    ["description"] = "Admin Name: **"..playerName.."** \nAdmin ID: **"..admin_id.."** \nWarning ID: **"..warningid.."**",
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Remove Warning Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(admin),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = admin,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Warning ID",
+                            ["value"] = warningid,
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989682303598993479/oRDXfvryYt2M0lojSZ55sJ4uHemQB-3lsTS2go941IOwLd0oty6hxtqguawNeJXOQ7Nv"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
         local player = ARMA.getUserSource(admin_id)
@@ -701,18 +1146,38 @@ AddEventHandler("ARMA:Unban",function()
             if permid == '' then return end
             permid = parseInt(permid)
             ARMAclient.notify(source,{'~g~Unbanned ID: ' .. permid})
-            webhook = "https://discord.com/api/webhooks/975532757801381918/v8CEiuVoICvpXApL5AsujU_MJIeeBiDLIJK49gSti3BOCdtOjsrpEFPeBzvNQcw0aXSO"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Unbanned Player",
-                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player ID:** "..permid,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Unban Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(source),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = permid,
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989683815268089916/iUjJ2Loo0s-aqQyOcqJO0wIMG9zsMfkyA6jPIo3aszLBqRXQX-yis4F9MW4lsVTzg6Jb"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.setBanned(permid,false)
         end)
     else
@@ -759,18 +1224,58 @@ AddEventHandler("ARMA:addNote",function(admin, player)
             exports['ghmattimysql']:execute("INSERT INTO arma_user_notes (`user_id`, `text`, `admin_name`, `admin_id`) VALUES (@user_id, @text, @admin_name, @admin_id);", {user_id = playerperm, text = text, admin_name = adminName, admin_id = admin_id}, function() end) 
             TriggerClientEvent('ARMA:NotifyPlayer', source, '~g~You have added a note to '..playerName..'('..playerperm..') with the reason '..text)
             TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
-            webhook = "https://discord.com/api/webhooks/975532251611799584/EvA7NsuZxIPHjuZnXmz7jJxgmVvHhRflMxcunjuF54sR7wDMgnbw7_CXdVpea3nazaJ4"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Added Note",
-                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player Name:** "..playerName.."\n**Player ID:** "..playerperm.."\n**Note:** "..text,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Note Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(source),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = player,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = playerperm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Note Message",
+                            ["value"] = text,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Note Type",
+                            ["value"] = "Add",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989686467481731093/FeEwI6B1jHIambeCXpafQW9Z3G7iiHALL5yTjZolR2_EVfZWQ16ufM1l_Aip8wN8kiIZ"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
         local player = ARMA.getUserSource(admin_id)
@@ -794,18 +1299,58 @@ AddEventHandler("ARMA:removeNote",function(admin, player)
             exports['ghmattimysql']:execute("DELETE FROM arma_user_notes WHERE note_id = @noteid", {noteid = noteid}, function() end)
             TriggerClientEvent('ARMA:NotifyPlayer', admin, '~g~You have removed note #'..noteid..' from '..playerName..'('..playerperm..')')
             TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
-            webhook = "https://discord.com/api/webhooks/975532251611799584/EvA7NsuZxIPHjuZnXmz7jJxgmVvHhRflMxcunjuF54sR7wDMgnbw7_CXdVpea3nazaJ4"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Removed Note",
-                    ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..admin_id.."\n**Player Name:** "..playerName.."\n**Player ID:** "..playerperm.."\n**Note ID:** "..noteid,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Note Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(source),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = playerName,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = player,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = playerperm,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Note ID",
+                            ["value"] = noteid,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Note Type",
+                            ["value"] = "Remove",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989686467481731093/FeEwI6B1jHIambeCXpafQW9Z3G7iiHALL5yTjZolR2_EVfZWQ16ufM1l_Aip8wN8kiIZ"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
         local player = ARMA.getUserSource(admin_id)
@@ -825,18 +1370,48 @@ AddEventHandler('ARMA:SlapPlayer', function(admin, target)
     if ARMA.hasPermission(admin_id, "admin.slap") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
+        local command = {
             {
-                ["color"] = "15158332",
-                ["title"] = "Slapped "..playerOtherName,
-                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
+                ["color"] = "16448403",
+                ["title"] = "ARMA Slap Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = admin,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = admin_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(target),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = target,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = player_id,
+                        ["inline"] = true
+                    }
                 }
+            }
         }
-        }}), { ["Content-Type"] = "application/json" })
+        local webhook = "https://discord.com/api/webhooks/989687219755294720/pr1BL0HvfV_Eh3MWR_lPfl3c3eKgnjKmm66KQx2XW9c80edSBm_5-w543W1Scl00UpkP"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:SlapPlayer', target)
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Slapped Player')
     else
@@ -855,18 +1430,48 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
     if ARMA.hasPermission(admin_id, "admin.revive") then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(target)
-        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
+        local command = {
             {
-                ["color"] = "15158332",
-                ["title"] = "Revived "..playerOtherName,
-                ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
+                ["color"] = "16448403",
+                ["title"] = "ARMA Revive Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Admin Name",
+                        ["value"] = GetPlayerName(admin),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin TempID",
+                        ["value"] = admin,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Admin PermID",
+                        ["value"] = admin_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(target),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = target,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = player_id,
+                        ["inline"] = true
+                    }
                 }
+            }
         }
-        }}), { ["Content-Type"] = "application/json" })
+        local webhook = "https://discord.com/api/webhooks/989688114870120458/g8fctDK8fiEj7afyYawG3qo89qMaVc816EAZ2Gqy5srmco0XyVpze_k7Ie6yjztN3vN5"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:FixClient',target)
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Revived Player')
     else
@@ -887,33 +1492,103 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
         if isFrozen then
-            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Froze "..playerOtherName,
-                    ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Freeze Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(admin),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = admin,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(newtarget),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = tanewtargetrget,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = player_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Type",
+                            ["value"] = "Frozen",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989687676858925097/mtHhI90umPUjLoRfnY0_lalnjSf6icT6zcI868r13nbDMhiD1HoNLVhmO0pNhMq1ODAV"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Froze Player.')
             ARMAclient.notify(newtarget, {'~g~You have been frozen.'})
         else
-            webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
+            local command = {
                 {
-                    ["color"] = "15158332",
-                    ["title"] = "Unfroze "..playerOtherName,
-                    ["description"] = "**Admin Name: **"..playerName.."\n**PermID: **"..user_id.."\n**Player Name:** "..playerOtherName.."\n**Player ID:** "..player_id,
-                    ["footer"] = {
-                        ["text"] = "Time - "..os.date("%x %X %p"),
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Freeze Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(admin),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = admin,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(newtarget),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = tanewtargetrget,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = player_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Type",
+                            ["value"] = "UnFrozen",
+                            ["inline"] = true
+                        }
                     }
+                }
             }
-            }}), { ["Content-Type"] = "application/json" })
+            local webhook = "https://discord.com/api/webhooks/989687676858925097/mtHhI90umPUjLoRfnY0_lalnjSf6icT6zcI868r13nbDMhiD1HoNLVhmO0pNhMq1ODAV"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
         end
