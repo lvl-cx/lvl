@@ -480,12 +480,12 @@ function ARMA.ban(adminsource,permid,time,reason)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA.\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link") 
             ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
         else 
             ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
             ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource) .. " | ID Of Admin: " .. adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "]") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA.\n\nReason(s): " .. reason .. "\n\nYou have been banned by: " .. GetPlayerName(adminsource) .. "\n\n [Your ID: " .. permid .. "]") 
         end
     else 
         if tonumber(time) then 
@@ -508,14 +508,14 @@ function ARMA.banConsole(permid,time,reason)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason,  adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA.\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
             print("~g~Success banned! User PermID:" .. permid)
             f10Ban(permid, adminPermID, reason, time)
         else 
             print("~g~Success banned! User PermID:" .. permid)
             ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
             f10Ban(permid, adminPermID, reason, "perm")
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA.\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
         end
     end
 end
@@ -527,14 +527,14 @@ function ARMA.banDiscord(permid,time,reason,adminPermID)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been banned from ARMA.\n\nYour ban will expire on: \n" .. os.date("%c", banTime) .. "\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID.. "\n\n [Your ID: " .. permid .. "]\n\n\n\n This ban in unappealable, if you think it was a mistake make a support ticket") 
             print("~g~Success banned! User PermID:" .. permid)
             f10Ban(permid, adminPermID, reason, time)
         else 
             print("~g~Success banned! User PermID:" .. permid)
             ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
             f10Ban(permid, adminPermID, reason, "perm")
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] You have been permanently banned from ARMA.\n\nReason: " .. reason .. "\n\nYou have been banned by: " .. adminPermID .. "\n\n [Your ID: " .. permid .. "]") 
         end
     end
 end
@@ -695,8 +695,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                             if tonumber(bantime) then 
                                 local timern = os.time()
                                 if timern > tonumber(bantime) then 
-                                    deferrals.update('Your ban has expired. Please do not violate this server\'s rules again. You will now be automatically connected!')
-                                    Wait(2000)
                                     ARMA.setBanned(user_id,false)
                                     if ARMA.rusers[user_id] == nil then -- not present on the server, init
                                         -- init entries
@@ -744,10 +742,10 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     return 
                                 end
                                 print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
-                                deferrals.done("[ARMA] You have been banned from ARMA. 🤬\n\nYour ban will expire on: \n" .. os.date("%c", bantime) .. "\n\nReason: \n" .. banreason .. "\n\nYou have been banned by: " .. banadmin  .. "\n\n [Your ID: " .. user_id .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link")
+                                deferrals.done("\n[ARMA] Temporary Ban\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by "..banadmin.."\nExpires on: "..os.date("%c", bantime).."\nAppeal @ armastudios.net")
                             else 
                                 print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
-                                deferrals.done("[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: \n" .. banreason .. "\n\nYou have been banned by: " .. banadmin  .. "\n\n [Your ID: " .. user_id .. "] \n\n\n\nIf you think this ban is unfair head over to our support discord where you can find our ban appeal link")
+                                deferrals.done("\n[ARMA] Permanent Ban\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by: "..banadmin .."\nAppeal @ armastudios.net")
                             end
                         end)
                     end
@@ -778,14 +776,13 @@ AddEventHandler("playerDropped",function(reason)
         ARMA.user_tmp_tables[user_id] = nil
         ARMA.user_sources[user_id] = nil
         print('[ARMA] Player Leaving Save:  Saved data for: ' .. GetPlayerName(source))
-        local localday = os.date("%A (%d/%m/%Y) at %X")
         local disconnect = {
             {
                 ["color"] = "16448403",
                 ["title"] = GetPlayerName(source).."("..user_id..") Temp ID: "..source.." disconnected",
                 ["description"] = reason, 
                 ["footer"] = {
-                    ["text"] = "ARMA | Server #1 | "..localday,
+                    ["text"] = "ARMA | Server #1 | "..os.date("%A (%d/%m/%Y) at %X"),
                 },
             }
         }
@@ -801,6 +798,7 @@ MySQL.createCommand("ARMA/setusername","UPDATE arma_users SET username = @userna
 
 RegisterServerEvent("ARMAcli:playerSpawned")
 AddEventHandler("ARMAcli:playerSpawned", function()
+    TriggerClientEvent('gettingUserId', source,ARMA.getUserId(source))
     Debug.pbegin("playerSpawned")
     -- register user sources and then set first spawn to false
     local user_id = ARMA.getUserId(source)
@@ -810,6 +808,16 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         local tmp = ARMA.getUserTmpTable(user_id)
         tmp.spawns = tmp.spawns+1
         local first_spawn = (tmp.spawns == 1)
+        local command = {
+            {
+                ["color"] = "16448403",
+                ["title"] = GetPlayerName(source).." TempID: "..source.." PermID: "..user_id.." connected",
+                ["footer"] = {
+                    ["text"] = "ARMA | Server #1 | "..os.date("%A (%d/%m/%Y) at %X"),
+                }
+            }
+        }
+        PerformHttpRequest("https://discord.com/api/webhooks/984787989001564232/RzBHWCi3zQ8rzhmAcpHhXpNpKSxvTiexXLZDzNxv-BD1pl4_apGy8Ga3Zlw1ziikfiN0", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
         if first_spawn then
             for k,v in pairs(ARMA.user_sources) do
                 ARMAclient.addPlayer(source,{v})
@@ -821,24 +829,6 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         TriggerEvent("ARMA:playerSpawn",user_id,player,first_spawn)
     end
     Debug.pend()
-end)
-
-
-AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
-    local source = source
-    print(source)
-    local user_id = ARMA.getUserId(source)
-    local embed = {
-        {
-            ["color"] = "16448403",
-            ["title"] = GetPlayerName(source).."("..user_id..") Temp ID: "..source.." connected",
-            ["description"] = "",
-            ["footer"] = {
-                ["text"] = "ARMA | Server #1 | "..localday,
-            },
-        }
-    }
-    PerformHttpRequest(logs, function(err, text, headers) end, 'POST', json.encode({username = "Server Logs", embeds = embed}), { ['Content-Type'] = 'application/json' })
 end)
 
 RegisterServerEvent("ARMA:playerDied")
