@@ -779,7 +779,7 @@ AddEventHandler("playerDropped",function(reason)
         local disconnect = {
             {
                 ["color"] = "16448403",
-                ["title"] = GetPlayerName(source).."("..user_id..") Temp ID: "..source.." disconnected",
+                ["title"] = GetPlayerName(source).." PermID: "..user_id.." Temp ID: "..source.." disconnected",
                 ["description"] = reason, 
                 ["footer"] = {
                     ["text"] = "ARMA | Server #1 | "..os.date("%A (%d/%m/%Y) at %X"),
