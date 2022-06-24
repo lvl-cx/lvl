@@ -5,7 +5,6 @@ RegisterServerEvent("ARMA:ENABLEBLIPS")
 AddEventHandler("ARMA:ENABLEBLIPS", function()
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, "police.menu") or ARMA.hasPermission(user_id, "emergency.vehicle") then
-    print("works")
     TriggerClientEvent("ARMA:BLIPS",source,cop,nhs)
   end
 end)
