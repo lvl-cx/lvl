@@ -1590,6 +1590,15 @@ cfg.groups = {
   ["LSD"] = {
     "lsd.job",
   },
+  ["10hrs"] = {
+    "hours.claim",
+  },
+  ["25hrs"] = {
+    "hours.claim",
+  },
+  ["50hrs"] = {
+    "hours.claim",
+  },
 
   -- [Gang Whitelist/ Rebel]
   ["Gang"] = {
