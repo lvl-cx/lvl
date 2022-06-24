@@ -1422,8 +1422,8 @@ end)
 
 
 FrozenPlayer = false
-RegisterNetEvent('Infinite:Freeze')
-AddEventHandler('Infinite:Freeze', function(isFrozen)
+RegisterNetEvent('ARMA:Freeze')
+AddEventHandler('ARMA:Freeze', function(isFrozen)
     FrozenPlayer = isFrozen
     TriggerEvent('godmodebypass', isFrozen)
 end)
