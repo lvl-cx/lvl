@@ -44,18 +44,58 @@ AddEventHandler("arma:warnPlayer",function(target_id,warningReason)
 	if ARMA.hasPermission(user_id,"admin.warn") then
 		warning = "Warning"
 		warningDate = getCurrentDate()
-		webhook = "https://discord.com/api/webhooks/946674250801115157/v9WFEEPfd6fKDUYcoJvql2B9Cnw2yvbmyfpiyvCz9IgFLTu2SopUEtXhe6R23OEgbv96"
-        PerformHttpRequest(webhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
-            {
-                ["color"] = "15158332",
-                ["title"] = "Warned Player",
-                ["description"] = "**Admin Name:** "..adminName .."\n**Admin ID:** "..user_id.."\n**Player ID:** "..target_id.."\n**Reason:** " ..warningReason,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
+		local command = {
+			{
+				["color"] = "16448403",
+				["title"] = "ARMA Admin Logs",
+				["description"] = "",
+				["text"] = "ARMA Server #1",
+				["fields"] = {
+					{
+						["name"] = "Admin Name",
+						["value"] = GetPlayerName(source),
+						["inline"] = true
+					},
+					{
+						["name"] = "Admin TempID",
+						["value"] = source,
+						["inline"] = true
+					},
+					{
+						["name"] = "Admin PermID",
+						["value"] = user_id,
+						["inline"] = true
+					},
+					{
+						["name"] = "Player Name",
+						["value"] = GetPlayerName(targetSource),
+						["inline"] = true
+					},
+					{
+						["name"] = "Player TempID",
+						["value"] = targetSource,
+						["inline"] = true
+					},
+					{
+						["name"] = "Player PermID",
+						["value"] = target_id,
+						["inline"] = true
+					},
+					{
+						["name"] = "Player Hours",
+						["value"] = "0 hours",
+						["inline"] = true
+					},
+					{
+						["name"] = "Warn Reason",
+						["value"] = warningReason,
+						["inline"] = true
+					}
+				}
+			}
+		}
+		local webhook = "https://discord.com/api/webhooks/989682303598993479/oRDXfvryYt2M0lojSZ55sJ4uHemQB-3lsTS2go941IOwLd0oty6hxtqguawNeJXOQ7Nv"
+		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 		f10Warn(target_id, adminName, warningReason)
 		ARMAclient.notify(targetSource, {'~r~You have received a warning for '..warningReason})
 	else
