@@ -24,7 +24,7 @@ RegisterCommand("carry",function(source, args)
 		if closestPlayer then
 			local targetSrc = GetPlayerServerId(closestPlayer)
 			if targetSrc ~= -1 then
-				TriggerServerEvent('Infinite:CarryRequest',targetSrc)
+				TriggerServerEvent('ARMA:CarryRequest',targetSrc)
 			else
 				drawNativeNotification("~r~No one nearby to carry!")
 			end
@@ -111,8 +111,8 @@ end)
 
 senderSrc = nil
 
-RegisterNetEvent("Infinite:StartCarry")
-AddEventHandler("Infinite:StartCarry", function(targetSrc)
+RegisterNetEvent("ARMA:StartCarry")
+AddEventHandler("ARMA:StartCarry", function(targetSrc)
 	local targetSrc = targetSrc
 	carry.InProgress = true
 	carry.targetSrc = targetSrc
@@ -121,16 +121,16 @@ AddEventHandler("Infinite:StartCarry", function(targetSrc)
 	carry.type = "carrying"
 end)
 
-RegisterNetEvent("Infinite:CarryTargetAsk")
-AddEventHandler("Infinite:CarryTargetAsk", function(senderSrc)
+RegisterNetEvent("ARMA:CarryTargetAsk")
+AddEventHandler("ARMA:CarryTargetAsk", function(senderSrc)
 	carryrequest = true
 	Citizen.CreateThread(function()
 		while carryrequest do
 			if IsControlJustPressed(1, 83) then
-				TriggerServerEvent("Infinite:CarryAccepted",senderSrc)
+				TriggerServerEvent("ARMA:CarryAccepted",senderSrc)
 				carryrequest = false
 			elseif IsControlJustPressed(1, 84) then
-				TriggerServerEvent("Infinite:CarryDeclined",senderSrc)
+				TriggerServerEvent("ARMA:CarryDeclined",senderSrc)
 				carryrequest = false
 			end
 			Wait(0)
