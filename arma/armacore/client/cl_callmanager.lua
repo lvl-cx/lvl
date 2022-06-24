@@ -214,14 +214,14 @@ end)
 RegisterNetEvent("staffon")
 AddEventHandler("staffon", function()
 
-    TriggerEvent("ARMA:OMioDioMode",true)
+    TriggerEvent("ARMA:playerStaffonMode",true,false)
     isInTicket = true
 end)
 
 RegisterNetEvent("staffoff")
 AddEventHandler("staffoff", function()
 
-    TriggerEvent("ARMA:OMioDioMode",false)
+    TriggerEvent("ARMA:playerStaffonMode",false,false)
     isInTicket = false
 end)
 
