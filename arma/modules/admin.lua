@@ -273,6 +273,62 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
     end
 end)
 
+RegisterServerEvent("ARMA:ForceClockOff")
+AddEventHandler("ARMA:ForceClockOff", function(player_temp)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local name = GetPlayerName(source)
+    local player_perm = ARMA.getUserId(player_temp)
+    local player_name = GetPlayerName(player_temp)
+    local table = {
+        'Commissioner Clocked',
+        'Deputy Commissioner Clocked',
+        'Assistant Commissioner Clocked',
+        'Deputy Assistant Commissioner Clocked',
+        'Commander Clocked',
+        'Chief Superintendent Clocked',
+        'Superintendent Clocked',
+        'Chief Inspector Clocked',
+        'Inspector Clocked',
+        'Sergeant Clocked',
+        'Special Police Constable Clocked',
+        'Senior Police Constable Clocked',
+        'Police Constable Clocked',
+        'PCSO Clocked',
+        'Head Chief Medical Officer Clocked',
+        'Assistant Chief Medical Officer Clocked',
+        'Deputy Chief Medical Officer Clocked',
+        'Captain Clocked',
+        'Consultant Clocked',
+        'Specialist Clocked',
+        'Senior Doctor Clocked',
+        'Junior Doctor Clocked',
+        'Critical Care Paramedic Clocked',
+        'Paramedic Clocked',
+        'Trainee Paramedic Clocked',
+        'Head Chief Medical Officer',
+        'Assistant Chief Medical Officer',
+        'Deputy Chief Medical Officer',
+        'Captain',
+        'Consultant',
+        'Specialist',
+        'Senior Doctor',
+        'Junior Doctor',
+        'Critical Care Paramedic',
+        'Paramedic',
+        'Trainee Paramedic'
+    }
+    if ARMA.hasPermission(user_id,"admin.tp2waypoint") then
+        for k,v in pairs(table) do
+            ARMA.removeUserGroup(player_perm, v)
+            ARMAclient.notify(source,{'~g~User clocked off'})
+            ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
+        end
+    else
+        --anticheat
+    end
+end)
+
 RegisterServerEvent("ARMA:AddGroup")
 AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
     local admin_temp = source
@@ -346,7 +402,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "0 hours",
+                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60).." hours",
                             ["inline"] = true
                         },
                         {
@@ -365,8 +421,12 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
             local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.addUserGroup(perm, "pov")
+            local user_groups = ARMA.getUserGroups(perm)
+            TriggerClientEvent("ARMA:GotGroups", source, user_groups)
         else
             ARMA.addUserGroup(perm, selgroup)
+            local user_groups = ARMA.getUserGroups(perm)
+            TriggerClientEvent("ARMA:GotGroups", source, user_groups)
             local command = {
                 {
                     ["color"] = "16448403",
@@ -516,8 +576,12 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
             local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.removeUserGroup(perm, "pov")
+            local user_groups = ARMA.getUserGroups(perm)
+            TriggerClientEvent("ARMA:GotGroups", source, user_groups)
         else
             ARMA.removeUserGroup(perm, selgroup)
+            local user_groups = ARMA.getUserGroups(perm)
+            TriggerClientEvent("ARMA:GotGroups", source, user_groups)
             local command = {
                 {
                     ["color"] = "16448403",
@@ -1521,7 +1585,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
                         },
                         {
                             ["name"] = "Player TempID",
-                            ["value"] = tanewtargetrget,
+                            ["value"] = newtarget,
                             ["inline"] = true
                         },
                         {
@@ -1571,7 +1635,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
                         },
                         {
                             ["name"] = "Player TempID",
-                            ["value"] = tanewtargetrget,
+                            ["value"] = newtarget,
                             ["inline"] = true
                         },
                         {
@@ -1592,7 +1656,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
         end
-        TriggerClientEvent('Infinite:Freeze', newtarget, isFrozen)
+        TriggerClientEvent('ARMA:Freeze', newtarget, isFrozen)
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
