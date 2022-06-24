@@ -204,7 +204,7 @@ Citizen.CreateThread(function()
 					local clip, ammo = GetAmmoInClip(_ped, weaponselected)
 					if ammo == GetMaxAmmoInClip(_ped, weaponselected) then
 						Wait(1000)
-						TriggerServerEvent("ARMAAntiCheat:Type8", 'Infinite Ammo')
+						TriggerServerEvent("ARMAAntiCheat:Type8", 'ARMA Ammo')
 					end
 				end
 			end
