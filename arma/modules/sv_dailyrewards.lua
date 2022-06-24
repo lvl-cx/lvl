@@ -7,7 +7,7 @@ AddEventHandler('ARMA:hoursReward', function(reward)
     if hours < reward then ARMAclient.notify(source,{'~r~You do not have enough hours to claim this reward.'}) return end
     if not ARMA.hasGroup(user_id, reward..'hrs') then
         if hours >= reward then
-            ARMA.giveBankMoney(user_id,reward*100)
+            ARMA.giveBankMoney(user_id,reward*10000)
         end
         ARMA.addUserGroup(user_id, reward..'hrs')
         ARMAclient.notify(source,{'~g~You have received your ~b~'..reward..' ~g~hours reward.'})
