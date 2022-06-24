@@ -49,34 +49,34 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 
-RegisterServerEvent("Infinite:CarryRequest")
-AddEventHandler("Infinite:CarryRequest", function(targetSrc)
+RegisterServerEvent("ARMA:CarryRequest")
+AddEventHandler("ARMA:CarryRequest", function(targetSrc)
 	local senderSrc = source
 	local targetSrc = targetSrc
 	local senderSrcName = GetPlayerName(senderSrc)
 	userid = ARMA.getUserId(senderSrc)
 	if ARMA.hasPermission(userid, 'staffon.perm') then 
-		TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
+		TriggerClientEvent("ARMA:StartCarry",senderSrc,targetSrc)
 	else
 		ARMAclient.notify(targetSrc,{"Player: ~g~"..senderSrcName.." is trying to carry you, press ~g~= to accept or ~r~- to refuse"})
 		ARMAclient.notify(senderSrc,{"Sent carry request to Temp ID: "..targetSrc})
-		TriggerClientEvent('Infinite:CarryTargetAsk', targetSrc, senderSrc)
+		TriggerClientEvent('ARMA:CarryTargetAsk', targetSrc, senderSrc)
 	end
 
 end)
 
-RegisterServerEvent("Infinite:CarryAccepted")
-AddEventHandler("Infinite:CarryAccepted", function(senderSrc)
+RegisterServerEvent("ARMA:CarryAccepted")
+AddEventHandler("ARMA:CarryAccepted", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)
 	ARMAclient.notify(targetSrc,{"~g~Carry request accepted."})
 	ARMAclient.notify(senderSrc,{"~g~Your carry request to "..targetSrcName.." has been accepted."})
-	TriggerClientEvent("Infinite:StartCarry",senderSrc,targetSrc)
+	TriggerClientEvent("ARMA:StartCarry",senderSrc,targetSrc)
 end)
 
-RegisterServerEvent("Infinite:CarryDeclined")
-AddEventHandler("Infinite:CarryDeclined", function(senderSrc)
+RegisterServerEvent("ARMA:CarryDeclined")
+AddEventHandler("ARMA:CarryDeclined", function(senderSrc)
 	local senderSrc = senderSrc
 	local targetSrc = source
 	local targetSrcName = GetPlayerName(targetSrc)
