@@ -1,4 +1,4 @@
-
+local a = 0
 
 SetDiscordAppId(970724996223746149)
 
@@ -8,12 +8,14 @@ Citizen.CreateThread(function()
 		SetDiscordRichPresenceAssetText("discord.gg/ArmaGTA") 
 		SetDiscordRichPresenceAssetSmall('mainlogo') -- Name of the smaller image asset.
 		SetDiscordRichPresenceAssetSmallText('ARMA')
-		SetRichPresence("" ..#GetActivePlayers().. "/" .. "128" .. " Players") 
+		SetRichPresence("[ID:"..a.."] | " ..#GetActivePlayers().. "/" .. "128" .. " Players") 
 		SetDiscordRichPresenceAction(0, 'Discord', 'discord.gg/ArmaGTA')
 
 		Wait(5000)
 	end
 end)
 
-
+RegisterNetEvent("gettingUserId",function(user_id)
+	a = user_id
+end)
 
