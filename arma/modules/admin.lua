@@ -1770,45 +1770,46 @@ AddEventHandler('ARMA:GetCoords', function()
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "dev.getcoords") then
         ARMAclient.getPosition(source,{},function(x,y,z)
-            ARMA.prompt(source,"Copy the coordinates using Ctrl-A Ctrl-C",x..","..y..","..z,function(player,choice) end)
-        end)
-        local command = {
-            {
-                ["color"] = "16448403",
-                ["title"] = "ARMA Admin Logs",
-                ["description"] = "",
-                ["text"] = "ARMA Server #1",
-                ["fields"] = {
+            ARMA.prompt(source,"Copy the coordinates using Ctrl-A Ctrl-C",x..","..y..","..z,function(player,choice) 
+                local command = {
                     {
-                        ["name"] = "Admin Name",
-                        ["value"] = GetPlayerName(source),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin TempID",
-                        ["value"] = source,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin PermID",
-                        ["value"] = user_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Hours",
-                        ["value"] = "0 hours",
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Coords",
-                        ["value"] = x..","..y..","..x,
-                        ["inline"] = true
+                        ["color"] = "16448403",
+                        ["title"] = "ARMA Admin Logs",
+                        ["description"] = "",
+                        ["text"] = "ARMA Server #1",
+                        ["fields"] = {
+                            {
+                                ["name"] = "Admin Name",
+                                ["value"] = GetPlayerName(source),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin TempID",
+                                ["value"] = source,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Admin PermID",
+                                ["value"] = user_id,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Player Hours",
+                                ["value"] = "0 hours",
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "Coords",
+                                ["value"] = choice,
+                                ["inline"] = true
+                            }
+                        }
                     }
                 }
-            }
-        }
-        local webhook = "https://discord.com/api/webhooks/989693266221989888/KSmFxjdtydw57u5jKHW7PoImRwRKxLfMOKLqXaqu3SeETIO4hlhwHtEh5DTo0DLGyo0V"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+                local webhook = "https://discord.com/api/webhooks/989693266221989888/KSmFxjdtydw57u5jKHW7PoImRwRKxLfMOKLqXaqu3SeETIO4hlhwHtEh5DTo0DLGyo0V"
+                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+            end)
+        end)
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
