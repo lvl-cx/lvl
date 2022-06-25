@@ -2280,3 +2280,16 @@ AddEventHandler("ARMA:checkBlips",function(status)
         TriggerClientEvent('ARMA:showBlips', source)
     end
 end)
+RegisterNetEvent("ARMA:dealershipBucket")
+AddEventHandler("ARMA:dealershipBucket",function(bool)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if bool then
+        SetPlayerRoutingBucket(source, 33) 
+        return
+    end
+    if not bool then
+        SetPlayerRoutingBucket(source,0)
+        return
+    end
+end)
