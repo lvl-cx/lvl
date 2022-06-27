@@ -69,11 +69,14 @@ body {
 
 #ButtonRow1>div>span {
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'inventoryFont', sans-serif;
     position: relative;
-    font-weight: 600;
-    font-size: 1em;
+    font-size: 1.8em;
     top: 0.2em;
+}
+
+#ButtonRow1>div:hover {
+    background-color: #fafb93;
 }
 
 #InventoryLogo {
