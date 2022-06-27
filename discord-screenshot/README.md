@@ -28,7 +28,7 @@ a discord webhook.
 ## Configuration
 
 * **webhookUrl** - The url of your discord's webhook.
-* **framework** - The framework you are using (`vrp` or `none`).
+* **framework** - The framework you are using (`ARMA` or `none`).
 * **commandName** - The command name.
 * **commandPermission** - The permission to use the command.
 * **hiddenIdentifiers** - A list of the identifiers that won't be shown in the embed (e.g. `ip`).
@@ -46,7 +46,7 @@ a discord webhook.
 
 Can be used via the server console or by anyone with the ace permission `request.screenshot`.
 
-### vRP
+### ARMA
 
 #### /screenshot &lt;user_id&gt;
 
