@@ -3,7 +3,6 @@ local vehicles = {}
 
 AllowMoreThenOneCar = true
 function tARMA.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type (one vehicle per type allowed at the same time)
-    local userid = ARMA.getUserId(source)
 
     local vehicle = vehicles[vtype]
     if vehicle and not IsVehicleDriveable(vehicle[3]) then -- precheck if vehicle is undriveable
