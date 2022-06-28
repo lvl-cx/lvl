@@ -3,6 +3,7 @@ games {  'gta5' }
 
 description "RP module/framework"
 
+dependency "RageUI"
 dependency "ghmattimysql"
 dependency "arma_mysql"
 
@@ -25,7 +26,7 @@ client_scripts {
 	"rageui/menu/items/*.lua",
 	"rageui/menu/panels/*.lua",
 	"rageui/menu/panels/*.lua",
-	"rageui/menu/windows/*.lua"
+	"rageui/menu/windows/*.lua",
 }
 
 -- server scripts

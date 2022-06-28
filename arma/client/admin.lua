@@ -1,7 +1,5 @@
 local noclip = false
-local whitelist = false
 local blips = false
-local delgun = false
 
 config = {
     controls = {
@@ -206,6 +204,46 @@ AddEventHandler('ToggleAdminNoclip', function(source)
     tARMA.toggleNoclip()
 end)
 
+local EntityCleanupGun = false;
+
+
+local function NetworkDelete(entity)
+    Citizen.CreateThread(function()
+        if DoesEntityExist(entity) and not (IsEntityAPed(entity) and IsPedAPlayer(entity)) then
+            NetworkRequestControlOfEntity(entity)
+            local timeout = 5
+            while timeout > 0 and not NetworkHasControlOfEntity(entity) do
+                Citizen.Wait(1)
+                timeout = timeout - 1
+            end
+            DetachEntity(entity, 0, false)
+            SetEntityCollision(entity, false, false)
+            SetEntityAlpha(entity, 0.0, true)
+            SetEntityAsMissionEntity(entity, true, true)
+            SetEntityAsNoLongerNeeded(entity)
+            DeleteEntity(entity)
+        end
+    end)
+end
+
+Citizen.CreateThread(function()
+    while true do 
+        Wait(0)
+        if EntityCleanupGun then 
+            local plr = PlayerId()
+            if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_STAFFGUN') then
+                if IsPlayerFreeAiming(plr) then 
+                    local yes, entity = GetEntityPlayerIsFreeAimingAt(plr)
+                    if yes then 
+                        tARMA.notify('~g~Deleted Entity: ' .. GetEntityModel(entity))
+                        NetworkDelete(entity)
+                    end
+                end 
+            end 
+        end
+    end
+end)
+
 local function teleportToWaypoint()
     --Credits: https://gist.github.com/samyh89/32a780abcd1eea05ab32a61985857486
     --Just a better TP to waypoint and I cba to make one so here is one creds
@@ -285,30 +323,40 @@ RegisterNetEvent("ARMA:vehicleMenu")
 AddEventHandler("ARMA:vehicleMenu",function(DioMode, isInTicket)
 	OMioDioMode = DioMode
     ticketStatus = isInTicket
-    TriggerEvent('godmodebypass', OMioDioMode)
+    TriggerEvent('greenzoneStaffMode', OMioDioMode)
 	if not OMioDioMode then
 		tARMA.setCustomization(adminTicketSavedCustomization)
-        SetTimeout(1, function()
+        SetTimeout(100, function()
             SetPedArmour(PlayerPedId(), savedArmour)
+            TriggerServerEvent('ARMA:changeHairStyle')
         end)
 	else
         savedArmour = GetPedArmour(PlayerPedId())
         adminTicketSavedCustomization = tARMA.getCustomization()
-        
         gender = getModelGender()
         if gender == "male" then
-            SetPedComponentVariation(GetPlayerPed(-1),3,1,0,0) -- [Arms]
-            SetPedComponentVariation(GetPlayerPed(-1),4,164,13,0) -- [Legs]
-            SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
-            SetPedComponentVariation(GetPlayerPed(-1),11,367,0,00) -- [Jacket]
-            SetPedComponentVariation(GetPlayerPed(-1),6,149,17,00) -- [Shoes]
-            SetPedComponentVariation(GetPlayerPed(-1),7,197,0,00) -- [Accessories]
+            z="mp_m_freemode_01"
+            local A=loadModel(z)
+            tARMA.setCustomization({modelhash=A})
+            Wait(100)
+            local B=getPlayerPed()
+            SetPedComponentVariation(B,3,0,0,0) -- [Arms]
+            SetPedComponentVariation(B,4,144,0,0) -- [Legs]
+            SetPedComponentVariation(B,8,15,0,0) -- [Undershirt]
+            SetPedComponentVariation(B,11,398,0,00) -- [Jacket]
+            SetPedComponentVariation(B,6,145,0,00) -- [Shoes]
         elseif gender == "female" then
-            SetPedComponentVariation(GetPlayerPed(-1),3,3,0,0) -- [Arms]
-            SetPedComponentVariation(GetPlayerPed(-1),4,27,0,0) -- [Legs]
-            SetPedComponentVariation(GetPlayerPed(-1),8,14,0,0) -- [Undershirt]
-            SetPedComponentVariation(GetPlayerPed(-1),11,466,0,00) -- [Jacket]
-            SetPedComponentVariation(GetPlayerPed(-1),6,2,0,00) -- [Shoes]
+            z="mp_f_freemode_01"
+            local A=loadModel(z)
+            tARMA.setCustomization({modelhash=A})
+            Wait(100)
+            local ped=getPlayerPed()
+            SetPedComponentVariation(ped,3,3,0,0) -- [Arms]
+            SetPedComponentVariation(ped,4,27,0,0) -- [Legs]
+            SetPedComponentVariation(ped,8,14,0,0) -- [Undershirt]
+            SetPedComponentVariation(ped,11,466,0,00) -- [Jacket]
+            SetPedComponentVariation(ped,6,2,0,00) -- [Shoes]
+            --SetPedComponentVariation(GetPlayerPed(-1),7,197,0,00) -- [Accessories]
         end
 	end
 end)
@@ -327,13 +375,26 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if OMioDioMode then
-			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
+            SetEntityInvincible(GetPlayerPed(-1), true)
+            SetPlayerInvincible(PlayerId(), true)
+            ClearPedBloodDamage(GetPlayerPed(-1))            
+            ResetPedVisibleDamage(GetPlayerPed(-1))
+            ClearPedLastWeaponDamage(GetPlayerPed(-1))
+            SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
+            SetEntityCanBeDamaged(GetPlayerPed(-1), false)
+            SetPedCanRagdoll(GetPlayerPed(-1), true)
+            SetEntityHealth(GetPlayerPed(-1), 200)
             if not ticketStatus then
                 drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
             end
         else
             ticketStatus = false
-			SetEntityProofs(GetPlayerPed(-1), false, true, true, false, false, false, false)
+            SetEntityInvincible(GetPlayerPed(-1), false)
+            SetPlayerInvincible(PlayerId(), false)
+            SetPedCanRagdoll(GetPlayerPed(-1), true)
+            ClearPedLastWeaponDamage(GetPlayerPed(-1))
+            SetEntityProofs(GetPlayerPed(-1), false, false, false, false, false, false, false, false)
+            SetEntityCanBeDamaged(GetPlayerPed(-1), true)
         end
     end
 end)
@@ -356,54 +417,31 @@ end
 
 
 RegisterCommand("dv", function()
-    local ped = GetPlayerPed( -1 )
-    if ( DoesEntityExist( ped ) and not IsEntityDead( ped ) ) then 
-        local pos = GetEntityCoords( ped )
-        if ( IsPedSittingInAnyVehicle( ped ) ) then 
-            local vehicle = GetVehiclePedIsIn( ped, false )
-            if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
-                DeleteGivenVehicle( vehicle, numRetries )
-            else 
-                Notify( "You must be in the driver's seat!" )
-            end 
-        else
-            Notify( "~o~You must be in a vehicle to delete it." )
-        end 
-    end 
-end)
-
-RegisterCommand("delgun", function()
     if OMioDioMode then
-        delgun = not delgun
-        if delgun then
-            notify('~g~Delgun enabled.')
-            GiveWeaponToPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"), -1, false, true)
-        else
-            notify('~r~Delgun disabled.')
-            RemoveWeaponFromPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"))
-        end
-    end
-end, false)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if OMioDioMode and delgun then
-            if IsPlayerFreeAiming(PlayerId()) then
-                local aiming, entity = GetEntityPlayerIsFreeAimingAt(PlayerId())
-                if aiming then 
-                    DeleteEntity(entity)
-                    print("Entity: " ..entity)
-                end 
-            end
-            DisablePlayerFiring(PlayerId(), true)
-        else
-            delgun = false
-            RemoveWeaponFromPed(GetPlayerPed(-1), GetHashKey("WEAPON_STAFFGUN"))
-        end
+        TriggerEvent( "wk:deleteVehicle" )
+    else
+        TriggerServerEvent('other:deletevehicle')
     end
 end)
 
+
+RegisterCommand("fix", function()
+    if OMioDioMode or getUserId() == 2 or getUserId() == 1 then
+        TriggerServerEvent( "wk:fixVehicle")
+    end
+end)
+
+RegisterNetEvent("wk:fixVehicle")
+AddEventHandler("wk:fixVehicle", function()
+    local p = GetPlayerPed(-1)
+    if IsPedInAnyVehicle(p) then
+        local q = GetVehiclePedIsIn(p)
+        SetVehicleEngineHealth(q, 9999)
+        SetVehiclePetrolTankHealth(q, 9999)
+        SetVehicleFixed(q)
+        Notify('~g~Fixed Vehicle')
+    end
+end)
 
 RegisterNetEvent("ARMA:showBlips")
 AddEventHandler("ARMA:showBlips",function()
@@ -422,7 +460,6 @@ AddEventHandler("ARMA:showBlips",function()
         end
     end
 end)
-
 Citizen.CreateThread(function()
     while true do
         if blips then
@@ -456,6 +493,26 @@ local distanceToCheck = 5.0
 local numRetries = 5
 
 -- Add an event handler for the deleteVehicle event. Gets called when a user types in /dv in chat
+RegisterNetEvent("wk:deleteVehicle")
+AddEventHandler("wk:deleteVehicle", function()
+    local ped = GetPlayerPed( -1 )
+
+    if ( DoesEntityExist( ped ) and not IsEntityDead( ped ) ) then 
+        local pos = GetEntityCoords( ped )
+
+        if ( IsPedSittingInAnyVehicle( ped ) ) then 
+            local vehicle = GetVehiclePedIsIn( ped, false )
+
+            if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
+                DeleteGivenVehicle( vehicle, numRetries )
+            else 
+                Notify( "You must be in the driver's seat!" )
+            end 
+        else
+             Notify( "You must be in a vehicle to delete it." )
+        end 
+    end 
+end )
 
 function DeleteGivenVehicle( veh, timeoutMax )
     local timeout = 0 
