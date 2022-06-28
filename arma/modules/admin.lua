@@ -1,3 +1,5 @@
+local htmlEntities = module("lib/htmlEntities")
+local Tools = module("lib/Tools")
 
 admincfg = {}
 
@@ -2293,3 +2295,67 @@ AddEventHandler("ARMA:dealershipBucket",function(bool)
         return
     end
 end)
+
+local function ch_list(player,choice)
+    local user_id = ARMA.getUserId(player)
+    if user_id ~= nil and ARMA.hasPermission(user_id,"admin.menu") then
+        if player_lists[player] then -- hide
+            player_lists[player] = nil
+            ARMAclient.removeDiv(player,{"user_list"})
+        else -- show
+            local content = ""
+            local count = 0
+            for k,v in pairs(ARMA.rusers) do
+                count = count+1
+                local source = ARMA.getUserSource(k)
+                ARMA.getUserIdentity(k, function(identity)
+                    if source ~= nil then
+                        content = content.."<br />"..k.." => <span class=\"pseudo\">"..ARMA.getPlayerName(source).."</span> <span class=\"endpoint\">"..'REDACATED'.."</span>"
+                        if identity then
+                            content = content.." <span class=\"name\">"..htmlEntities.encode(identity.firstname).." "..htmlEntities.encode(identity.name).."</span> <span class=\"reg\">"..identity.registration.."</span> <span class=\"phone\">"..identity.phone.."</span>"
+                        end
+                    end
+                    
+                    -- check end
+                    count = count-1
+                    if count == 0 then
+                        player_lists[player] = true
+                        local css = [[
+                        .div_user_list{ 
+                            margin: auto; 
+                            padding: 8px; 
+                            width: 650px; 
+                            margin-top: 80px; 
+                            background: black; 
+                            color: white; 
+                            font-weight: bold; 
+                            font-size: 1.1em;
+                        } 
+                        
+                        .div_user_list .pseudo{ 
+                            color: rgb(0,255,125);
+                        }
+                        
+                        .div_user_list .endpoint{ 
+                            color: rgb(255,0,0);
+                        }
+                        
+                        .div_user_list .name{ 
+                            color: #309eff;
+                        }
+                        
+                        .div_user_list .reg{ 
+                            color: rgb(0,0,0);
+                        }
+                        
+                        .div_user_list .phone{ 
+                            color: rgb(211, 0, 255);
+                        }
+                        ]]
+                        ARMAclient.setDiv(player,{"user_list", css, content})
+                    end
+                end)
+            end
+        end
+    end
+end

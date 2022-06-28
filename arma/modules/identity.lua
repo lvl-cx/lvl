@@ -187,6 +187,111 @@ local function ch_identity(player,choice)
   end
 end
 
+RegisterNetEvent("Identity")
+AddEventHandler("Identity", function()
+  local user_id = ARMA.getUserId(source)
+  if user_id ~= nil then
+    ARMA.prompt(source,lang.cityhall.identity.prompt_firstname(),"",function(player,firstname)
+      if string.len(firstname) >= 2 and string.len(firstname) < 50 then
+        firstname = sanitizeString(firstname, sanitizes.name[1], sanitizes.name[2])
+        ARMA.prompt(source,lang.cityhall.identity.prompt_name(),"",function(player,name)
+          if string.len(name) >= 2 and string.len(name) < 50 then
+            name = sanitizeString(name, sanitizes.name[1], sanitizes.name[2])
+            ARMA.prompt(source,lang.cityhall.identity.prompt_age(),"",function(player,age)
+              age = parseInt(age)
+              if age >= 16 and age <= 150 then
+                if ARMA.tryPayment(user_id,cfg.new_identity_cost) then
+                  ARMA.generateRegistrationNumber(function(registration)
+                    ARMA.generatePhoneNumber(function(phone)
+
+                      MySQL.execute("ARMA/update_user_identity", {
+                        user_id = user_id,
+                        firstname = firstname,
+                        name = name,
+                        age = age,
+                        registration = registration,
+                        phone = phone
+                      })
+
+                      -- update client registration
+                      ARMAclient.setRegistrationNumber(source,{registration})
+                      ARMAclient.notify(source,{lang.money.paid({cfg.new_identity_cost})})
+                    end)
+                  end)
+                else
+                  ARMAclient.notify(source,{lang.money.not_enough()})
+                end
+              else
+                ARMAclient.notify(source,{lang.common.invalid_value()})
+              end
+            end)
+          else
+            ARMAclient.notify(source,{lang.common.invalid_value()})
+          end
+        end)
+      else
+        ARMAclient.notify(source,{lang.common.invalid_value()})
+      end
+    end)
+  end
+end)
+
+cityhall_menu[lang.cityhall.identity.title()] = {ch_identity,lang.cityhall.identity.description({cfg.new_identity_cost})}
+
+local function cityhall_enter()
+  local user_id = ARMA.getUserId(source)
+  if user_id ~= nil then
+    ARMA.openMenu(source,cityhall_menu)
+  end
+end
+
+local function cityhall_leave()
+  ARMA.closeMenu(source)
+end
+
+local function build_client_cityhall(source) -- build the city hall area/marker/blip
+  local user_id = ARMA.getUserId(source)
+  if user_id ~= nil then
+    local x,y,z = table.unpack(cfg.city_hall)
+    ARMAclient.addMarker(source,{x,y,z-1,0.7,0.7,0.5,0,255,125,125,150})
+
+    ARMA.setArea(source,"ARMA:cityhall",x,y,z,1,1.5,cityhall_enter,cityhall_leave)
+  end
+end
+
+AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
+  -- send registration number to client at spawn
+  ARMA.getUserIdentity(user_id, function(identity)
+    if identity then
+      ARMAclient.setRegistrationNumber(source,{identity.registration or "000AAA"})
+    end
+  end)
+
+  -- first spawn, build city hall
+  if first_spawn then
+    build_client_cityhall(source)
+  end
+end)
+
+-- player identity menu
+
+-- add identity to main menu
+ARMA.registerMenuBuilder("main", function(add, data)
+  local player = data.player
+
+  local user_id = ARMA.getUserId(player)
+  if user_id ~= nil then
+    ARMA.getUserIdentity(user_id, function(identity)
+
+          local content = lang.cityhall.menu.info({htmlEntities.encode(identity.name),htmlEntities.encode(identity.firstname),identity.age,identity.registration,identity.phone,home,number})
+          local choices = {}
+          choices[lang.cityhall.menu.title()] = {function()end, content}
+
+          add(choices)
+        end)
+      end
+    end)
+
 
 
 
