@@ -159,11 +159,10 @@ local getStaffGroupsGroupIds = {
     ["cardev"] = "Car Developer",
 }
 local getUserGroupsGroupIds = {
-    ["VIP"] = "VIP",
-    ["Recruit"] = "Recruit",
-    ["Soldier"] = "Soldier",
-    ["Warrior"] = "Warrior",
-    ["Champion"] = "Champion",
+    ["Supporter"] = "Supporter",
+    ["Platinum"] = "Platinum",
+    ["Godfather"] = "Godfather",
+    ["Underboss"] = "Underboss",
 }
 local getUserPOVGroups = {
     ["pov"] = "POV List",

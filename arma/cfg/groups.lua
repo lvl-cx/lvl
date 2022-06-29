@@ -1565,31 +1565,32 @@ cfg.groups = {
 	"clockon.nhs",
   },
 
-  -- [Drug Groups]
-  ["Scrap"] = {
-    "scrap.job",
-  },
+-- ILLEGAL LICENSES --
   ["Weed"] = {
     "weed.job",
   },
   ["Cocaine"] = {
     "cocaine.job",
   },
+  ["Heroin"] = {
+    "heroin.job",
+  },
+  ["LSD"] = {
+    "lsd.job",
+  },
+
+-- LEGAL LICENSES --
+  ["Scrap"] = {
+    "scrap.job",
+  },
   ["Gold"] = {
     "gold.job",
   },
-
   ["Diamond"] = {
     "diamond.job",
   },
 
-  ["Heroin"] = {
-    "heroin.job",
-  },
-
-  ["LSD"] = {
-    "lsd.job",
-  },
+-- HOUR REWARDS --
   ["10hrs"] = {
     "hours.claim",
   },
@@ -1600,7 +1601,6 @@ cfg.groups = {
     "hours.claim",
   },
 
-  -- [Gang Whitelist/ Rebel]
   ["Gang"] = {
     "gang.whitelist",
   },
@@ -1609,58 +1609,51 @@ cfg.groups = {
     "rebel.whitelist",
   },
 
-  -- [Donator Groups]
+-- DONATOR GROUPS --
+  ["Supporter"] = {
+  	"vip.perm",
+  },  
+  ["Platinum"] = {
+  	"vip.perm",
+  },  
+  ["Godfather"] = {
+  	"vip.perm",
+  },  
+  ["Underboss"] = {
+  	"vip.perm",
+  },
 
-  	["Starter"] = {
-		"vip.perm",
-	},
+-- POV GROUP --
+  ["pov"] = {
+  	"pov.list"
+  },
 
-	["VIP"] = {
-		"vip.perm",
-	},
-
-	["Recruit"] = {
-		"vip.perm",
-	},
-
-	["Soldier"] = {
-		"vip.perm",
-	},
-
-	["Warrior"] = {
-		"vip.perm",
-	},
-	["Champion"] = {
-		"vip.perm",
-	},
-
-	["pov"] = {
-		"pov.list"
-	  },
-
-  -- [Staff On/ Off Flag]
+-- STAFF ON / STAFF OFF --
   ["staffon"] = {},
   ["staffoff"] = {},
 
-  -- [Cosmetics]
-  	-- [Watches]
-	["Rolex"] = {},
-	["AP"] = {},
-	-- [Chain]
-	["Gold Chain"] = {},
-	-- [Vests]
-	["Army Black Armed Vest"] = {},
-	["Army Green Armed Vest"] = {},
-	["Army Black Ammo Vest"] = {},
-	["Army Green Ammo Vest"] = {},
-	["Army Black Large Vest"] = {},
-	["Army Green Large Vest"] = {},
-	["Standard Grey Vest"] = {},
-	["Small Army Green Vest"] = {},
-	["Camo Green Vest"] = {},
-	["Blue Untar Vest"] = {},
-	["British Grey Armed Vest"] = {},
-	["Pink Icons Vest"] = {},
+-- COSMETIC ITEMS --
+
+-- CHAINS / WATCHES --
+  ["Rolex"] = {},
+  ["AP"] = {},
+
+-- CHAINS --
+  ["Gold Chain"] = {},
+
+-- VESTS --
+  ["Army Black Armed Vest"] = {},
+  ["Army Green Armed Vest"] = {},
+  ["Army Black Ammo Vest"] = {},
+  ["Army Green Ammo Vest"] = {},
+  ["Army Black Large Vest"] = {},
+  ["Army Green Large Vest"] = {},
+  ["Standard Grey Vest"] = {},
+  ["Small Army Green Vest"] = {},
+  ["Camo Green Vest"] = {},
+  ["Blue Untar Vest"] = {},
+  ["British Grey Armed Vest"] = {},
+  ["Pink Icons Vest"] = {},
 
 }
 

@@ -549,13 +549,21 @@ local function ch_replace(player,choice)
   ARMAclient.replaceNearestVehicle(player,{7})
 end
 
+local vipgroups = {
+    "Supporter",
+    "Platinum",
+    "Godfather",
+    "Underboss"
+}
+
 RegisterNetEvent("ARMA:HasVIP")
 AddEventHandler("ARMA:HasVIP", function()
     local source = source 
     local userid = ARMA.getUserId(source)
-
-    if ARMA.hasGroup(userid, "VIP") then 
-        TriggerClientEvent("ARMA:OpenVIPGarage", source)
+    for k,v in pairs(vipgroups) do
+        if ARMA.hasGroup(userid, v) then 
+            TriggerClientEvent("ARMA:OpenVIPGarage", source)
+        end
     end
 end)
 
