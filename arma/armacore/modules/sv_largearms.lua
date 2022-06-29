@@ -27,7 +27,7 @@ AddEventHandler('LargeArms:BuyWeapon', function(price, hash)
                     ARMAclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
                 end
 
-                webhook = "https://discord.com/api/webhooks/972475411067994202/8b3h5tTb_Tz7-hkFirrS00YHPnTTq7RuH2iHKyJNEH4cpbKsvokxsvVC39er7mjWjQCf"
+                webhook = "https://discord.com/api/webhooks/991558186416996442/hRO_L2cHWlEXggwv3bllV596JaCAKYgzIkzikfIEDNzN9BxKYWrnJDwNpUWwUnHKfNgI"
                 
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Roleplay", embeds = {

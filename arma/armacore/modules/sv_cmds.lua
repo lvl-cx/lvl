@@ -249,7 +249,7 @@ RegisterCommand("/", function(source, args, raw)
 			}
 		}
 	}
-	local webhook = "https://discord.com/api/webhooks/991455740776693761/AGLdsqRCe4vLSuWOhNHsmeYHBjmjZ-hS-Nf2caTPPwSdZ4mtgG6l0KBWRN7r-WdzWl6q"
+	local webhook = "https://discord.com/api/webhooks/991456257401683989/QXTyyOllOcMXwD8pu-aqQ6Jg6j0o1sQJ0R6wYItw1g7t8UiWtuQTdrtsNx4wc7swk_G7"
 	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if lastmsg ~= nil then
@@ -367,7 +367,7 @@ end)
 
 RegisterCommand("announce", function(source, args, raw)
 	local user_id = ARMA.getUserId(source)
-	if ARMA.hasPermission(user_id,"dev.announce") then
+	if ARMA.hasPermission(user_id,"dev.menu") then
 		if #args <= 0 then 
 			return 
 		end
@@ -411,7 +411,7 @@ RegisterCommand("announce", function(source, args, raw)
 				}
 			}
 		}
-		local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+		local webhook = "https://discord.com/api/webhooks/991557281219096626/I9Yy5aBkdLiK09viZL5_W9G3aEo0POcRRTjcOuLQA5b_dkpxbAlV0WSnjauthm6fhVy9"
 		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 		TriggerClientEvent('chatMessage', -1, "^7Announce: " , { 128, 128, 128 }, message, "alert")
 	end

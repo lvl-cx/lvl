@@ -40,10 +40,10 @@ AddEventHandler('ARMA:takeCarScreenshot', function(spawncode, orientation)
         local file = io.open('C:/xampp/htdocs/cars/'..spawncode..'/index.html',"w+")
         file:write('<html><style>	body {background-color: #262626;}</style><img src="front.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="rear.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="side.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"></html>')
         file:close()
-        PerformHttpRequest('https://discord.com/api/webhooks/980284381761515583/2XrEHiKzr1oynLfgvejGwizRRGXHttDoqOoowGD7baexwVvbGh9EvM6QcGgi099R0_l8', function(err, text, headers) 
+        PerformHttpRequest('https://discord.com/api/webhooks/991560897170526249/95AzsuBqELh6w87d-X3O3nE9I2uy8SMpz55TT08gkLA11Sg8uvkSjgGYPCLXMeixDsPu', function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA", embeds = {
             {
-                ["color"] = "15158332",
+                ["color"] = "16448403",
                 ["title"] = "Car Screenshots",
                 ["description"] = "**Admin Name: **"..name.."\n**Admin ID: **"..user_id.."\n**Link:** http://86.141.230.253/cars/"..spawncode,
                 ["footer"] = {

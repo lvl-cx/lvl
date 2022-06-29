@@ -458,7 +458,7 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989737592490692640/hboLIKeEI6xxY8wbcnJz0_P7ZWu7UC6PLwU5NZOoRjPEcsMv4mtxyP_t9oc6tiujjOuz"
+        local webhook = "https://discord.com/api/webhooks/991476693170659398/9-9T2TIHBP2hqvZOwq8FfLMQl0wI_PSP28WjTT9axmoMoXzxrvruTMaUHf0-DpG4ibVc"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         --anticheat
@@ -554,7 +554,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.addUserGroup(perm, "pov")
             local user_groups = ARMA.getUserGroups(perm)
@@ -618,7 +618,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
     else
@@ -709,7 +709,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.removeUserGroup(perm, "pov")
             local user_groups = ARMA.getUserGroups(perm)
@@ -773,7 +773,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989684388541399041/uAyuGOZJ52-O8UZgw5SYoXpmiPGhY3HBYh2dgAujAHj9gjyPssp1mTAmmQiRtzUkYTzz"
+            local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
     else 
@@ -863,7 +863,7 @@ AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, reasons, dur
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+        local webhook = "https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target)..'['..target_id..']'..' for '..reasons)
         if tonumber(duration) >= 9000 then
@@ -1054,7 +1054,7 @@ AddEventHandler('ARMA:offlineban', function(admin)
                                 }
                             }
                         }
-                        local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+                        local webhook = "https://discord.com/api/webhooks/991476652821454858/DyObLKDN6_KVAwUuh-V4NOprPijM-0xEyIgnmJF1C8MUdIwqaMea_H1vIYPsGWcSX4M_"
                         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have offline banned '..permid..' for '..Reason)
                         if tonumber(Duration) == -1 then
@@ -1186,7 +1186,7 @@ AddEventHandler('ARMA:noF10Kick', function()
                         }
                     }
                 }
-                local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
+                local webhook = "https://discord.com/api/webhooks/991476558818725960/wGi0MrLFj19RE_aG3QQkv4rCdywxs4EIunYJ_zmBey2sA0Rpus6Oe6vQBmakFrzIXh9h"
                 PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                 DropPlayer(ARMA.getUserSource(permid), reason)
             end)
@@ -1211,7 +1211,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
     local perm = admincfg.buttonsEnabled["kick"][2]
     local admin_id = ARMA.getUserId(admin)
     local adminName = GetPlayerName(admin)
-    local webhook = "https://discord.com/api/webhooks/975532585050574849/7UssunD4em2q8qazgLvdkc4NouRU6ybfPY4-ev6jBRIdMVe_WieN73DlHYsWFfZU3RXr"
+    local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
     if ARMA.hasPermission(admin_id, perm) then
         ARMA.prompt(source,"Reason:","",function(source,Reason) 
             if Reason == "" then return end
@@ -1270,7 +1270,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989682406636269638/jog19dzFLJjbiZX4Fw0gf6pkBbz6cyyf6Z2-q3ChtcZXfMtG-bUPulBKmpBIYptQ9DC2"
+            local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
             f10Kick(target_permid, adminName, Reason)
@@ -1324,7 +1324,7 @@ AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989682303598993479/oRDXfvryYt2M0lojSZ55sJ4uHemQB-3lsTS2go941IOwLd0oty6hxtqguawNeJXOQ7Nv"
+            local webhook = "https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
@@ -1376,7 +1376,7 @@ AddEventHandler("ARMA:Unban",function()
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989683815268089916/iUjJ2Loo0s-aqQyOcqJO0wIMG9zsMfkyA6jPIo3aszLBqRXQX-yis4F9MW4lsVTzg6Jb"
+            local webhook = "https://discord.com/api/webhooks/991476724363706418/m2aEhULB5NWG0NzS5FgGscLSeJvMDApibQ7oMmBHPctTrlXxfLCodlvFByoTCJoAmzdZ"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.setBanned(permid,false)
         end)
@@ -1549,7 +1549,7 @@ AddEventHandler("ARMA:removeNote",function(admin, player)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989686467481731093/FeEwI6B1jHIambeCXpafQW9Z3G7iiHALL5yTjZolR2_EVfZWQ16ufM1l_Aip8wN8kiIZ"
+            local webhook = "https://discord.com/api/webhooks/991456823884398623/EqKL4NW4qvjjWQ46_exR-2l51CrkviiTqK959DoSJmbvfQGBdbFdYmodMoWLemwBpH_c"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
@@ -1610,7 +1610,7 @@ AddEventHandler('ARMA:SlapPlayer', function(admin, target)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989687219755294720/pr1BL0HvfV_Eh3MWR_lPfl3c3eKgnjKmm66KQx2XW9c80edSBm_5-w543W1Scl00UpkP"
+        local webhook = "https://discord.com/api/webhooks/991476247660073040/XNH5g7OwPFDoCA4D1wqNo_HWrZD5EWNbb6QoYc2ducFjV2cPkryg8ACyFOj_ItKSOdSC"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:SlapPlayer', target)
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Slapped Player')
@@ -1670,7 +1670,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989688114870120458/g8fctDK8fiEj7afyYawG3qo89qMaVc816EAZ2Gqy5srmco0XyVpze_k7Ie6yjztN3vN5"
+        local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:FixClient',target)
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Revived Player')
@@ -1739,7 +1739,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989687676858925097/mtHhI90umPUjLoRfnY0_lalnjSf6icT6zcI868r13nbDMhiD1HoNLVhmO0pNhMq1ODAV"
+            local webhook = "https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Froze Player.')
             frozenplayers[user_id] = true
@@ -1790,7 +1790,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989687676858925097/mtHhI90umPUjLoRfnY0_lalnjSf6icT6zcI868r13nbDMhiD1HoNLVhmO0pNhMq1ODAV"
+            local webhook = "https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
@@ -1865,7 +1865,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+        local webhook = "https://discord.com/api/webhooks/991476057393872966/TQBcjsriIZJIxdd4BCzC5mbL4uAfW7UKxA1sYJ8iWaFBQxymAtpxWpYmV1M_MsT4CwFn"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:Teleport', source, coords)
     else
@@ -1948,7 +1948,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
                         }
                     }
                 }
-                local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+                local webhook = "https://discord.com/api/webhooks/991476085248237659/YByx_T6sIDT2OUrNS9ZrHnsQ84tkqyxhClp6f-Dni3zi4U--lIuTssKLibN9L59XdlXh"
                 PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             else 
                 TriggerClientEvent('ARMA:BringPlayer', SelectedPlrSource, false, id)  
@@ -2010,7 +2010,7 @@ AddEventHandler('ARMA:GetCoords', function()
                         }
                     }
                 }
-                local webhook = "https://discord.com/api/webhooks/989693266221989888/KSmFxjdtydw57u5jKHW7PoImRwRKxLfMOKLqXaqu3SeETIO4hlhwHtEh5DTo0DLGyo0V"
+                local webhook = "https://discord.com/api/webhooks/991476525515931698/EFvcicz4u-frkK-Y1tSfgHT_BhmE99xAyWTpvhdLxP8lm1sYIX66wmXIEvabFJh3_5VZ"
                 PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             end)
         end)
@@ -2158,7 +2158,7 @@ AddEventHandler('ARMA:GiveCratesMenu', function()
                             end
                         end
                     end)
-                    webhook = "https://discord.com/api/webhooks/975532406817833000/U4DT4s1sKp1dxxVrzl-pFZvNgv2F9SP0kv6YB8zsSeVA7sQPQSNclEsBDKWgBj6KUC9L"
+                    webhook = "https://discord.com/api/webhooks/991456793379221564/7lJUj2h_apXDdiKB43_go8bLj6TnaaAyrbgwH1R9REpScBesVsnMtaA2x-rVm8USB2hH"
                     PerformHttpRequest(webhook, function(err, text, headers) 
                     end, "POST", json.encode({username = "ARMA", embeds = {
                         {
@@ -2243,7 +2243,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/989692070644043806/x6D5cEyEiZn4jwDpY6YByFgnDZJaTsLybeDNU3msEueeRh_rFK_iCPpaKLdQoALs5IHV"
+        local webhook = "https://discord.com/api/webhooks/991476114688057384/o_HHxUAEBITN7ao61sxtHReWuSb-MIiaDbbrNXVAZuxnDpztKmr-3cLxf8PthFOHVwj7"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         local ped = GetPlayerPed(source)
         local ped2 = GetPlayerPed(id)

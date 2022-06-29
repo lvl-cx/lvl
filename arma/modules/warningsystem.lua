@@ -94,7 +94,7 @@ AddEventHandler("arma:warnPlayer",function(target_id,warningReason)
 				}
 			}
 		}
-		local webhook = "https://discord.com/api/webhooks/989682303598993479/oRDXfvryYt2M0lojSZ55sJ4uHemQB-3lsTS2go941IOwLd0oty6hxtqguawNeJXOQ7Nv"
+		local webhook = "https://discord.com/api/webhooks/991561080142831696/iF0P7cQJf3FPV1wr_gg9IeM2aQsBFBrD1EdM1NueaScLEN0DTipfAlTjb56l7k3IVS_n"
 		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 		f10Warn(target_id, adminName, warningReason)
 		ARMAclient.notify(targetSource, {'~r~You have received a warning for '..warningReason})

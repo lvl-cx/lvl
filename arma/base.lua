@@ -812,7 +812,7 @@ AddEventHandler("playerDropped",function(reason)
                 },
             }
         }
-        PerformHttpRequest("https://discord.com/api/webhooks/989598411718287441/uZ7ZF0OuYmCxclciDSamKFybdT2rl9csJG1t1S8fhOrAFsTBOoORMCssw3XPU4WECUsg", function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = disconnect}), { ['Content-Type'] = 'application/json' })
+        PerformHttpRequest("https://discord.com/api/webhooks/991556666095050803/cGTvcrMqB4wmub370MCRQHwW74tzLIHsmgkqXyNBqLPExMWNnB7lTXFRrcDmSNUYhAWQ", function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = disconnect}), { ['Content-Type'] = 'application/json' })
     else 
         print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
     end
@@ -843,7 +843,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
                 }
             }
         }
-        PerformHttpRequest("https://discord.com/api/webhooks/989598411718287441/uZ7ZF0OuYmCxclciDSamKFybdT2rl9csJG1t1S8fhOrAFsTBOoORMCssw3XPU4WECUsg", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
+        PerformHttpRequest("https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
         if first_spawn then
             for k,v in pairs(ARMA.user_sources) do
                 ARMAclient.addPlayer(source,{v})

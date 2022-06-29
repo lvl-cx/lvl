@@ -17,7 +17,7 @@ AddEventHandler('PD:BuyWeapon', function(hash)
             TriggerClientEvent("ARMA:PlaySound", source, 1)
             ARMAclient.notify(source, {"~g~Paid ".. '£0'})
 
-            webhook = "https://discord.com/api/webhooks/972476603231784960/iJHscnG9ICcShGWIWQFsNKodRTGUF_P3BwScxC-gKdu81PZo0EMvnIqVCPLjahKf9oVe"
+            webhook = "https://discord.com/api/webhooks/991558379979931749/rND_Azu9PE3AeMUPWSgcRA6aoJhxQjM6Jp-bgHC7y0Qg3oyp_W2j3H1-ZoxsMJxdMtM2"
                 
             PerformHttpRequest(webhook, function(err, text, headers) 
             end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
