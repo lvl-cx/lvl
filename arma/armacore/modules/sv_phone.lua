@@ -23,7 +23,58 @@ AddEventHandler("ARMA:AskID",function()
                 local bcapital = 0
                 local home = ""
                 local number = ""
-  
+                local askid = {
+                  {
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Ask ID Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                      {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Player TempID",
+                        ["value"] = source,
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Player PermID",
+                        ["value"] = user_id,
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Player Hours",
+                        ["value"] = "0 hours",
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Target Name",
+                        ["value"] = GetPlayerName(nplayer),
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Target TempID",
+                        ["value"] = nplayer,
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Target PermID",
+                        ["value"] = ARMA.getUserId(nplayer),
+                        ["inline"] = true
+                      },
+                      {
+                        ["name"] = "Target Hours",
+                        ["value"] = "0 hours",
+                        ["inline"] = true
+                      }
+                    }
+                  }
+                }
+                local webhook = "https://discord.com/api/webhooks/991453068325556264/eJpHA6UOLpkz767qNXyZDJemLtKQ3mGPsyGxmaAvxYZ5cn9kcaGI7w_R_-7RW9ZClTTi"
+                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = askid}), { ['Content-Type'] = 'application/json' })
 
   
                   ARMA.getUserAddress(nuser_id, function(address)
@@ -60,6 +111,58 @@ AddEventHandler("ARMA:GiveMoney",function()
       ARMAclient.getNearestPlayer(player,{10},function(nplayer)
         if nplayer ~= nil then
         local nuser_id = ARMA.getUserId(nplayer)
+        local givemoney = {
+          {
+            ["color"] = "16448403",
+            ["title"] = "ARMA Give Money Logs",
+            ["description"] = "",
+            ["text"] = "ARMA Server #1",
+            ["fields"] = {
+              {
+                ["name"] = "Player Name",
+                ["value"] = GetPlayerName(source),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player TempID",
+                ["value"] = source,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player PermID",
+                ["value"] = user_id,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player Hours",
+                ["value"] = "0 hours",
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target Name",
+                ["value"] = GetPlayerName(nplayer),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target TempID",
+                ["value"] = nplayer,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target PermID",
+                ["value"] = ARMA.getUserId(nplayer),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target Hours",
+                ["value"] = "0 hours",
+                ["inline"] = true
+              }
+            }
+          }
+        }
+        local webhook = "https://discord.com/api/webhooks/991455014751064104/5YHDx5686AN82SjPXGNFjdhqwY6eE46x811zFDBCcTGaoCV4azBEVnpqRplJTF5M0ZwJ"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = givemoney}), { ['Content-Type'] = 'application/json' })
         if nuser_id ~= nil then
             ARMA.prompt(player,lang.money.give.prompt(),"",function(player,amount)
             local amount = parseInt(amount)
@@ -93,6 +196,58 @@ AddEventHandler("ARMA:SearchPlr", function()
         local money = ARMA.getMoney(nuser_id)
         local items = ""
         local data = ARMA.getUserDataTable(nuser_id)
+        local searchplr = {
+          {
+            ["color"] = "16448403",
+            ["title"] = "ARMA Search Player Logs",
+            ["description"] = "",
+            ["text"] = "ARMA Server #1",
+            ["fields"] = {
+              {
+                ["name"] = "Player Name",
+                ["value"] = GetPlayerName(source),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player TempID",
+                ["value"] = source,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player PermID",
+                ["value"] = user_id,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Player Hours",
+                ["value"] = "0 hours",
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target Name",
+                ["value"] = GetPlayerName(nplayer),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target TempID",
+                ["value"] = nplayer,
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target PermID",
+                ["value"] = ARMA.getUserId(nplayer),
+                ["inline"] = true
+              },
+              {
+                ["name"] = "Target Hours",
+                ["value"] = "0 hours",
+                ["inline"] = true
+              }
+            }
+          }
+        }
+        local webhook = "https://discord.com/api/webhooks/991455014751064104/5YHDx5686AN82SjPXGNFjdhqwY6eE46x811zFDBCcTGaoCV4azBEVnpqRplJTF5M0ZwJ"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = searchplr}), { ['Content-Type'] = 'application/json' })
         if data and data.inventory then
           for k,v in pairs(data.inventory) do
             local item_name = ARMA.getItemName(k)

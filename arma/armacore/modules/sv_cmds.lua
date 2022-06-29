@@ -45,7 +45,7 @@ RegisterCommand("anon", function(source, args, raw)
 			}
 		}
 	}
-	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	local webhook = "https://discord.com/api/webhooks/991455652524343416/S3vVK-a1pmRPVdYiF1fySi8JhL8wX-KY0OHNTEqsGV7OYeZrWmcN0V9lbQON5MMPPdnP"
 	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if ChatCooldown == 0 then 
@@ -100,7 +100,7 @@ RegisterCommand("ooc", function(source, args, raw)
 			}
 		}
 	}
-	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	local webhook = "https://discord.com/api/webhooks/991455740776693761/AGLdsqRCe4vLSuWOhNHsmeYHBjmjZ-hS-Nf2caTPPwSdZ4mtgG6l0KBWRN7r-WdzWl6q"
 	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if lastmsg ~= nil then
@@ -249,7 +249,7 @@ RegisterCommand("/", function(source, args, raw)
 			}
 		}
 	}
-	local webhook = "https://discord.com/api/webhooks/989700144469540885/7hl1bhuu4SSuFAkx1h_D0U5jcVHfqGkkLdSGsKTGR9s3PoZNkq3-Rf_SG8zJoiqXHHrD"
+	local webhook = "https://discord.com/api/webhooks/991455740776693761/AGLdsqRCe4vLSuWOhNHsmeYHBjmjZ-hS-Nf2caTPPwSdZ4mtgG6l0KBWRN7r-WdzWl6q"
 	PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
 	Wait(100)
 	if lastmsg ~= nil then

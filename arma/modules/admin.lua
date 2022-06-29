@@ -254,6 +254,43 @@ AddEventHandler("ARMA:Giveweapon",function()
     if ARMA.hasPermission(userid, "dev.menu") then
         ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
         GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
+        local spawnweapon = {
+            {
+              ["color"] = "16448403",
+              ["title"] = "ARMA Weapon Spawn Logs",
+              ["description"] = "",
+              ["text"] = "ARMA Server #1",
+              ["fields"] = {
+                {
+                  ["name"] = "Player Name",
+                  ["value"] = GetPlayerName(source),
+                  ["inline"] = true
+                },
+                {
+                  ["name"] = "Player TempID",
+                  ["value"] = source,
+                  ["inline"] = true
+                },
+                {
+                  ["name"] = "Player PermID",
+                  ["value"] = user_id,
+                  ["inline"] = true
+                },
+                {
+                  ["name"] = "Player Hours",
+                  ["value"] = "0 hours",
+                  ["inline"] = true
+                },
+                {
+                  ["name"] = "Weapon Spawned",
+                  ["value"] = "weapon_"..hash,
+                  ["inline"] = true
+                }
+              }
+            }
+          }
+          local webhook = "https://discord.com/api/webhooks/991456674038681680/2MLwDbdHTr_wOtJZHn5bZuO8ZK-C9LnigXBanDzSc-GnDEgfTWj_KYK8HWBOXzQU4wWn"
+          PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = spawnweapon}), { ['Content-Type'] = 'application/json' })
         ARMAclient.notify(source,{"~g~Successfully spawned ~b~"..hash})
     end)
     end
@@ -261,6 +298,9 @@ end)
 
 RegisterServerEvent("ARMA:GiveWeaponToPlayer")
 AddEventHandler("ARMA:GiveWeaponToPlayer",function()
+    local admin = source
+    local admin_id = ARMA.getUserId(admin)
+    local admin_name = GetPlayerName(admin)
     local source = source
     local userid = ARMA.getUserId(source)
     if ARMA.hasPermission(userid, "dev.menu") then
@@ -269,6 +309,58 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
             local permsource = ARMA.getUserSource(permid)
             ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
                 GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
+                local giveweapon = {
+                    {
+                      ["color"] = "16448403",
+                      ["title"] = "ARMA Give Weapon To Player Logs",
+                      ["description"] = "",
+                      ["text"] = "ARMA Server #1",
+                      ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(admin),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = source,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                          ["name"] = "Player Name",
+                          ["value"] = GetPlayerName(source),
+                          ["inline"] = true
+                        },
+                        {
+                          ["name"] = "Player TempID",
+                          ["value"] = source,
+                          ["inline"] = true
+                        },
+                        {
+                          ["name"] = "Player PermID",
+                          ["value"] = user_id,
+                          ["inline"] = true
+                        },
+                        {
+                          ["name"] = "Player Hours",
+                          ["value"] = "0 hours",
+                          ["inline"] = true
+                        },
+                        {
+                          ["name"] = "Weapon Given To Player",
+                          ["value"] = "weapon_"..hash,
+                          ["inline"] = true
+                        }
+                      }
+                    }
+                  }
+                  local webhook = "https://discord.com/api/webhooks/991456700362137620/OXE6qxXf2dUAAFFlNsVH716-LT4tP6bR6Xim3PWyyv5vKrJ50nlNTh0h5iM9qNDUfjDY"
+                  PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = giveweapon}), { ['Content-Type'] = 'application/json' })
                 ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
             end)
         end)
@@ -864,7 +956,7 @@ AddEventHandler('ARMA:CustomBan', function(admin, target)
                             }
                         }
                     }
-                    local webhook = "https://discord.com/api/webhooks/989607709731070013/1aMo-belmtcB-3rtCmWjXAY38kRrkMUiOAhHUi9TlL9stw6e_IHW_tOw9wYbqVCMf1cm"
+                    local webhook = "https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2"
                     PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                     TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target_id)..'['..target..']'..' for '..Reason)
                     if tonumber(Duration) == -1 then
@@ -1094,7 +1186,7 @@ AddEventHandler('ARMA:noF10Kick', function()
                         }
                     }
                 }
-                local webhook = "https://discord.com/api/webhooks/989682406636269638/jog19dzFLJjbiZX4Fw0gf6pkBbz6cyyf6Z2-q3ChtcZXfMtG-bUPulBKmpBIYptQ9DC2"
+                local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
                 PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
                 DropPlayer(ARMA.getUserSource(permid), reason)
             end)
@@ -1382,7 +1474,7 @@ AddEventHandler("ARMA:addNote",function(admin, player)
                     }
                 }
             }
-            local webhook = "https://discord.com/api/webhooks/989686467481731093/FeEwI6B1jHIambeCXpafQW9Z3G7iiHALL5yTjZolR2_EVfZWQ16ufM1l_Aip8wN8kiIZ"
+            local webhook = "https://discord.com/api/webhooks/991456823884398623/EqKL4NW4qvjjWQ46_exR-2l51CrkviiTqK959DoSJmbvfQGBdbFdYmodMoWLemwBpH_c"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end)
     else
@@ -1964,6 +2056,9 @@ end)
 
 RegisterServerEvent('ARMA:GiveMoneyMenu')
 AddEventHandler('ARMA:GiveMoneyMenu', function()
+    local admin = source
+    local admin_id = ARMA.getUserId(admin)
+    local admin_name = GetPlayerName(admin)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "dev.givemoney") then
@@ -1973,18 +2068,20 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
                 ARMA.prompt(source,"Amount:","",function(source,amount) 
                     if amount == '' then return end
                     amount = parseInt(amount)
+                    local player_source = ARMA.getUserSource(playerid)
+                    if player_source == nil then return end
                     ARMA.giveBankMoney(tonumber(playerid), amount)
                     ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~£"..amount.." ~g~"})
-                    local command = {
+                    local givemoney = {
                         {
                             ["color"] = "16448403",
-                            ["title"] = "ARMA Developer Logs",
+                            ["title"] = "ARMA Give Money Logs",
                             ["description"] = "",
                             ["text"] = "ARMA Server #1",
                             ["fields"] = {
                                 {
                                     ["name"] = "Admin Name",
-                                    ["value"] = GetPlayerName(source),
+                                    ["value"] = GetPlayerName(admin),
                                     ["inline"] = true
                                 },
                                 {
@@ -1994,22 +2091,22 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
                                 },
                                 {
                                     ["name"] = "Admin PermID",
-                                    ["value"] = user_id,
+                                    ["value"] = admin_id,
                                     ["inline"] = true
                                 },
                                 {
                                     ["name"] = "Player Name",
-                                    ["value"] = GetPlayerName(ARMA.getUserSource(playerid)),
+                                    ["value"] = GetPlayerName(player_source),
                                     ["inline"] = true
                                 },
                                 {
                                     ["name"] = "Player TempID",
-                                    ["value"] = ARMA.getUserSource(playerid),
+                                    ["value"] = source,
                                     ["inline"] = true
                                 },
                                 {
                                     ["name"] = "Player PermID",
-                                    ["value"] = playerid,
+                                    ["value"] = user_id,
                                     ["inline"] = true
                                 },
                                 {
@@ -2025,8 +2122,8 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
                             }
                         }
                     }
-                    local webhook = "https://discord.com/api/webhooks/989693266221989888/KSmFxjdtydw57u5jKHW7PoImRwRKxLfMOKLqXaqu3SeETIO4hlhwHtEh5DTo0DLGyo0V"
-                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+                    local webhook = "https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9"
+                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = givemoney}), { ['Content-Type'] = 'application/json' })
                 end)
             end
         end)
@@ -2202,6 +2299,9 @@ end)
 
 RegisterNetEvent('ARMA:AddCar')
 AddEventHandler('ARMA:AddCar', function()
+    local admin = source
+    local admin_id = ARMA.getUserId(admin)
+    local admin_name = GetPlayerName(admin)
     local source = source
     local userid = ARMA.getUserId(source)
     local perm = admincfg.buttonsEnabled["addcar"][2]
@@ -2218,17 +2318,58 @@ AddEventHandler('ARMA:AddCar', function()
                     if permid and car ~= "" then  
                         exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
                         ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-                        webhook = "https://discord.com/api/webhooks/975532307245039676/pnJVovWuZbf5JHDyPlVWV_sS2iplmUjxxj3sOc84n4BuXEdtjR0L07hG-Y-fg-xs9klG"
-                        PerformHttpRequest(webhook, function(err, text, headers) 
-                        end, "POST", json.encode({username = "ARMA", embeds = {
+                        local addcar = {
                             {
-                                ["color"] = "15158332",
-                                ["title"] = "Added Car",
-                                ["description"] = "**Admin Name:** "..adminName.."\n**Admin ID:** "..userid.."\n**Player ID:** "..permid.."\n**Car Spawncode:** "..car,
-                                ["footer"] = {
-                                    ["text"] = "Time - "..os.date("%x %X %p"),
+                              ["color"] = "16448403",
+                              ["title"] = "ARMA Add Car To Player Logs",
+                              ["description"] = "",
+                              ["text"] = "ARMA Server #1",
+                              ["fields"] = {
+                                {
+                                    ["name"] = "Admin Name",
+                                    ["value"] = GetPlayerName(admin),
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin TempID",
+                                    ["value"] = source,
+                                    ["inline"] = true
+                                },
+                                {
+                                    ["name"] = "Admin PermID",
+                                    ["value"] = admin_id,
+                                    ["inline"] = true
+                                },
+                                {
+                                  ["name"] = "Player Name",
+                                  ["value"] = GetPlayerName(source),
+                                  ["inline"] = true
+                                },
+                                {
+                                  ["name"] = "Player TempID",
+                                  ["value"] = source,
+                                  ["inline"] = true
+                                },
+                                {
+                                  ["name"] = "Player PermID",
+                                  ["value"] = user_id,
+                                  ["inline"] = true
+                                },
+                                {
+                                  ["name"] = "Player Hours",
+                                  ["value"] = "0 hours",
+                                  ["inline"] = true
+                                },
+                                {
+                                  ["name"] = "Car Added To Player",
+                                  ["value"] = car,
+                                  ["inline"] = true
                                 }
-                        }}}), { ["Content-Type"] = "application/json" })
+                              }
+                            }
+                          }
+                          local webhook = "https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes"
+                          PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = addcar}), { ['Content-Type'] = 'application/json' })
                     else 
                         ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
                     end
