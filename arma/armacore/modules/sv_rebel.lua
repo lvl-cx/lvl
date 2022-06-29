@@ -24,7 +24,7 @@ AddEventHandler('Rebel:BuyWeapon', function(price, hash)
                 PerformHttpRequest(webhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Roleplay", embeds = {
                     {
-                        ["color"] = "15158332",
+                        ["color"] = "16448403",
                         ["title"] = "",
                         ["description"] = "Name: **" .. GetPlayerName(source) .. "** \nUser ID: **" .. userid.. "** \nBought Weapon: **" .. hash .. '**\nPrice: **£' .. tostring(price).. '**',
                         ["footer"] = {

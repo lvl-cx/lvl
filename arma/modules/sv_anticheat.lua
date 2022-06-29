@@ -333,7 +333,7 @@
 --         ARMA.kick(player,"[ARMA] You have been permanently banned from ARMA. 🤬\n\nReason: " .. "Cheating "..reason .. "\n\nYou have been banned by: ARMA\n\n [Your ID: " .. user_id .. "]") 
 --         local embed = {
 --             {
---                 ["color"] = "15158332",
+--                 ["color"] = "16448403",
 --                 ["title"] = "AC Banned Player",
 --                 ["description"] = '**Player Name**: '..name..'\n**Perm ID:** '..user_id..'\n**Reason:** '.."Cheating "..reason.."\n**Extra:** "..extra,
 --                 ["footer"] = {
@@ -358,7 +358,7 @@
 --         PerformHttpRequest(webhook, function(err, text, headers) 
 --         end, "POST", json.encode({username = "ARMA", embeds = {
 --             {
---                 ["color"] = "15158332",
+--                 ["color"] = "16448403",
 --                 ["title"] = "AC Unbanned Player",
 --                 ["description"] = "**Admin Name: **"..playerName.."\n**Admin ID: **"..user_id.."\n**Player ID:** "..permid,
 --                 ["footer"] = {

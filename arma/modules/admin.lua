@@ -458,7 +458,7 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/991476693170659398/9-9T2TIHBP2hqvZOwq8FfLMQl0wI_PSP28WjTT9axmoMoXzxrvruTMaUHf0-DpG4ibVc"
+        local webhook = "https://discord.com/api/webhooks/991476290496503818/vOqaK1KdoP1k3iK0aHRZlVBRBCXuOs4UOpK-sMcI7XTWnOFfT_7pnwhDoA_Bx-ccEub4"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         --anticheat
@@ -2162,7 +2162,7 @@ AddEventHandler('ARMA:GiveCratesMenu', function()
                     PerformHttpRequest(webhook, function(err, text, headers) 
                     end, "POST", json.encode({username = "ARMA", embeds = {
                         {
-                            ["color"] = "15158332",
+                            ["color"] = "16448403",
                             ["title"] = "Crate Logs",
                             ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
                             ["footer"] = {
