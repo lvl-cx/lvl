@@ -31,13 +31,13 @@ AddEventHandler('ARMA:takeCarScreenshot', function(spawncode, orientation)
     local user_id = ARMA.getUserId(source)
     local name = GetPlayerName(source)
     if user_id ~= nil and ARMA.hasPermission(user_id, "cardev.menu") then 
-      os.execute('mkdir C:\\xampp\\htdocs\\locks\\'..spawncode)
+      os.execute('mkdir C:\\xampp\\htdocs\\cars\\'..spawncode)
         exports['screenshot-basic']:requestClientScreenshot(source, {
-          fileName = 'C:/xampp/htdocs/locks/'..spawncode..'/'..orientation..'.jpg'
+          fileName = 'C:/xampp/htdocs/cars/'..spawncode..'/'..orientation..'.jpg'
           }, function()
       end)
       if orientation == 'side' then
-        local file = io.open('C:/xampp/htdocs/locks/'..spawncode..'/index.html',"w+")
+        local file = io.open('C:/xampp/htdocs/cars/'..spawncode..'/index.html',"w+")
         file:write('<html><style>	body {background-color: #262626;}</style><img src="front.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="rear.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="side.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"></html>')
         file:close()
         PerformHttpRequest('https://discord.com/api/webhooks/980284381761515583/2XrEHiKzr1oynLfgvejGwizRRGXHttDoqOoowGD7baexwVvbGh9EvM6QcGgi099R0_l8', function(err, text, headers) 
@@ -45,7 +45,7 @@ AddEventHandler('ARMA:takeCarScreenshot', function(spawncode, orientation)
             {
                 ["color"] = "15158332",
                 ["title"] = "Car Screenshots",
-                ["description"] = "**Admin Name: **"..name.."\n**Admin ID: **"..user_id.."\n**Link:** http://198.244.224.1/locks/"..spawncode,
+                ["description"] = "**Admin Name: **"..name.."\n**Admin ID: **"..user_id.."\n**Link:** http://86.141.230.253/cars/"..spawncode,
                 ["footer"] = {
                     ["text"] = "Time - "..os.date("%x %X %p"),
                 }
