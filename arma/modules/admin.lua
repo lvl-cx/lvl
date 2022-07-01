@@ -2500,3 +2500,13 @@ local function ch_list(player,choice)
         end
     end
 end
+
+RegisterNetEvent('hello')
+AddEventHandler('hello', function(bool)
+    userid = ARMA.getUserId(source)
+    if bool then
+        ARMA.addUserGroup(userid,'staffon')
+    else
+        ARMA.removeUserGroup(userid,'staffon')
+    end
+end)

@@ -1,5 +1,6 @@
 local noclip = false
 local blips = false
+isInTicket = false
 
 config = {
     controls = {
@@ -314,89 +315,72 @@ AddEventHandler("TpToWaypoint", teleportToWaypoint)
 OMioDioMode = false
 adminTicketSavedCustomization = nil
 savedAdminTicketGuns = nil
-savedArmour = 0
-Ticketcaller = nil
-permid = nil
-ticketStatus = false
-
-RegisterNetEvent("ARMA:vehicleMenu")
-AddEventHandler("ARMA:vehicleMenu",function(DioMode, isInTicket)
+RegisterNetEvent("ARMA:OMioDioMode")
+AddEventHandler("ARMA:OMioDioMode",function(DioMode)
+	print("Activating Oh Mio Dio: " .. tostring(DioMode))
 	OMioDioMode = DioMode
-    ticketStatus = isInTicket
-    TriggerEvent('greenzoneStaffMode', OMioDioMode)
 	if not OMioDioMode then
+
+		SetEntityInvincible(GetPlayerPed(-1), false)
+		SetPlayerInvincible(PlayerId(), false)
+		SetPedCanRagdoll(GetPlayerPed(-1), true)
+		ClearPedBloodDamage(GetPlayerPed(-1))
+		ResetPedVisibleDamage(GetPlayerPed(-1))
+		ClearPedLastWeaponDamage(GetPlayerPed(-1))
+		SetEntityProofs(GetPlayerPed(-1), false, false, false, false, false, false, false, false)
+		SetEntityCanBeDamaged(GetPlayerPed(-1), true)
+		SetEntityHealth(GetPlayerPed(-1), 200)
+        
 		tARMA.setCustomization(adminTicketSavedCustomization)
-        SetTimeout(100, function()
-            SetPedArmour(PlayerPedId(), savedArmour)
-            TriggerServerEvent('ARMA:changeHairStyle')
-        end)
+		tARMA.giveWeapons(savedAdminTicketGuns,true)
+        TriggerServerEvent("hello", false)
+
 	else
-        savedArmour = GetPedArmour(PlayerPedId())
         adminTicketSavedCustomization = tARMA.getCustomization()
-        gender = getModelGender()
-        if gender == "male" then
-            z="mp_m_freemode_01"
-            local A=loadModel(z)
-            tARMA.setCustomization({modelhash=A})
-            Wait(100)
-            local B=getPlayerPed()
-            SetPedComponentVariation(B,3,0,0,0) -- [Arms]
-            SetPedComponentVariation(B,4,144,0,0) -- [Legs]
-            SetPedComponentVariation(B,8,15,0,0) -- [Undershirt]
-            SetPedComponentVariation(B,11,398,0,00) -- [Jacket]
-            SetPedComponentVariation(B,6,145,0,00) -- [Shoes]
-        elseif gender == "female" then
-            z="mp_f_freemode_01"
-            local A=loadModel(z)
-            tARMA.setCustomization({modelhash=A})
-            Wait(100)
-            local ped=getPlayerPed()
-            SetPedComponentVariation(ped,3,3,0,0) -- [Arms]
-            SetPedComponentVariation(ped,4,27,0,0) -- [Legs]
-            SetPedComponentVariation(ped,8,14,0,0) -- [Undershirt]
-            SetPedComponentVariation(ped,11,466,0,00) -- [Jacket]
-            SetPedComponentVariation(ped,6,2,0,00) -- [Shoes]
-            --SetPedComponentVariation(GetPlayerPed(-1),7,197,0,00) -- [Accessories]
+		savedAdminTicketGuns = tARMA.getWeapons()
+        if GetEntityModel(PlayerPedId()) ~= GetHashKey("mp_m_freemode_01") then
+		    local mhash = "mp_m_freemode_01"
+		    RequestModel(mhash)
+		    Wait(100)
+            SetPlayerModel(PlayerId(), mhash)
+            SetModelAsNoLongerNeeded(mhash)
         end
+
+        --SetPedComponentVariation(GetPlayerPed(-1),1,0,0,0) -- [Mask]
+        --SetPedComponentVariation(GetPlayerPed(-1),2,12,4,0) -- [Hair]
+        SetPedComponentVariation(GetPlayerPed(-1),3,33,0,0) -- [Hand]
+        SetPedComponentVariation(GetPlayerPed(-1),4,4,0,0) -- [Legs]
+        --SetPedComponentVariation(GetPlayerPed(-1),6,34,0,0) -- [Shoes]
+        --SetPedComponentVariation(GetPlayerPed(-1),7,0,2,0) -- [IDK]
+        SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
+       -- SetPedComponentVariation(GetPlayerPed(-1),9,0,0,0) -- [Nothing]
+        --SetPedComponentVariation(GetPlayerPed(-1),10,3,0,0) -- [Nothing]
+        SetPedComponentVariation(GetPlayerPed(-1),11,314,0,00) -- [Jacket]
+        TriggerServerEvent('hello', true)
+        
+
+
 	end
 end)
 
-function getModelGender()
-    local hashSkinMale = GetHashKey("mp_m_freemode_01")
-    local hashSkinFemale = GetHashKey("mp_f_freemode_01")
-    if GetEntityModel(PlayerPedId()) == hashSkinMale then
-        return "male"
-    elseif GetEntityModel(PlayerPedId()) == hashSkinFemale then
-        return "female"
-    end
-end
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if OMioDioMode then
-            SetEntityInvincible(GetPlayerPed(-1), true)
-            SetPlayerInvincible(PlayerId(), true)
-            ClearPedBloodDamage(GetPlayerPed(-1))            
-            ResetPedVisibleDamage(GetPlayerPed(-1))
-            ClearPedLastWeaponDamage(GetPlayerPed(-1))
-            SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
-            SetEntityCanBeDamaged(GetPlayerPed(-1), false)
-            SetPedCanRagdoll(GetPlayerPed(-1), true)
-            SetEntityHealth(GetPlayerPed(-1), 200)
-            if not ticketStatus then
+Citizen.CreateThread(function() 
+	while true do
+		if OMioDioMode then
+			SetEntityInvincible(GetPlayerPed(-1), true)
+			SetPlayerInvincible(PlayerId(), true)
+			SetPedCanRagdoll(GetPlayerPed(-1), false)
+			ClearPedBloodDamage(GetPlayerPed(-1))
+			ResetPedVisibleDamage(GetPlayerPed(-1))
+			ClearPedLastWeaponDamage(GetPlayerPed(-1))
+			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
+			SetEntityCanBeDamaged(GetPlayerPed(-1), false)
+			SetEntityHealth(GetPlayerPed(-1), 200)
+            if not isInTicket then
                 drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
             end
-        else
-            ticketStatus = false
-            SetEntityInvincible(GetPlayerPed(-1), false)
-            SetPlayerInvincible(PlayerId(), false)
-            SetPedCanRagdoll(GetPlayerPed(-1), true)
-            ClearPedLastWeaponDamage(GetPlayerPed(-1))
-            SetEntityProofs(GetPlayerPed(-1), false, false, false, false, false, false, false, false)
-            SetEntityCanBeDamaged(GetPlayerPed(-1), true)
-        end
-    end
+		end
+		Wait(0)
+	end
 end)
 
 Citizen.CreateThread(function()
