@@ -12,6 +12,7 @@ local tbl = {
 	[4] = {locked = false, player = nil},
 	[5] = {locked = false, player = nil},
 	[6] = {locked = false, player = nil},
+	[7] = {locked = false, player = nil},
 }
 
 RegisterServerEvent('lockGarage')
@@ -73,10 +74,10 @@ AddEventHandler("LSC:applyModifications", function (model, vehicle)
 						TriggerClientEvent("LSC:applyModifications", source, vehicle, modifications)
 					end
 				else
-					print("#rows is 0")
+					-- print("#rows is 0")
 				end
 			else
-				print("rows is nil. line 91")
+				-- print("rows is nil. line 91")
 			end
 		end)
 	end
