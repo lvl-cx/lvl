@@ -317,7 +317,6 @@ adminTicketSavedCustomization = nil
 savedAdminTicketGuns = nil
 RegisterNetEvent("ARMA:OMioDioMode")
 AddEventHandler("ARMA:OMioDioMode",function(DioMode)
-	print("Activating Oh Mio Dio: " .. tostring(DioMode))
 	OMioDioMode = DioMode
 	if not OMioDioMode then
 
