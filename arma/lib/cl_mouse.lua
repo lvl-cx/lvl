@@ -69,7 +69,7 @@ Citizen.CreateThread(
 
 
 function func_disableGuiControls()
-    if inGUIGBRP then
+    if inGUIARMA then
         DisableControlAction(0, 1, true)
         DisableControlAction(0, 2, true)
         DisableControlAction(0, 25, true)
