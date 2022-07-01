@@ -14,11 +14,24 @@ cfg.spawn_radius = 1
 cfg.default_customization = {
   model = "mp_m_freemode_01" 
 }
-
--- init default ped parts
-for i=0,19 do
-  cfg.default_customization[i] = {0,0}
+for p=0,19 do 
+  cfg.default_customization[p]={0,0}
 end
+cfg.default_customization[0]={0,0}
+cfg.default_customization[1]={0,0}
+cfg.default_customization[2]={47,0}
+cfg.default_customization[3]={5,0}
+cfg.default_customization[4]={4,0}
+cfg.default_customization[5]={0,0}
+cfg.default_customization[6]={7,0}
+cfg.default_customization[7]={51,0}
+cfg.default_customization[8]={0,240}
+cfg.default_customization[9]={0,1}
+cfg.default_customization[10]={0,0}
+cfg.default_customization[11]={5,0}
+cfg.default_customization[12]={4,0}
+cfg.default_customization[15]={0,2}
+
 
 cfg.clear_phone_directory_on_death = false
 cfg.lose_aptitudes_on_death = false
