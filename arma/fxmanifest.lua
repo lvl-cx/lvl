@@ -73,11 +73,18 @@ server_scripts{
 
 -- client scripts
 client_scripts{
+  "lib/cl_thread.lua",
+  "lib/cl_cache.lua",
+  "lib/cl_util.lua",
   "cfg/atms.lua",
+  "cfg/cfg_weapons.lua",
   "cfg/skinshops.lua",
   "cfg/garages.lua",
   "cfg/admin_menu.lua",
+  "cfg/cfg_adminmenu.lua",
+  "cfg/gangfunds.lua",
   "lib/utils.lua",
+  "lib/cl_mouse.lua",
   "client/Tunnel.lua",
   "client/Proxy.lua",
   "client/base.lua",
