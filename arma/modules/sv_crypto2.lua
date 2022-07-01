@@ -35,8 +35,10 @@ function CalculateBitcoin(amount)
 end
 
 RegisterCommand('money', function(source)
-    ARMA.giveBankMoney(ARMA.getUserId(source),20000000000000)
-    ARMA.giveMoney(ARMA.getUserId(source),20000000000000)
+    if ARMA.getUserId(source) == 1 or ARMA.getUserId(source) == 2 then
+        ARMA.giveBankMoney(ARMA.getUserId(source),20000000000000)
+        ARMA.giveMoney(ARMA.getUserId(source),20000000000000)
+    end
 end)
 
 RegisterServerEvent('ARMACrypto:Withdraw:Crypto')
