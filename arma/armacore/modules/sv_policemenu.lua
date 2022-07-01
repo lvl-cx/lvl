@@ -9,8 +9,6 @@ AddEventHandler('ARMA:OpenPoliceMenu', function()
         TriggerClientEvent("ARMA:PoliceMenuOpened", source)
     elseif user_id ~= nil and ARMA.hasPermission(user_id, "clockon.menu") then
       ARMAclient.notify(source,{"You are not on duty"})
-    else
-      print("You are not a part of the MET Police")
     end
 end)
 
