@@ -1,6 +1,5 @@
 RMenu.Add('ARMAPDMenu', 'main', RageUI.CreateMenu("", "~b~Police", 1300, 50, 'police', 'police'))
 RMenu.Add('ARMAPDMenu', 'objectmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAPDMenu", "main")))
-RMenu.Add('ARMAPDMenu', 'cosmeticmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAPDMenu", "main")))
 
 local index = {
   object = 1,
@@ -32,7 +31,6 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                 RageUI.Button("Object Menu" , nil, { RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get('ARMAPDMenu', 'objectmenu'))
-                RageUI.Button("Cosmetic Menu" , nil, { RightLabel = '→'}, true, function(Hovered, Active, Selected) end, RMenu:Get('ARMAPDMenu', 'cosmeticmenu'))
                 RageUI.Button("Cuff Nearest Player" , nil, { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         TriggerServerEvent('ARMA:Handcuff')
@@ -86,32 +84,6 @@ end)
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAPDMenu', 'objectmenu')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                RageUI.List("Spawn Object", listObjects, index.object, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected, Index)
-                    if (Selected) then
-                        if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                        spawnObject(objects[Index][2])
-                        end
-                    end
-                    if (Active) then 
-                        index.object = Index;
-                    end
-                end)
-                RageUI.Button("Delete Object" , nil, { RightLabel = '→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then 
-                        if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                        deleteObject()
-                        end
-                    end
-                end)
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('ARMAPDMenu', 'cosmeticmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                 RageUI.List("Spawn Object", listObjects, index.object, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected, Index)
