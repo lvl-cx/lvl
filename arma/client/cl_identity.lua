@@ -1,4 +1,4 @@
-RMenu.Add('identitymenu', 'main', RageUI.CreateMenu("", "~b~Identity Menu", 1450,0))
+RMenu.Add('identitymenu', 'main', RageUI.CreateMenu("", "~b~Identity Menu", 1450,0, 'identity', 'identity'))
 
 RageUI.CreateWhile(1.0, true, function()
 
@@ -16,9 +16,9 @@ end)
 isInMenu = false
 Citizen.CreateThread(function() 
     while true do
-            local v1 = vector3(-551.14440917969,-192.09701538086,38.22310256958)
+            local v1 = vector3(-911.130859375,-2022.8002929688,12.833104133606)
             if isInArea(v1, 100.0) then 
-                DrawMarker(29, -551.14440917969,-192.09701538086,38.22310256958, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.4, 0.4, 14, 212, 0, 250, true, true, false, false, nil, nil, false)
+                DrawMarker(29, -911.130859375,-2022.8002929688,12.833104133606, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.4, 0.4, 14, 212, 0, 250, true, true, false, false, nil, nil, false)
             end
             if isInMenu == false then
             if isInArea(v1, 1.4) then 
@@ -52,7 +52,7 @@ function alert(msg)
 end
 
 Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-551.14440917969,-192.09701538086,38.22310256958)
+    blip = AddBlipForCoord(-911.130859375,-2022.8002929688,12.833104133606)
     SetBlipSprite(blip, 498)
     SetBlipScale(blip, 0.5)
     SetBlipDisplay(blip, 2)
