@@ -265,7 +265,7 @@ for i=0,31,1 do
                                                     local lostAmount = blackjackGameData[gameId][source][1]
                                                     TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(lostAmount).." chips")
                                                     if lostAmount > 10000000 then
-                                                        TriggerClientEvent('chatMessage', -1, "Diamond Casino | "..GetPlayerName(source).." has LOST ".. tostring(getMoneyStringFormatted(lostAmount)).." chips!", { 255, 0, 0 }, "", "alert")
+                                                        TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has LOST "..tostring(getMoneyStringFormatted(lostAmount)).." chips!", "alert")
                                                     end
                                                 elseif currentHand < 21 then
                                                     --print("currentHand < 21")
@@ -376,7 +376,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | "..GetPlayerName(source).." has WON ".. tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", { 255, 0, 0 }, "", "alert")
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
@@ -389,7 +389,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | "..GetPlayerName(source).." has WON ".. tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", { 255, 0, 0 }, "", "alert")
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
@@ -410,7 +410,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackLose",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(potentialPushAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | "..GetPlayerName(source).." has LOST ".. tostring(getMoneyStringFormatted(potentialPushAmount)).." chips!", { 255, 0, 0 }, "", "alert")
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has LOST "..tostring(getMoneyStringFormatted(potentialPushAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
