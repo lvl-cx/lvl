@@ -44,22 +44,32 @@ end)
 RegisterNetEvent("Blackjack:requestSitAtBlackjackTable")
 AddEventHandler("Blackjack:requestSitAtBlackjackTable", function(chairId)
     local source = source
-
+    local user_id = ARMA.getUserId({source})
     if source ~= nil then
         for k,v in pairs(blackjackTables) do 
             if v == source then 
                 blackjackTables[k] = false
-                --print("[Error] Player tried to sit at a table, but he's already sitting there :?, proceeding...")
                 return
             end
         end
-        --print("setting blackjacktable chairID: " .. tostring(chairId))
-        blackjackTables[chairId] = source
-        TriggerClientEvent("Blackjack:sendBlackjackTableData",-1,blackjackTables)
-        TriggerClientEvent("Blackjack:sitAtBlackjackTable",source,chairId)
+        if chairId > 7 and ARMA.hasGroup({user_id,"highroller"}) then
+            blackjackTables[chairId] = source
+            TriggerClientEvent("Blackjack:sendBlackjackTableData",-1,blackjackTables)
+            TriggerClientEvent("Blackjack:sitAtBlackjackTable",source,chairId)
+            return
+        end
+        if chairId > 7 and not ARMA.hasGroup({user_id,"highroller"}) then
+            ARMAclient.notify(source,{'~r~You need to be a highroller to sit at this table.'})
+            return
+        end
+        if chairId <= 7 then
+            blackjackTables[chairId] = source
+            TriggerClientEvent("Blackjack:sendBlackjackTableData",-1,blackjackTables)
+            TriggerClientEvent("Blackjack:sitAtBlackjackTable",source,chairId)
+            return
+        end
     else
         TriggerClientEvent("blackjack:notify",source,"~r~Error, can't sit you down.")
-        --print("[casino catastrophe] id is nil what?")
     end
 end)
 
