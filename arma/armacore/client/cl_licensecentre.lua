@@ -31,6 +31,7 @@ licensecentre.licenses = {
     {name = "Scrap Job License", group = "Scrap", price = 100000, priceshow = "100,000"},
     {name = "Gold License", group = "Gold", price = 1000000, priceshow = "1,000,000"},
     {name = "Diamond License", group = "Diamond", price = 5000000, priceshow = "5,000,000"},
+    {name = "Highrollers License", group = "highroller", price = 10000000, priceshow = "10,000,000"},
 
 }
 

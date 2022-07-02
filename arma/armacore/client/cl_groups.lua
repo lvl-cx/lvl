@@ -104,6 +104,17 @@ RageUI.CreateWhile(1.0, true, function()
 
                     end
                 end, RMenu:Get('GroupMenu', 'groups'))
+            elseif SelectedGroup == 'highroller' then 
+                RageUI.Separator("License Name: " .. SelectedGroup, function() end)
+                RageUI.Separator("Price of License: " .. '£10,000,000', function() end)
+                RageUI.Separator("License Type: " .. 'Legal License', function() end)
+
+                RageUI.Button('Refund License - [£' .. '2,500,000' ..']', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    if Selected then 
+                        TriggerServerEvent('ARMA:RefundLicense', SelectedGroup)
+
+                    end
+                end, RMenu:Get('GroupMenu', 'groups'))
             elseif SelectedGroup == 'Gold' then 
                 RageUI.Separator("License Name: " .. SelectedGroup, function() end)
                 RageUI.Separator("Price of License: " .. '£1,000,000', function() end)
