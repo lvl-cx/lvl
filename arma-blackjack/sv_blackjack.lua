@@ -265,9 +265,7 @@ for i=0,31,1 do
                                                     local lostAmount = blackjackGameData[gameId][source][1]
                                                     TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(lostAmount).." chips")
                                                     if lostAmount > 10000000 then
-                                        
-                                                        TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(lostAmount)) .. " chips!")
-                                        
+                                                        TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has LOST "..tostring(getMoneyStringFormatted(lostAmount)).." chips!", "alert")
                                                     end
                                                 elseif currentHand < 21 then
                                                     --print("currentHand < 21")
@@ -378,10 +376,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chat:addMessage', -1, {
-                                                                    template = '<div style="padding: 0.5vw; margin: 0.4vw; background-color: rgba(255, 0, 0, 0.6); border-radius: 4px;"><i class="fas fa-globe"></i> ' .. "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!" .. '</div>',
-                                                                    args = { playerName, msg }
-                                                                  })
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
@@ -394,7 +389,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..tostring(potentialWinAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has WON " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!")
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
@@ -415,7 +410,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackLose",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~r~-"..tostring(potentialPushAmount).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "Diamond Casino | " .. GetPlayerName(source) .. " has LOST " .. tostring(getMoneyStringFormatted(potentialPushAmount)) .. " chips!")
+                                                                TriggerClientEvent('chatMessage', source, "^1^[Diamond Casino]", { 128, 128, 128 }, ""..GetPlayerName(source).." has LOST "..tostring(getMoneyStringFormatted(potentialPushAmount)).." chips!", "alert")
                                                             end
                                                         end
                                                     end
