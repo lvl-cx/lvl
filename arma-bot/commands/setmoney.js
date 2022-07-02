@@ -5,13 +5,13 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     if (!params[0] || !parseInt(params[0]) || !params[1]) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'setcredits [permid] [amount]')
+        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'setmoney [permid] [amount]')
     }
     fivemexports.arma.armabot('getUserSource', [parseInt(params[0])], function(d) {
         fivemexports.ghmattimysql.execute("UPDATE `arma_user_moneys` SET bank = ? WHERE user_id = ?", [params[1], params[0]], (result) => {
             if (result) {
                 let embed = {
-                    "title": "Set Credits",
+                    "title": "Set Money",
                     "description": `\nPerm ID: **${params[0]}**\nAmount: **${params[1]}**\n\nAdmin: <@${message.author.id}>`,
                     "color": settingsjson.settings.botColour,
                     "footer": {
@@ -22,7 +22,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
                 message.channel.send({ embed })
             } else {
                 let embed = {
-                    "title": "Failed to set Credits",
+                    "title": "Failed to set Money",
                     "description": `\nPerm ID: **${params[0]}**\nAmount: **${params[1]}**`,
                     "color": settingsjson.settings.botColour,
                     "footer": {
@@ -37,6 +37,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 }
 
 exports.conf = {
-    name: "setcredits",
+    name: "setmoney",
     perm: 5
 }
