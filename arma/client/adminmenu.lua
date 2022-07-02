@@ -134,6 +134,7 @@ local getUserLicenseGroups = {
     ["LSD"] = "LSD",
     ["Gang"] = "Gang",
     ["Rebel"] = "Rebel",
+    ["highroller"] = "Highrollers",
 }
 
 local getUserMPDGroups = {
