@@ -64,49 +64,6 @@ AddEventHandler('ARMA:OpenSettings', function()
     end
 end)
 
-RegisterServerEvent("ARMA:GetPlayerData")
-AddEventHandler("ARMA:GetPlayerData",function()
-    local source = source
-    user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, admincfg.perm) then
-        players = GetPlayers()
-        players_table = {}
-        menu_btns_table = {}
-        useridz = {}
-        for i, p in pairs(players) do
-            if ARMA.getUserId(p) ~= nil then
-                name = GetPlayerName(p)
-                user_idz = ARMA.getUserId(p)
-                data = ARMA.getUserDataTable(user_idz)
-                playtime = data.PlayerTime or 0
-                PlayerTimeInHours = playtime/60
-                if PlayerTimeInHours < 1 then
-                    PlayerTimeInHours = 0
-                end
-                players_table[user_idz] = {name, p, user_idz, math.ceil(PlayerTimeInHours)}
-                table.insert(useridz, user_idz)
-            else
-                DropPlayer(p, "ARMA - The server was unable to cache your ID, please rejoin.")
-            end
-         end
-        if admincfg.IgnoreButtonPerms == false then
-            for i, b in pairs(admincfg.buttonsEnabled) do
-                if b[1] and ARMA.hasPermission(user_id, b[2]) then
-                    menu_btns_table[i] = true
-                else
-                    menu_btns_table[i] = false
-                end
-            end
-        else
-            for j, t in pairs(admincfg.buttonsEnabled) do
-                menu_btns_table[j] = true
-            end
-        end
-        TriggerClientEvent("ARMA:SendPlayerInfo", source, players_table, menu_btns_table)
-    end
-end)
-
-
 RegisterCommand("gethours", function(source, args)
     local v = source
     local UID = ARMA.getUserId(v)
@@ -2501,6 +2458,35 @@ local function ch_list(player,choice)
     end
 end
 
+RegisterServerEvent("ARMA:GetPlayerData")
+AddEventHandler("ARMA:GetPlayerData",function()
+    local source = source
+    user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, admincfg.perm) then
+        players = GetPlayers()
+        players_table = {}
+        menu_btns_table = {}
+        useridz = {}
+        for i, p in pairs(players) do
+            if ARMA.getUserId(p) ~= nil then
+                name = GetPlayerName(p)
+                user_idz = ARMA.getUserId(p)
+                data = ARMA.getUserDataTable(user_idz)
+                playtime = data.PlayerTime or 0
+                PlayerTimeInHours = playtime/60
+                if PlayerTimeInHours < 1 then
+                    PlayerTimeInHours = 0
+                end
+                players_table[user_idz] = {name, p, user_idz, math.ceil(PlayerTimeInHours)}
+                table.insert(useridz, user_idz)
+            else
+                DropPlayer(p, "ARMA - The server was unable to cache your ID, please rejoin.")
+            end
+        end
+        TriggerClientEvent("ARMA:getPlayersInfo", source, players_table)
+    end
+end)
+
 RegisterNetEvent('hello')
 AddEventHandler('hello', function(bool)
     userid = ARMA.getUserId(source)
@@ -2510,3 +2496,46 @@ AddEventHandler('hello', function(bool)
         ARMA.removeUserGroup(userid,'staffon')
     end
 end)
+
+
+RegisterNetEvent("ARMA:getStaffLevel")
+AddEventHandler("ARMA:getStaffLevel", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if source ~= nil then
+        getStaffLevel(true,source)
+    end
+end)
+
+function getStaffLevel(bool,src)
+    local user_id = ARMA.getUserId(src)
+    local level = 0
+    if ARMA.hasGroup(user_id,"dev") then
+        level = 12
+    elseif ARMA.hasGroup(user_id,"founder") then
+        level = 11
+    elseif ARMA.hasGroup(user_id,"operationsmanager") then
+        level = 10
+    elseif ARMA.hasGroup(user_id,"staffmanager") then    
+        level = 9
+    elseif ARMA.hasGroup(user_id,"commanager") then
+        level = 8
+    elseif ARMA.hasGroup(user_id,"headadmin") then
+        level = 7
+    elseif ARMA.hasGroup(user_id,"senioradmin") then
+        level = 6
+    elseif ARMA.hasGroup(user_id,"administrator") then
+        level = 5
+    elseif ARMA.hasGroup(user_id,"srmoderator") then
+        level = 4
+    elseif ARMA.hasGroup(user_id,"moderator") then
+        level = 3
+    elseif ARMA.hasGroup(user_id,"supportteam") then
+        level = 2
+    elseif ARMA.hasGroup(user_id,"trialstaff") then
+        level = 1
+    end
+    if ARMA.hasPermission(user_id,"admin.menu") then
+        TriggerClientEvent('ARMA:gettingStaffLevel', source,level)
+    end
+end
