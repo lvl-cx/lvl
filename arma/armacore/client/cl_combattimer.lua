@@ -8,7 +8,6 @@ zones = {
     {name = "Large Arms", coords = vector3(-1113.1085205078,4922.0400390625,217.8408203125), blipWidth = 110.0, blipColour = 1},
     {name = "Heroin", coords = vector3(3529.4702148438,3726.9321289062,36.473175048828), blipWidth = 220.0, blipColour = 1},
     {name = "Rebel", coords = vector3(1457.4250488281,6308.064453125,63.868026733398), blipWidth = 130.0, blipColour = 1},
-    {name = "Weapon Trader", coords = vector3(-104.02886962891,899.93719482422,243.78176879883), blipWidth = 180.0, blipColour = 1},
 }
 
 Citizen.CreateThread(function()

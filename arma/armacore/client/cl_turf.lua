@@ -43,10 +43,6 @@ RegisterNetEvent('ARMA:TurfComplete')
 AddEventHandler('ARMA:TurfComplete', function(reward, name)
 	inTurf = false
 	secondsRemaining = 0
-	if name == 'Global Weapon Trader' then
-		TakenTurf = true
-	end
-
 	if name == 'Weed' then
 		TakenTurfWeed = true
 	end
@@ -415,17 +411,6 @@ AddEventHandler('LSDZone', function(isnTurf)
 	end
 end)
 
-RegisterNetEvent('GlobalTraderZone')
-AddEventHandler('GlobalTraderZone', function(isnTurf)
-	while true do
-		if inTurf then 
-			DrawMarker(1, -93.742729187012,879.74108886719,236.20074462891-10, 0, 0, 0, 0, 0, 0, 100.001, 100.0001, 150.5001, 0, 255, 68, 80, 0, 0, 0, 0)
-		end
-
-		Citizen.Wait(1) 
-	end
-end)
-
 RegisterNetEvent('WeedZone')
 AddEventHandler('WeedZone', function(isnTurf)
 	while true do
@@ -454,12 +439,8 @@ Citizen.CreateThread(function()
 		-- [Turf Markers]
 		DrawMarker(24, 3580.8835449219,3647.9147949219,33.888610839844+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Heroin]
 		DrawMarker(24, 2487.8530273438,-403.55877685547,93.735229492188+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0)  -- [LSD]
-		DrawMarker(24, -96.505516052246,833.08752441406,235.72334289551+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.8, 0.8, 0.6, 255, 34, 0, 220, false, true, 0, 0, 0, 0, 0) -- [Global Weapon Trader]
 		DrawMarker(24, 103.01790618896,-1958.5435791016,20.781145095825+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Weed]
 		DrawMarker(24, 125.75616455078,-1304.6053466797,29.233455657959+1 - 0.98, 0.9, 0.0, 0, 0, 0, 0, 0.6, 0.6, 0.6, 255, 34, 0, 200, false, true, 0, 0, 0, 0, 0) -- [Cocaine]
-		if TakenTurf then
-			DrawMarker(30, -86.27645111084,834.51782226562,235.92004394531+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Global Weapon Trader Taken Commision]
-		end	
 		if TakenTurfWeed then
 			DrawMarker(30, 100.96116638184,-1958.7907714844,20.790607452393+1 - 0.98, 0.8, 0.8, 0, 0, 0, 0, 0.5, 0.5, 0.5, 255, 34, 0, 200, true, true, 0, 0, 0, 0, 0) -- [Weds Trader]
 		end		
@@ -497,16 +478,3 @@ function drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     AddTextComponentString(text)
     DrawText(x - width/2, y - height/2 + 0.005)
 end
-
--- [Blip]
-Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-96.406372070312,833.00939941406,235.7233581543)
-    SetBlipSprite(blip, 431)
-    SetBlipScale(blip, 0.7)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 1)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString('Global Weapon Trader')
-    EndTextCommandSetBlipName(blip)
-end)

@@ -54,26 +54,6 @@ AddEventHandler('ARMA:PlayerDied', function(isnTurf)
 	end
 end)
 
-RegisterNetEvent("ARMA:ChangeCommision")
-AddEventHandler("ARMA:ChangeCommision", function(com)
-	if completedTurf == true then
-		if com <= 35 then
-			if com >= 0 then
-				TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Global Weapon Trader", "alert")
-			  
-				ARMAclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
-				SendLargeArms(com, source)
-				SendLargeArms2(com, source)
-				SendLargeArms3(com, source)
-				SendLargeArms4(com, source)
-				TriggerClientEvent('GlobalrecieveTurf', -1, com)
-			end
-		else
-			ARMAclient.notify(source,{"~r~You cannot go higher than 35%."})
-		end
-	end
-end)
-
 RegisterNetEvent("ARMA:ChangeCommisionWeed")
 AddEventHandler("ARMA:ChangeCommisionWeed", function(com)
 	if completedTurf == true then
@@ -177,11 +157,6 @@ AddEventHandler('ARMA:TakeTurf', function(isnTurf)
 			if turf.nameofturf == "LSD" then
 				TriggerClientEvent("LSDZone", -1)
 				TriggerClientEvent("GlobalTraderLSD", -1)
-			end
-
-			if turf.nameofturf == "Global Weapon Trader" then
-				TriggerClientEvent("ARMA:DontIt", -1, false)
-				TriggerClientEvent("GlobalTraderZone", -1)
 			end
 
 			if turf.nameofturf == "Weed" then
