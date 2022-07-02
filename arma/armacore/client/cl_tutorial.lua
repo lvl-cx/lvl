@@ -6,7 +6,7 @@ local CanSeeMarker = false
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(500)
-      if #(vec(-510.23022460938, -255.72303771973,35.607707977295+1 - 0.98) - GetEntityCoords(PlayerPedId())) < 100 then
+      if #(vec(-907.02740478516, -2045.3104248047,9.2988243103027+1 - 0.98) - GetEntityCoords(PlayerPedId())) < 100 then
       if not CanSeeMarker then
         CanSeeMarker = true
         Citizen.CreateThread(function()
@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
                 alert('Press ~INPUT_VEH_HORN~ to start tutorial ~y~(Starters only)')
                 if IsControlJustPressed(0, 51) then
                   if taxiCooldown == false then
-                    TriggerEvent("arma:PlaySound", "starter") 
+                    TriggerEvent("arma:PlaySound", "starter")
                   
                     local x,y,z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 8.0, 0.5))
                     veh = "taxi" 
