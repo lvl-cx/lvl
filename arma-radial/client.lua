@@ -272,23 +272,11 @@ function impoundVehicle(entityId)
     end
 end
 
-function robPerson(entityId)
-    local player = GetPlayerByEntityID(entityId)
-    local playerSrc = GetPlayerServerId(player)
-    if playerSrc > 0 then
-        if GetSelectedPedWeapon(PlayerPedId()) ~= `WEAPON_UNARMED` then
-            TriggerServerEvent("ARMA:robPlayer",playerSrc)
-        else
-            TriggerEvent("ARMA:Notify","~r~You need a weapon in your hands.")
-        end
-    end
-end
-
 function askId(entityId)
     local player = GetPlayerByEntityID(entityId)
     local playerSrc = GetPlayerServerId(player)
     if playerSrc > 0 then
-        TriggerServerEvent("ARMA:askId",playerSrc)
+        TriggerServerEvent('ARMA:AskID')
     end
 end
 
@@ -296,7 +284,7 @@ function giveCash(entityId)
     local player = GetPlayerByEntityID(entityId)
     local playerSrc = GetPlayerServerId(player)
     if playerSrc > 0 then
-        TriggerServerEvent("ARMA:giveCashToPlayer",playerSrc)
+        TriggerServerEvent('ARMA:GiveMoney')
     end
 end
 
@@ -308,7 +296,7 @@ function searchPlayer(entityId)
             if IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_enter', 3) or IsEntityPlayingAnim(ped, "random@arrests", "idle_2_hands_up", 3) or IsEntityPlayingAnim(ped, "random@arrests@busted", "idle_a", 3) then
                 local playerSrc = GetPlayerServerId(player)
                 if playerSrc > 0 then
-                    TriggerServerEvent("ARMA:searchPlayer",playerSrc)
+                    TriggerServerEvent('ARMA:SearchPlr')
                 end
             else
                 TriggerEvent("ARMA:Notify","~r~Player must have their hands up or be on their knees!")
@@ -317,7 +305,7 @@ function searchPlayer(entityId)
     else
         local playerSrc = GetPlayerServerId(player)
         if playerSrc > 0 then
-            TriggerServerEvent("ARMA:searchPlayer",playerSrc)
+            TriggerServerEvent('ARMA:SearchPlr')
         end
     end
 end
@@ -329,7 +317,7 @@ function revive(entityId)
     local playerSrc = GetPlayerServerId(player)
     if playerSrc > 0 then
         if globalOnNHSDuty then
-            TriggerServerEvent("ARMA:PerformCPR",playerSrc)
+            TriggerClientEvent('ARMA:cprAnim', player, nplayer)
         else
             if not cpr_in_progress then
                 TriggerServerEvent("ARMA:attemptCPR",playerSrc)
@@ -440,8 +428,6 @@ RegisterNUICallback("radialClick", function(data)
         giveCash(entityId)
     elseif menu == "search" then
         searchPlayer(entityId)
-    elseif menu == "robPerson" then
-        robPerson(entityId)
     elseif menu == "revive" then
         revive(entityId)
     elseif menu == "handcuff" then

@@ -103,11 +103,6 @@ $(document).ready(function(){
             icon: '#searchPerson'
         },
         {
-            id   : 'robPerson',
-            title: 'Rob Person',
-            icon: '#robPlayer'
-        },
-        {
             id   : 'revive',
             title: 'CPR',
             icon: '#cpr'
