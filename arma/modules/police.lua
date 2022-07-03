@@ -541,22 +541,6 @@ local choice_store_weapons = {function(player, choice)
 end, lang.police.menu.store_weapons.description()}
 
 
-local function build_client_points(source)
-  -- PC
-  for k,v in pairs(cfg.pcs) do
-    local x,y,z = table.unpack(v)
-    ARMAclient.addMarker(source,{x,y,z-1,0.7,0.7,0.5,0,125,255,125,150})
-    ARMA.setArea(source,"ARMA:police:pc"..k,x,y,z,1,1.5,pc_enter,pc_leave)
-  end
-end
-
--- build police points
-AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
-  if first_spawn then
-    build_client_points(source)
-  end
-end)
-
 -- WANTED SYNC
 
 local wantedarma_players = {}

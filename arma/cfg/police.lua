@@ -1,13 +1,6 @@
 
 local cfg = {}
 
--- PCs positions
-cfg.pcs = {
-  {1853.21, 3689.51, 34.2671},
-  {442.030609130859, -978.72705078125, 30.6896057128906},
-  {-448.97076416016,6012.4208984375,31.71639251709}
-}
-
 -- vehicle tracking configuration
 cfg.trackveh = {
   min_time = 300, -- min time in seconds
