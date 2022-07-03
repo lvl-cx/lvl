@@ -1017,7 +1017,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for i, p in pairs(actypes) do
-                    RageUI.ButtonWithStyleWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     end, RMenu:Get('adminmenu', 'anticheat'))
                 end
             end
@@ -1074,7 +1074,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
                 for i, p in pairs(actypes) do
-                    RageUI.ButtonWithStyleWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             acbanType = p.type
                         end
