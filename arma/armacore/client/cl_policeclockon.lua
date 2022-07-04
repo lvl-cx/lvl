@@ -164,6 +164,5 @@ AddEventHandler('PoliceDuty:Allowed', function(allowed)
     elseif not allowed then
         RageUI.ActuallyCloseAll()
         RageUI.Visible(RMenu:Get("PoliceDutyMenu", "main"), false)
-        notify("~r~You are not a part of the MET Police!")
     end
 end)
