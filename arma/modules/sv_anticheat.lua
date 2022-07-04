@@ -15,7 +15,7 @@ actypes = {
     {type = 8, desc = 'Weapon Modifiers'},
     {type = 9, desc = 'Armour Modifier'},
     {type = 10, desc = 'Health Modifier'},
-    {type = 11, desc = 'Server Triggers'},
+    {type = 11, desc = 'Server Triggers'}
 }
 
 local allowedEntities = {
