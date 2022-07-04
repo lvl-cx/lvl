@@ -7,8 +7,6 @@ AddEventHandler('ARMA:OpenNHSMenu', function()
     if user_id ~= nil and ARMA.hasPermission(user_id, "nhs.menu") then
         TriggerClientEvent("ARMA:NHSMenuOpened", source)
     elseif user_id ~= nil and ARMA.hasPermission(user_id, "clockon.nhs") then
-    else
-        print("You are not a part of the NHS")
     end
 end)
 
