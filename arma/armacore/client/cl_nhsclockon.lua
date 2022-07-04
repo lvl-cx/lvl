@@ -120,6 +120,5 @@ AddEventHandler('NHSDuty:Allowed', function(allowed)
     elseif not allowed then
         RageUI.ActuallyCloseAll()
         RageUI.Visible(RMenu:Get("NHSDutyMenu", "main"), false)
-        notify("~r~You are not a part of the NHS")
     end
 end)
