@@ -1,6 +1,5 @@
 local m = module("cfg/garages")
 m=m.garage_types
-
 local f = module("arma-weapons", "cfg/cfg_weaponsonback")
 f=f.RealWeapons
 
