@@ -347,14 +347,14 @@ AddEventHandler("ARMA:OMioDioMode",function(DioMode)
 
         --SetPedComponentVariation(GetPlayerPed(-1),1,0,0,0) -- [Mask]
         --SetPedComponentVariation(GetPlayerPed(-1),2,12,4,0) -- [Hair]
-        SetPedComponentVariation(GetPlayerPed(-1),3,33,0,0) -- [Hand]
+        --SetPedComponentVariation(GetPlayerPed(-1),19,0,0,0) -- [Hand]
         SetPedComponentVariation(GetPlayerPed(-1),4,4,0,0) -- [Legs]
-        --SetPedComponentVariation(GetPlayerPed(-1),6,34,0,0) -- [Shoes]
+        SetPedComponentVariation(GetPlayerPed(-1),8,34,0,0) -- [Shoes]
         --SetPedComponentVariation(GetPlayerPed(-1),7,0,2,0) -- [IDK]
         SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
        -- SetPedComponentVariation(GetPlayerPed(-1),9,0,0,0) -- [Nothing]
         --SetPedComponentVariation(GetPlayerPed(-1),10,3,0,0) -- [Nothing]
-        SetPedComponentVariation(GetPlayerPed(-1),11,314,0,00) -- [Jacket]
+        SetPedComponentVariation(GetPlayerPed(-1),11,442,0,00) -- [Jacket]
         TriggerServerEvent('hello', true)
         
 

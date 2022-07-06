@@ -30,6 +30,7 @@ cfg.garage_types = {
   ["hycadem8"] = {"Xonaa Hycade M8",9999999999, ""},
   ["agtr35"] = {"testing",9999999999, ""},
   ["zacoea90"] = {"testing",9999999999, ""},
+  ["taxi"] = {"starter",9999999999, ""},
 },
   
   
