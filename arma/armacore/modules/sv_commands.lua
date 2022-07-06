@@ -16,7 +16,7 @@ AddEventHandler(
 )
 
 RegisterCommand("getmyid", function(source)
-    TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, " Perm ID: " .. ARMA.getUserId({source}) , "alert")
+    TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, " Perm ID: " .. ARMA.getUserId(source) , "alert")
     --TriggerClientEvent('chat:addMessage', source, {
     --    template = '^7[ARMA^7]:^7' .. " Perm ID: " .. ARMA.getUserId(source) .. '</div>',
     --    args = { playerName, msg }
