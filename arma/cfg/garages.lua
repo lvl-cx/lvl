@@ -28,6 +28,8 @@ cfg.garage_types = {
   _config = {vtype="Car",blipid=50,blipcolor=4,permissions={"vip.perm"}},
   ["canamassault"] = {"Vola Buggy",999999999999, ""},
   ["hycadem8"] = {"Xonaa Hycade M8",9999999999, ""},
+  ["agtr35"] = {"testing",9999999999, ""},
+  ["zacoea90"] = {"testing",9999999999, ""},
 },
   
   
