@@ -9,10 +9,10 @@ Citizen.CreateThread(function()
 		SetDiscordRichPresenceAssetSmall('mainlogo') -- Name of the smaller image asset.
 		SetDiscordRichPresenceAssetSmallText('ARMA')
 		while (a == 0 ) do
-			SetRichPresence("[ID:fetching...] | " ..#GetActivePlayers().. "/" .. "128" .. " Players") 
+			SetRichPresence("[ID:fetching...] | " ..#GetActivePlayers().. "/" .. "64" .. " Players") 
 			Wait(0)
 		end
-		SetRichPresence("[ID:"..a.."] | " ..#GetActivePlayers().. "/" .. "128" .. " Players") 
+		SetRichPresence("[ID:"..a.."] | " ..#GetActivePlayers().. "/" .. "64" .. " Players") 
 		SetDiscordRichPresenceAction(0, 'Discord', 'discord.gg/armarp')
 
 		Wait(5000)
