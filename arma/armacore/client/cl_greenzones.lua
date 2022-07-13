@@ -7,6 +7,7 @@ local blips = {
 	{title="[Legion]", colour=2, id=1, pos=vector3(170.51364135742,-1021.3690795898,28.816247940063),dist=50,nonRP=false,setBit=false}, -- [Legion]
 	{title="[Admin Island]", colour=2, id=1, pos=vector3(3492.4116210938,2579.2509765625,13.129757881165),dist=200,nonRP=false,setBit=false}, -- [Admin Island]
 	{title="[Casino]", colour=2, id=1, pos=vector3(1134.6573486328,251.09861755371,-51.035732269287),dist=100,nonRP=false,setBit=false}, -- [Casino]
+	{title="[Rebel]", colour=2, id=1, pos=vector3(1457.4250488281,6308.064453125,63.868026733398),dist=130,nonRP=false,setBit=false},
 }
 
 local function ShowInfo(text)
