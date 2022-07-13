@@ -3,10 +3,10 @@ AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
     ARMAclient.setUserID(source, {user_id})
 
-    if vRP.hasGroup(user_id, 'Developer') then
+    if ARMA.hasGroup(user_id, 'Developer') then
         ARMAclient.setDev(source, {})
     end
-    if vRP.hasGroup(user_id, 'cardev') then
+    if ARMA.hasGroup(user_id, 'cardev') then
         ARMAclient.setCarDev(source, {})
     end
         
