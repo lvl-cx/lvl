@@ -260,6 +260,7 @@ function tARMA.staffMode(status, ticketStatus)
         staffClothing[4]={152,2}
         staffClothing[6]={141,0}
         staffClothing[8]={15,0}
+        staffClothing[11]={442,0}
         tARMA.setCustomization(staffClothing)
     else
         tARMA.setCustomization(clothing)
