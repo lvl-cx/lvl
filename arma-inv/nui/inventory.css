@@ -10,7 +10,6 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    border: solid 0.1em #fafb93;
     transform: translate(-50%, -50%);
 }
 
@@ -62,7 +61,6 @@ body {
     margin-left: 0.8em;
     margin-bottom: 0.6em;
     background-color: rgba(6, 7, 8, 0.4);
-    border: solid 0.1em #fafb93;
     text-align: center;
     justify-content: center;
 }
@@ -76,7 +74,7 @@ body {
 }
 
 #ButtonRow1>div:hover {
-    background-color: #fafb93;
+    background-color: #1252e4;
 }
 
 #InventoryLogo {
@@ -89,20 +87,11 @@ body {
 
 #InventoryLine {
     width: 91%;
-    background: #fafb93;
+    background: #1252e4;
     height: 0.09em;
     position: relative;
     left: 3em;
     top: 2em;
-}
-
-#InventoryText {
-    font-family: 'Poppins', sans-serif;
-    color: #fafb93;
-    position: relative;
-    font-size: 0.8em;
-    bottom: 32em;
-    left: 24.5em;
 }
 
 #SecondInventoryWeight {
@@ -165,7 +154,7 @@ th {
 
 .ItemSelected {
     border: none;
-    background-color: #fafb93;
+    background-color: #1252e4;
 }
 
 #ndInventoryText {
