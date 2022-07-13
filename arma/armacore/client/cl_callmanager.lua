@@ -9,63 +9,68 @@ RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager",
 RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
 RMenu:Get('callmanager', 'main')
 
-RageUI.CreateWhile(1.0, RMenu:Get("callmanager", "main"), nil, function()
-    RageUI.IsVisible(RMenu:Get("callmanager", "main"), true, false, true, function()
-        if next(adminTickets) then
-            RageUI.Button("Admin Tickets", "", {}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    RMenu.Visible(RMenu:Get("callmanager", "admin"), true)
-                end
-            end)
-        end
-        if next(PDCalls) then
-            RageUI.Button("POlice Calls", "", {}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    RMenu.Visible(RMenu:Get("callmanager", "police"), true)
-                end
-            end)
-        end
-        if next(NHSCalls) then
-            RageUI.Button("NHS Calls", "", {}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    RMenu.Visible(RMenu:Get("callmanager", "nhs"), true)
-                end
-            end)
-        end
-        end, function()
-    end)
-    RageUI.IsVisible(RMenu:Get("callmanager", "admin"), true, false, true, function()
-        for k, v in pairs(adminTickets) do
-            RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
-                if Selected then
-                    TriggerServerEvent("Jud:TakeTicket", k, 'Admin')
-                end
-            end)
-        end
-        end, function()
-    end)
-    RageUI.IsVisible(RMenu:Get("callmanager", "police"), true, false, true, function()
-        for k, v in pairs(pdCalls) do
-            RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
-                if Selected then
-                    TriggerServerEvent("Jud:TakeTicket", k, 'PD')
-                    SetNewWaypoint(v.coords.x, v.coords.y)
-                end
-            end)
-        end
-        end, function()
-    end)
-    RageUI.IsVisible(RMenu:Get("callmanager", "nhs"), true, false, true, function()
-        for k, v in pairs(NHSCalls) do
-            RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
-                if Selected then
-                    TriggerServerEvent("Jud:TakeTicket", k, 'NHS')
-                    SetNewWaypoint(v.coords.x, v.coords.y)
-                end
-            end)
-        end
-        end, function()
-    end)
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('callmanager', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            if next(adminTickets) then
+                RageUI.Button("Admin Tickets", "", {}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        RMenu.Visible(RMenu:Get("callmanager", "admin"), true)
+                    end
+                end)
+            end
+            if next(PDCalls) then
+                RageUI.Button("POlice Calls", "", {}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        RMenu.Visible(RMenu:Get("callmanager", "police"), true)
+                    end
+                end)
+            end
+            if next(NHSCalls) then
+                RageUI.Button("NHS Calls", "", {}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        RMenu.Visible(RMenu:Get("callmanager", "nhs"), true)
+                    end
+                end)
+            end
+        end) 
+    end
+    if RageUI.Visible(RMenu:Get('callmanager', 'admin')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            for k, v in pairs(adminTickets) do
+                RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("Jud:TakeTicket", k, 'Admin')
+                    end
+                end)
+            end
+        end) 
+    end
+    if RageUI.Visible(RMenu:Get('callmanager', 'police')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            for k, v in pairs(pdCalls) do
+                RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("Jud:TakeTicket", k, 'PD')
+                        SetNewWaypoint(v.coords.x, v.coords.y)
+                    end
+                end)
+            end
+        end) 
+    end
+    if RageUI.Visible(RMenu:Get('callmanager', 'nhs')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            for k, v in pairs(NHSCalls) do
+                RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("Jud:TakeTicket", k, 'NHS')
+                        SetNewWaypoint(v.coords.x, v.coords.y)
+                    end
+                end)
+            end
+        end) 
+    end
 end)
 
 RegisterNetEvent("Jud:RecieveTickets")
