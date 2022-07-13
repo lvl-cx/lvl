@@ -1,5 +1,0 @@
-RegisterNetEvent('ARMA:SendID')
-AddEventHandler('ARMA:SendID', function()
-  user_id = ARMA.getUserId(source)
-  TriggerClientEvent('ARMA:UserID', source, user_id)
-end)

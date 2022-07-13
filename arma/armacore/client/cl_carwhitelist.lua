@@ -24,27 +24,16 @@ Citizen.CreateThread(function()
         for k,v in pairs(UnallowlistedVehicles) do
             if IsInVehicle() then
                 if IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), true), GetHashKey(k)) then
-                    TriggerServerEvent('ARMA:SendID')
-                    Wait(100)
-                    if v ~= userid then
-                        if v ~= userid then
-                            if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false)) == 0 then
-                                SetEntityCoords(GetPlayerPed(-1), GetEntityCoords(GetPlayerPed(-1)))
-                                notify("~r~You are not allowed in this vehicle.")
-                            end
+                    if v ~= tARMA.userID() then
+                        if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false)) == 0 then
+                            SetEntityCoords(GetPlayerPed(-1), GetEntityCoords(GetPlayerPed(-1)))
+                            notify("~r~You are not allowed in this vehicle.")
                         end
                     end
-                    
                 end
             end
         end
     end
-end)
-
-
-RegisterNetEvent('ARMA:UserID')
-AddEventHandler('ARMA:UserID', function(bool)
-    userid = bool
 end)
 
 function IsInVehicle()
