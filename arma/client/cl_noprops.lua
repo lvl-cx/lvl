@@ -1,4 +1,4 @@
-local a = module("cfg/cfg_noprops")
+--[[ local a = module("cfg/cfg_noprops")
 local b={}
 local c={}
 local d={}
@@ -102,3 +102,4 @@ Citizen.CreateThread(function()
     end
     collectgarbage()
 end)
+ ]]
