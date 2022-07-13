@@ -1,6 +1,5 @@
 local noclip = false
 local blips = false
-isInTicket = false
 
 config = {
     controls = {
@@ -28,73 +27,9 @@ config = {
         bgA = 80, 
 }
 
-RegisterKeyMapping('noclip', 'Staff Noclip', 'keyboard', 'F4')       
-RegisterCommand('noclip', function(source, args, RawCommand)
-    TriggerServerEvent('ARMA:noClip')
-end)
-
-
-function setupScaleform(scaleform)
-
-    local scaleform = RequestScaleformMovie(scaleform)
-
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(1)
-    end
-
-    PushScaleformMovieFunction(scaleform, "CLEAR_ALL")
-    PopScaleformMovieFunctionVoid()
-    
-    PushScaleformMovieFunction(scaleform, "SET_CLEAR_SPACE")
-    PushScaleformMovieFunctionParameterInt(200)
-    PopScaleformMovieFunctionVoid()
-
-
-    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(1)
-    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.goBackward, true))
-    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.goForward, true))
-    BeginTextCommandScaleformString("STRING")
-    AddTextComponentScaleform("Go Forwards/Backwards")
-    EndTextCommandScaleformString()
-    PopScaleformMovieFunctionVoid()
-
-
-    PushScaleformMovieFunction(scaleform, "SET_DATA_SLOT")
-    PushScaleformMovieFunctionParameterInt(4)
-    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.decreasespeed, true))
-    ScaleformMovieMethodAddParamPlayerNameString(GetControlInstructionalButton(1, config.controls.changeSpeed, true))
-    BeginTextCommandScaleformString("STRING")
-    AddTextComponentScaleform("Increase/Decrease Speed ("..config.speeds[index].label..")")
-    EndTextCommandScaleformString()
-    PopScaleformMovieFunctionVoid()
-
-
-    PushScaleformMovieFunction(scaleform, "DRAW_INSTRUCTIONAL_BUTTONS")
-    PopScaleformMovieFunctionVoid()
-
-    return scaleform
-end
-
-function DisableControls()
-    DisableControlAction(0, 30, true)
-    DisableControlAction(0, 31, true)
-    DisableControlAction(0, 32, true)
-    DisableControlAction(0, 33, true)
-    DisableControlAction(0, 34, true)
-    DisableControlAction(0, 35, true)
-    DisableControlAction(0, 266, true)
-    DisableControlAction(0, 267, true)
-    DisableControlAction(0, 268, true)
-    DisableControlAction(0, 269, true)
-    DisableControlAction(0, 44, true)
-    DisableControlAction(0, 74, true)
- 
-end
-
 function tARMA.toggleNoclip()
-    inRedZone = false
     noclip = not noclip
+    inRedZone = false
     if IsPedInAnyVehicle(PlayerPedId(), true) then
         ped = GetVehiclePedIsIn(PlayerPedId(), true)
     else
@@ -121,89 +56,75 @@ function tARMA.isNoclip()
     return noclip
 end
 
-
-
-index = 1 -- DONT TOUCH OR JIMMY SAVIL WILL TOUCH YOU
-
+index = 1
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(1)
+        Citizen.Wait(0)
         if noclip then
-            --buttons = setupScaleform("instructional_buttons")
-
             currentSpeed = config.speeds[index].speed
             if IsPedInAnyVehicle(PlayerPedId(), false) then
                 noclipEntity = GetVehiclePedIsIn(PlayerPedId(), false)
             else
                 noclipEntity = PlayerPedId()
             end
-
             SetEntityCollision(noclipEntity, not noclip, not noclip)
             FreezeEntityPosition(noclipEntity, noclip)
             SetEntityInvincible(noclipEntity, noclip)
-            SetVehicleRadioEnabled(noclipEntity, not noclip) -- [[Stop radio from appearing when going upwards.]]
+            SetVehicleRadioEnabled(noclipEntity, not noclip)
         end
 
         if noclip then
-            --DrawScaleformMovieFullscreen(buttons)
-
             local yoff = 0.0
             local zoff = 0.0
             local x, y, z = tARMA.getPosition()
             local dx, dy, dz = tARMA.getCamDirection()
-            
-
             if IsControlJustPressed(1, config.controls.changeSpeed) then
                 if index ~= #config.speeds then
                     index = index+1
                     currentSpeed = config.speeds[index].speed
-                -- else
-                --     currentSpeed = config.speeds[1].speed
-                --     index = 1
                 end
-                --setupScaleform("instructional_buttons")
             end
-
-
             if IsControlJustPressed(1, config.controls.decreasespeed) then
                 if index ~= 1 then
                     index = index-1
                     currentSpeed = config.speeds[index].speed
-                -- else
-                --     currentSpeed = config.speeds[1].speed
-                --     index = #config.speeds
                 end
-                --setupScaleform("instructional_buttons")
             end
 				
-				DisableControls()
-
+			DisableControls()
 			if IsDisabledControlPressed(0, config.controls.goForward) then
                 x = x + currentSpeed * dx
                 y = y + currentSpeed * dy
                 z = z + currentSpeed * dz
 			end
-			
             if IsDisabledControlPressed(0, config.controls.goBackward) then
                 x = x - currentSpeed * dx
                 y = y - currentSpeed * dy
                 z = z - currentSpeed * dz
 			end
-		
             local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(GetPlayerPed(-1))
             local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, x,y, zoff * (currentSpeed + 0.3))
 			SetEntityHeading(noclipEntity, heading)
             SetEntityCoordsNoOffset(noclipEntity, x, y, z, true, true, false)
-           
         end
     end
 end)
 
 
-RegisterNetEvent('ToggleAdminNoclip')
-AddEventHandler('ToggleAdminNoclip', function(source)
-    tARMA.toggleNoclip()
-end)
+function DisableControls()
+    DisableControlAction(0, 30, true)
+    DisableControlAction(0, 31, true)
+    DisableControlAction(0, 32, true)
+    DisableControlAction(0, 33, true)
+    DisableControlAction(0, 34, true)
+    DisableControlAction(0, 35, true)
+    DisableControlAction(0, 266, true)
+    DisableControlAction(0, 267, true)
+    DisableControlAction(0, 268, true)
+    DisableControlAction(0, 269, true)
+    DisableControlAction(0, 44, true)
+    DisableControlAction(0, 74, true)
+end
 
 local EntityCleanupGun = false;
 
@@ -313,6 +234,7 @@ RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
 local staffMode = false
+local isInTicket = false
 function tARMA.staffMode(status, ticketStatus)
     isInTicket = ticketStatus
     staffMode = status
@@ -347,6 +269,21 @@ function tARMA.staffMode(status, ticketStatus)
         end)
     end
 end
+
+RegisterCommand("return", function()
+    if staffMode then
+        if location ~= nil then
+            SetEntityCoords(PlayerPedId(), location)
+            location = nil
+            tARMA.notify("~g~Returned.")
+        else
+            tARMA.notify("~r~Unable to find last location!")
+        end
+        tARMA.staffMode(source, {false, false})
+        TriggerEvent('Jud:sendTicketInfo', source)
+    end
+end)
+
 
 function drawNativeText(V)
     BeginTextCommandPrint("STRING")
