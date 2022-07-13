@@ -1,6 +1,6 @@
-local m = module("cfg/garages")
+local m = module("arma-vehicles", "cfg/cfg_garages")
 m=m.garage_types
-local f = module("arma-weapons", "cfg/cfg_weaponsonback")
+local f = module("arma-weapons", "cfg/cfg_weaponModels")
 f=f.RealWeapons
 
 actypes = {
@@ -105,14 +105,6 @@ AddEventHandler('entityCreating', function(entity)
                 allowSpawn = true
             end
         end
-    end
-    for c,d in pairs(f) do
-        if model == GetHashKey(d.model) then
-            allowSpawn = true
-        end
-    end
-    if not allowSpawn then
-        CancelEvent()
     end
 end)
 

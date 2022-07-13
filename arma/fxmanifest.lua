@@ -12,6 +12,7 @@ shared_scripts {
   "cfg/cfg_crypto.lua",
   "sharedcfg/*",
   "armacore/cfg/*",
+  "cfg/garages.lua",
 }
 
 -- RageUI
@@ -79,7 +80,6 @@ client_scripts{
   "cfg/atms.lua",
   "cfg/cfg_weapons.lua",
   "cfg/skinshops.lua",
-  "cfg/garages.lua",
   "cfg/admin_menu.lua",
   "cfg/cfg_adminmenu.lua",
   "cfg/gangfunds.lua",
