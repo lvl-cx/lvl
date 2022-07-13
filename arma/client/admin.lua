@@ -292,7 +292,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if staffMode then 
             if not isInTicket then
-                DrawAdvancedText(0.575, 0.945, 0.025, 0.0048, 1.0, "~r~You are staffed on remember to /return!", 255, 0, 0, 255, 1, 0)
+                drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
             end
             SetEntityInvincible(PlayerPedId(), true)
         end
