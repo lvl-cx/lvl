@@ -48,7 +48,7 @@ RegisterCommand("999", function(source)
                 name = GetPlayerName(user_source),
                 permID = user_id,
                 tempID = user_source,
-                coords = GetEntityCoords(user_source),
+                coords = GetEntityCoords(GetPlayerPed(user_source)),
             }
             for k, v in pairs(ARMA.getUsers({})) do
                 if ARMA.hasPermission(k, "police.perms") then
@@ -71,7 +71,7 @@ RegisterCommand("111", function(source)
                 name = GetPlayerName(user_source),
                 permID = user_id,
                 tempID = user_source,
-                coords = GetEntityCoords(user_source),
+                coords = GetEntityCoords(GetPlayerPed(user_source)),
             }
             for k, v in pairs(ARMA.getUsers({})) do
                 if ARMA.hasPermission(k, "nhs.menu") then
@@ -189,4 +189,22 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
             ARMAclient.notify(admin_source,{"~r~Call Already accepted!"})
         end
     end         
+end)
+
+
+RegisterNetEvent("Jud:NHSComaCall")
+AddEventHandler("Jud:NHSComaCall", function()
+    local user_id = ARMA.getUserId(source)
+    local user_source = ARMA.getUserSource(user_id)
+    NHSCalls['Immediate Attention'] = {
+        name = GetPlayerName(user_source),
+        permID = user_id,
+        tempID = user_source,
+        coords = GetEntityCoords(GetPlayerPed(user_source)),
+    }
+    for k, v in pairs(ARMA.getUsers({})) do
+        if ARMA.hasPermission(k, "nhs.menu") then
+            ARMAclient.notify(v,{"~g~NHS Call Received!"})
+        end
+    end
 end)

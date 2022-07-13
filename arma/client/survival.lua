@@ -139,7 +139,7 @@ Citizen.CreateThread(function()
 				if IsControlJustPressed(1, 51) then
 					calledNHS = true
 					notify('~g~NHS called to your approximate location')
-					TriggerServerEvent('ARMA:recieveNHSCall2')
+					TriggerServerEvent('Jud:NHSComaCall')
 				end
 			end
             DrawRect(0.51, 0.748, 0.38, 0.036, 0, 0, 0, 150)
@@ -692,10 +692,6 @@ function getRandomComaAnimation()
     dict,anim = table.unpack(randomComaAnimations[num])
     comaAnimation["dict"] = dict
     comaAnimation["anim"] = anim
-    print("GETTING CCOMA ANIM")
-    --comaAnimation["dict"] = "combat@damage@writheidle_a"
-    --comaAnimation["anim"] = "writhe_idle_a"
-    --randomize this :)
     return comaAnimation
 end
 
