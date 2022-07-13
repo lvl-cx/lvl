@@ -79,11 +79,6 @@ AddEventHandler("Jud:ReceiveNHSCalls", function(c)
     NHSCalls = c
 end)
 
-RegisterCommand("callmanager", function(source)
-    TriggerServerEvent("Jud:RequestTickets")
-    RageUI.Visible(RMenu:Get("callmanager", "main"), true)
-end)
-
 RegisterNetEvent('Jud:sendTicketInfo')
 AddEventHandler('Jud:sendTicketInfo', function(permid, name)
     if permid ~= nil and name ~= nil then
@@ -99,7 +94,15 @@ AddEventHandler('Jud:sendTicketInfo', function(permid, name)
     end
 end)
 
-RegisterKeyMapping("callmanager", "Opens Callmanager Menu", "keyboard", "m")
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if IsControlJustPressed(1, 178) then
+            TriggerServerEvent("Jud:RequestTickets")
+            RageUI.Visible(RMenu:Get("callmanager", "main"), true)
+        end
+    end
+end)
 
 function drawNativeText(V)
     BeginTextCommandPrint("STRING")

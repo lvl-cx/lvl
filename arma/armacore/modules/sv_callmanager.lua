@@ -116,7 +116,7 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
             for k, v in pairs(adminTickets) do
                 if ticketID == k then
                     if ARMA.getUserSource(v.permID) ~= nil then
-                        if user_id == v.permID then
+                        if user_id ~= v.permID then
                             local adminbucket = GetPlayerRoutingBucket(admin_source)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             if adminbucket ~= playerbucket then
