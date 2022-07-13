@@ -17,18 +17,10 @@ AddEventHandler(
 
 RegisterCommand("getmyid", function(source)
     TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, " Perm ID: " .. ARMA.getUserId(source) , "alert")
-    --TriggerClientEvent('chat:addMessage', source, {
-    --    template = '^7[ARMA^7]:^7' .. " Perm ID: " .. ARMA.getUserId(source) .. '</div>',
-    --    args = { playerName, msg }
-    --  })
 end)
 
 RegisterCommand("getmytempid", function(source)
 	TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, " Your Temp ID: " .. source, "alert")
-    --TriggerClientEvent('chat:addMessage', source, {
-    --    template = '^7[ARMA^7]:^7' .. " Your Temp ID: " .. source,
-    --    args = { playerName, msg }
-    --  })
 end)
 
 RegisterCommand('getid', function(source, args)
@@ -36,24 +28,11 @@ RegisterCommand('getid', function(source, args)
         local userid = ARMA.getUserId(args[1])
         if userid then 
             TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "This Users Perm ID is: " .. userid, "alert")
-            --TriggerClientEvent('chat:addMessage', source, {
-            --    template = '^7[ARMA^7]:^7' .. "This Users Perm ID is: " .. userid, "alert",
-            --    args = { playerName, msg }
-            --  })
         else 
             TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "Temp ID cannot be found! This user is most likely offline.", "alert")
-            --TriggerClientEvent('chat:addMessage', source, {
-            --    template = '^7[ARMA^7]:^7' .. "Temp ID cannot be found! This user is most likely offline.", "alert",
-            --    args = { playerName, msg }
-            --  })
-            
         end
     else 
         TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "Please specify a user eg: /getid [tempid]", "alert")
-        --TriggerClientEvent('chat:addMessage', source, {
-        --    template = '^7[ARMA^7]:^7' .. "Please specify a user eg: /getid [tempid]", "alert",
-        --    args = { playerName, msg }
-        --  })
     end
 end)
 
