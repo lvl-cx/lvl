@@ -354,7 +354,7 @@ AddEventHandler("ARMA:OMioDioMode",function(DioMode)
         SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
        -- SetPedComponentVariation(GetPlayerPed(-1),9,0,0,0) -- [Nothing]
         --SetPedComponentVariation(GetPlayerPed(-1),10,3,0,0) -- [Nothing]
-        SetPedComponentVariation(GetPlayerPed(-1),11,442,0,00) -- [Jacket]
+        SetPedComponentVariation(GetPlayerPed(-1),11,473,0,00) -- [Jacket]
         TriggerServerEvent('hello', true)
         
 
