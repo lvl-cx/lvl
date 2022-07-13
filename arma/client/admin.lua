@@ -312,85 +312,41 @@ end
 RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
-OMioDioMode = false
-adminTicketSavedCustomization = nil
-savedAdminTicketGuns = nil
-RegisterNetEvent("ARMA:OMioDioMode")
-AddEventHandler("ARMA:OMioDioMode",function(DioMode)
-	OMioDioMode = DioMode
-	if not OMioDioMode then
+local staffMode = false
+function tARMA.staffMode(status, ticketStatus)
+    isInTicket = ticketStatus
+    staffMode = status
 
-		SetEntityInvincible(GetPlayerPed(-1), false)
-		SetPlayerInvincible(PlayerId(), false)
-		SetPedCanRagdoll(GetPlayerPed(-1), true)
-		ClearPedBloodDamage(GetPlayerPed(-1))
-		ResetPedVisibleDamage(GetPlayerPed(-1))
-		ClearPedLastWeaponDamage(GetPlayerPed(-1))
-		SetEntityProofs(GetPlayerPed(-1), false, false, false, false, false, false, false, false)
-		SetEntityCanBeDamaged(GetPlayerPed(-1), true)
-		SetEntityHealth(GetPlayerPed(-1), 200)
-        
-		tARMA.setCustomization(adminTicketSavedCustomization)
-		tARMA.giveWeapons(savedAdminTicketGuns,true)
-        TriggerServerEvent("hello", false)
-
-	else
-        adminTicketSavedCustomization = tARMA.getCustomization()
-		savedAdminTicketGuns = tARMA.getWeapons()
-        if GetEntityModel(PlayerPedId()) ~= GetHashKey("mp_m_freemode_01") then
-		    local mhash = "mp_m_freemode_01"
-		    RequestModel(mhash)
-		    Wait(100)
-            SetPlayerModel(PlayerId(), mhash)
-            SetModelAsNoLongerNeeded(mhash)
+    if staffMode then
+        if weapons == nil then
+            weapons = tARMA.getWeapons()
         end
 
-        --SetPedComponentVariation(GetPlayerPed(-1),1,0,0,0) -- [Mask]
-        --SetPedComponentVariation(GetPlayerPed(-1),2,12,4,0) -- [Hair]
-        --SetPedComponentVariation(GetPlayerPed(-1),19,0,0,0) -- [Hand]
+        if clothing == nil then
+            clothing = tARMA.getCustomization()
+        end
+
+        if armour == nil then
+            armour = GetPedArmour(PlayerPedId())
+        end
+
+        if location == nil then
+            location = GetEntityCoords(PlayerPedId())
+        end
         SetPedComponentVariation(GetPlayerPed(-1),4,4,0,0) -- [Legs]
         SetPedComponentVariation(GetPlayerPed(-1),8,34,0,0) -- [Shoes]
-        --SetPedComponentVariation(GetPlayerPed(-1),7,0,2,0) -- [IDK]
         SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
-       -- SetPedComponentVariation(GetPlayerPed(-1),9,0,0,0) -- [Nothing]
-        --SetPedComponentVariation(GetPlayerPed(-1),10,3,0,0) -- [Nothing]
         SetPedComponentVariation(GetPlayerPed(-1),11,442,0,00) -- [Jacket]
-        TriggerServerEvent('hello', true)
-        
-
-
-	end
-end)
-
-Citizen.CreateThread(function() 
-	while true do
-		if OMioDioMode then
-			SetEntityInvincible(GetPlayerPed(-1), true)
-			SetPlayerInvincible(PlayerId(), true)
-			SetPedCanRagdoll(GetPlayerPed(-1), false)
-			ClearPedBloodDamage(GetPlayerPed(-1))
-			ResetPedVisibleDamage(GetPlayerPed(-1))
-			ClearPedLastWeaponDamage(GetPlayerPed(-1))
-			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
-			SetEntityCanBeDamaged(GetPlayerPed(-1), false)
-			SetEntityHealth(GetPlayerPed(-1), 200)
-            if not isInTicket then
-                drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
-            end
-		end
-		Wait(0)
-	end
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if IsControlPressed(1, 121) then -- Insert Key
-            TriggerServerEvent('ARMA:eulenLog')
-            Wait(1000)
-        end
+    else
+        tARMA.setCustomization(clothing)
+        tARMA.giveWeapons(weapons, true)
+        weapons = nil
+        clothing = nil
+        SetTimeout(50, function()
+            SetPedArmour(PlayerPedId(), armour)
+        end)
     end
-end)
+end
 
 function drawNativeText(V)
     BeginTextCommandPrint("STRING")
@@ -400,7 +356,7 @@ end
 
 
 RegisterCommand("dv", function()
-    if OMioDioMode then
+    if staffMode then
         TriggerEvent( "wk:deleteVehicle" )
     else
         TriggerServerEvent('other:deletevehicle')
@@ -409,7 +365,7 @@ end)
 
 
 RegisterCommand("fix", function()
-    if OMioDioMode or getUserId() == 2 or getUserId() == 1 then
+    if staffMode or tARMA.userID() == 2 or tARMA.userID() == 1 then
         TriggerServerEvent( "wk:fixVehicle")
     end
 end)
