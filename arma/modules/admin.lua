@@ -51,15 +51,12 @@ admincfg.buttonsEnabled = {
     ["devMenu"] = {true, "dev.menu"},
 }
 
-local whitelist = false
 
 RegisterServerEvent('ARMA:OpenSettings')
 AddEventHandler('ARMA:OpenSettings', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if user_id ~= nil and ARMA.hasPermission(user_id, "admin.menu") then
-        TriggerClientEvent("ARMA:OpenSettingsMenu", source, true)
-    else
+    if user_id ~= nil and not ARMA.hasPermission(user_id, "admin.tickets") then
         TriggerClientEvent("ARMA:OpenSettingsMenu", source, false)
     end
 end)
@@ -114,41 +111,6 @@ AddEventHandler("Jud:GetNearbyPlayers", function(dist)
             end
             TriggerClientEvent("Jud:ReturnNearbyPlayers", source, plrTable)
         end)
-    end
-end)
-
-RegisterServerEvent("ARMA:whitelist")
-AddEventHandler("ARMA:whitelist",function(whitelist)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local name = GetPlayerName(source)
-    local whitelist = whitelist
-    if ARMA.hasPermission(user_id, 'dev.menu') then
-        if whitelist then
-            ARMAclient.notify(source,{"~g~Whitelist activated."})
-        else
-            ARMAclient.notify(source,{"~r~Whitelist deactivated."})
-        end
-        while true do
-            Citizen.Wait(0)
-            players = GetPlayers()
-            local source = source
-            if whitelist == true then
-                for k, v in pairs(players) do
-                    local user_id = ARMA.getUserId(v)
-                    if not ARMA.hasPermission(user_id, 'admin.tickets') then
-                        DropPlayer(v, "ARMA - Whitelist is currently enabled, please wait.")
-                    end
-                end
-            end
-        end
-    end
-end)
-
-RegisterServerEvent("ARMA:getWhitelist")
-AddEventHandler("ARMA:getWhitelist",function()
-    if whitelist then
-        return true
     end
 end)
 
@@ -2369,7 +2331,7 @@ RegisterNetEvent('ARMA:noClip')
 AddEventHandler('ARMA:noClip', function()
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.noclip') then 
-        TriggerClientEvent('ToggleAdminNoclip',source)
+        ARMAclient.toggleNoclip(source,{})
     end
 end)
 
@@ -2489,17 +2451,17 @@ end)
 
 RegisterCommand("staffon", function(source)
     local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
+    print('staff on called sv')
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {true})
+        ARMAclient.staffMode(source, {true, false})
     end
 end)
 
 RegisterCommand("staffoff", function(source)
     local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
+    print('staff off called sv')
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {false})
+        ARMAclient.staffMode(source, {false, false})
     end
 end)
 
