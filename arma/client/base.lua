@@ -343,3 +343,32 @@ AddEventHandler('ARMA:CheckIdRegister', function()
     TriggerEvent('playerSpawned', GetEntityCoords(PlayerPedId()))
 end)
 
+local isDev = false
+local carDev = false
+local user_id = nil
+local stafflevel = 0
+function tARMA.setDev()
+    isDev = true
+end
+function tARMA.isDev()
+    return isDev
+end
+function tARMA.setCarDev()
+  carDev = true
+end
+function tARMA.isCarDev()
+  return carDev
+end
+function tARMA.setUserID(a)
+  user_id = a
+end
+function tARMA.userID()
+  return user_id
+end
+function tARMA.setStaffLevel(a)
+  stafflevel = a
+end
+function tARMA.getStaffLevel()
+  return stafflevel
+end
+

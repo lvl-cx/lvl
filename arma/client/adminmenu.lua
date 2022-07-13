@@ -15,6 +15,7 @@ local SelectedPerm = nil
 local SelectedName = nil
 local SelectedPlayerSource = nil
 local hoveredPlayer = nil
+local GlobalAdminLevel = 0
 
 
 local f = nil
@@ -169,19 +170,10 @@ local getUserNHSGroups = {
     ["Trainee Paramedic"] = "Trainee Paramedic",
 }
 
-local ARMAStaffLevel = 0
-RegisterNetEvent("ARMA:gettingStaffLevel")
-AddEventHandler("ARMA:gettingStaffLevel", function(A)
-    ARMAStaffLevel = A
-    RageUI.Visible(RMenu:Get("adminmenu", "main"), not RageUI.Visible(RMenu:Get("adminmenu", "main")))
-end)
 
-function getStaffLevel()
-    return ARMAStaffLevel
-end
 
 RageUI.CreateWhile(1.0, true, function()
-    if getStaffLevel() > 0 then
+    if GlobalAdminLevel > 0 then
         if RageUI.Visible(RMenu:Get('adminmenu', 'main')) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
                 hoveredPlayer = nil
@@ -388,21 +380,21 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'functions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GetCoords')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 0 then                   
+            if GlobalAdminLevel >= 0 then                   
                 RageUI.ButtonWithStyle("Kick (No F10)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:noF10Kick')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 5 then                   
+            if GlobalAdminLevel >= 5 then                   
                 RageUI.List("Teleport to ",q,s,nil,{},true,function(x, y, z, N)
                     s = N
                     if z then
@@ -412,14 +404,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end,
                 function()end)
             end
-            if getStaffLevel() >= 5 then
+            if GlobalAdminLevel >= 5 then
                 RageUI.ButtonWithStyle("TP To Coords","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Tp2Coords")
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 2 then
+            if GlobalAdminLevel >= 2 then
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -427,7 +419,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
-            if getStaffLevel() >= 5 then
+            if GlobalAdminLevel >= 5 then
                 RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local WaypointHandle = GetFirstBlipInfoId(8)
@@ -448,14 +440,14 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 5 then
+            if GlobalAdminLevel >= 5 then
                 RageUI.ButtonWithStyle("Unban Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Unban")
                     end
                 end)
             end
-            if getStaffLevel() >= 6 then
+            if GlobalAdminLevel >= 6 then
                 RageUI.ButtonWithStyle("Remove Warning", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -463,14 +455,14 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 7 then
+            if GlobalAdminLevel >= 7 then
                 RageUI.ButtonWithStyle("Toggle Blips", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:checkBlips')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("~b~Developer Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
@@ -483,42 +475,42 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'devfunctions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Spawn Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:Giveweapon')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Money","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Crates","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveCratesMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
             end
-            if getStaffLevel() >= 11 then
+            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("AntiCheat","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:getAnticheatData")
@@ -631,14 +623,14 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             hoveredPlayer = nil
             RageUI.Separator("~y~Player must provide POV on request: "..povlist)
-            if getStaffLevel() > 1 then
+            if GlobalAdminLevel > 1 then
                 RageUI.ButtonWithStyle("Player Notes", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:getNotes', uid, SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'notesub'))
             end              
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Kick Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -646,13 +638,13 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() >= 2 then
+            if GlobalAdminLevel >= 2 then
                 RageUI.ButtonWithStyle("Ban Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                     end
                 end, RMenu:Get('adminmenu', 'bansub'))
             end
-            if getStaffLevel() >= 3 then
+            if GlobalAdminLevel >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         inRedZone = false
@@ -660,7 +652,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() >= 3 then
+            if GlobalAdminLevel >= 3 then
                 RageUI.ButtonWithStyle("Revive", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -668,7 +660,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end 
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local newSource = GetPlayerServerId(PlayerId())
@@ -680,14 +672,14 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:BringPlayer', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         inRedZone = false
@@ -696,21 +688,21 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport Back from Admin Zone", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:TeleportBackFromAdminZone", SelectedPlayer[2], savedCoordsBeforeAdminZone)
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Legion", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Teleport", SelectedPlayer[2], vector3(151.61740112305,-1035.05078125,29.339416503906))
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Freeze", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -719,7 +711,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 3 then
+            if GlobalAdminLevel > 3 then
                 RageUI.ButtonWithStyle("Slap Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -727,21 +719,21 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 4 then
+            if GlobalAdminLevel > 4 then
                 RageUI.ButtonWithStyle("Force Clock Off", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:ForceClockOff', SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Open F10 Warning Log", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         ExecuteCommand("sw " .. SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 0 then
+            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Take Screenshot", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -749,7 +741,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if getStaffLevel() > 6 then
+            if GlobalAdminLevel > 6 then
                 RageUI.ButtonWithStyle("See Groups", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[2], SelectedPlayer[3])
@@ -878,7 +870,7 @@ warningbankick = {
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'bansub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 1 then
+            if GlobalAdminLevel > 1 then
                 RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)            
                         if Selected then
                             local uid = GetPlayerServerId(PlayerId())
@@ -956,7 +948,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("~g~#"..f[K].note_id.." ~w~" .. f[K].text .. " - "..f[K].admin_name.. "("..f[K].admin_id..")")
                 end
             end
-            if getStaffLevel() > 1 then
+            if GlobalAdminLevel > 1 then
                 RageUI.ButtonWithStyle("Add To Notes:", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:addNote', uid, SelectedPlayer[2])
@@ -994,7 +986,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'anticheat')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1012,7 +1004,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'actypes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1028,7 +1020,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbannedplayers')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1047,7 +1039,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acmanualbanlist')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1069,7 +1061,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acmanualban')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1107,7 +1099,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbanmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 11 then
+            if GlobalAdminLevel > 11 then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Separator("Your Name: " ..acadminname, function() end)
@@ -1154,7 +1146,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if getStaffLevel() > 7 then
+            if GlobalAdminLevel > 7 then
                 RageUI.ButtonWithStyle("Staff Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
@@ -1162,7 +1154,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'staffGroups'))
             end
-            if getStaffLevel() > 1 then
+            if GlobalAdminLevel > 1 then
                 RageUI.ButtonWithStyle("POV Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
@@ -1170,7 +1162,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'POVGroups'))
             end
-            if getStaffLevel() > 7 then
+            if GlobalAdminLevel > 7 then
                 RageUI.ButtonWithStyle("License Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
@@ -1178,7 +1170,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'LicenseGroups'))
             end
-            if getStaffLevel() > 7 then
+            if GlobalAdminLevel > 7 then
                 RageUI.ButtonWithStyle("MPD Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
@@ -1186,7 +1178,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'MPDGroups'))
             end
-            if getStaffLevel() > 7 then
+            if GlobalAdminLevel > 7 then
                 RageUI.ButtonWithStyle("NHS Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if (Selected) then
                         RMenu:Get("adminmenu", "groups"):SetTitle("")
@@ -1194,7 +1186,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'NHSGroups'))
             end
-            if getStaffLevel() > 7 then
+            if GlobalAdminLevel > 7 then
                 RageUI.ButtonWithStyle("Donator Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'UserGroups'))
             end
@@ -1532,10 +1524,12 @@ AddEventHandler('ARMA:NotifyPlayer', function(string)
     notify('~g~' .. string)
 end)
 
+
 RegisterCommand('openadminmenu',function()
-    TriggerServerEvent("ARMA:getStaffLevel")
     TriggerServerEvent('ARMA:GetPlayerData')
     TriggerServerEvent("ARMA:GetNearbyPlayerData")
+    TriggerServerEvent("ARMA:getAdminLevel")
+    GlobalAdminLevel = tARMA.getStaffLevel()
 end)
 
 RegisterKeyMapping('openadminmenu', 'Opens the Admin menu', 'keyboard', 'F2')

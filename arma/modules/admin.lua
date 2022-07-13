@@ -2487,55 +2487,52 @@ AddEventHandler("ARMA:GetPlayerData",function()
     end
 end)
 
-RegisterNetEvent('hello')
-AddEventHandler('hello', function(bool)
-    userid = ARMA.getUserId(source)
-    if bool then
-        ARMA.addUserGroup(userid,'staffon')
-    else
-        ARMA.removeUserGroup(userid,'staffon')
+RegisterCommand("staffon", function(source)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+    if ARMA.hasPermission(user_id, "admin.tickets") then
+        ARMAclient.staffMode(source, {true})
+    end
+end)
+
+RegisterCommand("staffoff", function(source)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+    if ARMA.hasPermission(user_id, "admin.tickets") then
+        ARMAclient.staffMode(source, {false})
     end
 end)
 
 
-RegisterNetEvent("ARMA:getStaffLevel")
-AddEventHandler("ARMA:getStaffLevel", function()
+RegisterServerEvent('ARMA:getAdminLevel')
+AddEventHandler('ARMA:getAdminLevel', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if source ~= nil then
-        getStaffLevel(true,source)
-    end
-end)
-
-function getStaffLevel(bool,src)
-    local user_id = ARMA.getUserId(src)
-    local level = 0
+    local adminlevel = 0
     if ARMA.hasGroup(user_id,"dev") then
-        level = 12
+        adminlevel = 12
     elseif ARMA.hasGroup(user_id,"founder") then
-        level = 11
+        adminlevel = 11
     elseif ARMA.hasGroup(user_id,"operationsmanager") then
-        level = 10
+        adminlevel = 10
     elseif ARMA.hasGroup(user_id,"staffmanager") then    
-        level = 9
+        adminlevel = 9
     elseif ARMA.hasGroup(user_id,"commanager") then
-        level = 8
+        adminlevel = 8
     elseif ARMA.hasGroup(user_id,"headadmin") then
-        level = 7
+        adminlevel = 7
     elseif ARMA.hasGroup(user_id,"senioradmin") then
-        level = 6
+        adminlevel = 6
     elseif ARMA.hasGroup(user_id,"administrator") then
-        level = 5
+        adminlevel = 5
     elseif ARMA.hasGroup(user_id,"srmoderator") then
-        level = 4
+        adminlevel = 4
     elseif ARMA.hasGroup(user_id,"moderator") then
-        level = 3
+        adminlevel = 3
     elseif ARMA.hasGroup(user_id,"supportteam") then
-        level = 2
+        adminlevel = 2
     elseif ARMA.hasGroup(user_id,"trialstaff") then
-        level = 1
+        adminlevel = 1
     end
-    if ARMA.hasPermission(user_id,"admin.menu") then
-        TriggerClientEvent('ARMA:gettingStaffLevel', source,level)
-    end
-end
+    ARMAclient.setStaffLevel(source, {adminlevel})
+end)
