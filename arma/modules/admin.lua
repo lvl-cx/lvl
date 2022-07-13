@@ -2449,22 +2449,22 @@ AddEventHandler("ARMA:GetPlayerData",function()
     end
 end)
 
+
 RegisterCommand("staffon", function(source)
     local user_id = ARMA.getUserId(source)
-    print('staff on called sv')
+    local user_source = ARMA.getUserSource(user_id)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {true, false})
+        ARMAclient.staffMode(user_source, {true, false})
     end
 end)
 
 RegisterCommand("staffoff", function(source)
     local user_id = ARMA.getUserId(source)
-    print('staff off called sv')
+    local user_source = ARMA.getUserSource(user_id)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {false, false})
+        ARMAclient.staffMode(user_source, {false, false})
     end
 end)
-
 
 RegisterServerEvent('ARMA:getAdminLevel')
 AddEventHandler('ARMA:getAdminLevel', function()
