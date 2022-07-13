@@ -33,7 +33,7 @@ function tARMA.toggleNoclip()
     if IsPedInAnyVehicle(PlayerPedId(), true) then
         ped = GetVehiclePedIsIn(PlayerPedId(), true)
     else
-        ped = GetPlayerPed(-1)
+        ped = PlayerPedId()
     end
     if noclip then -- set
         SetPedCanRagdoll(ped, false)
@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
                 y = y - currentSpeed * dy
                 z = z - currentSpeed * dz
 			end
-            local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(GetPlayerPed(-1))
+            local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(PlayerPedId())
             local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, x,y, zoff * (currentSpeed + 0.3))
 			SetEntityHeading(noclipEntity, heading)
             SetEntityCoordsNoOffset(noclipEntity, x, y, z, true, true, false)
@@ -255,10 +255,12 @@ function tARMA.staffMode(status, ticketStatus)
         if location == nil then
             location = GetEntityCoords(PlayerPedId())
         end
-        SetPedComponentVariation(GetPlayerPed(-1),4,4,0,0) -- [Legs]
-        SetPedComponentVariation(GetPlayerPed(-1),8,34,0,0) -- [Shoes]
-        SetPedComponentVariation(GetPlayerPed(-1),8,15,0,0) -- [Undershirt]
-        SetPedComponentVariation(GetPlayerPed(-1),11,442,0,00) -- [Jacket]
+        staffClothing = tARMA.getCustomization()
+        staffClothing[3]={0,0}
+        staffClothing[4]={152,2}
+        staffClothing[6]={141,0}
+        staffClothing[8]={15,0}
+        tARMA.setCustomization(staffClothing)
     else
         tARMA.setCustomization(clothing)
         tARMA.giveWeapons(weapons, true)
@@ -281,6 +283,18 @@ RegisterCommand("return", function()
         end
         tARMA.staffMode(source, {false, false})
         TriggerEvent('Jud:sendTicketInfo', source)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do 
+        Citizen.Wait(0)
+        if staffMode then 
+            if not isInTicket then
+                DrawAdvancedText(0.575, 0.945, 0.025, 0.0048, 1.0, "~r~You are staffed on remember to /return!", 255, 0, 0, 255, 1, 0)
+            end
+            SetEntityInvincible(PlayerPedId(), true)
+        end
     end
 end)
 
@@ -309,7 +323,7 @@ end)
 
 RegisterNetEvent("wk:fixVehicle")
 AddEventHandler("wk:fixVehicle", function()
-    local p = GetPlayerPed(-1)
+    local p = PlayerPedId()
     if IsPedInAnyVehicle(p) then
         local q = GetVehiclePedIsIn(p)
         SetVehicleEngineHealth(q, 9999)
@@ -328,7 +342,7 @@ AddEventHandler("ARMA:showBlips",function()
         tARMA.notify("~r~Blips disabled")
         for k, v in ipairs(GetActivePlayers()) do
             local Q = GetPlayerPed(v)
-            if GetPlayerPed(v) ~= GetPlayerPed(-1) then
+            if GetPlayerPed(v) ~= PlayerPedId() then
                 Q = GetPlayerPed(v)
                 blip = GetBlipFromEntity(Q)
                 RemoveBlip(blip)
@@ -341,7 +355,7 @@ Citizen.CreateThread(function()
         if blips then
             for k, v in ipairs(GetActivePlayers()) do
                 local ped = GetPlayerPed(v)
-                if ped ~= GetPlayerPed(-1) then
+                if ped ~= PlayerPedId() then
                     local blip = GetBlipFromEntity(ped)
                     if not DoesBlipExist(blip) then
                         blip = AddBlipForEntity(ped)

@@ -20,7 +20,6 @@ end)
 RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    print('prompt here')
     ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
         if value ~= "" then
             adminTickets[value] = {
