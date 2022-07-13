@@ -1,6 +1,7 @@
 local adminTickets = {}
 local pdCalls = {}
 local NHSCalls = {}
+--table.insert(adminTickets, {name = 'Test', permID = 1, tempID = 1}) test case
 
 RegisterNetEvent("Jud:RequestTickets")
 AddEventHandler("Jud:RequestTickets", function()
@@ -9,17 +10,18 @@ AddEventHandler("Jud:RequestTickets", function()
         TriggerClientEvent("Jud:RecieveTickets", source, adminTickets)
     end
     if ARMA.hasPermission(user_id, "police.perms") then
-        TriggerClientEvent("Jud:RecieveTickets", source, pdCalls)
+        TriggerClientEvent("Jud:ReceivePDCalls", source, pdCalls)
     end
     if ARMA.hasPermission(user_id, "nhs.menu") then
-        TriggerClientEvent("Jud:RecieveTickets", source, NHSCalls)
+        TriggerClientEvent("Jud:ReceiveNHSCalls", source, NHSCalls)
     end
 end)
 
 RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt({user_source, "Please enter call reason: ", "", function(player, value)
+    print('prompt here')
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
         if value ~= "" then
             adminTickets[value] = {
                 name = GetPlayerName(user_source),
@@ -35,13 +37,13 @@ RegisterCommand("calladmin", function(source)
         else
             ARMAclient.notify(user_source,{"Please enter a valid reason."})
         end
-    end})
+    end)
 end)
 
 RegisterCommand("999", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt({user_source, "Please enter call reason: ", "", function(player, value)
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
         if value ~= "" then
             pdCalls[value] = {
                 name = GetPlayerName(user_source),
@@ -58,13 +60,13 @@ RegisterCommand("999", function(source)
         else
             ARMAclient.notify(user_source,{"Please enter a valid reason."})
         end
-    end})
+    end)
 end)
 
 RegisterCommand("111", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt({user_source, "Please enter call reason: ", "", function(player, value)
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
         if value ~= "" then
             NHSCalls[value] = {
                 name = GetPlayerName(user_source),
@@ -81,7 +83,7 @@ RegisterCommand("111", function(source)
         else
             ARMAclient.notify(user_source,{"Please enter a valid reason."})
         end
-    end})
+    end)
 end)
 
 RegisterNetEvent("Jud:RemoveTicket")
@@ -115,7 +117,7 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
             for k, v in pairs(adminTickets) do
                 if ticketID == k then
                     if ARMA.getUserSource(v.permID) ~= nil then
-                        if user_id ~= v.permID then
+                        if user_id == v.permID then
                             local adminbucket = GetPlayerRoutingBucket(admin_source)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             if adminbucket ~= playerbucket then
@@ -125,8 +127,8 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.staffMode(admin_source, {true})
                                 TriggerClientEvent('Jud:sendTicketInfo', admin_source, v.permID, v.name)
-                                ARMA.giveBankMoney({user_id, 100})
-                                ARMAclient.notify(admin_source,{"~g~You have taken "..v.name.."'s ticket ["..v.permID.."]. Enjoy 100 Tokens ❤️"})
+                                ARMA.giveBankMoney(user_id, 3000)
+                                ARMAclient.notify(admin_source,{"~g~You have taken "..v.name.."'s ticket. You have earned £3,000 ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
                                 ARMAclient.teleport(admin_source, {x,y,z})
                                 TriggerEvent("Jud:RemoveTicket", ticketID, b)

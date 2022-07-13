@@ -1,5 +1,5 @@
 local adminTickets = {}
-local pdCalls = {}
+local PDCalls = {}
 local NHSCalls = {}
 local isInTicket = false
 
@@ -15,24 +15,15 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if next(adminTickets) then
                 RageUI.Button("Admin Tickets", "", {}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        RMenu.Visible(RMenu:Get("callmanager", "admin"), true)
-                    end
-                end)
+                end, RMenu:Get("callmanager", "admin"))
             end
             if next(PDCalls) then
-                RageUI.Button("POlice Calls", "", {}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        RMenu.Visible(RMenu:Get("callmanager", "police"), true)
-                    end
-                end)
+                RageUI.Button("Police Calls", "", {}, true, function(Hovered, Active, Selected)
+                end, RMenu:Get("callmanager", "police"))
             end
             if next(NHSCalls) then
                 RageUI.Button("NHS Calls", "", {}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        RMenu.Visible(RMenu:Get("callmanager", "nhs"), true)
-                    end
-                end)
+                end, RMenu:Get("callmanager", "nhs"))
             end
         end) 
     end
@@ -49,7 +40,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('callmanager', 'police')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            for k, v in pairs(pdCalls) do
+            for k, v in pairs(PDCalls) do
                 RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("Jud:TakeTicket", k, 'PD')
@@ -74,9 +65,17 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 RegisterNetEvent("Jud:RecieveTickets")
-AddEventHandler("Jud:RecieveTickets", function(a, b, c)
+AddEventHandler("Jud:RecieveTickets", function(a)
     adminTickets = a
-    pdCalls = b
+end)
+
+RegisterNetEvent("Jud:ReceivePDCalls")
+AddEventHandler("Jud:ReceivePDCalls", function(b)
+    PDCalls = b
+end)
+
+RegisterNetEvent("Jud:ReceiveNHSCalls")
+AddEventHandler("Jud:ReceiveNHSCalls", function(c)
     NHSCalls = c
 end)
 
