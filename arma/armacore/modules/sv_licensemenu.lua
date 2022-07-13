@@ -20,7 +20,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)
 
                 ARMA.addUserGroup(userid,job)
 
-                ARMAclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..tostring(priceshow) .. " ❤️"})
+                ARMAclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..priceshow .. " ❤️"})
                 TriggerClientEvent("ARMA:PlaySound", source, 1)
 
                 else 
