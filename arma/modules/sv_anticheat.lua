@@ -94,17 +94,30 @@ local allowedEntities = {
     [`prop_mp_barrier_01b`] = true,
 }
 
+local otherVehicles = {
+    [`taxi`] = true,
+}
+
 
 local webhook = 'https://discord.com/api/webhooks/976251422402310244/m061Wiz1_v6mlCQyjjS_pWYYgSYNR_sTmKCvBSptze03jpKpv7I5cZCbptfzxjBMFcRY'
 
 AddEventHandler('entityCreating', function(entity)
+    local model = GetEntityModel(entity)
     allowSpawn = false
     for k,v in pairs(m) do
         for a,l in pairs(v) do
-            if (GetEntityModel(entity)) == GetHashKey(a) or allowedEntities[(GetEntityModel(entity))] then
+            if model == GetHashKey(a) or allowedEntities[model] or otherVehicles[(GetEntityModel(entity))] then
                 allowSpawn = true
             end
         end
+    end
+    -- for c,d in pairs(f) do
+    --     if model == GetHashKey(d.model) then
+    --         allowSpawn = true
+    --     end
+    -- end
+    if not allowSpawn then
+        CancelEvent()
     end
 end)
 
