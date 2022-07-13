@@ -7,6 +7,8 @@ RegisterServerEvent('_chat:messageEntered')
 RegisterServerEvent('chat:clear')
 RegisterServerEvent('__cfx_internal:commandFallback')
 
+local blockedWords = {"nigger", "nigga", "wog", "coon", "paki"}
+
 AddEventHandler('_chat:messageEntered', function(author, color, message)
     if not message or not author then
         return
@@ -15,6 +17,13 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
     -- TriggerClientEvent('chatMessage', -1, author,  { 255, 255, 255 }, message, "twt")
 
     if not WasEventCanceled() then
+        for word in pairs(blockedWords) do
+            if(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(message:lower(), "-", ""), ",", ""), "%.", ""), " ", ""), "*", ""), "+", ""):find(blockedWords[word])) then
+                TriggerClientEvent('chatMessage', source, '',  { 255, 255, 255 }, "That word is not allowed.", "alert")
+                CancelEvent()
+                return
+            end
+        end
         TriggerClientEvent('chatMessage', -1, "@"..author..":",  { 255, 255, 255 }, message)
     end
 
@@ -31,11 +40,6 @@ AddEventHandler('__cfx_internal:commandFallback', function(command)
     end
 
     CancelEvent()
-end)
-
-
-RegisterCommand('say', function(source, args, rawCommand)
-    TriggerClientEvent('chatMessage', -1, (source == 0) and 'console:' or GetPlayerName(source), { 255, 255, 255 }, rawCommand:sub(5), "alert")
 end)
 
 -- command suggestions for clients
