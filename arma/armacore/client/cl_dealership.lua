@@ -8,8 +8,9 @@ RMenu.Add("DealershipMenu", "confirmA", RageUI.CreateSubMenu(RMenu:Get('Dealersh
 local hasPoliceRole = false
 local hasRebel = false
 
-RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'main'), nil, function()
-    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'main'), true, false, true, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('DealershipMenu', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button('Dealership Vehicles', nil, { RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get("DealershipMenu", "sim"))
             if hasPoliceRole then
@@ -23,12 +24,12 @@ RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'main'), nil, function()
     end, function()
        
     end)
+end
 end)
 
-
-    RageUI.CreateWhile(1.0, true, function()
-        if RageUI.Visible(RMenu:Get("DealershipMenu", "sim")) then
-            RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('DealershipMenu', 'sim')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
                 RageUI.Separator("~y~Currently Viewing: " .. 'Dealership Vehicles', function() end)
         for i , p in pairs(dealership.guns) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
@@ -46,11 +47,11 @@ end)
     end, function()
        
     end)
+    end
 end)
 
-
 RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
+    if RageUI.Visible(RMenu:Get('DealershipMenu', 'police')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RageUI.Separator("~y~Currently Viewing: " .. 'Police Vehicles', function() end)
         for i , p in pairs(dealership.guns2) do 
@@ -67,13 +68,13 @@ RageUI.CreateWhile(1.0, true, function()
         end
 
     end, function()
-       
     end)
+    end
 end)
 
-
-RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'rebel'), nil, function()
-    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'rebel'), true, false, true, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('DealershipMenu', 'rebel')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RageUI.Separator("Currently Viewing: " .. 'Rebel Vehicles', function() end)
         for i , p in pairs(carsTable.rebel) do 
             RageUI.Button("~r~"..p.vehname, nil, {RightLabel =  "~g~£" .. tostring(p.price) }, true, function(Hovered, Active, Selected)
@@ -89,12 +90,13 @@ RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'rebel'), nil, function()
         end
 
     end, function()
-       
     end)
+    end
 end)
 
-RageUI.CreateWhile(1.0, RMenu:Get("DealershipMenu", "confirm"), nil, function()
-    RageUI.IsVisible(RMenu:Get("DealershipMenu", "confirm"), true, false, true, function()  
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('DealershipMenu', 'confirm')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("Are you sure?")
         RageUI.Separator("Current Vehicle: ~y~" .. cName, function() end)
         RageUI.Separator("Vehicle Price: ~g~£" .. cPrice, function() end)
@@ -139,6 +141,7 @@ RageUI.CreateWhile(1.0, RMenu:Get("DealershipMenu", "confirm"), nil, function()
             end
         end, RMenu:Get("DealershipMenu", "main"))
     end)
+end
 end)
 
 RegisterNetEvent('returnSimeons')
