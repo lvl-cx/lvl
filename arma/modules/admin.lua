@@ -1,54 +1,110 @@
 local htmlEntities = module("lib/htmlEntities")
 local Tools = module("lib/Tools")
 
-admincfg = {}
 
-admincfg.perm = "admin.tickets"
-admincfg.IgnoreButtonPerms = false
-admincfg.admins_cant_ban_admins = false
-
-
---[[ {enabled -- true or false}, permission required ]]
-admincfg.buttonsEnabled = {
-
-    --[[ admin Menu ]]
-    ["adminMenu"] = {true, "admin.tickets"},
-    ["warn"] = {true, "admin.warn"},      
-    ["showwarn"] = {true, "admin.showwarn"},
-    ["ban"] = {true, "admin.ban"},
-    ["unban"] = {true, "admin.unban"},
-    ["kick"] = {true, "admin.kick"},
-    ["revive"] = {true, "admin.revive"},
-    ["TP2"] = {true, "admin.tp2player"},
-    ["TP2ME"] = {true, "admin.summon"},
-    ["FREEZE"] = {true, "admin.freeze"},
-    ["spectate"] = {true, "admin.spectate"}, 
-    ["SS"] = {true, "admin.screenshot"},
-    ["slap"] = {true, "admin.slap"},
-    ["addcar"] = {true, "admin.addcar"},
-
-    --[[ Functions ]]
-    ["tp2waypoint"] = {true, "admin.tp2waypoint"},
-    ["tp2coords"] = {true, "admin.tp2coords"},
-    ["removewarn"] = {true, "admin.removewarn"},
-    ["spawnBmx"] = {true, "admin.spawnBmx"},
-    ["spawnGun"] = {true, "admin.spawnGun"},
-
-    --[[ Add Groups ]]
-    ["getgroups"] = {true, "group.add"},
-    ["staffGroups"] = {true, "admin.staffAddGroups"},
-    ["mpdGroups"] = {true, "admin.mpdAddGroups"},
-    ["povGroups"] = {true, "admin.povAddGroups"},
-    ["licenseGroups"] = {true, "dev.menu"},
-    ["donoGroups"] = {true, "admin.donoAddGroups"},
-    ["nhsGroups"] = {true, "admin.nhsAddGroups"},
-
-    --[[ Vehicle Functions ]]
-    ["vehFunctions"] = {true, "admin.vehmenu"},
-    ["noClip"] = {true, "admin.noclip"},
-
-    -- [[ Developer Functions ]]
-    ["devMenu"] = {true, "dev.menu"},
+warningbankick = {
+    {
+        name = "1.0 Trolling",
+        desc = "Duration: 1hr",
+        selected = false,
+        duration = 1,
+    },
+    {
+        name = "1.1 Offensive Language/Toxicity",
+        desc = "Duration: 2hr",
+        selected = false,
+        duration = 2,
+    },
+    {
+        name = "1.2 Exploiting ",
+        desc = "Duration: 6hr",
+        selected = false,
+        duration = 6,
+    },
+    {
+        name = "1.3 Out of game transactions (OOGT)",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "1.4 Scamming",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "1.5 Advertising",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "1.6 Malicious Attacks",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "1.7 PII (Personally Identifiable Information)",
+        desc = "Duration: 168hr",
+        selected = false,
+        duration = 168,
+    },
+    {
+        name = "2.1 Chargeback",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "2.2 Staff Discretion",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "2.3 Cheating",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "2.4 Ban Evading",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "2.5 Association with External Modifications",
+        desc = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "3.1 Failure to provide POV ",
+        desc = "Duration: 24hr",
+        selected = false,
+        duration = 24,
+    },
+    {
+        name = "3.2 Withholding Information From Staff",
+        desc = "Duration: 24hr",
+        selected = false,
+        duration = 24,
+    },
+    {
+        name = "3.3 Blackmailing",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
+    {
+        name = "3.4 Community Ban",
+        desc = "Duration: Permanent",
+        selected = false,
+        duration = 9000,
+    },
 }
 
 
@@ -98,7 +154,7 @@ AddEventHandler("Jud:GetNearbyPlayers", function(dist)
     local user_id = ARMA.getUserId(source)
     local plrTable = {}
 
-    if ARMA.hasPermission(user_id, admincfg.perm) then
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
         ARMAclient.getNearestPlayers(source, {dist}, function(nearbyPlayers)
             for k, v in pairs(nearbyPlayers) do
                 data = ARMA.getUserDataTable(ARMA.getUserId(k))
@@ -1003,8 +1059,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local target_name = GetPlayerName(target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
-    local perm = admincfg.buttonsEnabled["SS"][2]
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.screenshot') then
         exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(target,
         {
         username = "ARMA Screenshot Logs",
@@ -1040,9 +1095,8 @@ end)
 RegisterServerEvent('ARMA:noF10Kick')
 AddEventHandler('ARMA:noF10Kick', function()
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["kick"][2]
     playerName = GetPlayerName(source)
-    if ARMA.hasPermission(admin_id, perm2) then
+    if ARMA.hasPermission(admin_id, 'admin.kick') then
         ARMA.prompt(source,"Perm ID:","",function(source,permid) 
             if permid == '' then return end
             permid = parseInt(permid)
@@ -1127,11 +1181,10 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
     local target_permid = target
     local playerName = GetPlayerName(source)
     local playerOtherName = GetPlayerName(tempid)
-    local perm = admincfg.buttonsEnabled["kick"][2]
     local admin_id = ARMA.getUserId(admin)
     local adminName = GetPlayerName(admin)
     local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.kick') then
         ARMA.prompt(source,"Reason:","",function(source,Reason) 
             if Reason == "" then return end
             local command = {
@@ -1207,8 +1260,7 @@ end)
 RegisterServerEvent('ARMA:RemoveWarning')
 AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
     local admin_id = ARMA.getUserId(admin)
-    local perm = admincfg.buttonsEnabled["removewarn"][2]
-    if ARMA.hasPermission(admin_id, perm) then     
+    if ARMA.hasPermission(admin_id, 'admin.removewarn') then     
         ARMA.prompt(source,"Warning ID:","",function(source,warningid) 
             if warningid == "" then return end
             exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
@@ -1258,9 +1310,8 @@ end)
 RegisterServerEvent("ARMA:Unban")
 AddEventHandler("ARMA:Unban",function()
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["unban"][2]
     playerName = GetPlayerName(source)
-    if ARMA.hasPermission(admin_id, perm2) then
+    if ARMA.hasPermission(admin_id, 'admin.unban') then
         ARMA.prompt(source,"Perm ID:","",function(source,permid) 
             if permid == '' then return end
             permid = parseInt(permid)
@@ -1313,8 +1364,7 @@ RegisterServerEvent("ARMA:getNotes")
 AddEventHandler("ARMA:getNotes",function(admin, player)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["spectate"][2]
-    if ARMA.hasPermission(admin_id, perm2) then
+    if ARMA.hasPermission(admin_id, 'admin.spectate') then
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
             if result ~= nil then
                 TriggerClientEvent('ARMA:sendNotes', source, json.encode(result))
@@ -1333,11 +1383,10 @@ RegisterServerEvent("ARMA:addNote")
 AddEventHandler("ARMA:addNote",function(admin, player)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["spectate"][2]
     local adminName = GetPlayerName(source)
     local playerName = GetPlayerName(player)
     local playerperm = ARMA.getUserId(player)
-    if ARMA.hasPermission(admin_id, perm2) then
+    if ARMA.hasPermission(admin_id, 'admin.spectate') then
         ARMA.prompt(source,"Reason:","",function(source,text) 
             if text == '' then return end
             exports['ghmattimysql']:execute("INSERT INTO arma_user_notes (`user_id`, `text`, `admin_name`, `admin_id`) VALUES (@user_id, @text, @admin_name, @admin_id);", {user_id = playerperm, text = text, admin_name = adminName, admin_id = admin_id}, function() end) 
@@ -1409,10 +1458,9 @@ RegisterServerEvent("ARMA:removeNote")
 AddEventHandler("ARMA:removeNote",function(admin, player)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    local perm2 = admincfg.buttonsEnabled["spectate"][2]
     local playerName = GetPlayerName(player)
     local playerperm = ARMA.getUserId(player)
-    if ARMA.hasPermission(admin_id, perm2) then
+    if ARMA.hasPermission(admin_id, 'admin.spectate') then
         ARMA.prompt(source,"Note ID:","",function(source,noteid) 
             if noteid == '' then return end
             exports['ghmattimysql']:execute("DELETE FROM arma_user_notes WHERE note_id = @noteid", {noteid = noteid}, function() end)
@@ -1607,9 +1655,8 @@ frozenplayers = {}
 RegisterServerEvent('ARMA:FreezeSV')
 AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
     local admin_id = ARMA.getUserId(admin)
-    local perm = admincfg.buttonsEnabled["FREEZE"][2]
     local player_id = ARMA.getUserId(newtarget)
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.freeze') then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
         if isFrozen then
@@ -1730,8 +1777,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
     local coords = GetEntityCoords(GetPlayerPed(newtarget))
     local user_id = ARMA.getUserId(source)
     local player_id = ARMA.getUserId(newtarget)
-    local perm = admincfg.buttonsEnabled["TP2"][2]
-    if ARMA.hasPermission(user_id, perm) then
+    if ARMA.hasPermission(user_id, 'admin.tp2player') then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
         local command = {
@@ -1802,8 +1848,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
     local source = source 
     local SelectedPlrSource = ARMA.getUserSource(id) 
     local user_id = ARMA.getUserId(source)
-    local perm = admincfg.buttonsEnabled["TP2ME"][2]
-    if ARMA.hasPermission(user_id, perm) then
+    if ARMA.hasPermission(user_id, 'admin.summon') then
         if SelectedPlrSource then  
             if onesync ~= "off" then 
                 local ped = GetPlayerPed(source)
@@ -2108,8 +2153,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
     local admin_name = GetPlayerName(admin)
     local player_id = ARMA.getUserId(id)
     local player_name = GetPlayerName(id)
-    local perm = admincfg.buttonsEnabled["TP2"][2]
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(id)
         local command = {
@@ -2181,8 +2225,7 @@ RegisterServerEvent("ARMA:TeleportBackFromAdminZone")
 AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeAdminZone)
     local admin = source
     local admin_id = ARMA.getUserId(admin)
-    local perm = admincfg.buttonsEnabled["TP2"][2]
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
         local ped = GetPlayerPed(id)
         SetEntityCoords(ped, savedCoordsBeforeAdminZone)
     else
@@ -2199,8 +2242,7 @@ RegisterServerEvent("ARMA:Teleport")
 AddEventHandler("ARMA:Teleport",function(id, coords)
     local admin = source
     local admin_id = ARMA.getUserId(admin)
-    local perm = admincfg.buttonsEnabled["TP2"][2]
-    if ARMA.hasPermission(admin_id, perm) then
+    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
         local ped = GetPlayerPed(source)
         local ped2 = GetPlayerPed(id)
         SetEntityCoords(ped2, coords)
@@ -2223,8 +2265,7 @@ AddEventHandler('ARMA:AddCar', function()
     local admin_name = GetPlayerName(admin)
     local source = source
     local userid = ARMA.getUserId(source)
-    local perm = admincfg.buttonsEnabled["addcar"][2]
-    if ARMA.hasPermission(userid, perm) then
+    if ARMA.hasPermission(userid, 'admin.addcar') then
         ARMA.prompt(source,"Add to Perm ID:","",function(source, permid)
             if permid == "" then return end
             local playerName = GetPlayerName(permid)
@@ -2424,10 +2465,9 @@ RegisterServerEvent("ARMA:GetPlayerData")
 AddEventHandler("ARMA:GetPlayerData",function()
     local source = source
     user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, admincfg.perm) then
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
         players = GetPlayers()
         players_table = {}
-        menu_btns_table = {}
         useridz = {}
         for i, p in pairs(players) do
             if ARMA.getUserId(p) ~= nil then
