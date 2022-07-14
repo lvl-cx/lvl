@@ -16,6 +16,7 @@ local SelectedName = nil
 local SelectedPlayerSource = nil
 local hoveredPlayer = nil
 local GlobalAdminLevel = 0
+local punishmentreasons = nil
 
 
 local f = nil
@@ -87,8 +88,9 @@ RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu
 RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "bansub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Select Ban Reasons',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "durationsubmenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "bansub"), "", menuColour..'Ban Duration',1300,100,"admin","admin"))
+RMenu.Add("adminmenu", "confirmban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Confirm Ban',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',1300,100,"admin","admin"))
-RMenu.Add("adminmenu", "confirmban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Confirm Ban',1300,100,"admin","admin"))
 
 --[[groups]]
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',1300,100,"admin","admin"))
@@ -760,176 +762,90 @@ AddEventHandler('ARMA:ReturnPov', function(pov)
     end
 end)
 
-warningbankick = {
-    {
-        name = "1.0 Trolling",
-        desc = "Duration: 1hr",
-        selected = false,
-        duration = 1,
-    },
-    {
-        name = "1.1 Offensive Language/Toxicity",
-        desc = "Duration: 2hr",
-        selected = false,
-        duration = 2,
-    },
-    {
-        name = "1.2 Exploiting ",
-        desc = "Duration: 6hr",
-        selected = false,
-        duration = 6,
-    },
-    {
-        name = "1.3 Out of game transactions (OOGT)",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "1.4 Scamming",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "1.5 Advertising",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "1.6 Malicious Attacks",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "1.7 PII (Personally Identifiable Information)",
-        desc = "Duration: 168hr",
-        selected = false,
-        duration = 168,
-    },
-    {
-        name = "2.1 Chargeback",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "2.2 Staff Discretion",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "2.3 Cheating",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "2.4 Ban Evading",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "2.5 Association with External Modifications",
-        desc = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "3.1 Failure to provide POV ",
-        desc = "Duration: 24hr",
-        selected = false,
-        duration = 24,
-    },
-    {
-        name = "3.2 Withholding Information From Staff",
-        desc = "Duration: 24hr",
-        selected = false,
-        duration = 24,
-    },
-    {
-        name = "3.3 Blackmailing",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-    {
-        name = "3.4 Community Ban",
-        desc = "Duration: Permanent",
-        selected = false,
-        duration = 9000,
-    },
-}
 
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'bansub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel > 1 then
-                RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)            
-                        if Selected then
-                            local uid = GetPlayerServerId(PlayerId())
-                            TriggerServerEvent('ARMA:CustomBan', uid, SelectedPlayer[3])
-                        end
-                    end, RMenu:Get('adminmenu', 'submenu'))   
-                for i , p in pairs(warningbankick) do
-                    RageUI.Checkbox(p.name, p.desc, p.selected, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
-                        if Selected then
-                            p.selected = not p.selected
-                            if p.selected then
-                                banduration = banduration + p.duration
-                                banstable[p.name] = {p.name, p.duration}
-                                banreasons = banreasons .. '\n' ..p.name
-                            end
-                        end
-                    end)
-                end
-                RageUI.ButtonWithStyle('Create Ban Data', nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+            if GlobalAdminLevel >= 2 then
+                RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)            
                     if Selected then
-                        bantargetname = SelectedPlayer[1]
-                        bantarget =  SelectedPlayer[3]
+                        local uid = GetPlayerServerId(PlayerId())
+                        TriggerServerEvent('ARMA:CustomBan', uid, SelectedPlayer[3])
                     end
-                end, RMenu:Get('adminmenu', 'confirmban'))
+                end, RMenu:Get("adminmenu", 'submenu'))  
+            for i , p in pairs(punishmentreasons) do
+                RageUI.ButtonWithStyle(p.name, p.desc, { RightLabel = "" }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        selectedBan = p.name
+                        if next(banstable) then
+                            banreasons = banreasons ..', '..p.name
+                        else 
+                            banreasons = banreasons ..p.name
+                        end
+                    end
+                end, RMenu:Get("adminmenu", 'durationsubmenu'))
+            end
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'confirmban')) then
+    if RageUI.Visible(RMenu:Get("adminmenu", 'durationsubmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Separator("~r~You are about to ban " ..bantargetname)
-            RageUI.Separator("~w~For the following reason(s):")
-            for k, v in pairs(banstable) do
-                RageUI.Separator(v[1]..' ~y~| ~w~'..v[2]..'hrs')
-            end
-            if banduration >= 9000 then
-                RageUI.Separator('Total Length: Permanent')
-            else
-                RageUI.Separator('Total Length: '..banduration..' hours.')
-            end
-            RageUI.ButtonWithStyle("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
-                if Selected then
-                    local uid = GetPlayerServerId(PlayerId())
-                    TriggerServerEvent('ARMA:BanPlayerConfirm', uid, bantarget, banreasons, banduration, banevidence)
-                end
-            end)
-            RageUI.ButtonWithStyle("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
-                if Selected then
-                    for i, p in pairs(warningbankick) do
-                        if p.selected then 
-                            p.selected = not p.selected 
+            if GlobalAdminLevel >= 2 then
+               for k,v in pairs(punishmentreasons) do
+                    if selectedBan == v.name then
+                        for a,b in pairs(v.duration[1]) do
+                            RageUI.ButtonWithStyle(v.duration[1][a], nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                                if Selected then
+                                    banduration = banduration + v.duration[2][a]
+                                    if a == 1 then
+                                        selectedBan = v.name ..' ~y~| ~w~1st Offense'
+                                    elseif a == 2 then
+                                        selectedBan = v.name ..' ~y~| ~w~2nd Offense'
+                                    elseif a == 3 then
+                                        selectedBan = v.name ..' ~y~| ~w~3rd Offense'
+                                    end
+                                    banstable[selectedBan] = {selectedBan, v.duration[2][a]}
+                                    bantargetname = SelectedPlayer[1]
+                                    bantarget =  SelectedPlayer[3]
+                                end
+                            end, RMenu:Get("adminmenu", 'confirmban'))
                         end
                     end
-                    banduration = 0
-                    banstable = {}
-                    banreasons = ''
                 end
-            end, RMenu:Get('adminmenu', 'submenu'))
+            end
+        end)
+    end
+
+    if RageUI.Visible(RMenu:Get("adminmenu", 'confirmban')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if GlobalAdminLevel >= 2 then
+                RageUI.Separator("~r~You are about to ban " ..bantargetname)
+                RageUI.Separator("~w~For the following reason(s):")
+                for k, v in pairs(banstable) do
+                    RageUI.Separator(v[1]..' ~y~| ~w~'..v[2]..'hrs')
+                end
+                if banduration >= 9000 then
+                    RageUI.Separator('Total Length: Permanent')
+                else
+                    RageUI.Separator('Total Length: '..banduration..' hours.')
+                end
+                RageUI.ButtonWithStyle("Add another Reason", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+                end, RMenu:Get("adminmenu", 'bansub')) 
+                RageUI.ButtonWithStyle("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local uid = GetPlayerServerId(PlayerId())
+                        TriggerServerEvent('ARMA:BanPlayerConfirm', uid, bantarget, bantargetname, banreasons, banduration)
+                    end
+                end)
+                RageUI.ButtonWithStyle("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        banduration = 0
+                        banstable = {}
+                        banreasons = ''
+                    end
+                end, RMenu:Get("adminmenu", 'submenu'))
+            end
         end)
     end
 end)
@@ -1484,8 +1400,9 @@ AddEventHandler("ARMA:GotGroups",function(gotGroups)
 end)
 
 RegisterNetEvent("ARMA:getPlayersInfo")
-AddEventHandler("ARMA:getPlayersInfo", function(BB)
+AddEventHandler("ARMA:getPlayersInfo", function(BB, preasons)
     players = BB
+    punishmentreasons = preasons
     RageUI.Visible(RMenu:Get("adminmenu", "main"), not RageUI.Visible(RMenu:Get("adminmenu", "main")))
 end)
 
