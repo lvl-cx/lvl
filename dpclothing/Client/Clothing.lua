@@ -38,7 +38,7 @@ local Drawables = {
 	},
 	["Shoes"] = {
 		Drawable = 6,
-		Table = {Standalone = true, Male = 36, Female = 35},
+		Table = {Standalone = true, Male = 34, Female = 35},
 		Emote = {Dict = "random@domestic", Anim = "pickup_low", Move = 0, Dur = 1200}
 	},
 	["Neck"] = {
@@ -73,7 +73,7 @@ local Extras = {
 	["Shirt"] = {
 		Drawable = 11,
 		Table = {
-			Standalone = true, Male = -1, Female = 74,
+			Standalone = true, Male = 252, Female = 74,
 			Extra = { 
 						{Drawable = 8, Id = 15, Tex = 0, Name = "Extra Undershirt"},
 			 			{Drawable = 3, Id = 15, Tex = 0, Name = "Extra Gloves"},
@@ -84,7 +84,7 @@ local Extras = {
 	},
 	["Pants"] = {
 		Drawable = 4,
-		Table = {Standalone = true, Male = 70, Female = 14},
+		Table = {Standalone = true, Male = 61, Female = 14},
 		Emote = {Dict = "re@construction", Anim = "out_of_breath", Move = 51, Dur = 1300}
 	},
 	["Bagoff"] = {
@@ -307,7 +307,7 @@ function DevTestVariants(d) -- If debug mode is enabled we can try all the varia
 							SoundPlay("Open")
 							SetPedComponentVariation(Ped, Drawable.Drawable, k, 0, 0)
 							Wait(300)
-							Notify(d.." : ~g~"..v)
+							Notify(d.." : ~b~"..v)
 							SoundPlay("Close")
 							SetPedComponentVariation(Ped, Drawable.Drawable, v, 0, 0)
 							Wait(300)
@@ -321,7 +321,7 @@ function DevTestVariants(d) -- If debug mode is enabled we can try all the varia
 						SoundPlay("Open")
 						SetPedPropIndex(Ped, Prop.Prop, k, 0, true)
 						Wait(300)
-						Notify(d.." : ~g~"..v)
+						Notify(d.." : ~b~"..v)
 						SoundPlay("Close")
 						SetPedPropIndex(Ped, Prop.Prop, v, 0, true)
 						Wait(300)
