@@ -69,7 +69,7 @@ RageUI.CreateWhile(1.0, true, function()
     RageUI.CreateWhile(1.0, true, function()
         if RageUI.Visible(RMenu:Get("DealershipMenu", "sim")) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-                RageUI.Separator("Currently Viewing: " .. 'Dealership Vehicles', function() end)
+                RageUI.Separator("~y~Currently Viewing: " .. 'Dealership Vehicles', function() end)
         for i , p in pairs(dealership.guns) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -93,7 +93,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Currently Viewing: " .. 'Police Vehicles', function() end)
+        RageUI.Separator("~y~Currently Viewing: " .. 'Police Vehicles', function() end)
         for i , p in pairs(dealership.guns2) do 
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -117,8 +117,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("DealershipMenu", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("Are you sure?")
-        RageUI.Separator("Currently Vehicle: " .. cName, function() end)
-        RageUI.Separator("Vehicle Price: " .. cPrice, function() end)
+        RageUI.Separator("Current Vehicle: ~y~" .. cName, function() end)
+        RageUI.Separator("Vehicle Price: ~g~£" .. cPrice, function() end)
         RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
                 -- [Event Here]
