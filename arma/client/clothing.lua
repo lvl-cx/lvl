@@ -6,8 +6,6 @@ RMenu.Add('ARMAClothing', 'main', RageUI.CreateMenu("", "~b~Clothing Menu",1300,
 RMenu.Add('ARMAClothing', 'clothingsubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changegendersubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changepedmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
-RMenu.Add('ARMAClothing', 'wardrobesub',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
-RMenu.Add('wardrobesub', 'clothingsub',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "wardrobesub")))
 local Face = {Max = {}, Index = 0, TextureIndex = 0};
 local Mask = {Max = {}, Index = 0, TextureIndex = 0};
 local Hair = {Max = {}, Index = 0, TextureIndex = 0};
@@ -27,7 +25,6 @@ local Watches = {Max = {}, Index = 0, TextureIndex = 0};
 local Bracelets = {Max = {}, Index = 0, TextureIndex = 0};
 local SelectedOption = nil;
 local MenuOpen = false;
-wardrobe = {}
 
 
 function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
@@ -44,16 +41,6 @@ function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
 
-RegisterNetEvent("clothingMenu:UpdateWardrobe")
-AddEventHandler("clothingMenu:UpdateWardrobe", function(newWardrobe)
-    wardrobe = newWardrobe
-end)
-
-RegisterNetEvent("clothingMenu:closeWardrobe")
-AddEventHandler("clothingMenu:closeWardrobe", function()
-    RageUI.CloseAll()
-end)
-
 RageUI.CreateWhile(1.0, true, function()
     
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'main')) then
@@ -61,7 +48,6 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Button("Change Clothing", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "clothingsubmenu"))
             RageUI.Button("Change Gender", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changegendersubmenu"))
             RageUI.Button("Change Ped", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changepedmenu"))
-            RageUI.Button("Wardrobe", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "wardrobesub"))
             --RageUI.Button("Clear Prop Index", "~r~Clear all Props that are on your body!", {}, true, function(Hovered, Active, Selected) 
             --    if Selected then 
             --        ClearAllPedProps(PlayerPedId())
@@ -98,63 +84,7 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
   
-    if RageUI.Visible(RMenu:Get('ARMAClothing', 'wardrobesub')) then 
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            TriggerServerEvent("JudHousing:LoadWardrobe")
-            for k, v in pairs(wardrobe) do
-            RageUI.Button(k, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
-                if Selected then 
-                    currentOutfit = k
-                    savedArmour = GetPedArmour(PlayerPedId())
-                end
-            end,RMenu:Get("wardrobesub", "clothingsub"))
-        end
-            RageUI.Button("~g~Save Outfit", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
-                if Selected then
-                    AddTextEntry("FMMC_MPM_NC", "Outfit Name")
-                DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                while (UpdateOnscreenKeyboard() == 0) do
-                    DisableAllControlActions(0);
-                    Wait(0);
-                end
-                if (GetOnscreenKeyboardResult()) then
-                    local result = GetOnscreenKeyboardResult()
-                    if result then
-                        TriggerServerEvent("JudHousing:SaveOutfit", result)
-                    end
-                end
-            end
-                
-            end)
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('wardrobesub', 'clothingsub')) then 
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    for k, v in pairs(wardrobe) do
-                        if k == currentOutfit then
-                          
-                            tARMA.setCustomization(v)
 
-                            SetTimeout(50, function()
-                                SetPedArmour(PlayerPedId(), savedArmour)
-                                TriggerServerEvent('ARMA:changeHairStyle')
-                            end)
-                           
-
-                        end
-                    end
-                end
-            end, RMenu:Get('ARMAClothing', 'wardrobesub'))
-    
-            RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
-                end
-            end, RMenu:Get('ARMAClothing', 'wardrobesub'))
-        end)
-    end
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'changepedmenu')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for k, v in pairs(peds) do 
@@ -543,7 +473,6 @@ Citizen.CreateThread(function()
             local x,y,z = v[2], v[3], v[4]
             if #(coords - vec3(x,y,z)) <= 1.0 then
                 inMarker = true 
-                TriggerServerEvent("JudHousing:LoadWardrobe")
                 break
             end    
         end
