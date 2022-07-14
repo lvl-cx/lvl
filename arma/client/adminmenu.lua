@@ -771,9 +771,9 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)            
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('RDMAdmin:CustomBan', uid, SelectedPlayer[3])
+                        TriggerServerEvent('ARMA:CustomBan', uid, SelectedPlayer[3])
                     end
-                end, RMenu:Get("RDMAdmin", 'submenu'))  
+                end, RMenu:Get("adminmenu", 'submenu'))  
             for i , p in pairs(punishmentreasons) do
                 RageUI.ButtonWithStyle(p.name, p.desc, { RightLabel = "" }, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -835,7 +835,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Confirm Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('adminmenu:BanPlayerConfirm', uid, bantarget, bantargetname, banreasons, banduration)
+                        TriggerServerEvent('ARMA:BanPlayerConfirm', uid, bantarget, bantargetname, banreasons, banduration)
                     end
                 end)
                 RageUI.ButtonWithStyle("Cancel Ban", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
