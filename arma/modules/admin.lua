@@ -1,6 +1,14 @@
 local htmlEntities = module("lib/htmlEntities")
 local Tools = module("lib/Tools")
 
+-- copy this table format with the reasons below @xonaa
+punishmentreasons = {
+    {
+        name = "Cheating",
+        desc = "1st Offense: 730hr\n2nd Offense: Permanent",
+        duration = {{'1st Offense: 730hr','2nd Offense: Permanent'},{730,9000}},
+    },
+}
 
 warningbankick = {
     {
@@ -2485,7 +2493,7 @@ AddEventHandler("ARMA:GetPlayerData",function()
                 DropPlayer(p, "ARMA - The server was unable to cache your ID, please rejoin.")
             end
         end
-        TriggerClientEvent("ARMA:getPlayersInfo", source, players_table)
+        TriggerClientEvent("ARMA:getPlayersInfo", source, players_table, punishmentreasons)
     end
 end)
 
