@@ -31,9 +31,10 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('DealershipMenu', 'sim')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
                 RageUI.Separator("~y~Currently Viewing: " .. 'Dealership Vehicles', function() end)
-        for i , p in pairs(dealership.guns) do 
+                for i , p in pairs(carsTable.main) do
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
+                    cName = p.vehname
                     cPrice = p.price
                     cHash = p.spawncode
                     cType = 'main'
@@ -54,9 +55,10 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('DealershipMenu', 'police')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RageUI.Separator("~y~Currently Viewing: " .. 'Police Vehicles', function() end)
-        for i , p in pairs(dealership.guns2) do 
+        for i , p in pairs(carsTable.police) do
             RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
                 if Selected then
+                    cName = p.vehname
                     cPrice = p.price
                     cHash = p.spawncode
                     cType = 'police'
@@ -79,6 +81,7 @@ RageUI.CreateWhile(1.0, true, function()
         for i , p in pairs(carsTable.rebel) do 
             RageUI.Button("~r~"..p.vehname, nil, {RightLabel =  "~g~£" .. tostring(p.price) }, true, function(Hovered, Active, Selected)
                 if Selected then
+                    cName = p.vehname
                     cPrice = p.price
                     cHash = p.spawncode
                     cType = 'rebel'
@@ -158,7 +161,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
             if testdriveenabled then
                 if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                    SetEntityCoords(PlayerPedId(), -32.98607635498,-1102.2288818359,26.42234992981)
+                    SetEntityCoords(PlayerPedId(), -51.761520385742,-1111.3009033203,26.435150146484)
                     notify("~r~Test drive canceled.")
                     testdrivetimer = 0
                     testdriveenabled = false
@@ -166,10 +169,10 @@ Citizen.CreateThread(function()
                 end
             end
 
-            local v1 = vector3(-33.493320465088,-1102.3771972656,26.42236328125)
+            local v1 = vector3(-51.761520385742,-1111.3009033203,26.435150146484)
 
             if isInArea(v1, 100.0) then 
-                DrawMarker(36, -33.493320465088,-1102.3771972656,26.42236328125 +1 - 0.98, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 255, 255, 255, 155, false, true, 0, 0, 0, 0, 0)
+                DrawMarker(36, -51.761520385742,-1111.3009033203,26.435150146484 +1 - 0.98, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 255, 255, 255, 155, false, true, 0, 0, 0, 0, 0)
             end
             if isInDealership == false then
             if isInArea(v1, 1.4) then 
@@ -219,7 +222,7 @@ end
 
 
 Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-33.493320465088,-1102.3771972656,26.42236328125)
+    blip = AddBlipForCoord(-51.761520385742,-1111.3009033203,26.435150146484)
     SetBlipSprite(blip, 225)
     SetBlipScale(blip, 0.6)
     SetBlipDisplay(blip, 2)
