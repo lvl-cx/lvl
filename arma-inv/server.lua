@@ -115,6 +115,7 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     if not itemId then    ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         ARMA.RunInventoryTask({source, itemId})
+        TriggerEvent('ARMA:RefreshInventory', source)
         
     else
         ARMAclient.notify(source, {'~r~You need to have this item on you to use it.'})
