@@ -1,83 +1,40 @@
-
-
-dealership = {}
-
-dealership.guns = {
-
-    {spawncode = "zoeesport", vehname = "Zoee Sport", vehdesc = "", price = 3000},
-    {spawncode = "XADV", vehname = "XADV", vehdesc = "", price = 5000},
-    {spawncode = "w115200d", vehname = "W115200D", vehdesc = "", price = 30000},
-    {spawncode = "subwrx", vehname = "SubWRX", vehdesc = "", price = 15000},
-    {spawncode = "sjtoyota", vehname = "SJ Toyota", vehdesc = "", price = 100000},
-    {spawncode = "rs6", vehname = "RS6", vehdesc = "", price = 35000},
-    {spawncode = "m13fortwo", vehname = "M13 Fortwo", vehdesc = "", price = 60000},
-    {spawncode = "jcwc", vehname = "JCWC", vehdesc = "", price = 80000}, 
-    {spawncode = "avalon", vehname = "Avalon", vehdesc = "", price = 5000},
-    {spawncode = "al18", vehname = "AL18", vehdesc = "", price = 150000},
-}
-
-dealership.guns2 = {
-    {spawncode = "apex3", vehname = "VW APEX 3", vehdesc = "", price = 1},
-    {spawncode = "audia4marked", vehname = "Audi A4 Marked", vehdesc = "", price = 1},
-    {spawncode = "audia4unmarked", vehname = "Audi A4 Unmarked", vehdesc = "", price = 1},
-    {spawncode = "polf150", vehname = "Offroad F150", vehdesc = "", price = 1},
-    {spawncode = "pddirtbike", vehname = "PD Dirtbike", vehdesc = "", price = 1},
-    {spawncode = "pbmw540i", vehname = "BMW 540i", vehdesc = "", price = 1},
-    {spawncode = "pdbmwm5", vehname = "BMW M5", vehdesc = "", price = 1},
-    {spawncode = "pdjagsuv", vehname = "Jaguar SUV", vehdesc = "", price = 1},
-    {spawncode = "pdjagxfr", vehname = "Jaguar XFR", vehdesc = "", price = 1},
-    {spawncode = "pdmarkedfocus", vehname = "Ford Focus", vehdesc = "", price = 1},
-    {spawncode = "pdnissangtr", vehname = "Nissan GTR Unmarked", vehdesc = "", price = 1},
-    {spawncode = "pdprior", vehname = "Audi Prior Unmarked", vehdesc = "", price = 1},
-    {spawncode = "wf20", vehname = "Armed Van", vehdesc = "", price = 1},
-}
-
-RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "~b~Dealership", 1300, 50, 'dealership', 'dealership'))
-RMenu.Add("DealershipMenu", "sim", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
-RMenu.Add("DealershipMenu", "police", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
-RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'sim',  1300, 50)))
-RMenu.Add("DealershipMenu", "confirmA", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'police',  1300, 50)))
+RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "dealership",  "dealership"))
+RMenu.Add('DealershipMenu', 'sim', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "dealership",  "dealership"))
+RMenu.Add('DealershipMenu', 'police', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "dealership",  "dealership"))
+RMenu.Add('DealershipMenu', 'rebel', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "dealership",  "dealership"))
+RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
+RMenu.Add("DealershipMenu", "confirmA", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
 
 local hasPoliceRole = false
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('DealershipMenu', 'main')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-      
-            RageUI.Button('Dealership Vehicles', nil, { RightLabel = "→"}, true, function(Hovered, Active, Selected)
-                if Selected then
- 
-        
-                end
-        
+local hasRebel = false
+
+RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'main'), nil, function()
+    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'main'), true, false, true, function()
+            RageUI.Button('Dealership Vehicles', nil, { RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get("DealershipMenu", "sim"))
             if hasPoliceRole then
-                RageUI.Button('Police Vehicles', nil, { RightLabel = "→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                    
-                    
-                    end
-                
+                RageUI.Button('~b~Police Vehicles', nil, { RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get("DealershipMenu", "police"))
             end
-  
-
-        end) 
-    end
+            if hasRebel then 
+                RageUI.Button('~r~Rebel Vehicles', nil, { RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                end, RMenu:Get("DealershipMenu", "rebel"))
+            end
+    end, function()
+       
     end)
+end)
 
 
-    RageUI.CreateWhile(1.0, true, function()
-        if RageUI.Visible(RMenu:Get("DealershipMenu", "sim")) then
-            RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-                RageUI.Separator("Currently Viewing: " .. 'Dealership Vehicles', function() end)
-        for i , p in pairs(dealership.guns) do 
-            RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
+RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'sim'), nil, function()
+    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'sim'), true, false, true, function()
+        RageUI.Separator("Currently Viewing: " .. 'Dealership Vehicles', function() end)
+        for i , p in pairs(carsTable.main) do 
+            RageUI.Button(p.vehname, nil, {RightLabel =  "~g~£" .. tostring(p.price) }, true, function(Hovered, Active, Selected)
                 if Selected then
-                    
                     cPrice = p.price
                     cHash = p.spawncode
-                    cName = p.vehname
-        
+                    cType = 'main'
                 end
                 if Active then 
                     TriggerEvent('returnHover', p.spawncode)
@@ -85,23 +42,21 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("DealershipMenu", "confirm"))
         end
 
-    end) 
-end
+    end, function()
+       
+    end)
 end)
 
 
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get("DealershipMenu", "police")) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'police'), nil, function()
+    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'police'), true, false, true, function()
         RageUI.Separator("Currently Viewing: " .. 'Police Vehicles', function() end)
-        for i , p in pairs(dealership.guns2) do 
-            RageUI.Button(p.vehname, nil, { RightLabel = "£" .. getMoneyStringFormatted(p.price) .. ""}, true, function(Hovered, Active, Selected)
+        for i , p in pairs(carsTable.police) do 
+            RageUI.Button("~b~"..p.vehname, nil, {RightLabel =  "~g~£" .. tostring(p.price) }, true, function(Hovered, Active, Selected)
                 if Selected then
-                    
                     cPrice = p.price
                     cHash = p.spawncode
-                    cName = p.vehname
-        
+                    cType = 'police'
                 end
                 if Active then 
                     TriggerEvent('returnHover', p.spawncode)
@@ -109,23 +64,43 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("DealershipMenu", "confirm"))
         end
 
-    end) 
-end
+    end, function()
+       
+    end)
 end)
 
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get("DealershipMenu", "confirm")) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+
+RageUI.CreateWhile(1.0, RMenu:Get('DealershipMenu', 'rebel'), nil, function()
+    RageUI.IsVisible(RMenu:Get('DealershipMenu', 'rebel'), true, false, true, function()
+        RageUI.Separator("Currently Viewing: " .. 'Rebel Vehicles', function() end)
+        for i , p in pairs(carsTable.rebel) do 
+            RageUI.Button("~r~"..p.vehname, nil, {RightLabel =  "~g~£" .. tostring(p.price) }, true, function(Hovered, Active, Selected)
+                if Selected then
+                    cPrice = p.price
+                    cHash = p.spawncode
+                    cType = 'rebel'
+                end
+                if Active then 
+                    TriggerEvent('returnHover', p.spawncode)
+                end
+            end, RMenu:Get("DealershipMenu", "confirm"))
+        end
+
+    end, function()
+       
+    end)
+end)
+
+RageUI.CreateWhile(1.0, RMenu:Get("DealershipMenu", "confirm"), nil, function()
+    RageUI.IsVisible(RMenu:Get("DealershipMenu", "confirm"), true, false, true, function()  
         RMenu:Get("DealershipMenu", "confirm"):SetSubtitle("Are you sure?")
         RageUI.Separator("Currently Vehicle: " .. cName, function() end)
         RageUI.Separator("Vehicle Price: " .. cPrice, function() end)
         RageUI.Button("Purchase Vehicle" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
-                -- [Event Here]
-                TriggerServerEvent('whoIs',cHash, cPrice)
+                TriggerServerEvent('simeons:buy', cHash, cType)
             end
         end, RMenu:Get("DealershipMenu", "main"))
-        
         RageUI.Button("Test Drive" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then   
                 testdrivetimer = 30
@@ -136,90 +111,88 @@ RageUI.CreateWhile(1.0, true, function()
                     Citizen.Wait(10)
                     i = i+1
                     if i > 10000 then 
-                        tARMA.notify('~r~Model could not be loaded!')
+                        tvRP.notify('~r~Model could not be loaded!')
                         break 
                     end
                 end
                 -- spawn car
                 if HasModelLoaded(mhash) then
-                    local nveh = CreateVehicle(mhash, -1047.984375,-3308.4685058594,13.944429397583+0.5, 0.0, true, false)
-                    SetVehicleOnGroundProperly(nveh)
+                    testdrivevehicle = CreateVehicle(mhash, -1047.984375,-3308.4685058594,13.944429397583+0.5, 0.0, true, false)
+                    SetVehicleOnGroundProperly(testdrivevehicle)
   
-                    SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1) -- put player inside
+                    SetPedIntoVehicle(GetPlayerPed(-1),testdrivevehicle,-1) -- put player inside
 
-                    local nid = NetworkGetNetworkIdFromEntity(nveh)
+                    local nid = NetworkGetNetworkIdFromEntity(testdrivevehicle)
             
                     testdriveenabled = true
                 end
-                if testdriveenabled then
-                    if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                        SetEntityCoords(PlayerPedId(), -32.98607635498,-1102.2288818359,26.42234992981)
+                SetTimeout(30000, function()
+                    if testdriveenabled then
+                        testdrivetimer = 0
+                        testdriveenabled = false
+                        DeleteEntity(testdrivevehicle)
+                        SetEntityCoords(PlayerPedId(), -54.503799438477,-1110.7507324219,26.435169219971)
                     end
-                end
-                Wait(30000)
-                if testdriveenabled then
-                    testdrivetimer = 0
-                    testdriveenabled = false
-                    DeleteCar3(nveh)
-                    SetEntityCoords(PlayerPedId(), -54.503799438477,-1110.7507324219,26.435169219971)
-                end
+                end)
             end
         end, RMenu:Get("DealershipMenu", "main"))
-
-    end) 
-end
+    end)
 end)
 
-RegisterNetEvent('returnPd2')
-AddEventHandler('returnPd2', function(bool)
-    if bool then 
-        hasPoliceRole = true 
-    else
-        hasPoliceRole = false
-    end
+RegisterNetEvent('returnSimeons')
+AddEventHandler('returnSimeons', function(cars, police, rebel)
+    carsTable = cars
+    hasPoliceRole = police 
+    hasRebel = rebel
 end)
 
 isInDealership = false
 currentAmmunition = nil
 Citizen.CreateThread(function() 
     while true do
+        Citizen.Wait(0)
+            if testdriveenabled then
+                if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
+                    SetEntityCoords(PlayerPedId(), -32.98607635498,-1102.2288818359,26.42234992981)
+                    notify("~r~Test drive canceled.")
+                    testdrivetimer = 0
+                    testdriveenabled = false
+                    DeleteEntity(testdrivevehicle)
+                end
+            end
 
-            local v1 = vector3(-49.388229370117,-1112.5594482422,26.435178756714)
+            local v1 = vector3(-33.493320465088,-1102.3771972656,26.42236328125)
 
             if isInArea(v1, 100.0) then 
-                DrawMarker(36, -49.388229370117,-1112.5594482422,26.435178756714 +1 - 0.98, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.5, 0.5, 255, 255, 255, 250, false, true, 2, false, nil, nil, false)
+                DrawMarker(36, -33.493320465088,-1102.3771972656,26.42236328125 +1 - 0.98, 0, 0, 0, 0, 0, 0, 1.2, 1.2, 1.2, 255, 255, 255, 155, false, true, 0, 0, 0, 0, 0)
             end
             if isInDealership == false then
             if isInArea(v1, 1.4) then 
                 alert('Press ~INPUT_VEH_HORN~ to access Dealership')
-                
                 if IsControlJustPressed(0, 51) then 
-                    TriggerServerEvent('sendPD')
+                    TriggerServerEvent('sendSimeons')
                     currentAmmunition = k
                     RageUI.Visible(RMenu:Get("DealershipMenu", "main"), true)
                     isInDealership = true
-                    currentAmmunition = k 
                 end
             end
             end
             if isInArea(v1, 1.4) == false and isInDealership and k == currentAmmunition then
                 TriggerEvent('returnHover', "shalean")
                 RageUI.ActuallyCloseAll()
-                RageUI.Visible(RMenu:Get("DealershipMenu", "main"), false)
                 isInDealership = false
                 currentAmmunition = nil
             end
-       
-        Citizen.Wait(0)
     end
 end)
 
 Citizen.CreateThread(function()
     while true do 
+        Citizen.Wait(0)
         if IsControlPressed(1, 177) then
+            ticks = 1
             TriggerEvent('returnHover', "shalean")
         end
-        Citizen.Wait(1)
     end
 end)
 
@@ -241,7 +214,7 @@ end
 
 
 Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-50.406093597412,-1111.1015625,26.435157775879)
+    blip = AddBlipForCoord(-33.493320465088,-1102.3771972656,26.42236328125)
     SetBlipSprite(blip, 225)
     SetBlipScale(blip, 0.6)
     SetBlipDisplay(blip, 2)
@@ -258,19 +231,22 @@ Citizen.CreateThread(function()
   
   Citizen.CreateThread(function()
       while true do 
-          Wait(0)
-          if testdriveenabled then
-              DrawAdvancedTextOutline(0.605, 0.513, 0.005, 0.0028, 0.4, "Test Drive left: "..testdrivetimer.." seconds", 255, 255, 255, 255, 7, 0)
-          end
+        Citizen.Wait(0)
+        if testdriveenabled then
+            DrawAdvancedTextOutline(0.605, 0.513, 0.005, 0.0028, 0.4, "Test Drive left: "..testdrivetimer.." seconds", 255, 255, 255, 255, 7, 0)
+        end
       end 
   end)
 
   Citizen.CreateThread(function()
+    local ticks = 500
     while true do 
         if testdriveenabled then
+            ticks = 1000
             testdrivetimer = testdrivetimer - 1
         end
-        Wait(1000)
+        Wait(ticks)
+        ticks = 500
     end
 end) 
 
