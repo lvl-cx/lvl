@@ -1403,7 +1403,6 @@ RegisterNetEvent("ARMA:getPlayersInfo")
 AddEventHandler("ARMA:getPlayersInfo", function(BB, preasons)
     players = BB
     punishmentreasons = preasons
-    print(json.encode(punishmentreasons))
     RageUI.Visible(RMenu:Get("adminmenu", "main"), not RageUI.Visible(RMenu:Get("adminmenu", "main")))
 end)
 
