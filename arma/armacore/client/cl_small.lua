@@ -115,7 +115,7 @@ Citizen.CreateThread(function()
                     print(v.name)
                     if currentGunHash == v.name or currentGunHash1 == v.name then
                         model = v.model
-                        print(model)
+                        print('model '..model)
                     end
                 end
                 if hoveredArmour then
@@ -124,8 +124,10 @@ Citizen.CreateThread(function()
                     N=loadModel(model)
                 end
                 O=CreateObject(N,v.x,v.y,v.z+0.1,false,false,false)
+                print('objected created')
                 while currentGunHash ~= nil or currentGunHash1 ~= nil or hoveredArmour == true and DoesEntityExist(O) do 
                     SetEntityHeading(O,GetEntityHeading(O)+1%360)
+                    print('rotating object')
                     FreezeEntityPosition(O,true)
                     SetEntityInvincible(O,true)
                     SetModelAsNoLongerNeeded(model)
@@ -133,6 +135,7 @@ Citizen.CreateThread(function()
                     Wait(0)
                 end
                 DeleteObject(O)
+                print('deleted object')
             end
         end
     end
