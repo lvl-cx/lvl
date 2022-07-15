@@ -1,155 +1,177 @@
-rebellicense = false
+local Housing = module("cfg/cfg_housing")
 
-RMenu.Add("SpawnMenu", "main", RageUI.CreateMenu("", "ARMA Spawn Menu",1300, 50, 'spawn', 'spawn'))
+local hasPD = false
+local inCam = false
+local hasRebel = false
+local hasVIP = false
+local housetable = {}
+spawn = {}
+spawn.position = nil
 
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('SpawnMenu', 'main')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-			FreezeEntityPosition(PlayerPedId(), true)
-			RageUI.Button("St Thomas Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Active then
-					SetNewWaypoint(364.56402587891,-591.74749755859)
-				end
-				if Selected then
-					TriggerServerEvent("ARMATP:StThomas")
-				end
-			end)
-			RageUI.Button("Paleto Bay Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Active then
-					SetNewWaypoint(-246.71606445313,6330.7153320313)
-				end
-				if Selected then
-					TriggerServerEvent("ARMATP:Paleto")
-				end
-			end)
-			RageUI.Button("Sandy Shores Medical Center", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-				if Active then
-					SetNewWaypoint(1841.5405273438,3668.8037109375)
-				end
-				if Selected then
-					TriggerServerEvent("ARMATP:Sandy")
-				end
-			end)
-			if policeenabled then
-				RageUI.Button("Mission Row PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-					if Active then
-						SetNewWaypoint(428.19479370117,-981.58215332031,30.710285186768)
-					end
-					if Selected then
-						TriggerServerEvent("ARMATP:MissionRow")
-					end
-				end)
-				RageUI.Button("Paleto PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-					if Active then
-						SetNewWaypoint(-439.23,6020.6,31.49)
-					end
-					if Selected then
-						TriggerServerEvent("ARMATP:PaletoPD")
-					end
-				end)
-				RageUI.Button("Vespucci PD", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-					if Active then
-						SetNewWaypoint(-1061.13,-827.26,19.21)
-					end
-					if Selected then
-						TriggerServerEvent("ARMATP:Vespucci")
-					end
-				end)
-			end
-			if rebellicense then 
-				RageUI.Button("Rebel Diner", nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-					if Active then
-						SetNewWaypoint(1582.0557861328,6450.7368164062,25.175634384155)
-					end
-					if Selected then
-						TriggerServerEvent("ARMATP:Rebel")
-					end
-				end)
-			end
-			if houseName == nil then 
 
-			else
-				RageUI.Button(houseName, nil, { RightLabel = "→" }, true, function(Hovered, Active, Selected)
-					if Active then
-						SetNewWaypoint(location)
-					end
-					if Selected then	
-						SetEntityCoords(PlayerPedId(), location)
-					end
-				end)
-			end
-		end)
+
+RegisterNetEvent("ARMA:PolicePerms")
+AddEventHandler("ARMA:PolicePerms",function(pd)
+    hasPD = pd
+end)
+RegisterNetEvent("ARMA:RebelPerms")
+AddEventHandler("ARMA:RebelPerms",function(rebel)
+    hasRebel = rebel
+end)
+RegisterNetEvent("ARMA:VIPPerms")
+AddEventHandler("ARMA:VIPPerms",function(vip)
+    hasVIP = vip
+end)
+
+RMenu.Add('RespawnMenu', 'main', RageUI.CreateMenu("", "Respawn Menu", 1350, 50, "spawn", "spawn"))
+
+RageUI.CreateWhile(1.0, RMenu:Get('RespawnMenu', 'main'), nil, function()
+    RageUI.IsVisible(RMenu:Get('RespawnMenu', 'main'), true, false, true, function()
+        if respawn.freeze == true then
+            SetPlayerControl(PlayerId(), 0, 0)
+        end 
+        for a , b in pairs(respawn.hospitals) do 
+            RageUI.Button(a, nil, "", true, function(Hovered, Active, Selected)
+                if Selected then
+                    spawn.position = b.location
+                    TriggerEvent('spawn:teleport')
+                end
+            end)
+        end
+        if hasVIP then
+            for c , d in pairs(respawn.vip) do 
+            RageUI.Button(c, nil, "", true, function(Hovered, Active, Selected)
+                if Selected then
+                    spawn.position = d.location
+                    TriggerEvent('spawn:teleport')
+                end
+             end)
+          end
+        end
+        if hasRebel then
+            for e,f in pairs(respawn.rebel) do
+                RageUI.Button(e, nil, "", true,function(Hovered, Active, Selected)
+                    if Selected then
+                        spawn.position = f.location
+                        TriggerEvent('spawn:teleport')
+                    end
+                end)
+            end
+        end
+        if hasPD then
+            for g,h in pairs(respawn.pd) do
+                RageUI.Button(g, nil, "", true,function(Hovered, Active, Selected)
+                    if Selected then
+                        spawn.position = h.location
+                        TriggerEvent('spawn:teleport')
+                    end
+                end)
+            end
+        end
+        for i,j in pairs(Housing.homes) do
+            if table.includes(housetable, i) then
+                RageUI.Button(""..i, nil, "", true,function(Hovered, Active, Selected)
+                    if Selected then
+                        spawn.position = j.entry_point
+                        Wait(100)
+                        TriggerEvent('spawn:teleport')
+                        Wait(100)
+                        RageUI.CloseAll()
+                    end
+                end)
+            end
+        end
+    end, function()
+
+    end)
+end)
+
+
+isInMenu = false
+Citizen.CreateThread(function() 
+    TriggerServerEvent("ARMA:PoliceCheck")
+    TriggerServerEvent("ARMA:RebelCheck")
+    TriggerServerEvent("ARMA:VIPCheck")
+    TriggerServerEvent("ARMA:getHouses")
+    while true do
+        local v1 = respawn.coords 
+        if not isInMenu then
+            if isInArea(v1, 1.4) then 
+                ped = GetPlayerPed(-1)
+                RageUI.Visible(RMenu:Get("RespawnMenu", "main"), true)
+                isInMenu = true
+            end
+        end
+        if not isInArea(v1, 1.4) and isInMenu then
+            RageUI.Visible(RMenu:Get("RespawnMenu", "main"), false)
+            isInMenu = false
+            if respawn.freeze then
+                SetPlayerControl(PlayerId(), 1, 1)
+            end
+        end
+        Citizen.Wait(0)
     end
 end)
-
-isRespawnMenuOpen = false
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(1)
-		local RespawnPlrCoords, isinRespawnMarker, RespawnZone, RespawnSleep = GetEntityCoords(PlayerPedId()), false, nil, true
-
-		local respawndistance = #(RespawnPlrCoords - vector3(340.05987548828,-1388.4616699219,32.509250640869))
-		if respawndistance < 120.0 then
-			RespawnSleep = false
-			if respawndistance < 1.5 then
-				isinRespawnMarker, RespawnZone = true, k
-			end
-		end
-		if (isinRespawnMarker and not hasAlreadyEnteredRespawnMarker) or (isinRespawnMarker and lastRespawnZone ~= RespawnZone) then
-			hasAlreadyEnteredRespawnMarker, lastRespawnZone = true, RespawnZone
-			TriggerServerEvent('ARMA:RebelCheck')
-			TriggerServerEvent('ARMA:PoliceCheck')
-			SetBigmapActive(true, true)
-			isRespawnMenuOpen = true
-		end
-
-		if not isinRespawnMarker and hasAlreadyEnteredRespawnMarker then
-			RageUI.ActuallyCloseAll()
-			RageUI.Visible(RMenu:Get("SpawnMenu", "main"), false)
-			SetBigmapActive(false, false)
-			hasAlreadyEnteredRespawnMarker = false
-			isRespawnMenuOpen = false
-		end
-
-		if RespawnSleep then
-			Citizen.Wait(500)
-		end
-	end
-end)
-
 
 Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-
-		if isRespawnMenuOpen then
-
-			RageUI.Visible(RMenu:Get("SpawnMenu", "main"), true)
-
-		end
-	end
-end)
-
-RegisterNetEvent('ARMA:RebelChecked')
-AddEventHandler('ARMA:RebelChecked', function(allowed)
-    if allowed then
-        rebellicense = true
-    elseif not allowed then
-        rebellicense = false
+    while true do
+        Citizen.Wait(0)
+        if inMenu then
+            inRedZone = false
+            RageUI.Visible(RMenu:Get("RespawnMenu", "main"), true)
+        end
     end
 end)
 
-RegisterNetEvent('ARMA:PoliceChecked')
-AddEventHandler('ARMA:PoliceChecked', function(policeallowed)
-    if policeallowed then
-        policeenabled = true
-    elseif not policeallowed then
-        policeenabled = false
+local function isInArea(v, dis) 
+    if #(GetEntityCoords(PlayerPedId()) - v) <= dis then  
+        return true
+    else 
+        return false
     end
+end
+
+RegisterNetEvent('spawn:teleport')
+AddEventHandler('spawn:teleport', function()
+    FreezeEntityPosition(PlayerPedId(), false)
+	inMenu = false
+    RageUI.CloseAll()
+    inRedZone = false
+    local spawnCoords = spawn.position
+	TriggerEvent("ARMA:PlaySound", "gtaloadin")
+    SetEntityCoords(PlayerPedId(), spawnCoords)
+    SetPlayerControl(PlayerId(), 1, 0)
+    SetFocusPosAndVel(spawnCoords.x,spawnCoords.y,spawnCoords.z+1000)
+    local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", spawnCoords.x,spawnCoords.y,spawnCoords.z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
+    SetCamActive(spawnCam3, true)
+    DestroyCam(spawnCam, 0)
+    DestroyCam(spawnCam2, 0)
+    RenderScriptCams(true, true, 0, 1, 0, 0)
+    local spawnCam4 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", spawnCoords.x,spawnCoords.y,spawnCoords.z, 0.0, 0.0, 0.0, 65.0, 0, 2)
+    SetCamActiveWithInterp(spawnCam4, spawnCam3, 5000, 0, 0)
+    Wait(2500)
+    ClearFocus()
+    Wait(2000)
+    FreezeEntityPosition(PlayerPedId(),false)
+    DestroyCam(spawnCam3)
+    DestroyCam(spawnCam4)
+    RenderScriptCams(false, true, 2000, 0, 0)
+    TriggerScreenblurFadeOut(2000.0)
+    ExecuteCommand("showui")
+    ClearFocus()
+    cb()
 end)
 
-RegisterNetEvent('HouseRespawn')
-AddEventHandler('HouseRespawn', function(name,vector)
-	location = vector3(vector)
-	houseName = name
+function table.includes(table,p)
+    for q,r in pairs(table)do 
+        if r==p then 
+            return true 
+        end 
+    end
+    return false 
+end
+
+RegisterNetEvent("ARMA:HousingTable")
+AddEventHandler("ARMA:HousingTable",function(houses)
+    housetable = houses
 end)
