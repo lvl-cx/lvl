@@ -131,7 +131,9 @@ function hashToWeapon(hash)
 		return weapons[hash]
 	else
 		return 'death'
+	end
 end
+
 RegisterNetEvent('showNotify')
 AddEventHandler('showNotify', function(notify)
 	ShowAboveRadarMessage(notify)
