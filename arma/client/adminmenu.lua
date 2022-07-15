@@ -768,12 +768,6 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'bansub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel >= 2 then
-                RageUI.ButtonWithStyle("~g~[Custom Ban Message]", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)            
-                    if Selected then
-                        local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:CustomBan', uid, SelectedPlayer[3])
-                    end
-                end, RMenu:Get("adminmenu", 'submenu'))  
             for i , p in pairs(punishmentreasons) do
                 RageUI.ButtonWithStyle(p.name, p.desc, { RightLabel = "" }, true, function(Hovered, Active, Selected)
                     if Selected then

@@ -1009,76 +1009,45 @@ AddEventHandler('ARMA:CreateBanData', function(admin, target)
 end)
 
 RegisterServerEvent('ARMA:BanPlayerConfirm')
-AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, reasons, duration)
+AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, targetname, reasons, duration)
     local source = source
     local user_id = ARMA.getUserId(source)
     local target = ARMA.getUserSource(target_id)
     local admin_id = ARMA.getUserId(admin)
     local adminName = GetPlayerName(source)
+    local playerName = targetname
     warningDate = getCurrentDate()
     if ARMA.hasPermission(user_id, "admin.ban") then
-        local command = {
-            {
-                ["color"] = "16448403",
-                ["title"] = "ARMA Ban Logs",
-                ["description"] = "",
-                ["text"] = "ARMA Server #1",
-                ["fields"] = {
-                    {
-                        ["name"] = "Admin Name",
-                        ["value"] = adminName,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin TempID",
-                        ["value"] = source,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin PermID",
-                        ["value"] = admin_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Name",
-                        ["value"] = GetPlayerName(target),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player TempID",
-                        ["value"] = target,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player PermID",
-                        ["value"] = target_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Hours",
-                        ["value"] = "0 hours",
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Ban Reason(s)",
-                        ["value"] = reasons,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Ban Duration",
-                        ["value"] = duration.." hours",
-                        ["inline"] = true
-                    }
-                }
-            }
-        }
-        local webhook = "https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target)..'['..target_id..']'..' for '..reasons)
         if tonumber(duration) >= 9000 then
+            local webhook = "webhook"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = 16777215,
+                    ["title"] = "User Permanently Banned",
+                    ["description"] = "> Players Name: **"..playerName.."**\n> Players Perm ID: **"..target_id.."**\n> Admin's Perm ID: **"..admin_id.."**\n> Reason(s): **"..reasons.."**\n> Duration: **Permanent**",
+                    ["footer"] = {
+                        ["text"] = "ARMA - "..os.date("%c"),
+                        ["icon_url"] = "",
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
             ARMA.ban(source,target_id,"perm",reasons)
-            f10Ban(target_id, adminName, reasons, "-1")
+            saveBanLog(target_id, adminName, reasons, "-1")
         else
+            local webhook = "webhook"
+            PerformHttpRequest(webhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA", embeds = {
+                {
+                    ["color"] = 16777215,
+                    ["title"] = "User Banned",
+                    ["description"] = "> Players Name: **"..playerName.."**\n> Players Perm ID: **"..target_id.."**\n> Admin's Perm ID: **"..admin_id.."**\n> Reason(s): **"..reasons.."**\n> Duration: **"..duration.."**",
+                    ["footer"] = {
+                        ["text"] = "ARMA - "..os.date("%c"),
+                        ["icon_url"] = "",
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
             ARMA.ban(source,target_id,duration,reasons)
             f10Ban(target_id, adminName, reasons, duration)
         end
@@ -1086,107 +1055,9 @@ AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, reasons, dur
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Ban Someone')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Ban Someone')
     end
 end)
-
-
-RegisterServerEvent('ARMA:CustomBan')
-AddEventHandler('ARMA:CustomBan', function(admin, target)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local target = target
-    local target_id = ARMA.getUserSource(target)
-    local admin_id = ARMA.getUserId(admin)
-    local adminName = GetPlayerName(source)
-    warningDate = getCurrentDate()
-    if ARMA.hasPermission(user_id, "admin.ban") then
-        ARMA.prompt(source,"Reason:","",function(source,Reason)
-            if Reason == "" then return end
-            ARMA.prompt(source,"Duration:","",function(source,Duration)
-                if Duration == "" then return end
-                Duration = parseInt(Duration)
-                ARMA.prompt(source,"Evidence:","",function(source,Evidence)  
-                    if Evidence == "" then return end
-                    videoclip = Evidence
-                    local command = {
-                        {
-                            ["color"] = "16448403",
-                            ["title"] = "ARMA Custom Ban Logs",
-                            ["description"] = "",
-                            ["text"] = "ARMA Server #1",
-                            ["fields"] = {
-                                {
-                                    ["name"] = "Admin Name",
-                                    ["value"] = adminName,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Admin TempID",
-                                    ["value"] = source,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Admin PermID",
-                                    ["value"] = admin_id,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player Name",
-                                    ["value"] = GetPlayerName(target_id),
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player TempID",
-                                    ["value"] = target_id,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player PermID",
-                                    ["value"] = target,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player Hours",
-                                    ["value"] = "0 hours",
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Ban Reason(s)",
-                                    ["value"] = Reason,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Ban Duration",
-                                    ["value"] = Duration.." hours",
-                                    ["inline"] = true
-                                }
-                            }
-                        }
-                    }
-                    local webhook = "https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2"
-                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-                    TriggerClientEvent('ARMA:NotifyPlayer', admin, 'You have banned '..GetPlayerName(target_id)..'['..target..']'..' for '..Reason)
-                    if tonumber(Duration) == -1 then
-                        ARMA.ban(source,target,"perm",Reason)
-                        f10Ban(target, adminName, Reason, "-1")
-                    else
-                        ARMA.ban(source,target,Duration,Reason)
-                        f10Ban(target, adminName, Reason, Duration)
-                    end
-                end)
-            end)
-        end)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Ban Someone')
-    end
-end)
-
 RegisterServerEvent('ARMA:offlineban')
 AddEventHandler('ARMA:offlineban', function(admin)
     local source = source
