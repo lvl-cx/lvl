@@ -81,6 +81,7 @@ client_scripts{
   "client/cl_crypto.lua",
   "client/cl_*.lua",
   "armacore/client/cl_*.lua",
+  "armacore/cfg/cfg_*.lua",
   -- "hotkeys/hotkeys.lua"
 }
 -- server scripts

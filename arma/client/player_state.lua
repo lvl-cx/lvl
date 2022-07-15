@@ -2,9 +2,32 @@
 -- periodic player state update
 
 local state_ready = false
+local firstspawn = true
 
 AddEventHandler("playerSpawned",function() -- delay state recording
   Citizen.CreateThread(function()
+    if firstspawn then 
+      firstspawn = false
+      local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
+      TriggerEvent("arma:PlaySound", "gtaloadin")
+      SetFocusPosAndVel(x,y,z+1000)
+      local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
+      SetCamActive(spawnCam3, true)
+      DestroyCam(spawnCam, 0)
+      DestroyCam(spawnCam2, 0)
+      RenderScriptCams(true, true, 0, 1, 0, 0)
+      local spawnCam4 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z, 0.0, 0.0, 0.0, 65.0, 0, 2)
+      SetCamActiveWithInterp(spawnCam4, spawnCam3, 5000, 0, 0)
+      Wait(2500)
+      ClearFocus()
+      Wait(2000)
+      FreezeEntityPosition(PlayerPedId(),false)
+      DestroyCam(spawnCam3)
+      DestroyCam(spawnCam4)
+      RenderScriptCams(false, true, 2000, 0, 0)
+      TriggerScreenblurFadeOut(2000.0)
+      ExecuteCommand("showui")
+    end
     Citizen.Wait(2000)
     state_ready = true
   end)
@@ -14,7 +37,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(500)
     if IsPlayerPlaying(PlayerId()) and state_ready then
-      local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+      local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
       ARMAserver.updatePos({x,y,z})
       ARMAserver.updateHealth({tARMA.getHealth()})
       ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
@@ -64,7 +87,7 @@ function tARMA.getWeaponTypes()
 end
 
 function tARMA.getWeapons()
-  local player = GetPlayerPed(-1)
+  local player = PlayerPedId()
 
   local ammo_types = {} -- remember ammo type to not duplicate ammo amount
 
@@ -89,7 +112,7 @@ function tARMA.getWeapons()
 end
 
 function tARMA.giveWeapons(weapons,clear_before)
-  local player = GetPlayerPed(-1)
+  local player = PlayerPedId()
 
   -- give weapons to player
 
@@ -108,7 +131,7 @@ end
 
 --[[
 function tARMA.dropWeapon()
-  SetPedDropsWeapon(GetPlayerPed(-1))
+  SetPedDropsWeapon(PlayerPedId())
 end
 --]]
 
@@ -127,23 +150,23 @@ end
 function tARMA.getDrawables(part)
   local isprop, index = parse_part(part)
   if isprop then
-    return GetNumberOfPedPropDrawableVariations(GetPlayerPed(-1),index)
+    return GetNumberOfPedPropDrawableVariations(PlayerPedId(),index)
   else
-    return GetNumberOfPedDrawableVariations(GetPlayerPed(-1),index)
+    return GetNumberOfPedDrawableVariations(PlayerPedId(),index)
   end
 end
 
 function tARMA.getDrawableTextures(part,drawable)
   local isprop, index = parse_part(part)
   if isprop then
-    return GetNumberOfPedPropTextureVariations(GetPlayerPed(-1),index,drawable)
+    return GetNumberOfPedPropTextureVariations(PlayerPedId(),index,drawable)
   else
-    return GetNumberOfPedTextureVariations(GetPlayerPed(-1),index,drawable)
+    return GetNumberOfPedTextureVariations(PlayerPedId(),index,drawable)
   end
 end
 
 function tARMA.getCustomization()
-  local ped = GetPlayerPed(-1)
+  local ped = PlayerPedId()
 
   local custom = {}
 
@@ -163,7 +186,7 @@ function tARMA.getCustomization()
 end
 
 function tARMA.getCustomization2()
-  local ped = GetPlayerPed(-1)
+  local ped = PlayerPedId()
 
   local custom = {}
 
@@ -199,7 +222,7 @@ function tARMA.setCustomization(custom) -- indexed [drawable,texture,palette] co
 
   Citizen.CreateThread(function() -- new thread
     if custom then
-      local ped = GetPlayerPed(-1)
+      local ped = PlayerPedId()
       local mhash = nil
 
       -- model
@@ -227,7 +250,7 @@ function tARMA.setCustomization(custom) -- indexed [drawable,texture,palette] co
         end
       end
 
-      ped = GetPlayerPed(-1)
+      ped = PlayerPedId()
 
       -- parts
       for k,v in pairs(custom) do
