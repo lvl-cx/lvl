@@ -2,19 +2,19 @@ ownedGaffs = {}
 
 --SQL
 
-MySQL = module("vrp_mysql", "MySQL")
+MySQL = module("arma_mysql", "MySQL")
 
-MySQL.createCommand("vRP/get_address","SELECT home, number FROM vrp_user_homes WHERE user_id = @user_id")
-MySQL.createCommand("vRP/get_home_owner","SELECT user_id FROM vrp_user_homes WHERE home = @home AND number = @number")
-MySQL.createCommand("vRP/rm_address","DELETE FROM vrp_user_homes WHERE user_id = @user_id AND home = @home")
-MySQL.createCommand("vRP/set_address","REPLACE INTO vrp_user_homes(user_id,home,number) VALUES(@user_id,@home,@number)")
+MySQL.createCommand("ARMA/get_address","SELECT home, number FROM arma_user_homes WHERE user_id = @user_id")
+MySQL.createCommand("ARMA/get_home_owner","SELECT user_id FROM arma_user_homes WHERE home = @home AND number = @number")
+MySQL.createCommand("ARMA/rm_address","DELETE FROM arma_user_homes WHERE user_id = @user_id AND home = @home")
+MySQL.createCommand("ARMA/set_address","REPLACE INTO arma_user_homes(user_id,home,number) VALUES(@user_id,@home,@number)")
 
 RegisterNetEvent('ARMA:getHouses')
 AddEventHandler('ARMA:getHouses', function()
     local houses = {}
-    local source = source
+    local source = source 
     local user_id = ARMA.getUserId(source)
-    exports['ghmattimysql']:execute("SELECT * FROM `vrp_user_homes` WHERE user_id = @user_id", {user_id = user_id}, function(result)
+    exports['ghmattimysql']:execute("SELECT * FROM `arma_user_homes` WHERE user_id = @user_id", {user_id = user_id}, function(result)
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.user_id == user_id then
@@ -30,23 +30,23 @@ end)
 function getUserAddress(user_id, cbr)
     local task = Task(cbr)
   
-    MySQL.query("vRP/get_address", {user_id = user_id}, function(rows, affected)
+    MySQL.query("ARMA/get_address", {user_id = user_id}, function(rows, affected)
         task({rows[1]})
     end)
 end
   
 function setUserAddress(user_id, home, number)
-    MySQL.execute("vRP/set_address", {user_id = user_id, home = home, number = number})
+    MySQL.execute("ARMA/set_address", {user_id = user_id, home = home, number = number})
 end
   
 function removeUserAddress(user_id, home)
-    MySQL.execute("vRP/rm_address", {user_id = user_id, home = home})
+    MySQL.execute("ARMA/rm_address", {user_id = user_id, home = home})
 end
 
 function getUserByAddress(home, number, cbr)
     local task = Task(cbr)
   
-    MySQL.query("vRP/get_home_owner", {home = home, number = number}, function(rows, affected)
+    MySQL.query("ARMA/get_home_owner", {home = home, number = number}, function(rows, affected)
         if #rows > 0 then
             task({rows[1].user_id})
         else
@@ -65,7 +65,7 @@ function leaveHome(user_id, home, number, cbr)
     for k, v in pairs(cfghomes.homes) do
         if k == home then
             local x,y,z = table.unpack(v.entry_point)
-            vRPclient.teleport(player, {x,y,z})
+            ARMAclient.teleport(player, {x,y,z})
             task({true})
         end
     end
@@ -81,7 +81,7 @@ function accessHome(user_id, home, number, cbr)
     for k, v in pairs(cfghomes.homes) do
         if k == home then
             local x,y,z = table.unpack(v.leave_point)
-            vRPclient.teleport(player, {x,y,z})
+            ARMAclient.teleport(player, {x,y,z})
             task({true})
         end
     end
@@ -102,7 +102,7 @@ AddEventHandler("JudHousing:Buy", function(house)
                             if ARMA.tryFullPayment(user_id,v.buy_price) then --try payment
                                 local price = v.buy_price
                                 setUserAddress(user_id,house,1) --set address
-                                vRPclient.notify(player,{"~g~You bought "..k.."!"}) --notify
+                                ARMAclient.notify(player,{"~g~You bought "..k.."!"}) --notify
                                 local webhook = 'webhook'
                                 local embed = {
                                     {
@@ -116,11 +116,11 @@ AddEventHandler("JudHousing:Buy", function(house)
                                 }
                                 PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = 'ARMA', embeds = embed}), { ['Content-Type'] = 'application/json' })
                             else
-                                vRPclient.notify(player,{"~r~You do not have enough money to buy "..k}) --not enough money
+                                ARMAclient.notify(player,{"~r~You do not have enough money to buy "..k}) --not enough money
                             end
                     end)
                 else
-                    vRPclient.notify(player,{"~r~Someone already owns "..k})
+                    ARMAclient.notify(player,{"~r~Someone already owns "..k})
                 end
                 if noowner ~= nil then
                     TriggerClientEvent('HouseOwned', player)
@@ -143,31 +143,31 @@ AddEventHandler("JudHousing:Enter", function(house)
             if huser_id == user_id then
                 accessHome(user_id, house, 1, function(ok) --enter home
                     if not ok then
-                        vRPclient.notify(player,{"~r~Unable to enter home"}) --notify unable to enter home for whatever reason
+                        ARMAclient.notify(player,{"~r~Unable to enter home"}) --notify unable to enter home for whatever reason
                     end
                 end)
             else
                 if hplayer ~= nil then --check if home owner is online
-                    vRPclient.notify(player,{"~r~You do not own this home, Knocked on door!"})
+                    ARMAclient.notify(player,{"~r~You do not own this home, Knocked on door!"})
                     ARMA.request(hplayer,name.." knocked on your door!", 30, function(v,ok) --knock on door
                         if ok then
-                            vRPclient.notify(player,{"~g~Doorbell Accepted"}) --doorbell accepted
+                            ARMAclient.notify(player,{"~g~Doorbell Accepted"}) --doorbell accepted
                             accessHome(user_id, house, 1, function(ok) --enter home
                                 if not ok then
-                                    vRPclient.notify(player,{"~r~Unable to enter home!"}) --notify unable to enter home for whatever reason
+                                    ARMAclient.notify(player,{"~r~Unable to enter home!"}) --notify unable to enter home for whatever reason
                                 end
                             end)
                         end
                         if not ok then
-                            vRPclient.notify(player,{"~r~Doorbell Refused "}) -- doorbell refused
+                            ARMAclient.notify(player,{"~r~Doorbell Refused "}) -- doorbell refused
                         end
                     end)
                 else
-                    vRPclient.notify(player,{"~r~Home owner not online!"}) -- home owner not online
+                    ARMAclient.notify(player,{"~r~Home owner not online!"}) -- home owner not online
                 end
             end
         else
-            vRPclient.notify(player,{"~r~Nobody owns "..house..""}) --no home owner & user_id already doesn't have a house
+            ARMAclient.notify(player,{"~r~Nobody owns "..house..""}) --no home owner & user_id already doesn't have a house
         end
     end)
 end)
@@ -179,7 +179,7 @@ AddEventHandler("JudHousing:Leave", function(house)
 
     leaveHome(user_id, house, 1, function(ok) --leave home
         if not ok then
-            vRPclient.notify(player,{"~r~Unable to leave home!"}) --notify if some error
+            ARMAclient.notify(player,{"~r~Unable to leave home!"}) --notify if some error
         end
     end)
 end)
@@ -191,7 +191,7 @@ AddEventHandler("JudHousing:Sell", function(house)
 
     getUserByAddress(house, 1, function(huser_id)
         if huser_id == user_id then
-            vRPclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
+            ARMAclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
                 usrList = ""
                 for k, v in pairs(nplayers) do
                     usrList = usrList .. "[" .. ARMA.getUserId(k) .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
@@ -212,8 +212,8 @@ AddEventHandler("JudHousing:Sell", function(house)
                                                     setUserAddress(buyer_id, house, 1) --give house
                                                     removeUserAddress(user_id, house) -- remove house
                                                     ARMA.giveBankMoney(user_id, amount) --give money to original owner
-                                                    vRPclient.notify(player,{"~g~You have successfully sold "..house.." to ".. GetPlayerName(target).." for £"..amount.."!"}) --notify original owner
-                                                    vRPclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you "..house.." for £"..amount.."!"}) --notify new owner
+                                                    ARMAclient.notify(player,{"~g~You have successfully sold "..house.." to ".. GetPlayerName(target).." for £"..amount.."!"}) --notify original owner
+                                                    ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you "..house.." for £"..amount.."!"}) --notify new owner
                                                     local webhook = 'https://discord.com/api/webhooks/973347553280135198/dnkc8GYV2hOIe6oi0Nl6YXo-ymdP2OgV6zhCOG6e_SJGuPL9SawLHLCag8bvx5GbsEe6'
                                                     local embed = {
                                                         {
@@ -229,31 +229,31 @@ AddEventHandler("JudHousing:Sell", function(house)
                                     
                                                
                                                 else
-                                                    vRPclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
-                                                    vRPclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
+                                                    ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
+                                                    ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
                                                 end
                                             else
-                                                vRPclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy "..house.."!"}) --notify owner that refused
-                                                vRPclient.notify(target,{"~r~You have refused to buy "..house.."!"}) --notify new owner that refused
+                                                ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy "..house.."!"}) --notify owner that refused
+                                                ARMAclient.notify(target,{"~r~You have refused to buy "..house.."!"}) --notify new owner that refused
                                             end
                                         end)
                                     else
-                                        vRPclient.notify(player,{"~r~Price of home needs to be a number!"}) -- if price of home is a string not a int
+                                        ARMAclient.notify(player,{"~r~Price of home needs to be a number!"}) -- if price of home is a string not a int
                                     end
                                 end)
                             else
-                                vRPclient.notify(player,{"~r~That Perm ID seems to be invalid!"}) --couldnt find perm id
+                                ARMAclient.notify(player,{"~r~That Perm ID seems to be invalid!"}) --couldnt find perm id
                             end
                         else
-                            vRPclient.notify(player,{"~r~No Perm ID selected!"}) --no perm id selected
+                            ARMAclient.notify(player,{"~r~No Perm ID selected!"}) --no perm id selected
                         end
                     end)
                 else
-                    vRPclient.notify(player,{"~r~No players nearby!"}) --no players nearby
+                    ARMAclient.notify(player,{"~r~No players nearby!"}) --no players nearby
                 end
             end)
         else
-            vRPclient.notify(player,{"~r~You do not own "..house.."!"})
+            ARMAclient.notify(player,{"~r~You do not own "..house.."!"})
         end
     end)
 end)
@@ -270,7 +270,7 @@ AddEventHandler("JudHousing:OpenChest", function(house)
             TriggerClientEvent("Jud:OpenHomeStorage", player, true , house) --JamesUK inventory modified by me
         --print(house)
         else
-            vRPclient.notify(player,{"~r~You do not own this house!"})
+            ARMAclient.notify(player,{"~r~You do not own this house!"})
         end
     end)
 end)
@@ -282,17 +282,17 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
-    ARMA.getUData(user_id, "vRP:home:wardrobe", function(data)
+    ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
         local sets = json.decode(data)
 
         if sets == nil then --check if user has no current wardrobe data and creates empty table
             sets = {}
         end
 
-        vRPclient.getCustomization(player,{},function(custom)
+        ARMAclient.getCustomization(player,{},function(custom)
             sets[outfitName] = custom --add outfit to table
-            ARMA.setUData(user_id,"vRP:home:wardrobe",json.encode(sets)) --add outfit to database
-            vRPclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
+            ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add outfit to database
+            ARMAclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
             TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
         end)
     end)
@@ -303,7 +303,7 @@ AddEventHandler("JudHousing:RemoveOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
-    ARMA.getUData(user_id, "vRP:home:wardrobe", function(data)
+    ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
         local sets = json.decode(data)
 
         if sets == nil then --check if user has no current wardrobe data and creates empty table
@@ -312,8 +312,8 @@ AddEventHandler("JudHousing:RemoveOutfit", function(outfitName)
 
         sets[outfitName] = nil --replaces outfit in table with nil
 
-        ARMA.setUData(user_id,"vRP:home:wardrobe",json.encode(sets)) --add new table to db
-        vRPclient.notify(player,{"~r~Remove outfit "..outfitName.." from wardrobe!"})
+        ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add new table to db
+        ARMAclient.notify(player,{"~r~Remove outfit "..outfitName.." from wardrobe!"})
         TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
     end)
 end)
@@ -323,7 +323,7 @@ AddEventHandler("JudHousing:LoadWardrobe", function()
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
-    ARMA.getUData(user_id, "vRP:home:wardrobe", function(data) --get data 
+    ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data) --get data 
         local sets = json.decode(data)
 
         if sets == nil then --check if user has no current wardrobe data and creates empty table
@@ -342,16 +342,16 @@ end)
 
 --Blips
 
-AddEventHandler("vRP:playerSpawn",function(user_id, source, first_spawn)
+AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
     for k, v in pairs(cfghomes.homes) do
         local x,y,z = table.unpack(v.entry_point)
         getUserByAddress(k,1,function(owner)
             if owner == nil then -- check if house is avaliable to be bought aka no owner of home
-                vRPclient.addBlip(source,{x,y,z,374,2,k}) -- add blip, 374,2 green house symbol
+                ARMAclient.addBlip(source,{x,y,z,374,2,k}) -- add blip, 374,2 green house symbol
             end
 
             if owner == user_id then -- check if owner is user
-                vRPclient.addBlip(source,{x,y,z,374,1,k}) -- add blip for owner of home, 374,2 green house symbol
+                ARMAclient.addBlip(source,{x,y,z,374,1,k}) -- add blip for owner of home, 374,2 green house symbol
             end
         end)
     end
