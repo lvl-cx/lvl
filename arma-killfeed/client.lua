@@ -1,3 +1,6 @@
+local weaponscfg = module("arma-weapons", "cfg_weaponsonback")
+weaponscfg=weaponscfg.RealWeapons
+
 -- Configuration Options
 local config = {
 	prox_enabled = false,					-- Proximity Enabled
@@ -6,67 +9,6 @@ local config = {
 	chatPrefix = '!',
 }
 
--- Weapons Table
-local weapons = {
-	[-1569615261] = 'knife',
-	[-1569615261] = 'death',
-
-	-- Custom Ars
-	[GetHashKey("WEAPON_mosin")] = 'mosin',
-
-    -- [Out Guns]
-    [GetHashKey("WEAPON_shank")] = 'knife',
-	[GetHashKey("WEAPON_corvo")] = 'knife',
-
-    [GetHashKey("WEAPON_glock")] = 'pistol',
-    [GetHashKey("WEAPON_PYTHON")] = 'pistol',
-	[GetHashKey("WEAPON_glock17")] = 'pistol',
-	[GetHashKey("WEAPON_FNX45")] = 'pistol',
-	[GetHashKey("WEAPON_NIKEGLOCK")] = 'pistol',
-    
-    [GetHashKey("WEAPON_mp7")] = 'smg',
-	[GetHashKey("WEAPON_TEC9")] = 'smg',
-    [GetHashKey("WEAPON_mp40")] = 'smg',
-    [GetHashKey("WEAPON_vesper")] = 'smg',
-    [GetHashKey("WEAPON_mac10")] = 'smg',
-    [GetHashKey("WEAPON_mp5")] = 'smg',
-    [GetHashKey("WEAPON_pp")] = 'smg',
-    [GetHashKey("WEAPON_CQ300")] = 'smg',
-	[GetHashKey("WEAPON_UMPV2NEONOIR")] = 'smg',
-    [GetHashKey("WEAPON_scorpianblue")] = 'smg',
-    [GetHashKey("WEAPON_blackicepeacekeeper")] = 'smg',
-	[GetHashKey("WEAPON_MP5GLOW")] = 'smg',
-    [GetHashKey("WEAPON_DIAMONDMP5")] = 'smg',
-	[GetHashKey("WEAPON_MP7ANIME")] = 'smg',
-	[GetHashKey("WEAPON_NEONOIRMAC10")] = 'smg',
-	[GetHashKey("WEAPON_ppsh")] = 'smg',
-	[GetHashKey("WEAPON_sigmpx")] = 'smg',
-	[GetHashKey("WEAPON_TEMPMP5")] = 'smg',
-
-
-    [GetHashKey("WEAPON_winchester")] = 'shotgun',
-	[GetHashKey("WEAPON_SAWNOFF")] = 'shotgun',
-    [GetHashKey("WEAPON_olympia")] = 'shotgun',
-    [GetHashKey("WEAPON_remington870")] = 'shotgun',
-	[GetHashKey("WEAPON_M82BLOSSOM")] = 'sniper',
-    [GetHashKey("WEAPON_svd")] = 'sniper',
-    [GetHashKey("WEAPON_bora")] = 'sniper',
-    [GetHashKey("WEAPON_REMINGTON700")] = 'sniper',
-    [GetHashKey("WEAPON_GUNGNIR")] = 'sniper',
-	[GetHashKey("WEAPON_MSR")] = 'sniper',
-	[GetHashKey("WEAPON_AX50")] = "sniperr",
-	[GetHashKey("WEAPON_L96")] = 'sniper',
-	[GetHashKey("WEAPON_locus")] = 'sniper',
-	[GetHashKey("WEAPON_hyperbeast")] = 'sniper',
-	[GetHashKey("WEAPON_AX502")] = 'sniper',
-	
-
-	[GetHashKey("WEAPON_usas")] = 'shotgun',
-	[GetHashKey("WEAPON_FN")] = 'shotgun',
-	
-	[GetHashKey("WEAPON_ODIN")] = "lmg",
-	[GetHashKey("WEAPON_M249")] = "lmg",
-}
 
 local feedActive = true
 local isDead = false
@@ -85,7 +27,7 @@ Citizen.CreateThread(function()
 					if KillerNetwork == "**Invalid**" or KillerNetwork == -1 then
 						TriggerServerEvent('KillFeed:Died', killedCoords)
 					else
-						TriggerEvent('ARMA:checkStatus', GetPlayerServerId(KillerNetwork), hashToWeapon(GetPedCauseOfDeath(killed)), killedCoords, killerCoords)
+						TriggerEvent('Killfeed:Killed', GetPlayerServerId(KillerNetwork), hashToWeapon(GetPedCauseOfDeath(killed)), killedCoords, killerCoords)
 					end
                 end
             else
@@ -169,10 +111,12 @@ AddEventHandler('KillFeed:AnnounceDeath', function(killed, coords, killedGroup)
 end)
 
 function hashToWeapon(hash)
-	if weapons[hash] ~= nil then
-		return weapons[hash]
-	else
-		return 'ar'
+	for k,v in pairs(weaponscfg) do
+		if GetHashKey(v.name) == hash then
+			return v.category
+		else
+			return 'death'
+		end
 	end
 end
 
