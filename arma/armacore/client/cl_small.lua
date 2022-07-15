@@ -1,6 +1,3 @@
-local weaponscfg = module("armacore/cfg/cfg_weaponsonback")
-weaponscfg=weaponscfg.RealWeapons
-
 local isInSmallarms = false
 local currentAmmunition = nil
 local currentGunHash = nil
@@ -9,9 +6,6 @@ local currentGunName = nil
 local currentGunHash1 = nil
 local currentGunPrice1 = nil
 local currentGunName1 = nil
-local hoveredArmour = false
-local N
-local O
 
 returnedSMALLGuns2 = {}
 
@@ -24,10 +18,6 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i, p in pairs(smallarms.guns) do 
                 RageUI.Button(p.name , "~g~£"..getMoneyStringFormatted(p.price), { RightLabel =  "→→→"}, true, function(Hovered, Active, Selected)
-                    if Active then
-                        currentGunHash = nil
-                        hoveredArmour = false
-                    end
                     if Selected then
                         currentGunHash = p.hash
                         currentGunPrice = p.price
@@ -37,10 +27,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
             for f , a in pairs(returnedSMALLGuns2) do 
                 RageUI.Button(a.name , "~g~£"..getMoneyStringFormatted(a.price), {RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                    if Active then
-                        currentGunHash1 = nil
-                        hoveredArmour = false
-                    end
                     if Selected then
                         currentGunHash1 = a.gunhash
                         currentGunPrice1 = a.price
@@ -49,9 +35,6 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get("SmallArmsMenu", "whitelisted"))
             end
             RageUI.Button("Level 1 Armour [25%]" , "~g~£"..getMoneyStringFormatted(smallarms.armourprice), {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Active then
-                    hoveredArmour = true
-                end
                 if Selected then
                     TriggerServerEvent("SmallArms:BuyArmour")
                 end
@@ -105,43 +88,6 @@ AddEventHandler("SmallArms:Error", function()
     RageUI.Visible(RMenu:Get("SmallArmsMenu", "main"))
 end)
 
-
-Citizen.CreateThread(function() 
-    while true do
-        Citizen.Wait(0)
-        for k,v in pairs(smallarms.gunshops) do
-            if currentGunHash ~= nil or currentGunHash1 ~= nil or hoveredArmour then
-                for k,v in pairs(weaponscfg) do 
-                    print(v.name)
-                    if currentGunHash == v.name or currentGunHash1 == v.name then
-                        --model = v.model
-                        model = 'w_ar_lr300'
-                        print('model '..model)
-                    end
-                end
-                if hoveredArmour then
-                    N=loadModel('prop_bodyarmour_03')
-                else
-                    N=loadModel(model)
-                end
-                O=CreateObject(N,v.x,v.y,v.z+0.1,false,false,false)
-                print('objected created')
-                while currentGunHash ~= nil or currentGunHash1 ~= nil or hoveredArmour == true and DoesEntityExist(O) do 
-                    SetEntityHeading(O,GetEntityHeading(O)+1%360)
-                    print('rotating object')
-                    FreezeEntityPosition(O,true)
-                    SetEntityInvincible(O,true)
-                    SetModelAsNoLongerNeeded(model)
-                    SetEntityCollision(O, false, false)
-                    Wait(0)
-                end
-                DeleteObject(O)
-                print('deleted object')
-            end
-        end
-    end
-end)
-
 Citizen.CreateThread(function() 
     for k, v in pairs(smallarms.gunshops) do
         local blip = AddBlipForCoord(v)
@@ -181,8 +127,6 @@ Citizen.CreateThread(function()
                 currentGunPrice1 = nil
                 currentGunName1 = nil
                 isInSmallarms = false
-                hoveredArmour = false
-                DeleteObject(O)
             end
         end
     end
