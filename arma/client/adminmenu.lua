@@ -772,11 +772,6 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle(p.name, p.desc, { RightLabel = "" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         selectedBan = p.name
-                        if next(banstable) then
-                            banreasons = banreasons ..', '..p.name
-                        else 
-                            banreasons = banreasons ..p.name
-                        end
                     end
                 end, RMenu:Get("adminmenu", 'durationsubmenu'))
             end
@@ -791,6 +786,11 @@ RageUI.CreateWhile(1.0, true, function()
                         for a,b in pairs(v.duration[1]) do
                             RageUI.ButtonWithStyle(v.duration[1][a], nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                                 if Selected then
+                                    if next(banstable) then
+                                        banreasons = banreasons ..', '..selectedBan
+                                    else 
+                                        banreasons = banreasons ..selectedBan
+                                    end
                                     banduration = banduration + v.duration[2][a]
                                     if a == 1 then
                                         selectedBan = v.name ..' ~y~| ~w~1st Offense'
