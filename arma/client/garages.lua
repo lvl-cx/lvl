@@ -39,11 +39,27 @@ function DeleteCar(veh)
     end
 end
 
-local FirstSpawn = true
-
 RegisterNetEvent('FirstSpawn')
-AddEventHandler('FirstSpawn', function(bool)
-    FirstSpawn = bool 
+AddEventHandler('FirstSpawn', function()
+    local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
+      TriggerEvent("arma:PlaySound", "gtaloadin")
+      SetFocusPosAndVel(x,y,z+1000)
+      local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
+      SetCamActive(spawnCam3, true)
+      DestroyCam(spawnCam, 0)
+      DestroyCam(spawnCam2, 0)
+      RenderScriptCams(true, true, 0, 1, 0, 0)
+      local spawnCam4 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z, 0.0, 0.0, 0.0, 65.0, 0, 2)
+      SetCamActiveWithInterp(spawnCam4, spawnCam3, 5000, 0, 0)
+      Wait(2500)
+      ClearFocus()
+      Wait(2000)
+      FreezeEntityPosition(PlayerPedId(),false)
+      DestroyCam(spawnCam3)
+      DestroyCam(spawnCam4)
+      RenderScriptCams(false, true, 2000, 0, 0)
+      TriggerScreenblurFadeOut(2000.0)
+      ExecuteCommand("showui")
 end)
 
 -- Did you know you can toggle most things in ARMA within the arma/sharedcfg/options.lua?
