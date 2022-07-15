@@ -1,6 +1,6 @@
 --[[
-vRP Los Santos Customs V1.2
-Credits - MythicalBro and マーモット#2533 for the vRP version and some bug fixes
+ARMA Los Santos Customs V1.2
+Credits - MythicalBro and マーモット#2533 for the ARMA version and some bug fixes
 ]]
 
 local colors = {
@@ -719,8 +719,8 @@ LSC_Config.ModelBlacklist = {
 --Sets if garage will be locked if someone is inside it already
 LSC_Config.lock = true
 
--- Enable/disable using vrp_adv_garages
-LSC_Config.vrp_adv_garages = false
+-- Enable/disable using arma_adv_garages
+LSC_Config.arma_adv_garages = false
 
 --Enable/disable old entering way
 LSC_Config.oldenter = true

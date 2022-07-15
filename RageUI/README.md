@@ -41,7 +41,7 @@ This project would never have been possible without the trust [Frazzle] placed i
 
 # Read this message before using it. ⚠️
 
-- It is useless to ask the question if this library is VRP or ESX compatible, if you ask yourself this question I invite you to turn on your brain to try to understand at least a little what the utility of this library is.
+- It is useless to ask the question if this library is ARMA or ESX compatible, if you ask yourself this question I invite you to turn on your brain to try to understand at least a little what the utility of this library is.
 
 - First of all, it is important to take into account that no support will be provided if you don't know you to use this library with the documentation provided. [See the tab]. 
 

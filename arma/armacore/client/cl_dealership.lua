@@ -101,7 +101,7 @@ RageUI.CreateWhile(1.0, true, function()
                         Citizen.Wait(10)
                         i = i+1
                         if i > 10000 then 
-                            tvRP.notify('~r~Model could not be loaded!')
+                            tARMA.notify('~r~Model could not be loaded!')
                             break 
                         end
                     end
