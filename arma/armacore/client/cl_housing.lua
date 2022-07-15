@@ -16,7 +16,9 @@ RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"home","home
 RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"home","homes"))
 RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"home","homes"))
 
-RageUI.CreateWhile(1.0, RMenu:Get("JudHousing", "main"), nil, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('JudHousing', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
 
     --Enter Menu
     maxKG = Housing.chestsize[currentHome] or 500
@@ -44,6 +46,8 @@ RageUI.CreateWhile(1.0, RMenu:Get("JudHousing", "main"), nil, function()
 
     end, function()
     end)
+    end)
+end
 
     --Leave Menu
 
