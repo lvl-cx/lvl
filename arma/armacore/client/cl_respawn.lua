@@ -28,9 +28,6 @@ RMenu.Add('RespawnMenu', 'main', RageUI.CreateMenu("", "Respawn Menu", 1350, 50,
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('RespawnMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        if respawn.freeze == true then
-            SetPlayerControl(PlayerId(), 0, 0)
-        end 
         for a , b in pairs(respawn.hospitals) do 
             RageUI.Button(a, nil, "", true, function(Hovered, Active, Selected)
                 if Selected then
@@ -107,9 +104,6 @@ Citizen.CreateThread(function()
         if not isInArea(v1, 1.4) and isInMenu then
             RageUI.Visible(RMenu:Get("RespawnMenu", "main"), false)
             isInMenu = false
-            if respawn.freeze then
-                SetPlayerControl(PlayerId(), 1, 1)
-            end
         end
         Citizen.Wait(0)
     end
@@ -135,14 +129,12 @@ end
 
 RegisterNetEvent('spawn:teleport')
 AddEventHandler('spawn:teleport', function()
-    FreezeEntityPosition(PlayerPedId(), false)
 	inMenu = false
     RageUI.CloseAll()
     inRedZone = false
     local spawnCoords = spawn.position
-	TriggerEvent("ARMA:PlaySound", "gtaloadin")
+	TriggerEvent("arma:PlaySound", "gtaloadin")
     SetEntityCoords(PlayerPedId(), spawnCoords)
-    SetPlayerControl(PlayerId(), 1, 0)
     SetFocusPosAndVel(spawnCoords.x,spawnCoords.y,spawnCoords.z+1000)
     local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", spawnCoords.x,spawnCoords.y,spawnCoords.z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
     SetCamActive(spawnCam3, true)
@@ -160,8 +152,6 @@ AddEventHandler('spawn:teleport', function()
     RenderScriptCams(false, true, 2000, 0, 0)
     TriggerScreenblurFadeOut(2000.0)
     ExecuteCommand("showui")
-    ClearFocus()
-    cb()
 end)
 
 function table.includes(table,p)
@@ -176,4 +166,8 @@ end
 RegisterNetEvent("ARMA:HousingTable")
 AddEventHandler("ARMA:HousingTable",function(houses)
     housetable = houses
+end)
+
+RegisterCommand("testrespawn", function()
+    RageUI.Visible(RMenu:Get("RespawnMenu", "main"), true)
 end)
