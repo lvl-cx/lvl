@@ -32,8 +32,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 y = y,
                 z = z
             }
-            -- [First Spawn things go here]
-            TriggerClientEvent('FirstSpawn', player, true)
         end
 
         if data.position ~= nil then -- teleport to saved pos
@@ -60,6 +58,8 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         end
                     end
                 end)
+            TriggerClientEvent('FirstSpawn', player, true)
+            ARMAclient.spawnAnim(source, {})
         else
             if data.weapons ~= nil then -- load saved weapons
                 ARMAclient.giveWeapons(source, {data.weapons, true})
