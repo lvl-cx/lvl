@@ -190,7 +190,14 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
             else
-                TriggerEvent('ARMA:CloseLootbag', source)
+                for i,v in pairs(LootBagEntities) do 
+                    if v[5] and v[5] == source then 
+                        CloseInv(v[5])
+                        Wait(3000)
+                        v[3] = false; 
+                        v[5] = nil;
+                    end
+                end
             end
         elseif inventoryType == "Housing" then
             local Quantity = parseInt(1)
@@ -400,7 +407,14 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                     end
                 end})
             else
-                TriggerEvent('ARMA:CloseLootbag', source)
+                for i,v in pairs(LootBagEntities) do 
+                    if v[5] and v[5] == source then 
+                        CloseInv(v[5])
+                        Wait(3000)
+                        v[3] = false; 
+                        v[5] = nil;
+                    end
+                end
             end
         elseif inventoryType == "Housing" then
             TriggerClientEvent('ARMA:ToggleNUIFocus', source, false)
@@ -599,7 +613,14 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
             else
-                TriggerEvent('ARMA:CloseLootbag', source)
+                for i,v in pairs(LootBagEntities) do 
+                    if v[5] and v[5] == source then 
+                        CloseInv(v[5])
+                        Wait(3000)
+                        v[3] = false; 
+                        v[5] = nil;
+                    end
+                end
             end
         elseif inventoryType == "Housing" then
             local homeformat = "chest:u" .. UserId .. "home"
