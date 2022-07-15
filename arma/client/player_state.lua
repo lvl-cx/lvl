@@ -6,6 +6,8 @@ local firstspawn = true
 
 AddEventHandler("playerSpawned",function() -- delay state recording
   Citizen.CreateThread(function()
+    Citizen.Wait(2000)
+    state_ready = true
     if firstspawn then 
       firstspawn = false
       local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
@@ -28,8 +30,6 @@ AddEventHandler("playerSpawned",function() -- delay state recording
       TriggerScreenblurFadeOut(2000.0)
       ExecuteCommand("showui")
     end
-    Citizen.Wait(2000)
-    state_ready = true
   end)
 end)
 
