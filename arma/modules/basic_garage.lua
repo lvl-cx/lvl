@@ -1,7 +1,7 @@
 -- -- a basic garage implementation
 -- -- vehicle db
 local lang = ARMA.lang
-local cfg = module("cfg/garages")
+local cfg = module("arma-vehicles", "garages")
 local cfg_inventory = module("cfg/inventory")
 local vehicle_groups = cfg.garage_types
 local limit = cfg.limit or 100000000

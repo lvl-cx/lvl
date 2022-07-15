@@ -1,4 +1,4 @@
-local cfg = module("cfg/garages")
+local cfg = module("arma-vehicles", "garages")
 local vehcategories = cfg.garage_types
 local garage_type = "car";
 local selected_category = nil;
