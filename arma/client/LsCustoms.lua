@@ -1419,15 +1419,9 @@ local function AddBlips()
 		SetBlipSprite(blip, 72)
 		SetBlipAsShortRange(blip,true)
 		SetBlipScale(blip, 0.7)
-		if i == 5 then
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Los Santos Customs")
-			EndTextCommandSetBlipName(blip)
-		elseif i == 6 then
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Los Santos Customs")
-			EndTextCommandSetBlipName(blip)
-		end
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString("Los Santos Customs")
+		EndTextCommandSetBlipName(blip)
 	end
 end
 
