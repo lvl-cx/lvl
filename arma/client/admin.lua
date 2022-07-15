@@ -233,7 +233,7 @@ end
 RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
-local staffMode = false
+staffMode = false
 local isInTicket = false
 function tARMA.staffMode(status, ticketStatus)
     isInTicket = ticketStatus
