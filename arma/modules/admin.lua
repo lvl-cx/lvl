@@ -4,11 +4,6 @@ local Tools = module("lib/Tools")
 -- copy this table format with the reasons below @xonaa
 punishmentreasons = {
     {
-        name = "Cheating",
-        desc = "1st Offense: 4380hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 4380hr','2nd Offense: Permanent'},{4380,9000}},
-    },
-    {
         name = "1.0 Trolling",
         desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
         duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
