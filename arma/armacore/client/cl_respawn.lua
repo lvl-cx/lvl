@@ -25,8 +25,9 @@ end)
 
 RMenu.Add('RespawnMenu', 'main', RageUI.CreateMenu("", "Respawn Menu", 1350, 50, "spawn", "spawn"))
 
-RageUI.CreateWhile(1.0, RMenu:Get('RespawnMenu', 'main'), nil, function()
-    RageUI.IsVisible(RMenu:Get('RespawnMenu', 'main'), true, false, true, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('RespawnMenu', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         if respawn.freeze == true then
             SetPlayerControl(PlayerId(), 0, 0)
         end 
@@ -84,6 +85,7 @@ RageUI.CreateWhile(1.0, RMenu:Get('RespawnMenu', 'main'), nil, function()
     end, function()
 
     end)
+end
 end)
 
 

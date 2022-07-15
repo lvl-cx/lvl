@@ -18,8 +18,9 @@ returnedSMALLGuns2 = {}
 RMenu.Add("SmallArmsMenu", "main", RageUI.CreateMenu("", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
 RMenu.Add("SmallArmsMenu", "sub", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
 RMenu.Add("SmallArmsMenu", "whitelisted", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
-RageUI.CreateWhile(1.0, RMenu:Get("SmallArmsMenu", "main"), nil, function()
-    RageUI.IsVisible(RMenu:Get("SmallArmsMenu", "main"), true, false, true, function()
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('SmallArmsMenu', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         for i, p in pairs(smallarms.guns) do 
             RageUI.Button(p.name , "~g~£"..getMoneyStringFormatted(p.price), { RightLabel =  "→→→"}, true, function(Hovered, Active, Selected)
                 if Active then
@@ -86,6 +87,7 @@ RageUI.CreateWhile(1.0, RMenu:Get("SmallArmsMenu", "main"), nil, function()
         end)
     end, function()
     end)
+end
 end)
 
 RegisterNetEvent("SMALL:GUNSRETURNED")
