@@ -13,6 +13,7 @@ smallarms.guns = {
     {name = "Beretta",  price = 60000, hash = "WEAPON_BERETTA"},
     {name = "Python",  price = 35000, hash = "WEAPON_PYTHON"},
     {name = "UMP45",  price = 200000, hash = "WEAPON_UMP45"},
+    {name = "MAC-11",  price = 200000, hash = "WEAPON_MAC11"},
 }
 
 return smallarms
