@@ -14,6 +14,7 @@ local cam = nil							-- Camera control
 local heading = 332.219879				-- Heading coord
 local zoom = "visage"					-- Define which tab is shown first (Default: Head)
 local isCameraActive = false
+local FirstSpawn     = true
 local PlayerLoaded   = false
 local PrevHat,PrevGlasses
 

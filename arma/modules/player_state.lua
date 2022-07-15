@@ -33,7 +33,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 z = z
             }
             -- [First Spawn things go here]
-            TriggerClientEvent('FirstSpawn', player)
+            TriggerClientEvent('FirstSpawn', player, true)
         end
 
         if data.position ~= nil then -- teleport to saved pos
