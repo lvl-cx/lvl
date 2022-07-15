@@ -516,31 +516,6 @@ local choice_fine = {function(player, choice)
   end
 end, lang.police.menu.fine.description()}
 
-local isStoring = {}
-local choice_store_weapons = {function(player, choice)
-    local user_id = ARMA.getUserId(player)
-	ARMAclient.getWeapons(player,{},function(weapons)
-        if not isStoring[player] then
-            isStoring[player] = true
-            ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
-                for k,v in pairs(weapons) do
-                    ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                    if v.ammo > 0 then
-                        ARMA.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
-                    end
-                end
-                ARMAclient.notify(player,{"~g~Weapons Stored"})
-                SetTimeout(10000,function()
-                    isStoring[player] = nil 
-                end)
-            end)
-        else
-            ARMAclient.notify(player,{"~o~You are already storing the weapons"})
-        end
-	end)
-end, lang.police.menu.store_weapons.description()}
-
-
 -- WANTED SYNC
 
 local wantedarma_players = {}
