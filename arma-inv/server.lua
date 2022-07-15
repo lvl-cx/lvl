@@ -190,7 +190,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
             else
-                TriggerServerEvent('ARMA:CloseLootbag')
+                TriggerEvent('ARMA:CloseLootbag', source)
             end
         elseif inventoryType == "Housing" then
             local Quantity = parseInt(1)
@@ -400,7 +400,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                     end
                 end})
             else
-                TriggerServerEvent('ARMA:CloseLootbag')
+                TriggerEvent('ARMA:CloseLootbag', source)
             end
         elseif inventoryType == "Housing" then
             TriggerClientEvent('ARMA:ToggleNUIFocus', source, false)
@@ -599,7 +599,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
             else
-                TriggerServerEvent('ARMA:CloseLootbag')
+                TriggerEvent('ARMA:CloseLootbag', source)
             end
         elseif inventoryType == "Housing" then
             local homeformat = "chest:u" .. UserId .. "home"
