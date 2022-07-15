@@ -186,6 +186,9 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     local maxVehKg = 200
                     TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                     TriggerEvent('ARMA:RefreshInventory', source)
+                    if not next(LootBagEntities[inventoryInfo].Items) then
+                        CloseInv(source)
+                    end
                 else 
                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
@@ -387,6 +390,9 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                                 local maxVehKg = 200
                                 TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                                 TriggerEvent('ARMA:RefreshInventory', source)
+                                if not next(LootBagEntities[inventoryInfo].Items) then
+                                    CloseInv(source)
+                                end
                             else 
                                 ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                             end 
@@ -588,6 +594,9 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                         local maxVehKg = 200
                         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({LootBagEntities[inventoryInfo].Items}), maxVehKg)                
                         TriggerEvent('ARMA:RefreshInventory', source)
+                        if not next(LootBagEntities[inventoryInfo].Items) then
+                            CloseInv(source)
+                        end
                     else 
                         ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                     end 

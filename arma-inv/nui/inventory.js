@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 window.addEventListener('message', function(event) {
     var msg = event.data;
-    console.log('NUI! Debug: ' + msg.action)
+    //console.log('NUI! Debug: ' + msg.action)
     if (msg.action == "InventoryDisplay" && msg.showInv) {
         $('#MainInventoryContainer').show();
         $('#ndInventoryText').show();
