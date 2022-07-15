@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
                 alert('Press ~INPUT_VEH_HORN~ to start tutorial ~y~(Starters only)')
                 if IsControlJustPressed(0, 51) then
                   if taxiCooldown == false then
-                    TriggerEvent("arma:PlaySound", "starter")
+                    TriggerEvent("ARMA:PlaySound", "starter")
                   
                     local x,y,z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 8.0, 0.5))
                     veh = "taxi" 
