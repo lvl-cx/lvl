@@ -17,6 +17,8 @@ files {
 
 client_scripts {
     'client.lua',
+    "@arma/client/Tunnel.lua",
+    "@arma/client/Proxy.lua",
 }
 
 server_scripts {

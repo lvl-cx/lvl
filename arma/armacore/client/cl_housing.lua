@@ -1,4 +1,4 @@
-local Housing = module("cfg/cfg_housing")
+local Housing = module("armacore/cfg/cfg_housing")
 
 local inHome = false
 local isInMenu = false

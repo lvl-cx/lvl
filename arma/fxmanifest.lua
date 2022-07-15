@@ -11,13 +11,31 @@ ui_page "gui/index.html"
 shared_scripts {
   "cfg/cfg_crypto.lua",
   "sharedcfg/*",
-  "armacore/cfg/*",
-  "cfg/garages.lua",
+  "armacore/cfg/cfg_*.lua",
 }
 
--- RageUI
-client_scripts {
-	"rageui/RMenu.lua",
+
+-- client files
+files{
+  "cfg/client.lua",
+  "gui/index.html",
+  "gui/design.css",
+  "gui/main.js",
+  "gui/Menu.js",
+  "gui/ProgressBar.js",
+  "gui/WPrompt.js",
+  "gui/RequestManager.js",
+  "gui/AnnounceManager.js",
+  "gui/Div.js",
+  "gui/dynamic_classes.js",
+  "gui/fonts/Pdown.woff",
+  "gui/fonts/GTA.woff"
+}
+
+
+-- client scripts
+client_scripts{
+  "rageui/RMenu.lua",
 	"rageui/menu/RageUI.lua",
 	"rageui/menu/Menu.lua",
 	"rageui/menu/MenuController.lua",
@@ -27,8 +45,44 @@ client_scripts {
 	"rageui/menu/panels/*.lua",
 	"rageui/menu/panels/*.lua",
 	"rageui/menu/windows/*.lua",
+  "lib/cl_thread.lua",
+  "lib/cl_cache.lua",
+  "lib/cl_util.lua",
+  "cfg/atms.lua",
+  "cfg/skinshops.lua",
+  "cfg/admin_menu.lua",
+  "cfg/gangfunds.lua",
+  "lib/utils.lua",
+  "lib/cl_mouse.lua",
+  "client/Tunnel.lua",
+  "client/Proxy.lua",
+  "client/base.lua",
+  "utils/*",
+  "client/iplloader.lua",
+  "client/gui.lua",
+  "client/player_state.lua",
+  "client/survival.lua",
+  "client/map.lua",
+  "client/identity.lua",
+  "client/basic_garage.lua",
+  "client/police.lua",
+  "client/lockcar-client.lua",
+  "client/admin.lua",
+  "client/enumerators.lua",
+  "client/inventory.lua",
+  "client/clothing.lua",
+  "client/atms.lua",
+  "client/garages.lua",
+  "client/adminmenu.lua",
+  "client/LsCustomsMenu.lua",
+  "client/LsCustoms.lua",
+  "client/warningsystem.lua",
+  "client/lootbags.lua",
+  "client/cl_crypto.lua",
+  "client/cl_*.lua",
+  "armacore/client/cl_*.lua",
+  -- "hotkeys/hotkeys.lua"
 }
-
 -- server scripts
 server_scripts{ 
   "lib/utils.lua",
@@ -70,64 +124,4 @@ server_scripts{
   "servercfg/*.lua",
   "armacore/modules/sv_*.lua",
   -- "modules/hotkeys.lua"
-}
-
--- client scripts
-client_scripts{
-  "lib/cl_thread.lua",
-  "lib/cl_cache.lua",
-  "lib/cl_util.lua",
-  "cfg/atms.lua",
-  "cfg/cfg_weapons.lua",
-  "cfg/skinshops.lua",
-  "cfg/admin_menu.lua",
-  "cfg/cfg_adminmenu.lua",
-  "cfg/gangfunds.lua",
-  "lib/utils.lua",
-  "lib/cl_mouse.lua",
-  "client/Tunnel.lua",
-  "client/Proxy.lua",
-  "client/base.lua",
-  "utils/*",
-  "client/iplloader.lua",
-  "client/gui.lua",
-  "client/player_state.lua",
-  "client/survival.lua",
-  "client/map.lua",
-  "client/identity.lua",
-  "client/basic_garage.lua",
-  "client/police.lua",
-  "client/lockcar-client.lua",
-  "client/admin.lua",
-  "client/enumerators.lua",
-  "client/inventory.lua",
-  "client/clothing.lua",
-  "client/atms.lua",
-  "client/garages.lua",
-  "client/adminmenu.lua",
-  "client/LsCustomsMenu.lua",
-  "client/LsCustoms.lua",
-  "client/warningsystem.lua",
-  "client/lootbags.lua",
-  "client/cl_crypto.lua",
-  "client/cl_*.lua",
-  "armacore/client/cl_*.lua",
-  -- "hotkeys/hotkeys.lua"
-}
-
--- client files
-files{
-  "cfg/client.lua",
-  "gui/index.html",
-  "gui/design.css",
-  "gui/main.js",
-  "gui/Menu.js",
-  "gui/ProgressBar.js",
-  "gui/WPrompt.js",
-  "gui/RequestManager.js",
-  "gui/AnnounceManager.js",
-  "gui/Div.js",
-  "gui/dynamic_classes.js",
-  "gui/fonts/Pdown.woff",
-  "gui/fonts/GTA.woff"
 }

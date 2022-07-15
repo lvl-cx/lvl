@@ -1,5 +1,5 @@
-local weaponscfg = module("arma-weapons", "cfg_weaponsonback")
-weaponscfg=weaponscfg.RealWeapons
+local a = module("arma-weapons", "cfg_weaponsonback")
+a=a.RealWeapons
 
 local isInSmallarms = false
 local currentAmmunition = nil
