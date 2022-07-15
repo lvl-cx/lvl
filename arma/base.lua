@@ -158,6 +158,16 @@ Citizen.CreateThread(function()
     PRIMARY KEY (note_id)
     )
     ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_user_homes(
+    user_id INTEGER,
+    home VARCHAR(100),
+    number INTEGER,
+    CONSTRAINT pk_user_homes PRIMARY KEY(home),
+    CONSTRAINT fk_user_homes_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE,
+    UNIQUE(home,number)
+    );
+    ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banreason varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banadmin varchar(100) NOT NULL DEFAULT ''; ")
