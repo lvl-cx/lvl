@@ -18,76 +18,79 @@ returnedSMALLGuns2 = {}
 RMenu.Add("SmallArmsMenu", "main", RageUI.CreateMenu("", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
 RMenu.Add("SmallArmsMenu", "sub", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
 RMenu.Add("SmallArmsMenu", "whitelisted", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "small", "small"))
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SmallArmsMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        for i, p in pairs(smallarms.guns) do 
-            RageUI.Button(p.name , "~g~£"..getMoneyStringFormatted(p.price), { RightLabel =  "→→→"}, true, function(Hovered, Active, Selected)
+            for i, p in pairs(smallarms.guns) do 
+                RageUI.Button(p.name , "~g~£"..getMoneyStringFormatted(p.price), { RightLabel =  "→→→"}, true, function(Hovered, Active, Selected)
+                    if Active then
+                        currentGunHash = nil
+                        hoveredArmour = false
+                    end
+                    if Selected then
+                        currentGunHash = p.hash
+                        currentGunPrice = p.price
+                        currentGunName = p.name
+                    end
+                end, RMenu:Get("SmallArmsMenu", "sub"))
+            end
+            for f , a in pairs(returnedSMALLGuns2) do 
+                RageUI.Button(a.name , "~g~£"..getMoneyStringFormatted(a.price), {RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                    if Active then
+                        currentGunHash1 = nil
+                        hoveredArmour = false
+                    end
+                    if Selected then
+                        currentGunHash1 = a.gunhash
+                        currentGunPrice1 = a.price
+                        currentGunName1 = a.name
+                    end
+                end, RMenu:Get("SmallArmsMenu", "whitelisted"))
+            end
+            RageUI.Button("Level 1 Armour [25%]" , "~g~£"..getMoneyStringFormatted(smallarms.armourprice), {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Active then
-                    currentGunHash = nil
-                    hoveredArmour = false
+                    hoveredArmour = true
                 end
                 if Selected then
-                    currentGunHash = p.hash
-                    currentGunPrice = p.price
-                    currentGunName = p.name
+                    TriggerServerEvent("SmallArms:BuyArmour")
                 end
-            end, RMenu:Get("SmallArmsMenu", "sub"))
-        end
-        for f , a in pairs(returnedSMALLGuns2) do 
-            RageUI.Button(a.name , "~g~£"..getMoneyStringFormatted(a.price), {RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                if Active then
-                    currentGunHash1 = nil
-                    hoveredArmour = false
-                end
+            end)
+        end, function()
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('SmallArmsMenu', 'sub')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Button("Purchase Weapon Body" , "Purchase "..currentGunName.." and Max Ammo", { RightLabel = "~g~£"..getMoneyStringFormatted(currentGunPrice) }, true, function(Hovered, Active, Selected)
                 if Selected then
-                    currentGunHash1 = a.gunhash
-                    currentGunPrice1 = a.price
-                    currentGunName1 = a.name
+                    TriggerServerEvent("SMALLARMS:BuyWeapon", currentGunHash)
                 end
-            end, RMenu:Get("SmallArmsMenu", "whitelisted"))
-        end
-        RageUI.Button("Level 1 Armour [25%]" , "~g~£"..getMoneyStringFormatted(smallarms.armourprice), {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-            if Active then
-                hoveredArmour = true
-            end
-            if Selected then
-                TriggerServerEvent("SmallArms:BuyArmour")
-            end
+            end)
+    
+            RageUI.Button("Buy Max Ammo", "Purchase Max Ammo for "..currentGunName, { RightLabel = "~g~£"..getMoneyStringFormatted(math.floor(currentGunPrice / 2)) }, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("SMALLARMS:BuyWeaponAmmo", currentGunHash)
+                end
+            end)
+        end, function()
         end)
-    end, function()
-    end)
-
-    RageUI.IsVisible(RMenu:Get("SmallArmsMenu", "sub"), true, false, true, function()
-        RageUI.Button("Purchase Weapon Body" , "Purchase "..currentGunName.." and Max Ammo", { RightLabel = "~g~£"..getMoneyStringFormatted(currentGunPrice) }, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("SMALLARMS:BuyWeapon", currentGunHash)
-            end
+    end
+    if RageUI.Visible(RMenu:Get('SmallArmsMenu', 'whitelisted')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Button("Purchase Weapon Body" , "Purchase "..currentGunName1.." and Max Ammo", { RightLabel = "~g~£"..getMoneyStringFormatted(currentGunPrice1) }, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("SMALLARMS:BuyWeapon2", currentGunHash1)
+                end
+            end)
+    
+            RageUI.Button("Buy Max Ammo", "Purchase Max Ammo for "..currentGunName1, { RightLabel = "~g~£"..getMoneyStringFormatted(math.floor(currentGunPrice1 / 2)) }, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("SMALLARMS:BuyWeaponAmmo2", currentGunHash1)
+                end
+            end)
+        end, function()
         end)
-
-        RageUI.Button("Buy Max Ammo", "Purchase Max Ammo for "..currentGunName, { RightLabel = "~g~£"..getMoneyStringFormatted(math.floor(currentGunPrice / 2)) }, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("SMALLARMS:BuyWeaponAmmo", currentGunHash)
-            end
-        end)
-    end, function()
-    end)
-
-    RageUI.IsVisible(RMenu:Get("SmallArmsMenu", "whitelisted"), true, false, true, function()
-        RageUI.Button("Purchase Weapon Body" , "Purchase "..currentGunName1.." and Max Ammo", { RightLabel = "~g~£"..getMoneyStringFormatted(currentGunPrice1) }, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("SMALLARMS:BuyWeapon2", currentGunHash1)
-            end
-        end)
-
-        RageUI.Button("Buy Max Ammo", "Purchase Max Ammo for "..currentGunName1, { RightLabel = "~g~£"..getMoneyStringFormatted(math.floor(currentGunPrice1 / 2)) }, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("SMALLARMS:BuyWeaponAmmo2", currentGunHash1)
-            end
-        end)
-    end, function()
-    end)
-end
+    end
 end)
 
 RegisterNetEvent("SMALL:GUNSRETURNED")
