@@ -1,12 +1,28 @@
-local weaponscfg = module("arma-weapons", "cfg_weaponsonback")
-weaponscfg=weaponscfg.RealWeapons
-
 -- Configuration Options
 local config = {
 	prox_enabled = false,					-- Proximity Enabled
 	prox_range = 100,						-- Distance
 	togglecommand = 'killfeed',	        	-- Toggle Kill Feed Command
 	chatPrefix = '!',
+}
+
+local weapons = {
+	[-1569615261] = 'knife',
+	[-1569615261] = 'death',
+
+	[GetHashKey("WEAPON_mosin")] = 'mosin',
+
+    [GetHashKey("WEAPON_shank")] = 'melee',
+
+    [GetHashKey("WEAPON_glock")] = 'pistol',
+    
+    [GetHashKey("WEAPON_mp7")] = 'smg',
+
+    [GetHashKey("WEAPON_winchester")] = 'shotgun',
+
+    [GetHashKey("WEAPON_svd")] = 'sniper',
+
+	[GetHashKey("WEAPON_ODIN")] = "lmg",
 }
 
 
@@ -111,15 +127,11 @@ AddEventHandler('KillFeed:AnnounceDeath', function(killed, coords, killedGroup)
 end)
 
 function hashToWeapon(hash)
-	for k,v in pairs(weaponscfg) do
-		if GetHashKey(v.name) == hash then
-			return v.category
-		else
-			return 'death'
-		end
-	end
+	if weapons[hash] ~= nil then
+		return weapons[hash]
+	else
+		return 'death'
 end
-
 RegisterNetEvent('showNotify')
 AddEventHandler('showNotify', function(notify)
 	ShowAboveRadarMessage(notify)
