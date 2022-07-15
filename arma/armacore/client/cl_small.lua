@@ -108,11 +108,11 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         for k,v in pairs(smallarms.gunshops) do
             if currentGunHash ~= nil or currentGunHash1 ~= nil or hoveredArmour then
-                for k,v in pairs(weaponscfg) do 
-                    if currentGunHash == v.name or currentGunHash1 == v.name then
-                        model = v.model
-                    end
-                end
+                -- for k,v in pairs(weaponscfg) do 
+                --     if currentGunHash == v.name or currentGunHash1 == v.name then
+                --         model = v.model
+                --     end
+                -- end
                 if hoveredArmour then
                     N=loadModel('prop_bodyarmour_03')
                 else
