@@ -59,7 +59,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                     end
                 end)
             TriggerClientEvent('FirstSpawn', player, true)
-            ARMAclient.spawnAnim(source, {})
+            ARMAclient.spawnAnim(source, {data.customization})
         else
             if data.weapons ~= nil then -- load saved weapons
                 ARMAclient.giveWeapons(source, {data.weapons, true})

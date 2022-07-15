@@ -60,7 +60,7 @@ local weapon_types = {
 "WEAPON_BASEBALLBAT",
 }
 
-function tARMA.spawnAnim()
+function tARMA.spawnAnim(a)
   local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
   TriggerEvent("arma:PlaySound", "gtaloadin")
   SetFocusPosAndVel(x,y,z+1000)
@@ -80,6 +80,7 @@ function tARMA.spawnAnim()
   RenderScriptCams(false, true, 2000, 0, 0)
   TriggerScreenblurFadeOut(2000.0)
   ExecuteCommand("showui")
+  tARMA.setCustomization(a)
 end
 
 function tARMA.getWeaponTypes()
