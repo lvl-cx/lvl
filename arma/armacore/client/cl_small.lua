@@ -114,7 +114,8 @@ Citizen.CreateThread(function()
                 for k,v in pairs(weaponscfg) do 
                     print(v.name)
                     if currentGunHash == v.name or currentGunHash1 == v.name then
-                        model = v.model
+                        --model = v.model
+                        model = 'w_ar_lr300'
                         print('model '..model)
                     end
                 end
@@ -166,7 +167,6 @@ Citizen.CreateThread(function()
                     currentAmmunition = k
                     RageUI.Visible(RMenu:Get("SmallArmsMenu", "main"), true)
                     isInSmallarms = true
-                    currentAmmunition = k 
                 end
             end
             if isInArea(v, 1.4) == false and isInSmallarms and k == currentAmmunition then
