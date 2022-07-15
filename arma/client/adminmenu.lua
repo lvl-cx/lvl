@@ -1295,20 +1295,20 @@ Citizen.CreateThread(function()
             DisableControlAction(0,141,true) -- disable melee
             DisableControlAction(0,142,true) -- disable melee
             DisableControlAction(0,143,true) -- disable melee
-			SetPedCanRagdoll(GetPlayerPed(-1), false)
-			ClearPedBloodDamage(GetPlayerPed(-1))
-			ResetPedVisibleDamage(GetPlayerPed(-1))
-			ClearPedLastWeaponDamage(GetPlayerPed(-1))
-			SetEntityProofs(GetPlayerPed(-1), true, true, true, true, true, true, true, true)
-			SetEntityCanBeDamaged(GetPlayerPed(-1), false)			
-        elseif not FrozenPlayer or not OMioDioMode or not noclip then  
+            SetPedCanRagdoll(PlayerPedId(), false)
+            ClearPedBloodDamage(PlayerPedId())
+            ResetPedVisibleDamage(PlayerPedId())
+            ClearPedLastWeaponDamage(PlayerPedId())
+            SetEntityProofs(PlayerPedId(), true, true, true, true, true, true, true, true)
+            SetEntityCanBeDamaged(PlayerPedId(), false)			
+        elseif not FrozenPlayer and not noclip and not Spectating and not staffMode then  
             SetEntityInvincible(PlayerPedId(), false)
-            SetPlayerInvincible(GetPlayerPed(-1), false)
+            SetPlayerInvincible(PlayerPedId(), false)
             FreezeEntityPosition(PlayerPedId(), false)
-            SetPedCanRagdoll(GetPlayerPed(-1), true)
-            ClearPedBloodDamage(GetPlayerPed(-1))
-            ResetPedVisibleDamage(GetPlayerPed(-1))
-            ClearPedLastWeaponDamage(GetPlayerPed(-1))
+            SetPedCanRagdoll(PlayerPedId(), true)
+            ClearPedBloodDamage(PlayerPedId())
+            ResetPedVisibleDamage(PlayerPedId())
+            ClearPedLastWeaponDamage(PlayerPedId())
         end
     end
 end)

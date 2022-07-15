@@ -68,12 +68,12 @@ AddEventHandler("ARMAEXTRAS:CarryDeclined", function(senderSrc)
 end)
 
 RegisterServerEvent("GDM:CarryRequest")
-AddEventHandler("GDM:CarryRequest", function(targetSrc, OMioDioMode)
+AddEventHandler("GDM:CarryRequest", function(targetSrc, staffMode)
     local targetSrc = targetSrc
     local senderSrc = source
     user_id = ARMA.getUserId(senderSrc)
     local senderSrcName = GetPlayerName(senderSrc)
-    if OMioDioMode and ARMA.hasPermission(user_id, "admin.tickets") then
+    if staffMode and ARMA.hasPermission(user_id, "admin.tickets") then
         TriggerClientEvent("ARMAEXTRAS:StartCarry", senderSrc, targetSrc)
     else
         ARMAclient.notify(targetSrc,{"Player: ~b~"..senderSrcName.."~w~ is trying to carry you, press ~g~Y~w~ to accept or ~r~L~w~ to refuse"})

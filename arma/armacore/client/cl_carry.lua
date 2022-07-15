@@ -36,7 +36,7 @@ RegisterCommand("carry",function(source, args)
         if closestPlayer then
             local targetSrc = GetPlayerServerId(closestPlayer)
             if targetSrc ~= -1 then
-                TriggerServerEvent("ARMA:CarryRequest", targetSrc, OMioDioMode)
+                TriggerServerEvent("ARMA:CarryRequest", targetSrc, staffMode)
             else
                 drawNativeNotification("~r~No one nearby to carry!")
             end
