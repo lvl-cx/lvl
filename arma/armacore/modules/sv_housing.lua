@@ -61,6 +61,7 @@ function leaveHome(user_id, home, number, cbr)
     local player = ARMA.getUserSource(user_id)
 
     TriggerClientEvent("JudHousing:UpdateInHome", player, false)
+    SetPlayerRoutingBucket(player, 0)
   
     for k, v in pairs(cfghomes.homes) do
         if k == home then
@@ -77,9 +78,11 @@ function accessHome(user_id, home, number, cbr)
     local player = ARMA.getUserSource(user_id)
 
     TriggerClientEvent("JudHousing:UpdateInHome", player, true)
-  
+    local count = 0
     for k, v in pairs(cfghomes.homes) do
+        count = count+1
         if k == home then
+            SetPlayerRoutingBucket(player, count)
             local x,y,z = table.unpack(v.leave_point)
             ARMAclient.teleport(player, {x,y,z})
             task({true})
