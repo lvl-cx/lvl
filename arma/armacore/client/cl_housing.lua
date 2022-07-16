@@ -11,10 +11,10 @@ local owned = false
 wardrobe = {}
 ownedHouses = {}
 
-RMenu.Add("JudHousing", "main", RageUI.CreateMenu("", "", 1350, 50,"home","homes"))
-RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"home","homes"))
-RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"home","homes"))
-RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"home","homes"))
+RMenu.Add("JudHousing", "main", RageUI.CreateMenu("", "", 1350, 50,"housing","housing"))
+RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"housing","housing"))
+RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"housing","housing"))
+RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"housing","housing"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('JudHousing', 'main')) then
