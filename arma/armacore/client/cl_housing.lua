@@ -18,9 +18,10 @@ RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousin
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('JudHousing', 'main')) then
+        maxKG = Housing.chestsize[currentHome] or 500
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator('Price: ~g~£'..getMoneyStringFormatted(currentHousePrice))
-            RageUI.Separator('Storage: ~g~'..Housing.chestsize[currentHome] or 500..'kg')
+            RageUI.Separator('Storage: ~g~'..maxKG..'kg')
             RageUI.Button("Enter Home/Doorbell", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("JudHousing:Enter", currentHome)
