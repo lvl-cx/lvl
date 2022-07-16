@@ -19,117 +19,95 @@ RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousin
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('JudHousing', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-
-    --Enter Menu
-    maxKG = Housing.chestsize[currentHome] or 500
-    RageUI.IsVisible(RMenu:Get("JudHousing", "main"), true, false, true, function()
-        RageUI.Separator('Price: ~g~£'..getMoneyStringFormatted(currentHousePrice))
-        RageUI.Separator('Storage: ~g~'..maxKG..'kg')
-        RageUI.Button("Enter Home/Doorbell", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("JudHousing:Enter", currentHome)
-            end
-        end)
-        if owned ~= true then
-            RageUI.Button("~g~Buy Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+            RageUI.Separator('Price: ~g~£'..getMoneyStringFormatted(currentHousePrice))
+            RageUI.Separator('Storage: ~g~'..Housing.chestsize[currentHome] or 500..'kg')
+            RageUI.Button("Enter Home/Doorbell", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent("JudHousing:Buy", currentHome)
+                    TriggerServerEvent("JudHousing:Enter", currentHome)
                 end
             end)
-        end
-
-        RageUI.Button("~r~Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("JudHousing:Sell", currentHome)
+            if owned ~= true then
+                RageUI.Button("~g~Buy Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("JudHousing:Buy", currentHome)
+                    end
+                end)
             end
-        end)
 
-    end, function()
-    end)
-    end)
-end
-
-    --Leave Menu
-
-    RageUI.IsVisible(RMenu:Get("JudHousing", "leave"), true, false, true, function()
-
-        RageUI.Button("Leave Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("JudHousing:Leave", currentHome)
-            end
-        end)
-
-    end, function()
-    end)
-
-    --Wardrobe Main Menu
-
-    RageUI.IsVisible(RMenu:Get("JudHousing", "wardrobe"), true, false, true, function()
-
-        for k, v in pairs(wardrobe) do
-            RageUI.Button(k, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("~r~Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    currentOutfit = k
-                    savedArmour = GetPedArmour(PlayerPedId())
+                    TriggerServerEvent("JudHousing:Sell", currentHome)
                 end
-            end, RMenu:Get("JudHousing", "wardrobesub"))
-        end
-
-        RageUI.Button("~g~Save Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                AddTextEntry("FMMC_MPM_NC", "Outfit Name")
-                DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                while (UpdateOnscreenKeyboard() == 0) do
-                    DisableAllControlActions(0);
-                    Wait(0);
-                end
-                if (GetOnscreenKeyboardResult()) then
-                    local result = GetOnscreenKeyboardResult()
-                    if result then
-                        TriggerServerEvent("JudHousing:SaveOutfit", result)
-                    end
-                end
-            end
+            end)
+        end, function()
         end)
-
-    end, function()
-    end)
-
-    --Wardrobe Sub Menu
-
-    RageUI.IsVisible(RMenu:Get("JudHousing", "wardrobesub"), true, false, true, function()
-
-        RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                for k, v in pairs(wardrobe) do
-                    if k == currentOutfit then
-                        tARMA.setCustomization({v})
-                        
-                        SetTimeout(50, function()
-                            SetPedArmour(PlayerPedId(), savedArmour)
-                            TriggerServerEvent('ARMA:changeHairStyle')
-                        end)
+    end
+    if RageUI.Visible(RMenu:Get('JudHousing', 'leave')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Button("Leave Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("JudHousing:Leave", currentHome)
+                end
+            end)
+        end, function()
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('JudHousing', 'wardrobe')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            for k, v in pairs(wardrobe) do
+                RageUI.Button(k, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        currentOutfit = k
+                        savedArmour = GetPedArmour(PlayerPedId())
+                    end
+                end, RMenu:Get("JudHousing", "wardrobesub"))
+            end
+    
+            RageUI.Button("~g~Save Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    AddTextEntry("FMMC_MPM_NC", "Outfit Name")
+                    DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                    while (UpdateOnscreenKeyboard() == 0) do
+                        DisableAllControlActions(0);
+                        Wait(0);
+                    end
+                    if (GetOnscreenKeyboardResult()) then
+                        local result = GetOnscreenKeyboardResult()
+                        if result then
+                            TriggerServerEvent("JudHousing:SaveOutfit", result)
+                        end
                     end
                 end
-            end
-        end, RMenu:Get("JudHousing", "wardrobe"))
-
-        RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-            if Selected then
-                TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
-            end
-        end, RMenu:Get("JudHousing", "wardrobe"))
-
-    end, function()
-    end)
+            end)
+        end, function()
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('JudHousing', 'wardrobesub')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    for k, v in pairs(wardrobe) do
+                        if k == currentOutfit then
+                            tARMA.setCustomization({v})
+                            
+                            SetTimeout(50, function()
+                                SetPedArmour(PlayerPedId(), savedArmour)
+                                TriggerServerEvent('ARMA:changeHairStyle')
+                            end)
+                        end
+                    end
+                end
+            end, RMenu:Get("JudHousing", "wardrobe"))
+    
+            RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
+                end
+            end, RMenu:Get("JudHousing", "wardrobe"))
+        end, function()
+        end)
+    end
 end)
-
---Thread
-
-
-
-
-
 
 Citizen.CreateThread(function()
     while true do
