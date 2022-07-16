@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
                     end
                 end
             end
-            if GetEntityHealth(playerPed) > cfg.coma_threshold then 
+            if GetEntityHealth(playerPed) > 102 then 
                 tARMA.disableComa()
                 if IsEntityDead(playerPed) then
                     local x,y,z = tARMA.getPosition()

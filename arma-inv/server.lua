@@ -748,16 +748,24 @@ AddEventHandler('ARMA:LootBag', function(netid)
     local source = source
     ARMAclient.isInComa(source, {}, function(in_coma) 
         if not in_coma then
-            if LootBagEntities[netid] and not LootBagEntities[netid][3] and #(GetEntityCoords(LootBagEntities[netid][1]) - GetEntityCoords(GetPlayerPed(source))) < 5.0 then
+            if LootBagEntities[netid] then
                 LootBagEntities[netid][3] = true;
                 local user_id = ARMA.getUserId({source})
                 if user_id ~= nil then
+                    TriggerClientEvent("arma:PlaySound", source, "zipper")
                     LootBagEntities[netid][5] = source
-                    OpenInv(source, netid, LootBagEntities[netid].Items)
-                    ARMAclient.notify(source,{"~g~You have opened " .. LootBagEntities[netid].name .. "'s lootbag"})
+
+                    if ARMA.hasPermission({user_id, "police.armoury"}) then
+                        ARMA.clearInventory({LootBagEntities[netid].id})
+                        ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
+
+                        OpenInv(source, netid, LootBagEntities[netid].Items)
+                    else
+                        OpenInv(source, netid, LootBagEntities[netid].Items)
+                    end  
                 end
             else
-                --ARMAclient.notify(source, {'~r~This loot bag is already being looted.'})
+                ARMAclient.notify(source, {'~r~This loot bag is unavailable.'})
             end
         else 
             ARMAclient.notify(source, {'~r~You cannot open this while dead silly.'})
