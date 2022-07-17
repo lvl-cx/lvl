@@ -4,31 +4,11 @@ local activeParachute = nil
 local crateBlip, radiusBlip = nil
 local soundID = nil
 
-local function LoadModel(modelName)
-    local modelHash
-    if type(modelName) ~= "string" then
-        modelHash = modelName
-    else
-        modelHash = GetHashKey(modelName)
-    end
-    if IsModelInCdimage(modelHash) then
-        if not HasModelLoaded(modelHash) then
-            RequestModel(modelHash)
-            while not HasModelLoaded(modelHash) do
-                Wait(0)
-            end
-        end
-        return modelHash
-    else
-        return nil
-    end
-end
-
 RegisterNetEvent("crateDrop")
 AddEventHandler("crateDrop", function(c)
     TriggerEvent("removeCrate")
     for k,v in pairs(models) do
-        LoadModel(v)
+        tARMA.LoadModel(v)
      end
 
     local z = math.random(150.0, 350.0)
