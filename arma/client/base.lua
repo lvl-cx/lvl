@@ -320,6 +320,21 @@ function tARMA.LoadModel(modelName)
   end
 end
 
+function tARMA.drawTxt(L, M, N, D, E, O, P, Q, R, S)
+  SetTextFont(M)
+  SetTextProportional(0)
+  SetTextScale(O, O)
+  SetTextColour(P, Q, R, S)
+  SetTextDropShadow(0, 0, 0, 0, 255)
+  SetTextEdge(1, 0, 0, 0, 255)
+  SetTextDropShadow()
+  SetTextOutline()
+  SetTextCentre(N)
+  BeginTextCommandDisplayText("STRING")
+  AddTextComponentSubstringPlayerName(L)
+  EndTextCommandDisplayText(D, E)
+end
+
 AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
 end)

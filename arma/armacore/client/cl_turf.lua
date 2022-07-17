@@ -358,7 +358,7 @@ Citizen.CreateThread(function()
 
 		if inTurf then		
 			
-			drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 255, 255, 255, 255)
+			tARMA.drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 255, 255, 255, 255)
 			
 			
 			local pos2 = turfs[turf].position
@@ -461,20 +461,4 @@ function alert(str)
 	SetTextComponentFormat("STRING")
 	AddTextComponentString(str)
 	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
-function drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
-    SetTextFont(0)
-    SetTextProportional(0)
-    SetTextScale(scale, scale)
-    SetTextColour(r, g, b, a)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextEdge(1, 0, 0, 0, 255)
-    SetTextDropShadow()
-    if(outline)then
-	    SetTextOutline()
-	end
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawText(x - width/2, y - height/2 + 0.005)
 end
