@@ -1,342 +1,6 @@
 local htmlEntities = module("lib/htmlEntities")
 local Tools = module("lib/Tools")
 
--- copy this table format with the reasons below @xonaa
-punishmentreasons = {
-    {
-        name = "1.0 Trolling",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.0 Trolling (Minor)",
-        desc = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",
-        duration = {{'1st Offense: 2hr','2nd Offense: 12hr', '3rd Offense: 24hr'},{2,12,24}},
-    },
-    {
-        name = "1.1 Metagaming",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.2 Power Gaming",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.3 Fail RP",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.4.1 Mass RDM",
-        desc = "1st Offense: 4380hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 4380hr','2nd Offense: Permanent'},{4380,9000}},
-    },
-    {
-        name = "1.5 No Reason to Initiate (NRTI)",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.6.1 Mass VDM",
-        desc = "1st Offense: 4380hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 4380hr','2nd Offense: Permanent'},{4380,9000}},
-    },
-    {
-        name = "1.7 Offensive Language/Toxicity (Minor)",
-        desc = "1st Offense: 2hr\n2nd Offense: 24hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 2hr','2nd Offense: 24hr', '3rd Offense: 72hr'},{2,24,72}},
-    },
-    {
-        name = "1.7 Offensive Language/Toxicity (Standard)",
-        desc = "1st Offense: 48hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 48hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{48,72,168}},
-    },
-    {
-        name = "1.7 Offensive Language/Toxicity (Severe)",
-        desc = "1st Offense: 4380hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 4380hr','2nd Offense: Permanent'},{4380,9000}},
-    },
-    {
-        name = "1.8 Breaking Character",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "1.9 Combat logging",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.10 Combat storing",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.11 Exploiting (Standard)",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 168hr'},{24,48,168}},
-    },
-    {
-        name = "1.11 Exploiting (Severe)",
-        desc = "1st Offense: 168hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 168hr','2nd Offense: Permanent'},{4380,9000}},
-    },
-    {
-        name = "1.12 Out of game transactions (OOGT)",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.13 Spite Reports",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 168hr'},{24,48,168}},
-    },
-    {
-        name = "1.14 Scamming",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.15 Loans",
-        desc = "1st Offense: 48hr\n2nd Offense: 168hr\n3rd Offense: Permanent",
-        duration = {{'1st Offense: 48hr','2nd Offense: 168hr', '3rd Offense: Permanent'},{48,168,9000}},
-    },
-    {
-        name = "1.16 Wasting Admin Time",
-        desc = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",
-        duration = {{'1st Offense: 2hr','2nd Offense: 12hr', '3rd Offense: 24hr'},{2,12,24}},
-    },
-    {
-        name = "2.1 Value of Life",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "2.2 Sexual RP",
-        desc = "1st Offense: 168hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 168hr','2nd Offense: Permanent'},{168,9000}},
-    },
-    {
-        name = "2.3 Terrorist RP",
-        desc = "1st Offense: 168hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 168hr','2nd Offense: Permanent'},{168,9000}},
-    },
-    {
-        name = "2.4 Impersonation of Whitelisted Factions",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "2.5 GTA Online Driving",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "2.6 NLR",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "2.7 Bad RP",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "2.8 Kidnapping (CIV)",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "3.0 Theft of Emergency Vehicles",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "3.1 Whitelist Abuse",
-        desc = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{24,72,168}},
-    },
-    {
-        name = "3.1 Whitelist Abuse (Severe)",
-        desc = "1st Offense: 168hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 168hr','2nd Offense: Permanent'},{168,9000}},
-    },
-    {
-        name = "3.2 Cop Baiting",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "3.3 Kidnapping (PD)",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "3.4 Unrealistic Revival",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "Interjection of Robberies",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "Interjection of RP",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "3.5 Combat Reviving",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "3.6 Gang Cap",
-        desc = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{24,72,168}},
-    },
-    {
-        name = "3.7 Max Gang Numbers",
-        desc = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{24,72,168}},
-    },
-    {
-        name = "3.8 Gang Alliance",
-        desc = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{24,72,168}},
-    },
-    {
-        name = "3.10 Impersonation of Gangs",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "4.1 Stealing Vehicles in Greenzone",
-        desc = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",
-        duration = {{'1st Offense: 2hr','2nd Offense: 12hr', '3rd Offense: 24hr'},{2,12,24}},
-    },
-    {
-        name = "4.2 Selling Illegal Items in Greenzone",
-        desc = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",
-        duration = {{'1st Offense: 12hr','2nd Offense: 24hr', '3rd Offense: 48hr'},{12,24,48}},
-    },
-    {
-        name = "4.3 Greenzone Retreating",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "4.5 Taking Hostage into Redzone",
-        desc = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",
-        duration = {{'1st Offense: 24hr','2nd Offense: 48hr', '3rd Offense: 72hr'},{24,48,72}},
-    },
-    {
-        name = "1.1 Advertising",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.2 Bullying",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.3 Impersonation",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.4 Language",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.5 Discrimination",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.5 Discrimination",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.6 Malicious Attacks",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.7 PII (Personally Identifiable Information)(Standard)",
-        desc = "1st Offense: 168hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 168hr','2nd Offense: Permanent'},{168,9000}},
-    },
-    {
-        name = "1.7 PII (Personally Identifiable Information)(Severe)",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.8 Chargeback",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.9 Staff Discretion",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.10 Cheating",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.11 Ban Evading",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.12 Withholding/Storing FiveM Cheats",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.13 Multi-Accounting",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.14 Association with External Modifications",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.15 Failure to provide POV",
-        desc = "1st Offense: 2hr\n2nd Offense: Permanent",
-        duration = {{'1st Offense: 2hr','2nd Offense: Permanent'},{2,9000}},
-    },
-    {
-        name = "1.16 Withholding Information From Staff (Standard)",
-        desc = "1st Offense: 48hr\n2nd Offense: 72hr\n3rd Offense: 168hr",
-        duration = {{'1st Offense: 48hr','2nd Offense: 72hr', '3rd Offense: 168hr'},{48,72,168}},
-    },
-    {
-        name = "1.16 Withholding Information From Staff (Severe)",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    {
-        name = "1.17 Blackmailing",
-        desc = "1st Offense: Permanent",
-        duration = {{'1st Offense: Permanent'},{9000}},
-    },
-    
-}
-
-
 RegisterServerEvent('ARMA:OpenSettings')
 AddEventHandler('ARMA:OpenSettings', function()
     local source = source
@@ -409,7 +73,7 @@ RegisterServerEvent("ARMA:CheckPov")
 AddEventHandler("ARMA:CheckPov",function(userperm)
     local user_id = ARMA.getUserId(source)
   
-    if ARMA.hasPermission(user_id, "admin.menu") then
+    if ARMA.hasPermission(user_id, "admin.tickets") then
         if ARMA.hasPermission(userperm, 'pov.list') then
             TriggerClientEvent('ARMA:ReturnPov', source, true)
         elseif not ARMA.hasPermission(userperm, 'pov.list') then
@@ -985,74 +649,196 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
     end
 end)
 
+local bans = {
+    {id = "rdm", name = "RDM", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "vdm", name = "VDM", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "massrdm", name = "Mass RDM", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "massvdm", name = "Mass VDM", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "metagaming", name = "Metagaming", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "powergaming", name = "Powergaming", durations = {24, 48, 72, -1},  bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "combatlogging", name = "Combat Logging", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "combatstoring", name = "Combat Storing", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "badrp", name = "Bad-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "failrp", name = "Fail-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours",itemchecked = false},
+    {id = "invalidinitiation", name = "Invalid-Initiation", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "nlr", name = "NLR", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "trolling", name = "Trolling", durations = {48, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 168 Hours\n3rd offense: Permanent", itemchecked = false},
+    {id = "exploiting", name = "Exploiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "copbaiting", name = "NLR", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "gtadriving", name = "Cop Baiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "breakingchar", name = "GTA Driving", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "offensivelang", name = "Offensive Language", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "toxicity", name = "Toxicity", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "racism", name = "Racism", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "whitelistabuse", name = "Whitelist Abuse", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
+    {id = "toev", name = "Theft Of An Emergancy Vehicle", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false,},
+    {id = "oogt", name = "OOGT", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "scamming", name = "Scamming", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "cheating", name = "Cheating", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "banevading", name = "Ban Evading", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "homophobia", name = "Homophobia", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "doxing", name = "Doxing", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "pii", name = "Personal Identification Information", durations = {-1, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
+    {id = "externalmods", name = "External Modifications", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "cheataffiliation", name = "Affiliation With Cheats", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "withholdingcheats", name = "Withholding/Storing FiveM Cheats", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
+    {id = "nrti", name = "No Reason To Initiate", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "spitereporting", name = "Spite Reporting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "wastingadmintime", name = "Wasting Admin Time", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "maliciousactivity", name = "Malicious Activity", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
+    {id = "terroristrp", name = "Terrorist RP", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
+    {id = "impersonationofwhitelistedfaction", name = "Impersonation Of A Whitelisted Faction", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
+    {id = "copbaiting", name = "Cop Baiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "gangingimpersonation", name = "Gang Impersonation", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
+    {id = "gangalliance", name = "Gang Alliance", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
+    {id = "staffdiscreqtion", name = "Staff Discretion", durations = {-1, -1, -1, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
+    {id = "ftvl", name = "Failure To Value Life", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+}
 
-RegisterServerEvent('ARMA:CreateBanData')
-AddEventHandler('ARMA:CreateBanData', function(admin, target)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local targetsource = ARMA.getUserSource(target)
-    local name = GetPlayerName(targetsource)
-    if ARMA.hasPermission(user_id, "admin.ban") then
-        TriggerClientEvent('ARMA:openConfirmBan', source, target, name)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Create Ban Data')
+
+local PlayerOffenses = {}
+local PlayerBanCachedDuration = {}
+local defaultBans = {}
+
+RegisterServerEvent("ARMA:GenerateBan")
+AddEventHandler("ARMA:GenerateBan", function(PlayerSource, RulesBroken)
+    local AdminTemp = source
+    local AdminPermID = ARMA.getUserId(AdminTemp)
+    local AdminName = GetPlayerName(AdminTemp)
+    local PlayerID = ARMA.getUserId(PlayerSource)
+    local PlayerName = GetPlayerName(PlayerSource)
+    local PlayerCacheBanMessage = {}
+    local PermOffense = false
+    local separatormsg = {}
+    PlayerBanCachedDuration[PlayerID] = 0
+    PlayerOffenses[PlayerID] = {}
+    
+    if ARMA.hasPermission(AdminPermID, "admin.tickets") then
+        exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = PlayerID}, function(result)
+            if #result > 0 then
+                PlayerOffenses[PlayerID] = json.decode(result[1].Rules)
+                for k,v in pairs(RulesBroken) do
+                    for a,b in pairs(bans) do
+                        if b.id == k then
+                            PlayerOffenses[PlayerID][k] = PlayerOffenses[PlayerID][k] + 1
+                            PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
+                            if PlayerOffenses[PlayerID][k] == 1 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
+                            elseif PlayerOffenses[PlayerID][k] == 2 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~2nd Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
+                            elseif PlayerOffenses[PlayerID][k] >= 3 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
+                            end
+                            table.insert(PlayerCacheBanMessage, bans[a].name)
+                            if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
+                                PlayerBanCachedDuration[PlayerID] = -1
+                                PermOffense = true
+                            end
+                        end
+                    end
+                end
+                if PermOffense then 
+                    PlayerBanCachedDuration[PlayerID] = -1
+                end
+                Wait(1500)
+                TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg)
+            else
+                for k,v in pairs(bans) do
+                    defaultBans[v.id] = 0
+                end
+                exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = PlayerID, Rules = json.encode(defaultBans)})
+                ARMAclient.notify(AdminTemp, {"~r~Regenerating player offenses, database row was not found."})
+                ARMAclient.notify(AdminTemp, {"~r~Regenerate players ban!"})
+            end
+        end)
     end
 end)
 
-RegisterServerEvent('ARMA:BanPlayerConfirm')
-AddEventHandler('ARMA:BanPlayerConfirm', function(admin, target_id, targetname, reasons, duration)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local target = ARMA.getUserSource(target_id)
-    local admin_id = ARMA.getUserId(admin)
-    local adminName = GetPlayerName(source)
-    local playerName = targetname
-    warningDate = getCurrentDate()
-    if ARMA.hasPermission(user_id, "admin.ban") then
-        if tonumber(duration) >= 9000 then
-            local webhook = "webhook"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
-                {
-                    ["color"] = 16777215,
-                    ["title"] = "User Permanently Banned",
-                    ["description"] = "> Players Name: **"..playerName.."**\n> Players Perm ID: **"..target_id.."**\n> Admin's Perm ID: **"..admin_id.."**\n> Reason(s): **"..reasons.."**\n> Duration: **Permanent**",
-                    ["footer"] = {
-                        ["text"] = "ARMA - "..os.date("%c"),
-                        ["icon_url"] = "",
+
+RegisterServerEvent("ARMA:BanPlayer")
+AddEventHandler("ARMA:BanPlayer", function(PlayerSource, Duration, BanMessage)
+    local AdminTemp = source
+    local AdminPermID = ARMA.getUserId(AdminTemp)
+    local AdminName = GetPlayerName(AdminTemp)
+    local PlayerID = ARMA.getUserId(PlayerSource)
+    local PlayerName = GetPlayerName(PlayerSource)
+    local CurrentTime = os.time()
+    local PlayerDiscordID = 0
+    local LogChannel = "webhook"
+    local StaffBanLogs = "webhook"
+
+    ARMA.prompt(source, "Ban Evidence","",function(player, Evidence)
+        local Evidence = Evidence or ""
+        if Evidence ~= nil and Evidence ~= "" then
+            if ARMA.hasPermission(AdminPermID, "admin.tickets") then
+                if tostring(Duration) == "-1" then
+                    CurrentTime = CurrentTime + (60 * 60 * 500000)
+                else
+                    CurrentTime = CurrentTime + (60 * 60 * tonumber(Duration))
+                end
+
+                local communityname = "vRP Staff Logs"
+                local communtiylogo = "" --Must end with .png or .jpg
+                local command = {
+                    {
+                        ["color"] = "15536128",
+                        ["title"] = PlayerName.. " Was Banned",
+                        ["fields"] = {
+                            {
+                                ["name"] = "**Admin Name**",
+                                ["value"] = "" ..AdminName,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Admin TempID**",
+                                ["value"] = "" ..AdminTemp,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Admin PermID**",
+                                ["value"] = "" ..AdminPermID,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Player Name**",
+                                ["value"] = "" .. GetPlayerName(PlayerSource),
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Player TempID**",
+                                ["value"] = "" ..PlayerSource,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Player PermID**",
+                                ["value"] = ""..PlayerID,
+                                ["inline"] = true
+                            },
+                            {
+                                ["name"] = "**Ban Duration**",
+                                ["value"] = "" ..Duration,
+                                ["inline"] = true
+                            },
+                        },
+                        ["description"] = "**Ban Evidence**\n```\n"..Evidence.."\n"..BanMessage.."```",
+                        ["footer"] = {
+                        ["text"] = communityname,
+                        ["icon_url"] = communtiylogo,
+                        },
                     }
-            }
-            }}), { ["Content-Type"] = "application/json" })
-            ARMA.ban(source,target_id,"perm",reasons)
-            saveBanLog(target_id, adminName, reasons, "-1")
+                }
+                PerformHttpRequest(LogChannel, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
+                PerformHttpRequest(StaffBanLogs, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
+                ARMAclient.notify(AdminTemp, {"Banned UserID "..PlayerID.."("..PlayerName..")"})
+                ARMA.ban(source,PlayerID,Duration,BanMessage)
+                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID}, function() end)
+            end
         else
-            local webhook = "webhook"
-            PerformHttpRequest(webhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA", embeds = {
-                {
-                    ["color"] = 16777215,
-                    ["title"] = "User Banned",
-                    ["description"] = "> Players Name: **"..playerName.."**\n> Players Perm ID: **"..target_id.."**\n> Admin's Perm ID: **"..admin_id.."**\n> Reason(s): **"..reasons.."**\n> Duration: **"..duration.."**",
-                    ["footer"] = {
-                        ["text"] = "ARMA - "..os.date("%c"),
-                        ["icon_url"] = "",
-                    }
-            }
-            }}), { ["Content-Type"] = "application/json" })
-            ARMA.ban(source,target_id,duration,reasons)
-            f10Ban(target_id, adminName, reasons, duration)
+            ARMAclient.notify(AdminTemp, {"~r~Evidence field was left empty!"})
         end
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Ban Someone')
-    end
+    end)
 end)
+
 RegisterServerEvent('ARMA:offlineban')
 AddEventHandler('ARMA:offlineban', function(admin)
     local source = source
@@ -2452,7 +2238,7 @@ RegisterNetEvent('ARMA:CleanAll')
 AddEventHandler('ARMA:CleanAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.menu') then
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
         for i,v in pairs(GetAllVehicles()) do 
             DeleteEntity(v)
         end
@@ -2499,7 +2285,7 @@ end)
 
 local function ch_list(player,choice)
     local user_id = ARMA.getUserId(player)
-    if user_id ~= nil and ARMA.hasPermission(user_id,"admin.menu") then
+    if user_id ~= nil and ARMA.hasPermission(user_id,"admin.tickets") then
         if player_lists[player] then -- hide
             player_lists[player] = nil
             ARMAclient.removeDiv(player,{"user_list"})
@@ -2585,7 +2371,7 @@ AddEventHandler("ARMA:GetPlayerData",function()
                 DropPlayer(p, "ARMA - The server was unable to cache your ID, please rejoin.")
             end
         end
-        TriggerClientEvent("ARMA:getPlayersInfo", source, players_table, punishmentreasons)
+        TriggerClientEvent("ARMA:getPlayersInfo", source, players_table, bans)
     end
 end)
 
