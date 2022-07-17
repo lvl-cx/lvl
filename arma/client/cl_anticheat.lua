@@ -7,11 +7,11 @@ Citizen.CreateThread(function()   -- No-Clip Thread this then goes to the server
 
         local dist = #(oldPos-newPos)
         oldPos = newPos
-        if dist > 6 and not IsPedFalling(playerPed) and not IsPedInParachuteFreeFall(playerPed) then
+        if dist > 6 and not IsPedFalling(playerPed) and not IsPedInParachuteFreeFall(playerPed) and not IsPedRagdoll(playerPed) then
             if not IsPedInAnyVehicle(playerPed, 1) then
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 18 then
-                    TriggerServerEvent("ARMAAntiCheat:Type1")
+                    TriggerServerEvent("ARMA:acType1")
                     speedWarnings = 0
                 end
             end
@@ -20,11 +20,17 @@ Citizen.CreateThread(function()   -- No-Clip Thread this then goes to the server
     end
 end)
 
+AddEventHandler("playerSpawned", function()
+    speedWarnings = 0
+end)
+
+
+
 
 Citizen.CreateThread(function()
     while true do
         speedWarnings = 0
-        Wait(60000)
+        Wait(30000)
     end
 end)
 -- No-Clip
@@ -127,7 +133,7 @@ Citizen.CreateThread(function()
 			Wait(1)
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
 				RemoveAllPedWeapons(PlayerPedId(),false)
-				TriggerServerEvent("ARMAAntiCheat:Type2", theWeapon)
+				TriggerServerEvent("ARMA:acType2", theWeapon)
 			end
 		end
 		end
@@ -156,11 +162,11 @@ Citizen.CreateThread(function()
 		for i, data in pairs(DetectableTextures) do
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
-					TriggerServerEvent("ARMAAntiCheat:Type7", data.name..' Menu')
+					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
 				end
 			else 
 				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
-					TriggerServerEvent("ARMAAntiCheat:Type7", data.name..' Menu')
+					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
 				end
 			end
 		end
@@ -178,12 +184,12 @@ Citizen.CreateThread(function()
 			if true then
 				if GetWeaponDamageModifier(weaponselected) > 1.0 then
 					Wait(500)
-					TriggerServerEvent("ARMAAntiCheat:Type8", 'Damager Modifier')
+					TriggerServerEvent("ARMA:acType8", 'Damage Modifier')
 				end
 
 				if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
 					Wait(500)
-					TriggerServerEvent("ARMAAntiCheat:Type8", 'Damager Modifier')
+					TriggerServerEvent("ARMA:acType8", 'Damage Modifier')
 				end
 
 				local clip, ammo = GetAmmoInClip(_ped, weaponselected)
@@ -191,11 +197,11 @@ Citizen.CreateThread(function()
 				local _weaponammo = GetAmmoInPedWeapon(_ped, weaponselected)
 				if ammo > 499 or ammo2 > 499 then
 					Wait(500)
-					TriggerServerEvent("ARMAAntiCheat:Type8", 'Extra Ammo')
+					TriggerServerEvent("ARMA:acType8", 'Extra Ammo')
 				end
 				if _weaponammo > ammo2 then
 					Wait(500)
-					TriggerServerEvent("ARMAAntiCheat:Type8", 'Extra Ammo')
+					TriggerServerEvent("ARMA:acType8", 'Extra Ammo')
 				end
 			end
 			local clip, ammo = GetAmmoInClip(_ped, weaponselected)
@@ -204,7 +210,7 @@ Citizen.CreateThread(function()
 					local clip, ammo = GetAmmoInClip(_ped, weaponselected)
 					if ammo == GetMaxAmmoInClip(_ped, weaponselected) then
 						Wait(1000)
-						TriggerServerEvent("ARMAAntiCheat:Type8", 'ARMA Ammo')
+						TriggerServerEvent("ARMA:acType8", 'Infinite Ammo')
 					end
 				end
 			end
@@ -216,18 +222,14 @@ end)
 Citizen.CreateThread(function()
     while true do 
         Wait(5000)
-        local Armour = GetPedArmour(PlayerPedId())
-        local Health = GetEntityHealth(PlayerPedId())
-		local clipsize = GetWeaponClipSize(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
-        local ammo = GetAmmoInPedWeapon(GetPlayerPed(-1), GetSelectedPedWeapon(GetPlayerPed(-1)))
-        if Armour > 100 then 
-			TriggerServerEvent("ARMAAntiCheat:Type9")
-        elseif Health > 200 then 
-			TriggerServerEvent("ARMAAntiCheat:Type10")
-		elseif ammo > 250 then
-			TriggerServerEvent("ARMAAntiCheat:Type8")
-		elseif clipsize > 250 then
-			TriggerServerEvent("ARMAAntiCheat:Type8")
+        if GetPedArmour(PlayerPedId()) > 100 then 
+			TriggerServerEvent("ARMA:acType9", 'More than 100 Armour')
+        elseif GetEntityHealth(PlayerPedId()) > 200 then 
+			TriggerServerEvent("ARMA:acType10", 'More than 200 Health')
+		elseif GetAmmoInPedWeapon(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
+			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Weapon')
+		elseif GetWeaponClipSize(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
+			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Clip')
 		end
     end
 end)
