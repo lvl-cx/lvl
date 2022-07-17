@@ -25,7 +25,10 @@ const audio = [
     { name: "gtaloadin", file: "gtaloadin.ogg", volume: 0.20 },
     { name: "drill", file: "drill.ogg", volume: 0.20 },
     { name: "alarm", file: "alarm.ogg", volume: 0.40 },
-    { name: "starter", file: "GBRPstarter.ogg", volume: 0.40 },
+    { name: "ring", file: "ring.ogg", volume: 0.40 },
+    { name: "tubearriving", file: "tubearriving.ogg", volume: 0.40 },
+    { name: "tubeleaving", file: "tubeleaving.ogg", volume: 0.40 },
+    { name: "questcomplete", file: "questcomplete.ogg", volume: 0.40 },
 ]
 
 var audioPlayer = null;
