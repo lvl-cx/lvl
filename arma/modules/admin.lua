@@ -696,10 +696,6 @@ local bans = {
 }
 
 
-local PlayerOffenses = {}
-local PlayerBanCachedDuration = {}
-local defaultBans = {}
-
 RegisterServerEvent("ARMA:GenerateBan")
 AddEventHandler("ARMA:GenerateBan", function(PlayerSource, RulesBroken)
     local AdminTemp = source
@@ -710,8 +706,9 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerSource, RulesBroken)
     local PlayerCacheBanMessage = {}
     local PermOffense = false
     local separatormsg = {}
-    PlayerBanCachedDuration[PlayerID] = 0
-    PlayerOffenses[PlayerID] = {}
+    local PlayerBanCachedDuration = {}
+    local defaultBans = {}
+    local PlayerOffenses = {}
     
     if ARMA.hasPermission(AdminPermID, "admin.tickets") then
         exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = PlayerID}, function(result)
