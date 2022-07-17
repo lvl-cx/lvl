@@ -125,7 +125,7 @@ Citizen.CreateThread(function()
 end)
 
 -- [RageUI Menu]
-RMenu.Add('CocaineMenu', 'Cocaine Seller', RageUI.CreateMenu("", "ARMA Cocaine Seller",1300, 50, "cocaine", "cocaine"))
+RMenu.Add('CocaineMenu', 'Cocaine Seller', RageUI.CreateMenu("", "~b~Cocaine Seller",1300, 50, "seller", "seller"))
 
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('CocaineMenu', 'Cocaine Seller')) then

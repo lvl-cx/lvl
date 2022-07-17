@@ -108,12 +108,7 @@ Citizen.CreateThread(function()
             end 
 
             TriggerClientEvent('crateDrop', -1, coords)
-            --TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, dropMsg, "alert")
-            TriggerClientEvent('chat:addMessage', -1, {
-                template = 'Supply Drops^7: ' .. dropMsg .. '</div>',
-                args = { playerName, msg }
-              })
-            used = false
+            TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, dropMsg, "alert")
         end
         -- Citizen.SetTimeout(stayTime * 1000, function()
         --     TriggerClientEvent("removeCrate", -1)
