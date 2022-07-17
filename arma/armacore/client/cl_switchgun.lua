@@ -65,10 +65,3 @@ function CurrentWeapon(ped)
 	return nil
 end
 
-function loadAnimDict(dict)
-	while not HasAnimDictLoaded(dict) do
-		RequestAnimDict(dict)
-		Wait(0)
-	end
-end
-
