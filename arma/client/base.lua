@@ -300,6 +300,26 @@ function tARMA.setWeapon(m, s, t)
   SetCurrentPedWeapon(m, s, t)
 end
 
+function tARMA.LoadModel(modelName)
+  local modelHash
+  if type(modelName) ~= "string" then
+      modelHash = modelName
+  else
+      modelHash = GetHashKey(modelName)
+  end
+  if IsModelInCdimage(modelHash) then
+      if not HasModelLoaded(modelHash) then
+          RequestModel(modelHash)
+          while not HasModelLoaded(modelHash) do
+              Wait(0)
+          end
+      end
+      return modelHash
+  else
+      return nil
+  end
+end
+
 AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
 end)
