@@ -168,6 +168,13 @@ Citizen.CreateThread(function()
     UNIQUE(home,number)
     );
     ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_bans_offenses(
+    UserID INTEGER AUTO_INCREMENT,
+    Rules TEXT NULL DEFAULT NULL,
+    CONSTRAINT pk_user PRIMARY KEY(UserID)
+    );
+    ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banreason varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banadmin varchar(100) NOT NULL DEFAULT ''; ")
