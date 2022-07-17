@@ -44,10 +44,7 @@ Citizen.CreateThread(function() -- coma thread
             TriggerServerEvent('ARMA:InComa')
             ARMAserver.MoneyDrop()
             TriggerEvent('ARMA:3Seconds')
-
-            --TriggerServerEvent("Server:SoundToRadius", source, 20.0f, "Untitled", 0.4f);
             TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
-            --TriggerServerEvent("playGlobalSound",plyCoords.x, plyCoords.y, plyCoords.z,"playDead")
             tARMA.ejectVehicle()
             in_coma = true
             deathPosition = plyCoords
@@ -140,23 +137,9 @@ Citizen.CreateThread(function()
 					calledNHS = true
 					notify('~g~NHS called to your approximate location')
 					TriggerServerEvent('Jud:NHSComaCall')
+                    TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
 				end
 			end
-            DrawRect(0.51, 0.748, 0.38, 0.036, 0, 0, 0, 150)
-            DrawRect(0.494, 0.75, 1.125, 0.17, 0, 0, 0, 150)
-            DrawRect(0.494, 0.75, 1.125, 0.17, 17, 1, 1, 1)
-            DrawRect(0.51, 0.748, 0.38*(secondsTilBleedout*0.011), 0.036, 180, 18, 32, 255)
-            DrawAdvancedText(0.607, 0.696, 0.005, 0.0028, 0.62, DeathString, 255, 255, 255, 255, 7, 0)
-            if not calledNHS then
-				DrawAdvancedText(1.041, 0.803, 0.005, 0.0028, 0.37, "Press [E] to call the NHS", 255, 255, 255, 255, 6, 0)
-			end     
-            if secondsTilBleedout > 0 then
-                DrawAdvancedText(0.605, 0.803, 0.005, 0.0028, 0.37, "Respawn available in ("..secondsTilBleedout.." seconds)", 255, 255, 255, 255, 6, 0)
-            else
-                playerCanRespawn = true    
-                DrawAdvancedText(0.605, 0.803, 0.005, 0.0028, 0.37, "Press [E] to respawn!", 255, 255, 255, 255, 6, 0)
-            end
-            DrawAdvancedText(0.605, 0.752, 0.005, 0.0028, 0.37, "You are dying... Call the NHS now", 255, 255, 255, 255, 6, 0)
             DisableControlAction(0,323,true)
             DisableControlAction(0,182,true)
             DisableControlAction(0,37,true)
@@ -164,14 +147,10 @@ Citizen.CreateThread(function()
         Wait(0)
     end 
 end)
-Citizen.CreateThread(function()
-    while true do 
-        if in_coma then
-            secondsTilBleedout = secondsTilBleedout - 1
-        end
-        Wait(1000)
-    end
-end) 
+
+AddEventHandler("ARMA:countdownEnded",function()
+    secondsTilBleedout = 0
+end)
 
 Citizen.CreateThread(function()
     while DeathAnim <= 3 and DeathAnim >= 0 do
@@ -193,8 +172,9 @@ function tARMA.respawnPlayer()
     
     exports.spawnmanager:spawnPlayer()
     playerCanRespawn = false 
+    TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
     DeathString = ""
-    secondsTilBleedout = 30
+    secondsTilBleedout = 90
     
     local ped = GetPlayerPed(-1)
     tARMA.reviveComa()
@@ -216,6 +196,7 @@ AddEventHandler("ARMA:FixClient", function()
         while true do 
             Wait(0)
             if resurrectspamm == true then
+                TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
                 DoScreenFadeOut(500)
                 Citizen.Wait(500)
                 local ped = PlayerPedId()
@@ -226,7 +207,7 @@ AddEventHandler("ARMA:FixClient", function()
                 calledNHS = false
                 ClearPedTasksImmediately(PlayerPedId())
                 resurrectspamm = false
-                secondsTilBleedout = 60
+                secondsTilBleedout = 90
                 in_coma = false
                 EnableControlAction(0, 73, true)
                 tARMA.stopScreenEffect(cfg.coma_effect)
@@ -262,7 +243,6 @@ end)
 
 Citizen.CreateThread(function()
     local DeathReason, Killer, DeathCauseHash, Weapon
-
     while true do
         Citizen.Wait(0)
         if IsEntityDead(PlayerPedId()) then
@@ -270,17 +250,14 @@ Citizen.CreateThread(function()
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             DeathCauseHash = GetPedCauseOfDeath(PlayerPedId())
             Weapon = WeaponNames[tostring(DeathCauseHash)]
-
             if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
                 Killer = NetworkGetPlayerIndexFromPed(PedKiller)
             elseif IsEntityAVehicle(PedKiller) and IsEntityAPed(GetPedInVehicleSeat(PedKiller, -1)) and IsPedAPlayer(GetPedInVehicleSeat(PedKiller, -1)) then
                 Killer = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(PedKiller, -1))
             end
             
-            if (Killer == PlayerId()) then
-                DeathReason = 'committed suicide'
-            elseif (Killer == nil) then
-                DeathReason = 'died'
+            if (Killer == PlayerId()) or (Killer == nil) then
+                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout, 'name' or "N/A",'userid' or "N/A", 'weapon died to' or "N/A",true)
             else
                 if IsMelee(DeathCauseHash) then
                     DeathReason = 'murdered'
@@ -313,14 +290,7 @@ Citizen.CreateThread(function()
                 else
                     DeathReason = 'killed'
                 end
-            end
-            
-            if DeathReason == 'committed suicide' or DeathReason == 'died' then
-                --TriggerServerEvent('DiscordBot:PlayerDied', GetPlayerName(PlayerId()) .. ' ' .. DeathReason .. '.', Weapon)
-                DeathString = "~r~You committed suicide"
-            else
-                --TriggerServerEvent('DiscordBot:PlayerDied', GetPlayerName(Killer) .. ' ' .. DeathReason .. ' ' .. GetPlayerName(PlayerId()) .. '.', Weapon)
-                DeathString = "~r~You were " .. DeathReason .. " by " .. GetPlayerName(Killer) .. " with a " .. tostring(Weapon)
+                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout, GetPlayerName(Killer) or "N/A",'userid' or "N/A",tostring(Weapon) or "N/A",false)
             end
             Killer = nil
             DeathReason = nil

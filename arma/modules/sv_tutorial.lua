@@ -1,0 +1,17 @@
+RegisterNetEvent('ARMA:checkTutorial')
+AddEventHandler('ARMA:checkTutorial', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if not ARMA.hasGroup(user_id, 'TutorialDone') then
+        TriggerClientEvent('ARMA:startTutorial', source)
+    end
+end)
+
+RegisterNetEvent('ARMA:setCompletedTutorial')
+AddEventHandler('ARMA:setCompletedTutorial', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if not ARMA.hasGroup(user_id, 'TutorialDone') then
+        ARMA.addUserGroup(user_id, 'TutorialDone')
+    end
+end)

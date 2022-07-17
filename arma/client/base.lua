@@ -335,6 +335,29 @@ function tARMA.drawTxt(L, M, N, D, E, O, P, Q, R, S)
   EndTextCommandDisplayText(D, E)
 end
 
+function tARMA.announceClient(d)
+    if d~=nil then 
+        CreateThread(function()
+            local e=GetGameTimer()
+            local scaleform=RequestScaleformMovie('MIDSIZED_MESSAGE')
+            while not HasScaleformMovieLoaded(scaleform)do 
+                Wait(0)
+            end
+            PushScaleformMovieFunction(scaleform,"SHOW_SHARD_MIDSIZED_MESSAGE")
+            PushScaleformMovieFunctionParameterString("~g~ARMA Announcement")
+            PushScaleformMovieFunctionParameterString(d)
+            PushScaleformMovieMethodParameterInt(5)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterBool(false)
+            EndScaleformMovieMethod()
+            while e+6*1000>GetGameTimer()do 
+                DrawScaleformMovieFullscreen(scaleform,255,255,255,255)
+                Wait(0)
+            end 
+        end)
+    end 
+end
+
 AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
 end)

@@ -1631,9 +1631,9 @@ cfg.groups = {
   	"pov.list"
   },
 
--- STAFF ON / STAFF OFF --
-  ["staffon"] = {},
-  ["staffoff"] = {},
+  
+  ["TutorialDone"] = {},
+
 
 -- COSMETIC ITEMS --
 
@@ -1662,10 +1662,6 @@ cfg.groups = {
 
 -- groups are added dynamically using the API or the menu, but you can add group when an user join here
 cfg.users = {
-  [1] = { -- give superadmin and admin group to the first created user on the database
-    "founder",
-    "dev",
-  }
 }
 
 -- group selectors
