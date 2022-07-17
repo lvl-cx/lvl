@@ -630,7 +630,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Ban Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         banningPermID = SelectedPlayer[3]
-                        baningName = SelectedPlayer[1]
+                        banningName = SelectedPlayer[1]
                     end
                 end, RMenu:Get('adminmenu', 'banselection'))
             end
