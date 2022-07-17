@@ -152,23 +152,3 @@ function alert(msg)
     AddTextComponentString(msg)
     DisplayHelpTextFromStringLabel(0,0,1,-1)
 end
-
-function loadModel(r)
-    local s
-    if type(r)~="string"then 
-        s=r 
-    else 
-        s=GetHashKey(r)
-    end
-    if IsModelInCdimage(s)then 
-        if not HasModelLoaded(s)then 
-            RequestModel(s)
-            while not HasModelLoaded(s)do 
-                Wait(0)
-            end 
-        end
-        return s 
-    else 
-        return nil 
-    end 
-end

@@ -36,7 +36,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if (GetOnscreenKeyboardResult()) then
                             local result = GetOnscreenKeyboardResult()
                             if result then 
-                                local k=loadModel(result)
+                                local k=tARMA.LoadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 SetVehicleOnGroundProperly(nveh)
@@ -61,7 +61,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if (GetOnscreenKeyboardResult()) then
                             local result = GetOnscreenKeyboardResult()
                             if result then 
-                                local k=loadModel(result)
+                                local k=tARMA.LoadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 SetVehicleOnGroundProperly(nveh)
@@ -213,7 +213,7 @@ RageUI.CreateWhile(1.0, true, function()
             if b then
                 RageUI.ButtonWithStyle("Spawn Vehicle (No mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local k=loadModel(veh)
+                        local k=tARMA.LoadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
                         local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
@@ -227,7 +227,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local k=loadModel(veh)
+                        local k=tARMA.LoadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
                         local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
@@ -298,7 +298,7 @@ function Notify( text )
 end
 
 function spawnVehicle(W,v,w,H,X,Y,Z,_)
-    local a0=loadModel(W)
+    local a0=tARMA.LoadModel(W)
     local a1=CreateVehicle(a0,v,w,H,X,Z,_)
     SetEntityAsMissionEntity(a1)
     SetModelAsNoLongerNeeded(a0)
@@ -306,26 +306,6 @@ function spawnVehicle(W,v,w,H,X,Y,Z,_)
         TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
     end
     return a1 
-end
-
-function loadModel(r)
-    local s
-    if type(r)~="string"then 
-        s=r 
-    else 
-        s=GetHashKey(r)
-    end
-    if IsModelInCdimage(s)then 
-        if not HasModelLoaded(s)then 
-            RequestModel(s)
-            while not HasModelLoaded(s)do 
-                Wait(0)
-            end 
-        end
-        return s 
-    else 
-        return nil 
-    end 
 end
 
 Citizen.CreateThread(function()
