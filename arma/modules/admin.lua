@@ -695,20 +695,20 @@ local bans = {
     {id = "ftvl", name = "Failure To Value Life", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
 }
 
+local PlayerOffenses = {}
+local PlayerBanCachedDuration = {}
+local defaultBans = {}
 
 RegisterServerEvent("ARMA:GenerateBan")
-AddEventHandler("ARMA:GenerateBan", function(PlayerSource, RulesBroken)
+AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
     local AdminTemp = source
     local AdminPermID = ARMA.getUserId(AdminTemp)
     local AdminName = GetPlayerName(AdminTemp)
-    local PlayerID = ARMA.getUserId(PlayerSource)
-    local PlayerName = GetPlayerName(PlayerSource)
     local PlayerCacheBanMessage = {}
     local PermOffense = false
     local separatormsg = {}
-    local PlayerBanCachedDuration = {}
-    local defaultBans = {}
-    local PlayerOffenses = {}
+    PlayerBanCachedDuration[PlayerID] = 0
+    PlayerOffenses[PlayerID] = {}
     
     if ARMA.hasPermission(AdminPermID, "admin.tickets") then
         exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = PlayerID}, function(result)
@@ -753,12 +753,10 @@ end)
 
 
 RegisterServerEvent("ARMA:BanPlayer")
-AddEventHandler("ARMA:BanPlayer", function(PlayerSource, Duration, BanMessage)
+AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage)
     local AdminTemp = source
     local AdminPermID = ARMA.getUserId(AdminTemp)
     local AdminName = GetPlayerName(AdminTemp)
-    local PlayerID = ARMA.getUserId(PlayerSource)
-    local PlayerName = GetPlayerName(PlayerSource)
     local CurrentTime = os.time()
     local PlayerDiscordID = 0
     local LogChannel = "webhook"
@@ -779,7 +777,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerSource, Duration, BanMessage)
                 local command = {
                     {
                         ["color"] = "15536128",
-                        ["title"] = PlayerName.. " Was Banned",
+                        ["title"] = AdminName.. " banned "..PlayerID,
                         ["fields"] = {
                             {
                                 ["name"] = "**Admin Name**",
@@ -794,16 +792,6 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerSource, Duration, BanMessage)
                             {
                                 ["name"] = "**Admin PermID**",
                                 ["value"] = "" ..AdminPermID,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "**Player Name**",
-                                ["value"] = "" .. GetPlayerName(PlayerSource),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "**Player TempID**",
-                                ["value"] = "" ..PlayerSource,
                                 ["inline"] = true
                             },
                             {
@@ -826,8 +814,9 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerSource, Duration, BanMessage)
                 }
                 PerformHttpRequest(LogChannel, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
                 PerformHttpRequest(StaffBanLogs, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
-                ARMAclient.notify(AdminTemp, {"Banned UserID "..PlayerID.."("..PlayerName..")"})
+                ARMAclient.notify(AdminTemp, {"Banned ID: "..PlayerID})
                 ARMA.ban(source,PlayerID,Duration,BanMessage)
+                f10Ban(PlayerID, AdminName, BanMessage, Duration)
                 exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID}, function() end)
             end
         else
