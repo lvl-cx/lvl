@@ -289,18 +289,16 @@ function tARMA.playFrontendSound(dict, name)
   PlaySoundFrontend(-1, dict, name, 0)
 end
 
---[[
--- not working
-function tARMA.setMovement(dict)
-  if dict then
-    SetPedMovementClipset(GetPlayerPed(-1),dict,true)
-  else
-    ResetPedMovementClipset(GetPlayerPed(-1),true)
-  end
+function tARMA.loadAnimDict(dict)
+	while not HasAnimDictLoaded(dict) do
+		RequestAnimDict(dict)
+		Wait(0)
+	end
 end
---]]
 
--- events
+function tARMA.setWeapon(m, s, t)
+  SetCurrentPedWeapon(m, s, t)
+end
 
 AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
