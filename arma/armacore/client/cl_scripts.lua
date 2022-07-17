@@ -1,4 +1,3 @@
--- RANDO PUNCHING --
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
@@ -95,7 +94,6 @@ local passengerDriveBy = false
 Citizen.CreateThread(function()
 	while true do
 		Wait(1)
-
 		playerPed = GetPlayerPed(-1)
 		car = GetVehiclePedIsIn(playerPed, false)
 		if car then
@@ -241,19 +239,12 @@ RegisterCommand("k", function(source,args,rawCommand)
 end, false)
 
 
-function loadAnimDict( dict )
-    while ( not HasAnimDictLoaded( dict ) ) do
-        RequestAnimDict( dict )
-        Citizen.Wait( 5 )
-    end
-end 
-
 RegisterNetEvent( 'KneelHU' )
 AddEventHandler( 'KneelHU', function()
     local player = GetPlayerPed( -1 )
 	if ( DoesEntityExist( player ) and not IsEntityDead( player )) then 
-        loadAnimDict( "random@arrests" )
-		loadAnimDict( "random@arrests@busted" )
+        tARMA.loadAnimDict( "random@arrests" )
+		tARMA.loadAnimDict( "random@arrests@busted" )
 		if ( IsEntityPlayingAnim( player, "random@arrests@busted", "idle_a", 3 ) ) then 
 			TaskPlayAnim( player, "random@arrests@busted", "exit", 8.0, 1.0, -1, 2, 0, 0, 0, 0 )
 			Wait (3000)
@@ -284,31 +275,6 @@ Citizen.CreateThread(function()
       HideHudComponentThisFrame( 8 ) -- Veh Class
     end
   end)
- -------------------------------------------------------------------
---Listed below are the integers and the corresponding HUD component--
- -------------------------------------------------------------------
--- 1 : WANTED_STARS
--- 2 : WEAPON_ICON
--- 3 : CASH
--- 4 : MP_CASH
--- 5 : MP_MESSAGE
--- 6 : VEHICLE_NAME
--- 7 : AREA_NAME
--- 8 : VEHICLE_CLASS
--- 9 : STREET_NAME
--- 10 : HELP_TEXT
--- 11 : FLOATING_HELP_TEXT_1
--- 12 : FLOATING_HELP_TEXT_2
--- 13 : CASH_CHANGE
--- 14 : RETICLE
--- 15 : SUBTITLE_TEXT
--- 16 : RADIO_STATIONS
--- 17 : SAVING_GAME
--- 18 : GAME_STREAM
--- 19 : WEAPON_WHEEL
--- 20 : WEAPON_WHEEL_STATS
--- 21 : HUD_COMPONENTS
--- 22 : HUD_WEAPONS
 
 -- AntiVDM --
 Citizen.CreateThread(function()
