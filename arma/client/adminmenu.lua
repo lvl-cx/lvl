@@ -806,7 +806,6 @@ RageUI.CreateWhile(1.0, true, function()
                             RageUI.Separator(v, function() end)
                         end
                         if Duration == -1 then
-                            Duration == 'perm'
                             RageUI.Separator("Total Length: Permanent", function() end)
                         else
                             RageUI.Separator("Total Length: " ..Duration.. " Hours", function() end)
