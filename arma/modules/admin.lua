@@ -734,9 +734,6 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                         end
                     end
                 end
-                if PermOffense then 
-                    PlayerBanCachedDuration[PlayerID] = -1
-                end
                 Wait(1500)
                 TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg)
             else
@@ -766,10 +763,8 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage)
         local Evidence = Evidence or ""
         if Evidence ~= nil and Evidence ~= "" then
             if ARMA.hasPermission(AdminPermID, "admin.tickets") then
-                if tostring(Duration) == "-1" then
-                    CurrentTime = CurrentTime + (60 * 60 * 500000)
-                else
-                    CurrentTime = CurrentTime + (60 * 60 * tonumber(Duration))
+                if tostring(Duration) ~= "perm" then
+                    Duration = CurrentTime + (60 * 60 * tonumber(Duration))
                 end
 
                 local communityname = "vRP Staff Logs"
