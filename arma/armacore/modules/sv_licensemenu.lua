@@ -6,7 +6,7 @@ licensecentre.location = vector3(-926.37622070312,-2037.8065185547,9.40232753753
 RegisterServerEvent("LicenseCentre:BuyGroup")
 AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = licensecentre.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -29,7 +29,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(price, job, name, priceshow)
             end
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Lincense menu purchase')
     end
 end)
 

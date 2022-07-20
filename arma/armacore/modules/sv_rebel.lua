@@ -6,7 +6,7 @@ rebel.location = vector3(1545.2042236328,6332.3295898438,24.078683853149)
 RegisterServerEvent("Rebel:BuyWeapon")
 AddEventHandler('Rebel:BuyWeapon', function(price, hash)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = rebel.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -43,14 +43,14 @@ AddEventHandler('Rebel:BuyWeapon', function(price, hash)
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Rebel Weapon purchase')
     end
 end)
 
 RegisterServerEvent("Rebel:BuyArmour")
 AddEventHandler('Rebel:BuyArmour', function()
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = rebel.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -73,7 +73,7 @@ AddEventHandler('Rebel:BuyArmour', function()
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Rebel Armour purchase')
     end
 end)
 

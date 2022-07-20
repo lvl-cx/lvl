@@ -58,8 +58,8 @@ AddEventHandler("crateDrop", function(c)
             if #(boxCoords - playerCoords) < 2.0 then
                 if (IsControlJustPressed(1, 51)) then
                     if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
-                        tArma.loadAnimDict('amb@medic@standing@kneel@base')
-                        tArma.loadAnimDict('anim@gangops@facility@servers@bodysearch@')
+                        tARMA.loadAnimDict('amb@medic@standing@kneel@base')
+                        tARMA.loadAnimDict('anim@gangops@facility@servers@bodysearch@')
                         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
                         TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
                         notify("~g~Looting Crate Drop...")

@@ -6,7 +6,7 @@ armoury.location = vector3(451.34454345703,-980.09381103516,30.689605712891)
 RegisterServerEvent("PD:BuyWeapon")
 AddEventHandler('PD:BuyWeapon', function(hash)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = armoury.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -37,14 +37,14 @@ AddEventHandler('PD:BuyWeapon', function(hash)
         end
 
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger PD Weapon purchase')
     end
 end)
 
 RegisterServerEvent("PD:BuyArmour")
 AddEventHandler('PD:BuyArmour', function()
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = armoury.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -62,7 +62,7 @@ AddEventHandler('PD:BuyArmour', function()
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger PD Armour purchase')
     end
 end)
 

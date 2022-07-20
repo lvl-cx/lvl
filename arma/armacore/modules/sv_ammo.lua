@@ -6,7 +6,7 @@ ammo.location = vector3(-458.36862182617,-2274.5075683594,8.5158195495605)
 RegisterServerEvent("Ammo:BuyAmmo")
 AddEventHandler('Ammo:BuyAmmo', function(price, hash, amount)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = ammo.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -26,7 +26,7 @@ AddEventHandler('Ammo:BuyAmmo', function(price, hash, amount)
 
 
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Ammo purchase')
     end
 end)
 

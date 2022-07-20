@@ -24,7 +24,7 @@ Citizen.CreateThread(function()
 		if not IsPedInAnyVehicle(ped, true) then
 			if GetIsTaskActive(ped, 56) then
 				if GetSelectedPedWeapon(ped) ~= GetHashKey('WEAPON_UNARMED') then
-					loadAnimDict("reaction@intimidation@1h")
+					tARMA.loadAnimDict("reaction@intimidation@1h")
 					TaskPlayAnim(ped, "reaction@intimidation@1h", "intro", 8.0, 2.0, 1700, 48, 10, 0, 0, 0 )
 					SetPedCurrentWeaponVisible(ped, 0, 1, 1, 1)
 					disableFiring = true
@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
 					disableFiring = false
 					equipedWeapon = CurrentWeapon(ped)
 				else
-					loadAnimDict("reaction@intimidation@1h")
+					tARMA.loadAnimDict("reaction@intimidation@1h")
 					TaskPlayAnim(ped, "reaction@intimidation@1h", "outro", 8.0, 2.0, 1700, 48, 10, 0, 0, 0 )
 					disableFiring = true
 					SetCurrentPedWeapon(ped, GetHashKey(equipedWeapon), true)

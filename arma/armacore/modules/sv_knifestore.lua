@@ -9,7 +9,7 @@ local finalID = nil
 RegisterServerEvent("KnifeStore:BuyWeapon")
 AddEventHandler('KnifeStore:BuyWeapon', function(price, hash)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = knifestore.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -51,7 +51,7 @@ AddEventHandler('KnifeStore:BuyWeapon', function(price, hash)
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Knife store Weapon purchase')
     end
 end)
 

@@ -97,8 +97,8 @@ end)
 RegisterNetEvent('ARMA:WithdrawAll')
 AddEventHandler('ARMA:WithdrawAll', function()
     local source = source
-    userid = ARMA.getUserId(source)
-    amount = ARMA.getBankMoney(userid)
+    local userid = ARMA.getUserId(source)
+    local amount = ARMA.getBankMoney(userid)
     if onesync ~= "off" then    
         --Onesync allows extra security behind events should enable it if it's not already.
         local ped = GetPlayerPed(source)
@@ -126,8 +126,8 @@ end)
 RegisterNetEvent('ARMA:DepositAll')
 AddEventHandler('ARMA:DepositAll', function()
     local source = source
-    userid = ARMA.getUserId(source)
-    amount = ARMA.getMoney(userid)
+    local userid = ARMA.getUserId(source)
+    local amount = ARMA.getMoney(userid)
 
         --Onesync allows extra security behind events should enable it if it's not already.
         local ped = GetPlayerPed(source)

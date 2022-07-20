@@ -7,7 +7,7 @@ largearms.location = vector3(-1111.3123779297,4937.2846679688,218.3872833252)
 RegisterServerEvent("LargeArms:BuyWeapon")
 AddEventHandler('LargeArms:BuyWeapon', function(price, hash)
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = largearms.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -44,14 +44,14 @@ AddEventHandler('LargeArms:BuyWeapon', function(price, hash)
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Large Arms Weapon purchase')
     end
 end)
 
 RegisterServerEvent("LargeArms:BuyArmour")
 AddEventHandler('LargeArms:BuyArmour', function()
     local source = source
-    userid = ARMA.getUserId(source)
+    local userid = ARMA.getUserId(source)
     local coords = largearms.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
@@ -70,7 +70,7 @@ AddEventHandler('LargeArms:BuyArmour', function()
         end
 
     else 
-        ARMA.banConsole(userid,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Large Arms Armour purchase')
     end
 end)
 
