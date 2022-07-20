@@ -114,7 +114,7 @@ local otherVehicles = {
 local webhook = 'https://discord.com/api/webhooks/981601829320269905/_7_ds_5lYXxkiXAjLE6rS1zFx-ZfSeMQ8n1dexmN4tOLte3rw73g-vGTqn_6u8TySG35'
 local image = "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F001%2F132%2F314%2Fcbc.jpg"
 
-AddEventHandler('vRP:playerLeave', function(user_id, source, reason)
+AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
     if user_id ~= nil then
         for k,v in pairs(cheatingCrashes) do
             if v == reason then
@@ -407,8 +407,8 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
                 gettingScreenshot = false
                 TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-                ARMA.banConsole(user_id,730,"Cheating "..reason)
-                saveBanLog(user_id, 'ARMA', "Cheating "..reason, 730)
+                ARMA.banConsole(user_id,"perm","Cheating "..reason)
+                f10Ban(user_id, 'ARMA', "Cheating "..reason, 730)
                 exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`) VALUES (@user_id, @username, @reason);", {user_id = user_id, username = name, reason = reason}, function() end) 
             end)
         end
@@ -421,7 +421,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
     local user_id = ARMA.getUserId(source)
     local playerName = GetPlayerName(source)
     if ARMA.hasPermission(user_id, 'anticheat.menu') then
-        vRPclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
+        ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
             {
@@ -457,20 +457,20 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
                 if manage then
                     if not otherVehicles[model] then
                         otherVehicles[model] = true
-                        vRPclient.notify(source,{"~g~Added "..spawncode.." to the AC Vehicle Whitelist"})
+                        ARMAclient.notify(source,{"~g~Added "..spawncode.." to the AC Vehicle Whitelist"})
                     else
-                        vRPclient.notify(source,{"~r~"..spawncode.." is already in the AC Vehicle Whitelist"})
+                        ARMAclient.notify(source,{"~r~"..spawncode.." is already in the AC Vehicle Whitelist"})
                     end
                 else
                     if otherVehicles[model] then
                         otherVehicles[model] = false
-                        vRPclient.notify(source,{"~g~Removed "..spawncode.." from the AC Vehicle Whitelist"})
+                        ARMAclient.notify(source,{"~g~Removed "..spawncode.." from the AC Vehicle Whitelist"})
                     else
-                        vRPclient.notify(source,{"~r~"..spawncode.." is not in the AC Vehicle Whitelist"})
+                        ARMAclient.notify(source,{"~r~"..spawncode.." is not in the AC Vehicle Whitelist"})
                     end
                 end
             else
-                vRPclient.notify(source,{"~r~Invalid Input"})
+                ARMAclient.notify(source,{"~r~Invalid Input"})
             end
         end)
     else
