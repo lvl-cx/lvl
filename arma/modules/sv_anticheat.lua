@@ -111,14 +111,12 @@ local otherVehicles = {
 }
 
 
-local webhook = 'https://discord.com/api/webhooks/981601829320269905/_7_ds_5lYXxkiXAjLE6rS1zFx-ZfSeMQ8n1dexmN4tOLte3rw73g-vGTqn_6u8TySG35'
-local image = "https://wompampsupport.azureedge.net/fetchimage?siteId=7575&v=2&jpgQuality=100&width=700&url=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F001%2F132%2F314%2Fcbc.jpg"
 
 AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
     if user_id ~= nil then
         for k,v in pairs(cheatingCrashes) do
             if v == reason then
-                PerformHttpRequest('https://discord.com/api/webhooks/994248601230397461/2_5ZZ6LwF7QzWNGkmbEcxdrorVE-5sTDqniPIJfemu_tIBEIqLXHMr4DSkHOq8naI7wr', function(err, text, headers) 
+                PerformHttpRequest('webhook here', function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
                     {
                         ["color"] = 16777215,
@@ -408,7 +406,6 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 gettingScreenshot = false
                 TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
                 ARMA.banConsole(user_id,"perm","Cheating "..reason)
-                f10Ban(user_id, 'ARMA', "Cheating "..reason, 730)
                 exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`) VALUES (@user_id, @username, @reason);", {user_id = user_id, username = name, reason = reason}, function() end) 
             end)
         end
