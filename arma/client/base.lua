@@ -74,6 +74,10 @@ function tARMA.removePlayer(player)
   players[player] = nil
 end
 
+function tARMA.getPlayer(v)
+  return players[V]
+end
+
 function tARMA.getNearestPlayers(radius)
   local r = {}
 
@@ -162,6 +166,72 @@ end
 function tARMA.stopScreenEffect(name)
   StopScreenEffect(name)
 end
+
+local Q={}
+local R={}
+function tARMA.createArea(l,W,T,U,X,Y,Z,_)
+  local V={position=W,radius=T,height=U,enterArea=X,leaveArea=Y,onTickArea=Z,metaData=_}
+  if V.height==nil then 
+      V.height=6 
+  end
+  Q[l]=V
+  R[l]=V 
+end
+
+local a=0
+local b=0
+local c=0
+local d=vector3(0,0,0)
+local e=false
+local f=PlayerPedId
+function savePlayerInfo()
+    a=f()
+    b=GetVehiclePedIsIn(a,false)
+    c=PlayerId()
+    d=GetEntityCoords(a)
+    local g=GetPedInVehicleSeat(b,-1)
+    e=g==a 
+end
+_G["PlayerPedId"]=function()
+    return a
+end
+function tARMA.getPlayerPed()
+    return a
+end
+function tARMA.getPlayerVehicle()
+    return b,e 
+end
+function tARMA.getPlayerId()
+    return c 
+end
+
+function tARMA.getPlayerCoords()
+    return d 
+end
+
+local a2={}
+Citizen.CreateThread(function()
+    while true do 
+        local b2={}
+        b2.playerPed=tARMA.getPlayerPed()
+        b2.playerCoords=tARMA.getPlayerCoords()
+        b2.playerId=tARMA.getPlayerId()
+        b2.vehicle=tARMA.getPlayerVehicle()
+        b2.weapon=GetSelectedPedWeapon(b2.playerPed)
+        for c2=1,#a2 do 
+            local d2=a2[c2]
+            d2(b2)
+        end
+        Wait(0)
+    end 
+end)
+function tARMA.createThreadOnTick(d2)
+    a2[#a2+1]=d2
+end
+
+Citizen.CreateThread(function()
+  tARMA.createThreadOnTick(savePlayerInfo)
+end)
 
 -- ANIM
 
