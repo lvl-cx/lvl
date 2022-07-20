@@ -12,6 +12,7 @@ shared_scripts {
   "cfg/cfg_crypto.lua",
   "sharedcfg/*",
   "armacore/cfg/cfg_*.lua",
+  "cfg/cfg_*.lua",
 }
 
 
