@@ -620,8 +620,10 @@ function cameraTransition(t)
     ExecuteCommand("showui")
     currentTest.subtitle="Please wait for the ~b~examiner~w~."
 end
-RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
-    RageUI.IsVisible(RMenu:Get('dvsa','main'),true,false,true,function()
+
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('dvsa', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RageUI.ButtonWithStyle("Driving Licence","View and manage your driving licence",{RightBadge=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
         end,RMenu:Get('dvsa','licence'))
         RageUI.ButtonWithStyle("Driving Test","View your driving tests",{RightBadge=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
@@ -666,7 +668,10 @@ RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
         end 
     end,function()
     end)
-    RageUI.IsVisible(RMenu:Get('dvsa','licence'),true,false,true,function(ab)
+    end
+    end)
+    if RageUI.Visible(RMenu:Get('dvsa', 'licence')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function(ab)
         if a.full then 
             RageUI.ButtonWithStyle("Licence Type:","This indiates if you hold a full licence",{RightLabel="Full",RightBadge=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
                 if aa then 
@@ -703,8 +708,8 @@ RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
                         end)
                     end 
                 end 
-            end 
-        end
+             end 
+         end
         if a.active then 
             RageUI.ButtonWithStyle("Penalty Points:","This indicates your amount of licence points",{RightLabel=a.points},true,function(a8,a9,aa)
                 if aa then 
@@ -734,7 +739,9 @@ RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
         end 
     end,function()
     end)
-    RageUI.IsVisible(RMenu:Get('dvsa','tests'),true,false,true,function(ab)
+    end
+    if RageUI.Visible(RMenu:Get('dvsa', 'tests')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function(ab)
         if c~=nil and table.count(c)>0 then 
             for r,s in pairs(c)do 
                 local ac="~r~FAIL"
@@ -763,7 +770,9 @@ RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
         end 
     end,function()
     end)
-    RageUI.IsVisible(RMenu:Get('dvsa','alerts'),true,false,true,function(ab)
+    end
+if RageUI.Visible(RMenu:Get('dvsa', 'alerts')) then
+    RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function(ab)
         for r,s in pairs(d)do 
             if s.date==nil then 
                 s.date=""
@@ -776,7 +785,7 @@ RageUI.CreateWhile(1.0,RMenu:Get('dvsa','main'),nil,function()
         end 
     end,function()
     end)
-end)
+end
 RegisterCommand("dl",function(ad,ae)
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('dvsa','licence'),false)
