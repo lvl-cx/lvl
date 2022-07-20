@@ -173,10 +173,10 @@ end)
 -- No-Clip Handler
 RegisterServerEvent("ARMA:acType1")
 AddEventHandler("ARMA:acType1", function()
-    local user_id = vRP.getUserId(source)
-    local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
-    if not vRP.hasPermission(user_id, "admin.noclip") then -- give this group to users you do want getting banned for No-Clipping
+    if not ARMA.hasPermission(user_id, "admin.noclip") then -- give this group to users you do want getting banned for No-Clipping
         if not table.includes(carrying, player) then
             Wait(500)
             TriggerEvent("ARMA:acBan", user_id, 1, name, player)
@@ -197,8 +197,8 @@ end
 
 RegisterServerEvent("ARMA:acType2") -- Player Spawned Weapon!
 AddEventHandler("ARMA:acType2", function(theweapon)
-	local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+	local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 2, name, player, theweapon)
@@ -207,8 +207,8 @@ end)
 
 local BlockedExplosions = {0, 1, 2, 4, 5, 25, 32, 33, 35, 35, 36, 37, 38, 45}
 AddEventHandler('explosionEvent', function(source, ev)
-    local user_id = vRP.getUserId(source)
-    local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
     for k, v in ipairs(BlockedExplosions) do 
         if ev.explosionType == v then
@@ -244,8 +244,8 @@ local BlacklistedEvents = { -- Place any events that you do not want running
 for i, eventName in ipairs(BlacklistedEvents) do
 RegisterNetEvent(eventName)
 AddEventHandler(eventName, function()
-    local user_id = vRP.getUserId(source)
-    local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 4, name, player)
@@ -255,8 +255,8 @@ end
 AddEventHandler('removeWeaponEvent', function(pedid, weaponType)
     CancelEvent()
     local source = source
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 5, name, player)
@@ -265,8 +265,8 @@ end)
 AddEventHandler("giveWeaponEvent", function(source)
     CancelEvent()
     local source = source
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 5, name, player)
@@ -275,8 +275,8 @@ end)
 AddEventHandler("removeAllWeaponsEvent", function(source)
     CancelEvent()
     local source = source
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 5, name, player)
@@ -284,8 +284,8 @@ end)
 
 RegisterServerEvent("ARMA:acType6")
 AddEventHandler("ARMA:acType6", function()
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     if type6enabled then
         Wait(500)
@@ -295,8 +295,8 @@ end)
 
 RegisterServerEvent("ARMA:acType7")
 AddEventHandler("ARMA:acType7", function(modmenu)
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 7, name, player, modmenu)
@@ -304,8 +304,8 @@ end)
 
 RegisterServerEvent("ARMA:acType8")
 AddEventHandler("ARMA:acType8", function(extra)
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 8, name, player, extra)
@@ -313,8 +313,8 @@ end)
 
 RegisterServerEvent("ARMA:acType9")
 AddEventHandler("ARMA:acType9", function()
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 9, name, player)
@@ -322,8 +322,8 @@ end)
 
 RegisterServerEvent("ARMA:acType10")
 AddEventHandler("ARMA:acType10", function()
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 10, name, player)
@@ -331,8 +331,8 @@ end)
 
 RegisterServerEvent("ARMA:acType11")
 AddEventHandler("ARMA:acType11", function(extra)
-    local user_id = vRP.getUserId(source)
-	local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 11, name, player, extra)
@@ -346,8 +346,8 @@ end)
 RegisterServerEvent("ARMA:getAnticheatData")
 AddEventHandler("ARMA:getAnticheatData",function()
     local source = source
-    user_id = vRP.getUserId(source)
-    if vRP.hasPermission(user_id, 'anticheat.menu') then
+    user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'anticheat.menu') then
         local bannedplayerstable = {}
         exports['ghmattimysql']:execute("SELECT * FROM `arma_anticheat`", {}, function(result)
             if result ~= nil then
@@ -407,7 +407,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
                 gettingScreenshot = false
                 TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-                vRP.banConsole(user_id,730,"Cheating "..reason)
+                ARMA.banConsole(user_id,730,"Cheating "..reason)
                 saveBanLog(user_id, 'ARMA', "Cheating "..reason, 730)
                 exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`) VALUES (@user_id, @username, @reason);", {user_id = user_id, username = name, reason = reason}, function() end) 
             end)
@@ -418,9 +418,9 @@ end)
 RegisterServerEvent("ARMA:acUnban")
 AddEventHandler("ARMA:acUnban",function(permid)
     local source = source
-    local user_id = vRP.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     local playerName = GetPlayerName(source)
-    if vRP.hasPermission(user_id, 'anticheat.menu') then
+    if ARMA.hasPermission(user_id, 'anticheat.menu') then
         vRPclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
@@ -434,9 +434,9 @@ AddEventHandler("ARMA:acUnban",function(permid)
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
-        vRP.setBanned(permid,false)
+        ARMA.setBanned(permid,false)
     else
-        local player = vRP.getUserSource(user_id)
+        local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to AC Unban Someone')
@@ -447,11 +447,11 @@ end)
 -- Allows the addition / removal of vehicles to the anticheat whitelist temporarily
 RegisterServerEvent("ARMA:editACVehicleWhitelist")
 AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
-    local user_id = vRP.getUserId(source)
-    local player = vRP.getUserSource(user_id)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
-    if vRP.hasPermission(user_id, 'anticheat.menu') then
-        vRP.prompt(source,"Spawncode:","",function(source,spawncode)
+    if ARMA.hasPermission(user_id, 'anticheat.menu') then
+        ARMA.prompt(source,"Spawncode:","",function(source,spawncode)
             if spawncode ~= '' then
                 model = GetHashKey(spawncode)
                 if manage then
@@ -474,7 +474,7 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
             end
         end)
     else
-        local player = vRP.getUserSource(user_id)
+        local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Edit AC Vehicle Whitelist')
