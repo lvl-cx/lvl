@@ -539,10 +539,10 @@ function ARMA.ban(adminsource,permid,time,reason)
     if getBannedPlayerSrc then 
         if tonumber(time) then
             ARMA.setBanned(permid,true,time,reason, GetPlayerName(adminsource))
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
         else
             ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource))
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
         end
         ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
     else 
@@ -563,11 +563,11 @@ function ARMA.banConsole(permid,time,reason)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason,  adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
             f10Ban(permid, adminPermID, reason, time)
         else 
             ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
             f10Ban(permid, adminPermID, reason, "perm")
         end
         print("~g~Success banned! User PermID:" .. permid)
@@ -581,11 +581,11 @@ function ARMA.banDiscord(permid,time,reason,adminPermID)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
             f10Ban(permid, adminPermID, reason, time)
         else 
             ARMA.setBanned(permid,true,"perm",reason,  adminPermID)
-            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/arma") 
+            ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
             f10Ban(permid, adminPermID, reason, "perm")
         end
         print("~g~Success banned! User PermID:" .. permid)
@@ -795,10 +795,10 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     return 
                                 end
                                 print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
-                                deferrals.done("\n[ARMA] Ban expires on: "..os.date("%c", bantime).."\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by "..banadmin.."\nAppeal @ discord.gg/arma")
+                                deferrals.done("\n[ARMA] Ban expires on: "..os.date("%c", bantime).."\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by "..banadmin.."\nAppeal @ discord.gg/armarp")
                             else 
                                 print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
-                                deferrals.done("\n[ARMA] Permanent Ban\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by: "..banadmin .."\nAppeal @ discord.gg/arma")
+                                deferrals.done("\n[ARMA] Permanent Ban\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by: "..banadmin .."\nAppeal @ discord.gg/armarp")
                             end
                         end)
                     end
