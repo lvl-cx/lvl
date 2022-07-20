@@ -21,6 +21,6 @@ AddEventHandler("ARMA:BuyStoreItem", function(item, price, amount, x)
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
-        ARMA.banConsole(user_id,"perm","Cheating/ Triggering Events")
+        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Trigger Store Buy Item')
     end
 end)
