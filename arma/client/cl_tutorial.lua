@@ -1,6 +1,6 @@
 local a = false
 local b = false
-local c = vector3(-1036.5452880859, -2735.7922363281, 13.756631851196)
+local c = vector3(-1037.3941650391,-2737.4182128906,13.780251502991)
 local d = ""
 local e = nil
 local f = 0
@@ -76,7 +76,7 @@ AddEventHandler("ARMA:startTutorial",function()
     DoScreenFadeOut(500)
     NetworkFadeOutEntity(PlayerPedId(), true, false)
     Wait(5000)
-    SetEntityCoords(PlayerPedId(), -1033.1064453125, -2730.1145019531, 13.756633758545)
+    SetEntityCoords(PlayerPedId(), -1035.9837646484,-2733.5810546875,13.756638526917)
     SetEntityHeading(PlayerPedId(), 146.0)
     NetworkFadeInEntity(PlayerPedId(), 0)
     DoScreenFadeIn(3000)
