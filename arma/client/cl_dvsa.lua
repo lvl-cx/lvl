@@ -46,7 +46,7 @@ RegisterNetEvent("ARMA:dvsaData",function(n,o,p,q)
             local ped=tARMA.createDynamicPed(s.model,t,s.heading,true,"mini@strip_club@idles@bouncer@base","base",30,false,nil)
         end 
     end
-    loadModel(i.models.camera)
+    tARMA.LoadModel(i.models.camera)
     for r,s in pairs(i.cameras)do 
         i.cameras[r].prop=CreateObject(i.models.camera,s.coords.x,s.coords.y,s.coords.z,false,false,false)
         while not DoesEntityExist(i.cameras[r].prop)do 
@@ -94,7 +94,7 @@ RegisterNetEvent("ARMA:beginTestClient",function(z,A)
         SetVehicleDirtLevel(currentTest.vehicle,0)
         SetVehicleRadioEnabled(currentTest.vehicle,false)
         cameraTransition(i.test.parkingSpaces[A].coords)
-        local B=loadModel(i.test.examinerModel)
+        local B=tARMA.LoadModel(i.test.examinerModel)
         currentTest.ped=CreatePed(26,B,218.611,-1390.879,30.57727,321.37,false,true)
         while not DoesEntityExist(currentTest.ped)do 
             Wait(0)
@@ -232,7 +232,7 @@ function policeChase()
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You are required to ~b~move over ~w~to allow a police pursuit to continue.","DVSA","UK Government")
     currentTest.subtitle="Move ~y~over"
     local G=`blista`
-    loadModel(G)
+    tARMA.LoadModel(G)
     local H=vector3(113.0901,-1226.426,37.60364)
     local I=tARMA.spawnVehicle(G,H,270.93,false,true)
     while not DoesEntityExist(I)do 
@@ -240,7 +240,7 @@ function policeChase()
     end
     SetModelAsNoLongerNeeded(G)
     local J=`a_f_y_business_02`
-    loadModel(J)
+    tARMA.LoadModel(J)
     local K=CreatePed(4,J,H,270.93,true)
     while not DoesEntityExist(K)do 
         Wait(0)
@@ -259,14 +259,14 @@ function policeChase()
     if not IsModelValid(M)then 
         M=`policet`
     end
-    loadModel(M)
+    tARMA.LoadModel(M)
     local N=tARMA.spawnVehicle(M,H,270.93,false,true)
     while not DoesEntityExist(N)do 
         Wait(0)
     end
     SetModelAsNoLongerNeeded(M)
     local O=`s_m_y_airworker`
-    loadModel(O)
+    tARMA.LoadModel(O)
     local P=CreatePed(4,O,H,270.93,true)
     while not DoesEntityExist(P)do 
         Wait(0)
@@ -578,7 +578,7 @@ function emergencyStop()
     useTablet()
 end
 function useTablet()
-    local B=loadModel(`prop_cs_tablet`)
+    local B=tARMA.LoadModel(`prop_cs_tablet`)
     currentTest.tabletHandle=CreateObject(B,0,0,0,true,true,true)
     AttachEntityToEntity(currentTest.tabletHandle,currentTest.ped,GetPedBoneIndex(currentTest.ped,57005),0.17,0.10,-0.13,24.0,180.0,180.0,true,true,false,true,1,true)
     RequestAnimDict("amb@world_human_seat_wall_tablet@female@base")
@@ -908,7 +908,7 @@ end)
 function createPlate(vehicle)
     e.active=true
     e.vehicle=vehicle
-    local B=loadModel(`prop_lplate`)
+    local B=tARMA.LoadModel(`prop_lplate`)
     local t=tARMA.getPlayerCoords()
     e.handle=CreateObject(B,t.x,t.y,t.z,false,false,false)
     e.handle2=CreateObject(B,t.x,t.y,t.z,false,false,false)
@@ -923,13 +923,13 @@ function createPlate(vehicle)
     tARMA.notifyPicture(i.images.dict,i.images.lPlate,i.notifications.lPlatesAdded2,"DVSA","Licence Services")
 end
 function makeVehicleCrash(as,J,H,L,at)
-    loadModel(as)
+    tARMA.LoadModel(as)
     local I=tARMA.spawnVehicle(as,H,at,true,true)
     while not DoesEntityExist(I)do 
         Wait(0)
     end
     SetModelAsNoLongerNeeded(as)
-    loadModel(J)
+    tARMA.LoadModel(J)
     local K=CreatePed(4,J,H,at,false)
     while not DoesEntityExist(K)do 
         Wait(0)
