@@ -934,11 +934,11 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
         exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(target,
         {
-        username = "ARMA Screenshot Logs",
+        username = "ARMA",
         avatar_url = "",
         embeds = {
             {
-                color = 11111111,
+                color = 16448403,
                 title = admin_name.."["..admin_id.."] Took a screenshot",
                 description = "**Admin Name:** " ..admin_name.. "\n**Admin ID:** " ..admin_id.. "\n**Player Name:** " ..target_name.. "\n**Player ID:** " ..target_id,
                 footer = {

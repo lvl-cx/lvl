@@ -116,10 +116,10 @@ AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
     if user_id ~= nil then
         for k,v in pairs(cheatingCrashes) do
             if v == reason then
-                PerformHttpRequest('webhook here', function(err, text, headers) 
+                PerformHttpRequest('https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGFc', function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
                     {
-                        ["color"] = 16777215,
+                        ["color"] = 16448403,
                         ["title"] = "Cheating Crash Error",
                         ["description"] = "> Name: **"..GetPlayerName(source).."**\n> Perm ID: **"..user_id.."**\n> Temp ID: **"..source.."**\n> Reason: **" .. reason .. "**\n\n*These can sometimes be false positives, if a person flags 2 or more times they are most likely cheating*",
                         ["footer"] = {
@@ -378,7 +378,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 avatar_url = image,
                 embeds = {
                     {
-                        ["color"] = 16777215,
+                        ["color"] = 16448403,
                         ["title"] = "Anticheat Ban (Screenshot Above)",
                         ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",                        ["footer"] = {
                             ["text"] = "ARMA - "..os.date("%c"),
@@ -392,7 +392,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                     print("^1ERROR: " .. error)
                     local embed = {
                         {
-                            ["color"] = 16777215,
+                            ["color"] = 16448403,
                             ["title"] = "Anticheat Ban (Screenshot Failed)",
                             ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",
                             ["footer"] = {
@@ -422,7 +422,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
             {
-                ["color"] = 16777215,
+                ["color"] = 16448403,
                 ["title"] = "Anticheat Unban",
                 ["description"] = "> Admin Name: **"..playerName.."**\n> Admin Perm ID: **"..user_id.."**\n> Players Perm ID: **"..permid.."**",
                 ["footer"] = {
