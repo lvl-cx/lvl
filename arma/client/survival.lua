@@ -14,6 +14,7 @@ Citizen.CreateThread(function()
   while true do 
     if IsDisabledControlJustPressed(0,38) then
       if playerCanRespawn and in_coma and secondsTilBleedout < 1 then
+        TriggerEvent("ARMA:respawnKeyPressed")
         tARMA.respawnPlayer()
       end
       Wait(1000)
@@ -150,6 +151,7 @@ end)
 
 AddEventHandler("ARMA:countdownEnded",function()
     secondsTilBleedout = 0
+    playerCanRespawn = true
 end)
 
 Citizen.CreateThread(function()
@@ -257,14 +259,10 @@ Citizen.CreateThread(function()
             end
             
             if (Killer == PlayerId()) or (Killer == nil) then
-                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout, 'name' or "N/A",'userid' or "N/A", 'weapon died to' or "N/A",true)
+                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout,"N/A","N/A","N/A",true)
             else
                 if IsMelee(DeathCauseHash) then
                     DeathReason = 'murdered'
-                elseif IsTorch(DeathCauseHash) then
-                    DeathReason = 'torched'
-                elseif IsKnife(DeathCauseHash) then
-                    DeathReason = 'knifed'
                 elseif IsPistol(DeathCauseHash) then
                     DeathReason = 'pistoled'
                 elseif IsSub(DeathCauseHash) then
@@ -274,19 +272,13 @@ Citizen.CreateThread(function()
                 elseif IsLight(DeathCauseHash) then
                     DeathReason = 'machine gunned'
                 elseif IsShotgun(DeathCauseHash) then
-                    DeathReason = 'pulverized'
+                    DeathReason = 'shotgunned'
                 elseif IsSniper(DeathCauseHash) then
                     DeathReason = 'sniped'
-                elseif IsHeavy(DeathCauseHash) then
-                    DeathReason = 'obliterated'
-                elseif IsMinigun(DeathCauseHash) then
-                    DeathReason = 'shredded'
-                elseif IsBomb(DeathCauseHash) then
-                    DeathReason = 'bombed'
                 elseif IsVeh(DeathCauseHash) then
-                    DeathReason = 'mowed over'
+                    DeathReason = 'chopped up'
                 elseif IsVK(DeathCauseHash) then
-                    DeathReason = 'flattened'
+                    DeathReason = 'ran over'
                 else
                     DeathReason = 'killed'
                 end
@@ -305,26 +297,6 @@ end)
 
 function IsMelee(Weapon)
     local Weapons = {'WEAPON_UNARMED', 'WEAPON_CROWBAR', 'WEAPON_BAT', 'WEAPON_GOLFCLUB', 'WEAPON_HAMMER', 'WEAPON_NIGHTSTICK'}
-    for i, CurrentWeapon in ipairs(Weapons) do
-        if GetHashKey(CurrentWeapon) == Weapon then
-            return true
-        end
-    end
-    return false
-end
-
-function IsTorch(Weapon)
-    local Weapons = {'WEAPON_MOLOTOV'}
-    for i, CurrentWeapon in ipairs(Weapons) do
-        if GetHashKey(CurrentWeapon) == Weapon then
-            return true
-        end
-    end
-    return false
-end
-
-function IsKnife(Weapon)
-    local Weapons = {'WEAPON_DAGGER', 'WEAPON_KNIFE', 'WEAPON_SWITCHBLADE', 'WEAPON_HATCHET', 'WEAPON_BOTTLE'}
     for i, CurrentWeapon in ipairs(Weapons) do
         if GetHashKey(CurrentWeapon) == Weapon then
             return true
@@ -385,36 +357,6 @@ end
 
 function IsSniper(Weapon)
     local Weapons = {'WEAPON_MARKSMANRIFLE', 'WEAPON_SNIPERRIFLE', 'WEAPON_HEAVYSNIPER', 'WEAPON_ASSAULTSNIPER', 'WEAPON_REMOTESNIPER'}
-    for i, CurrentWeapon in ipairs(Weapons) do
-        if GetHashKey(CurrentWeapon) == Weapon then
-            return true
-        end
-    end
-    return false
-end
-
-function IsHeavy(Weapon)
-    local Weapons = {'WEAPON_GRENADELAUNCHER', 'WEAPON_RPG', 'WEAPON_FLAREGUN', 'WEAPON_HOMINGLAUNCHER', 'WEAPON_FIREWORK', 'VEHICLE_WEAPON_TANK'}
-    for i, CurrentWeapon in ipairs(Weapons) do
-        if GetHashKey(CurrentWeapon) == Weapon then
-            return true
-        end
-    end
-    return false
-end
-
-function IsMinigun(Weapon)
-    local Weapons = {'WEAPON_MINIGUN'}
-    for i, CurrentWeapon in ipairs(Weapons) do
-        if GetHashKey(CurrentWeapon) == Weapon then
-            return true
-        end
-    end
-    return false
-end
-
-function IsBomb(Weapon)
-    local Weapons = {'WEAPON_GRENADE', 'WEAPON_PROXMINE', 'WEAPON_EXPLOSION', 'WEAPON_STICKYBOMB'}
     for i, CurrentWeapon in ipairs(Weapons) do
         if GetHashKey(CurrentWeapon) == Weapon then
             return true
