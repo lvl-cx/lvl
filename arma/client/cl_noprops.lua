@@ -27,7 +27,7 @@ local function q(r,s,t,u)
     return r~=t and r~=t/2 or s~=u and s~=u/2 
 end
 local function v(w)
-    loadModel(w)
+    tARMA.LoadModel(w)
     local x=CreateObject(w,100.0,100.0,10.0,false,false,false)
     FreezeEntityPosition(x,true)
     SetModelAsNoLongerNeeded(w)
