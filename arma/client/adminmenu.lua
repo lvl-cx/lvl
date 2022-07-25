@@ -405,7 +405,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if GlobalAdminLevel >= 5 then                   
-                RageUI.List("Teleport to ",q,s,nil,{},true,function(x, y, z, N)
+                RageUI.List("Teleport to ",q,s,"",{},true,function(x, y, z, N)
                     s = N
                     if z then
                         local uid = GetPlayerServerId(PlayerId())
