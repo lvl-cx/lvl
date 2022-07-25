@@ -41,6 +41,16 @@ function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
 
+RegisterNetEvent("clothingMenu:UpdateWardrobe")
+AddEventHandler("clothingMenu:UpdateWardrobe", function(newWardrobe)
+    wardrobe = newWardrobe
+end)
+
+RegisterNetEvent("clothingMenu:closeWardrobe")
+AddEventHandler("clothingMenu:closeWardrobe", function()
+    RageUI.CloseAll()
+end)
+
 RageUI.CreateWhile(1.0, true, function()
     
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'main')) then
@@ -48,11 +58,6 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Button("Change Clothing", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "clothingsubmenu"))
             RageUI.Button("Change Gender", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changegendersubmenu"))
             RageUI.Button("Change Ped", nil, {}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAClothing", "changepedmenu"))
-            --RageUI.Button("Clear Prop Index", "~r~Clear all Props that are on your body!", {}, true, function(Hovered, Active, Selected) 
-            --    if Selected then 
-            --        ClearAllPedProps(PlayerPedId())
-            --    end
-            --end)
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAClothing', 'changegendersubmenu')) then 
