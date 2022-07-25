@@ -5,13 +5,9 @@ largearms.location = vector3(-1111.3123779297,4937.2846679688,218.3872833252)
 
 largearms.marker = vector3(-1111.3123779297,4937.2846679688,218.3872833252-0.98)
 
-largearms.name = 'Large Arms'
-
-largearms.banner = 'large'
-
 -- [Start of RageUI]
 
-RMenu.Add('LargeArms', 'main', RageUI.CreateMenu("", "~b~" .. largearms.name, 1300, 50, largearms.banner, largearms.banner))
+RMenu.Add('LargeArms', 'main', RageUI.CreateMenu("", "~b~" .. "Large Arms", 1300, 50, "banners", "large"))
 RMenu.Add("LargeArms", "confirm", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  1300, 50)))
 RMenu.Add("LargeArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  1300, 50)))
 

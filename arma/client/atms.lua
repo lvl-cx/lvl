@@ -1,5 +1,5 @@
 local cfg = module("cfg/atms")
-RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",1300, 50, 'atm', 'atm'))
+RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",1300, 50, 'banners', 'atm'))
 RMenu.Add("ARMAATM", "submenuwithdraw", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  1300, 50)))
 RMenu.Add("ARMAATM", "submenudeposit", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  1300, 50)))
 

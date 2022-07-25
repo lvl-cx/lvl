@@ -1,6 +1,6 @@
 currentHours = 0
 
-RMenu.Add('DailyRewards', 'main', RageUI.CreateMenu("","~b~Rewards",10,50, "rewards", "rewards"))
+RMenu.Add('DailyRewards', 'main', RageUI.CreateMenu("","~b~Rewards",10,50, "banners", "rewards"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('DailyRewards', 'main')) then

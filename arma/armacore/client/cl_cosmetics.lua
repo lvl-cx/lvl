@@ -5,7 +5,7 @@ data = {}
 -- - Chain
 -- - Vest
 
-RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", 1300, 50, "cosmetics", "cosmetics"))
+RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", 1300, 50, "banners", "cosmetics"))
 RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 

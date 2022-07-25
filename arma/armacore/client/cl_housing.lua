@@ -11,13 +11,13 @@ local owned = false
 wardrobe = {}
 ownedHouses = {}
 
-RMenu.Add("JudHousing", "main", RageUI.CreateMenu("", "", 1350, 50,"housing","housing"))
-RMenu.Add("JudHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"housing","housing"))
-RMenu.Add("JudHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"housing","housing"))
-RMenu.Add("JudHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("JudHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"housing","housing"))
+RMenu.Add("ARMAHousing", "main", RageUI.CreateMenu("", "", 1350, 50,"banners","housing"))
+RMenu.Add("ARMAHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"banners","housing"))
+RMenu.Add("ARMAHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"banners","housing"))
+RMenu.Add("ARMAHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("ARMAHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"banners","housing"))
 
 RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('JudHousing', 'main')) then
+    if RageUI.Visible(RMenu:Get('ARMAHousing', 'main')) then
         maxKG = Housing.chestsize[currentHome] or 500
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator('Price: ~g~£'..getMoneyStringFormatted(currentHousePrice))
@@ -43,7 +43,7 @@ RageUI.CreateWhile(1.0, true, function()
         end, function()
         end)
     end
-    if RageUI.Visible(RMenu:Get('JudHousing', 'leave')) then
+    if RageUI.Visible(RMenu:Get('ARMAHousing', 'leave')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button("Leave Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -53,7 +53,7 @@ RageUI.CreateWhile(1.0, true, function()
         end, function()
         end)
     end
-    if RageUI.Visible(RMenu:Get('JudHousing', 'wardrobe')) then
+    if RageUI.Visible(RMenu:Get('ARMAHousing', 'wardrobe')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for k, v in pairs(wardrobe) do
                 RageUI.Button(k, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
@@ -61,7 +61,7 @@ RageUI.CreateWhile(1.0, true, function()
                         currentOutfit = k
                         savedArmour = GetPedArmour(PlayerPedId())
                     end
-                end, RMenu:Get("JudHousing", "wardrobesub"))
+                end, RMenu:Get("ARMAHousing", "wardrobesub"))
             end
     
             RageUI.Button("~g~Save Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
@@ -83,7 +83,7 @@ RageUI.CreateWhile(1.0, true, function()
         end, function()
         end)
     end
-    if RageUI.Visible(RMenu:Get('JudHousing', 'wardrobesub')) then
+    if RageUI.Visible(RMenu:Get('ARMAHousing', 'wardrobesub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button("~g~Equip Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -98,13 +98,13 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end
-            end, RMenu:Get("JudHousing", "wardrobe"))
+            end, RMenu:Get("ARMAHousing", "wardrobe"))
     
             RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("ARMAHousing:RemoveOutfit", currentOutfit)
                 end
-            end, RMenu:Get("JudHousing", "wardrobe"))
+            end, RMenu:Get("ARMAHousing", "wardrobe"))
         end, function()
         end)
     end
@@ -134,13 +134,13 @@ Citizen.CreateThread(function()
             if isInArea(v.entry_point, 0.8) and isInMenu == false then 
                 currentHome = k
                 currentHousePrice = v.buy_price
-                RMenu:Get("JudHousing", "main"):SetSubtitle("~b~" .. currentHome)
-                RageUI.Visible(RMenu:Get("JudHousing", "main"), true)
+                RMenu:Get("ARMAHousing", "main"):SetSubtitle("~b~" .. currentHome)
+                RageUI.Visible(RMenu:Get("ARMAHousing", "main"), true)
                 isInMenu = true
             end
 
             if isInArea(v.entry_point, 0.8) == false and isInMenu and currentHome == k then
-                RageUI.Visible(RMenu:Get("JudHousing", "main"), false)
+                RageUI.Visible(RMenu:Get("ARMAHousing", "main"), false)
                 isInMenu = false
             end
 
@@ -168,12 +168,12 @@ Citizen.CreateThread(function()
                 if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and inHome then
                     TriggerServerEvent("ARMAHousing:LoadWardrobe")
                     currentHome = k
-                    RageUI.Visible(RMenu:Get("JudHousing", "wardrobe"), true)
+                    RageUI.Visible(RMenu:Get("ARMAHousing", "wardrobe"), true)
                     isInWardrobeMenu = true
                 end
 
                 if isInArea(v.wardrobe_point, 0.8) == false and isInWardrobeMenu and currentHome == k and inHome then
-                    RageUI.Visible(RMenu:Get("JudHousing", "wardrobe"), false)
+                    RageUI.Visible(RMenu:Get("ARMAHousing", "wardrobe"), false)
                     isInWardrobeMenu = false
                 end
 
@@ -185,13 +185,13 @@ Citizen.CreateThread(function()
 
                 if isInArea(v.leave_point, 0.8) and isInLeaveMenu == false and inHome then
                     currentHome = k
-                    RMenu:Get("JudHousing", "leave"):SetSubtitle("~b~" .. currentHome)
-                    RageUI.Visible(RMenu:Get("JudHousing", "leave"), true)
+                    RMenu:Get("ARMAHousing", "leave"):SetSubtitle("~b~" .. currentHome)
+                    RageUI.Visible(RMenu:Get("ARMAHousing", "leave"), true)
                     isInLeaveMenu = true
                 end
 
                 if isInArea(v.leave_point, 0.8) == false and isInLeaveMenu and currentHome == k and inHome then
-                    RageUI.Visible(RMenu:Get("JudHousing", "leave"), false)
+                    RageUI.Visible(RMenu:Get("ARMAHousing", "leave"), false)
                     isInLeaveMenu = false
                    
                 end

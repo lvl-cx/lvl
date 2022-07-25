@@ -5,13 +5,9 @@ rebel.location = vector3(1545.2042236328,6332.3295898438,24.078683853149)
 
 rebel.marker = vector3(1545.2042236328,6332.3295898438,24.078683853149-0.98)
 
-rebel.name = 'Rebel'
-
-rebel.banner = 'rebel'
-
 -- [Start of RageUI]
 
-RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "~b~" .. rebel.name, 1300, 50, rebel.banner, rebel.banner))
+RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "~b~" .. "Rebel", 1300, 50, "banners", "rebel"))
 RMenu.Add("Rebel", "confirma", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
 RMenu.Add("Rebel", "confirm", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
 

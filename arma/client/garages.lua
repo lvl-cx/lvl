@@ -11,7 +11,7 @@ local veh = nil
 local cantload = {}
 local vehname = nil 
 --Created by JamesUK#6793 :)
-RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Garage Menu",1300, 50, 'garage', 'garage'))
+RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Garage Menu",1300, 50, 'banners', 'garage'))
 RMenu.Add('ARMAGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))

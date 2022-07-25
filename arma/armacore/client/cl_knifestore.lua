@@ -5,13 +5,9 @@ knifestore.location = vector3(21.854759216309,-1107.3658447266,29.797010421753)
 
 knifestore.marker = vector3(21.854759216309,-1107.3658447266,29.797010421753-0.98)
 
-knifestore.name = 'Knife Store'
-
-knifestore.banner = 'knife'
-
 -- [Start of RageUI]
 
-RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~b~" .. knifestore.name, 1300, 50, knifestore.banner, knifestore.banner))
+RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~b~" .. "Knife Store", 1300, 50, "banners", "knife"))
 RMenu.Add("KnifeStoreMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('KnifeStoreMenu', 'main',  1300, 50)))
 
 knifestore.guns = {

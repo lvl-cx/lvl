@@ -23,7 +23,7 @@ AddEventHandler("ARMA:VIPPerms",function(vip)
     hasVIP = vip
 end)
 
-RMenu.Add('RespawnMenu', 'main', RageUI.CreateMenu("", "Respawn Menu", 1350, 50, "spawn", "spawn"))
+RMenu.Add('RespawnMenu', 'main', RageUI.CreateMenu("", "Respawn Menu", 1350, 50, "banners", "spawn"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('RespawnMenu', 'main')) then

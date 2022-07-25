@@ -5,13 +5,9 @@ armoury.location = vector3(451.34454345703,-980.09381103516,30.689605712891)
 
 armoury.marker = vector3(451.34454345703,-980.09381103516,30.689605712891-0.98)
 
-armoury.name = 'Police Armoury'
-
-armoury.banner = 'armoury'
-
 -- [Start of RageUI]
 
-RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~b~" .. armoury.name, 1300, 50, armoury.banner, armoury.banner))
+RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~b~" .. "Police Armoury", 1300, 50, "banners", "armoury"))
 RMenu.Add("PDArmoury", "confirm", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 RMenu.Add("PDArmoury", "confirma", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
 

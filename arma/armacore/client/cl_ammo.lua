@@ -5,13 +5,10 @@ ammo.location = vector3(-458.36862182617,-2274.5075683594,8.5158195495605)
 
 ammo.marker = vector3(-458.36862182617,-2274.5075683594,8.5158195495605-0.98)
 
-ammo.name = 'Ammo Trader'
-
-ammo.banner = 'rebel'
 
 -- [Start of RageUI]
 
-RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "~b~" .. ammo.name, 1300, 50, ammo.banner, ammo.banner))
+RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "~b~" .. 'Ammo Trader', 1300, 50, "banners", "rebel"))
 RMenu.Add("Ammo", "confirm", RageUI.CreateSubMenu(RMenu:Get('Ammo', 'main',  1300, 50)))
 
 ammo.types = {
