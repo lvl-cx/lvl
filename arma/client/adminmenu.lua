@@ -451,10 +451,6 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'functions'))
             end
             if GlobalAdminLevel >= 11 then
-                RageUI.ButtonWithStyle("~b~Developer Functions", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'devfunctions'))
-            end
-            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("AntiCheat","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:getAnticheatData")
@@ -470,35 +466,27 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'devfunctions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 11 then
+            if tARMA.isDev() then
                 RageUI.ButtonWithStyle("Spawn Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:Giveweapon')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-            end
-            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-            end
-            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-            end
-            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Money","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-            end
-            if GlobalAdminLevel >= 11 then
                 RageUI.ButtonWithStyle("Give Crates","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveCratesMenu")
@@ -1386,6 +1374,12 @@ RegisterKeyMapping('openadminmenu', 'Opens the Admin menu', 'keyboard', 'F2')
 RegisterKeyMapping('noclip', 'Staff Noclip', 'keyboard', 'F4')       
 RegisterCommand('noclip', function(source, args, RawCommand)
     TriggerServerEvent("ARMA:noClip")
+end)
+
+RegisterCommand('devmenu',function()
+    if not tARMA.isDev() then
+        RageUI.Visible(RMenu:Get("adminmenu", "devfunctions"), not RageUI.Visible(RMenu:Get("adminmenu", "devfunctions")))
+    end
 end)
 
 function DrawHelpMsg(msg)
