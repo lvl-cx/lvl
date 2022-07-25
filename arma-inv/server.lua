@@ -92,8 +92,8 @@ AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
     end})
 end)
 
-RegisterNetEvent('Jud:FetchHouseInventory')
-AddEventHandler('Jud:FetchHouseInventory', function()
+RegisterNetEvent('ARMA:FetchHouseInventory')
+AddEventHandler('ARMA:FetchHouseInventory', function()
     local source = source
     local user_id = ARMA.getUserId({source})
     local homeformat = "chest:u" .. user_id .. "home"

@@ -32,7 +32,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(adminTickets) do
                 RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("Jud:TakeTicket", k, 'Admin')
+                        TriggerServerEvent("ARMA:TakeTicket", k, 'Admin')
                     end
                 end)
             end
@@ -43,7 +43,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(PDCalls) do
                 RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("Jud:TakeTicket", k, 'PD')
+                        TriggerServerEvent("ARMA:TakeTicket", k, 'PD')
                         SetNewWaypoint(v.coords.x, v.coords.y)
                     end
                 end)
@@ -55,7 +55,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(NHSCalls) do
                 RageUI.Button("["..v.permID.."] "..v.name.." : "..k, nil, "", true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("Jud:TakeTicket", k, 'NHS')
+                        TriggerServerEvent("ARMA:TakeTicket", k, 'NHS')
                         SetNewWaypoint(v.coords.x, v.coords.y)
                     end
                 end)
@@ -64,23 +64,23 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-RegisterNetEvent("Jud:RecieveTickets")
-AddEventHandler("Jud:RecieveTickets", function(a)
+RegisterNetEvent("ARMA:RecieveTickets")
+AddEventHandler("ARMA:RecieveTickets", function(a)
     adminTickets = a
 end)
 
-RegisterNetEvent("Jud:ReceivePDCalls")
-AddEventHandler("Jud:ReceivePDCalls", function(b)
+RegisterNetEvent("ARMA:ReceivePDCalls")
+AddEventHandler("ARMA:ReceivePDCalls", function(b)
     PDCalls = b
 end)
 
-RegisterNetEvent("Jud:ReceiveNHSCalls")
-AddEventHandler("Jud:ReceiveNHSCalls", function(c)
+RegisterNetEvent("ARMA:ReceiveNHSCalls")
+AddEventHandler("ARMA:ReceiveNHSCalls", function(c)
     NHSCalls = c
 end)
 
-RegisterNetEvent('Jud:sendTicketInfo')
-AddEventHandler('Jud:sendTicketInfo', function(permid, name)
+RegisterNetEvent('ARMA:sendTicketInfo')
+AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
     if permid ~= nil and name ~= nil then
         isInTicket = true
     else
@@ -98,7 +98,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if IsControlJustPressed(1, 178) then
-            TriggerServerEvent("Jud:RequestTickets")
+            TriggerServerEvent("ARMA:RequestTickets")
             RageUI.Visible(RMenu:Get("callmanager", "main"), true)
         end
     end

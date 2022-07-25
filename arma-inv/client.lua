@@ -73,8 +73,8 @@ function LoadAnimDict(dict)
     end
 end
 
-RegisterNetEvent("Jud:OpenHomeStorage")
-AddEventHandler("Jud:OpenHomeStorage", function(toggle)
+RegisterNetEvent("ARMA:OpenHomeStorage")
+AddEventHandler("ARMA:OpenHomeStorage", function(toggle)
     if toggle == true then
         TriggerServerEvent('ARMA:FetchPersonalInventory')
         inventoryOpen = true; 
@@ -82,7 +82,7 @@ AddEventHandler("Jud:OpenHomeStorage", function(toggle)
         SetNuiFocusKeepInput(true)
         SendNUIMessage({action = 'InventoryDisplay', showInv = true})
         inventoryType = 'Housing'
-        TriggerServerEvent('Jud:FetchHouseInventory')
+        TriggerServerEvent('ARMA:FetchHouseInventory')
     else
         inventoryOpen = false;
         SetNuiFocus(false, false)

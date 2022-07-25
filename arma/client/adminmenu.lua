@@ -178,7 +178,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'players'))
                 RageUI.ButtonWithStyle("Nearby Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("Jud:GetNearbyPlayers", 250)
+                        TriggerServerEvent("ARMA:GetNearbyPlayers", 250)
                     end
                 end, RMenu:Get('adminmenu', 'closeplayers'))
                 RageUI.ButtonWithStyle("Search Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -227,8 +227,8 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-RegisterNetEvent("Jud:ReturnNearbyPlayers")
-AddEventHandler("Jud:ReturnNearbyPlayers", function(table)
+RegisterNetEvent("ARMA:ReturnNearbyPlayers")
+AddEventHandler("ARMA:ReturnNearbyPlayers", function(table)
     playersNearby = table
 end)
 

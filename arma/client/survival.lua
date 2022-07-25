@@ -137,7 +137,7 @@ Citizen.CreateThread(function()
 				if IsControlJustPressed(1, 51) then
 					calledNHS = true
 					notify('~g~NHS called to your approximate location')
-					TriggerServerEvent('Jud:NHSComaCall')
+					TriggerServerEvent('ARMA:NHSComaCall')
                     TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
 				end
 			end

@@ -283,7 +283,7 @@ RegisterCommand("return", function()
             tARMA.notify("~r~Unable to find last location!")
         end
         tARMA.staffMode(source, {false, false})
-        TriggerEvent('Jud:sendTicketInfo', source)
+        TriggerEvent('ARMA:sendTicketInfo', source)
     end
 end)
 

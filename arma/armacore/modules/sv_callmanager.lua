@@ -3,17 +3,17 @@ local pdCalls = {}
 local NHSCalls = {}
 --table.insert(adminTickets, {name = 'Test', permID = 1, tempID = 1}) test case
 
-RegisterNetEvent("Jud:RequestTickets")
-AddEventHandler("Jud:RequestTickets", function()
+RegisterNetEvent("ARMA:RequestTickets")
+AddEventHandler("ARMA:RequestTickets", function()
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        TriggerClientEvent("Jud:RecieveTickets", source, adminTickets)
+        TriggerClientEvent("ARMA:RecieveTickets", source, adminTickets)
     end
     if ARMA.hasPermission(user_id, "police.perms") then
-        TriggerClientEvent("Jud:ReceivePDCalls", source, pdCalls)
+        TriggerClientEvent("ARMA:ReceivePDCalls", source, pdCalls)
     end
     if ARMA.hasPermission(user_id, "nhs.menu") then
-        TriggerClientEvent("Jud:ReceiveNHSCalls", source, NHSCalls)
+        TriggerClientEvent("ARMA:ReceiveNHSCalls", source, NHSCalls)
     end
 end)
 
@@ -85,8 +85,8 @@ RegisterCommand("111", function(source)
     end)
 end)
 
-RegisterNetEvent("Jud:RemoveTicket")
-AddEventHandler("Jud:RemoveTicket", function(ticketID, a)
+RegisterNetEvent("ARMA:RemoveTicket")
+AddEventHandler("ARMA:RemoveTicket", function(ticketID, a)
     if a == "Admin" then
         adminTickets[ticketID] = nil
     elseif a == "PD" then
@@ -96,19 +96,19 @@ AddEventHandler("Jud:RemoveTicket", function(ticketID, a)
     end
     for k, v in pairs(ARMA.getUsers({})) do
         if ARMA.hasPermission(k, "admin.tickets") then
-            TriggerClientEvent("Jud:RecieveTickets", v, adminTickets)
+            TriggerClientEvent("ARMA:RecieveTickets", v, adminTickets)
         end
         if ARMA.hasPermission(k, "police.perms") then
-            TriggerClientEvent("Jud:RecieveTickets", v, pdCalls)
+            TriggerClientEvent("ARMA:RecieveTickets", v, pdCalls)
         end
         if ARMA.hasPermission(k, "nhs.menu") then
-            TriggerClientEvent("Jud:RecieveTickets", v, NHSCalls)
+            TriggerClientEvent("ARMA:RecieveTickets", v, NHSCalls)
         end
     end
 end)
 
-RegisterNetEvent("Jud:TakeTicket")
-AddEventHandler("Jud:TakeTicket", function(ticketID, b)
+RegisterNetEvent("ARMA:TakeTicket")
+AddEventHandler("ARMA:TakeTicket", function(ticketID, b)
     local user_id = ARMA.getUserId(source)
     local admin_source = ARMA.getUserSource(user_id)
     if ARMA.hasPermission(user_id, "admin.tickets") and b == 'Admin' then
@@ -125,19 +125,19 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.staffMode(admin_source, {true})
-                                TriggerClientEvent('Jud:sendTicketInfo', admin_source, v.permID, v.name)
+                                TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
                                 ARMA.giveBankMoney(user_id, 3000)
                                 ARMAclient.notify(admin_source,{"~g~You have taken "..v.name.."'s ticket. You have earned £3,000 ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
                                 ARMAclient.teleport(admin_source, {x,y,z})
-                                TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                             end)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own ticket!"})
                         end
                     else
                         ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                     end
                 end
             end
@@ -152,14 +152,14 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
                         if user_id ~= v.permID then
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.notify(v.tempID,{"~g~Your police call has been accepted!"})
-                                TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                             end)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own call!"})
                         end
                     else
                         ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                     end
                 end
             end
@@ -174,14 +174,14 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
                         if user_id ~= v.permID then
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.notify(v.tempID,{"~g~Your emergency call has been accepted!"})
-                                TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                             end)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own call!"})
                         end
                     else
                         ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("Jud:RemoveTicket", ticketID, b)
+                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
                     end
                 end
             end
@@ -192,8 +192,8 @@ AddEventHandler("Jud:TakeTicket", function(ticketID, b)
 end)
 
 
-RegisterNetEvent("Jud:NHSComaCall")
-AddEventHandler("Jud:NHSComaCall", function()
+RegisterNetEvent("ARMA:NHSComaCall")
+AddEventHandler("ARMA:NHSComaCall", function()
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
     NHSCalls['Immediate Attention'] = {

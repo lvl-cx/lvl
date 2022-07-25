@@ -270,7 +270,7 @@ AddEventHandler("JudHousing:OpenChest", function(house)
 
     getUserByAddress(house, 1, function(huser_id)
         if huser_id == user_id then --check if homeowner is user
-            TriggerClientEvent("Jud:OpenHomeStorage", player, true , house) --JamesUK inventory modified by me
+            TriggerClientEvent("ARMA:OpenHomeStorage", player, true , house) --JamesUK inventory modified by me
         --print(house)
         else
             ARMAclient.notify(player,{"~r~You do not own this house!"})

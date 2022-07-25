@@ -41,8 +41,8 @@ end)
 
 
 
-RegisterNetEvent("Jud:GetNearbyPlayers")
-AddEventHandler("Jud:GetNearbyPlayers", function(dist)
+RegisterNetEvent("ARMA:GetNearbyPlayers")
+AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
     local source = source
     local user_id = ARMA.getUserId(source)
     local plrTable = {}
@@ -58,7 +58,7 @@ AddEventHandler("Jud:GetNearbyPlayers", function(dist)
                 end
                 plrTable[ARMA.getUserId(k)] = {GetPlayerName(k), k, ARMA.getUserId(k), math.ceil(PlayerTimeInHours)}
             end
-            TriggerClientEvent("Jud:ReturnNearbyPlayers", source, plrTable)
+            TriggerClientEvent("ARMA:ReturnNearbyPlayers", source, plrTable)
         end)
     end
 end)
