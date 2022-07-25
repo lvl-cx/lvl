@@ -497,16 +497,16 @@ RageUI.CreateWhile(1.0, true, function()
                 if searchforPermID == nil then 
                     searchforPermID = ""
                 end
-                g = searchforPermID
-                h[i] = g
-                i = i + 1
             end
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[3],searchforPermID) then
-                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            g = v[3]
+                            h[i] = g
+                            i = i + 1
                         end
                     end, RMenu:Get('adminmenu', 'submenu'))
                 end
@@ -523,16 +523,16 @@ RageUI.CreateWhile(1.0, true, function()
                 if searchid == nil then 
                     searchid = ""
                 end
-                g = searchid
-                h[i] = g
-                i = i + 1
             end
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[2], searchid) then
-                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            g = v[2]
+                            h[i] = g
+                            i = i + 1
                         end
                     end, RMenu:Get('adminmenu', 'submenu'))
                 end
@@ -553,9 +553,12 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(string.lower(v[1]), string.lower(SearchName)) then
-                    RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            g = v[1]
+                            h[i] = g
+                            i = i + 1
                         end
                     end, RMenu:Get('adminmenu', 'submenu'))
                 end
@@ -571,7 +574,7 @@ RageUI.CreateWhile(1.0, true, function()
                 if i > 1 then
                     for K = #h, #h - 10, -1 do
                         if h[K] then
-                            if tonumber(h[K]) == v[3] then
+                            if tonumber(h[K]) == v[3] or tonumber(h[K]) == v[2] or h[K] == v[1] then
                                 RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                                     if Selected then
                                         SelectedPlayer = players[k]
@@ -851,14 +854,14 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'notesub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if f == nil then
+            if noteslist == nil then
                 RageUI.Separator("~b~Player notes: Loading...")
-            elseif #f == 0 then
+            elseif #noteslist == 0 then
                 RageUI.Separator("~b~There are no player notes to display.")
             else
                 RageUI.Separator("~b~Player notes:")
-                for K = 1, #f do
-                    RageUI.Separator("~g~#"..f[K].note_id.." ~w~" .. f[K].text .. " - "..f[K].admin_name.. "("..f[K].admin_id..")")
+                for K = 1, #noteslist do
+                    RageUI.Separator("~g~#"..noteslist[K].note_id.." ~w~" .. noteslist[K].text .. " - "..noteslist[K].admin_name.. "("..noteslist[K].admin_id..")")
                 end
             end
             if GlobalAdminLevel > 1 then
@@ -881,9 +884,9 @@ end)
 RegisterNetEvent("ARMA:sendNotes",function(a7)
     a7 = json.decode(a7)
     if a7 == nil then
-        f = {}
+        noteslist = {}
     else
-        f = a7
+        noteslist = a7
     end
 end)
 
@@ -898,6 +901,7 @@ end)
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'anticheat')) then
+        TriggerServerEvent("ARMA:getAnticheatData")
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
                 foundMatch = false
@@ -1413,7 +1417,6 @@ end)
 
 RegisterCommand('anticheat',function()
     if tARMA.isDev() then
-        TriggerServerEvent("ARMA:getAnticheatData")
         RageUI.Visible(RMenu:Get("adminmenu", "anticheat"), not RageUI.Visible(RMenu:Get("adminmenu", "anticheat")))
     end
 end)
