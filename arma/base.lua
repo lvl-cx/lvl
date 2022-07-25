@@ -232,6 +232,10 @@ MySQL.createCommand("ARMA/check_token_userid","SELECT token FROM arma_user_token
 MySQL.createCommand("ARMA/ban_token","UPDATE arma_user_tokens SET banned = @banned WHERE token = @token")
 --Token Banning
 
+-- removing anticheat ban entry
+MySQL.createCommand("ac/delete_ban","DELETE FROM arma_anticheat WHERE @user_id = user_id")
+
+
 -- init tables
 
 
@@ -529,6 +533,7 @@ function ARMA.setBanned(user_id,banned,time,reason, admin)
         MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = "", banreason =  "", banadmin =  ""})
         ARMA.BanIdentifiers(user_id, false)
         ARMA.BanTokens(user_id, false) 
+        MySQL.execute("ac/delete_ban", {user_id = user_id})
     end 
 end
 
