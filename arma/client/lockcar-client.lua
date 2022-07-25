@@ -6,4 +6,4 @@ RegisterCommand('lockcar', function()
     end
 end)
 
-RegisterKeyMapping('lockcar', 'Locks and unlocks your vehicle', 'KEYBOARD', 'F3')
+RegisterKeyMapping('lockcar', 'Locks and unlocks your vehicle', 'KEYBOARD', 'COMMA')
