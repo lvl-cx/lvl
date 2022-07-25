@@ -60,7 +60,7 @@ function leaveHome(user_id, home, number, cbr)
   
     local player = ARMA.getUserSource(user_id)
 
-    TriggerClientEvent("JudHousing:UpdateInHome", player, false)
+    TriggerClientEvent("ARMAHousing:UpdateInHome", player, false)
     SetPlayerRoutingBucket(player, 0)
   
     for k, v in pairs(cfghomes.homes) do
@@ -77,7 +77,7 @@ function accessHome(user_id, home, number, cbr)
   
     local player = ARMA.getUserSource(user_id)
 
-    TriggerClientEvent("JudHousing:UpdateInHome", player, true)
+    TriggerClientEvent("ARMAHousing:UpdateInHome", player, true)
     local count = 0
     for k, v in pairs(cfghomes.homes) do
         count = count+1
@@ -92,8 +92,8 @@ end
 
 --Main Events
 
-RegisterNetEvent("JudHousing:Buy")
-AddEventHandler("JudHousing:Buy", function(house)
+RegisterNetEvent("ARMAHousing:Buy")
+AddEventHandler("ARMAHousing:Buy", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -133,8 +133,8 @@ AddEventHandler("JudHousing:Buy", function(house)
     end
 end)
 
-RegisterNetEvent("JudHousing:Enter")
-AddEventHandler("JudHousing:Enter", function(house)
+RegisterNetEvent("ARMAHousing:Enter")
+AddEventHandler("ARMAHousing:Enter", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
@@ -175,8 +175,8 @@ AddEventHandler("JudHousing:Enter", function(house)
     end)
 end)
 
-RegisterNetEvent("JudHousing:Leave")
-AddEventHandler("JudHousing:Leave", function(house)
+RegisterNetEvent("ARMAHousing:Leave")
+AddEventHandler("ARMAHousing:Leave", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -187,8 +187,8 @@ AddEventHandler("JudHousing:Leave", function(house)
     end)
 end)
 
-RegisterNetEvent("JudHousing:Sell")
-AddEventHandler("JudHousing:Sell", function(house)
+RegisterNetEvent("ARMAHousing:Sell")
+AddEventHandler("ARMAHousing:Sell", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -263,8 +263,8 @@ end)
 
 --Chest
 
-RegisterNetEvent("JudHousing:OpenChest")
-AddEventHandler("JudHousing:OpenChest", function(house)
+RegisterNetEvent("ARMAHousing:OpenChest")
+AddEventHandler("ARMAHousing:OpenChest", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -280,8 +280,8 @@ end)
 
 --Wardrobe
 
-RegisterNetEvent("JudHousing:SaveOutfit")
-AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
+RegisterNetEvent("ARMAHousing:SaveOutfit")
+AddEventHandler("ARMAHousing:SaveOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -296,13 +296,13 @@ AddEventHandler("JudHousing:SaveOutfit", function(outfitName)
             sets[outfitName] = custom --add outfit to table
             ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add outfit to database
             ARMAclient.notify(player,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
-            TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
+            TriggerClientEvent("ARMAHousing:UpdateWardrobe", player, sets) --update wardrobe for client
         end)
     end)
 end)
 
-RegisterNetEvent("JudHousing:RemoveOutfit")
-AddEventHandler("JudHousing:RemoveOutfit", function(outfitName)
+RegisterNetEvent("ARMAHousing:RemoveOutfit")
+AddEventHandler("ARMAHousing:RemoveOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -317,12 +317,12 @@ AddEventHandler("JudHousing:RemoveOutfit", function(outfitName)
 
         ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add new table to db
         ARMAclient.notify(player,{"~r~Remove outfit "..outfitName.." from wardrobe!"})
-        TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
+        TriggerClientEvent("ARMAHousing:UpdateWardrobe", player, sets) --update wardrobe for client
     end)
 end)
 
-RegisterNetEvent("JudHousing:LoadWardrobe")
-AddEventHandler("JudHousing:LoadWardrobe", function()
+RegisterNetEvent("ARMAHousing:LoadWardrobe")
+AddEventHandler("ARMAHousing:LoadWardrobe", function()
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -333,7 +333,7 @@ AddEventHandler("JudHousing:LoadWardrobe", function()
             sets = {}
         end
 
-        TriggerClientEvent("JudHousing:UpdateWardrobe", player, sets) --update wardrobe for client
+        TriggerClientEvent("ARMAHousing:UpdateWardrobe", player, sets) --update wardrobe for client
         if ARMA.hasGroup(user_id, 'VIP') then
             TriggerClientEvent("clothingMenu:UpdateWardrobe", player, sets) --update wardrobe for client
         else
