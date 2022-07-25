@@ -195,7 +195,7 @@ Citizen.CreateThread(function()
 	MySQL.createCommand("ARMAls/update_vehicle_modifications", "update arma_user_vehicles set modifications = @modifications where user_id = @user_id and vehicle = @vehicle")
 	MySQL.createCommand("ARMAls/get_vehicle_modifications", "select modifications from arma_user_vehicles where user_id = @user_id and vehicle = @vehicle")
 	MySQL.execute("ARMAls/create_modifications_column")
-    print("[ARMA] - Base tables initialised.")
+    print("[ARMA] ^2Base tables initialised.^0")
 end)
 
 

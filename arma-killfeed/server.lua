@@ -30,4 +30,4 @@ function getMoneyStringFormatted(cashString)
 	return minus .. int:reverse():gsub("^,", "") .. fraction 
 end
 
-print("[ARMA] - Killfeed initialised.")
+print("[ARMA] ^2Killfeed tables initialised.^0")

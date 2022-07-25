@@ -74,6 +74,6 @@
 ---                PRIMARY KEY (`user_id`)
 ---                );
 ---        ]])
----    print("[ARMA] - Random Crates initialised")
+---    print("[ARMA] ^2Random Crates initialised.^0")
 ---end)
 ---            
