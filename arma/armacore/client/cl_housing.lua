@@ -24,20 +24,20 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator('Storage: ~g~'..maxKG..'kg')
             RageUI.Button("Enter Home/Doorbell", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent("JudHousing:Enter", currentHome)
+                    TriggerServerEvent("ARMAHousing:Enter", currentHome)
                 end
             end)
             if owned ~= true then
                 RageUI.Button("~g~Buy Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("JudHousing:Buy", currentHome)
+                        TriggerServerEvent("ARMAHousing:Buy", currentHome)
                     end
                 end)
             end
 
             RageUI.Button("~r~Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent("JudHousing:Sell", currentHome)
+                    TriggerServerEvent("ARMAHousing:Sell", currentHome)
                 end
             end)
         end, function()
@@ -47,7 +47,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button("Leave Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent("JudHousing:Leave", currentHome)
+                    TriggerServerEvent("ARMAHousing:Leave", currentHome)
                 end
             end)
         end, function()
@@ -75,7 +75,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if (GetOnscreenKeyboardResult()) then
                         local result = GetOnscreenKeyboardResult()
                         if result then
-                            TriggerServerEvent("JudHousing:SaveOutfit", result)
+                            TriggerServerEvent("ARMAHousing:SaveOutfit", result)
                         end
                     end
                 end
@@ -89,7 +89,7 @@ RageUI.CreateWhile(1.0, true, function()
                 if Selected then
                     for k, v in pairs(wardrobe) do
                         if k == currentOutfit then
-                            tARMA.setCustomization({v})
+                            tARMA.setCustomization(v)
                             
                             SetTimeout(50, function()
                                 SetPedArmour(PlayerPedId(), savedArmour)
@@ -102,7 +102,7 @@ RageUI.CreateWhile(1.0, true, function()
     
             RageUI.Button("~r~Remove Outfit", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent("JudHousing:RemoveOutfit", currentOutfit)
+                    TriggerServerEvent("ARMAHousing:RemoveOutfit", currentOutfit)
                 end
             end, RMenu:Get("JudHousing", "wardrobe"))
         end, function()
@@ -155,7 +155,7 @@ Citizen.CreateThread(function()
                 if isInArea(v.chest_point, 0.8) and inHome then
                     alert("~y~Press ~INPUT_VEH_HORN~ To Open House Chest!")
                     if IsControlJustPressed(0, 51) then
-                        TriggerServerEvent("JudHousing:OpenChest", currentHome)
+                        TriggerServerEvent("ARMAHousing:OpenChest", currentHome)
                     end
                 end
 
@@ -166,7 +166,7 @@ Citizen.CreateThread(function()
                 end
 
                 if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and inHome then
-                    TriggerServerEvent("JudHousing:LoadWardrobe")
+                    TriggerServerEvent("ARMAHousing:LoadWardrobe")
                     currentHome = k
                     RageUI.Visible(RMenu:Get("JudHousing", "wardrobe"), true)
                     isInWardrobeMenu = true
@@ -213,13 +213,13 @@ Citizen.CreateThread(function()
 end)
 
 
-RegisterNetEvent("JudHousing:UpdateInHome")
-AddEventHandler("JudHousing:UpdateInHome", function(inTheHome)
+RegisterNetEvent("ARMAHousing:UpdateInHome")
+AddEventHandler("ARMAHousing:UpdateInHome", function(inTheHome)
     inHome = inTheHome
 end)
 
-RegisterNetEvent("JudHousing:UpdateWardrobe")
-AddEventHandler("JudHousing:UpdateWardrobe", function(newWardrobe)
+RegisterNetEvent("ARMAHousing:UpdateWardrobe")
+AddEventHandler("ARMAHousing:UpdateWardrobe", function(newWardrobe)
     wardrobe = newWardrobe
 end)
 
