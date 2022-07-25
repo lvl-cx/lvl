@@ -2220,6 +2220,44 @@ AddEventHandler('ARMA:AddCar', function()
     end
 end)
 
+RegisterServerEvent("ARMA:checkBan")
+AddEventHandler("ARMA:checkBan",function(permid)
+    local source = source 
+    local user_id = ARMA.getUserId(source)
+    local permid = tonumber(permid)
+    local bantable = {}
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
+        exports['ghmattimysql']:execute("SELECT * FROM arma_users WHERE id = @id", {id = permid}, function(result) 
+            if result ~= nil then
+                for k,v in pairs(result) do
+                    if v.banned then
+                        local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
+                        local hoursLeft = ((tonumber(v.bantime)-os.time()))/3600
+                        local minutesLeft = nil
+                        if hoursLeft < 1 then
+                            minutesLeft = hoursLeft * 60
+                            minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
+                            datetime = minutesLeft .. " mins" 
+                        else
+                            hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
+                            datetime = hoursLeft .. " hrs" 
+                        end
+                        bantable[permid] = {name = v.username, id = v.id, banned = v.banned, timeleft = datetime, banexpires = expiry, banreason = v.banreason, banadmin = v.banadmin}
+                    else
+                        bantable[permid] = {name = v.username, id = v.id, banned = v.banned}
+                    end
+                    TriggerClientEvent("ARMA:sendBanChecked", source, bantable)
+                end
+            end
+        end)
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Check Ban')
+    end
+end)
+
 RegisterNetEvent('ARMA:CleanAll')
 AddEventHandler('ARMA:CleanAll', function()
     local source = source

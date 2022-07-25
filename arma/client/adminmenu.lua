@@ -23,6 +23,8 @@ local Duration = 0
 local BanMessage = "N/A"
 local SeparatorMSG = {}
 
+local banchecked = {}
+
 
 local f = nil
 local g
@@ -57,27 +59,22 @@ local s = 1
 
 menuColour = '~b~'
 
-RMenu.Add('adminmenu', 'main', RageUI.CreateMenu("", "~b~Admin Menu", 1300,100, "admin","admin"))
 RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", menuColour.."Settings Menu", 1300,100, "settings","settings")) 
 RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", menuColour..'Crosshair Settings',1300,100,"settings","settings"))
 
+RMenu.Add('adminmenu', 'main', RageUI.CreateMenu("", "~b~Admin Menu", 1300,100, "admin","admin"))
 RMenu.Add("adminmenu", "players", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "closeplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
-
---[[ Functions ]]
 RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',1300,100,"admin","admin"))
---[[ End of Functions ]]
-
---[[ AntiCheat ]]
+RMenu.Add("adminmenu", "checkban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Check Ban',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Types',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "acvehwhitelist", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Vehicle Whitelist',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "acbannedplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Banned Players',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "acsearchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Search PermID',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "acbanmenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "acbannedplayers"), "", menuColour..'AC Banned Player Submenu',1300,100,"admin","admin"))
-
 RMenu.Add("adminmenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Admin Player Interaction Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',1300,100,"admin","admin"))
@@ -86,8 +83,6 @@ RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmen
 RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Ban Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',1300,100,"admin","admin"))
-
---[[groups]]
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "staffGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"admin","admin"))
 RMenu.Add("adminmenu", "UserGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',1300,100,"admin","admin"))
@@ -366,17 +361,46 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'functions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if GlobalAdminLevel > 0 then                   
+                RageUI.ButtonWithStyle("Kick (No F10)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent('ARMA:noF10Kick')
+                    end
+                end, RMenu:Get('adminmenu', 'functions'))
+            end
+            if GlobalAdminLevel >= 2 then
+                RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        if foundMatch == false then
+                            banningPermID = KeyboardInput("Enter Perm ID", "", 10)
+                            banningName = 'ID: ' .. banningPermID
+                        end
+                    end
+                end, RMenu:Get('adminmenu', 'banselection'))
+            end
+            if GlobalAdminLevel >= 2 then
+                RageUI.ButtonWithStyle("Check Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                end, RMenu:Get('adminmenu', 'checkban'))
+            end
+            if GlobalAdminLevel >= 5 then
+                RageUI.ButtonWithStyle("Unban Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("ARMA:Unban")
+                    end
+                end)
+            end
+            if GlobalAdminLevel >= 6 then
+                RageUI.ButtonWithStyle("Remove Warning", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local uid = GetPlayerServerId(PlayerId())
+                        TriggerServerEvent('ARMA:RemoveWarning', uid, result)
+                    end
+                end, RMenu:Get('adminmenu', 'functions'))
+            end
             if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GetCoords')
-                    end
-                end, RMenu:Get('adminmenu', 'functions'))
-            end
-            if GlobalAdminLevel >= 0 then                   
-                RageUI.ButtonWithStyle("Kick (No F10)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:noF10Kick')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
@@ -397,16 +421,6 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if GlobalAdminLevel >= 2 then
-                RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        if foundMatch == false then
-                            banningPermID = KeyboardInput("Enter Perm ID", "", 10)
-                            banningName = 'ID: ' .. banningPermID
-                        end
-                    end
-                end, RMenu:Get('adminmenu', 'banselection'))
-            end
             if GlobalAdminLevel >= 5 then
                 RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -425,21 +439,6 @@ RageUI.CreateWhile(1.0, true, function()
                         else
                             tARMA.notify("~r~You do not have a waypoint set")
                         end
-                    end
-                end, RMenu:Get('adminmenu', 'functions'))
-            end
-            if GlobalAdminLevel >= 5 then
-                RageUI.ButtonWithStyle("Unban Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent("ARMA:Unban")
-                    end
-                end)
-            end
-            if GlobalAdminLevel >= 6 then
-                RageUI.ButtonWithStyle("Remove Warning", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:RemoveWarning', uid, result)
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
@@ -810,6 +809,40 @@ RageUI.CreateWhile(1.0, true, function()
                 else
                     RageUI.Separator("~r~You must select at least one ban reason.", function() end)
                 end
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('adminmenu', 'checkban')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if GlobalAdminLevel >= 2 then
+                if next(banchecked) then
+                    for a, b in pairs(banchecked) do
+                        if b.banned then 
+                            RageUI.Separator("~r~Player is banned")
+                            RageUI.Separator("~g~Player Name: ~w~"..b.name)
+                            RageUI.Separator("~g~Player PermID: ~w~"..b.id)
+                            RageUI.Separator("~g~Ban Reason: ~w~"..b.banreason)
+                            RageUI.Separator("~g~Ban Expires: ~w~"..b.banexpires)
+                            RageUI.Separator("~g~Remaining Time: ~w~"..b.timeleft)
+                            RageUI.Separator("~g~Ban Admin: ~w~"..b.banadmin)
+                        else
+                            RageUI.Separator("~g~Player is not banned")
+                            RageUI.Separator("~g~Player Name: ~w~"..b.name)
+                            RageUI.Separator("~g~Player PermID: ~w~"..b.id)
+                        end
+                    end
+                else
+                    RageUI.Separator('Please select a Perm ID')
+                end
+                RageUI.ButtonWithStyle("Select Perm ID", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        permID = KeyboardInput("Enter Perm ID", "", 10)
+                        if permID == nil then 
+                            tvRP.notify('~r~Invalid Perm ID')
+                        end
+                        TriggerServerEvent('ARMA:checkBan', permID)
+                    end
+                end, RMenu:Get("adminmenu", 'checkban'))
             end
         end)
     end
@@ -1338,6 +1371,11 @@ AddEventHandler("ARMA:RecieveBanPlayerData",function(BanDuration, CollectedBanMe
     BanMessage = CollectedBanMessage
     SeparatorMsg = SepMSG
     RageUI.Visible(RMenu:Get('adminmenu', 'generatedban'), true)
+end)
+
+RegisterNetEvent("ARMA:sendBanChecked")
+AddEventHandler("ARMA:sendBanChecked",function(bancheckedtable)
+    banchecked = bancheckedtable
 end)
 
 function Draw2DText(x, y, text, scale)
