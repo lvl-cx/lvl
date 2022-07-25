@@ -747,8 +747,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                     defaultBans[v.id] = 0
                 end
                 exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = PlayerID, Rules = json.encode(defaultBans)})
-                ARMAclient.notify(AdminTemp, {"~r~Regenerating player offenses, database row was not found."})
-                ARMAclient.notify(AdminTemp, {"~r~Regenerate players ban!"})
+                ARMAclient.notify(AdminTemp, {"~g~Created player's default offences, please regenerate ban."})
             end
         end)
     end
@@ -1245,12 +1244,6 @@ AddEventHandler("ARMA:getNotes",function(admin, player)
                 TriggerClientEvent('ARMA:sendNotes', source, json.encode(result))
             end
         end)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Get Notes')
     end
 end)
 
