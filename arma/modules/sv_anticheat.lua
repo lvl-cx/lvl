@@ -345,7 +345,7 @@ RegisterServerEvent("ARMA:getAnticheatData")
 AddEventHandler("ARMA:getAnticheatData",function()
     local source = source
     user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'anticheat.menu') then
+    if ARMA.hasGroup(user_id, 'dev') then
         local bannedplayerstable = {}
         exports['ghmattimysql']:execute("SELECT * FROM `arma_anticheat`", {}, function(result)
             if result ~= nil then
@@ -417,7 +417,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
     local source = source
     local user_id = ARMA.getUserId(source)
     local playerName = GetPlayerName(source)
-    if ARMA.hasPermission(user_id, 'anticheat.menu') then
+    if ARMA.hasGroup(user_id, 'dev') then
         ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
         PerformHttpRequest(webhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
@@ -447,7 +447,7 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
-    if ARMA.hasPermission(user_id, 'anticheat.menu') then
+    if ARMA.hasGroup(user_id, 'dev') then
         ARMA.prompt(source,"Spawncode:","",function(source,spawncode)
             if spawncode ~= '' then
                 model = GetHashKey(spawncode)
