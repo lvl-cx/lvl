@@ -237,9 +237,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'MainMenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.List("Modify Render Distance", d, dts, "~b~Change Render Distance", {}, true, function(a,b,c,d)
-                if c then -- Locals...
-                end
-                dts = d -- Locals ...
+                if c then end
+                dts = d
             end)
             RageUI.Checkbox("Toggle Compass", nil, compasschecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
                 if Selected then
@@ -247,10 +246,17 @@ RageUI.CreateWhile(1.0, true, function()
                     ExecuteCommand("compass")
                 end
             end)
-            RageUI.Checkbox("Disable Hitsounds", nil, hitsoundchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
+            RageUI.Checkbox("Toggle Hitsounds", nil, hitsoundchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
                 if Selected then
                     hitsoundchecked = not hitsoundchecked
-                    TriggerEvent("hs:triggerSounds")
+                    if hitsoundchecked then
+                        notify("~g~Hitsounds Enabled!")
+                        SetResourceKvpInt('hitsoundchecked', 1)
+                    else
+                        notify("~r~Hitsounds Disabled!")
+                        SetResourceKvpInt('hitsoundchecked', 0)
+                    end
+                    TriggerEvent("RDM:triggerhssounds", hitsoundchecked)
                 end
             end)
             RageUI.Checkbox("Toggle Hud", nil, hudchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
@@ -309,6 +315,13 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
+RegisterNetEvent('ARMA:sendSettings')
+AddEventHandler('ARMA:sendSettings', function()
+    if GetResourceKvpInt('hitsoundchecked') == 1 then
+        hitsoundchecked = true
+        TriggerEvent("RDM:triggerhssounds", true)
+    end
+end)
 
 RegisterNetEvent('ARMA:OpenSettingsMenu')
 AddEventHandler('ARMA:OpenSettingsMenu', function(admin)

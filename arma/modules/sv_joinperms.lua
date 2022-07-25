@@ -37,4 +37,7 @@ AddEventHandler("playerJoining", function()
         adminlevel = 1
     end
     ARMAclient.setStaffLevel(source, {adminlevel})
+
+    TriggerClientEvent('ARMA:sendGarageSettings', source)
+    TriggerClientEvent('ARMA:sendSettings', source)
 end)
