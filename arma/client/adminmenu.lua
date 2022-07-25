@@ -1406,13 +1406,13 @@ RegisterCommand('noclip', function(source, args, RawCommand)
 end)
 
 RegisterCommand('devmenu',function()
-    if not tARMA.isDev() then
+    if tARMA.isDev() then
         RageUI.Visible(RMenu:Get("adminmenu", "devfunctions"), not RageUI.Visible(RMenu:Get("adminmenu", "devfunctions")))
     end
 end)
 
 RegisterCommand('anticheat',function()
-    if not tARMA.isDev() then
+    if tARMA.isDev() then
         TriggerServerEvent("ARMA:getAnticheatData")
         RageUI.Visible(RMenu:Get("adminmenu", "anticheat"), not RageUI.Visible(RMenu:Get("adminmenu", "anticheat")))
     end
