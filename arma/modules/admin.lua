@@ -2234,16 +2234,21 @@ AddEventHandler("ARMA:checkBan",function(permid)
             if result ~= nil then
                 for k,v in pairs(result) do
                     if v.banned then
-                        local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
-                        local hoursLeft = ((tonumber(v.bantime)-os.time()))/3600
-                        local minutesLeft = nil
-                        if hoursLeft < 1 then
-                            minutesLeft = hoursLeft * 60
-                            minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
-                            datetime = minutesLeft .. " mins" 
+                        if v.bantime ~= "perm" then
+                            local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
+                            local hoursLeft = ((tonumber(v.bantime)-os.time()))/3600
+                            local minutesLeft = nil
+                            if hoursLeft < 1 then
+                                minutesLeft = hoursLeft * 60
+                                minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
+                                datetime = minutesLeft .. " mins" 
+                            else
+                                hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
+                                datetime = hoursLeft .. " hrs" 
+                            end
                         else
-                            hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                            datetime = hoursLeft .. " hrs" 
+                            datetime = "Permanent"
+                            expiry = "Never"
                         end
                         bantable[permid] = {name = v.username, id = v.id, banned = v.banned, timeleft = datetime, banexpires = expiry, banreason = v.banreason, banadmin = v.banadmin}
                     else
