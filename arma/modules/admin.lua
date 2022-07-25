@@ -718,6 +718,9 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                     for a,b in pairs(bans) do
                         if b.id == k then
                             PlayerOffenses[PlayerID][k] = PlayerOffenses[PlayerID][k] + 1
+                            if PlayerOffenses[PlayerID][k] > 3 then
+                                bans[a].durations[PlayerOffenses[PlayerID][k]] = -1
+                            end
                             PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
                             if PlayerOffenses[PlayerID][k] == 1 then
                                 table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
