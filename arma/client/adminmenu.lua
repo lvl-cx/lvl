@@ -487,6 +487,48 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
+                RageUI.ButtonWithStyle("Spawn Vehicle", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        AddTextEntry('FMMC_MPM_NC', "Enter the car spawncode name")
+                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                        while (UpdateOnscreenKeyboard() == 0) do
+                            DisableAllControlActions(0);
+                            Wait(0);
+                        end
+                        if (GetOnscreenKeyboardResult()) then
+                            local result = GetOnscreenKeyboardResult()
+                            if result then 
+                                local mhash = GetHashKey(result)
+                                local i = 0
+                                while not HasModelLoaded(mhash) and i < 50 do
+                                    RequestModel(mhash)
+                                    Citizen.Wait(10)
+                                    i = i+1
+                                    if i > 50 then 
+                                        tARMA.notify('~r~Model could not be loaded!')
+                                        break 
+                                    end
+                                end
+                                if HasModelLoaded(mhash) then
+                                    local x,y,z = tARMA.getPosition()
+                                    if pos then
+                                        x,y,z = table.unpack(pos)
+                                    end
+                                    local nveh = CreateVehicle(mhash, x, y ,z + 0.5, GetEntityHeading(PlayerPedId()), true, false)
+                                    SetVehicleOnGroundProperly(nveh)
+                                    SetEntityInvincible(nveh,false)
+                                    SetPedIntoVehicle(PlayerPedId(),nveh,-1)
+                                    SetVehicleNumberPlateText(nveh, GetPlayerName(PlayerId()))
+                                    SetVehicleHasBeenOwnedByPlayer(nveh,true)
+                                    local nid = NetworkGetNetworkIdFromEntity(nveh)
+                                    SetNetworkIdCanMigrate(nid,true)
+                                else
+                                    return
+                                end
+                            end
+                        end
+                    end
+                end, RMenu:Get('adminmenu', 'devfunctions'))
                 RageUI.ButtonWithStyle("Give Money","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
@@ -854,7 +896,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         permID = KeyboardInput("Enter Perm ID", "", 10)
                         if permID == nil then 
-                            tvRP.notify('~r~Invalid Perm ID')
+                            tARMA.notify('~r~Invalid Perm ID')
                         end
                         TriggerServerEvent('ARMA:checkBan', permID)
                     end
