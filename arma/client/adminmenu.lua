@@ -534,11 +534,6 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:GiveMoneyMenu")
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-                RageUI.ButtonWithStyle("Give Crates","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent("ARMA:GiveCratesMenu")
-                    end
-                end, RMenu:Get('adminmenu', 'devfunctions'))
             end        
         end)
     end
@@ -962,13 +957,13 @@ RageUI.CreateWhile(1.0, true, function()
                 foundMatch = false
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
-                RageUI.Button("List Banned Players","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("List Banned Players","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'acbannedplayers'))
-                RageUI.Button("Search Perm ID","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Search Perm ID","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'acsearchpermid'))
-                RageUI.Button("Ban Meanings","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Ban Meanings","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'actypes'))
-                RageUI.Button("Manage Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Manage Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'acvehwhitelist'))
             end   
         end)
@@ -980,7 +975,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 for k, v in pairs(acbannedplayerstable) do
-                    RageUI.Button("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = acbannedplayerstable[k]
                         end
@@ -1002,7 +997,7 @@ RageUI.CreateWhile(1.0, true, function()
                 foundMatch = true
                 if string.find(v[2],acsearchforPermID) then
                     if tARMA.isDev() then
-                        RageUI.Button("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                        RageUI.ButtonWithStyle("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                             if Selected then
                                 SelectedPlayer = acbannedplayerstable[k]
                             end
@@ -1022,13 +1017,13 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Username: " .. SelectedPlayer[3], function() end)
                 RageUI.Separator("Reason: " .. SelectedPlayer[4], function() end)
                 RageUI.Separator("Extra: " .. SelectedPlayer[5], function() end)
-                RageUI.Button("Unban Player","Unban Selected User",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Unban Player","Unban Selected User",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         TriggerServerEvent('ARMA:acUnban', SelectedPlayer[2])
                         TriggerServerEvent("ARMA:getAnticheatData")
                     end
                 end, RMenu:Get('adminmenu', "anticheat"))
-                RageUI.Button("Check Warnings","Show F10 Warning Log",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Check Warnings","Show F10 Warning Log",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         ExecuteCommand("sw " .. SelectedPlayer[2])
                     end
@@ -1043,7 +1038,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 for i, p in pairs(actypes) do
-                    RageUI.Button("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Type #"..p.type, p.desc, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     end)
                 end
             end
@@ -1055,12 +1050,12 @@ RageUI.CreateWhile(1.0, true, function()
             if tARMA.isDev() then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
-                RageUI.Button("Add to Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Add to Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:editACVehicleWhitelist', true)
                     end
                 end)
-                RageUI.Button("Remove from Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Remove from Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:editACVehicleWhitelist', false)
                     end
