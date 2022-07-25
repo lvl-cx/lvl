@@ -449,14 +449,7 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:checkBlips')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
-            end
-            if GlobalAdminLevel >= 11 then
-                RageUI.ButtonWithStyle("AntiCheat","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent("ARMA:getAnticheatData")
-                    end
-                end, RMenu:Get('adminmenu', 'anticheat'))
-            end  
+            end 
         end)
     end
 end)
@@ -873,7 +866,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'anticheat')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 5 then
+            if tARMA.isDev() then
                 foundMatch = false
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
@@ -891,7 +884,7 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbannedplayers')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 5 then
+            if tARMA.isDev() then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 for k, v in pairs(acbannedplayerstable) do
@@ -916,11 +909,13 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(acbannedplayerstable) do
                 foundMatch = true
                 if string.find(v[2],acsearchforPermID) then
-                    RageUI.Button("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            SelectedPlayer = acbannedplayerstable[k]
-                        end
-                    end, RMenu:Get('adminmenu', 'acbanmenu'))
+                    if tARMA.isDev() then
+                        RageUI.Button("Ban ID: "..v[1].." Perm ID: "..v[2], "Username: "..v[3].." Reason: "..v[4], {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                            if Selected then
+                                SelectedPlayer = acbannedplayerstable[k]
+                            end
+                        end, RMenu:Get('adminmenu', 'acbanmenu'))
+                    end
                 end
              end
         end)
@@ -928,7 +923,7 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbanmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 5 then
+            if tARMA.isDev() then
                 RageUI.Separator("~r~ Ban Info ", function() end)
                 RageUI.Separator("Ban ID: " .. SelectedPlayer[1], function() end)
                 RageUI.Separator("Perm ID: " .. SelectedPlayer[2], function() end)
@@ -952,7 +947,7 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get('adminmenu', 'actypes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 5 then
+            if tARMA.isDev() then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 for i, p in pairs(actypes) do
@@ -965,7 +960,7 @@ RageUI.CreateWhile(1.0, true, function()
 
     if RageUI.Visible(RMenu:Get('adminmenu', 'acvehwhitelist')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 5 then
+            if tARMA.isDev() then
                 RageUI.Separator("Anticheat Duration: Lifetime", function() end)
                 RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
                 RageUI.Button("Add to Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
@@ -985,10 +980,6 @@ end)
 
 RegisterCommand("cleanup", function()
     TriggerServerEvent('ARMA:CleanAll')
-end)
-
-RegisterCommand("blips", function()
-    TriggerServerEvent('ARMA:checkBlips')
 end)
 
 
@@ -1379,6 +1370,13 @@ end)
 RegisterCommand('devmenu',function()
     if not tARMA.isDev() then
         RageUI.Visible(RMenu:Get("adminmenu", "devfunctions"), not RageUI.Visible(RMenu:Get("adminmenu", "devfunctions")))
+    end
+end)
+
+RegisterCommand('anticheat',function()
+    if not tARMA.isDev() then
+        TriggerServerEvent("ARMA:getAnticheatData")
+        RageUI.Visible(RMenu:Get("adminmenu", "anticheat"), not RageUI.Visible(RMenu:Get("adminmenu", "anticheat")))
     end
 end)
 

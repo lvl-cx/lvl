@@ -2235,8 +2235,6 @@ AddEventHandler('ARMA:CleanAll', function()
             DeleteEntity(v)
         end
         TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "Cleanup Completed by ^3" .. GetPlayerName(source) .. "^0!", "alert")
-    else 
-        ARMAclient.notify(source,{"~r~You cannot perform this action."})
     end
 end)
 
