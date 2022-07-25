@@ -295,15 +295,20 @@ AddEventHandler("ARMA:memberLeaveGang", function(gangid)
                 if tostring(user_id) == I then
                     local memberrank = array[tostring(user_id)].rank
                     local rank = array[tostring(user_id)].rank
-                    array[tostring(user_id)] = nil
-                    array = json.encode(array)
-                    exports['ghmattimysql']:execute("UPDATE arma_gangs SET gangmembers = @gangmembers WHERE gangname=@gangname", {gangmembers=array, gangname = gangid}, function()
-                        TriggerClientEvent('ARMA:ForceRefreshData', source)
-                        if tonumber(membersource) > 0 then
-                            ARMAclient.notify(source,{"~g~Successfully left gang."})
-                            TriggerClientEvent('ARMA:disbandedGang', membersource)
-                        end
-                    end)
+                    if rank == 4 then
+                        ARMAclient.notify(source,{"~r~You cannot leave the gang because you are the leader!"})
+                        return
+                    else
+                        array[tostring(user_id)] = nil
+                        array = json.encode(array)
+                        exports['ghmattimysql']:execute("UPDATE arma_gangs SET gangmembers = @gangmembers WHERE gangname=@gangname", {gangmembers=array, gangname = gangid}, function()
+                            TriggerClientEvent('ARMA:ForceRefreshData', source)
+                            if tonumber(membersource) > 0 then
+                                ARMAclient.notify(source,{"~g~Successfully left gang."})
+                                TriggerClientEvent('ARMA:disbandedGang', membersource)
+                            end
+                        end)
+                    end
                 end
             end
         end
