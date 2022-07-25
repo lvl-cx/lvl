@@ -2382,6 +2382,11 @@ RegisterServerEvent('ARMA:getAdminLevel')
 AddEventHandler('ARMA:getAdminLevel', function()
     local source = source
     local user_id = ARMA.getUserId(source)
+
+    if ARMA.hasGroup(user_id, 'Developer') then
+        ARMAclient.setDev(source, {})
+    end
+        
     local adminlevel = 0
     if ARMA.hasGroup(user_id,"dev") then
         adminlevel = 12
