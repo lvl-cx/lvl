@@ -8,26 +8,23 @@ data = {}
 RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", 1300, 50, "banners", "cosmetics"))
 RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
 RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
-
 RMenu.Add("CosmeticMenu", "limited", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  1300, 50)))
 RMenu.Add("CosmeticMenu", "standard", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  1300, 50)))
-
 RMenu.Add("CosmeticMenu", "buycosmeticsub", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "standard",  1300, 50))) 
 RMenu.Add("CosmeticMenu", "buycosmeticsublimit", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "limited",  1300, 50)))
-
 RMenu.Add("CosmeticMenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "cosmetics",  1300, 50))) 
 RMenu.Add("CosmeticMenu", "refundconfirm", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  1300, 50))) 
 RMenu.Add("CosmeticMenu", "marketplace", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  1300, 50))) 
 
 
--- [Main Menu]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "main")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button('Buy Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+            RageUI.ButtonWithStyle('Buy Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "buycosmetics"))
 
-            RageUI.Button('Your Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+            RageUI.ButtonWithStyle('Your Cosmetics', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
                     TriggerServerEvent('ARMA:GetCosmetic')
                 end
@@ -37,29 +34,29 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Standard/ Limited Option]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "buycosmetics")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Cosmetic Shop", function() end)
-            RageUI.Button('Standard Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+            RageUI.ButtonWithStyle('Standard Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "standard"))
 
-            RageUI.Button('Limited Time Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+            RageUI.ButtonWithStyle('Limited Time Items', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
             end, RMenu:Get("CosmeticMenu", "limited"))
 
     end) 
 end
 end)
 
--- [LTM Shop Sub Menu]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "limited")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Cosmetic shop will reset: " .. 'Tommorow', function() end)
             for i,v in pairs(cosmetics.limitedshop) do 
 
-                RageUI.Button(v.item, nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle(v.item, nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         CosmeticPrice = v.price
                         CosmeticItem = v.item 
@@ -71,14 +68,14 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Standard Shop Sub Menu]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "standard")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("These items will always be in the cosmetic shop", function() end)
             for i,v in pairs(cosmetics.shop) do 
 
-                RageUI.Button(v.item , nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected) 
+                RageUI.ButtonWithStyle(v.item , nil, {RightLabel = "£" .. getMoneyStringFormatted(v.price)}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         CosmeticPrice = v.price
                         CosmeticItem = v.item 
@@ -91,7 +88,7 @@ end
 end)
 
 
--- [Buy Cosmetics Confirm (Standard)]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "buycosmeticsub")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
@@ -101,13 +98,13 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Price: £" .. getMoneyStringFormatted(v.price), function() end)
                     RageUI.Separator("Are you sure you want to purchase this cosmetic?", function() end)
 
-                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('ARMA:BuyCosmetic', v.item)
                         end
                     end, RMenu:Get("CosmeticMenu", "standard"))
 
-                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end
@@ -120,7 +117,7 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Buy Cosmetics Confirm (LTM)]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "buycosmeticsublimit")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
@@ -130,13 +127,13 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Price: £" .. v.price, function() end)
                     RageUI.Separator("Are you sure you want to purchase this cosmetic?", function() end)
 
-                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('ARMA:BuyCosmetic', v.item)
                         end
                     end, RMenu:Get("CosmeticMenu", "limited"))
 
-                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end
@@ -149,26 +146,25 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [View User's Cosmetics]
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "cosmetics")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i,v in pairs(data) do 
-                RageUI.Button(i, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                RageUI.ButtonWithStyle(i, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                     if Selected then 
                         SelectedCosmetic = i;
                     end
                 end, RMenu:Get("CosmeticMenu", "submenu"))
             end         
-    end) 
-end
+        end) 
+    end
 end)
 
 local WatchEquip = false
 local ChainEquip = false
 local VestEquip = false
 
--- [Cosmetic Options/ Sub Menu]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "submenu")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
@@ -178,7 +174,6 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Price: £" .. tostring(getMoneyStringFormatted(v.price)), function() end)
                     RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
                     RageUI.Separator("Cosmetic Refund Price: £" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
-                    -- [Equip Cosmetic]
                     if v.type == 'Watch' then
                         if GetPedPropIndex(PlayerPedId(), 6) == v.clothingid then WatchEquip = true else WatchEquip = false end
                         RageUI.Checkbox('Equip ' .. v.item, nil, WatchEquip, {Style = RageUI.CheckboxStyle.Car}, function(Hovered, Active, Selected, Checked)
@@ -229,28 +224,20 @@ RageUI.CreateWhile(1.0, true, function()
                             end
                         end)
                     end
-                    -- [Other Options]
-                    RageUI.Button('Sell Cosmetic to player', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Sell Cosmetic to player', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then
-
                             TriggerServerEvent('ARMA:SellCosmeticToPlayer', v.item)
-
                         end
                     end)
-
-                    RageUI.Button('Refund Cosmetic [25% Back]', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Refund Cosmetic [25% Back]', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                     end, RMenu:Get("CosmeticMenu", "refundconfirm"))
-
-
-                    RageUI.Button('List on ARMA Market Place', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
-
+                    RageUI.ButtonWithStyle('List on ARMA Market Place', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                     end, RMenu:Get("CosmeticMenu", "marketplace"))
-
                     RageUI.Separator("discord.gg/armarp - #market-place", function() end)
                 end
             end
-    end)            
-end
+        end)            
+    end
 end)
 
 local listingprice = '0'
@@ -264,11 +251,9 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Name: " .. v.item, function() end)
                     RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
                     RageUI.Separator("Cosmetic Price: £" .. tostring(getMoneyStringFormatted(v.price)), function() end)
-
-                    RageUI.Button('Enter Listing Price - £' .. listingprice, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Enter Listing Price - £' .. listingprice, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             listingpriceresult = KeyboardInput("Enter Listing Price:", "", 10)
-
                             if listingpriceresult == tostring(tonumber(listingpriceresult)) then
                                 if listingpriceresult == nil then 
                                     listingpriceresult = "0"
@@ -279,8 +264,7 @@ RageUI.CreateWhile(1.0, true, function()
                             end
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
-
-                    RageUI.Button('Enter Custom Message - ' .. listingmessage, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Enter Custom Message - ' .. listingmessage, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             listingmessageresult = KeyboardInput("Enter Listing Price [Max 50 Words]:", "", 50)
                             if listingmessageresult == nil then 
@@ -289,8 +273,7 @@ RageUI.CreateWhile(1.0, true, function()
                             listingmessage = listingmessageresult
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
-
-                    RageUI.Button('Confirm', 'Listing Price: £' .. listingprice .. '\nListing Message: ' .. listingmessage .. '\nItem Name: ' .. v.item, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Confirm', 'Listing Price: £' .. listingprice .. '\nListing Message: ' .. listingmessage .. '\nItem Name: ' .. v.item, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             if cooldown <= 0 then 
                                 TriggerServerEvent('ARMA:CosmeticMarketPlace', v.item, tonumber(listingprice), listingmessage)
@@ -302,10 +285,9 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
                 end
-             
             end       
-    end) 
-end
+        end) 
+    end
 end)
 
 Citizen.CreateThread(function()
@@ -317,7 +299,7 @@ Citizen.CreateThread(function()
     end
 end)
 
--- [Confirm Refund]
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("CosmeticMenu", "refundconfirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
@@ -327,44 +309,31 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Type: " .. v.type, function() end)
                     RageUI.Separator("Cosmetic Refund Price: £" .. tostring(getMoneyStringFormatted(v.price * 0.25)), function() end)
                     RageUI.Separator("Are you sure you want to refund this ?", function() end)
-
-                    RageUI.Button('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Confirm', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                             TriggerServerEvent('ARMA:RefundCosmetic', v.item)
                             TriggerServerEvent('ARMA:GetCosmetic')
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
-
-                    RageUI.Button('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
+                    RageUI.ButtonWithStyle('Decline', nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
                         
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
                 end
-             
             end       
-    end) 
-end
-end)
-
--- [While loops]
-Citizen.CreateThread(function()
-    while true do
-        
-        if IsControlJustPressed(0, 288) then 
-            
-            RageUI.Visible(RMenu:Get("CosmeticMenu", "main"), true)
-            TriggerServerEvent('ARMA:GetCosmetic')
-        
-        end
-        Citizen.Wait(1)
+        end) 
     end
 end)
 
+RegisterCommand("cosmetics", function()
+    RageUI.Visible(RMenu:Get("CosmeticMenu", "main"), true)
+        TriggerServerEvent('ARMA:GetCosmetic')
+end)
+RegisterKeyMapping("comsetics", "Opens Cosmetics Menu", "keyboard", "F7")
 
--- [Functions/ Events]
 RegisterNetEvent('ARMA:ResetCosmetics')
-AddEventHandler('ARMA:ResetCosmetics', function(type2) -- [Remove All of Ped Cosmetics]
+AddEventHandler('ARMA:ResetCosmetics', function(type2)
     if type2 == 'Vest' then 
         SetPedComponentVariation(PlayerPedId(), 9, 0, 0, 0) 
     elseif type2 == 'Chain' then 
@@ -380,7 +349,6 @@ AddEventHandler('ARMA:ReturnCosmetic', function(rdata)
 end)
 
 function ConfirmRefund()
-    
 	AddTextEntry('FMMC_KEY_TIP8', "Type [Yes] to Confirm Refund.")
 	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
     while (UpdateOnscreenKeyboard() == 0) do
@@ -394,7 +362,6 @@ function ConfirmRefund()
 		end
     end
 	return false
-
 end
 
 
