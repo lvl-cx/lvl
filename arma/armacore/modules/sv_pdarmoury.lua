@@ -32,7 +32,7 @@ AddEventHandler('PD:BuyWeapon', function(hash)
         }}), { ["Content-Type"] = "application/json" })
 
         else
-            ARMAclient.notify(source,{'~r~You are not PD/ Clocked on!'})
+            ARMAclient.notify(source,{'~r~You are not Clocked on!'})
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
 
@@ -58,7 +58,7 @@ AddEventHandler('PD:BuyArmour', function()
             ARMAclient.notify(source, {"~g~Paid ".. '£0'})
             TriggerClientEvent('ARMA:SetVest', source)
         else
-            ARMAclient.notify(source,{'~r~You are not PD/ Clocked on!'})
+            ARMAclient.notify(source,{'~r~You are not Clocked on!'})
             TriggerClientEvent("ARMA:PlaySound", source, 2)
         end
     else 
