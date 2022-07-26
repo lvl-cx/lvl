@@ -60,6 +60,7 @@ local weapon_types = {
 }
 
 function tARMA.spawnAnim(a)
+  ExecuteCommand("hideui")
   local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
   TriggerEvent("arma:PlaySound", "gtaloadin")
   SetFocusPosAndVel(x,y,z+1000)
@@ -73,7 +74,6 @@ function tARMA.spawnAnim(a)
   Wait(2500)
   ClearFocus()
   Wait(2000)
-  FreezeEntityPosition(PlayerPedId(),false)
   DestroyCam(spawnCam3)
   DestroyCam(spawnCam4)
   RenderScriptCams(false, true, 2000, 0, 0)
