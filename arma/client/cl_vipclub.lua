@@ -30,6 +30,7 @@ function tARMA.isPlatClub()
 end
 
 RegisterCommand("vipclub",function()
+    TriggerServerEvent('ARMA:getPlayerSubscription')
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu'),not RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu')))
 end)
@@ -44,12 +45,6 @@ local d={
     ["CS:GO"]={checked=false,soundId="csgo_death"}
 }
 
-RegisterCommand("sound",function()
-    print(GetResourceKvpString("ARMA_deathsound"))
-    for k,v in pairs(d) do
-        print(json.encode(v))
-    end
-end)
 local E=true
 Citizen.CreateThread(function()
     local f=GetResourceKvpString("ARMA_pluschutes") or "true"
@@ -106,7 +101,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.ButtonWithStyle("Manage Subscription","",{RightLabel="→→→"},true,function(o,p,q)
             end,RMenu:Get("vipclubmenu","managesubscription"))
-            if tARMA.isPlusClub()or tARMA.isPlatClub()then 
+            if tARMA.isPlusClub() or tARMA.isPlatClub()then 
                 RageUI.ButtonWithStyle("Manage Perks","",{RightLabel="→→→"},true,function(o,p,q)
                 end,RMenu:Get("vipclubmenu","manageperks"))
             end
@@ -207,14 +202,14 @@ RageUI.CreateWhile(1.0, true, function()
             local function R()
                 E=true
                 tARMA.setparachutestting(E)
-                tARMA.notify("~y~Parachute enabled")
+                tARMA.notify("~a~Parachute enabled.")
             end
             local function S()
                 E=false
                 tARMA.setparachutestting(E)
-                tARMA.notify("~y~Parachute disabled")
+                tARMA.notify("~r~Parachute disabled.")
             end
-            RageUI.Checkbox("Enable Parachute","~g~This gives you primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
+            RageUI.Checkbox("Enable Parachute","~g~This gives you a primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
                 if p then
                     if E then
                         S()
