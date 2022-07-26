@@ -66,18 +66,6 @@ function tARMA.getCamDirection()
   return x,y,z
 end
 
-function tARMA.addPlayer(player)
-  players[player] = true
-end
-
-function tARMA.removePlayer(player)
-  players[player] = nil
-end
-
-function tARMA.getPlayer(v)
-  return players[V]
-end
-
 function tARMA.getNearestPlayers(radius)
   local r = {}
 
@@ -493,8 +481,12 @@ end
 function tARMA.setUserID(a)
   user_id = a
 end
-function tARMA.userID()
-  return user_id
+function tARMA.userID(Z)
+  if Z == nil then
+    return user_id
+  else
+    return baseplayers[z]
+  end
 end
 function tARMA.setStaffLevel(a)
   stafflevel = a
@@ -522,3 +514,18 @@ end
 function tARMA.getRageUIMenuHeight()
   return 100
 end
+
+local baseplayers = {}
+
+function tARMA.setBasePlayers(players)
+  baseplayers = players
+end
+
+function tARMA.addPlayer(player, id)
+  baseplayers[player] = id
+end
+
+function tARMA.removePlayer(player)
+  baseplayers[player] = nil
+end
+

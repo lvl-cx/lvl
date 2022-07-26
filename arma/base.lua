@@ -886,6 +886,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
     -- register user sources and then set first spawn to false
     local user_id = ARMA.getUserId(source)
     local player = source
+    ARMAclient.addPlayer(-1,{player, user_id})
     if user_id ~= nil then
         ARMA.user_sources[user_id] = source
         local tmp = ARMA.getUserTmpTable(user_id)
