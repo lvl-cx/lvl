@@ -37,9 +37,13 @@ AddEventHandler("ARMA:getPlayerSubscription", function(playerid)
     local player = ARMA.getUserSource(user_id)
     if playerid ~= nil then
         MySQL.query("subscription/get_subscription", {user_id = playerid}, function(rows, affected)
-            local plusdays = rows[1].plusdays
-            local platdays = rows[1].platdays
-            TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plusdays, platdays)
+            if #rows > 0 then
+                local plusdays = rows[1].plusdays
+                local platdays = rows[1].platdays
+                TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plusdays, platdays)
+            else
+                ARMAclient.notify(player, {"~r~Player not found."})
+            end
         end)
     else
         MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
