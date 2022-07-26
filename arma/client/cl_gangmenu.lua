@@ -155,7 +155,7 @@ function func_drawGangUI()
     if showFundsGangUI then 
         DrawRect(0.501,0.558,0.421,0.326,0,0,0,150)
         DrawRect(0.501,0.374,0.421,0.047,18,82,228,248)
-        DrawAdvancedText(0.591,0.378,0.005,0.0028,0.48,"ARMA gang - funds",255,255,255,255,7,0)
+        DrawAdvancedText(0.591,0.378,0.005,0.0028,0.48,"ARMA Gang - Funds",255,255,255,255,7,0)
         DrawAdvancedText(0.581,0.464,0.005,0.0028,0.5,"Gang Funds",255,255,255,255,0,0)
         DrawAdvancedText(0.581,0.502,0.005,0.0028,0.4,"£"..GangBalance,25,199,65,255,0,0)
         DrawAdvancedText(0.536,0.578,0.005,0.0028,0.4,"Deposit (1% Fee)",255,255,255,255,6,0)
@@ -211,7 +211,7 @@ function func_drawGangUI()
     if showMembersGangUI then 
         DrawRect(0.501,0.525,0.421,0.387,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
-        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA gang - members",255,255,255,255,7,0)
+        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA Gang - Members",255,255,255,255,7,0)
         DrawRect(0.398,0.52,0.195,0.291,0,0,0,150)
         DrawAdvancedText(0.449,0.359,0.005,0.0028,0.4,"Name",255,255,255,255,6,0)
         DrawAdvancedText(0.506,0.359,0.005,0.0028,0.4,"ID",255,255,255,255,6,0)
@@ -362,7 +362,7 @@ function func_drawGangUI()
     if showLogsGangUI then 
         DrawRect(0.501,0.525,0.421,0.387,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
-        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA gang - logs",255,255,255,255,7,0)
+        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA Gang - Logs",255,255,255,255,7,0)
         DrawRect(0.502,0.515,0.387,0.276,0,0,0,150)
         -- DrawAdvancedText(0.449,0.365,0.005,0.0028,0.4,"Name",255,255,255,255,4,0)
         -- DrawAdvancedText(0.51,0.365,0.005,0.0028,0.4,"UserID",255,255,255,255,4,0)
@@ -374,7 +374,7 @@ function func_drawGangUI()
         -- DrawAdvancedText(0.547,0.688,0.005,0.0028,0.4,"Previous",255,255,255,255,4,0)
         -- DrawAdvancedText(0.639,0.688,0.005,0.0028,0.4,"Next",255,255,255,255,4,0)
         -- DrawAdvancedText(0.591,0.688,0.005,0.0028,0.4,tostring(e).."/"..tostring(f),255,255,255,255,4,0)
-         DrawAdvancedText(0.775,0.693,0.005,0.0028,0.4,"Back",255,255,255,255,4,0)
+        DrawAdvancedText(0.775,0.693,0.005,0.0028,0.4,"Back",255,255,255,255,4,0)
         if CursorInArea(0.6583,0.7056,0.6712,0.7064)then 
             DrawRect(0.681,0.689,0.045,0.036,a,b,c,150)
             if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
@@ -390,7 +390,7 @@ function func_drawGangUI()
     if showSettingsGangUI then 
         DrawRect(0.501,0.525,0.421,0.387,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
-        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA gang - settings",255,255,255,255,7,0)
+        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA Gang - Settings",255,255,255,255,7,0)
         DrawAdvancedText(0.7,0.398,0.005,0.0028,0.46,"Permissions Guide",255,255,255,255,6,0)
         DrawAdvancedText(0.7,0.436,0.005,0.0028,0.46,"A recruit can deposit to the gang funds only.",255,255,255,255,6,0)
         DrawAdvancedText(0.7,0.472,0.005,0.0028,0.46,"A member can invite users",255,255,255,255,6,0)
@@ -450,7 +450,7 @@ function func_drawGangUI()
     if showTurfsGangUI then 
         DrawRect(0.501,0.450,0.421,0.300,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
-        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA gang - Turfs",255,255,255,255,7,0)
+        DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA Gang - Turfs",255,255,255,255,7,0)
         DrawAdvancedText(0.399,0.38,0.005,0.0028,0.4,"Weed Turf - (Commission - "..weedturf.."%)",255,255,255,255,0,1)
         DrawAdvancedText(0.399,0.44,0.005,0.0028,0.4,"Cocaine Turf - (Commission - "..cocaineturf.."%)",255,255,255,255,0,1)
         DrawAdvancedText(0.399,0.50,0.005,0.0028,0.4,"Heroin Turf - (Commission - "..herointurf.."%)",255,255,255,255,0,1)
@@ -613,10 +613,7 @@ function GetMoneyAmountText()
     end
     return nil 
 end
-RegisterNetEvent("ARMA:Notify")
-AddEventHandler("ARMA:Notify",function(u)
-    Notify(u)
-end)
+
 RegisterNetEvent('LSDrecieveTurf')
 AddEventHandler('LSDrecieveTurf', function(lsd)
     lsdturf = lsd
@@ -641,6 +638,7 @@ RegisterNetEvent('GlobalrecieveTurf')
 AddEventHandler('GlobalrecieveTurf', function(global2)
     globalturf = global2
 end)
+
 function closeToBarclays()
     local v=GetEntityCoords(GetPlayerPed(PlayerId()),false)
     local w=#(v-vector3(151.7451171875,-1036.7829589844,29.338624954224))
@@ -648,7 +646,7 @@ function closeToBarclays()
     if w<10.0 or x<10.0 then 
         return true 
     else 
-        Notify("~r~You must be near Barclays to deposit/withdraw")
+        Notify("~r~You must be near Legion or Cayo Perico Bank to access gang funds.")
         return false 
     end 
 end
