@@ -17,13 +17,13 @@ Proxy.addInterface("ARMA",tARMA)
 
 function tARMA.teleport(x,y,z)
   tARMA.unjail() -- force unjail before a teleportation
-  SetEntityCoords(GetPlayerPed(-1), x+0.0001, y+0.0001, z+0.0001, 1,0,0,1)
+  SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1,0,0,1)
   ARMAserver.updatePos({x,y,z})
 end
 
 -- return x,y,z
 function tARMA.getPosition()
-  local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1),true))
+  local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
   return x,y,z
 end
 
@@ -43,12 +43,12 @@ end
 
 -- return vx,vy,vz
 function tARMA.getSpeed()
-  local vx,vy,vz = table.unpack(GetEntityVelocity(GetPlayerPed(-1)))
+  local vx,vy,vz = table.unpack(GetEntityVelocity(PlayerPedId()))
   return math.sqrt(vx*vx+vy*vy+vz*vz)
 end
 
 function tARMA.getCamDirection()
-  local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(GetPlayerPed(-1))
+  local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(PlayerPedId())
   local pitch = GetGameplayCamRelativePitch()
 
   local x = -math.sin(heading*math.pi/180.0)
@@ -234,7 +234,7 @@ function tARMA.playAnim(upper, seq, looping)
   if seq.task ~= nil then -- is a task (cf https://github.com/ImagicTheCat/ARMA/pull/118)
     tARMA.stopAnim(true)
 
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     if seq.task == "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER" then -- special case, sit in a chair
       local x,y,z = tARMA.getPosition()
       TaskStartScenarioAtPosition(ped, seq.task, x, y, z-1, GetEntityHeading(ped), 0, 0, false)
@@ -279,11 +279,11 @@ function tARMA.playAnim(upper, seq, looping)
               if not first then inspeed = 2.0001 end
               if not last then outspeed = 2.0001 end
 
-              TaskPlayAnim(GetPlayerPed(-1),dict,name,inspeed,outspeed,-1,flags,0,0,0,0)
+              TaskPlayAnim(PlayerPedId(),dict,name,inspeed,outspeed,-1,flags,0,0,0,0)
             end
 
             Citizen.Wait(0)
-            while GetEntityAnimCurrentTime(GetPlayerPed(-1),dict,name) <= 0.95 and IsEntityPlayingAnim(GetPlayerPed(-1),dict,name,3) and anims[id] do
+            while GetEntityAnimCurrentTime(PlayerPedId(),dict,name) <= 0.95 and IsEntityPlayingAnim(PlayerPedId(),dict,name,3) and anims[id] do
               Citizen.Wait(0)
             end
           end
@@ -302,9 +302,9 @@ end
 function tARMA.stopAnim(upper)
   anims = {} -- stop all sequences
   if upper then
-    ClearPedSecondaryTask(GetPlayerPed(-1))
+    ClearPedSecondaryTask(PlayerPedId())
   else
-    ClearPedTasks(GetPlayerPed(-1))
+    ClearPedTasks(PlayerPedId())
   end
 end
 
@@ -321,7 +321,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(10)
     if ragdoll then
-      SetPedToRagdoll(GetPlayerPed(-1), 1000, 1000, 0, 0, 0, 0)
+      SetPedToRagdoll(PlayerPedId(), 1000, 1000, 0, 0, 0, 0)
     end
   end
 end)
@@ -449,7 +449,7 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(500)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     local proximity = cfg.voice_proximity
 
     if IsPedSittingInAnyVehicle(ped) then
