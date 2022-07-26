@@ -188,7 +188,6 @@ function getCasinoChips()
 end
 RegisterNetEvent("ARMA:setDisplayChips")
 AddEventHandler("ARMA:setDisplayChips",function(x)
-    print(x)
     local y=tostring(x)
     d=getMoneyStringFormatted(y)
 end)

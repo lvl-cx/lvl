@@ -37,40 +37,24 @@ Citizen.CreateThread(function()
     end
   end)
 
+
+local hospitals = {
+  {coords = vector3(1832.9547119141,3682.9191894531,34.270072937012), name = 'Sandy Hospital'},
+  {coords = vector3(-254.43467712402,6332.3833007812,32.42724609375), name = 'Paleto Hospital'},
+  {coords = vector3(308.84286499023,-592.34204101562,43.284061431885), name = 'St Thomas Hospital'},
+}
 -- [Blips]
 Citizen.CreateThread(function()
-    blip = AddBlipForCoord(1832.9547119141,3682.9191894531,34.270072937012)
+  for k,v in pairs(hospitals) do
+    blip = AddBlipForCoord(v.coords)
     SetBlipSprite(blip, 80)
     SetBlipScale(blip, 0.4)
     SetBlipDisplay(blip, 2)
     SetBlipColour(blip, 2)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Sandy Hospital")
+    AddTextComponentString(v.name)
     EndTextCommandSetBlipName(blip)
-  end)
-  
-  Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-254.43467712402,6332.3833007812,32.42724609375)
-    SetBlipSprite(blip, 80)
-    SetBlipScale(blip, 0.4)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 2)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Paleto Hospital")
-    EndTextCommandSetBlipName(blip)
-  end)
-  
-  Citizen.CreateThread(function()
-    blip = AddBlipForCoord(308.84286499023,-592.34204101562,43.284061431885)
-    SetBlipSprite(blip, 80)
-    SetBlipScale(blip, 0.4)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 2)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("City Hospital")
-    EndTextCommandSetBlipName(blip)
-  end)
+  end
+end)
   
