@@ -1,12 +1,3 @@
-RegisterServerEvent('ARMA:openCarDev')
-AddEventHandler('ARMA:openCarDev', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil and ARMA.hasPermission(user_id, "cardev.menu") then 
-      TriggerClientEvent("ARMA:CarDevMenu", source)
-    end
-end)
-
 RegisterServerEvent('ARMA:setCarDev')
 AddEventHandler('ARMA:setCarDev', function(status)
     local source = source

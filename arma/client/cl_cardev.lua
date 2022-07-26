@@ -249,13 +249,11 @@ end)
 
 
 RegisterCommand('cardev', function()
-    TriggerServerEvent('ARMA:openCarDev')
+    if tARMA.isCarDev() or tARMA.isDev() then
+        RageUI.Visible(RMenu:Get('CARDEV', 'main'), not RageUI.Visible(RMenu:Get('CARDEV', 'main')))
+    end
 end)
 
-RegisterNetEvent("ARMA:CarDevMenu")
-AddEventHandler("ARMA:CarDevMenu",function()
-  RageUI.Visible(RMenu:Get('CARDEV', 'main'), not RageUI.Visible(RMenu:Get('CARDEV', 'main')))
-end)
 
 function FixVehicle(veh)
     local p = GetPlayerPed(-1)
