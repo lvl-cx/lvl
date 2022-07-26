@@ -5,7 +5,7 @@ local cfg = module("arma-vehicles", "garages")
 local cfg_inventory = module("cfg/inventory")
 local vehicle_groups = cfg.garage_types
 local limit = cfg.limit or 100000000
-MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,locked)")
+MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
 MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")

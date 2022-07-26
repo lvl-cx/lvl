@@ -1,6 +1,6 @@
 local cfg = module("arma-vehicles", "garages")
 local vehcategories = cfg.garage_types
-local garage_type = "car"
+local garage_type = "Car"
 local selected_category = nil
 local Hovered_Vehicles = nil
 local VehiclesFetchedTable = {}
