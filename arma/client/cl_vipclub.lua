@@ -179,8 +179,22 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
                 RageUI.Separator('Perm ID: '..z.userid)
-                RageUI.Separator('Days of Plus Remaining: '..math.floor(z.hoursOfPlus/24*100)/100)
-                RageUI.Separator('Days of Platinum Remaining: '..math.floor(z.hoursOfPlatinum/24*100)/100)
+                if z.hoursOfPlus>=10 then 
+                    colourCode="~g~"
+                elseif z.hoursOfPlus<10 and z.hoursOfPlus>3 then 
+                    colourCode="~y~"
+                else 
+                    colourCode="~r~"
+                end
+                RageUI.Separator('Days of Plus Remaining: '..colourCode..math.floor(z.hoursOfPlus/24*100)/100)
+                if z.hoursOfPlatinum>=10 then 
+                    colourCode="~g~"
+                elseif z.hoursOfPlatinum<10 and z.hoursOfPlatinum>3 then 
+                    colourCode="~y~"
+                else 
+                    colourCode="~r~"
+                end
+                RageUI.Separator('Days of Platinum Remaining: '..colourCode..math.floor(z.hoursOfPlatinum/24*100)/100)
                 RageUI.ButtonWithStyle("Add Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
                 end)
                 RageUI.ButtonWithStyle("Remove Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
