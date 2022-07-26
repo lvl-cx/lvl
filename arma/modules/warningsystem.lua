@@ -32,7 +32,12 @@ AddEventHandler("arma:refreshWarningSystem",function()
 	local source = source
 	local user_id = ARMA.getUserId(source)	
 	armawarningstables = getarmaWarnings(user_id,source)
-	TriggerClientEvent("arma:recievedRefreshedWarningData",source,armawarningstables)
+	a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = user_id})
+	for k,v in pairs(a) do
+		if v.UserID == user_id then
+			TriggerClientEvent("arma:recievedRefreshedWarningData",source,armawarningstables,v.points)
+		end
+	end
 end)
 
 RegisterServerEvent("arma:warnPlayer")
@@ -115,10 +120,10 @@ function f10Kick(target_id,adminName,warningReason)
 	exports['ghmattimysql']:execute("INSERT INTO arma_warnings (`user_id`, `warning_type`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, @admin, @warning_date,@reason);", {user_id = target_id, warning_type = warning, admin = adminName, warning_date = warningDate, reason = warningReason}, function() end)
 end
 
-function f10Ban(target_id,adminName,warningReason,warning_duration,warning_points)
+function f10Ban(target_id,adminName,warningReason,warning_duration)
 	warning = "Ban"
 	warningDate = getCurrentDate()
-	exports['ghmattimysql']:execute("INSERT INTO arma_warnings (`user_id`, `warning_type`, `duration`, `admin`, `warning_date`, `reason`, `points`) VALUES (@user_id, @warning_type, @duration, @admin, @warning_date,@reason,@points);", {user_id = target_id, warning_type = warning, admin = adminName, duration = warning_duration, warning_date = warningDate, reason = warningReason, points=warning_points}, function() end)
+	exports['ghmattimysql']:execute("INSERT INTO arma_warnings (`user_id`, `warning_type`, `duration`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, @duration, @admin, @warning_date,@reason,@points);", {user_id = target_id, warning_type = warning, admin = adminName, duration = warning_duration, warning_date = warningDate, reason = warningReason}, function() end)
 end
 
 
