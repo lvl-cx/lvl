@@ -137,6 +137,7 @@ Citizen.CreateThread(function()
     admin VARCHAR(100),
     warning_date DATE,
     reason VARCHAR(2000),
+    points INT,
     PRIMARY KEY (warning_id)
     )
     ]])
