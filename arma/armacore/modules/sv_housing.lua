@@ -337,7 +337,7 @@ AddEventHandler("ARMAHousing:LoadWardrobe", function()
         if ARMA.hasGroup(user_id, 'VIP') then
             TriggerClientEvent("clothingMenu:UpdateWardrobe", player, sets) --update wardrobe for client
         else
-            TriggerClientEvent('clothingMenu:closeWardrobe')
+            TriggerClientEvent('clothingMenu:closeWardrobe', player)
         end
     end)
 end)
