@@ -112,3 +112,17 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
         end
     end)
 end)
+
+RegisterNetEvent("ARMA:reduceVipSubscriptions")
+AddEventHandler("ARMA:reduceVipSubscriptions", function()
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+
+    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+        local plushours = rows[1].plushours
+        local plathours = rows[1].plathours
+        MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
+        MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
+        TriggerClientEvent('ARMA:setVIPClubData', player, plushours-1/60, plathours-1/60)
+    end)
+end)
