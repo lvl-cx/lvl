@@ -1,4 +1,4 @@
-RMenu.Add('ARMANHSMenu', 'main', RageUI.CreateMenu("", "~b~NHS",1250,100, 'nhs', 'nhs'))
+RMenu.Add('ARMANHSMenu', 'main', RageUI.CreateMenu("", "~b~NHS",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'nhs', 'nhs'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMANHSMenu', 'main')) then

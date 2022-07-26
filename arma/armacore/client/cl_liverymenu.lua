@@ -1,4 +1,4 @@
-RMenu.Add("LiveryMenu", "main", RageUI.CreateMenu("", "~b~Livery Menu", 1350, 10, "banners", "livery")) 
+RMenu.Add("LiveryMenu", "main", RageUI.CreateMenu("", "~b~Livery Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "livery")) 
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LiveryMenu', 'main')) then

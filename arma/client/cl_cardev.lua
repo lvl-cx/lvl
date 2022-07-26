@@ -1,7 +1,7 @@
-RMenu.Add('CARDEV', 'main', RageUI.CreateMenu("","~r~Main Menu",1250,100, "banners", "cardev"))
-RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle List",1250,100))
-RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelist'),"","~r~Vehicle List",1250,100))
-RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",1250,100))
+RMenu.Add('CARDEV', 'main', RageUI.CreateMenu("","~r~Main Menu",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cardev"))
+RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelist'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 
 local m = module("arma-vehicles", "garages")
 m=m.garage_types

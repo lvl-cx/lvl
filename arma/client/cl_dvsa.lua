@@ -1,8 +1,8 @@
 TriggerEvent('chat:addSuggestion','/dl','Manage your driving licence and book a test')
-RMenu.Add('dvsa','main',RageUI.CreateMenu("","Driver & Vehicle Standards Agency", 1350, 100, "banners", "dvsa_banner"))
-RMenu.Add('dvsa','licence',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Driving Licence", 1350, 100))
-RMenu.Add('dvsa','tests',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Driving Tests", 1350, 100))
-RMenu.Add('dvsa','alerts',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Alerts", 1350, 100))
+RMenu.Add('dvsa','main',RageUI.CreateMenu("","Driver & Vehicle Standards Agency", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "dvsa_banner"))
+RMenu.Add('dvsa','licence',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Driving Licence", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add('dvsa','tests',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Driving Tests", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add('dvsa','alerts',RageUI.CreateSubMenu(RMenu:Get('dvsa','main'),"","DVSA: ~b~Alerts", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 local a={}
 local b={}
 local c={}

@@ -1,4 +1,4 @@
-RMenu.Add('identitymenu', 'main', RageUI.CreateMenu("", "~b~Identity Menu", 1450,0, 'banners', 'identity'))
+RMenu.Add('identitymenu', 'main', RageUI.CreateMenu("", "~b~Identity Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'identity'))
 
 RageUI.CreateWhile(1.0, true, function()
 

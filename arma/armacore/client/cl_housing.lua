@@ -11,10 +11,10 @@ local owned = false
 wardrobe = {}
 ownedHouses = {}
 
-RMenu.Add("ARMAHousing", "main", RageUI.CreateMenu("", "", 1350, 50,"banners","housing"))
-RMenu.Add("ARMAHousing", "leave", RageUI.CreateMenu("", "", 1350, 50,"banners","housing"))
-RMenu.Add("ARMAHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", 1350, 50,"banners","housing"))
-RMenu.Add("ARMAHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("ARMAHousing", "wardrobe"), "", "~b~Wardrobe", 1350, 50,"banners","housing"))
+RMenu.Add("ARMAHousing", "main", RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
+RMenu.Add("ARMAHousing", "leave", RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
+RMenu.Add("ARMAHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
+RMenu.Add("ARMAHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("ARMAHousing", "wardrobe"), "", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAHousing', 'main')) then

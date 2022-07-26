@@ -21,7 +21,7 @@ local vehicleCannotBeRented = {
     ["demonhawkk"] = true,
 }
 
-RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Arma Garages",1350,10, "banners", "garage"))
+RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Arma Garages",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "garage"))
 RMenu.Add('ARMAGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
