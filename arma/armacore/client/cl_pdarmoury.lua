@@ -50,7 +50,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Armour Plate: " .. 'Level 4 ~b~[100%]', function() end)
             RageUI.Separator("Armour Plate Price: Free" .. '', function() end)
-            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
+            RageUI.Separator("Current Gunstore: Police Armoury", function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -74,7 +74,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Weapon Name: " .. cName, function() end)
             RageUI.Separator("Weapon Price: Free", function() end)
-            RageUI.Separator("Current Gunstore: " .. armoury.name, function() end)
+            RageUI.Separator("Current Gunstore: Police Armoury", function() end)
         
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
@@ -103,7 +103,7 @@ Citizen.CreateThread(function()
         
             if isInArea(v1, 0.8) then 
             
-                alert('Press ~INPUT_VEH_HORN~ to access ' .. armoury.name)
+                alert('Press ~INPUT_VEH_HORN~ to access Police Armoury')
                 if IsControlJustPressed(0, 51) then
                     PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
                     RageUI.Visible(RMenu:Get("PDArmoury", "main"), true)
@@ -131,7 +131,7 @@ Citizen.CreateThread(function()
     SetBlipColour(blip, 3)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(armoury.name)
+    AddTextComponentString("Police Armoury")
     EndTextCommandSetBlipName(blip)
 end)
 

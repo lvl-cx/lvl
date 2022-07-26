@@ -23,19 +23,17 @@ knifestore.guns = {
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('KnifeStoreMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        for i , p in pairs(knifestore.guns) do 
-            RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
-                if Selected then
-
-                    cPrice = p.price
-                    cHash = p.hash
-                    cName = p.name
-
-                end
-            end, RMenu:Get("KnifeStoreMenu", "confirm"))
-        end
-    end) 
-end
+            for i , p in pairs(knifestore.guns) do 
+                RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        cPrice = p.price
+                        cHash = p.hash
+                        cName = p.name
+                    end
+                end, RMenu:Get("KnifeStoreMenu", "confirm"))
+            end
+        end) 
+    end
 end)
 -- [Confirm Purchase]
 RageUI.CreateWhile(1.0, true, function()
@@ -43,18 +41,13 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
         RageUI.Separator("Weapon Name: " .. cName, function() end)
         RageUI.Separator("Weapon Price: £" .. getMoneyStringFormatted(cPrice), function() end)
-        RageUI.Separator("Current Gunstore: " .. knifestore.name, function() end)
+        RageUI.Separator("Current Gunstore: Knife Store", function() end)
         RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
             if Selected then
-
                 TriggerServerEvent('KnifeStore:BuyWeapon', cPrice, cHash)
-
             end
         end, RMenu:Get("KnifeStoreMenu", "main"))
-
         RageUI.Button("~r~Decline" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("KnifeStoreMenu", "main"))
-       
-
     end) 
 end
 end)
@@ -71,7 +64,7 @@ Citizen.CreateThread(function()
         
             if isInArea(v1, 0.8) then 
             
-                alert('Press ~INPUT_VEH_HORN~ to access ' .. knifestore.name)
+                alert('Press ~INPUT_VEH_HORN~ to access Knife Store')
                 if IsControlJustPressed(0, 51) then
                     PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
                     RageUI.Visible(RMenu:Get("KnifeStoreMenu", "main"), true)
@@ -100,7 +93,7 @@ Citizen.CreateThread(function()
     SetBlipColour(blip, 1)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(knifestore.name)
+    AddTextComponentString('Knife Store')
     EndTextCommandSetBlipName(blip)
 end)
 

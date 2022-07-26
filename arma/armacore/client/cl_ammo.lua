@@ -27,16 +27,13 @@ RageUI.CreateWhile(1.0, true, function()
             for i , p in pairs(ammo.types) do 
                 RageUI.Button(p.name , nil, { RightLabel = '~g~£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                     if Selected then
-
                         cPrice = p.price
                         cName = p.name
-
                     end
                 end, RMenu:Get("Ammo", "confirm"))
             end
-
-    end) 
-end
+        end) 
+    end
 end)
 
 
@@ -56,56 +53,39 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Separator("Ammo Type: " .. cName, function() end)
             RageUI.Separator("Ammo Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
-            RageUI.Separator("Current Trader: " .. ammo.name, function() end)
-        
+            RageUI.Separator("Current Trader: Ammo Trader", function() end)
             RageUI.List(cName, AmmoNumbers, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
-                if Hovered then
-    
-                end
-    
                 Index = AIndex
             end)
-        RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
-            if Selected then
-
-                TriggerServerEvent('Ammo:BuyAmmo', cPrice * tonumber(Index), cName, tonumber(Index))
-
-            end
-        end, RMenu:Get("Ammo", "main"))
-
-       
-
-    end) 
-end
+            RageUI.Button("~g~Confirm" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent('Ammo:BuyAmmo', cPrice * tonumber(Index), cName, tonumber(Index))
+                end
+            end, RMenu:Get("Ammo", "main"))       
+        end) 
+    end
 end)
 
 AmmoMenu = false
 Citizen.CreateThread(function() 
     while true do
-   
-            local v1 = ammo.location
-
-            if isInArea(v1, 500.0) then 
-                DrawMarker(27, ammo.marker, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 250, 0, 0, 2, true, 0, 0, false)
+        local v1 = ammo.location
+        if isInArea(v1, 500.0) then 
+            DrawMarker(27, ammo.marker, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 0, 0, 250, 0, 0, 2, true, 0, 0, false)
+        end
+        if isInArea(v1, 0.8) then 
+            alert('Press ~INPUT_VEH_HORN~ to access Ammo Trader')
+            if IsControlJustPressed(0, 51) then
+                PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
+                RageUI.Visible(RMenu:Get("Ammo", "main"), true)
+                AmmoMenu = true
             end
-        
-            if isInArea(v1, 0.8) then 
-            
-                alert('Press ~INPUT_VEH_HORN~ to access ' .. ammo.name)
-                if IsControlJustPressed(0, 51) then
-                    PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
-                    RageUI.Visible(RMenu:Get("Ammo", "main"), true)
-                    AmmoMenu = true
-
-                end
-            end
-
-            if isInArea(v1, 0.8) == false and AmmoMenu then
-                RageUI.ActuallyCloseAll()
-                RageUI.Visible(RMenu:Get("Ammo", "main"), false)
-                AmmoMenu = false
-            end
-     
+        end
+        if isInArea(v1, 0.8) == false and AmmoMenu then
+            RageUI.ActuallyCloseAll()
+            RageUI.Visible(RMenu:Get("Ammo", "main"), false)
+            AmmoMenu = false
+        end
         Citizen.Wait(1)
     end
 end)
@@ -120,7 +100,7 @@ Citizen.CreateThread(function()
     SetBlipColour(blip, 1)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(ammo.name)
+    AddTextComponentString('Ammo Trader')
     EndTextCommandSetBlipName(blip)
 end)
 
