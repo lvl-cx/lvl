@@ -99,6 +99,12 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
 
             TriggerClientEvent('ARMA:sendGarageSettings', source)
             TriggerClientEvent('ARMA:sendSettings', source)
+            players = ARMA.getUsers({})
+            local baseplayers = {}
+            for k,v in pairs(players) do
+                baseplayers[v] = ARMA.getUserId(v)
+            end
+            ARMAclient.setBasePlayers(baseplayers)
         else
             if data.weapons ~= nil then -- load saved weapons
                 ARMAclient.giveWeapons(source, {data.weapons, true})
