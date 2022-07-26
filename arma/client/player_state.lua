@@ -2,7 +2,6 @@
 -- periodic player state update
 
 local state_ready = false
-local firstspawn = true
 
 AddEventHandler("playerSpawned",function() -- delay state recording
   Citizen.CreateThread(function()
@@ -273,18 +272,3 @@ function tARMA.setCustomization(custom) -- indexed [drawable,texture,palette] co
     exit({})
   end)
 end
-
--- fix invisible players by resetting customization every minutes
---[[
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(60000)
-    if state_ready then
-      local custom = tARMA.getCustomization()
-      custom.model = nil
-      custom.modelhash = nil
-      tARMA.setCustomization(custom)
-    end
-  end
-end)
---]]
