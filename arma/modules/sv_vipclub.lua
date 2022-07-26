@@ -1,3 +1,55 @@
+MySQL.createCommand("subscription/set_plushours","UPDATE arma_subscriptions SET plusdays = @plusdays WHERE user_id = @user_id")
+MySQL.createCommand("subscription/set_plathours","UPDATE arma_subscriptions SET platdays = @platdays WHERE user_id = @user_id")
+MySQL.createCommand("subscription/get_subscription","SELECT * FROM arma_subscriptions WHERE user_id = @user_id")
+MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plusdays = 0, platdays = 0")
+
+AddEventHandler("playerJoining", function()
+    local user_id = ARMA.getUserId(source)
+    MySQL.execute("subscription/add_id", {user_id = user_id})
+end)
+
+RegisterNetEvent("ARMA:setPlayerSubscription")
+AddEventHandler("ARMA:setPlayerSubscription", function(subtype)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+
+    if ARMA.hasGroup(user_id, 'dev') then
+        ARMA.prompt(player,"Number of hours ","",function(player, hours) -- ask for number of hours
+            if tonumber(hours) and tonumber(hours) > 0 then
+                if subtype == "Plus" then
+                    MySQL.execute("subscription/set_plushours", {user_id = user_id, plusdays = hours})
+                elseif subtype == "Platinum" then
+                    MySQL.execute("subscription/set_plathours", {user_id = user_id, platdays = hours})
+                end
+            else
+                ARMAclient.notify(player,{"~r~Number of hours must be a number."}) -- if price of home is a string not a int
+            end
+        end)
+    else
+        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(player), player, 'Trigger Set Player Subscription')
+    end
+end)
+
+RegisterNetEvent("ARMA:getPlayerSubscription")
+AddEventHandler("ARMA:getPlayerSubscription", function(playerid)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+    print(playerid)
+    if playerid ~= nil then
+        MySQL.query("subscription/get_subscription", {user_id = playerid}, function(rows, affected)
+            local plusdays = rows[1].plusdays
+            local platdays = rows[1].platdays
+            TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plusdays, platdays)
+        end)
+    else
+        MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+            local plusdays = rows[1].plusdays
+            local platdays = rows[1].platdays
+            TriggerClientEvent('ARMA:setVIPClubData', player, plusdays, platdays)
+        end)
+    end
+end)
+
 RegisterNetEvent("ARMA:beginSellSubscriptionToPlayer")
 AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
     local user_id = ARMA.getUserId(source)
