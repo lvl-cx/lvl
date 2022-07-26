@@ -36,6 +36,7 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		if showWarningSystem then
+			local totalPoints = 0
 			DrawRect(0.498, 0.482, 0.615, 0.636, 0, 0, 0, 150)
 			DrawRect(0.498, 0.197, 0.615, 0.066, 0, 0, 0, 135)
 			DrawAdvancedText(0.59, 0.198, 0.005, 0.0028, 0.619, 'ARMA' .. ' Warnings', 255, 255, 255, 255, 7, 0)
@@ -48,7 +49,7 @@ Citizen.CreateThread(function()
 			DrawAdvancedText(0.510, 0.271, 0.005, 0.0028, 0.4, "Date", 255, 255, 255, 255, 6, 0)
 			DrawAdvancedText(0.675, 0.271, 0.005, 0.0028, 0.4, "Reason", 255, 255, 255, 255, 6, 0)
 			for warningID,warningTable in pairs(armaWarnings) do
-				local warning_id, warning_type,duration,admin,date,reason = warningTable["warning_id"], warningTable["warning_type"],warningTable["duration"],warningTable["admin"],warningTable["warning_date"],warningTable["reason"]
+				local warning_id, warning_type,duration,admin,date,reason,points = warningTable["warning_id"], warningTable["warning_type"],warningTable["duration"],warningTable["admin"],warningTable["warning_date"],warningTable["reason"],warningTable["points"]
 				if warning_type == "Warning" then
 					warningColourR = 255
 					warningColourG = 255
@@ -69,17 +70,21 @@ Citizen.CreateThread(function()
 				DrawAdvancedText(0.510, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, date,  255, 255, 255, 255, 6, 0)
 				DrawAdvancedText(0.675, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, reason,  255, 255, 255, 255, 6, 0)
 				rowcounter = rowcounter + 1
+				totalPoints = totalPoints + points
+				if totalPoints > 10 then; totalPoints = 10; end;
 			end
 			rowcounter = 0
+			if totalPoints < 3 then
+				colorCode = '~g~'
+			elseif totalPoints > 3 and totalPoints < 8 then
+				colorCode = '~y~'
+			else
+				colorCode = '~r~'
+			end
+			DrawAdvancedText(0.59, 0.750, 0.005, 0.0028, 0.619, "Total Points - "..colorCode..totalPoints, 255, 255, 255, 255, 7, 0)
 		end
 		Wait(0)
 	end	
-end)
-
-RegisterCommand("warn",function()
-	userIDtoWarn = getWarningUserID()
-	userWarningMessage = getWarningUserMsg()
-	TriggerServerEvent("arma:warnPlayer",tonumber(userIDtoWarn),userWarningMessage)
 end)
 
 function getWarningUserID()

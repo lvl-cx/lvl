@@ -22,6 +22,7 @@ local selectedbans = {}
 local Duration = 0
 local BanMessage = "N/A"
 local SeparatorMSG = {}
+local BanPoints = 0
 
 local banchecked = {}
 
@@ -860,7 +861,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end)
                         RageUI.ButtonWithStyle("Confirm", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                             if Selected then
-                                TriggerServerEvent("ARMA:BanPlayer", banningPermID, Duration, BanMessage)
+                                TriggerServerEvent("ARMA:BanPlayer", banningPermID, Duration, BanMessage, BanPoints)
                             end
                         end)
                     end
@@ -1425,10 +1426,11 @@ AddEventHandler("ARMA:getPlayersInfo", function(BB, preasons)
 end)
 
 RegisterNetEvent("ARMA:RecieveBanPlayerData")
-AddEventHandler("ARMA:RecieveBanPlayerData",function(BanDuration, CollectedBanMessage, SepMSG)
+AddEventHandler("ARMA:RecieveBanPlayerData",function(BanDuration, CollectedBanMessage, SepMSG, points)
     Duration = BanDuration
     BanMessage = CollectedBanMessage
     SeparatorMsg = SepMSG
+    BanPoints = points
     RageUI.Visible(RMenu:Get('adminmenu', 'generatedban'), true)
 end)
 

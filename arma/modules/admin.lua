@@ -707,12 +707,14 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
     local PlayerCacheBanMessage = {}
     local PermOffense = false
     local separatormsg = {}
+    local points = 0
     PlayerBanCachedDuration[PlayerID] = 0
     PlayerOffenses[PlayerID] = {}
     
     if ARMA.hasPermission(AdminPermID, "admin.tickets") then
         exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = PlayerID}, function(result)
             if #result > 0 then
+                points = result[1].points
                 PlayerOffenses[PlayerID] = json.decode(result[1].Rules)
                 for k,v in pairs(RulesBroken) do
                     for a,b in pairs(bans) do
@@ -729,6 +731,12 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                             elseif PlayerOffenses[PlayerID][k] >= 3 then
                                 table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
                             end
+                            if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
+                                points = points + bans[a].durations[PlayerOffenses[PlayerID][k]]/24
+                                print(points)
+                            else
+                                points = 10
+                            end
                             table.insert(PlayerCacheBanMessage, bans[a].name)
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
                                 PlayerBanCachedDuration[PlayerID] = -1
@@ -741,12 +749,12 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                     PlayerBanCachedDuration[PlayerID] = -1
                 end
                 Wait(1500)
-                TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg)
+                TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, points)
             else
                 for k,v in pairs(bans) do
                     defaultBans[v.id] = 0
                 end
-                exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = PlayerID, Rules = json.encode(defaultBans)})
+                exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules,points) VALUES(@UserID, @Rules, @points)", {UserID = PlayerID, Rules = json.encode(defaultBans), points = points})
                 ARMAclient.notify(AdminTemp, {"~g~Created player's default offences, please regenerate ban."})
             end
         end)
@@ -755,7 +763,7 @@ end)
 
 
 RegisterServerEvent("ARMA:BanPlayer")
-AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage)
+AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPoints)
     local AdminTemp = source
     local AdminPermID = ARMA.getUserId(AdminTemp)
     local AdminName = GetPlayerName(AdminTemp)
@@ -769,9 +777,9 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage)
         if Evidence ~= nil and Evidence ~= "" then
             if ARMA.hasPermission(AdminPermID, "admin.tickets") then
                 if Duration == -1 then
-                    Duration = "perm"
+                    banDuration = "perm"
                 else
-                    Duration = CurrentTime + (60 * 60 * tonumber(Duration))
+                    banDuration = CurrentTime + (60 * 60 * tonumber(Duration))
                 end
 
                 local communityname = "vRP Staff Logs"
@@ -817,9 +825,9 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage)
                 PerformHttpRequest(LogChannel, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
                 PerformHttpRequest(StaffBanLogs, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
                 ARMAclient.notify(AdminTemp, {"Banned ID: "..PlayerID})
-                ARMA.ban(source,PlayerID,Duration,BanMessage)
-                f10Ban(PlayerID, AdminName, BanMessage, Duration)
-                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID}, function() end)
+                ARMA.ban(source,PlayerID,banDuration,BanMessage)
+                f10Ban(PlayerID, AdminName, BanMessage, Duration, BanPoints)
+                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
             end
         else
             ARMAclient.notify(AdminTemp, {"~r~Evidence field was left empty!"})
