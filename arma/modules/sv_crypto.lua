@@ -1,4 +1,4 @@
-local cryptoprice = 0
+--[[ local cryptoprice = 0
 local url = "https://blockchain.info/ticker"
 
 
@@ -135,3 +135,4 @@ Citizen.CreateThread(function()
         end
     end
 end)
+ ]]
