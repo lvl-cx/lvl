@@ -75,20 +75,6 @@ local function DisplayHelpText(str)
 	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
-local function notify(text, duration)
-	Citizen.CreateThread(function()
-		SetNotificationTextEntry("STRING")
-		AddTextComponentSubstringPlayerName(text)
-		if duration then 
-			local Notification = DrawNotification(true, true)
-			Citizen.Wait(duration)
-			RemoveNotification(Notification)
-		else 
-			DrawNotification(false, false) 
-		end
-	end)
-end
-
 local function GetInitialDatas()
 	local customCrosshairData = GetResourceKvpInt("cookcrosshair_custom")
 	if not customCrosshairData or customCrosshairData == 0 then
@@ -117,7 +103,7 @@ local function SaveDatas()
 		SetResourceKvpInt("cookcrosshair_" .. v.param, crosshairParameters[v.param]["currentValue"])
 	end
 
-	notify("~y~Crosshair datas~s~ has been ~g~saved~s~.", 5000)
+	tARMA.notify("~y~Crosshair datas~s~ has been ~g~saved~s~.", 5000)
 end
 
 local function ResetDatas()
@@ -136,7 +122,7 @@ local function ResetDatas()
 		SetResourceKvpInt("cookcrosshair_" .. v.param, v.value)
 	end
 
-	notify("~y~Crosshair datas~s~ has been ~r~reset~s~.", 5000)
+	tARMA.notify("~y~Crosshair datas~s~ has been ~r~reset~s~.", 5000)
 
 	GetInitialDatas()
 end

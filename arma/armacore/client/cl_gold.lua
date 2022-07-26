@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
                 --ClearPedTasksImmediately(ped)
                 Action = false
               else
-                ARMA.notify({"~r~You cant gather Gold while Driving!"})
+                tARMA.notify({"~r~You cant gather Gold while Driving!"})
               end
             end
           end

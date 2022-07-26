@@ -211,14 +211,14 @@ RageUI.CreateWhile(1.0, true, function()
                                         TriggerEvent('ARMA:ChangeArmour2', v.clothingid, v.index)
                                         VestEquip = true
                                     else
-                                        notify('~r~You need Armour to Equip a vest!')
+                                        tARMA.notify('~r~You need Armour to Equip a vest!')
                                     end                         
                                 else 
                                     if GetPedArmour(PlayerPedId()) == 0 then 
                                         SetPedComponentVariation(PlayerPedId(), 9, 0, 0, 0) 
                                         VestEquip = false
                                     else
-                                        notify('~r~You cant Un-equip a vest when you have armour!')
+                                        tARMA.notify('~r~You cant Un-equip a vest when you have armour!')
                                     end
                                 end        
                             end
@@ -260,7 +260,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 end
                                 listingprice = listingpriceresult
                             else
-                                notify('~r~Please enter a valid value.')
+                                tARMA.notify('~r~Please enter a valid value.')
                             end
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
@@ -280,7 +280,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 TriggerServerEvent('ARMA:GetCosmetic')
                                 cooldown = 300
                             else
-                                notify('~r~Listing cooldown ' .. tostring(cooldown) ..'s')
+                                tARMA.notify('~r~Listing cooldown ' .. tostring(cooldown) ..'s')
                             end
                         end
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))

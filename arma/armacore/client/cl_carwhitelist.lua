@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
                     if v ~= tARMA.userID() then
                         if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false)) == 0 then
                             SetEntityCoords(GetPlayerPed(-1), GetEntityCoords(GetPlayerPed(-1)))
-                            notify("~r~You are not allowed in this vehicle.")
+                            tARMA.notify("~r~You are not allowed in this vehicle.")
                         end
                     end
                 end

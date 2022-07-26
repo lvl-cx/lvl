@@ -147,7 +147,7 @@ Citizen.CreateThread(function()
             if testdriveenabled then
                 if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                     SetEntityCoords(PlayerPedId(), -51.761520385742,-1111.3009033203,26.435150146484)
-                    notify("~r~Test drive canceled.")
+                    tARMA.notify("~r~Test drive canceled.")
                     testdrivetimer = 0
                     testdriveenabled = false
                     DeleteEntity(testdrivevehicle)
@@ -243,12 +243,6 @@ Citizen.CreateThread(function()
     end
 end) 
 
-  
-function notify(string)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(string)
-    DrawNotification(true, false)
-end
 
 function DrawAdvancedTextOutline(x,y ,w,h,sc, text, r,g,b,a,font,jus)
     SetTextFont(font)

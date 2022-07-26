@@ -125,7 +125,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if string.upper(Confirm()) == 'YES' then
                             TriggerServerEvent('ARMA:RefundLicense', SelectedGroup)
                         else
-                            notify('~g~Failed to type Yes.')
+                            tARMA.notify('~g~Failed to type Yes.')
                         end
 
                     end

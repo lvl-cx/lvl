@@ -22,7 +22,7 @@ end)
 RegisterNetEvent('ARMA:OutOfZone')
 AddEventHandler('ARMA:OutOfZone', function(isnTurf)
 	inTurf = false
-	notify("~r~The The turf cap was cancelled, you will receive nothing.")
+	tARMA.notify("~r~The The turf cap was cancelled, you will receive nothing.")
 	TakenTurf = false
 	inZone = false
 end)
@@ -30,7 +30,7 @@ end)
 RegisterNetEvent('ARMA:PlayerDied')
 AddEventHandler('ARMA:PlayerDied', function(isnTurf)
 	inTurf = false
-	notify("~r~The turf cap was cancelled, you died!")
+	tARMA.notify("~r~The turf cap was cancelled, you died!")
 	TakenTurf = false
 	inTurfName = ""
 	secondsRemaining = 0

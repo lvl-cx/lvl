@@ -32,12 +32,6 @@ local myveh = {}
 local gameplaycam = nil
 local cam = nil
 
-local function Notify(text)
-	SetNotificationTextEntry('STRING')
-	AddTextComponentString(text)
-	DrawNotification(false, false)
-end
-
 local function f(n)
 	return (n + 0.00001)
 end

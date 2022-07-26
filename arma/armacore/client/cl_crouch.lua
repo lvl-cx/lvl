@@ -70,12 +70,6 @@ Citizen.CreateThread(function()
 	local stealthFreeAimMaxMoveSpeed = 10.0
 	local stealthADSMaxMoveSpeed = 10.0
 	
-	local function notify(text)
-		SetTextComponentFormat("STRING")
-		AddTextComponentString(text)
-		DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-	end
-	
 	local function refreshPlayerData ()
 		playerped = PlayerPedId()
 		player = GetPlayerIndex()
@@ -248,7 +242,7 @@ Citizen.CreateThread(function()
 			forcedStealth(true)
 			if IsAimCamActive() or IsAimCamThirdPersonActive() then
 				SetPedMaxMoveBlendRatio(playerped, freeAimMaxMoveSpeed)	
-				--notify("PLAYER FREE-AIMING")
+				--tARMA.notify("PLAYER FREE-AIMING")
 			end
 		end
 	end
@@ -261,17 +255,17 @@ Citizen.CreateThread(function()
 	local function tickStealthy ()
 		if IsPlayerFreeAiming(player) then
 			SetPedMaxMoveBlendRatio(playerped, stealthADSMaxMoveSpeed)
-			--notify("PLAYER AIMING STEALTHY")
+			--tARMA.notify("PLAYER AIMING STEALTHY")
 		else
 			if IsAimCamActive() or IsAimCamThirdPersonActive() then
 				SetPedMaxMoveBlendRatio(playerped, stealthFreeAimMaxMoveSpeed)	
-				--notify("PLAYER FREE-AIMING STEALTHY")
+				--tARMA.notify("PLAYER FREE-AIMING STEALTHY")
 			end
 		end
 	end
 	
 	local function crouch ()
-		--notify("CROUCHING")
+		--tARMA.notify("CROUCHING")
 		RequestAnimSet("move_ped_crouched")
 		thisStealth(false)
 		forcedStealth(true)
@@ -285,35 +279,35 @@ Citizen.CreateThread(function()
 		while not HasAnimSetLoaded("move_ped_crouched") do
 			Citizen.Wait(0)
 			RequestAnimSet("move_ped_crouched")
-			--notify("LOADING ANIM SET")
+			--tARMA.notify("LOADING ANIM SET")
 		end
 		SetPedMovementClipset(playerped, "move_ped_crouched", crouchSpeed)
 		SetPedStrafeClipset(playerped, "move_ped_crouched_strafing")
 		SetWeaponAnimationOverride(playerped, "Ballistic")
-		--notify("CROUCHED")
+		--tARMA.notify("CROUCHED")
 	end
 	
 	local function tickCrouched ()
 		if IsPlayerFreeAiming(player) then
 			SetPedMaxMoveBlendRatio(playerped, moveSpeedCrouchedADS)
-			--notify("PLAYER AIMING CROUCHED")
+			--tARMA.notify("PLAYER AIMING CROUCHED")
 		else
 			if IsAimCamActive() or IsAimCamThirdPersonActive() then
 				SetPedMaxMoveBlendRatio(playerped, moveSpeedCrouchedFreeaim)
-				--notify("PLAYER FREEAIMING CROUCHED")
+				--tARMA.notify("PLAYER FREEAIMING CROUCHED")
 			else
 				SetPedMaxMoveBlendRatio(playerped, moveSpeedCrouched)
-				--notify("PLAYER CROUCHED")
+				--tARMA.notify("PLAYER CROUCHED")
 			end
 		end
 	end
 	
 	local function prone ()
-		notify("PLAYER PRONE")
+		tARMA.notify("PLAYER PRONE")
 	end
 	
 	local function tickProne ()
-		Citizen.Wait(notify("PLAYER STILL PRONE"))
+		Citizen.Wait(tARMA.notify("PLAYER STILL PRONE"))
 	end
 	
 	local function updateStance ()

@@ -63,7 +63,7 @@ Citizen.CreateThread(function()
                    end)
                   end
                   if taxiCooldown == true then
-                    notify('~r~You have to wait 5 minutes before you can call another taxi.')
+                    tARMA.notify('~r~You have to wait 5 minutes before you can call another taxi.')
                   end
                 end
             end
@@ -110,7 +110,7 @@ AddEventHandler('ARMA:cprAnim', function(nplayer)
   if GetEntityHealth(GetPlayerPed(GetPlayerFromServerId(nplayer))) == 102 then
     if not cpr_in_progress then
       cpr_in_progress = true
-      notify("~g~CPR in progress.")
+      tARMA.notify("~g~CPR in progress.")
       math.randomseed(GetGameTimer())
       cprChance = math.random(1,8)
       local ad = "missheistfbi3b_ig8_2"
@@ -121,17 +121,17 @@ AddEventHandler('ARMA:cprAnim', function(nplayer)
       Wait(12000)
       if cprChance == 1 then
         TriggerServerEvent("ARMA:SendFixClient", nplayer)
-        notify("~g~You have saved this person's life.")
+        tARMA.notify("~g~You have saved this person's life.")
       else
-        notify("~r~You need to practice CPR more, please try again.")
+        tARMA.notify("~r~You need to practice CPR more, please try again.")
       end
       Wait(2000)
       cpr_in_progress = false  
       ClearPedSecondaryTask(PlayerPedId())
     else
-      notify("~r~You are already performing CPR.")
+      tARMA.notify("~r~You are already performing CPR.")
     end
   else
-    notify("~r~You cannot perform CPR on this person.")
+    tARMA.notify("~r~You cannot perform CPR on this person.")
   end
 end)

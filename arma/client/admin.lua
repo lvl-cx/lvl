@@ -330,7 +330,7 @@ AddEventHandler("wk:fixVehicle", function()
         SetVehicleEngineHealth(q, 9999)
         SetVehiclePetrolTankHealth(q, 9999)
         SetVehicleFixed(q)
-        Notify('~g~Fixed Vehicle')
+        tARMA.notify('~g~Fixed Vehicle')
     end
 end)
 
@@ -397,10 +397,10 @@ AddEventHandler("wk:deleteVehicle", function()
             if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
                 DeleteGivenVehicle( vehicle, numRetries )
             else 
-                Notify( "You must be in the driver's seat!" )
+                tARMA.notify( "You must be in the driver's seat!" )
             end 
         else
-             Notify( "You must be in a vehicle to delete it." )
+            tARMA.notify( "You must be in a vehicle to delete it." )
         end 
     end 
 end )
@@ -412,7 +412,7 @@ function DeleteGivenVehicle( veh, timeoutMax )
     DeleteVehicle( veh )
 
     if ( DoesEntityExist( veh ) ) then
-        Notify( "~r~Failed to delete vehicle, trying again..." )
+        tARMA.notify( "~r~Failed to delete vehicle, trying again..." )
 
         -- Fallback if the vehicle doesn't get deleted
         while ( DoesEntityExist( veh ) and timeout < timeoutMax ) do 
@@ -420,7 +420,7 @@ function DeleteGivenVehicle( veh, timeoutMax )
 
             -- The vehicle has been banished from the face of the Earth!
             if ( not DoesEntityExist( veh ) ) then 
-                Notify( "~g~Vehicle deleted." )
+                tARMA.notify( "~g~Vehicle deleted." )
             end 
 
             -- Increase the timeout counter and make the system wait
@@ -429,11 +429,11 @@ function DeleteGivenVehicle( veh, timeoutMax )
 
             -- We've timed out and the vehicle still hasn't been deleted. 
             if ( DoesEntityExist( veh ) and ( timeout == timeoutMax - 1 ) ) then
-                Notify( "~r~Failed to delete vehicle after " .. timeoutMax .. " retries." )
+                tARMA.notify( "~r~Failed to delete vehicle after " .. timeoutMax .. " retries." )
             end 
         end 
     else 
-        Notify( "~g~Vehicle deleted." )
+        tARMA.notify( "~g~Vehicle deleted." )
     end 
 end 
 
@@ -446,13 +446,6 @@ function GetVehicleInDirection( entFrom, coordFrom, coordTo )
     if ( IsEntityAVehicle( vehicle ) ) then 
         return vehicle
     end 
-end
-
--- Shows a notification on the player's screen 
-function Notify( text )
-    SetNotificationTextEntry( "STRING" )
-    AddTextComponentString( text )
-    DrawNotification( false, false )
 end
 
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)

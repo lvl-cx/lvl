@@ -264,7 +264,7 @@ function FixVehicle(veh)
     SetVehicleEngineHealth(q, 9999)
     SetVehiclePetrolTankHealth(q, 9999)
     SetVehicleFixed(q)
-    Notify('~g~Fixed Vehicle')
+    tARMA.notify('~g~Fixed Vehicle')
     end
 end
 
@@ -285,16 +285,10 @@ function cleanveh()
 	if IsPedInAnyVehicle(playerPed, false) then
 		local vehicle = GetVehiclePedIsIn(playerPed, false)
 		SetVehicleDirtLevel(vehicle, 0)
-		Notify("~b~Your vehicle has been cleaned!")
+		tARMA.notify("~b~Your vehicle has been cleaned!")
 	else
-		Notify("~o~You're not in a vehicle! There is no vehicle to clean!")
+		tARMA.notify("~o~You're not in a vehicle! There is no vehicle to clean!")
 	end
-end
-
-function Notify( text )
-    SetNotificationTextEntry( "STRING" )
-    AddTextComponentString( text )
-    DrawNotification( false, false )
 end
 
 function spawnVehicle(W,v,w,H,X,Y,Z,_)
@@ -328,7 +322,7 @@ end)
 
 function TakeVehScreenshot()
     if GetVehiclePedIsIn(PlayerPedId(),false)==0 then
-        notify("~r~You must be in a vehicle.")
+        tARMA.notify("~r~You must be in a vehicle.")
         return 
     end
     TakingCarSS = true

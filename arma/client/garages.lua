@@ -199,13 +199,13 @@ RageUI.CreateWhile(1.0, true, function()
                             if folders[folderName] ~= nil then
                                 if not table.find(folders[folderName], SelectedCar.spawncode) then
                                     table.insert(folders[folderName], SelectedCar.spawncode)
-                                    notify("~g~"..SelectedCar.name.." was added to "..folderName)
+                                    tARMA.notify("~g~"..SelectedCar.name.." was added to "..folderName)
                                     TriggerServerEvent("ARMA:updateFolders", folders)
                                 else
-                                    notify("~r~This Car is already in "..folderName)
+                                    tARMA.notify("~r~This Car is already in "..folderName)
                                 end
                             else
-                                notify("~r~Folder "..folderName.." does not exist.")
+                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
                             end
                         end
                     end
@@ -220,14 +220,14 @@ RageUI.CreateWhile(1.0, true, function()
                                         if folders[folderName][i] == SelectedCar.spawncode then
                                             table.remove(folders[folderName], i)
                                             TriggerServerEvent("ARMA:updateFolders", folders)
-                                            notify("~g~"..SelectedCar.name.." was removed from "..folderName)
+                                            tARMA.notify("~g~"..SelectedCar.name.." was removed from "..folderName)
                                         end
                                     end
                                 else
-                                    notify("~r~"..SelectedCar.name.." is not in "..folderName)
+                                    tARMA.notify("~r~"..SelectedCar.name.." is not in "..folderName)
                                 end
                             else
-                                notify("~r~Folder "..folderName.." does not exist.")
+                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
                             end
                         end
                     end
@@ -244,12 +244,12 @@ RageUI.CreateWhile(1.0, true, function()
                         if folders[folderName] == nil then
                             folders[folderName] = {}
                             TriggerServerEvent("ARMA:updateFolders", folders)
-                            notify("~g~Created custom folder "..folderName)
+                            tARMA.notify("~g~Created custom folder "..folderName)
                         else
-                            notify("~r~Folder already exists.")
+                            tARMA.notify("~r~Folder already exists.")
                         end
                     else
-                        notify("~r~Invalid folder name.")
+                        tARMA.notify("~r~Invalid folder name.")
                     end
                 end
             end)
@@ -259,13 +259,13 @@ RageUI.CreateWhile(1.0, true, function()
                     if folderName ~= nil then
                         if folders[folderName] ~= nil then
                             folders[folderName] = nil
-                            notify("~g~Deleted custom folder "..folderName)
+                            tARMA.notify("~g~Deleted custom folder "..folderName)
                             TriggerServerEvent("ARMA:updateFolders", folders)
                         else
-                            notify("~r~Folder "..folderName.." does not exist.")
+                            tARMA.notify("~r~Folder "..folderName.." does not exist.")
                         end
                     else
-                        notify("~r~Invalid folder name.")
+                        tARMA.notify("~r~Invalid folder name.")
                     end
                 end
             end)

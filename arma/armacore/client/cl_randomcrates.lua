@@ -29,7 +29,7 @@
 ---                    if not openingCrate then
 ---                        TriggerServerEvent('openRandomCrate')
 ---                    else
----                        notify('~r~You are already opening a crate.')
+---                        tARMA.notify('~r~You are already opening a crate.')
 ---                    end
 ---                end
 ---            end)
@@ -108,8 +108,3 @@
 ---    RageUI.Visible(RMenu:Get("RandomCrate", "main"), true)
 ---end)
 ---
----function notify(string)
----    SetNotificationTextEntry("STRING")
----    AddTextComponentString(string)
----    DrawNotification(true, false)
----end

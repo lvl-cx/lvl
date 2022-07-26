@@ -178,7 +178,7 @@ local unfrozen = false
 function tARMA.loadFreeze(notify,god,ghost)
 	if not frozen then
 	  if notify then
-	    ARMA.notify({"~r~You've been frozen."})
+	    tARMA.notifyy({"~r~You've been frozen."})
 	  end
 	  frozen = true
 	  invincible = god
@@ -186,7 +186,7 @@ function tARMA.loadFreeze(notify,god,ghost)
 	  unfrozen = false
 	else
 	  if notify then
-	    ARMA.notify({"~g~You've been unfrozen."})
+	    tARMA.notifyy({"~g~You've been unfrozen."})
 	  end
 	  unfrozen = true
 	  invincible = false

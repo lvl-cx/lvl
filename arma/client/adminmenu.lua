@@ -250,10 +250,10 @@ RageUI.CreateWhile(1.0, true, function()
                 if Selected then
                     hitsoundchecked = not hitsoundchecked
                     if hitsoundchecked then
-                        notify("~g~Hitsounds Enabled!")
+                        tARMA.notify("~g~Hitsounds Enabled!")
                         SetResourceKvpInt('hitsoundchecked', 1)
                     else
-                        notify("~r~Hitsounds Disabled!")
+                        tARMA.notify("~r~Hitsounds Disabled!")
                         SetResourceKvpInt('hitsoundchecked', 0)
                     end
                     TriggerEvent("RDM:triggerhssounds", hitsoundchecked)
@@ -1495,12 +1495,6 @@ function KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
 		blockinput = false 
 		return nil 
 	end
-end
-
-function tARMA.notify(string)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(string)
-    DrawNotification(true, false)
 end
 
 function SpawnVehicle(VehicleName)

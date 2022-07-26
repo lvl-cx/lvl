@@ -55,21 +55,21 @@ function engine()
         if savedvehicle ~= nil then
           SetVehicleEngineOn(savedvehicle, false, true, true)
           engineStatus = false
-          notify("~r~Engine Off")
+          tARMA.notify("~r~Engine Off")
         else
           SetVehicleEngineOn(GetVehiclePedIsIn(ped, false), false, true, true)
           engineStatus = false
-          notify("~r~Engine Off")
+          tARMA.notify("~r~Engine Off")
         end
       else
         if savedvehicle ~= nil then
             SetVehicleEngineOn(savedvehicle, true, true, true)
             engineStatus = true
-            notify("~g~Engine On")
+            tARMA.notify("~g~Engine On")
         else
             SetVehicleEngineOn(GetVehiclePedIsIn(ped, false), true, true, true)
             engineStatus = true
-            notify("~g~Engine On")
+            tARMA.notify("~g~Engine On")
         end
       end
     end
@@ -88,13 +88,13 @@ function tglDoorLocks()
           SetVehicleDoorsLockedForAllPlayers(savedvehicle, false)
           SetVehicleDoorsLockedForPlayer(savedvehicle, PlayerId(), false)
           lockStatus = false
-          notify("~g~Doors Unlocked")
+          tARMA.notify("~g~Doors Unlocked")
         else
           SetVehicleDoorsLocked(GetVehiclePedIsIn(ped, false), 1)
           SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(ped, false), false)
           SetVehicleDoorsLockedForPlayer(GetVehiclePedIsIn(ped, false), PlayerId(), false)
           lockStatus = false
-          notify("~g~Doors Unlocked")
+          tARMA.notify("~g~Doors Unlocked")
         end
       else
         if savedvehicle ~= nil then
@@ -102,7 +102,7 @@ function tglDoorLocks()
           SetVehicleDoorsLockedForAllPlayers(savedvehicle, true)
           SetVehicleDoorsLockedForPlayer(savedvehicle, PlayerId(), true)
           lockStatus = true
-          notify("~r~Doors Locked")
+          tARMA.notify("~r~Doors Locked")
         else
           SetVehicleDoorsLocked(GetVehiclePedIsIn(ped, false), 2)
           SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(ped, false), true)
@@ -176,8 +176,8 @@ function speedom()
         Citizen.CreateThread(function()
           local veh = GetVehiclePedIsIn(ped, false)
           CruiseVel = GetVehicleWheelSpeed(veh, 1)
-          notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
-          notify("~g~Press break to disable.")
+          tARMA.notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
+          tARMA.notify("~g~Press break to disable.")
           if CruiseVel > 1 then
             Cruise = true
             while Cruise do
@@ -206,13 +206,13 @@ function speedom()
                 Cruise = false
               end
             end
-            notify("~r~Cruise Control disabled.")
+            tARMA.notify("~r~Cruise Control disabled.")
           end
         end)
       else
         CruiseVel = GetVehicleWheelSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 1)
-        notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
-        notify("~g~Press break to disable.")
+        tARMA.notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
+        tARMA.notify("~g~Press break to disable.")
       end
     end
   end)
@@ -239,10 +239,4 @@ end
 
 function round(num, numDecimalPlaces)
 	return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
-end
-
-function notify(msg)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(msg)
-    DrawNotification(true, false)
 end

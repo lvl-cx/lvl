@@ -53,19 +53,12 @@ function drawTxt(x,y ,width,height,scale, text, r,g,b,a)
     DrawText(x - width/2, y - height/2 + 0.005)
 end
 
-function notify(string)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(string)
-    DrawNotification(true, false)
-end
-Citizen.CreateThread(
-    function()
-        while not createThreadOnTick do
-            Wait(0)
-        end
-        createThreadOnTick(func_disableGuiControls)
+Citizen.CreateThread(function()
+    while not createThreadOnTick do
+        Wait(0)
     end
-)
+    createThreadOnTick(func_disableGuiControls)
+end)
 
 
 function func_disableGuiControls()

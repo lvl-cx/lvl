@@ -81,33 +81,33 @@ end)
 
 RegisterCommand("hideids", function()
     idshidden = true
-    notify('~r~IDs Disabled')
+    tARMA.notify('~r~IDs Disabled')
 end)
 
 RegisterCommand("showids", function()
     idshidden = false
-    notify('~g~IDs Enabled')
+    tARMA.notify('~g~IDs Enabled')
 end)
 
 RegisterCommand("hidechat", function()
     TriggerEvent('ARMA:toggleChat', true)
-    notify('~g~Chat Hidden')
+    tARMA.notify('~g~Chat Hidden')
 end)
 
 RegisterCommand("showchat", function()
     TriggerEvent('ARMA:toggleChat', false)
-    notify('~g~Chat Shown')
+    tARMA.notify('~g~Chat Shown')
 end)
 
 RegisterNetEvent("ARMA:ChangeIDs")
 AddEventHandler("ARMA:ChangeIDs", function(status)
     if status then
         disPlayerNames = 10
-        notify("~r~Disabled Far IDs")
+        tARMA.notify("~r~Disabled Far IDs")
         faridsenabled = false
     elseif not status then
         disPlayerNames = 100
-        notify("~g~Enabled Far IDs")
+        tARMA.notify("~g~Enabled Far IDs")
         faridsenabled = true
     end
 end)

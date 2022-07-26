@@ -18,9 +18,9 @@ Citizen.CreateThread(function()
                     if not cooldown then 
                         cooldown = true
                         SetEntityHealth(PlayerPedId(), 200)
-                        notify("~g~You have been healed, free of charge by the NHS.")
+                        tARMA.notify("~g~You have been healed, free of charge by the NHS.")
                     elseif cooldown then
-                        notify("~r~You cannot get healed, try again later")
+                        tARMA.notify("~r~You cannot get healed, try again later")
                     end
                 end
             end
