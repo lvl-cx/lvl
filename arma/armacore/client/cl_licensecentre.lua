@@ -149,7 +149,7 @@ Citizen.CreateThread(function()
                 DrawMarker(27, licensecentre.marker, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 255, 255, 250, 0, 0, 2, true, 0, 0, false)
             end
             if isInArea(v1, 0.8) then 
-                alert('Press ~INPUT_VEH_HORN~ to access ' .. licensecentre.name)
+                alert('Press ~INPUT_VEH_HORN~ to access Job Centre')
                 if IsControlJustPressed(0, 51) then
                     PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1) 
                     RageUI.Visible(RMenu:Get("LicenseCentre", "main"), true)
@@ -173,7 +173,7 @@ Citizen.CreateThread(function()
     SetBlipColour(blip, 2)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(licensecentre.name)
+    AddTextComponentString('Job Centre')
     EndTextCommandSetBlipName(blip)
   end)
 
