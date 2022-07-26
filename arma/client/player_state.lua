@@ -28,6 +28,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(60000)
     ARMAserver.UpdatePlayTime()
+    TriggerServerEvent('ARMA:reduceVipSubscriptions')
   end
 end)
 
