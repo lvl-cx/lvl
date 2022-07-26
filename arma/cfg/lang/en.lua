@@ -15,10 +15,6 @@ local lang = {
   weapon = {
     pistol = "Pistol"
   },  
-  survival = {
-    starving = "starving",
-    thirsty = "thirsty"
-  },
   money = {
     display = "<span class=\"symbol\">$</span> {1}",
     bdisplay = "<span class=\"symbol\">$</span> {1}",
@@ -86,41 +82,6 @@ local lang = {
       not_enough = "~r~You don't have enough money in bank."
     }
   },
-  business = {
-    title = "Chamber of Commerce",
-    directory = {
-      title = "Directory",
-      description = "Business directory.",
-      dprev = "> Prev",
-      dnext = "> Next",
-      info = "<em>capital: </em>{1} $<br /><em>owner: </em>{2} {3}<br /><em>registration n°: </em>{4}<br /><em>phone: </em>{5}"
-    },
-    info = {
-      title = "Business info",
-      info = "<em>name: </em>{1}<br /><em>capital: </em>{2} $<br /><em>capital transfer: </em>{3} $<br /><br/>Capital transfer is the amount of money transfered for a business economic period, the maximum is the business capital."
-    },
-    addcapital = {
-      title = "Add capital",
-      description = "Add capital to your business.",
-      prompt = "Amount to add to the business capital:",
-      added = "~r~{1}$ ~s~added to the business capital."
-    },
-    launder = {
-      title = "Money laundering",
-      description = "Use your business to launder dirty money.",
-      prompt = "Amount of dirty money to launder (max {1} $): ",
-      laundered = "~g~{1}$ ~s~laundered.",
-      not_enough = "~r~Not enough dirty money."
-    },
-    open = {
-      title = "Open business",
-      description = "Open your business, minimum capital is {1} $.",
-      prompt_name = "Business name (can't change after, max {1} chars):",
-      prompt_capital = "Initial capital (min {1})",
-      created = "~g~Business created."
-      
-    }
-  },
   cityhall = {
     title = "City Hall",
     identity = {
@@ -137,7 +98,6 @@ local lang = {
   },
   police = {
     title = "Police",
-    wanted = "Wanted rank {1}",
     not_handcuffed = "~r~Not handcuffed",
     cloakroom = {
       title = "Cloakroom",
@@ -152,12 +112,6 @@ local lang = {
         title = "Registration search",
         description = "Search identity by registration.",
         prompt = "Enter registration number:"
-      },
-      closebusiness = {
-        title = "Close business",
-        description = "Close business of the nearest player.",
-        request = "Are you sure to close the business {3} owned by {1} {2} ?",
-        closed = "~g~Business closed."
       },
       trackveh = {
         title = "Track vehicle",
@@ -242,7 +196,7 @@ local lang = {
       }
     },
     identity = {
-      info =  "<em>Name: </em>{1}<br /><em>Perm ID: </em>{3}<br /><em>Registration n°: </em>{4}<br /><em>Phone: </em>{5}<br />"
+      info =  "<em>Name: </em>{1}<br /><em>Perm ID: </em>{3}<br /><em>Number Plate: </em>{4}<br /><em>Phone: </em>{5}<br />"
     }
   },
   emergency = {
