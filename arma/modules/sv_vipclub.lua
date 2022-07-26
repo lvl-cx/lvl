@@ -1,0 +1,58 @@
+RegisterNetEvent("ARMA:beginSellSubscriptionToPlayer")
+AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
+    local user_id = ARMA.getUserId(source)
+    local player = ARMA.getUserSource(user_id)
+
+    ARMAclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
+        usrList = ""
+        for k, v in pairs(nplayers) do
+            usrList = usrList .. "[" .. ARMA.getUserId(k) .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
+        end
+        if usrList ~= "" then
+            ARMA.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, target_id) --ask for id
+                target_id = target_id
+                if target_id ~= nil and target_id ~= "" then --validation
+                    local target = ARMA.getUserSource(tonumber(target_id)) --get source of the new owner id
+                    if target ~= nil then
+                        ARMA.prompt(player,"Number of hours ","",function(player, hours) -- ask for number of hours
+                            if tonumber(amount) and tonumber(amount) > 0 then
+                                ARMA.prompt(player,"Price £: ","",function(player, amount) -- ask for price of request
+                                    if tonumber(amount) and tonumber(amount) > 0 then
+                                        ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " of "..subtype.." subscription for £"..amount, 30, function(target,ok) --request player if they want to buy sub
+                                            if ok then --bought
+
+                                                local buyer_id = ARMA.getUserId(target)
+                                                amount = tonumber(amount) 
+                                                if ARMA.tryFullPayment(buyer_id,amount) then
+                                                    -- add code to add subscription amount to player buying
+                                                    -- also add code to remove subscription amount from player selling
+                                                
+                                                else
+                                                    ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
+                                                    ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
+                                                end
+                                            else
+                                                ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy "..house.."!"}) --notify owner that refused
+                                                ARMAclient.notify(target,{"~r~You have refused to buy "..house.."!"}) --notify new owner that refused
+                                            end
+                                        end)
+                                    else
+                                        ARMAclient.notify(player,{"~r~Price of subscription must be a number."}) -- if price of home is a string not a int
+                                    end
+                                end)
+                            else
+                                ARMAclient.notify(player,{"~r~Number of hours must be a number."}) -- if price of home is a string not a int
+                            end
+                        end)
+                    else
+                        ARMAclient.notify(player,{"~r~That Perm ID seems to be invalid!"}) --couldnt find perm id
+                    end
+                else
+                    ARMAclient.notify(player,{"~r~No Perm ID selected!"}) --no perm id selected
+                end
+            end)
+        else
+            ARMAclient.notify(player,{"~r~No players nearby!"}) --no players nearby
+        end
+    end)
+end)
