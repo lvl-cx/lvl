@@ -178,12 +178,12 @@ RageUI.CreateWhile(1.0, true, function()
                         colourCode="~r~"
                     end
                     RageUI.Separator('Days of Platinum Remaining: '..colourCode..math.floor(z.hoursOfPlatinum/24*100)/100)
-                    RageUI.ButtonWithStyle("Set Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
+                    RageUI.ButtonWithStyle("Set Plus Days (in hours)","This has to be set in hours.",{RightLabel="→→→"},true,function(o,p,q)
                         if q then
                             TriggerServerEvent("ARMA:setPlayerSubscription", z.userid, "Plus")
                         end
                     end)
-                    RageUI.ButtonWithStyle("Set Platinum Days","",{RightLabel="→→→"},true,function(o,p,q)
+                    RageUI.ButtonWithStyle("Set Platinum Days (in hours)","This has to be set in hours.",{RightLabel="→→→"},true,function(o,p,q)
                         if q then
                             TriggerServerEvent("ARMA:setPlayerSubscription", z.userid, "Platinum")
                         end
@@ -300,7 +300,6 @@ RegisterNetEvent("ARMA:getUsersSubscription",function(userid, plussub, platsub)
     z.hoursOfPlus=plussub
     z.hoursOfPlatinum=platsub
     RMenu:Get("vipclubmenu", 'manageusersubscription')
-    print(z.userid..' '..z.hoursOfPlus..' '..z.hoursOfPlatinum)
 end)
 
 RegisterNetEvent("ARMA:userSubscriptionUpdated",function()
