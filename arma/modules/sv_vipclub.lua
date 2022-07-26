@@ -1,6 +1,7 @@
 MySQL.createCommand("subscription/set_plushours","UPDATE arma_subscriptions SET plushours = @plushours WHERE user_id = @user_id")
 MySQL.createCommand("subscription/set_plathours","UPDATE arma_subscriptions SET plathours = @plathours WHERE user_id = @user_id")
 MySQL.createCommand("subscription/get_subscription","SELECT * FROM arma_subscriptions WHERE user_id = @user_id")
+MySQL.createCommand("subscription/get_all_subscriptions","SELECT * FROM arma_subscriptions")
 MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plushours = 0, plathours = 0")
 
 AddEventHandler("playerJoining", function()
@@ -113,24 +114,31 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
     end)
 end)
 
-RegisterNetEvent("ARMA:reduceVipSubscriptions")
-AddEventHandler("ARMA:reduceVipSubscriptions", function()
-    local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
-
-    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
-        local plushours = rows[1].plushours
-        local plathours = rows[1].plathours
-        if plushours > 0 then
-            MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
-        else
-            MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = 0})
-        end
-        if plathours > 0 then
-            MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
-        else
-            MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = 0})
-        end
-        TriggerClientEvent('ARMA:setVIPClubData', player, plushours-1/60, plathours-1/60)
-    end)
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(60*60000)
+        MySQL.query("subscription/get_all_subscriptions", {}, function(rows, affected)
+            if #rows > 0 then
+                for k,v in pairs(rows) do
+                    local plushours = v.plushours
+                    local plathours = v.plathours
+                    local user_id = v.user_id
+                    local user = ARMA.getUserSource(user_id)
+                    if plushours > 0 then
+                        MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
+                    else
+                        MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = 0})
+                    end
+                    if plathours > 0 then
+                        MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
+                    else
+                        MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = 0})
+                    end
+                    if user ~= nil then
+                        TriggerClientEvent('ARMA:setVIPClubData', user, plushours, plathours)
+                    end
+                end
+            end
+        end)
+    end
 end)
