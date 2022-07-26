@@ -74,14 +74,20 @@ Citizen.CreateThread(function()
 				if totalPoints > 10 then; totalPoints = 10; end;
 			end
 			rowcounter = 0
-			if totalPoints < 3 then
-				colorCode = '~g~'
-			elseif totalPoints > 3 and totalPoints < 8 then
-				colorCode = '~y~'
+			local colorCode = {}
+			if totalPoints >=0 and totalPoints <=3 then
+				colorCode.x, colorCode.y, colorCode.z = 105, 179, 76
+			elseif totalPoints > 3 and totalPoints <= 5 then
+				colorCode.x, colorCode.y, colorCode.z = 172, 179, 52
+			elseif totalPoints > 5 and totalPoints <= 7 then
+				colorCode.x, colorCode.y, colorCode.z = 250, 183, 51
+			elseif totalPoints > 7 and totalPoints <= 9 then
+				colorCode.x, colorCode.y, colorCode.z = 255, 78, 17
 			else
-				colorCode = '~r~'
+				colorCode.x, colorCode.y, colorCode.z = 255, 13, 13
 			end
-			DrawAdvancedText(0.59, 0.750, 0.005, 0.0028, 0.619, "Total Points - "..colorCode..totalPoints, 255, 255, 255, 255, 7, 0)
+			DrawAdvancedText(0.59, 0.720, 0.005, 0.0028, 0.5, totalPoints..' points', colorCode.x, colorCode.y, colorCode.z, 255, 6, 0)
+			DrawRect(0.498, 0.750, 0.535, -0.0120000000000001, colorCode.x, colorCode.y, colorCode.z, 204)
 		end
 		Wait(0)
 	end	
