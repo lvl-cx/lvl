@@ -5,7 +5,7 @@ local cfg = module("arma-vehicles", "garages")
 local cfg_inventory = module("cfg/inventory")
 local vehicle_groups = cfg.garage_types
 local limit = cfg.limit or 100000000
-MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate) VALUES(@user_id,@vehicle,@registration)")
+MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
 MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")
@@ -19,10 +19,10 @@ MySQL.createCommand("ARMA/fetch_rented_vehs", "SELECT * FROM arma_user_vehicles 
 RegisterServerEvent("ARMA:getCustomFolders")
 AddEventHandler('ARMA:getCustomFolders', function()
     local source = source
-    local user_id = vRP.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     exports["ghmattimysql"]:execute("SELECT * from `arma_custom_garages` WHERE user_id = @user_id", {user_id = user_id}, function(Result)
         if #Result > 0 then
-            TriggerClientEvent("RDMGarages:sendFolders", source, json.decode(Result[1].folder))
+            TriggerClientEvent("ARMA:sendFolders", source, json.decode(Result[1].folder))
         end
     end)
 end)
@@ -31,7 +31,7 @@ end)
 RegisterServerEvent("ARMA:updateFolders")
 AddEventHandler('ARMA:updateFolders', function(FolderUpdated)
     local source = source
-    local user_id = vRP.getUserId(source)
+    local user_id = ARMA.getUserId(source)
 
     exports["ghmattimysql"]:execute("SELECT * from `arma_custom_garages` WHERE user_id = @user_id", {user_id = user_id}, function(Result)
         if #Result > 0 then
@@ -370,15 +370,15 @@ AddEventHandler('ARMA:FetchVehiclesIn', function()
                         if not returned_table[i].vehicles then 
                             returned_table[i].vehicles = {}
                         end
-                        local time = tonumber(veh.rentedtime) - os.time()
-                        local datetime = ""
-                        local date = os.date("!*t", time)
-                        if date.hour >= 1 and date.min >= 1 then 
-                            datetime = date.hour .. " hours and " .. date.min .. " minutes left"
-                        elseif date.hour <= 1 and date.min >= 1 then 
-                            datetime = date.min .. " minutes left"
-                        elseif date.hour >= 1 and date.min <= 1 then 
-                            datetime = date.hour .. " hours left"
+                        local hoursLeft = ((tonumber(veh.rentedtime)-os.time()))/3600
+                        local minutesLeft = nil
+                        if hoursLeft < 1 then
+                            minutesLeft = hoursLeft * 60
+                            minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
+                            datetime = minutesLeft .. " mins" 
+                        else
+                            hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
+                            datetime = hoursLeft .. " hrs" 
                         end
                         returned_table[i].vehicles[a] = {z[1], datetime}
                     end
@@ -440,25 +440,25 @@ end)
 RegisterNetEvent('ARMA:CancelRent')
 AddEventHandler('ARMA:CancelRent', function(spawncode, VehicleName, a)
     local source = source
-    local user_id = vRP.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     if a == 'owner' then
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_vehicles WHERE rentedid = @id", {id = user_id}, function(result)
             if #result > 0 then 
                 for i = 1, #result do 
                     if result[i].vehicle == spawncode and result[i].rented then
-                        local target = vRP.getUserSource(result[i].user_id)
+                        local target = ARMA.getUserSource(result[i].user_id)
                         if target ~= nil then
-                            vRP.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
+                            ARMA.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
                                 if ok then
                                     MySQL.execute('ARMA/rentedupdate', {id = user_id, rented = 0, rentedid = "", rentedunix = "", user_id = result[i].user_id, veh = spawncode})
-                                    vRPclient.notify(target, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
-                                    vRPclient.notify(source, {"~r~" ..VehicleName.." has been returned to your garage."})
+                                    ARMAclient.notify(target, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
+                                    ARMAclient.notify(source, {"~r~" ..VehicleName.." has been returned to your garage."})
                                 else
-                                    vRPclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
+                                    ARMAclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
                                 end
                             end)
                         else
-                            vRPclient.notify(source, {"~r~The player is not online."})
+                            ARMAclient.notify(source, {"~r~The player is not online."})
                         end
                     end
                 end
@@ -470,19 +470,19 @@ AddEventHandler('ARMA:CancelRent', function(spawncode, VehicleName, a)
                 for i = 1, #result do 
                     if result[i].vehicle == spawncode and result[i].rented then
                         local rentedid = tonumber(result[i].rentedid)
-                        local target = vRP.getUserSource(rentedid)
+                        local target = ARMA.getUserSource(rentedid)
                         if target ~= nil then
-                            vRP.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
+                            ARMA.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
                                 if ok then
                                     MySQL.execute('ARMA/rentedupdate', {id = rentedid, rented = 0, rentedid = "", rentedunix = "", user_id = user_id, veh = spawncode})
-                                    vRPclient.notify(source, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
-                                    vRPclient.notify(target, {"~r~" ..VehicleName.." has been returned to your garage."})
+                                    ARMAclient.notify(source, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
+                                    ARMAclient.notify(target, {"~r~" ..VehicleName.." has been returned to your garage."})
                                 else
-                                    vRPclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
+                                    ARMAclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
                                 end
                             end)
                         else
-                            vRPclient.notify(source, {"~r~The player is not online."})
+                            ARMAclient.notify(source, {"~r~The player is not online."})
                         end
                     end
                 end
