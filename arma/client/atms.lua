@@ -7,15 +7,8 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAATM', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button("Deposit", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
-                if Selected then 
-
-                end
             end, RMenu:Get("ARMAATM", "submenudeposit"))
-      
             RageUI.Button("Withdraw", nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
-                if Selected then 
-
-                end
             end, RMenu:Get("ARMAATM", "submenuwithdraw"))
         end)
     end
