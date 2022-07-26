@@ -9,7 +9,7 @@ AddEventHandler("playerJoining", function()
 end)
 
 RegisterNetEvent("ARMA:setPlayerSubscription")
-AddEventHandler("ARMA:setPlayerSubscription", function(subtype)
+AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -17,10 +17,11 @@ AddEventHandler("ARMA:setPlayerSubscription", function(subtype)
         ARMA.prompt(player,"Number of hours ","",function(player, hours) -- ask for number of hours
             if tonumber(hours) and tonumber(hours) > 0 then
                 if subtype == "Plus" then
-                    MySQL.execute("subscription/set_plushours", {user_id = user_id, plusdays = hours})
+                    MySQL.execute("subscription/set_plushours", {user_id = playerid, plusdays = hours})
                 elseif subtype == "Platinum" then
-                    MySQL.execute("subscription/set_plathours", {user_id = user_id, platdays = hours})
+                    MySQL.execute("subscription/set_plathours", {user_id = playerid, platdays = hours})
                 end
+                TriggerClientEvent('ARMA:userSubscriptionUpdated', player)
             else
                 ARMAclient.notify(player,{"~r~Number of hours must be a number."}) -- if price of home is a string not a int
             end
@@ -34,7 +35,6 @@ RegisterNetEvent("ARMA:getPlayerSubscription")
 AddEventHandler("ARMA:getPlayerSubscription", function(playerid)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
-    print(playerid)
     if playerid ~= nil then
         MySQL.query("subscription/get_subscription", {user_id = playerid}, function(rows, affected)
             local plusdays = rows[1].plusdays
