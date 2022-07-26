@@ -372,6 +372,21 @@ RegisterCommand("announce", function(source, args, raw)
 		TriggerClientEvent('chatMessage', -1, "^7Announce: " , { 128, 128, 128 }, message, "alert")
 	end
 end)
+
+RegisterCommand('clear', function(source, args, rawCommand)
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.ban') then
+        local players = GetPlayers()
+        for i,v in pairs(players) do 
+            local source = v
+            TriggerClientEvent('chat:clear',source)               
+        end
+    else
+        ARMAclient.notify(source,{"~r~You do not have permission to use this command."})
+    end
+end, false)
+
+
 --Function
 function stringsplit(inputstr, sep)
 	if sep == nil then
