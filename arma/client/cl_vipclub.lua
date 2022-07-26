@@ -30,31 +30,25 @@ function tARMA.isPlatClub()
 end
 
 RegisterCommand("vipclub",function()
-    TriggerServerEvent('ARMA:getPlayerSubscription')
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu'),not RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu')))
 end)
 
 local d={
-    ["Default"]={checked=true,soundId="playDead"},
+    ["Default"]={checked=true,soundId="dead"},
     ["Fortnite"]={checked=false,soundId="fortnite_death"},
     ["Roblox"]={checked=false,soundId="roblox_death"},
     ["Minecraft"]={checked=false,soundId="minecraft_death"},
     ["Pac-Man"]={checked=false,soundId="pacman_death"},
-    ["Wasted"]={checked=false,soundId="gta_wasted"},
     ["Mario"]={checked=false,soundId="mario_death"},
     ["CS:GO"]={checked=false,soundId="csgo_death"}
 }
-local e=false
-Citizen.CreateThread(function()
-    local f=GetResourceKvpString("ARMA_codhitmarkersounds") or"false"
-    if f=="false"then 
-        e=false
-        TriggerEvent("ARMA:codHMSoundsOff")
-    else 
-        e=true
-        TriggerEvent("ARMA:codHMSoundsOn")
-    end 
+
+RegisterCommand("sound",function()
+    print(GetResourceKvpString("ARMA_deathsound"))
+    for k,v in pairs(d) do
+        print(json.encode(v))
+    end
 end)
 local E=true
 Citizen.CreateThread(function()
@@ -70,46 +64,42 @@ function tARMA.setparachutestting(f)
 end
 
 AddEventHandler("playerSpawned", function()
-    if h then
-        Wait(5000)
-        local i=tARMA.getDeathSound()
-        local j="playDead"
-        for k,l in pairs(d)do 
-            if l.soundId==i then 
-                j=k 
-            end 
-        end
-        for k,m in pairs(d)do 
-            if j~=k then 
-                m.checked=false 
-            else 
-                m.checked=true 
-            end 
+    TriggerServerEvent('ARMA:getPlayerSubscription')
+    Wait(5000)
+    local i=tARMA.getDeathSound()
+    local j="dead"
+    for k,l in pairs(d)do 
+        if l.soundId==i then 
+            j=k 
+        end 
+    end
+    for k,m in pairs(d)do 
+        if j~=k then 
+            m.checked=false 
+        else 
+            m.checked=true 
         end 
     end 
 end)
 
 function tARMA.setDeathSound(i)
-    if tARMA.isPlusClub()or tARMA.isPlatClub()then 
+    if tARMA.isPlusClub() or tARMA.isPlatClub() then 
         SetResourceKvp("ARMA_deathsound",i)
     else 
         tARMA.notify("~r~Cannot change deathsound, not a valid ARMA Plus or Platinum subscriber.")
     end 
 end
 function tARMA.getDeathSound()
-    if tARMA.isPlusClub()or tARMA.isPlatClub()then 
+    if tARMA.isPlusClub() or tARMA.isPlatClub() then 
         local k=GetResourceKvpString("ARMA_deathsound")
         if type(k)=="string"and k~=""then 
             return k 
         else 
-            return"playDead"
+            return"dead"
         end 
     else 
-        return"playDead"
+        return"dead"
     end 
-end
-local function n(i)
-    SendNUIMessage({transactionType=i})
 end
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'mainmenu')) then
@@ -214,20 +204,6 @@ RageUI.CreateWhile(1.0, true, function()
                     TriggerServerEvent("ARMA:claimWeeklyKit")
                 end 
             end)
-            local function r()
-                TriggerEvent("ARMA:codHMSoundsOn")
-                e=true
-                tARMA.setCODHitMarkerSetting(e)
-                tARMA.notify("~y~COD Hitmarkers now set to "..tostring(e))
-            end
-            local function s()
-                TriggerEvent("ARMA:codHMSoundsOff")
-                e=false
-                tARMA.setCODHitMarkerSetting(e)
-                tARMA.notify("~y~COD Hitmarkers now set to "..tostring(e))
-            end
-            RageUI.Checkbox("Enable COD Hitmarkers","~g~This adds 'hit marker' sound and image when shooting another player.",e,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
-            end,r,s)
             local function R()
                 E=true
                 tARMA.setparachutestting(E)
@@ -239,21 +215,31 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.notify("~y~Parachute disabled")
             end
             RageUI.Checkbox("Enable Parachute","~g~This gives you primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
+                if p then
+                    if E then
+                        S()
+                    else
+                        R()
+                    end
+                end
             end,R,S)
         end)
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'deathsounds')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for u,l in pairs(d)do 
-                RageUI.Checkbox(u,"",l.checked,{},function()
-                end,function()
-                    for v,m in pairs(d)do 
-                        m.checked=false 
+                RageUI.Checkbox(u, "", l.checked, {Style = RageUI.CheckboxStyle.Tick}, function(Hovered, Selected, Active, Checked)
+                    if Selected then
+                        if l.checked then
+                            for k,v in pairs(d)do 
+                                if k~=u then 
+                                    v.checked=false
+                                end 
+                            end
+                            tARMA.setDeathSound(l.soundId)
+                        end
                     end
-                    l.checked=true
-                    n(l.soundId)
-                    tARMA.setDeathSound(l.soundId)
-                end,function()
+                    l.checked = Checked
                 end)
             end 
         end)
@@ -320,13 +306,3 @@ Citizen.CreateThread(function()
         Wait(500)
     end 
 end)
-
-globalIgnoreDeathSound=false
-RegisterNetEvent("ARMA:deathSound")
-AddEventHandler("ARMA:deathSound",function(C)
-    local D=GetEntityCoords(tARMA.getPlayerPed())
-    local E=#(D-C)
-    if not globalIgnoreDeathSound and E<=15 then
-        SendNUIMessage({transactionType=tARMA.getDeathSound()})
-    end 
-end) 
