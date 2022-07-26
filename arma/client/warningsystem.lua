@@ -1,6 +1,7 @@
 armaWarnings = {}
 
 showWarningSystem = false
+local totalPoints = 0
 
 xoffset = 0.031
 rowcounter = 0
@@ -17,8 +18,10 @@ AddEventHandler("arma:showWarningsOfUser",function(armawarningstables)
 end)
 
 RegisterNetEvent("arma:recievedRefreshedWarningData")
-AddEventHandler("arma:recievedRefreshedWarningData",function(armawarningstables)
+AddEventHandler("arma:recievedRefreshedWarningData",function(armawarningstables, points)
 	armaWarnings = armawarningstables
+	totalPoints = points
+	if totalPoints > 10 then; totalPoints = 10; end;
 end)
 
 
@@ -36,7 +39,6 @@ end)
 Citizen.CreateThread(function()
 	while true do
 		if showWarningSystem then
-			local totalPoints = 0
 			DrawRect(0.498, 0.482, 0.615, 0.636, 0, 0, 0, 150)
 			DrawRect(0.498, 0.197, 0.615, 0.066, 0, 0, 0, 135)
 			DrawAdvancedText(0.59, 0.198, 0.005, 0.0028, 0.619, 'ARMA' .. ' Warnings', 255, 255, 255, 255, 7, 0)
@@ -70,8 +72,6 @@ Citizen.CreateThread(function()
 				DrawAdvancedText(0.510, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, date,  255, 255, 255, 255, 6, 0)
 				DrawAdvancedText(0.675, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, reason,  255, 255, 255, 255, 6, 0)
 				rowcounter = rowcounter + 1
-				totalPoints = totalPoints + points
-				if totalPoints > 10 then; totalPoints = 10; end;
 			end
 			rowcounter = 0
 			local colorCode = {}
