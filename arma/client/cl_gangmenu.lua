@@ -60,9 +60,9 @@ AddEventHandler("ARMA:GotGangData",function(i,j,k,PO)
 end)
 RegisterNetEvent("ARMA:disbandedGang")
 AddEventHandler("ARMA:disbandedGang",function()
+    PlayerIsInGang=false
     showGangUI=false
     showNoGangUI=true
-    PlayerIsInGang=false
     showSettingsGangUI=false
     showTurfsGangUI=false
     showFundsGangUI=false
@@ -78,7 +78,7 @@ RegisterNetEvent("ARMA:InviteRecieved")
 AddEventHandler("ARMA:InviteRecieved",function(o,Q)
     ARMAGangInvites[ARMAGangInviteIndex]=Q
     ARMAGangInviteIndex=ARMAGangInviteIndex+1
-    Notify(o)
+    tARMA.notify(o)
 end)
 RegisterNetEvent("ARMA:gangNameNotTaken")
 AddEventHandler("ARMA:gangNameNotTaken",function()
@@ -119,7 +119,7 @@ function func_drawGangUI()
                 if createGangName~=nil and createGangName~="null"and createGangName~=""then 
                     TriggerServerEvent("ARMA:CreateGang",createGangName)
                 else 
-                    Notify("~r~No gang name entered!")
+                    tARMA.notify("~r~No gang name entered!")
                 end 
             end 
         else 
@@ -143,7 +143,7 @@ function func_drawGangUI()
                     showGangUI=true
                     PlayerIsInGang=true 
                 else 
-                    Notify("~r~No gang invite selected")
+                    tARMA.notify("~r~No gang invite selected")
                 end 
             end 
         else 
@@ -171,7 +171,7 @@ function func_drawGangUI()
                         TriggerServerEvent("ARMA:depositGangBalance",amount)
                     end 
                 else 
-                    Notify("~r~No amount entered!")
+                    tARMA.notify("~r~No amount entered!")
                 end 
             end 
         else 
@@ -188,10 +188,10 @@ function func_drawGangUI()
                             TriggerServerEvent("ARMA:withdrawGangBalance",amount)
                         end 
                     else 
-                        Notify("~r~You don't have a high enough rank to withdraw")
+                        tARMA.notify("~r~You don't have a high enough rank to withdraw")
                     end 
                 else 
-                    Notify("~r~No amount entered!")
+                    tARMA.notify("~r~No amount entered!")
                 end 
             end 
         else 
@@ -259,10 +259,10 @@ function func_drawGangUI()
                     if gangPermission>=4 then 
                         TriggerServerEvent("ARMA:PromoteUser",gangID,tonumber(selectedMember))
                     else 
-                        Notify("~r~You don't have permission to promote!")
+                        tARMA.notify("~r~You don't have permission to promote!")
                     end 
                 else 
-                    Notify("~r~No gang member selected")
+                    tARMA.notify("~r~No gang member selected")
                 end 
             end 
         else 
@@ -276,10 +276,10 @@ function func_drawGangUI()
                     if gangPermission>=4 then 
                         TriggerServerEvent("ARMA:DemoteUser",gangID,selectedMember)
                     else 
-                        Notify("~r~You don't have permission to demote!")
+                        tARMA.notify("~r~You don't have permission to demote!")
                     end 
                 else 
-                    Notify("~r~No gang member selected")
+                    tARMA.notify("~r~No gang member selected")
                 end 
             end 
         else 
@@ -295,10 +295,10 @@ function func_drawGangUI()
                             TriggerServerEvent("ARMA:kickMemberFromGang",gangID,selectedMember)
                         end 
                     else 
-                        Notify("~r~You don't have permission to kick!")
+                        tARMA.notify("~r~You don't have permission to kick!")
                     end 
                 else 
-                    Notify("~r~No gang member selected")
+                    tARMA.notify("~r~No gang member selected")
                 end 
             end 
         else 
@@ -313,10 +313,10 @@ function func_drawGangUI()
                     if gangPermission>=2 then 
                         TriggerServerEvent("ARMA:InviteUserToGang",gangID,s)
                     else 
-                        Notify("~r~You don't have permission to invite players")
+                        tARMA.notify("~r~You don't have permission to invite players")
                     end 
                 else 
-                    Notify("No player name entered")
+                    tARMA.notify("No player name entered")
                 end 
             end 
         else 
@@ -327,7 +327,7 @@ function func_drawGangUI()
             if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
                 if e<=1 then 
-                    Notify("~r~Lowest page reached")
+                    tARMA.notify("~r~Lowest page reached")
                 else 
                     e=e-1 
                 end 
@@ -340,7 +340,7 @@ function func_drawGangUI()
             if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
                 if e>=f then 
-                    Notify("~r~Max page reached")
+                    tARMA.notify("~r~Max page reached")
                 else 
                     e=e+1 
                 end 
@@ -406,14 +406,6 @@ function func_drawGangUI()
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
                 if YesNoConfirm()then 
                     TriggerServerEvent("ARMA:memberLeaveGang",gangID)
-                    PlayerIsInGang=false
-                    showGangUI=false
-                    showNoGangUI=true
-                    showSettingsGangUI=false
-                    showTurfsGangUI=false
-                    showFundsGangUI=false
-                    showLogsGangUI=false
-                    showMembersGangUI=false
                     setCursor(0)
                     SetPlayerControl(PlayerId(),1,0)
                 end 
@@ -430,7 +422,7 @@ function func_drawGangUI()
                         TriggerServerEvent("ARMA:DeleteGang",gangID)
                     end 
                 else 
-                    Notify("~r~You don't have permission to disband!")
+                    tARMA.notify("~r~You don't have permission to disband!")
                 end 
             end 
         else 
@@ -646,7 +638,7 @@ function closeToBarclays()
     if w<10.0 or x<10.0 then 
         return true 
     else 
-        Notify("~r~You must be near Legion or Cayo Perico Bank to access gang funds.")
+        tARMA.notify("~r~You must be near Legion or Cayo Perico Bank to access gang funds.")
         return false 
     end 
 end
