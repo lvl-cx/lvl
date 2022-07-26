@@ -49,7 +49,7 @@ AddEventHandler('ARMA:ProcessHeroin', function()
 end)
 
 local commision = 0
-local finalID = nil
+local gangname = nil
 RegisterNetEvent('ARMA:SellHeroin')
 AddEventHandler('ARMA:SellHeroin', function()
     local user_id = ARMA.getUserId(source)
@@ -65,16 +65,11 @@ AddEventHandler('ARMA:SellHeroin', function()
   
           ARMAclient.notify(source, {"~g~Sold 1 heroin for £" .. tostring(price - finalCommision) .. " +" .. commision .. "% Commision!"})
   
-          if finalID ~= nil then
-            exports['ghmattimysql']:execute("SELECT * FROM ganginfo WHERE userid = @uid", {uid = ARMA.getUserId(finalID)}, function(result)
-              fundsavailable = result
-              for k,v in pairs(fundsavailable) do 
-                  AvailableGangFunds = v.gangfunds
-      
-                  local moneyleft = AvailableGangFunds + finalCommision
-                  exports.ghmattimysql:execute("UPDATE ganginfo SET gangfunds = @money WHERE userid = @userid", {money = moneyleft, userid = ARMA.getUserId(finalID)})
-      
-              end
+          if gangname ~= nil then
+            exports['ghmattimysql']:execute("SELECT * FROM arma_gangs WHERE gangname = @gangname", {gangname = gangname}, function(result)
+              AvailableGangFunds = v.funds
+              local moneyleft = AvailableGangFunds + finalCommision
+              exports.ghmattimysql:execute("UPDATE arma_gangs SET funds = @money WHERE gangname = @gangname", {money = moneyleft, gangname = gangname})
             end)
             ARMAclient.notify(finalID,{"~g~You have been given £" .. finalCommision.. "~g~."})
           end
@@ -84,8 +79,19 @@ AddEventHandler('ARMA:SellHeroin', function()
     end
 end)
 
-function SendHeroin(som, userid2)
+function SendHeroin(som, a)
   commision = som 
-  finalID = userid2
+  userid = ARMA.getUserId(a)
+  exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+      for K,V in pairs(gotGangs) do
+          local array = json.decode(V.gangmembers)
+          for I,L in pairs(array) do
+              if tostring(userid) == I then
+                  gangname = V.gangname
+                  break
+              end
+          end
+      end
+  end)
   TriggerClientEvent('HeroinrecieveTurf', -1, tostring(commision))
 end

@@ -65,7 +65,7 @@ AddEventHandler('ARMA:SellLSD', function()
   
           ARMAclient.notify(source, {"~g~Sold 1 LSD for £" .. tostring(price - finalCommision) .. " +" .. commision .. "% Commision!"})
   
-          if finalID ~= nil then
+          if gangname ~= nil then
             exports['ghmattimysql']:execute("SELECT * FROM arma_gangs WHERE gangname = @gangname", {gangname = gangname}, function(result)
               AvailableGangFunds = v.funds
               local moneyleft = AvailableGangFunds + finalCommision
@@ -93,5 +93,5 @@ function SendLSD(som, a)
           end
       end
   end)
-  TriggerClientEvent('LSDrecieveTurf', tostring(commision))
+  TriggerClientEvent('LSDrecieveTurf', -1, tostring(commision))
 end
