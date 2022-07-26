@@ -826,8 +826,8 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                 PerformHttpRequest(StaffBanLogs, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
                 ARMAclient.notify(AdminTemp, {"Banned ID: "..PlayerID})
                 ARMA.ban(source,PlayerID,banDuration,BanMessage)
-                f10Ban(PlayerID, AdminName, BanMessage, Duration, BanPoints)
-                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
+                f10Ban(PlayerID, AdminName, BanMessage, Duration)
+                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
             end
         else
             ARMAclient.notify(AdminTemp, {"~r~Evidence field was left empty!"})
