@@ -330,7 +330,7 @@ RegisterCommand("cosmetics", function()
     RageUI.Visible(RMenu:Get("CosmeticMenu", "main"), true)
         TriggerServerEvent('ARMA:GetCosmetic')
 end)
-RegisterKeyMapping("comsetics", "Opens Cosmetics Menu", "keyboard", "F7")
+RegisterKeyMapping("cosmetics", "Opens Cosmetics Menu", "keyboard", "F7")
 
 RegisterNetEvent('ARMA:ResetCosmetics')
 AddEventHandler('ARMA:ResetCosmetics', function(type2)
