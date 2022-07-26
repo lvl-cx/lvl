@@ -2,6 +2,8 @@ RMenu.Add('vipclubmenu','mainmenu',RageUI.CreateMenu("","",tARMA.getRageUIMenuWi
 RMenu:Get('vipclubmenu','mainmenu'):SetSubtitle("~b~ARMA VIP Membership")
 RMenu.Add('vipclubmenu','managesubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','managesubscription'):SetSubtitle("~b~ARMA VIP Membership")
+RMenu.Add('vipclubmenu','manageusersubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
+RMenu:Get('vipclubmenu','manageusersubscription'):SetSubtitle("~b~ARMA VIP Membership")
 RMenu.Add('vipclubmenu','manageperks',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','manageperks'):SetSubtitle("~b~ARMA VIP Membership")
 RMenu.Add('vipclubmenu','deathsounds',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
@@ -9,6 +11,12 @@ RMenu:Get('vipclubmenu','deathsounds'):SetSubtitle("~b~ARMA VIP Membership")
 RMenu.Add('vipclubmenu','vehicleextras',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','vehicleextras'):SetSubtitle("~b~ARMA VIP Membership")
 local a={hoursOfPlus=0,hoursOfPlatinum=0}
+local z={userid=0,hoursOfPlus=0,hoursOfPlatinum=0}
+a.hoursOfPlus = 500
+a.hoursOfPlatinum = 1000
+z.userid = 1
+z.hoursOfPlus=500
+z.hoursOfPlatinum=1000
 
 function tARMA.isPlusClub()
     if a.hoursOfPlus>0 then 
@@ -43,8 +51,6 @@ local d={
     ["Minecraft"]={checked=false,soundId="minecraft_death"},
     ["Pac-Man"]={checked=false,soundId="pacman_death"},
     ["Wasted"]={checked=false,soundId="gta_wasted"},
-    ["Aughhh"]={checked=false,soundId="augh!"},
-    ["Wilhelm-Scream"]={checked=false,soundId="Wilhelm"},
     ["Mario"]={checked=false,soundId="mario_death"},
     ["CS:GO"]={checked=false,soundId="csgo_death"}
 }
@@ -61,7 +67,7 @@ Citizen.CreateThread(function()
 end)
 local E=true
 Citizen.CreateThread(function()
-    local f=GetResourceKvpString("ARMA_pluschutes") or"true"
+    local f=GetResourceKvpString("ARMA_pluschutes") or "true"
     if f=="true"then
         E=true
     else 
@@ -122,7 +128,20 @@ RageUI.CreateWhile(1.0, true, function()
             if tARMA.isPlusClub()or tARMA.isPlatClub()then 
                 RageUI.ButtonWithStyle("Manage Perks","",{RightLabel="→→→"},true,function(o,p,q)
                 end,RMenu:Get("vipclubmenu","manageperks"))
-            end 
+            end
+            if tARMA.isDev() then
+                RageUI.ButtonWithStyle("Manage User's Subscription","",{RightLabel="→→→"},true,function(o,p,q)
+                    if o then
+                        permID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
+                        if permID == nil then 
+                            tARMA.notify('~r~Invalid Perm ID')
+                        end
+                        TriggerServerEvent('ARMA:manageUserSubscription', permID)
+                        --RageUI.ActuallyCloseAll()
+                    end
+                --end)
+                end,RMenu:Get("vipclubmenu","manageusersubscription"))
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'managesubscription')) then
@@ -154,6 +173,23 @@ RageUI.CreateWhile(1.0, true, function()
                     TriggerServerEvent("ARMA:beginSellSubscriptionToPlayer","Platinum")
                 end 
             end)
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('vipclubmenu', 'manageusersubscription')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if tARMA.isDev() then
+                RageUI.Separator('Perm ID: '..z.userid)
+                RageUI.Separator('Days of Plus Remaining: '..math.floor(z.hoursOfPlus/24*100)/100)
+                RageUI.Separator('Days of Platinum Remaining: '..math.floor(z.hoursOfPlatinum/24*100)/100)
+                RageUI.ButtonWithStyle("Add Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
+                end)
+                RageUI.ButtonWithStyle("Remove Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
+                end)
+                RageUI.ButtonWithStyle("Add Platinum Days","",{RightLabel="→→→"},true,function(o,p,q)
+                end)
+                RageUI.ButtonWithStyle("Remove Platinum Days","",{RightLabel="→→→"},true,function(o,p,q)
+                end)
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'manageperks')) then
@@ -214,17 +250,17 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'vehicleextras')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             local w=tARMA.getPlayerVehicle()
-        SetVehicleAutoRepairDisabled(w,true)
-        for x=1,99,1 do 
-            if DoesExtraExist(w,x)then 
-                RageUI.Checkbox("Extra "..x,"",IsVehicleExtraTurnedOn(w,x),{},function()
-                end,function()
-                    SetVehicleExtra(w,x,0)
-                end,function()
-                    SetVehicleExtra(w,x,1)
-                end)
+            SetVehicleAutoRepairDisabled(w,true)
+            for x=1,99,1 do 
+                if DoesExtraExist(w,x)then 
+                    RageUI.Checkbox("Extra "..x,"",IsVehicleExtraTurnedOn(w,x),{},function()
+                    end,function()
+                        SetVehicleExtra(w,x,0)
+                    end,function()
+                        SetVehicleExtra(w,x,1)
+                    end)
+                end 
             end 
-        end 
         end)
     end
 end)
@@ -244,6 +280,12 @@ RegisterNetEvent("ARMA:reducePlatMembershipHour",function()
     if a.hoursOfPlatinum<0 then 
         a.hoursOfPlatinum=0 
     end 
+end)
+RegisterNetEvent("ARMA:getUsersSubscription",function(userid, plussub, platsub)
+    z.userid = userid
+    z.hoursOfPlus=plussub
+    z.hoursOfPlatinum=platsub
+    RageUI.Visible(RMenu:Get('vipclubmenu', 'manageusersubscription'), true)
 end)
 Citizen.CreateThread(function()
     while true do 
