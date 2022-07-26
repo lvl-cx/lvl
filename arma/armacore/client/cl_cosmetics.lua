@@ -253,7 +253,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("Cosmetic Price: £" .. tostring(getMoneyStringFormatted(v.price)), function() end)
                     RageUI.ButtonWithStyle('Enter Listing Price - £' .. listingprice, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
-                            listingpriceresult = KeyboardInput("Enter Listing Price:", "", 10)
+                            listingpriceresult = tARMA.KeyboardInput("Enter Listing Price:", "", 10)
                             if listingpriceresult == tostring(tonumber(listingpriceresult)) then
                                 if listingpriceresult == nil then 
                                     listingpriceresult = "0"
@@ -266,7 +266,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end, RMenu:Get("CosmeticMenu", "cosmetics"))
                     RageUI.ButtonWithStyle('Enter Custom Message - ' .. listingmessage, nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected) 
                         if Selected then 
-                            listingmessageresult = KeyboardInput("Enter Listing Price [Max 50 Words]:", "", 50)
+                            listingmessageresult = tARMA.KeyboardInput("Enter Listing Price [Max 50 Words]:", "", 50)
                             if listingmessageresult == nil then 
                                 listingmessageresult = "[No Message]"
                             end

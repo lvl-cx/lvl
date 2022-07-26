@@ -385,7 +385,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if foundMatch == false then
-                            banningPermID = KeyboardInput("Enter Perm ID", "", 10)
+                            banningPermID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
                             banningName = 'ID: ' .. banningPermID
                         end
                     end
@@ -543,7 +543,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchpermid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
-                searchforPermID = KeyboardInput("Enter Perm ID", "", 10)
+                searchforPermID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
                 if searchforPermID == nil then 
                     searchforPermID = ""
                 end
@@ -569,7 +569,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchtempid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
-                searchid = KeyboardInput("Enter Temp ID", "", 10)
+                searchid = tARMA.KeyboardInput("Enter Temp ID", "", 10)
                 if searchid == nil then 
                     searchid = ""
                 end
@@ -595,7 +595,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchname')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
-                SearchName = KeyboardInput("Enter Name", "", 10)
+                SearchName = tARMA.KeyboardInput("Enter Name", "", 10)
                 if SearchName == nil then 
                     SearchName = ""
                 end
@@ -890,7 +890,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
                 RageUI.ButtonWithStyle("Select Perm ID", nil, { RightLabel = ">>>" }, true, function(Hovered, Active, Selected)
                     if Selected then
-                        permID = KeyboardInput("Enter Perm ID", "", 10)
+                        permID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
                         if permID == nil then 
                             tARMA.notify('~r~Invalid Perm ID')
                         end
@@ -989,7 +989,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acsearchpermid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
-                acsearchforPermID = KeyboardInput("Enter Perm ID", "", 10)
+                acsearchforPermID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
                 if acsearchforPermID == nil then 
                     acsearchforPermID = ""
                 end
@@ -1476,25 +1476,6 @@ function DrawHelpMsg(msg)
     SetTextComponentFormat("STRING")
     AddTextComponentString(msg)
     DisplayHelpTextFromStringLabel(0,0,1,-1)
-end
-
-function KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
-	AddTextEntry('FMMC_KEY_TIP1', TextEntry) 
-	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", ExampleText, "", "", "", MaxStringLenght)
-    blockinput = true 
-	while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do 
-		Citizen.Wait(0)
-	end
-	if UpdateOnscreenKeyboard() ~= 2 then
-		local result = GetOnscreenKeyboardResult() 
-		Citizen.Wait(1) 
-		blockinput = false 
-		return result 
-	else
-		Citizen.Wait(1)
-		blockinput = false 
-		return nil 
-	end
 end
 
 function SpawnVehicle(VehicleName)

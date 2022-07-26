@@ -194,7 +194,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.Button('Add to Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
-                        local folderName = KeyboardInput("Enter Folder Name", "", 25)
+                        local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
                         if folderName ~= nil then
                             if folders[folderName] ~= nil then
                                 if not table.find(folders[folderName], SelectedCar.spawncode) then
@@ -212,7 +212,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.Button('Remove from Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
-                        local folderName = KeyboardInput("Enter Folder Name", "", 25)
+                        local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
                         if folderName ~= nil then
                             if folders[folderName] ~= nil then
                                 if table.find(folders[folderName], SelectedCar.spawncode) then
@@ -239,7 +239,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.Button("[Create Custom Folder]" , "Create a custom folder.", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    local folderName = KeyboardInput("Enter Folder Name", "", 25)
+                    local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
                     if folderName ~= nil then
                         if folders[folderName] == nil then
                             folders[folderName] = {}
@@ -255,7 +255,7 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             RageUI.Button("[Delete Custom Folder]" , "Delete a custom folder", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    local folderName = KeyboardInput("Enter Folder name", "", 25)
+                    local folderName = tARMA.KeyboardInput("Enter Folder name", "", 25)
                     if folderName ~= nil then
                         if folders[folderName] ~= nil then
                             folders[folderName] = nil
