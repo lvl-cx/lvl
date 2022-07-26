@@ -1,7 +1,7 @@
-MySQL.createCommand("subscription/set_plushours","UPDATE arma_subscriptions SET plusdays = @plusdays WHERE user_id = @user_id")
-MySQL.createCommand("subscription/set_plathours","UPDATE arma_subscriptions SET platdays = @platdays WHERE user_id = @user_id")
+MySQL.createCommand("subscription/set_plushours","UPDATE arma_subscriptions SET plushours = @plushours WHERE user_id = @user_id")
+MySQL.createCommand("subscription/set_plathours","UPDATE arma_subscriptions SET plathours = @plathours WHERE user_id = @user_id")
 MySQL.createCommand("subscription/get_subscription","SELECT * FROM arma_subscriptions WHERE user_id = @user_id")
-MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plusdays = 0, platdays = 0")
+MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plushours = 0, plathours = 0")
 
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
@@ -14,16 +14,16 @@ AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
     local player = ARMA.getUserSource(user_id)
 
     if ARMA.hasGroup(user_id, 'dev') then
-        ARMA.prompt(player,"Number of hours ","",function(player, hours) -- ask for number of hours
+        ARMA.prompt(player,"Number of hours ","",function(player, hours)
             if tonumber(hours) and tonumber(hours) > 0 then
                 if subtype == "Plus" then
-                    MySQL.execute("subscription/set_plushours", {user_id = playerid, plusdays = hours})
+                    MySQL.execute("subscription/set_plushours", {user_id = playerid, plushours = hours})
                 elseif subtype == "Platinum" then
-                    MySQL.execute("subscription/set_plathours", {user_id = playerid, platdays = hours})
+                    MySQL.execute("subscription/set_plathours", {user_id = playerid, plathours = hours})
                 end
                 TriggerClientEvent('ARMA:userSubscriptionUpdated', player)
             else
-                ARMAclient.notify(player,{"~r~Number of hours must be a number."}) -- if price of home is a string not a int
+                ARMAclient.notify(player,{"~r~Number of hours must be a number."})
             end
         end)
     else
@@ -38,18 +38,18 @@ AddEventHandler("ARMA:getPlayerSubscription", function(playerid)
     if playerid ~= nil then
         MySQL.query("subscription/get_subscription", {user_id = playerid}, function(rows, affected)
             if #rows > 0 then
-                local plusdays = rows[1].plusdays
-                local platdays = rows[1].platdays
-                TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plusdays, platdays)
+                local plushours = rows[1].plushours
+                local plathours = rows[1].plathours
+                TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plushours, plathours)
             else
                 ARMAclient.notify(player, {"~r~Player not found."})
             end
         end)
     else
         MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
-            local plusdays = rows[1].plusdays
-            local platdays = rows[1].platdays
-            TriggerClientEvent('ARMA:setVIPClubData', player, plusdays, platdays)
+            local plushours = rows[1].plushours
+            local plathours = rows[1].plathours
+            TriggerClientEvent('ARMA:setVIPClubData', player, plushours, plathours)
         end)
     end
 end)
