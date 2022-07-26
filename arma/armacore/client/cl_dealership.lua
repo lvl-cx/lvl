@@ -1,9 +1,9 @@
-RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "banners",  "dealership"))
-RMenu.Add('DealershipMenu', 'sim', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "banners",  "dealership"))
-RMenu.Add('DealershipMenu', 'police', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "banners",  "dealership"))
-RMenu.Add('DealershipMenu', 'rebel', RageUI.CreateMenu("", "Dealership Menu", 1300, 50, "banners",  "dealership"))
-RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
-RMenu.Add("DealershipMenu", "confirmA", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  1300, 50)))
+RMenu.Add('DealershipMenu', 'main', RageUI.CreateMenu("", "Dealership Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners",  "dealership"))
+RMenu.Add('DealershipMenu', 'sim', RageUI.CreateMenu("", "Dealership Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners",  "dealership"))
+RMenu.Add('DealershipMenu', 'police', RageUI.CreateMenu("", "Dealership Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners",  "dealership"))
+RMenu.Add('DealershipMenu', 'rebel', RageUI.CreateMenu("", "Dealership Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners",  "dealership"))
+RMenu.Add("DealershipMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("DealershipMenu", "confirmA", RageUI.CreateSubMenu(RMenu:Get('DealershipMenu', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 local hasPoliceRole = false
 local hasRebel = false

@@ -125,7 +125,7 @@ Citizen.CreateThread(function()
 end)
 
 -- [RageUI Menu]
-RMenu.Add('LSDMenu', 'LSD Seller', RageUI.CreateMenu("", "~b~LSD Seller",1300, 50, "banners", "seller"))
+RMenu.Add('LSDMenu', 'LSD Seller', RageUI.CreateMenu("", "~b~LSD Seller",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "seller"))
 
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('LSDMenu', 'LSD Seller')) then

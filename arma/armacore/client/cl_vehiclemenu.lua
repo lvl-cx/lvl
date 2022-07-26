@@ -1,4 +1,4 @@
-RMenu.Add('vehiclemenu', 'main', RageUI.CreateMenu("", "~b~Vehicle Mangement", 1300, 50, "banners", "vehicle"))
+RMenu.Add('vehiclemenu', 'main', RageUI.CreateMenu("", "~b~Vehicle Mangement", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "vehicle"))
 
 
 local savedvehicle = nil

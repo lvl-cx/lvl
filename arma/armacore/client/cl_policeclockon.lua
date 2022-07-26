@@ -1,4 +1,4 @@
-RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "~b~Clock On", 1300, 50 ,'banners', 'clockon'))
+RMenu.Add('PoliceDutyMenu', 'main', RageUI.CreateMenu("", "~b~Clock On", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight() ,'banners', 'clockon'))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('PoliceDutyMenu', 'main')) then

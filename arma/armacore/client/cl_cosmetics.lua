@@ -5,16 +5,16 @@ data = {}
 -- - Chain
 -- - Vest
 
-RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", 1300, 50, "banners", "cosmetics"))
-RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
-RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  1300, 50)))
-RMenu.Add("CosmeticMenu", "limited", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  1300, 50)))
-RMenu.Add("CosmeticMenu", "standard", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  1300, 50)))
-RMenu.Add("CosmeticMenu", "buycosmeticsub", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "standard",  1300, 50))) 
-RMenu.Add("CosmeticMenu", "buycosmeticsublimit", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "limited",  1300, 50)))
-RMenu.Add("CosmeticMenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "cosmetics",  1300, 50))) 
-RMenu.Add("CosmeticMenu", "refundconfirm", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  1300, 50))) 
-RMenu.Add("CosmeticMenu", "marketplace", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  1300, 50))) 
+RMenu.Add("CosmeticMenu", "main",  RageUI.CreateMenu("", "~b~Cosmetic Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cosmetics"))
+RMenu.Add("CosmeticMenu", "cosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("CosmeticMenu", "buycosmetics", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "main",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("CosmeticMenu", "limited", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("CosmeticMenu", "standard", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "buycosmetics",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("CosmeticMenu", "buycosmeticsub", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "standard",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))) 
+RMenu.Add("CosmeticMenu", "buycosmeticsublimit", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "limited",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("CosmeticMenu", "submenu", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "cosmetics",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))) 
+RMenu.Add("CosmeticMenu", "refundconfirm", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))) 
+RMenu.Add("CosmeticMenu", "marketplace", RageUI.CreateSubMenu(RMenu:Get("CosmeticMenu", "submenu",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))) 
 
 
 

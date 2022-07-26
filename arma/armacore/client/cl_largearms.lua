@@ -7,9 +7,9 @@ largearms.marker = vector3(-1111.3123779297,4937.2846679688,218.3872833252-0.98)
 
 -- [Start of RageUI]
 
-RMenu.Add('LargeArms', 'main', RageUI.CreateMenu("", "~b~" .. "Large Arms", 1300, 50, "banners", "large"))
-RMenu.Add("LargeArms", "confirm", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  1300, 50)))
-RMenu.Add("LargeArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  1300, 50)))
+RMenu.Add('LargeArms', 'main', RageUI.CreateMenu("", "~b~" .. "Large Arms", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "large"))
+RMenu.Add("LargeArms", "confirm", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("LargeArms", "confirma", RageUI.CreateSubMenu(RMenu:Get('LargeArms', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 largearms.guns = {
     {name = "LR-300", price = 750000, hash = "WEAPON_LR300"},

@@ -7,8 +7,8 @@ knifestore.marker = vector3(21.854759216309,-1107.3658447266,29.797010421753-0.9
 
 -- [Start of RageUI]
 
-RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~b~" .. "Knife Store", 1300, 50, "banners", "knife"))
-RMenu.Add("KnifeStoreMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('KnifeStoreMenu', 'main',  1300, 50)))
+RMenu.Add('KnifeStoreMenu', 'main', RageUI.CreateMenu("", "~b~" .. "Knife Store", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "knife"))
+RMenu.Add("KnifeStoreMenu", "confirm", RageUI.CreateSubMenu(RMenu:Get('KnifeStoreMenu', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 knifestore.guns = {
     {name = "Baseball Bat", price = 1000, hash = "WEAPON_baseballbat"},

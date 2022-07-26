@@ -1,7 +1,7 @@
 local cfg = module("cfg/atms")
-RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",1300, 50, 'banners', 'atm'))
-RMenu.Add("ARMAATM", "submenuwithdraw", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  1300, 50)))
-RMenu.Add("ARMAATM", "submenudeposit", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  1300, 50)))
+RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'atm'))
+RMenu.Add("ARMAATM", "submenuwithdraw", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("ARMAATM", "submenudeposit", RageUI.CreateSubMenu(RMenu:Get('ARMAATM', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAATM', 'main')) then

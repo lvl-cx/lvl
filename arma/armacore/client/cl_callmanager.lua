@@ -3,10 +3,10 @@ local PDCalls = {}
 local NHSCalls = {}
 local isInTicket = false
 
-RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~b~Call Manager', 1300, 50, 'banners', 'manager'))
-RMenu.Add("callmanager", "admin", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
-RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
-RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  1300, 50)))
+RMenu.Add('callmanager', 'main', RageUI.CreateMenu("", '~b~Call Manager', tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'manager'))
+RMenu.Add("callmanager", "admin", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("callmanager", "police", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("callmanager", "nhs", RageUI.CreateSubMenu(RMenu:Get("callmanager", "main",  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 RMenu:Get('callmanager', 'main')
 
 

@@ -8,8 +8,8 @@ ammo.marker = vector3(-458.36862182617,-2274.5075683594,8.5158195495605-0.98)
 
 -- [Start of RageUI]
 
-RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "~b~" .. 'Ammo Trader', 1300, 50, "banners", "rebel"))
-RMenu.Add("Ammo", "confirm", RageUI.CreateSubMenu(RMenu:Get('Ammo', 'main',  1300, 50)))
+RMenu.Add('Ammo', 'main', RageUI.CreateMenu("", "~b~" .. 'Ammo Trader', tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "rebel"))
+RMenu.Add("Ammo", "confirm", RageUI.CreateSubMenu(RMenu:Get('Ammo', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 ammo.types = {
     {name = "9mm Bullets", price = 500},

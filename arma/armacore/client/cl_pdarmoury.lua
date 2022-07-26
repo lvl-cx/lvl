@@ -7,9 +7,9 @@ armoury.marker = vector3(451.34454345703,-980.09381103516,30.689605712891-0.98)
 
 -- [Start of RageUI]
 
-RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~b~" .. "Police Armoury", 1300, 50, "banners", "armoury"))
-RMenu.Add("PDArmoury", "confirm", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
-RMenu.Add("PDArmoury", "confirma", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  1300, 50)))
+RMenu.Add('PDArmoury', 'main', RageUI.CreateMenu("", "~b~" .. "Police Armoury", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "armoury"))
+RMenu.Add("PDArmoury", "confirm", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("PDArmoury", "confirma", RageUI.CreateSubMenu(RMenu:Get('PDArmoury', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 armoury.guns = {
     {name = "P226", hash = "WEAPON_p226r"},

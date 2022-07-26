@@ -7,9 +7,9 @@ rebel.marker = vector3(1545.2042236328,6332.3295898438,24.078683853149-0.98)
 
 -- [Start of RageUI]
 
-RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "~b~" .. "Rebel", 1300, 50, "banners", "rebel"))
-RMenu.Add("Rebel", "confirma", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
-RMenu.Add("Rebel", "confirm", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  1300, 50)))
+RMenu.Add('Rebel', 'main', RageUI.CreateMenu("", "~b~" .. "Rebel", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "rebel"))
+RMenu.Add("Rebel", "confirma", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
+RMenu.Add("Rebel", "confirm", RageUI.CreateSubMenu(RMenu:Get('Rebel', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
 rebel.guns = {
     {name = "Vandal Gold", price = 825000, hash = "WEAPON_VANDALG"},

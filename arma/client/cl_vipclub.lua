@@ -1,12 +1,12 @@
-RMenu.Add('vipclubmenu','mainmenu',RageUI.CreateMenu("","",1300,50,"banners", "vipclub"))
+RMenu.Add('vipclubmenu','mainmenu',RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','mainmenu'):SetSubtitle("~b~ARMA VIP Membership")
-RMenu.Add('vipclubmenu','managesubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",1300,50,"banners", "vipclub"))
+RMenu.Add('vipclubmenu','managesubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','managesubscription'):SetSubtitle("~b~ARMA VIP Membership")
-RMenu.Add('vipclubmenu','manageperks',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",1300,50,"banners", "vipclub"))
+RMenu.Add('vipclubmenu','manageperks',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','manageperks'):SetSubtitle("~b~ARMA VIP Membership")
-RMenu.Add('vipclubmenu','deathsounds',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",1300,50,"banners", "vipclub"))
+RMenu.Add('vipclubmenu','deathsounds',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','deathsounds'):SetSubtitle("~b~ARMA VIP Membership")
-RMenu.Add('vipclubmenu','vehicleextras',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",1300,50,"banners", "vipclub"))
+RMenu.Add('vipclubmenu','vehicleextras',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu:Get('vipclubmenu','vehicleextras'):SetSubtitle("~b~ARMA VIP Membership")
 local a={hoursOfPlus=0,hoursOfPlatinum=0}
 
@@ -143,7 +143,7 @@ RageUI.CreateWhile(1.0, true, function()
                 colourCode="~r~"
             end
             RageUI.Separator("Days remaining of Platinum Subscription: "..colourCode..math.floor(a.hoursOfPlatinum/24*100)/100 .." days.")
-            RageUI.Separator("---")
+            RageUI.Separator()
             RageUI.ButtonWithStyle("Sell Plus Subscription days.","~r~If you have already claimed your weekly kit, you may not sell days until the week is over.",{RightLabel="→→→"},true,function(o,p,q)
                 if q then 
                     TriggerServerEvent("ARMA:beginSellSubscriptionToPlayer","Plus")

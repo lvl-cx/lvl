@@ -1,4 +1,4 @@
-RMenu.Add('ARMAPDMenu', 'main', RageUI.CreateMenu("", "~b~Police", 1300, 50, 'banners', 'police'))
+RMenu.Add('ARMAPDMenu', 'main', RageUI.CreateMenu("", "~b~Police", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'police'))
 RMenu.Add('ARMAPDMenu', 'objectmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAPDMenu", "main")))
 
 local index = {

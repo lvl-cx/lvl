@@ -9,9 +9,9 @@ local currentGunName1 = nil
 
 returnedSMALLGuns2 = {}
 
-RMenu.Add("SmallArmsMenu", "main", RageUI.CreateMenu("", "~r~ARMA Small Arms", 1300, 50, "banners", "small"))
-RMenu.Add("SmallArmsMenu", "sub", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "banners", "small"))
-RMenu.Add("SmallArmsMenu", "whitelisted", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", 1300, 50, "banners", "small"))
+RMenu.Add("SmallArmsMenu", "main", RageUI.CreateMenu("", "~r~ARMA Small Arms", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "small"))
+RMenu.Add("SmallArmsMenu", "sub", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "small"))
+RMenu.Add("SmallArmsMenu", "whitelisted", RageUI.CreateSubMenu(RMenu:Get("SmallArmsMenu", "main"), "", "~r~ARMA Small Arms", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "small"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SmallArmsMenu', 'main')) then

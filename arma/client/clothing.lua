@@ -2,7 +2,7 @@ local cfg = module("cfg/skinshops")
 local skinshops = cfg.skinshops 
 local peds = cfg.peds
 
-RMenu.Add('ARMAClothing', 'main', RageUI.CreateMenu("", "~b~Clothing Menu",1300, 100, "banners", "cstore"))
+RMenu.Add('ARMAClothing', 'main', RageUI.CreateMenu("", "~b~Clothing Menu",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cstore"))
 RMenu.Add('ARMAClothing', 'clothingsubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changegendersubmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
 RMenu.Add('ARMAClothing', 'changepedmenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAClothing", "main")))
