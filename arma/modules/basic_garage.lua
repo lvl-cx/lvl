@@ -15,14 +15,32 @@ MySQL.createCommand("ARMA/check_rented","SELECT * FROM arma_user_vehicles WHERE 
 MySQL.createCommand("ARMA/sell_vehicle_player","UPDATE arma_user_vehicles SET user_id = @user_id, vehicle_plate = @registration WHERE user_id = @oldUser AND vehicle = @vehicle")
 MySQL.createCommand("ARMA/rentedupdate", "UPDATE arma_user_vehicles SET user_id = @id, rented = @rented, rentedid = @rentedid, rentedtime = @rentedunix WHERE user_id = @user_id AND vehicle = @veh")
 MySQL.createCommand("ARMA/fetch_rented_vehs", "SELECT * FROM arma_user_vehicles WHERE rented = 1")
---RageUI Implementation by JamesUK#6793.
 
---PHONE GARAGES ARE NOT SUPPORTED DO NOT EVEN ASK.
---PHONE GARAGES ARE NOT SUPPORTED DO NOT EVEN ASK.
---PHONE GARAGES ARE NOT SUPPORTED DO NOT EVEN ASK.
---PHONE GARAGES ARE NOT SUPPORTED DO NOT EVEN ASK.
---PHONE GARAGES ARE NOT SUPPORTED DO NOT EVEN ASK.
+RegisterServerEvent("ARMA:getCustomFolders")
+AddEventHandler('ARMA:getCustomFolders', function()
+    local source = source
+    local user_id = vRP.getUserId(source)
+    exports["ghmattimysql"]:execute("SELECT * from `arma_custom_garages` WHERE user_id = @user_id", {user_id = user_id}, function(Result)
+        if #Result > 0 then
+            TriggerClientEvent("RDMGarages:sendFolders", source, json.decode(Result[1].folder))
+        end
+    end)
+end)
 
+
+RegisterServerEvent("ARMA:updateFolders")
+AddEventHandler('ARMA:updateFolders', function(FolderUpdated)
+    local source = source
+    local user_id = vRP.getUserId(source)
+
+    exports["ghmattimysql"]:execute("SELECT * from `arma_custom_garages` WHERE user_id = @user_id", {user_id = user_id}, function(Result)
+        if #Result > 0 then
+            exports['ghmattimysql']:execute("UPDATE arma_custom_garages SET folder = @folder WHERE user_id = @user_id", {folder = json.encode(FolderUpdated), user_id = user_id}, function() end)
+        else
+            exports['ghmattimysql']:execute("INSERT INTO arma_custom_garages (`user_id`, `folder`) VALUES (@user_id, @folder);", {user_id = user_id, folder = json.encode(FolderUpdated)}, function() end)
+        end
+    end)
+end)
 
 Citizen.CreateThread(function()
     while true do
@@ -400,15 +418,15 @@ AddEventHandler('ARMA:FetchVehiclesOut', function()
                         if not returned_table[i].vehicles then 
                             returned_table[i].vehicles = {}
                         end
-                        local time = tonumber(veh.rentedtime) - os.time()
-                        local datetime = ""
-                        local date = os.date("!*t", time)
-                        if date.hour >= 1 and date.min >= 1 then 
-                            datetime = date.hour .. " hours and " .. date.min .. " minutes left."
-                        elseif date.hour <= 1 and date.min >= 1 then 
-                            datetime = date.min .. " minutes left"
-                        elseif date.hour >= 1 and date.min <= 1 then 
-                            datetime = date.hour .. " hours left"
+                        local hoursLeft = ((tonumber(veh.rentedtime)-os.time()))/3600
+                        local minutesLeft = nil
+                        if hoursLeft < 1 then
+                            minutesLeft = hoursLeft * 60
+                            minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
+                            datetime = minutesLeft .. " mins" 
+                        else
+                            hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
+                            datetime = hoursLeft .. " hrs" 
                         end
                         returned_table[i].vehicles[a .. ':' .. veh.user_id] = {z[1], datetime, veh.user_id, a}
                     end
@@ -417,6 +435,60 @@ AddEventHandler('ARMA:FetchVehiclesOut', function()
         end
         TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
     end)
+end)
+
+RegisterNetEvent('ARMA:CancelRent')
+AddEventHandler('ARMA:CancelRent', function(spawncode, VehicleName, a)
+    local source = source
+    local user_id = vRP.getUserId(source)
+    if a == 'owner' then
+        exports['ghmattimysql']:execute("SELECT * FROM arma_user_vehicles WHERE rentedid = @id", {id = user_id}, function(result)
+            if #result > 0 then 
+                for i = 1, #result do 
+                    if result[i].vehicle == spawncode and result[i].rented then
+                        local target = vRP.getUserSource(result[i].user_id)
+                        if target ~= nil then
+                            vRP.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
+                                if ok then
+                                    MySQL.execute('ARMA/rentedupdate', {id = user_id, rented = 0, rentedid = "", rentedunix = "", user_id = result[i].user_id, veh = spawncode})
+                                    vRPclient.notify(target, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
+                                    vRPclient.notify(source, {"~r~" ..VehicleName.." has been returned to your garage."})
+                                else
+                                    vRPclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
+                                end
+                            end)
+                        else
+                            vRPclient.notify(source, {"~r~The player is not online."})
+                        end
+                    end
+                end
+            end
+        end)
+    elseif a == 'renter' then
+        exports['ghmattimysql']:execute("SELECT * FROM arma_user_vehicles WHERE user_id = @id", {id = user_id}, function(result)
+            if #result > 0 then 
+                for i = 1, #result do 
+                    if result[i].vehicle == spawncode and result[i].rented then
+                        local rentedid = tonumber(result[i].rentedid)
+                        local target = vRP.getUserSource(rentedid)
+                        if target ~= nil then
+                            vRP.request(target,GetPlayerName(source).." would like to cancel the rent on the vehicle: ", 10, function(target,ok)
+                                if ok then
+                                    MySQL.execute('ARMA/rentedupdate', {id = rentedid, rented = 0, rentedid = "", rentedunix = "", user_id = user_id, veh = spawncode})
+                                    vRPclient.notify(source, {"~r~" ..VehicleName.." has been returned to the vehicle owner."})
+                                    vRPclient.notify(target, {"~r~" ..VehicleName.." has been returned to your garage."})
+                                else
+                                    vRPclient.notify(source, {"~r~User has declined the request to cancel the rental of vehicle: " ..VehicleName})
+                                end
+                            end)
+                        else
+                            vRPclient.notify(source, {"~r~The player is not online."})
+                        end
+                    end
+                end
+            end
+        end)
+    end
 end)
 
 
@@ -580,4 +652,15 @@ AddEventHandler("ARMA:PayVehicleTax", function()
             ARMAclient.notify(source,{"~r~Its fine... Tax payers will pay your vehicle tax instead."})
         end
     end
+end)
+
+Citizen.CreateThread(function()
+    Wait(1500)
+    exports['ghmattimysql']:execute([[
+        CREATE TABLE IF NOT EXISTS `arma_custom_garages` (
+            `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+            `folder` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+            PRIMARY KEY (`user_id`) USING BTREE
+        );
+    ]])
 end)
