@@ -308,7 +308,7 @@ end
 
 
 RegisterCommand("dv", function()
-    if staffMode then
+    if staffMode or tARMA.isDev() then
         TriggerEvent( "wk:deleteVehicle" )
     else
         TriggerServerEvent('other:deletevehicle')
@@ -317,7 +317,7 @@ end)
 
 
 RegisterCommand("fix", function()
-    if staffMode or tARMA.userID() == 2 or tARMA.userID() == 1 then
+    if staffMode or tARMA.getStaffLevel() >= 6 then
         TriggerServerEvent( "wk:fixVehicle")
     end
 end)
