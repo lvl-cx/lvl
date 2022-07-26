@@ -193,6 +193,13 @@ Citizen.CreateThread(function()
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_casino_chips(
+    user_id INT(11),
+    chips INT(10) NULL DEFAULT NULL,
+    CONSTRAINT pk_user PRIMARY KEY(user_id)
+    );
+    ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banreason varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banadmin varchar(100) NOT NULL DEFAULT ''; ")
