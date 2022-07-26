@@ -188,8 +188,8 @@ Citizen.CreateThread(function()
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_subscriptions(
     user_id INT(11),
-    platdays INT(10) NULL DEFAULT NULL,
-    plusdays INT(10) NULL DEFAULT NULL,
+    plathours FLOAT(10) NULL DEFAULT NULL,
+    plushours FLOAT(10) NULL DEFAULT NULL,
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
