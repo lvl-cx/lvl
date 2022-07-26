@@ -554,6 +554,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            TriggerServerEvent("ARMA:CheckPov",v[3])
                             g = v[3]
                             h[i] = g
                             i = i + 1
@@ -580,6 +581,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            TriggerServerEvent("ARMA:CheckPov",v[3])
                             g = v[2]
                             h[i] = g
                             i = i + 1
@@ -606,6 +608,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
                             SelectedPlayer = players[k]
+                            TriggerServerEvent("ARMA:CheckPov",v[3])
                             g = v[1]
                             h[i] = g
                             i = i + 1
@@ -628,6 +631,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 RageUI.ButtonWithStyle("[" .. v[3] .. "] " .. v[1], "Name: " .. v[1] .. " Perm ID: " .. v[3] .. " Temp ID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                                     if Selected then
                                         SelectedPlayer = players[k]
+                                        TriggerServerEvent("ARMA:CheckPov",v[3])
                                     end
                                 end, RMenu:Get('adminmenu', 'submenu'))
                             end
