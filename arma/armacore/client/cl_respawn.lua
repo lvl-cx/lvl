@@ -109,16 +109,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if inMenu then
-            inRedZone = false
-            RageUI.Visible(RMenu:Get("RespawnMenu", "main"), true)
-        end
-    end
-end)
-
 local function isInArea(v, dis) 
     if #(GetEntityCoords(PlayerPedId()) - v) <= dis then  
         return true

@@ -29,6 +29,12 @@ const audio = [
     { name: "tubearriving", file: "tubearriving.ogg", volume: 0.40 },
     { name: "tubeleaving", file: "tubeleaving.ogg", volume: 0.40 },
     { name: "questcomplete", file: "questcomplete.ogg", volume: 0.40 },
+    { name: "fortnite_death", file: "fortnite_death.webm", volume: 0.3},
+    { name: "roblox_death", file: "roblox_death.webm", volume: 0.3},
+    { name: "minecraft_death", file: "minecraft_death.webm", volume: 0.3},
+    { name: "pacman_death", file: "pacman_death.webm", volume: 0.3},
+    { name: "mario_death", file: "mario_death.webm", volume: 0.3},
+    { name: "csgo_death", file: "csgo_death.webm", volume: 0.3},
 ]
 
 var audioPlayer = null;

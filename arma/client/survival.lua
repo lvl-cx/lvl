@@ -249,6 +249,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if IsEntityDead(PlayerPedId()) then
             Citizen.Wait(500)
+            TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             DeathCauseHash = GetPedCauseOfDeath(PlayerPedId())
             Weapon = WeaponNames[tostring(DeathCauseHash)]
