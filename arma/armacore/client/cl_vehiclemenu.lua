@@ -34,8 +34,12 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 RegisterCommand("vehiclemenu", function()
-    if IsPedInAnyVehicle(GetPlayerPed(-1), true) then
-        RageUI.Visible(RMenu:Get("vehiclemenu", "main"), true)
+    if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) or RageUI.Visible(RMenu:Get("vehiclemenu", "main")) then
+      RageUI.ActuallyCloseAll()
+      savedvehicle = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
+      RageUI.Visible(RMenu:Get("vehiclemenu", "main"), not RageUI.Visible(RMenu:Get("vehiclemenu", "main")))
+    else
+        tARMA.notify("~r~You are not in a vehicle!")
     end
 end)
 
@@ -114,17 +118,6 @@ function tglDoorLocks()
   end)
 end
 
-Citizen.CreateThread(function()
-  while true do
-    local ped = PlayerPedId()
-    if savedvehicle ~= nil and IsPedInAnyVehicle(ped, true) then
-      if savedvehicle ~= GetVehiclePedIsIn(ped, false) then
-        savedvehicle = nil
-      end
-    end
-    Wait(30000)
-  end
-end)
 
 doorStatus = {
     [0] = false,
