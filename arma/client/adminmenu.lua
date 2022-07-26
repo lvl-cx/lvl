@@ -835,13 +835,14 @@ RageUI.CreateWhile(1.0, true, function()
                         RageUI.Separator("~g~Generating ban details for ID " ..banningPermID, function() end)
                     else
                         RageUI.Separator("~r~You are about to ban " ..banningName, function() end)
+                        RageUI.Separator("For the following reason(s):", function() end)
                         for k,v in pairs(SeparatorMsg) do
                             RageUI.Separator(v, function() end)
                         end
                         if Duration == -1 then
                             RageUI.Separator("Total Length: Permanent", function() end)
                         else
-                            RageUI.Separator("Total Length: " ..Duration.. " Hours", function() end)
+                            RageUI.Separator("Total Length: " ..Duration.. " hrs", function() end)
                         end
 
                         RageUI.ButtonWithStyle("Cancel", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
