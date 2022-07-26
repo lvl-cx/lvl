@@ -32,8 +32,8 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                     ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
                                                 end
                                             else
-                                                ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy "..house.."!"}) --notify owner that refused
-                                                ARMAclient.notify(target,{"~r~You have refused to buy "..house.."!"}) --notify new owner that refused
+                                                ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy " ..hours.. " of "..subtype.." subscription for £"..amount}) --notify owner that refused
+                                                ARMAclient.notify(target,{"~r~You have refused to buy " ..hours.. " of "..subtype.." subscription for £"..amount}) --notify new owner that refused
                                             end
                                         end)
                                     else
