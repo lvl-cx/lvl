@@ -332,7 +332,7 @@ Citizen.CreateThread(function()
 		end
 
 		if inTurf then		
-			tARMA.drawTxt("Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 7, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
+			tARMA.drawTxt("Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 7, 1, 0.8, 0.8, 0.6, 255, 255, 255, 255)
 			local pos2 = turfs[turf].position
 			local ped = PlayerPedId()
             if IsEntityDead(ped) then
