@@ -1611,6 +1611,9 @@ cfg.groups = {
   ["Rebel"] = {
     "rebel.whitelist",
   },
+  ["AdvancedRebel"] = {
+    "advancedrebel.whitelist",
+  },
 
 -- DONATOR GROUPS --
   ["Supporter"] = {
