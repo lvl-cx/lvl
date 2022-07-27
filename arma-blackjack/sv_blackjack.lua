@@ -14,12 +14,6 @@ end
 local blackjackGameInProgress = {}
 local blackjackGameData = {}
 
-function tryTakeChips(source,amount)
-    user_id = ARMA.getUserId({source})
-    if ARMA.takeChips({user_id,amount}) then 
-        return true
-    end
-end
 
 function giveChips(source,amount)
     user_id = ARMA.getUserId({source})
@@ -90,6 +84,7 @@ end)
 RegisterNetEvent("Blackjack:setBlackjackBet")
 AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
     local source = source
+    local user_id = ARMA.getUserId({source})
 
     if gameId ~= nil and betAmount ~= nil and chairId ~= nil then 
         if blackjackGameData[gameId] == nil then
@@ -99,13 +94,14 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
             if tonumber(betAmount) then
                 betAmount = tonumber(betAmount)
                 if betAmount > 0 then
-                    if tryTakeChips(source,betAmount) then
-                        --print("Taken",betAmount,"chips from id",source)
+                    local chips = ARMA.getChips({user_id})
+                    print(chips)
+                    if chips >= betAmount then
+                        ARMA.takeChips({user_id,betAmount})
                         if blackjackGameData[gameId][source] == nil then
                             blackjackGameData[gameId][source] = {}
                         end
                         blackjackGameData[gameId][source][1] = betAmount
-                        --print("GameId: " .. tostring(gameId) .. " source: " .. tostring(source) .. " has placed a bet of " .. tostring(betAmount))
                         TriggerClientEvent("Blackjack:successBlackjackBet",source)
                         TriggerClientEvent("Blackjack:syncChipsPropBlackjack",-1,betAmount,chairId)
                         TriggerClientEvent("blackjack:notify",source,"~g~Bet placed: " .. tostring(betAmount) .. " chips.")
@@ -145,7 +141,6 @@ for i=0,31,1 do
             local chairIdInitial = i*4 --0-3,4-7,8-11,12-15
             local chairIdFinal = (i*4)+3
             for chairID=chairIdInitial,chairIdFinal do
-                --print("checking chairID[" .. tostring(chairID) .. "] = " .. tostring(blackjackTables[chairID])) 
                 if blackjackTables[chairID] ~= false then
                     table.insert(players_ready,blackjackTables[chairID])
                     game_ready = true
@@ -153,7 +148,6 @@ for i=0,31,1 do
             end
             if game_ready then
                 local gameId = math.random(1000,10000000)
-                print("generated gameId",gameId)
                 blackjackGameData[gameId] = {} --init game data
                 blackjackGameInProgress[gameId] = false
                 for k,v in pairs(players_ready) do 
@@ -169,9 +163,6 @@ for i=0,31,1 do
                         if v ~= nil then
                             local playerBetted = false 
                             betAmount = v[1]
-                            -- print("betAmount: " .. tostring(betAmount))
-                            -- print("v: " .. tostring(v))
-                            -- print("vdump: " .. dump(blackjackGameData[gameId][k]))
                             if betAmount ~= nil and betAmount > 0 then 
                                 playerBetted = true
                             end
@@ -218,7 +209,6 @@ for i=0,31,1 do
                             end
                             if cardIndex == 0 then
                                 local randomCard = math.random(1,52)
-                                --print("randomDealerCard: " .. tostring(randomCard))
                                 table.insert(blackjackGameData[gameId]["dealer"]["cardData"], randomCard) 
                                 TriggerClientEvent("Blackjack:beginCardGiveOut",-1,gameId,blackjackGameData[gameId]["dealer"]["cardData"],gameId,cardIndex,getCurrentHand(gameId,"dealer"),tableId)
                             end
@@ -632,18 +622,3 @@ function dump(o)
        return tostring(o)
     end
  end
-
--- RegisterCommand("debugtableserver",function()
---     print("blackjackTables")
---     print("===============")
---     print(dump(blackjackTables))
---     print("blackjackGameData")
---     print("===============")
---     print(dump(blackjackGameData))
--- end)
-
--- RegisterCommand("debugcarddata",function()
---     print("carddata")
---     print("===============")
---     print(dump(blackjackGameData[1024]))
--- end)
