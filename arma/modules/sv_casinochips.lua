@@ -77,7 +77,7 @@ function ARMA.giveChips(user_id,amount)
 end
 
 function ARMA.takeChips(user_id,amount)
-    if amount > 0 and then
+    if amount > 0 then
         MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
             if #rows > 0 then
                 local chips = rows[1].chips
