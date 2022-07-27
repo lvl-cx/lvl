@@ -16,14 +16,14 @@ local blackjackGameData = {}
 
 function tryTakeChips(source,amount)
     user_id = ARMA.getUserId({source})
-    if ARMA.tryPayment({user_id,amount}) then 
+    if ARMA.takeChips({user_id,amount}) then 
         return true
     end
 end
 
 function giveChips(source,amount)
     user_id = ARMA.getUserId({source})
-    ARMA.giveMoney({user_id,amount})
+    ARMA.giveChips({user_id,amount})
 end
 
 AddEventHandler('playerDropped', function (reason)

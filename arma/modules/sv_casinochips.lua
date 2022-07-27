@@ -70,3 +70,25 @@ AddEventHandler("ARMA:sellChips", function(amount)
         end
     end)
 end)
+
+function ARMA.giveChips(user_id,amount)
+    MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
+    TriggerClientEvent('ARMA:chipsUpdated', source)
+end
+
+function ARMA.takeChips(user_id,amount)
+    if amount > 0 and then
+        MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+            if #rows > 0 then
+                local chips = rows[1].chips
+                if amount > chips then
+                    return false
+                else
+                    MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
+                    TriggerClientEvent('ARMA:chipsUpdated', source)
+                    return true
+                end        
+            end
+        end)
+    end
+end
