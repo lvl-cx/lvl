@@ -3,6 +3,12 @@ local Proxy = module('arma', 'lib/Proxy')
 ARMA = Proxy.getInterface("ARMA")
 ARMAclient = Tunnel.getInterface("ARMA", "Blackjack")
 
+MySQL = module("arma_mysql", "MySQL")
+MySQL.createCommand("casinochips/get_chips","SELECT * FROM arma_casino_chips WHERE user_id = @user_id")
+MySQL.createCommand("casinochips/add_chips", "UPDATE arma_casino_chips SET chips = (chips + @amount) WHERE user_id = @user_id")
+MySQL.createCommand("casinochips/remove_chips", "UPDATE arma_casino_chips SET chips = (chips - @amount) WHERE user_id = @user_id")
+
+
 local blackjackTables = {
     --[chairId] == false or source if taken
 }
@@ -16,8 +22,22 @@ local blackjackGameData = {}
 
 
 function giveChips(source,amount)
-    user_id = ARMA.getUserId({source})
-    ARMA.giveChips({user_id,amount})
+    local user_id = ARMA.getUserId({source})
+    MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
+    TriggerClientEvent('ARMA:chipsUpdated', source)
+end
+
+function takeChips(source,amount)
+    local user_id = ARMA.getUserId({source})
+    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+        if #rows > 0 then
+            local chips = rows[1].chips
+            if amount > 0 and chips >= amount then
+                MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
+                TriggerClientEvent('ARMA:chipsUpdated', player)
+            end
+        end
+    end)
 end
 
 AddEventHandler('playerDropped', function (reason)
@@ -85,6 +105,7 @@ RegisterNetEvent("Blackjack:setBlackjackBet")
 AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
     local source = source
     local user_id = ARMA.getUserId({source})
+    local chips = nil
 
     if gameId ~= nil and betAmount ~= nil and chairId ~= nil then 
         if blackjackGameData[gameId] == nil then
@@ -94,20 +115,21 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
             if tonumber(betAmount) then
                 betAmount = tonumber(betAmount)
                 if betAmount > 0 then
-                    local chips = ARMA.getChips({user_id})
-                    print(chips)
-                    if chips >= betAmount then
-                        ARMA.takeChips({user_id,betAmount})
-                        if blackjackGameData[gameId][source] == nil then
-                            blackjackGameData[gameId][source] = {}
+                    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+                        chips = rows[1].chips
+                        if chips >= betAmount then
+                            takeChips({user_id,betAmount})
+                            if blackjackGameData[gameId][source] == nil then
+                                blackjackGameData[gameId][source] = {}
+                            end
+                            blackjackGameData[gameId][source][1] = betAmount
+                            TriggerClientEvent("Blackjack:successBlackjackBet",source)
+                            TriggerClientEvent("Blackjack:syncChipsPropBlackjack",-1,betAmount,chairId)
+                            TriggerClientEvent("blackjack:notify",source,"~g~Bet placed: " .. tostring(betAmount) .. " chips.")
+                        else 
+                            TriggerClientEvent("blackjack:notify",source,"~r~Not enough chips!")
                         end
-                        blackjackGameData[gameId][source][1] = betAmount
-                        TriggerClientEvent("Blackjack:successBlackjackBet",source)
-                        TriggerClientEvent("Blackjack:syncChipsPropBlackjack",-1,betAmount,chairId)
-                        TriggerClientEvent("blackjack:notify",source,"~g~Bet placed: " .. tostring(betAmount) .. " chips.")
-                    else 
-                        TriggerClientEvent("blackjack:notify",source,"~r~Not enough chips!")
-                    end
+                    end)
                 end
             end
         end
