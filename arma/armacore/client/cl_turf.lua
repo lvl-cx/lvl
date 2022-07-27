@@ -110,21 +110,18 @@ function TakeComissionCocaine()
 		while true do
 			if TakenTurfCocaine then
 				local v1 = vector3(121.41984558105,-1307.7109375,29.23345375061)
-				
-					if inTurf == false then
-						if isInArea(v1, 1.4) then 
-							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
-							if IsControlJustPressed(0, 51) then 
-								changeComision3()
-							end
+				if inTurf == false then
+					if isInArea(v1, 1.4) then 
+						alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+						if IsControlJustPressed(0, 51) then 
+							changeComision3()
 						end
 					end
-				
+				end
 			end
 			Citizen.Wait(0)
 		end
 	end)
-	
 end
 
 function TakeComissionLSD()
@@ -132,21 +129,18 @@ function TakeComissionLSD()
 		while true do
 			if TakenTurfLSD then
 				local v1 = vector3(2485.8977050781,-405.85736083984,93.73526763916)
-				
-					if inTurf == false then
-						if isInArea(v1, 1.4) then 
-							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
-							if IsControlJustPressed(0, 51) then 
-								changeComision4()
-							end
+				if inTurf == false then
+					if isInArea(v1, 1.4) then 
+						alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+						if IsControlJustPressed(0, 51) then 
+							changeComision4()
 						end
 					end
-				
+				end
 			end
 			Citizen.Wait(0)
 		end
 	end)
-	
 end
 
 function TakeComissionHeroin()
@@ -154,21 +148,18 @@ function TakeComissionHeroin()
 		while true do
 			if TakenTurfHeroin then
 				local v1 = vector3(3577.2836914062,3649.7709960938,33.888595581055)
-				
-					if inTurf == false then
-						if isInArea(v1, 1.4) then 
-							alert('Press ~INPUT_VEH_HORN~ to Change Commision')
-							if IsControlJustPressed(0, 51) then 
-								changeComision5()
-							end
+				if inTurf == false then
+					if isInArea(v1, 1.4) then 
+						alert('Press ~INPUT_VEH_HORN~ to Change Commision')
+						if IsControlJustPressed(0, 51) then 
+							changeComision5()
 						end
 					end
-				
+				end
 			end
 			Citizen.Wait(0)
 		end
 	end)
-	
 end
 
 RegisterNetEvent("ARMA:DontIt")
@@ -237,7 +228,6 @@ function changeComision2()
 end
 
 function changeComision3()
-    
 	AddTextEntry('FMMC_KEY_TIP8', "Enter the Commision to change.")
 	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "Enter Amount (Blank to Cancel)", "", "", "", "", 30)
     while (UpdateOnscreenKeyboard() == 0) do
@@ -312,36 +302,21 @@ inZone = false
 
 Citizen.CreateThread(function()
 	while true do
-		local pos = GetEntityCoords(GetPlayerPed(-1), true)
-
+		local pos = GetEntityCoords(PlayerPedId(), true)
 		for k,v in pairs(turfs)do
 			local pos2 = v.position
 			local pos3 = v.capturf 
-
 			if (Vdist(pos.x, pos.y, pos.z, pos3.x, pos3.y, pos3.z) < 1.4) then
 				if not inTurf then
-					
-					
 					if (Vdist(pos.x, pos.y, pos.z, pos3.x, pos3.y, pos3.z) < 1.4) then
-						
 						local scaleform = RequestScaleformMovie("MP_BIG_MESSAGE_FREEMODE")
-						
 						if HasScaleformMovieLoaded(scaleform) then
-							
-	
 							PushScaleformMovieFunction(scaleform, "SHOW_SHARD_WASTED_MP_MESSAGE")
 							BeginTextComponent("STRING")
 							AddTextComponentString("Press [E] to take turf")
 							EndTextComponent()
 							PopScaleformMovieFunctionVoid()
-	
-	
-						   
-							  DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
-						   
-						   
-	
-		
+							DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
 						end
 						
 						inZone = true
@@ -357,22 +332,15 @@ Citizen.CreateThread(function()
 		end
 
 		if inTurf then		
-			
-			tARMA.drawTxt(0.92, 1.44, 1.0,1.0,0.5, "Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 255, 255, 255, 255)
-			
-			
+			tARMA.drawTxt("Capping Turf: ~r~" .. secondsRemaining .. " seconds remaining", 7, 1, 0.5, 0.8, 0.6, 255, 255, 255, 255)
 			local pos2 = turfs[turf].position
-			local ped = GetPlayerPed(-1)
-
-			
+			local ped = PlayerPedId()
             if IsEntityDead(ped) then
 			TriggerServerEvent('ARMA:PlayerDied', turf)
-
 			elseif (Vdist(pos.x, pos.y, pos.z, pos2.x, pos2.y, pos2.z) > turfs[turf].radius) then
 				TriggerServerEvent('ARMA:TooFar', turf)
 			end
 		end
-
 		Citizen.Wait(0)
 	end
 end)
