@@ -69,31 +69,3 @@ AddEventHandler("ARMA:sellChips", function(amount)
         end
     end)
 end)
-
-function ARMA.giveChips(user_id,amount)
-    local player = ARMA.getUserSource(user_id)
-    MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
-    TriggerClientEvent('ARMA:chipsUpdated', player)
-end
-
-function ARMA.takeChips(user_id,amount)
-    local player = ARMA.getUserSource(user_id)
-    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
-        if #rows > 0 then
-            local chips = rows[1].chips
-            if amount > 0 and chips >= amount then
-                MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
-                TriggerClientEvent('ARMA:chipsUpdated', player)
-            end
-        end
-    end)
-end
-
-function ARMA.getChips(user_id)
-    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
-        if #rows > 0 then
-            print(rows[1].chips)
-            return rows[1].chips
-        end
-    end)
-end
