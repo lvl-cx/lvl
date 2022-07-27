@@ -19,6 +19,14 @@ AddEventHandler('ARMA:RefundLicense', function(group)
         else
             ARMAclient.notify(source, {'~r~Error, You do not have this License.'})
         end
+    elseif group == 'AdvancedRebel' then 
+        if ARMA.hasGroup(user_id, group) then
+            ARMA.removeUserGroup(user_id, group)
+            ARMA.giveBankMoney(user_id, 5000000)
+            ARMAclient.notify(source, {'~g~You have refunded ' .. group .. ' for £5,000,000 [25% of License Price]'})
+        else
+            ARMAclient.notify(source, {'~r~Error, You do not have this License.'})
+        end
     elseif group == 'Gang' then 
         if ARMA.hasGroup(user_id, group) then
             ARMA.removeUserGroup(user_id, group)
@@ -175,6 +183,9 @@ AddEventHandler('GroupMenu:Groups', function()
         end
         if ARMA.hasGroup(user_id, "Rebel") then
             GroupsL["Rebel"] = true;
+        end
+        if ARMA.hasGroup(user_id, "AdvancedRebel") then
+            GroupsL["AdvancedRebel"] = true;
         end
         if ARMA.hasGroup(user_id, "LSD") then
             GroupsL["LSD"] = true;

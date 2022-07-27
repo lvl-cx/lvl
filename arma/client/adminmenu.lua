@@ -119,16 +119,17 @@ local getUserPOVGroups = {
     ["pov"] = "POV List",
 }
 local getUserLicenseGroups = {
-    ["Scrap"] = "Scrap",
-    ["Weed"] = "Weed",
-    ["Cocaine"] = "Cocaine",
-    ["Gold"] = "Gold",
-    ["Diamond"] = "Diamond",
-    ["Heroin"] = "Heroin",
-    ["LSD"] = "LSD",
-    ["Gang"] = "Gang",
-    ["Rebel"] = "Rebel",
-    ["highroller"] = "Highrollers",
+    ["Scrap"] = "Scrap License",
+    ["Weed"] = "Weed License",
+    ["Cocaine"] = "Cocaine License",
+    ["Gold"] = "Gold License",
+    ["Diamond"] = "Diamond License",
+    ["Heroin"] = "Heroin License",
+    ["LSD"] = "LSD License",
+    ["Gang"] = "Gang License",
+    ["Rebel"] = "Rebel License",
+    ["AdvancedRebel"] = "Advanced Rebel License",
+    ["highroller"] = "Highrollers License",
 }
 
 local getUserMPDGroups = {

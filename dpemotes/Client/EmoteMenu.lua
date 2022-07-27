@@ -24,7 +24,7 @@ else
 end
 
 _menuPool = NativeUI.CreatePool()
-mainMenu = NativeUI.CreateMenu("", "", menuPosition["x"], menuPosition["y"], Menuthing, Menuthing)
+mainMenu = NativeUI.CreateMenu("", "", menuPosition["x"], menuPosition["y"], "banners", "emotes")
 _menuPool:Add(mainMenu)
 
 function ShowNotification(text)
@@ -62,15 +62,15 @@ end)
 lang = Config.MenuLanguage
 
 function AddEmoteMenu(menu)
-    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['emotes'], "", "", Menuthing, Menuthing)
-    local dancemenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['danceemotes'], "", "", Menuthing, Menuthing)
-    local propmenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['propemotes'], "", "", Menuthing, Menuthing)
+    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['emotes'], "", "", "banners", "emotes")
+    local dancemenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['danceemotes'], "", "", "banners", "emotes")
+    local propmenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['propemotes'], "", "", "banners", "emotes")
     table.insert(EmoteTable, Config.Languages[lang]['danceemotes'])
     table.insert(EmoteTable, Config.Languages[lang]['danceemotes'])
 
     if Config.SharedEmotesEnabled then
-      sharemenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['shareemotes'], Config.Languages[lang]['shareemotesinfo'], "", Menuthing, Menuthing)
-      shareddancemenu = _menuPool:AddSubMenu(sharemenu, Config.Languages[lang]['sharedanceemotes'], "", "", Menuthing, Menuthing)
+      sharemenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['shareemotes'], Config.Languages[lang]['shareemotesinfo'], "", "banners", "emotes")
+      shareddancemenu = _menuPool:AddSubMenu(sharemenu, Config.Languages[lang]['sharedanceemotes'], "", "", "banners", "emotes")
       table.insert(ShareTable, 'none')
       table.insert(EmoteTable, Config.Languages[lang]['shareemotes'])
     end
@@ -78,7 +78,7 @@ function AddEmoteMenu(menu)
     if not Config.SqlKeybinding then
       unbind2item = NativeUI.CreateItem(Config.Languages[lang]['rfavorite'], Config.Languages[lang]['rfavorite'])
       unbinditem = NativeUI.CreateItem(Config.Languages[lang]['prop2info'], "")
-      favmenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['favoriteemotes'], Config.Languages[lang]['favoriteinfo'], "", Menuthing, Menuthing)
+      favmenu = _menuPool:AddSubMenu(submenu, Config.Languages[lang]['favoriteemotes'], Config.Languages[lang]['favoriteinfo'], "", "banners", "emotes")
       favmenu:AddItem(unbinditem)
       favmenu:AddItem(unbind2item)
       table.insert(FavEmoteTable, Config.Languages[lang]['rfavorite'])
@@ -204,7 +204,7 @@ function AddCancelEmote(menu)
 end
 
 function AddWalkMenu(menu)
-    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['walkingstyles'], "", "", Menuthing, Menuthing)
+    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['walkingstyles'], "", "", "banners", "emotes")
 
     walkreset = NativeUI.CreateItem(Config.Languages[lang]['normalreset'], Config.Languages[lang]['resetdef'])
     submenu:AddItem(walkreset)
@@ -231,7 +231,7 @@ function AddWalkMenu(menu)
 end
 
 function AddFaceMenu(menu)
-    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['moods'], "", "", Menuthing, Menuthing)
+    local submenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['moods'], "", "", "banners", "emotes")
 
     facereset = NativeUI.CreateItem(Config.Languages[lang]['normalreset'], Config.Languages[lang]['resetdef'])
     submenu:AddItem(facereset)
@@ -255,9 +255,9 @@ end
 
 function AddInfoMenu(menu)
     if not UpdateAvailable then
-      infomenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['infoupdate'], "(1.7.3)", "", Menuthing, Menuthing)
+      infomenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['infoupdate'], "(1.7.3)", "", "banners", "emotes")
     else
-      infomenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['infoupdateav'], Config.Languages[lang]['infoupdateavtext'], "", Menuthing, Menuthing)
+      infomenu = _menuPool:AddSubMenu(menu, Config.Languages[lang]['infoupdateav'], Config.Languages[lang]['infoupdateavtext'], "", "banners", "emotes")
     end
     contact = NativeUI.CreateItem(Config.Languages[lang]['suggestions'], Config.Languages[lang]['suggestionsinfo'])
     u170 = NativeUI.CreateItem("1.7.0", "Added /emotebind [key] [emote]!")

@@ -33,7 +33,7 @@ RegisterCommand('warnings', function()
 end)
 
 
-    RegisterKeyMapping('warnings', 'Opens Warnings', 'keyboard', 'F10')
+RegisterKeyMapping('warnings', 'Opens Warnings', 'keyboard', 'F10')
 
 
 Citizen.CreateThread(function()
