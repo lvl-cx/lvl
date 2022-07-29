@@ -16,8 +16,7 @@ AddEventHandler("ARMA:enterDiamondCasino", function()
     SetPlayerRoutingBucket(source, 50)
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
-            local chips = rows[1].chips
-            TriggerClientEvent('ARMA:setDisplayChips', source, chips)
+            TriggerClientEvent('ARMA:setDisplayChips', source, rows[1].chips)
         end
     end)
 end)
@@ -35,8 +34,7 @@ AddEventHandler("ARMA:getChips", function()
     local user_id = ARMA.getUserId(source)
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
-            local chips = rows[1].chips
-            TriggerClientEvent('ARMA:setDisplayChips', source, chips)
+            TriggerClientEvent('ARMA:setDisplayChips', source, rows[1].chips)
         end
     end)
 end)
@@ -57,6 +55,7 @@ RegisterNetEvent("ARMA:sellChips")
 AddEventHandler("ARMA:sellChips", function(amount)
     local source = source
     local user_id = ARMA.getUserId(source)
+    local chips = nil
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
             local chips = rows[1].chips
@@ -70,25 +69,3 @@ AddEventHandler("ARMA:sellChips", function(amount)
         end
     end)
 end)
-
-function ARMA.giveChips(user_id,amount)
-    MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
-    TriggerClientEvent('ARMA:chipsUpdated', source)
-end
-
-function ARMA.takeChips(user_id,amount)
-    if amount > 0 then
-        MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
-            if #rows > 0 then
-                local chips = rows[1].chips
-                if amount > chips then
-                    return false
-                else
-                    MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
-                    TriggerClientEvent('ARMA:chipsUpdated', source)
-                    return true
-                end        
-            end
-        end)
-    end
-end

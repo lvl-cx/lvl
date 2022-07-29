@@ -116,7 +116,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(60*60000)
+        Citizen.Wait(60000)
         MySQL.query("subscription/get_all_subscriptions", {}, function(rows, affected)
             if #rows > 0 then
                 for k,v in pairs(rows) do

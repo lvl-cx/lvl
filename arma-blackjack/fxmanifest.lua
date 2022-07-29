@@ -2,6 +2,9 @@ fx_version 'adamant'
 
 game "gta5"
 
+dependency "ghmattimysql"
+dependency "arma_mysql"
+
 description "DiamondBlackjack created by Robbster"
 
 client_scripts {

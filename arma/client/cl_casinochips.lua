@@ -241,3 +241,4 @@ function getMoneyStringFormatted(cashString)
 	int = int:reverse():gsub("(%d%d%d)", "%1,")
 	return minus .. int:reverse():gsub("^,", "") .. fraction 
 end
+
