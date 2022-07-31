@@ -27,19 +27,6 @@ function giveChips(source,amount)
     TriggerClientEvent('ARMA:chipsUpdated', source)
 end
 
-function takeChips(source,amount)
-    local user_id = ARMA.getUserId({source})
-    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
-        if #rows > 0 then
-            local chips = rows[1].chips
-            if amount > 0 and chips >= amount then
-                MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
-                TriggerClientEvent('ARMA:chipsUpdated', player)
-            end
-        end
-    end)
-end
-
 AddEventHandler('playerDropped', function (reason)
     local source = source
     for k,v in pairs(blackjackTables) do
@@ -115,14 +102,15 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
             if tonumber(betAmount) then
                 betAmount = tonumber(betAmount)
                 if betAmount > 0 then
-                    if chairId < 8 and betAmount > 100000 then
-                        ARMAclient.notify(source,{'~r~Maximum bet at this table is £100,000.'})
-                        return
-                    end
                     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
                         chips = rows[1].chips
                         if chips >= betAmount then
-                            takeChips({user_id,betAmount})
+                            if chairId < 8 and betAmount > 100000 then
+                                ARMAclient.notify(source,{'~r~Maximum bet at this table is £100,000.'})
+                                return
+                            end
+                            MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = betAmount})
+                            TriggerClientEvent('ARMA:chipsUpdated', source)
                             if blackjackGameData[gameId][source] == nil then
                                 blackjackGameData[gameId][source] = {}
                             end
