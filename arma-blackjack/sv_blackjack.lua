@@ -115,6 +115,10 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
             if tonumber(betAmount) then
                 betAmount = tonumber(betAmount)
                 if betAmount > 0 then
+                    if chairId < 8 and betAmount > 100000 then
+                        ARMAclient.notify(source,{'~r~Maximum bet at this table is £100,000.'})
+                        return
+                    end
                     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
                         chips = rows[1].chips
                         if chips >= betAmount then
@@ -465,13 +469,7 @@ for i=0,31,1 do
     end)
 end
 
---1,1,3,6
 function getCurrentHand(gameId,userId)
-    --print("error debug #2")
-    --print("gameId",gameId)
-    --print("userId",userId)
-    --print(dump(blackjackGameData[gameId]))
-    --print("=======")
     if blackjackGameData[gameId][userId]["cardData"] ~= nil then 
         local hand = 0
         local numberOfAces = 0
