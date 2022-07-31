@@ -51,6 +51,7 @@ AddEventHandler('ARMA:GiveItem', function(itemId, itemLoc)
     if not itemId then  ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         ARMA.RunGiveTask({source, itemId})
+        TriggerEvent('ARMA:RefreshInventory', source)
     else
         ARMAclient.notify(source, {'~r~You need to have this item on you to give it.'})
     end
@@ -62,6 +63,7 @@ AddEventHandler('ARMA:TrashItem', function(itemId, itemLoc)
     if not itemId then  ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         ARMA.RunTrashTask({source, itemId})
+        TriggerEvent('ARMA:RefreshInventory', source)
     else
         ARMAclient.notify(source, {'~r~You need to have this item on you to drop it.'})
     end
