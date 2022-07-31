@@ -47,15 +47,15 @@ local d={
 
 local E=true
 Citizen.CreateThread(function()
-    local f=GetResourceKvpString("ARMA_pluschutes") or "true"
+    local f=GetResourceKvpString("ARMA_vipParachute") or "true"
     if f=="true"then
         E=true
     else 
         E=true
     end 
 end)
-function tARMA.setparachutestting(f)
-    SetResourceKvp("ARMA_pluschutes",tostring(f))
+function tARMA.setParachuteSetting(f)
+    SetResourceKvp("ARMA_vipParachute",tostring(f))
 end
 
 AddEventHandler("playerSpawned", function()
@@ -87,13 +87,13 @@ end
 function tARMA.getDeathSound()
     if tARMA.isPlusClub() or tARMA.isPlatClub() then 
         local k=GetResourceKvpString("ARMA_deathsound")
-        if type(k)=="string"and k~=""then 
+        if type(k) == "string" and k~="" then 
             return k 
         else 
-            return"dead"
+            return "dead"
         end 
     else 
-        return"dead"
+        return "dead"
     end 
 end
 RageUI.CreateWhile(1.0, true, function()
@@ -113,21 +113,9 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'managesubscription')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if a.hoursOfPlus>=10 then 
-                colourCode="~g~"
-            elseif a.hoursOfPlus<10 and a.hoursOfPlus>3 then 
-                colourCode="~y~"
-            else 
-                colourCode="~r~"
-            end
+            colourCode = getColourCode(a.hoursOfPlus)
             RageUI.Separator("Days remaining of Plus Subscription: "..colourCode..math.floor(a.hoursOfPlus/24*100)/100 .." days.")
-            if a.hoursOfPlatinum>=10 then 
-                colourCode="~g~"
-            elseif a.hoursOfPlatinum<10 and a.hoursOfPlatinum>3 then 
-                colourCode="~y~"
-            else 
-                colourCode="~r~"
-            end
+            colourCode = getColourCode(a.hoursOfPlatinum)
             RageUI.Separator("Days remaining of Platinum Subscription: "..colourCode..math.floor(a.hoursOfPlatinum/24*100)/100 .." days.")
             RageUI.Separator()
             RageUI.ButtonWithStyle("Sell Plus Subscription days.","~r~If you have already claimed your weekly kit, you may not sell days until the week is over.",{RightLabel="→→→"},true,function(o,p,q)
@@ -147,21 +135,9 @@ RageUI.CreateWhile(1.0, true, function()
             if tARMA.isDev() then
                 if next(z) then
                     RageUI.Separator('Perm ID: '..z.userid)
-                    if z.hoursOfPlus>=10 then 
-                        colourCode="~g~"
-                    elseif z.hoursOfPlus<10 and z.hoursOfPlus>3 then 
-                        colourCode="~y~"
-                    else 
-                        colourCode="~r~"
-                    end
+                    colourCode = getColourCode(z.hoursOfPlus)
                     RageUI.Separator('Days of Plus Remaining: '..colourCode..math.floor(z.hoursOfPlus/24*100)/100)
-                    if z.hoursOfPlatinum>=10 then 
-                        colourCode="~g~"
-                    elseif z.hoursOfPlatinum<10 and z.hoursOfPlatinum>3 then 
-                        colourCode="~y~"
-                    else 
-                        colourCode="~r~"
-                    end
+                    colourCode = getColourCode(z.hoursOfPlatinum)
                     RageUI.Separator('Days of Platinum Remaining: '..colourCode..math.floor(z.hoursOfPlatinum/24*100)/100)
                     RageUI.ButtonWithStyle("Set Plus Days (in hours)","This has to be set in hours.",{RightLabel="→→→"},true,function(o,p,q)
                         if q then
@@ -201,12 +177,12 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             local function R()
                 E=true
-                tARMA.setparachutestting(E)
+                tARMA.setParachuteSetting(E)
                 tARMA.notify("~a~Parachute enabled.")
             end
             local function S()
                 E=false
-                tARMA.setparachutestting(E)
+                tARMA.setParachuteSetting(E)
                 tARMA.notify("~r~Parachute disabled.")
             end
             RageUI.Checkbox("Enable Parachute","~g~This gives you a primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
@@ -222,7 +198,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'deathsounds')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for u,l in pairs(d)do 
+            for u,l in pairs(d) do 
                 RageUI.Checkbox(u, "", l.checked, {Style = RageUI.CheckboxStyle.Tick}, function(Hovered, Selected, Active, Checked)
                     if Selected then
                         if l.checked then
@@ -301,3 +277,14 @@ Citizen.CreateThread(function()
         Wait(500)
     end 
 end)
+
+function getColourCode(a)
+    if a>=10 then 
+        colourCode="~g~"
+    elseif a<10 and a>3 then 
+        colourCode="~y~"
+    else 
+        colourCode="~r~"
+    end
+    return colourCode
+end
