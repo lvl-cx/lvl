@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
 			DrawAdvancedText(0.510, 0.271, 0.005, 0.0028, 0.4, "Date", 255, 255, 255, 255, 6, 0)
 			DrawAdvancedText(0.675, 0.271, 0.005, 0.0028, 0.4, "Reason", 255, 255, 255, 255, 6, 0)
 			for warningID,warningTable in pairs(armaWarnings) do
-				local warning_id, warning_type,duration,admin,date,reason,points = warningTable["warning_id"], warningTable["warning_type"],warningTable["duration"],warningTable["admin"],warningTable["warning_date"],warningTable["reason"],warningTable["points"]
+				local warning_id, warning_type,duration,admin,date,reason = warningTable["warning_id"], warningTable["warning_type"],warningTable["duration"],warningTable["admin"],warningTable["warning_date"],warningTable["reason"]
 				if warning_type == "Warning" then
 					warningColourR = 255
 					warningColourG = 255
