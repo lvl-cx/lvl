@@ -378,7 +378,24 @@ cfg.peds = {
 'u_m_y_party_01',
 'u_m_y_proldriver_01',
 'u_m_y_sbike',
-'u_m_y_tattoo_01'
+'2pac',
+'AdaCasualA',
+'alex_weiss',
+'Brad_Pitt',
+'bunnyman',
+'Harley',
+'jimmyboston',
+'Lana',
+'LaraA',
+'LaraB',
+'LaraCroft',
+'LBJames',
+'MaxPayne1',
+'merle',
+'Neymar',
+'Sam',
+'sloan',
+'SnoopDogg',
 }
 
 return cfg
