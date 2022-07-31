@@ -31,12 +31,12 @@ function ARMA.defInventoryItem(idname,name,description,choices,weight)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
       -- prompt number
-    --   TriggerClientEvent('Infinite:ToggleNUIFocus', player, false)
+    --   TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
       ARMA.prompt(player,lang.inventory.trash.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
         local amount = parseInt(amount)
         if ARMA.tryGetInventoryItem(user_id,idname,amount,false) then
-        --   TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
-          TriggerEvent('Infinite:RefreshInventory', ARMA.getUserSource(user_id))
+        --   TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+          TriggerEvent('ARMA:RefreshInventory', ARMA.getUserSource(user_id))
           ARMAclient.notify(player,{lang.inventory.trash.done({ARMA.getItemName(idname),amount})})
           ARMAclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
         else
@@ -57,34 +57,34 @@ function ch_give(idname, player, choice)
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
           -- prompt number
-          TriggerClientEvent('Infinite:ToggleNUIFocus', player, false)
+          TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
           ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
             local amount = parseInt(amount)
             -- weight check
-            TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+            TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
             local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
             if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
               if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
                 ARMA.giveInventoryItem(nuser_id,idname,amount,true)
-                TriggerEvent('Infinite:RefreshInventory', player)
-                TriggerEvent('Infinite:RefreshInventory', nplayer)
+                TriggerEvent('ARMA:RefreshInventory', player)
+                TriggerEvent('ARMA:RefreshInventory', nplayer)
                 ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
                 ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
               else
-                TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+                TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
                 ARMAclient.notify(player,{lang.common.invalid_value()})
               end
             else
-                TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+                TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
               ARMAclient.notify(player,{lang.inventory.full()})
             end
           end)
         else
-            TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+            TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
           ARMAclient.notify(player,{lang.common.no_player_near()})
         end
       else
-        TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
         ARMAclient.notify(player,{lang.common.no_player_near()})
       end
     end)
@@ -96,16 +96,16 @@ function ch_trash(idname, player, choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
     -- prompt number
-    TriggerClientEvent('Infinite:ToggleNUIFocus', player, false)
+    TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
     ARMA.prompt(player,lang.inventory.trash.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
       local amount = parseInt(amount)
       if ARMA.tryGetInventoryItem(user_id,idname,amount,false) then
-        TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
-        TriggerEvent('Infinite:RefreshInventory', player)
+        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+        TriggerEvent('ARMA:RefreshInventory', player)
         ARMAclient.notify(player,{lang.inventory.trash.done({ARMA.getItemName(idname),amount})})
         ARMAclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
       else
-        TriggerClientEvent('Infinite:ToggleNUIFocus', player, true)
+        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
         ARMAclient.notify(player,{lang.common.invalid_value()})
       end
     end)
@@ -233,7 +233,7 @@ function ARMA.giveInventoryItem(user_id,idname,amount,notify)
       end
     end
   end
-  TriggerEvent('Infinite:RefreshInventory', player)
+  TriggerEvent('ARMA:RefreshInventory', player)
 end
 
 
@@ -247,7 +247,7 @@ function ARMA.RunTrashTask(source, itemName)
         data.inventory[itemName] = nil;
         print('[^7JamesUKInventory]^1: Invalid item removed from inventory space. Usually caused by spawned in staff items. User item from: ' .. user_id .. ' Item Name: ' .. itemName)
     end
-    TriggerEvent('Infinite:RefreshInventory', source)
+    TriggerEvent('ARMA:RefreshInventory', source)
 end
 
 
@@ -256,7 +256,7 @@ function ARMA.RunGiveTask(source, itemName)
     if choices['Give'] then
         choices['Give'][1](source)
     end
-    TriggerEvent('Infinite:RefreshInventory', source)
+    TriggerEvent('ARMA:RefreshInventory', source)
 end
 
 function ARMA.RunInventoryTask(source, itemName)
@@ -272,7 +272,7 @@ function ARMA.RunInventoryTask(source, itemName)
     elseif choices['Equip'] then 
         choices['Equip'][1](source)
     end
-    TriggerEvent('Infinite:RefreshInventory', source)
+    TriggerEvent('ARMA:RefreshInventory', source)
 end
 
 -- try to get item from a connected user inventory
@@ -299,7 +299,7 @@ function ARMA.tryGetInventoryItem(user_id,idname,amount,notify)
       
         end
       end
-      TriggerEvent('Infinite:RefreshInventory', player)
+      TriggerEvent('ARMA:RefreshInventory', player)
       return true
     else
       -- notify
