@@ -159,3 +159,26 @@ Citizen.CreateThread(function()
         end)
     end
 end)
+
+RegisterNetEvent("ARMA:claimWeeklyKit") -- need to add a thing for restricting the kit to actually being weekly
+AddEventHandler("ARMA:claimWeeklyKit", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+        if #rows > 0 then
+            local plushours = rows[1].plushours
+            local plathours = rows[1].plathours
+            if plathours > 168 then
+                ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
+                -- copy for other items
+                ARMAclient.setArmour(source, {100})
+            elseif plushours > 168 then
+                ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
+                -- copy for other items
+                ARMAclient.setArmour(source, {100})
+            end
+        else
+            ARMAclient.notify(player, {"~r~Player not found."})
+        end
+    end)
+end)
