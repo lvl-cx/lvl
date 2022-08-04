@@ -8,22 +8,54 @@ Debug = module("lib/Debug")
 local config = module("cfg/base")
 local version = module("version")
 
-print("^5[ARMA]: ^7" .. 'Checking for ARMA Updates..')
 
-PerformHttpRequest("https://raw.githubusercontent.com/DunkoUK/dunko_arma/master/arma/version.lua",function(err,text,headers)
-if err == 200 then
-    text = string.gsub(text,"return ","")
-    local r_version = tonumber(text)
-    if version ~= r_version then
-        print("^5[ARMA]: ^7" .. 'A Dunko Update is available from: https://github.com/DunkoUK/dunko_arma')
-    else 
-        print("^5[ARMA]: ^7" .. 'You are running the most up to date Dunko Version. Thanks for using Dunko_ARMA and thanks to our contributors for updating the project. Support Found At: https://discord.gg/b8wQn2XqDt')
-    end
-else
-    print("[ARMA] unable to check the remote version")
-end
-end, "GET", "")
-
+local verify_card = {
+    ["type"] = "AdaptiveCard",
+    ["$schema"] = "http://adaptivecards.io/schemas/adaptive-card.json",
+    ["version"] = "1.3",
+    ["backgroundImage"] = {
+        ["url"] = "https://cdn.discordapp.com/attachments/925933277854961684/1004861451099451463/bg.jpg?size=4096",
+    },
+    ["body"] = {
+        {
+            ["type"] = "TextBlock",
+            ["text"] = "Welcome to ARMA, to join our server please verify your discord account by following the steps below.",
+            ["wrap"] = true,
+            ["weight"] = "Bolder"
+        },
+        {
+            ["type"] = "Container",
+            ["items"] = {
+                {
+                    ["type"] = "TextBlock",
+                    ["text"] = "1. Join the ARMA discord (discord.gg/armarp)",
+                    ["wrap"] = true,
+                },
+                {
+                    ["type"] = "TextBlock",
+                    ["text"] = "2. Type the following command",
+                    ["wrap"] = true,
+                },
+                {
+                    ["type"] = "TextBlock",
+                    ["color"] = "Attention",
+                    ["text"] = "3. !verify NULL",
+                    ["wrap"] = true,
+                }
+            }
+        },
+        {
+            ["type"] = "ActionSet",
+            ["actions"] = {
+                {
+                    ["type"] = "Action.Submit",
+                    ["title"] = "Enter ARMA",
+                    ["id"] = "attempt_connection"
+                }
+            }
+        },
+    }
+}
 
 Debug.active = config.debug
 ARMA = {}
@@ -198,6 +230,15 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_casino_chips(
     user_id INT(11),
     chips INT(10) NULL DEFAULT NULL,
+    CONSTRAINT pk_user PRIMARY KEY(user_id)
+    );
+    ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_verification(
+    user_id INTEGER AUTO_INCREMENT,
+    code VARCHAR(100) NULL DEFAULT NULL,
+    discord_id VARCHAR(100) NULL DEFAULT NULL,
+    verified TINYINT NULL DEFAULT NULL,
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
@@ -718,47 +759,90 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                             if not config.whitelist or whitelisted then
                                 Debug.pbegin("playerConnecting_delayed")
                                 if ARMA.rusers[user_id] == nil then -- not present on the server, init
-                                    if ARMA.CheckTokens(source, user_id) then 
-                                        deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                    ::try_verify::
+                                    local verified = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
+                                    if #verified > 0 then
+                                        if verified[1]["verified"] == 0 then
+                                            local code = nil
+                                            local data_code = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
+                                            code = data_code[1]["code"]
+                                            if code == nil then
+                                                code = math.random(100000, 999999)
+                                            end
+                                            exports["ghmattimysql"]:executeSync("UPDATE arma_verification SET code = @code WHERE user_id = @user_id", {user_id = user_id, code = code})
+                                            local function show_auth_card(code, deferrals, callback)
+                                                verify_card["body"][2]["items"][3]["text"] = "3. !verify "..code
+                                                deferrals.presentCard(verify_card, callback)
+                                            end
+                                            local function check_verified()
+                                                local data_verified = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
+                                                local verified_code = data_verified[1]["verified"]
+                                                if verified_code == true then
+                                                    if ARMA.CheckTokens(source, user_id) then 
+                                                        deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                                    end
+                                                    ARMA.users[ids[1]] = user_id
+                                                    ARMA.rusers[user_id] = ids[1]
+                                                    ARMA.user_tables[user_id] = {}
+                                                    ARMA.user_tmp_tables[user_id] = {}
+                                                    ARMA.user_sources[user_id] = source
+                                                    ARMA.getUData(user_id, "ARMA:datatable", function(sdata)
+                                                        local data = json.decode(sdata)
+                                                        if type(data) == "table" then ARMA.user_tables[user_id] = data end
+                                                        local tmpdata = ARMA.getUserTmpTable(user_id)
+                                                        ARMA.getLastLogin(user_id, function(last_login)
+                                                            tmpdata.last_login = last_login or ""
+                                                            tmpdata.spawns = 0
+                                                            local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
+                                                            MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
+                                                            print("[ARMA] "..name.." Joined | PermID: "..user_id..")")
+                                                            TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
+                                                            Wait(500)
+                                                            deferrals.done()
+                                                        end)
+                                                    end)
+                                                else
+                                                    show_auth_card(code, deferrals, check_verified)
+                                                end
+                                            end
+                                            show_auth_card(code, deferrals, check_verified)
+                                        else
+                                            if ARMA.CheckTokens(source, user_id) then 
+                                                deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                            end
+                                            ARMA.users[ids[1]] = user_id
+                                            ARMA.rusers[user_id] = ids[1]
+                                            ARMA.user_tables[user_id] = {}
+                                            ARMA.user_tmp_tables[user_id] = {}
+                                            ARMA.user_sources[user_id] = source
+                                            ARMA.getUData(user_id, "ARMA:datatable", function(sdata)
+                                                local data = json.decode(sdata)
+                                                if type(data) == "table" then ARMA.user_tables[user_id] = data end
+                                                local tmpdata = ARMA.getUserTmpTable(user_id)
+                                                ARMA.getLastLogin(user_id, function(last_login)
+                                                    tmpdata.last_login = last_login or ""
+                                                    tmpdata.spawns = 0
+                                                    local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
+                                                    MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
+                                                    print("[ARMA] "..name.." Joined | PermID: "..user_id..")")
+                                                    TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
+                                                    Wait(500)
+                                                    deferrals.done()
+                                                end)
+                                            end)
+                                        end
+                                    else
+                                        exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_verification(user_id,verified) VALUES(@user_id,false)", {user_id = user_id})
+                                        goto try_verify
                                     end
-                                    ARMA.users[ids[1]] = user_id
-                                    ARMA.rusers[user_id] = ids[1]
-                                    ARMA.user_tables[user_id] = {}
-                                    ARMA.user_tmp_tables[user_id] = {}
-                                    ARMA.user_sources[user_id] = source
-                                    
-                                    -- load user data table
-                                    deferrals.update("[ARMA] Loading datatable...")
-                                    ARMA.getUData(user_id, "ARMA:datatable", function(sdata)
-                                        local data = json.decode(sdata)
-                                        if type(data) == "table" then ARMA.user_tables[user_id] = data end
-                                        
-                                        -- init user tmp table
-                                        local tmpdata = ARMA.getUserTmpTable(user_id)
-                                        
-                                        deferrals.update("[ARMA] Getting last login...")
-                                        ARMA.getLastLogin(user_id, function(last_login)
-                                            tmpdata.last_login = last_login or ""
-                                            tmpdata.spawns = 0
-                                            
-                                            -- set last login
-                                            -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
-                                            -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
-                                            local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
-                                            MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
-                                            
-                                            -- trigger join
-                                            print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined (Perm ID = "..user_id..")")
-                                            TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
-                                            deferrals.done()
-                                        end)
-                                    end)
+
                                 else -- already connected
                                     if ARMA.CheckTokens(source, user_id) then 
                                         deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
                                     end
-                                    print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined (Perm ID = "..user_id..")")
+                                    print("[ARMA] "..name.." Reconnected | PermID: "..user_id)
                                     TriggerEvent("ARMA:playerRejoin", user_id, source, name)
+                                    Wait(500)
                                     deferrals.done()
                                     
                                     -- reset first spawn
