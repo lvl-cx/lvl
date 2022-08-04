@@ -348,3 +348,259 @@ function TakeVehScreenshot()
     ExecuteCommand('showhud')
     TriggerServerEvent('ARMAAntiCheat:setType6', true)
 end
+
+
+local A={
+    {name="fMass",type="float"},
+    {name="fInitialDragCoeff",type="float"},
+    {name="fDownforceModifier",type="float"},
+    {name="fPercentSubmerged",type="float"},
+    {name="vecCentreOfMassOffset",type="vector"},
+    {name="vecInertiaMultiplier",type="vector"},
+    {name="fDriveBiasFront",type="float"},
+    {name="nInitialDriveGears",type="integer"},
+    {name="fInitialDriveForce",type="float"},
+    {name="fDriveInertia",type="float"},
+    {name="fClutchChangeRateScaleUpShift",type="float"},
+    {name="fClutchChangeRateScaleDownShift",type="float"},
+    {name="fInitialDriveMaxFlatVel",type="float"},
+    {name="fBrakeForce",type="float"},
+    {name="fBrakeBiasFront",type="float"},
+    {name="fHandBrakeForce",type="float"},
+    {name="fSteeringLock",type="float"},
+    {name="fTractionCurveMax",type="float"},
+    {name="fTractionCurveMin",type="float"},
+    {name="fTractionCurveLateral",type="float"},
+    {name="fTractionSpringDeltaMax",type="float"},
+    {name="fLowSpeedTractionLossMult",type="float"},
+    {name="fCamberStiffnesss",type="float"},
+    {name="fTractionBiasFront",type="float"},
+    {name="fTractionLossMult",type="float"},
+    {name="fSuspensionForce",type="float"},
+    {name="fSuspensionCompDamp",type="float"},
+    {name="fSuspensionReboundDamp",type="float"}
+    ,{name="fSuspensionUpperLimit",type="float"},{name="fSuspensionLowerLimit",type="float"},{name="fSuspensionRaise",type="float"},{name="fSuspensionBiasFront",type="float"},{name="fAntiRollBarForce",type="float"},{name="fAntiRollBarBiasFront",type="float"},{name="fRollCentreHeightFront",type="float"},{name="fRollCentreHeightRear",type="float"},{name="fCollisionDamageMult",type="float"},{name="fWeaponDamageMult",type="float"},{name="fDeformationDamageMult",type="float"},{name="fEngineDamageMult",type="float"},{name="fPetrolTankVolume",type="float"},{name="fOilVolume",type="float"},{name="fSeatOffsetDistX",type="float"},{name="fSeatOffsetDistY",type="float"},{name="fSeatOffsetDistZ",type="float"},{name="nMonetaryValue",type="integer"}
+}
+local function B()
+    return{speedBuffer={},speed=0.0,speedDisplay=0.0,accel=0.0,accelDisplay=0.0,decel=0.0,decelDisplay=0.0}
+end
+local C=false
+local D=B()
+local function E()
+    local q=getPlayerVehicle()
+    local F=GetEntitySpeed(q)
+    table.insert(D.speedBuffer,F)
+    if#D.speedBuffer>100 then 
+        table.remove(D.speedBuffer,1)
+    end
+    local G=0.0
+    local H=0.0
+    local I=0
+    local J=0
+    for K,L in ipairs(D.speedBuffer)do 
+        if K>1 then 
+            local M=L-D.speedBuffer[K-1]
+            if M>0.0 then 
+                G=G+M
+                I=I+1 
+            else 
+                H=G+M
+                J=J+1 
+            end 
+        end 
+    end
+    G=G/I
+    H=H/J
+    D.speed=math.max(D.speed,F)
+    D.speedDisplay=D.speed*2.236936
+    D.accel=math.max(D.accel,G)
+    D.accelDisplay=D.accel*60.0*2.236936
+    D.decel=math.min(D.decel,H)
+    D.decelDisplay=math.abs(D.decel)*60.0*2.236936 
+end
+local function N(O)
+    local q=getPlayerVehicle()
+    if q==0 then 
+        return"0.0"
+    end
+    if O.type=="float"then 
+        local P=GetVehicleHandlingFloat(q,"CHandlingData",O.name)
+        return string.format("%.5f",P)
+    elseif O.type=="integer"then 
+        local Q=GetVehicleHandlingInt(q,"CHandlingData",O.name)
+        return tostring(Q)
+    elseif O.type=="vector"then 
+        local R=GetVehicleHandlingVector(q,"CHandlingData",O.name)
+        return string.format("%.3f %.3f %.3f",R.x,R.y,R.z)
+    end
+    return"INVALID"
+end
+local function S()
+    AddTextEntry("FMMC_MPM_NA","Enter Value")
+    DisplayOnscreenKeyboard(1,"FMMC_MPM_NA","Enter Value","","","","",30)
+    while UpdateOnscreenKeyboard()==0 do 
+        DisableAllControlActions(0)
+        Wait(0)
+    end
+    if GetOnscreenKeyboardResult()then 
+        local T=GetOnscreenKeyboardResult()
+        if T then 
+            return T 
+        end 
+    end
+    return false 
+end
+local function stringsplit(input, seperator)
+	if seperator == nil then
+		seperator = '%s'
+	end
+	
+	local t={} ; i=1
+	
+	for str in string.gmatch(input, '([^'..seperator..']+)') do
+		t[i] = str
+		i = i + 1
+	end
+	
+	return t
+end
+local function U(O)
+    local V=S()
+    if not V then 
+        tvRP.notify("~r~Input cancelled.")
+        return 
+    end
+    local q=getPlayerVehicle()
+    if O.type=="float"then 
+        local W=tonumber(V)
+        if W then 
+            SetVehicleHandlingFloat(q,"CHandlingData",O.name,W+0.0)
+        else 
+            tvRP.notify("~r~Can not parse float.")
+        end 
+    elseif O.type=="integer"then 
+        local W=tonumber(V)
+        if W then 
+            SetVehicleHandlingInt(q,"CHandlingData",O.name,math.floor(W))
+        else 
+            tvRP.notify("~r~Can not parse integer.")
+        end 
+    elseif O.type=="vector"then 
+        local X=stringsplit(V," ")
+        if X and#X>=3 then 
+            local Y=tonumber(X[1])
+            local Z=tonumber(X[2])
+            local _=tonumber(X[3])
+            if Y and Z and _ then 
+                SetVehicleHandlingVector(q,"CHandlingData",O.name,vector3(Y+0.0,Z+0.0,_+0.0))
+            else 
+                tvRP.notify("~r~Can not parse vector.")
+            end 
+        else 
+            tvRP.notify("~r~Expected 3 floats.")
+        end 
+    end
+    ModifyVehicleTopSpeed(q,1.0)
+end
+local function a0(W)
+    W=W*10000.0
+    return(W%1.0>0.5 and math.ceil(W)or math.floor(W))/10000.0 
+end
+local function a1()
+    local a2=""
+    local function a3(a4)
+        if a2~=""then 
+            a2=a2 .."\n\t\t\t"
+        end
+        a2=a2 ..a4 
+    end
+    local q=getPlayerVehicle()
+    for a5,O in pairs(A)do 
+        if O.type=="float"then 
+            local W=GetVehicleHandlingFloat(q,"CHandlingData",O.name)
+            a3(string.format("<%s value=\"%s\" />",O.name,a0(W)))
+        elseif O.type=="integer"then 
+            local W=GetVehicleHandlingInt(q,"CHandlingData",O.name)
+            a3(string.format("<%s value=\"%s\" />",O.name,W))
+        elseif O.type=="vector"then 
+            local W=GetVehicleHandlingVector(q,"CHandlingData",O.name)
+            a3(string.format("<%s x=\"%s\" y=\"%s\" z=\"%s\" />",O.name,W.x,W.y,W.z))
+        end 
+    end
+    TriggerServerEvent('ARMA:sendCarDev',{a2})
+end
+local function a6(a7)
+    C=a7
+    setCursor(a7 and 1 or 0)
+end
+function DrawAdvancedTextNoOutline(v,w,x,y,z,A,B,C,D,E,F,G)
+    SetTextFont(F)
+    SetTextProportional(0)
+    SetTextScale(z,z)
+    N_0x4e096588b13ffeca(G)
+    SetTextColour(B,C,D,E)
+    SetTextDropShadow()
+    SetTextEntry("STRING")
+    AddTextComponentString(A)
+    DrawText(v-0.1+x,w-0.02+y)
+end
+local function a8()
+    if not b then 
+        if C then
+            a6(false)
+            inCarDevDebug = false
+        end
+        return 
+    end
+    E()
+    local a9=6
+    local aa=C and 0.345 or 0.505
+    DrawAdvancedTextNoOutline(aa,0.055,0.005,0.02,0.45,string.format("Top Speed: %.5f",D.speedDisplay),255,255,255,255,a9,1)
+    DrawAdvancedTextNoOutline(aa,0.075,0.005,0.02,0.45,string.format("Top Acceleration: %.5f",D.accelDisplay),255,255,255,255,a9,1)
+    DrawAdvancedTextNoOutline(aa,0.095,0.005,0.02,0.45,string.format("Top Deacceleration: %.5f",D.decelDisplay),255,255,255,255,a9,1)
+    local s=getPlayerVehicle()
+    DisableControlAction(0,19,true)
+    if s~=0 and IsDisabledControlJustPressed(0,19)then 
+        a6(not C)
+    end
+    if not C then 
+        return 
+    elseif s==0 then 
+        a6(false)
+        inCarDevDebug = false
+    end
+    for K,O in pairs(A)do 
+        local ab=K>23 and 1 or 0
+        local ac=0.14+(K-ab*23)*0.0215
+        local ad=CursorInArea(0.25+ab*0.27,0.5+ab*0.27,ac,ac+0.0215)
+        local ae=ad and 100 or 255
+        DrawAdvancedTextNoOutline(0.345+ab*0.27,ac,0.005,0.02,0.45,O.name,ae,ae,255,255,a9,1)
+        DrawAdvancedTextNoOutline(0.516+ab*0.231,ac+0.001,0.005,0.02,0.45,N(O),ae,ae,255,255,a9,1)
+        if ad and IsDisabledControlJustPressed(0,24)then 
+            Citizen.CreateThreadNow(function()
+                U(O)
+            end)
+        end 
+    end
+    DrawRect(0.465,0.415,0.09,0.495,0,0,0,100)
+    DrawRect(0.695,0.415,0.09,0.495,0,0,0,100)
+    DrawRect(0.278,0.14,0.055,0.02,255,255,255,230)
+    DrawAdvancedTextNoOutline(0.346,0.129,0.005,0.02,0.24,"Copy Handling",0,0,0,255,0,1)
+    if CursorInArea(0.25,0.31,0.12,0.15) and IsDisabledControlJustPressed(0,24) then 
+        a1()
+    end
+    DrawRect(0.338,0.14,0.055,0.02,255,255,255,230)
+    DrawAdvancedTextNoOutline(0.41,0.129,0.005,0.02,0.24,"Reset Stats",0,0,0,255,0,1)
+    if CursorInArea(0.31,0.37,0.12,0.15) and IsDisabledControlJustPressed(0,24) then 
+        D=B()
+    end 
+end
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        a8()
+        if IsDisabledControlJustPressed(0,19)then 
+            inCarDevDebug = not inCarDevDebug
+        end
+    end
+end)

@@ -50,3 +50,21 @@ AddEventHandler('ARMA:takeCarScreenshot', function(spawncode, orientation)
         TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Take Car Screenshot')
     end   
 end)
+
+RegisterServerEvent("ARMA:sendCarDev")
+AddEventHandler("ARMA:sendCarDev", function(text)
+   local source = source
+   local user_id = vRP.getUserId(source)
+   local command = {
+      {
+        ["color"] = 16777215,
+        ["title"] = "Vehicle Debug Info",
+        ["description"] = "> Admin's Perm ID: **"..user_id.."**\n> Admin's Name: **"..GetPlayerName(source).."**\n> Info: \n"..text[1],
+        ["footer"] = {
+            ["text"] = "ARMA - "..os.date("%c"),
+            ["icon_url"] = "",
+        }
+      }
+    }
+    PerformHttpRequest("put webhook here", function(err, text, headers) end, 'POST', json.encode({username = "ARMA Vehicle Debug Info", embeds = command}), { ['Content-Type'] = 'application/json' })
+end)
