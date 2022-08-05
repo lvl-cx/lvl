@@ -71,6 +71,9 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             if ARMA.hasPermission(user_id, 'police.perms') then
                 ARMAclient.setPolice(source, {})
             end
+            if ARMA.hasPermission(user_id, 'nhs.menu') then
+                ARMAclient.setNHS(source, {})
+            end
                 
             local adminlevel = 0
             if ARMA.hasGroup(user_id,"dev") then
