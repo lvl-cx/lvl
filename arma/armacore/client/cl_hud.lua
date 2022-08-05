@@ -16,7 +16,7 @@ end)
   
 -- [Functions]
 
-local showHud = true
+showHud = true
 function C_Hud()
     if showHud then
         local userid = PlayerPedId()
@@ -36,8 +36,8 @@ function C_Hud()
     end
 end
 
-RegisterNetEvent('ArmourHud')
-AddEventHandler('ArmourHud', function(bool)
+RegisterNetEvent('showHud')
+AddEventHandler('showHud', function(bool)
     showHud = bool
 end)
 

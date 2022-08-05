@@ -145,25 +145,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- [`] BIGGER MINIMAP 2 --
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-		if IsControlJustReleased(1, 243) then
-			Citizen.Wait(0)
-			if not isRadarExtended then
-				SetBigmapActive(true, true)
-				LastGameTimer = GetGameTimer()
-				isRadarExtended = true
-			elseif isRadarExtended then
-				SetBigmapActive(false, false)
-				LastGameTimer = 0
-				isRadarExtended = false
-			end
-		end
-	end
-end)
-
 -- window roll down/up --
 local windowup = true
 
