@@ -51,22 +51,22 @@ function showhudUI(flag)
 end
 
 local toggleui = false
-RegisterCommand('toggleui', function()
-    if not toggleui then 
-        toggleui = true
-        SendNUIMessage({
-            showhud = false
-          })
-          DisplayRadar(false)
-          TriggerEvent('ArmourHud', false)
-    else
-        toggleui = false
-        SendNUIMessage({
-            showhud = true
-          })
-          DisplayRadar(true)
-          TriggerEvent('ArmourHud', true)
-    end
+RegisterCommand('showui', function()
+    toggleui = false
+    SendNUIMessage({
+        showhud = true
+    })
+    DisplayRadar(true)
+    TriggerEvent('showHud', true)
+end)
+
+RegisterCommand('hideui', function()
+    toggleui = true
+    SendNUIMessage({
+        showhud = false
+    })
+    DisplayRadar(false)
+    TriggerEvent('showHud', false)
 end)
 
 function getMinimapAnchor()
