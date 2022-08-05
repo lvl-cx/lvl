@@ -258,7 +258,7 @@ RageUI.CreateWhile(1.0, true, function()
                         tARMA.notify("~r~Hitsounds Disabled!")
                         SetResourceKvpInt('hitsoundchecked', 0)
                     end
-                    TriggerEvent("RDM:triggerhssounds", hitsoundchecked)
+                    TriggerEvent("hs:triggerSounds", hitsoundchecked)
                 end
             end)
             RageUI.Checkbox("Toggle Hud", nil, hudchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
@@ -321,7 +321,7 @@ RegisterNetEvent('ARMA:sendSettings')
 AddEventHandler('ARMA:sendSettings', function()
     if GetResourceKvpInt('hitsoundchecked') == 1 then
         hitsoundchecked = true
-        TriggerEvent("RDM:triggerhssounds", true)
+        TriggerEvent("hs:triggerSounds", true)
     end
 end)
 
@@ -381,7 +381,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         TriggerServerEvent('ARMA:noF10Kick')
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
             end
             if GlobalAdminLevel >= 2 then
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -410,14 +410,47 @@ RageUI.CreateWhile(1.0, true, function()
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RemoveWarning', uid, result)
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
+            end
+            if GlobalAdminLevel >= 6 then
+                RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local mhash = GetHashKey('londontaxi')
+                        local i = 0
+                        while not HasModelLoaded(mhash) and i < 50 do
+                            RequestModel(mhash)
+                            Citizen.Wait(10)
+                            i = i+1
+                            if i > 50 then 
+                                tARMA.notify('~r~Model could not be loaded!')
+                                break 
+                            end
+                        end
+                        if HasModelLoaded(mhash) then
+                            local x,y,z = tARMA.getPosition()
+                            if pos then
+                                x,y,z = table.unpack(pos)
+                            end
+                            local nveh = CreateVehicle(mhash, x, y ,z + 0.5, GetEntityHeading(PlayerPedId()), true, false)
+                            SetVehicleOnGroundProperly(nveh)
+                            SetEntityInvincible(nveh,false)
+                            SetPedIntoVehicle(PlayerPedId(),nveh,-1)
+                            SetVehicleNumberPlateText(nveh, GetPlayerName(PlayerId()))
+                            SetVehicleHasBeenOwnedByPlayer(nveh,true)
+                            local nid = NetworkGetNetworkIdFromEntity(nveh)
+                            SetNetworkIdCanMigrate(nid,true)
+                        else
+                            return
+                        end
+                    end
+                end)
             end
             if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GetCoords')
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
             end
             if GlobalAdminLevel >= 5 then                   
                 RageUI.List("Teleport to ",q,s,"",{},true,function(x, y, z, N)
@@ -434,7 +467,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         TriggerServerEvent("ARMA:Tp2Coords")
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
             end
             if GlobalAdminLevel >= 5 then
                 RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -455,14 +488,14 @@ RageUI.CreateWhile(1.0, true, function()
                             tARMA.notify("~r~You do not have a waypoint set")
                         end
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
             end
             if GlobalAdminLevel >= 7 then
                 RageUI.ButtonWithStyle("Toggle Blips", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:checkBlips')
                     end
-                end, RMenu:Get('adminmenu', 'functions'))
+                end)
             end 
         end)
     end
