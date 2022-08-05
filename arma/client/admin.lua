@@ -235,8 +235,7 @@ AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
 staffMode = false
 local isInTicket = false
-function tARMA.staffMode(status, ticketStatus)
-    isInTicket = ticketStatus
+function tARMA.staffMode(status)
     staffMode = status
 
     if staffMode then
@@ -295,6 +294,21 @@ Citizen.CreateThread(function()
                 drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
             end
             SetEntityInvincible(PlayerPedId(), true)
+        end
+    end
+end)
+
+RegisterNetEvent('ARMA:sendTicketInfo')
+AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
+    if permid ~= nil and name ~= nil then
+        isInTicket = true
+    else
+        isInTicket = false
+    end
+    while isInTicket do
+        Wait(0)
+        if permid ~= nil and name ~= nil then
+            drawNativeText("~y~You've taken the ticket of " ..name.. "("..permid..")", 255, 0, 0, 255, true)   
         end
     end
 end)
