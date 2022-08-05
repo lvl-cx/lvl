@@ -2,9 +2,6 @@ local showMenu = false
 local Entity = nil
 local EntityType = nil
 local crosshairStatus = false
-local globalOnPoliceDuty = false
-local globalOnNHSDuty = false
-local globalOnPrisonDuty = false
 local hideHud = false
 
 RegisterNetEvent("ARMA:showHUD")
@@ -445,20 +442,6 @@ RegisterNUICallback("radialClick", function(data)
     elseif menu == "seizeillegals" then
         seizeillegals(entityId)
     end
-end)
-
-RegisterNetEvent("ARMA:setPoliceOnDuty")
-AddEventHandler("ARMA:setPoliceOnDuty", function(onduty)
-	globalOnPoliceDuty = onduty
-end)
-
-RegisterNetEvent("ARMA:RecieveNHSOnDutyFlag")
-AddEventHandler("ARMA:RecieveNHSOnDutyFlag", function(onduty)
-	globalOnNHSDuty = onduty
-end)
-
-RegisterNetEvent("ARMA:setPrisonGuardOnDuty", function(status)
-    globalOnPrisonDuty = status
 end)
 
 function GetPlayerByEntityID(i)

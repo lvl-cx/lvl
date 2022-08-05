@@ -466,6 +466,10 @@ local isDev = false
 local carDev = false
 local user_id = nil
 local stafflevel = 0
+globalOnPoliceDuty = false
+function tARMA.setPolice()
+  globalOnPoliceDuty = true
+end
 function tARMA.setDev()
     isDev = true
 end
