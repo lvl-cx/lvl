@@ -548,7 +548,6 @@ local function a8()
     if not b then 
         if C then
             a6(false)
-            inGUIARMA = false
         end
         return 
     end
@@ -567,7 +566,6 @@ local function a8()
         return 
     elseif s==0 then 
         a6(false)
-        inGUIARMA = false
     end
     for K,O in pairs(A)do 
         local ab=K>23 and 1 or 0
@@ -599,6 +597,6 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         a8()
-        inGUIARMA = C
+        inVehDebug = C
     end
 end)

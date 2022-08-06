@@ -62,7 +62,7 @@ end)
 
 
 function func_disableGuiControls()
-    if inGUIARMA then
+    if inGUIARMA or inVehDebug then
         DisableControlAction(0, 1, true)
         DisableControlAction(0, 2, true)
         DisableControlAction(0, 25, true)
