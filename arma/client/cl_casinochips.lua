@@ -5,7 +5,6 @@ local d="0"
 local e=vector3(924.99627685547,47.006057739258,81.104507446289)
 local f=vector3(1089.6083984375,206.60050964355,-48.999725341797)
 local g=vector3(967.6533203125,63.682018280029,112.55312347412)
-local inCasino = false
 RMenu.Add('ARMAChips','cashier',RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_casino","shopui_title_casino"))
 RMenu:Get('ARMAChips','cashier'):SetSubtitle("~b~CHIPS")
 RMenu.Add('casino_enter','casino',RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_casino","shopui_title_casino"))
@@ -91,7 +90,6 @@ RageUI.CreateWhile(1.0, true, function()
                             end 
                         end 
                     end 
-                    inCasino = false
                 end 
             end)
         end)
@@ -102,7 +100,6 @@ RageUI.CreateWhile(1.0, true, function()
                 if p then 
                     TriggerServerEvent("ARMA:enterDiamondCasino")
                     tARMA.teleport(f.x,f.y,f.z)
-                    inCasino = true
                 end 
             end)
             RageUI.ButtonWithStyle("Diamond Casino Rooftop","",{RightLabel="→→→"},true,function(n,o,p)
@@ -200,27 +197,34 @@ local z={{position=vector3(1149.3828125,269.19174194336,-52.020873718262),radius
 
 
 Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if inCasino then       
-            if isInArea(vector3(1115.98046875,217.99314880371,-49.435111999512), 0.8) then 
-                RageUI.Visible(RMenu:Get("ARMAChips", "cashier"), true)
-                chipsMenu = true
-            end
-            if isInArea(vector3(1115.98046875,217.99314880371,-49.435111999512), 0.8) == false and chipsMenu then
-                RageUI.ActuallyCloseAll()
-                RageUI.Visible(RMenu:Get("ARMAChips", "cashier"), false)
-                chipsMenu = false
-            end
-            for H,k in pairs(h)do 
-                tARMA.addBlip(k.entryPosition.x,k.entryPosition.y,k.entryPosition.z,683,0,"Chips Cashier",0.7,true)
-            end
+    if true then
+        Wait(0)
+        RequestStreamedTextureDict("CommonMenu")
+        local C=function(D)
+            showCasinoChipsCashier(true)
+        end
+        local E=function(D)
+            showCasinoChipsCashier(false)
+        end
+        local F=function(D)
+        end
+        local G=function(D)
             SetScriptGfxDrawOrder(7)
             DrawSprite("CommonMenu","shop_chips_b",0.89,0.078,0.025,0.030,0.0,255,255,255,255)
             SetScriptGfxDrawOrder(1)
             DrawRect(0.934,0.077,0.104,0.036,0,0,0,150)
             DrawAdvancedTextNoOutline(1.037,0.08,0.005,0.0028,0.52,d,255,255,255,255,7,0)
         end
+        for H,k in pairs(h)do 
+            tARMA.addBlip(k.entryPosition.x,k.entryPosition.y,k.entryPosition.z,683,0,"Chips Cashier",0.7,true)
+            tARMA.addMarker(k.entryPosition.x,k.entryPosition.y,k.entryPosition.z,1.0,1.0,1.0,138,43,226,70,50,27)
+            tARMA.createArea("chipscashier_"..H,k.entryPosition,1.5,6,C,E,F,{})
+        end
+        for I,J in pairs(z)do 
+            tARMA.createArea("casinos_"..I,J.position,J.radius,6,function()
+            end,function()
+            end,G,{})
+        end 
     end 
 end)
 

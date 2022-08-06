@@ -31,9 +31,6 @@ end
 local m=function()
 end
 tARMA.createArea("dvsaTestCentre_",i.test.reception,1.5,6,k,l,m)
-Citizen.CreateThread(function()
-    TriggerServerEvent('ARMA:gettingDVSAData')
-end)
 RegisterNetEvent("ARMA:dvsaData",function(n,o,p,q)
     h=true
     a=n
@@ -724,7 +721,7 @@ RageUI.CreateWhile(1.0, true, function()
                         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence was issued at "..a.date..".","UK Government","DVSA")
                     end 
                 end)
-                if table.count(b)<0 then 
+                if not next(b) then 
                     RageUI.Separator("DVSA - Licence Record")
                     for r,s in pairs(b)do 
                         RageUI.ButtonWithStyle(s.offence,"Date: "..s.date.." | Type: "..s.type,{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
@@ -739,7 +736,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('dvsa', 'tests')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            if c~=nil and table.count(c)>0 then 
+            if c~=nil and next(c) then 
                 for r,s in pairs(c)do 
                     local ac="~r~FAIL"
                     if s.pass then 
