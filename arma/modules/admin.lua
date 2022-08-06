@@ -757,14 +757,10 @@ end)
 
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
-    exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = user_id}, function(result)
-        if #result < 0 then
-            for k,v in pairs(bans) do
-                defaultBans[v.id] = 0
-            end
-            exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
-        end
-    end)
+    for k,v in pairs(bans) do
+        defaultBans[v.id] = 0
+    end
+    exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
 end)
 
 RegisterServerEvent("ARMA:BanPlayer")
