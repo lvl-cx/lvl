@@ -55,10 +55,10 @@ RageUI.CreateWhile(1.0, true, function()
                         if q>0 then 
                             TriggerServerEvent("ARMA:buyChips",q)
                         else 
-                            ARMA.notify("~r~Negative amount.")
+                            tARMA.notify("~r~Negative amount.")
                         end 
                     else 
-                        ARMA.notify("~r~Invalid amount.")
+                        tARMA.notify("~r~Invalid amount.")
                     end 
                 end 
             end)
@@ -70,9 +70,9 @@ RageUI.CreateWhile(1.0, true, function()
                         if q>0 then 
                             TriggerServerEvent("ARMA:sellChips",q)
                         else 
-                            ARMA.notify("~r~Negative amount.")
+                            tARMA.notify("~r~Negative amount.")
                         end 
-                    else ARMA.notify("~r~Invalid amount.")
+                    else tARMA.notify("~r~Invalid amount.")
                     end 
                 end 
             end)
