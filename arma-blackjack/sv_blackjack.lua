@@ -109,6 +109,10 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
                                 ARMAclient.notify(source,{'~r~Maximum bet at this table is £100,000.'})
                                 return
                             end
+                            if chairId > 7 and betAmount < 100000 then
+                                ARMAclient.notify(source,{'~r~Minimum bet at this table is £100,000.'})
+                                return
+                            end
                             MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = betAmount})
                             TriggerClientEvent('ARMA:chipsUpdated', source)
                             if blackjackGameData[gameId][source] == nil then
