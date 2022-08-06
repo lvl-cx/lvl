@@ -38,7 +38,6 @@ end
 
 -- PACKS
 load_item_pack("required")
-load_item_pack("food")
 load_item_pack("drugs")
 
 return cfg
