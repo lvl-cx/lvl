@@ -1,4 +1,4 @@
-MySQL.createCommand("casinochips/add_id", "INSERT IGNORE INTO arma_casino_chips SET user_id = @user_id, chips = 0")
+MySQL.createCommand("casinochips/add_id", "INSERT IGNORE INTO arma_casino_chips SET user_id = @user_id")
 MySQL.createCommand("casinochips/get_chips","SELECT * FROM arma_casino_chips WHERE user_id = @user_id")
 MySQL.createCommand("casinochips/add_chips", "UPDATE arma_casino_chips SET chips = (chips + @amount) WHERE user_id = @user_id")
 MySQL.createCommand("casinochips/remove_chips", "UPDATE arma_casino_chips SET chips = (chips - @amount) WHERE user_id = @user_id")

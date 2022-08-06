@@ -761,6 +761,10 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
     end
 end)
 
+AddEventHandler("playerJoining", function()
+    local user_id = ARMA.getUserId(source)
+    exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
+end)
 
 RegisterServerEvent("ARMA:BanPlayer")
 AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPoints)
