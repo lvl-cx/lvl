@@ -264,7 +264,7 @@ function impoundVehicle(entityId)
         if user_id > 0 then
             exports.ARMA:impound(user_id, GetEntityModel(entityId), VehToNet(entityId),entityId)
         else
-            TriggerEvent("ARMA:Notify","~r~Vehicle is not owned by anyone")
+            tARMA.notify("~r~Vehicle is not owned by anyone")
         end
     end
 end
@@ -296,7 +296,7 @@ function searchPlayer(entityId)
                     TriggerServerEvent('ARMA:SearchPlr')
                 end
             else
-                TriggerEvent("ARMA:Notify","~r~Player must have their hands up or be on their knees!")
+                tARMA.notify("~r~Player must have their hands up or be on their knees!")
             end
         end
     else
@@ -328,7 +328,7 @@ function revive(entityId)
                 ClearPedSecondaryTask(PlayerPedId())
                 cpr_in_progress = false
             else
-                TriggerEvent("ARMA:Notify","~r~CPR in progress")
+                tARMA.notify("~r~CPR in progress")
             end
         end
     end
@@ -452,10 +452,3 @@ function GetPlayerByEntityID(i)
 	end
 	return nil
 end
-
--- RegisterCommand("vehpara",function()
---     local vehicle = GetVehiclePedIsIn(PlayerPedId())
---     SetVehicleParachuteModel(vehicle,GetEntityModel(vehicle))
---     SetVehicleParachuteActive(vehicle,true)
---     print("DoesVehicleHaveParachute",DoesVehicleHaveParachute(vehicle))
--- end)
