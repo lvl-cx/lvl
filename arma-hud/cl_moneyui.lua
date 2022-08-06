@@ -3,9 +3,6 @@
 ------------------------------------------------------------------
 
 local showHud = true                          -- Boolean to show / hide HUD
-local hunger = 100                              -- Init hunger's variable. Set to 100 for development. 
-local thirst = 100                              -- Init thirst's variable. Set to 100 for development. 
-local showNo = false
 local moneyDisplay = 0
 local bankMoneyDisplay = 0
 local voiceChatProximity = 2
@@ -50,9 +47,7 @@ function showhudUI(flag)
   })
 end
 
-local toggleui = false
 RegisterCommand('showui', function()
-    toggleui = false
     SendNUIMessage({
         showhud = true
     })
@@ -61,7 +56,6 @@ RegisterCommand('showui', function()
 end)
 
 RegisterCommand('hideui', function()
-    toggleui = true
     SendNUIMessage({
         showhud = false
     })
