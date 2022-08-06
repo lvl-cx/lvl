@@ -107,8 +107,8 @@ RegisterNetEvent("ARMA:beginTestClient",function(z,A)
         SetVehicleLightsMode(currentTest.vehicle,0)
         Wait(9000)
         dvsaSound("welcomedvsa")
-        currentTest.subtitle="Hey! I'm ~y~Callum"
-        tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your assigned examiner for the test is Callum.","DVSA","UK Government")
+        currentTest.subtitle="Hey! I'm ~y~Lloyd Shettle"
+        tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your assigned examiner for the test is Lloyd.","DVSA","UK Government")
         tARMA.loadAnimDict("amb@medic@standing@tendtodead@base")
         TaskPlayAnim(currentTest.ped,"amb@medic@standing@tendtodead@base","base",8.0,0.0,-1,1,0,0,0,0)
         Wait(5000)
@@ -138,7 +138,7 @@ function initialMoveOff()
         currentTest.subtitle=i.notifications.testStartMessages[r]
         Wait(4000)
     end
-    currentTest.route=math.random(1,table.count(i.test.routes))
+    currentTest.route=math.random(1,#(i.test.routes))
     SetVehicleEngineOn(currentTest.vehicle,true,true,false)
     FreezeEntityPosition(currentTest.vehicle,false)
     Wait(2000)
@@ -193,7 +193,7 @@ function handleTestRoute()
             end
             if E<3.5 then 
                 currentTest.waypoint=currentTest.waypoint+1
-                if currentTest.waypoint>=table.count(i.test.routes[currentTest.route])then 
+                if currentTest.waypoint>=#(i.test.routes[currentTest.route])then 
                     C=true
                     if currentTest.blip~=0 then 
                         tARMA.removeBlip(currentTest.blip)
@@ -623,7 +623,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RageUI.ButtonWithStyle("Driving Licence","View and manage your driving licence",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','licence'))
-            RageUI.ButtonWithStyle("Driving Test","View your driving tests",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+            RageUI.ButtonWithStyle("Driving Test History","View your previous driving tests",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','tests'))
             RageUI.ButtonWithStyle("DVSA Alerts","View alerts received from the DVSA",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','alerts'))
