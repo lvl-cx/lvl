@@ -750,12 +750,6 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                 end
                 Wait(1500)
                 TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, points)
-            else
-                for k,v in pairs(bans) do
-                    defaultBans[v.id] = 0
-                end
-                exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules,points) VALUES(@UserID, @Rules, @points)", {UserID = PlayerID, Rules = json.encode(defaultBans), points = points})
-                ARMAclient.notify(AdminTemp, {"~g~Created player's default offences, please regenerate ban."})
             end
         end)
     end
@@ -763,6 +757,9 @@ end)
 
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
+    for k,v in pairs(bans) do
+        defaultBans[v.id] = 0
+    end
     exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
 end)
 
