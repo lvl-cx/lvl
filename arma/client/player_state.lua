@@ -59,17 +59,27 @@ local weapon_types = {
 "WEAPON_BASEBALLBAT",
 }
 
-function tARMA.spawnAnim(a)
+function tARMA.spawnAnim(a, b)
   ExecuteCommand("hideui")
-  local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
+  local g = b
+  RequestCollisionAtCoord(g.x, g.y, g.z)
+  SetEntityCoordsNoOffset(PlayerPedId(), g.x, g.y, g.z, true, false, false)
+  SetEntityVisible(PlayerPedId(), false, false)
+  FreezeEntityPosition(PlayerPedId(), true)
+  local h = GetGameTimer()
+  while (not HaveAllStreamingRequestsCompleted(PlayerPedId()) or GetNumberOfStreamingRequests() > 0) and
+      GetGameTimer() - h < 10000 do
+      Wait(0)
+      --print("Waiting for streaming requests to complete!")
+  end
   TriggerEvent("arma:PlaySound", "gtaloadin")
-  SetFocusPosAndVel(x,y,z+1000)
-  local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
+  SetFocusPosAndVel(g.x, g.y, g.z+1000)
+  local spawnCam3 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", g.x, g.y, g.z+1000, 0.0, 0.0, 0.0, 65.0, 0, 2)
   SetCamActive(spawnCam3, true)
   DestroyCam(spawnCam, 0)
   DestroyCam(spawnCam2, 0)
   RenderScriptCams(true, true, 0, 1, 0, 0)
-  local spawnCam4 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", x,y,z, 0.0, 0.0, 0.0, 65.0, 0, 2)
+  local spawnCam4 = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", g.x, g.y, g.z, 0.0, 0.0, 0.0, 65.0, 0, 2)
   SetCamActiveWithInterp(spawnCam4, spawnCam3, 5000, 0, 0)
   Wait(2500)
   ClearFocus()
@@ -78,6 +88,8 @@ function tARMA.spawnAnim(a)
   DestroyCam(spawnCam4)
   RenderScriptCams(false, true, 2000, 0, 0)
   TriggerScreenblurFadeOut(2000.0)
+  SetEntityVisible(PlayerPedId(), true, false)
+  FreezeEntityPosition(PlayerPedId(), false)
   ExecuteCommand("showui")
   tARMA.setCustomization(a)
 end

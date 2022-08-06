@@ -1,5 +1,4 @@
 local cfg = module("cfg/player_state")
-local log_config = module("servercfg/cfg_webhooks")
 local lang = ARMA.lang
 
 -- client -> server events
@@ -9,12 +8,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local data = ARMA.getUserDataTable(user_id)
     local tmpdata = ARMA.getUserTmpTable(user_id)
     local playername = GetPlayerName(player)
-    webhook = log_config.spawnlog
-    if webhook ~= nil then
-        if webhook ~= 'none' then
-            PerformHttpRequest(webhook, function(err, text, headers) end, "POST", json.encode({username = "Dunko ARMA Logs", embeds = {{["color"] = "16448403", ["title"] = playername .. ' Has Spawned In The Server', ["description"] = 'His Perm-ID: **' .. user_id .. '\n** His Source Id: **' .. player .. '**', ["footer"] = {["text"] = "Time - "..os.date("%x %X %p"),}}}}), { ["Content-Type"] = "application/json" })
-        end
-    end
 
 
     if first_spawn then -- first spawn
@@ -22,7 +15,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         if data.customization == nil then
             data.customization = cfg.default_customization
         end
-
+        
         if data.position == nil and cfg.spawn_enabled then
             local x = cfg.spawn_position[1] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
             local y = cfg.spawn_position[2] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
@@ -32,10 +25,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 y = y,
                 z = z
             }
-        end
-
-        if data.position ~= nil then -- teleport to saved pos
-            ARMAclient.teleport(source, {data.position.x, data.position.y, data.position.z})
         end
 
         if data.customization ~= nil then
@@ -58,8 +47,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         end
                     end
                 end)
-            TriggerClientEvent('FirstSpawn', player, true)
-            ARMAclient.spawnAnim(source, {data.customization})
+            ARMAclient.spawnAnim(source, {data.customization, data.position})
             ARMAclient.setUserID(source, {user_id})
 
             if ARMA.hasGroup(user_id, 'dev') then
