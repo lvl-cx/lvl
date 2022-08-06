@@ -277,12 +277,12 @@ RegisterCommand("return", function()
         if location ~= nil then
             SetEntityCoords(PlayerPedId(), location)
             location = nil
-            tARMA.notify("~g~Returned.")
+            tARMA.notify("~g~Returned to position.")
         else
             tARMA.notify("~r~Unable to find last location!")
         end
         tARMA.staffMode(source, {false, false})
-        TriggerEvent('ARMA:sendTicketInfo', source)
+        isInTicket = false
     end
 end)
 
@@ -302,8 +302,6 @@ RegisterNetEvent('ARMA:sendTicketInfo')
 AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
     if permid ~= nil and name ~= nil then
         isInTicket = true
-    else
-        isInTicket = false
     end
     while isInTicket do
         Wait(0)
