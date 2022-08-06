@@ -138,26 +138,43 @@ function tARMA.isPaused()
   return paused
 end
 
+local controls = {
+  phone = {
+    -- PHONE CONTROLS
+    up = {3,172},
+    down = {3,173},
+    left = {3,174},
+    right = {3,175},
+    select = {3,176},
+    cancel = {3,177},
+    open = {3,31123}, -- K to open the menu
+  },
+  request = {
+    yes = {0,83}, -- +
+    no = {0,84} -- -
+  }
+}
+
 -- gui controls (from cellphone)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     -- menu controls
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.up)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="UP"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.down)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="DOWN"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.left)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="LEFT"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.right)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="RIGHT"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.select)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="SELECT"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.cancel)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="CANCEL"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.up)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="UP"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.down)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="DOWN"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.left)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="LEFT"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.right)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="RIGHT"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.select)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="SELECT"}) end
+    if IsControlJustPressed(table.unpack(controls.phone.cancel)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="CANCEL"}) end
 
     -- open general menu
-    if IsControlJustPressed(table.unpack(cfg.controls.phone.open)) and (not tARMA.isInComa() or not cfg.coma_disable_menu) and (not tARMA.isHandcuffed() or not cfg.handcuff_disable_menu) and GetLastInputMethod(0) then 
+    if IsControlJustPressed(table.unpack(controls.phone.open)) and (not tARMA.isInComa() or not cfg.coma_disable_menu) and (not tARMA.isHandcuffed() or not cfg.handcuff_disable_menu) and GetLastInputMethod(0) then 
       ARMAserver.openMainMenu({})
     end
 
     -- F5,F6 (default: control michael, control franklin)
-    if IsControlJustPressed(table.unpack(cfg.controls.request.yes)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="F5"}) end
-    if IsControlJustPressed(table.unpack(cfg.controls.request.no)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="F6"}) end
+    if IsControlJustPressed(table.unpack(controls.request.yes)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="F5"}) end
+    if IsControlJustPressed(table.unpack(controls.request.no)) and GetLastInputMethod(0) then SendNUIMessage({act="event",event="F6"}) end
 
     -- pause events
     local pause_menu = IsPauseMenuActive()

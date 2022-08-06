@@ -51,8 +51,6 @@ client_scripts{
   "lib/cl_util.lua",
   "cfg/atms.lua",
   "cfg/skinshops.lua",
-  "cfg/admin_menu.lua",
-  "cfg/gangfunds.lua",
   "lib/utils.lua",
   "lib/cl_mouse.lua",
   "client/Tunnel.lua",

@@ -239,13 +239,12 @@ function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
   local a0=tARMA.LoadModel(W)
   local a1=CreateVehicle(a0,v,w,H,X,Z,_)
   SetEntityAsMissionEntity(a1)
-  DecorSetInt(a1,"BWACVeh",955)
   SetModelAsNoLongerNeeded(a0)
   if Y then 
       TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
   end
-  if GetResourceState("BWFuel")=="started"then 
-      exports['BWFuel']:SetFuel(a1,100)
+  if GetResourceState("ARMAFuel")=="started"then 
+      exports['ARMAFuel']:SetFuel(a1,100)
   end
   return a1 
 end
@@ -505,17 +504,17 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(500)
     local ped = PlayerPedId()
-    local proximity = cfg.voice_proximity
+    local proximity = 30.0
 
     if IsPedSittingInAnyVehicle(ped) then
       local veh = GetVehiclePedIsIn(ped,false)
       local hash = GetEntityModel(veh)
       -- make open vehicles (bike,etc) use the default proximity
       if IsThisModelACar(hash) or IsThisModelAHeli(hash) or IsThisModelAPlane(hash) then
-        proximity = cfg.voice_proximity_vehicle
+        proximity = 5.0
       end
     elseif tARMA.isInside() then
-      proximity = cfg.voice_proximity_inside
+      proximity = 9.0
     end
 
     NetworkSetTalkerProximity(proximity+0.0001)
