@@ -43,7 +43,6 @@ smoke_choices["Take"] = {function(player,choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
     if ARMA.tryGetInventoryItem(user_id,"weed",1) then
-	  ARMA.varyHunger(user_id,(20))
       ARMAclient.notify(player,{"~g~ smoking weed."})
       play_smoke(player)
       ARMA.closeMenu(player)
@@ -66,7 +65,6 @@ smell_choices["Take"] = {function(player,choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
     if ARMA.tryGetInventoryItem(user_id,"cocaine",1) then
-	  ARMA.varyThirst(user_id,(20))
       ARMAclient.notify(player,{"~g~ smell cocaine."})
       play_smell(player)
       ARMA.closeMenu(player)

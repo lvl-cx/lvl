@@ -122,8 +122,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         end
 
     else -- not first spawn (player died), don't load weapons, empty wallet, empty inventory
-        ARMA.setHunger(user_id, 0)
-        ARMA.setThirst(user_id, 0)
 
         if cfg.clear_phone_directory_on_death then
             data.phone_directory = {} -- clear phone directory after death

@@ -6,8 +6,6 @@ files {
 	"ui/index.html",
 	"ui/assets/bank.png",
 	"ui/assets/cash.png",
-	"ui/assets/hunger.png",
-	"ui/assets/thirst.png",
 	"ui/assets/Thedus-Wide.otf",
 	"ui/fonts/fonts/Circular-Bold.ttf",
 	"ui/fonts/fonts/Circular-Bold.ttf",

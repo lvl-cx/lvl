@@ -1,108 +1,12 @@
 local cfg = module("cfg/survival")
 local lang = ARMA.lang
 
--- api
-
-function ARMA.getHunger(user_id)
-    local data = ARMA.getUserDataTable(user_id)
-    if data then
-        return data.hunger
-    end
-
-    return 0
-end
-
-function ARMA.getThirst(user_id)
-    local data = ARMA.getUserDataTable(user_id)
-    if data then
-        return data.thirst
-    end
-
-    return 0
-end
-
-function ARMA.setHunger(user_id, value)
-    local data = ARMA.getUserDataTable(user_id)
-    if data then
-        data.hunger = value
-        if data.hunger < 0 then
-            data.hunger = 0
-        elseif data.hunger > 100 then
-            data.hunger = 100
-        end
-
-        -- update bar
-        local source = ARMA.getUserSource(user_id)
-        ARMAclient.setProgressBarValue(source, {"ARMA:hunger", data.hunger})
-        if data.hunger >= 100 then
-            ARMAclient.setProgressBarText(source, {"ARMA:hunger", lang.survival.starving()})
-        else
-            ARMAclient.setProgressBarText(source, {"ARMA:hunger", ""})
-        end
-    end
-end
-
-function ARMA.setThirst(user_id, value)
-    local data = ARMA.getUserDataTable(user_id)
-    if data then
-        data.thirst = value
-        if data.thirst < 0 then
-            data.thirst = 0
-        elseif data.thirst > 100 then
-            data.thirst = 100
-        end
-
-        -- update bar
-        local source = ARMA.getUserSource(user_id)
-        ARMAclient.setProgressBarValue(source, {"ARMA:thirst", data.thirst})
-        if data.thirst >= 100 then
-            ARMAclient.setProgressBarText(source, {"ARMA:thirst", lang.survival.thirsty()})
-        else
-            ARMAclient.setProgressBarText(source, {"ARMA:thirst", ""})
-        end
-    end
-end
-
-function ARMA.varyHunger(user_id, variation)
-
-end
-
-function ARMA.varyThirst(user_id, variation)
-
-end
-
--- tunnel api (expose some functions to clients)
-
-function tARMA.varyHunger(variation)
-
-end
-
-function tARMA.varyThirst(variation)
-
-end
-
--- tasks
-
--- hunger/thirst increase
-function task_update()
-    for k, v in pairs(ARMA.users) do
-        ARMA.varyHunger(v, cfg.hunger_per_minute)
-        ARMA.varyThirst(v, cfg.thirst_per_minute)
-    end
-
-    SetTimeout(60000, task_update)
-end
-
 
 -- handlers
 
 -- init values
 AddEventHandler("ARMA:playerJoin", function(user_id, source, name, last_login)
     local data = ARMA.getUserDataTable(user_id)
-    if data.hunger == nil then
-        data.hunger = 0
-        data.thirst = 0
-    end
 end)
 
 
@@ -139,15 +43,5 @@ RegisterNetEvent('ARMA:SearchForPlayer')
 AddEventHandler('ARMA:SearchForPlayer', function()
     TriggerClientEvent('ARMA:ReceiveSearch', -1, source)
 end)
-
-RegisterNetEvent('TeleportThem')
-AddEventHandler('TeleportThem', function(one, two)
-    Wait(500)
-    ARMAclient.teleport(one, {-934.38214111328,-782.61444091797,15.921166419983})
-    ARMAclient.notify(one, {'Number One'})
-    ARMAclient.teleport(two, {-948.12878417969,-801.18139648438,15.921133995056})
-    ARMAclient.notify(two, {'Number Two'})
-end)
-
 
 

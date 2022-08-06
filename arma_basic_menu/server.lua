@@ -444,8 +444,6 @@ function jail_clock(target_id,timer)
 		    timer = 0
 		  end
 		end
-		ARMA.setHunger({tonumber(target_id), 0})
-		ARMA.setThirst({tonumber(target_id), 0})
 	    jail_clock(tonumber(target_id),timer-1)
 	  end) 
     else 
@@ -491,8 +489,6 @@ local ch_jail = {function(player,choice)
 				    ARMAclient.teleport(target,{1641.5477294922,2570.4819335938,45.564788818359}) -- teleport to inside jail
 				    ARMAclient.notify(target,{"~r~You have been sent to jail."})
 				    ARMAclient.notify(player,{"~g~You sent a player to jail."})
-				    ARMA.setHunger({tonumber(target_id),0})
-				    ARMA.setThirst({tonumber(target_id),0})
 				    jail_clock(tonumber(target_id),tonumber(jail_time))
 					local user_id = ARMA.getUserId({player})
 					ARMAbm.logInfoToFile("jailLog.txt",user_id .. " jailed "..target_id.." for " .. jail_time .. " minutes")
@@ -566,8 +562,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             ARMAclient.setHandcuffed(target,{true})
             ARMAclient.teleport(target,{1641.5477294922,2570.4819335938,45.564788818359}) -- teleport inside jail
             ARMAclient.notify(target,{"~r~Finish your sentence."})
-			ARMA.setHunger({tonumber(user_id),0})
-			ARMA.setThirst({tonumber(user_id),0})
 			ARMAbm.logInfoToFile("jailLog.txt",user_id.." has been sent back to jail for " .. custom .. " minutes to complete his sentence")
 		    jail_clock(tonumber(user_id),tonumber(custom))
 		  end
@@ -646,35 +640,6 @@ local ch_handcuff = {function(player,choice)
   end)
 end,lang.police.menu.handcuff.description()}
 
--- admin god mode
-local gods = {}
-function task_god()
-  SetTimeout(10000, task_god)
-
-  for k,v in pairs(gods) do
-    ARMA.setHunger({v, 0})
-    ARMA.setThirst({v, 0})
-
-    local player = ARMA.getUserSource({v})
-    if player ~= nil then
-      ARMAclient.setHealth(player, {200})
-    end
-  end
-end
-task_god()
-
-local ch_godmode = {function(player,choice)
-  local user_id = ARMA.getUserId({player})
-  if user_id ~= nil then
-    if gods[player] then
-	  gods[player] = nil
-	  ARMAclient.notify(player,{"~r~Godmode deactivated."})
-	else
-	  gods[player] = user_id
-	  ARMAclient.notify(player,{"~g~Godmode activated."})
-	end
-  end
-end, "Toggles admin godmode."}
 
 local player_lists = {}
 local ch_userlist = {function(player,choice)
