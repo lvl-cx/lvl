@@ -106,7 +106,7 @@ RegisterNetEvent("ARMA:beginTestClient",function(z,A)
         SetVehicleHasMutedSirens(currentTest.vehicle,true)
         SetVehicleLightsMode(currentTest.vehicle,0)
         Wait(9000)
-        dvsaSound("welcomedvsa")
+        TriggerEvent("arma:PlaySound", "welcomedvsa")
         currentTest.subtitle="Hey! I'm ~y~Lloyd Shettle"
         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your assigned examiner for the test is Lloyd.","DVSA","UK Government")
         tARMA.loadAnimDict("amb@medic@standing@tendtodead@base")
@@ -133,7 +133,7 @@ RegisterNetEvent("ARMA:beginTestClient",function(z,A)
     end 
 end)
 function initialMoveOff()
-    dvsaSound("testExplained")
+    TriggerEvent("arma:PlaySound", "testExplained")
     for r in pairs(i.notifications.testStartMessages)do 
         currentTest.subtitle=i.notifications.testStartMessages[r]
         Wait(4000)
@@ -185,7 +185,7 @@ function handleTestRoute()
                 else 
                     if F>i.test.routes[currentTest.route][currentTest.waypoint+1].limit+85.0 then 
                         issueSerious("Speeding")
-                        dvsaSound("slowDownOrTermination")
+                        TriggerEvent("arma:PlaySound", "slowDownOrTermination")
                         currentTest.subtitle="You ~r~must ~w~slow down, or risk the test being terminated immediately"
                         currentTest.subtitle="Follow the ~y~sat nav"
                     end 
@@ -225,7 +225,7 @@ function handleTestRoute()
     end 
 end
 function policeChase()
-    dvsaSound("policePursuitContinue")
+    TriggerEvent("arma:PlaySound", "policePursuitContinue")
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You are required to ~b~move over ~w~to allow a police pursuit to continue.","DVSA","UK Government")
     currentTest.subtitle="Move ~y~over"
     local G=`blista`
@@ -308,7 +308,7 @@ function returnToTestCentre()
     currentTest.marker=tARMA.addMarker(i.test.parkingSpaces[currentTest.parkingSpace].coords.x,i.test.parkingSpaces[currentTest.parkingSpace].coords.y,i.test.parkingSpaces[currentTest.parkingSpace].coords.z,1.2,1.2,1.2,0,255,125,125,50,0,true,true)
     SetBlipRoute(currentTest.blip,true)
     SetBlipRouteColour(currentTest.blip,38)
-    dvsaSound("newDestinationSet")
+    TriggerEvent("arma:PlaySound", "newDestinationSet")
     currentTest.subtitle="I've set a ~y~new sat nav destination~w~, please follow it"
     Wait(4000)
     currentTest.subtitle="Follow the ~y~sat nav"
@@ -341,7 +341,7 @@ function finishTest(S)
         end 
     end
     useTablet()
-    dvsaSound("completePaperwork")
+    TriggerEvent("arma:PlaySound", "completePaperwork")
     currentTest.subtitle="Please wait whilst I finish my ~y~paperwork"
     SetVehicleEngineOn(vehicle,false,true,true)
     FreezeEntityPosition(currentTest.vehicle,true)
@@ -349,24 +349,24 @@ function finishTest(S)
     local U=""
     local V=""
     if S then 
-        dvsaSound("testPassed")
+        TriggerEvent("arma:PlaySound", "testPassed")
         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You ~b~passed your test with ~y~"..currentTest.minors.." ~w~minors","UK Government","DVSA")
         currentTest.subtitle="Congratulations, you have ~g~passed ~w~your driving test with ~y~"..currentTest.minors.." ~w~minors"
         Wait(6000)
         currentTest.subtitle="This is only the beginning to becoming a ~b~safe ~w~and ~b~confident driver"
         Wait(4000)
-        dvsaSound("testPassedGoodbye")
+        TriggerEvent("arma:PlaySound", "testPassedGoodbye")
         currentTest.subtitle="I would like to add you drove very well and I wish you the best of luck in the future"
         Wait(4000)
         currentTest.subtitle="See you around!"
     else 
-        dvsaSound("testFailed")
+        TriggerEvent("arma:PlaySound", "testFailed")
         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Unfortunately you have ~r~failed your test","UK Government","DVSA")
         currentTest.subtitle="Unfortunately you have ~y~failed ~w~your driving test"
         Wait(6000)
         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your ~r~serious ~w~faults were:","UK Government","DVSA")
         Wait(3000)
-        dvsaSound("seriousFaults")
+        TriggerEvent("arma:PlaySound", "seriousFaults")
         for r,s in pairs(currentTest.seriousReason)do 
             V=V..", "..currentTest.seriousReason[r]
             tARMA.notify("~r~Serious Fault~w~: "..currentTest.seriousReason[r])
@@ -374,14 +374,14 @@ function finishTest(S)
         end
         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your ~y~minor ~w~faults were:","UK Government","DVSA")
         Wait(3000)
-        dvsaSound("minorFaults")
+        TriggerEvent("arma:PlaySound", "minorFaults")
         for r,s in pairs(currentTest.minorsReason)do 
             U=U..", "..currentTest.minorsReason[r]
             tARMA.notify("~y~Minor Fault~w~: "..currentTest.minorsReason[r])
             Wait(500)
         end
         Wait(4000)
-        dvsaSound("testFailedGoodbye")
+        TriggerEvent("arma:PlaySound", "testFailedGoodbye")
         currentTest.subtitle="We do not fail a candidate lightly and we hope you have the ~b~determination ~w~to improve"
         Wait(4000)
         currentTest.subtitle="I wish you the best of luck in the future and I look forward to seeing you next time"
@@ -450,7 +450,7 @@ function pullUpOnRight()
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Listen carefully for directions","Controlled Stop","DVSA")
     local T=false
     local Y=false
-    dvsaSound("controlledStop")
+    TriggerEvent("arma:PlaySound", "controlledStop")
     currentTest.subtitle="We will soon carry out a ~b~controlled stop"
     Wait(4000)
     currentTest.subtitle="When it is safe to do so, ~y~pull up ~w~and park safely ~y~on the right hand side ~w~of the road."
@@ -482,7 +482,7 @@ function pullUpOnRight()
     else 
         currentTest.subtitle="Thank you, please move off again when you are ready"
     end
-    dvsaSound("moveOffWhenReady")
+    TriggerEvent("arma:PlaySound", "moveOffWhenReady")
     Wait(2000)
     currentTest.subtitle="Follow the ~y~sat nav"
     useTablet()
@@ -491,11 +491,11 @@ function operateHeadlights()
     PlaySoundFrontend(-1,"Out_Of_Bounds_Timer","DLC_HEISTS_GENERAL_FRONTEND_SOUNDS",1)
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Listen carefully for directions","Show Me Question","DVSA")
     currentTest.subtitle="I will now ask you one ~y~show me question ~w~while driving"
-    dvsaSound("askShowMeQuestion")
+    TriggerEvent("arma:PlaySound", "askShowMeQuestion")
     Wait(6000)
     local T=false
     local Z=false
-    dvsaSound("operateMainBeamHeadlights")
+    TriggerEvent("arma:PlaySound", "operateMainBeamHeadlights")
     currentTest.subtitle="When it is ~y~safe ~w~to do so, show me how you'd ~y~operate the main beam headlights."
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Turn on your headlights as requested","Show Me Question","DVSA")
     SetTimeout(20000,function()
@@ -516,7 +516,7 @@ function operateHeadlights()
     if not _ then 
         issueMinor("Show Me - Headlights")
     end
-    dvsaSound("continueToFollow")
+    TriggerEvent("arma:PlaySound", "continueToFollow")
     currentTest.subtitle="Thank you, please continue to follow the sat nav"
     Wait(2000)
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Thank you, the show me question is complete","Show Me Question","DVSA")
@@ -524,7 +524,7 @@ function operateHeadlights()
 end
 function stopSignDetection()
     PlaySoundFrontend(-1,"Out_Of_Bounds_Timer","DLC_HEISTS_GENERAL_FRONTEND_SOUNDS",1)
-    dvsaSound("stopSign")
+    TriggerEvent("arma:PlaySound", "stopSign")
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You are legally required to stop at this sign","Stop Sign","DVSA")
     local a2=false
     local a3=false
@@ -546,7 +546,7 @@ function stopSignDetection()
 end
 function emergencyStop()
     PlaySoundFrontend(-1,"Out_Of_Bounds_Timer","DLC_HEISTS_GENERAL_FRONTEND_SOUNDS",1)
-    dvsaSound("emergencyStopIntroduction")
+    TriggerEvent("arma:PlaySound", "emergencyStopIntroduction")
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Listen carefully for directions","Test Instruction","DVSA")
     currentTest.subtitle="We will soon carry out an ~y~emergency stop~w~, I will give you a warning before you should stop"
     Wait(3000)
@@ -554,7 +554,7 @@ function emergencyStop()
     Wait(3000)
     currentTest.subtitle="When I say ~r~stop ~w~you should react as soon as possible"
     Wait(math.random(7000,15000))
-    dvsaSound("stopNowMessage")
+    TriggerEvent("arma:PlaySound", "stopNowMessage")
     currentTest.subtitle="~r~STOP ~w~- Perform an emergency stop"
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Perform an emergency stop immediately","STOP","DVSA")
     Wait(3000)
@@ -568,7 +568,7 @@ function emergencyStop()
         issueSerious("ES - Failed")
     end
     Wait(3000)
-    dvsaSound("moveOffWhenReady")
+    TriggerEvent("arma:PlaySound", "moveOffWhenReady")
     currentTest.subtitle="Thank you, please continue to follow the sat nav"
     Wait(2000)
     currentTest.subtitle="Follow the ~y~sat nav"
@@ -964,7 +964,4 @@ function removePlate()
 end
 function convertSpeed(F)
     return F*2.236936 
-end
-function dvsaSound(au)
-    TriggerEvent("arma:PlaySound", au)
 end
