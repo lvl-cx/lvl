@@ -539,9 +539,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -598,9 +596,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -657,9 +653,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -716,9 +710,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -775,9 +767,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -834,9 +824,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -893,9 +881,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -952,9 +938,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1011,9 +995,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1070,9 +1052,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1129,9 +1109,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1187,9 +1165,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1246,9 +1222,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
@@ -1304,9 +1278,7 @@ cfg.groups = {
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
 	  onspawn = function(player) ARMAclient.setCop(player,{true}) end,
 	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)
-		TriggerEvent("ARMA:ClockingOff")   
-		TriggerClientEvent("ARMA:ClockingOff123",source)		
+		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
