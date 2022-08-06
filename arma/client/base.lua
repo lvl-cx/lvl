@@ -528,6 +528,20 @@ AddEventHandler('ARMA:CheckIdRegister', function()
     TriggerEvent('playerSpawned', GetEntityCoords(PlayerPedId()))
 end)
 
+local baseplayers = {}
+
+function tARMA.setBasePlayers(players)
+  baseplayers = players
+end
+
+function tARMA.addPlayer(player, id)
+  baseplayers[player] = id
+end
+
+function tARMA.removePlayer(player)
+  baseplayers[player] = nil
+end
+
 local isDev = false
 local carDev = false
 local user_id = nil
@@ -556,6 +570,7 @@ function tARMA.setUserID(a)
   user_id = a
 end
 function tARMA.userID(Z)
+  print(Z)
   if Z == nil then
     return user_id
   else
@@ -587,19 +602,5 @@ end
 
 function tARMA.getRageUIMenuHeight()
   return 100
-end
-
-local baseplayers = {}
-
-function tARMA.setBasePlayers(players)
-  baseplayers = players
-end
-
-function tARMA.addPlayer(player, id)
-  baseplayers[player] = id
-end
-
-function tARMA.removePlayer(player)
-  baseplayers[player] = nil
 end
 

@@ -283,7 +283,7 @@ Citizen.CreateThread(function()
                 else
                     DeathReason = 'killed'
                 end
-                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout, GetPlayerName(Killer) or "N/A", tARMA.userID(killer) or "N/A", tostring(Weapon) or "N/A", false)
+                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTilBleedout, GetPlayerName(Killer) or "N/A", tARMA.userID(Killer) or "N/A", tostring(Weapon) or "N/A", false)
             end
             Killer = nil
             DeathReason = nil
