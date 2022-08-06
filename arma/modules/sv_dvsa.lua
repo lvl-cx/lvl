@@ -191,7 +191,7 @@ AddEventHandler("ARMA:gettingDVSAData", function()
     exports['ghmattimysql']:execute("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id}, function(result)
         if result ~= nil then 
             for k,v in pairs(result) do
-                if v.userid == user_id then
+                if v.user_id == user_id then
                     local data1 = {}
                     local licence = {}
                     local date = 0
