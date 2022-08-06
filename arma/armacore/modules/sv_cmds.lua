@@ -417,13 +417,3 @@ Citizen.CreateThread(function()
         Wait(1000)
     end
 end)
-
-RegisterServerEvent("ARMA:ClockingOff")
-AddEventHandler("ARMA:ClockingOff", function()
-	print("Clocking off triggered")
-	TriggerClientEvent("ARMA:ClockingOffC", source)
-end)
-
-RegisterCommand("clockingoff", function()
-	TriggerEvent("ARMA:ClockingOff")
-end)
