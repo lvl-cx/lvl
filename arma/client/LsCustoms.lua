@@ -1426,6 +1426,7 @@ AddEventHandler('playerSpawned', function(spawn)
 	if firstspawn == 0 then
 		AddBlips()
 		TriggerServerEvent('getGarageInfo')
+		TriggerServerEvent('ARMA:gettingDVSAData')
 		firstspawn = 1
 	end
 end)
