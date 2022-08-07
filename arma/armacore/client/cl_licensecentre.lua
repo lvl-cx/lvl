@@ -5,11 +5,11 @@ licensecentre.marker = vector3(-926.37622070312,-2037.8065185547,9.4023275375366
 
 licensecentre.dlicenses = {
     {name = "Weed License", group = "Weed", price = 200000},
-    {name = "Gang License", group = "Gang",price = 500000},
+    {name = "Gang License", group = "Gang", price = 500000},
     {name = "Cocaine License", group = "Cocaine", price = 500000},
     {name = "Heroin License", group = "Heroin", price = 10000000},
     {name = "LSD License", group = "LSD", price = 50000000},
-    {name = "Rebel License", group = "Rebel",price = 30000000},
+    {name = "Rebel License", group = "Rebel", price = 30000000},
     {name = "Advanced Rebel License", group = "AdvancedRebel",price = 15000000},
 }
 
@@ -17,7 +17,7 @@ licensecentre.licenses = {
     {name = "Scrap Job License", group = "Scrap", price = 100000},
     {name = "Gold License", group = "Gold", price = 1000000},
     {name = "Diamond License", group = "Diamond", price = 5000000},
-    {name = "Highrollers License", group = "highroller", price = 10000000},
+    --{name = "Highrollers License", group = "highroller", price = 10000000},
 
 }
 
@@ -42,7 +42,6 @@ RageUI.CreateWhile(1.0, true, function()
         for i , p in pairs(licensecentre.dlicenses) do 
             RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
-                    cPrice = p.price
                     cGroup = p.group
                     cName = p.name
                 end
@@ -58,7 +57,6 @@ RageUI.CreateWhile(1.0, true, function()
         for i , p in pairs(licensecentre.licenses) do 
             RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
                 if Selected then
-                    cPrice = p.price
                     cGroup = p.group
                     cName = p.name
                 end
@@ -90,7 +88,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent('LicenseCentre:BuyGroup', cPrice, cGroup, cName, tostring(getMoneyStringFormatted(cPrice)))
+                    TriggerServerEvent('LicenseCentre:BuyGroup', cGroup, cName)
                 end
             end, RMenu:Get("LicenseCentre", "main"))
             RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
@@ -137,7 +135,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
-                    TriggerServerEvent('LicenseCentre:BuyGroup', cPrice, cGroup, cName, tostring(getMoneyStringFormatted(cPrice)))
+                    TriggerServerEvent('LicenseCentre:BuyGroup', cGroup, cName)
                 end
             end, RMenu:Get("LicenseCentre", "main"))
             RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
