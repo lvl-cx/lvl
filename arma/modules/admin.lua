@@ -2202,6 +2202,7 @@ AddEventHandler("ARMA:checkBlips",function(status)
         TriggerClientEvent('ARMA:showBlips', source)
     end
 end)
+
 RegisterNetEvent("ARMA:dealershipBucket")
 AddEventHandler("ARMA:dealershipBucket",function(bool)
     local source = source
@@ -2310,18 +2311,20 @@ end)
 
 
 RegisterCommand("staffon", function(source)
+    local source = source
     local user_id = ARMA.getUserId(source)
-    local user_source = ARMA.getUserSource(user_id)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(user_source, {true, false})
+        ARMAclient.staffMode(source, {true, false})
+        ARMAclient.notify(source, {'~g~Staff Powerz Activated.'})
     end
 end)
 
 RegisterCommand("staffoff", function(source)
+    local source = source
     local user_id = ARMA.getUserId(source)
-    local user_source = ARMA.getUserSource(user_id)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(user_source, {false, false})
+        ARMAclient.staffMode(source, {false, false})
+        ARMAclient.notify(source, {'~g~Staff Powerz Deactivated.'})
     end
 end)
 

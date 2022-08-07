@@ -178,7 +178,7 @@ RageUI.CreateWhile(1.0, true, function()
             local function R()
                 E=true
                 tARMA.setParachuteSetting(E)
-                tARMA.notify("~a~Parachute enabled.")
+                tARMA.notify("~g~Parachute enabled.")
             end
             local function S()
                 E=false
