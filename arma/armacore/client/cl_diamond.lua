@@ -95,58 +95,26 @@ Citizen.CreateThread(function()
   end
 end)
 
-local isInMenu = false
-local currentAmmunition = nil
-Citizen.CreateThread(function() 
-    while true do
-
-            local v1 = vector3(1222.3013916016,-2995.5390625,5.8653602600098)
-
-            if isInMenu == false then
-
-            if isInArea(v1, 1.4) then 
-                alert('Press ~INPUT_VEH_HORN~ to access Seller')
-                if IsControlJustPressed(0, 51) then 
-                    currentAmmunition = k
-                    RageUI.Visible(RMenu:Get('SellerMenu', 'main'), true)
-                    isInMenu = true
-                    currentAmmunition = k 
-                end
-            end
-            end
-            if isInArea(v1, 1.4) == false and isInMenu and k == currentAmmunition then
-              RageUI.ActuallyCloseAll()
-                RageUI.Visible(RMenu:Get('SellerMenu', 'main'), false)
-                isInMenu = false
-                currentAmmunition = nil
-            end
-        Citizen.Wait(0)
-    end
-end)
-
 -- [RageUI Menu]
 RMenu.Add('SellerMenu', 'main', RageUI.CreateMenu("", "~b~Seller",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "seller"))
-
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get('SellerMenu', 'main')) then
       RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RageUI.Button("Sell Gold" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+            if Selected then
     
-    RageUI.Button("Sell Gold" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
-        if Selected then
- 
-            TriggerServerEvent('ARMA:SellGold')
-        end
-    end)
+                TriggerServerEvent('ARMA:SellGold')
+            end
+        end)
 
-    RageUI.Button("Sell Diamond" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
-      if Selected then
+        RageUI.Button("Sell Diamond" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+          if Selected then
 
-          TriggerServerEvent('ARMA:SellDiamond')
-      end
-  end)
-
-  end) 
-end
+              TriggerServerEvent('ARMA:SellDiamond')
+          end
+        end)
+    end) 
+  end
 end)
 
 

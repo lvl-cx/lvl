@@ -157,6 +157,92 @@ function tARMA.doesAreaExist(l)
   end
   return false
 end
+
+function DrawText3D(a, b, c, d, e, f, g)
+  local h, i, j = GetScreenCoordFromWorldCoord(a, b, c)
+  if h then
+      SetTextScale(0.4, 0.4)
+      SetTextFont(0)
+      SetTextProportional(1)
+      SetTextColour(255, 255, 255, 255)
+      SetTextDropshadow(0, 0, 0, 0, 55)
+      SetTextEdge(2, 0, 0, 0, 150)
+      SetTextDropShadow()
+      SetTextOutline()
+      BeginTextCommandDisplayText("STRING")
+      SetTextCentre(1)
+      AddTextComponentSubstringPlayerName(d)
+      EndTextCommandDisplayText(i, j)
+  end
+end
+function tARMA.add3DTextForCoord(d, a, b, c, k)
+  local function l(m)
+      DrawText3D(m.coords.x, m.coords.y, m.coords.z, m.text)
+  end
+  local n = tARMA.generateUUID("3dtext", 8, "alphanumeric")
+  tARMA.createArea(
+      "3dtext_" .. n,
+      vector3(a, b, c),
+      k,
+      6.0,
+      function()
+      end,
+      function()
+      end,
+      l,
+      {coords = vector3(a, b, c), text = d}
+  )
+end
+
+local UUIDs = {}
+
+local uuidTypes = {
+    ["alphabet"] = "abcdefghijklmnopqrstuvwxyz",
+    ["numerical"] = "0123456789",
+    ["alphanumeric"] = "abcdefghijklmnopqrstuvwxyz0123456789",
+}
+
+local function randIntKey(length,type)
+    local index, pw, rnd = 0, "", 0
+    local chars = {
+        uuidTypes[type]
+    }
+    repeat
+        index = index + 1
+        rnd = math.random(chars[index]:len())
+        if math.random(2) == 1 then
+            pw = pw .. chars[index]:sub(rnd, rnd)
+        else
+            pw = chars[index]:sub(rnd, rnd) .. pw
+        end
+        index = index % #chars
+    until pw:len() >= length
+    return pw
+end
+
+--Generate unique key of type alphabet/numerical/alphanumeric
+--Key is a string used to categorize/define uuids for different code.
+--returns string.
+function tARMA.generateUUID(key,length,type)
+    if UUIDs[key] == nil then
+        UUIDs[key] = {}
+    end
+
+    if type == nil then type = "alphanumeric" end
+
+    local uuid = randIntKey(length,type)
+    if UUIDs[key][uuid] then
+        while UUIDs[key][uuid] ~= nil do
+            uuid = randIntKey(length,type)
+            Wait(0)
+        end
+    end
+    UUIDs[key][uuid] = true
+    --print("generated UUIDs["..key.."]["..uuid.."] = true")
+    return uuid
+end
+
+
 Citizen.CreateThread(function()
     while true do
         local M = tARMA.getPlayerCoords()

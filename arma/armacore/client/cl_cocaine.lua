@@ -75,23 +75,6 @@ Citizen.CreateThread(function()
     else
       InRangeProcess = false
     end
-
-    -- [Cocaine Seller] --
-
-    if IsPlayerNearCoords(vector3(Drugs.Cocaine.Sell.x,Drugs.Cocaine.Sell.y,Drugs.Cocaine.Sell.z), 100.0) then
-      if not CanSeeMarker then
-        CanSeeMarker = true
-        Citizen.CreateThread(function()
-          while CanSeeMarker do
-            Citizen.Wait(0)
-            DrawMarker(2,  Drugs.Cocaine.Sell.x,Drugs.Cocaine.Sell.y,Drugs.Cocaine.Sell.z+1 - 0.98, 0, 0, 0, 0, 0, 0, 0.6, 0.3, 0.3, 255, 255, 255, 150, true, true, 0, 0, 0, 0, 0)
-
-          end
-        end)
-      end
-    else
-      CanSeeMarker = false
-    end
   end
 end)
 
