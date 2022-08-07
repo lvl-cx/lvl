@@ -516,6 +516,21 @@ function tARMA.LoadModel(modelName)
   end
 end
 
+function tARMA.getObjectId(a_, aX)
+  if aX == nil then
+      aX = ""
+  end
+  local aL = 0
+  local b0 = NetworkDoesNetworkIdExist(a_)
+  if not b0 then
+      print(string.format("no object by ID %s\n%s", a_, aX))
+  else
+      local b1 = NetworkGetEntityFromNetworkId(a_)
+      aL = b1
+  end
+  return aL
+end
+
 function tARMA.KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
 	AddTextEntry('FMMC_KEY_TIP1', TextEntry) 
 	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", ExampleText, "", "", "", MaxStringLenght)

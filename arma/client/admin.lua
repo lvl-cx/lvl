@@ -126,8 +126,7 @@ function DisableControls()
     DisableControlAction(0, 74, true)
 end
 
-local EntityCleanupGun = false;
-
+local usingDelgun = false
 
 local function NetworkDelete(entity)
     Citizen.CreateThread(function()
@@ -151,7 +150,9 @@ end
 Citizen.CreateThread(function()
     while true do 
         Wait(0)
-        if EntityCleanupGun then 
+        if usingDelgun then 
+            drawNativeText("~b~Aim ~w~at an object and press ~b~Left Click ~w~to delete it.")
+            drawNativeNotification("Don't forget to use ~b~/delgun ~w~to disable the delete gun!")
             local plr = PlayerId()
             if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey('WEAPON_STAFFGUN') then
                 if IsPlayerFreeAiming(plr) then 
@@ -162,6 +163,23 @@ Citizen.CreateThread(function()
                     end
                 end 
             end 
+        end
+    end
+end)
+
+RegisterCommand("delgun",function()
+    if tARMA.getStaffLevel() > 0 then
+        usingDelgun = not usingDelgun
+        local g = tARMA.getPlayerPed()
+        local h = "WEAPON_STAFFGUN"
+        if usingDelgun then
+            a = HasPedGotWeapon(g, h, false)
+            GiveWeaponToPed(g, h, nil, false, true)
+        else
+            if not a then
+                RemoveWeaponFromPed(g, h)
+            end
+            a = false
         end
     end
 end)
@@ -291,7 +309,7 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if staffMode then 
             if not isInTicket then
-                drawNativeText("~r~You are currently /staffon'd.", 255, 0, 0, 255, true)
+                drawNativeText("~r~Reminder: You are /staffon'd.", 255, 0, 0, 255, true)
             end
             SetEntityInvincible(PlayerPedId(), true)
         end
