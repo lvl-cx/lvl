@@ -142,45 +142,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Blips]
-
-Citizen.CreateThread(function()
-  cocaine = AddBlipForCoord(Drugs.Cocaine.Sell.x,Drugs.Cocaine.Sell.y,Drugs.Cocaine.Sell.z)
-  SetBlipSprite(cocaine, 403)
-  SetBlipScale(cocaine, 0.6)
-  SetBlipDisplay(cocaine, 2)
-  SetBlipColour(cocaine, 0)
-  SetBlipAsShortRange(cocaine, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Cocaine Seller")
-  EndTextCommandSetBlipName(cocaine)
-  end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Cocaine.Gather.x,Drugs.Cocaine.Gather.y,Drugs.Cocaine.Gather.z)
-  SetBlipSprite(blip, 403)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 0)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Cocaine Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Cocaine.Process.x,Drugs.Cocaine.Process.y,Drugs.Cocaine.Process.z)
-  SetBlipSprite(blip, 403)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 0)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Cocaine Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
 
 function isInArea(v, dis) 
     

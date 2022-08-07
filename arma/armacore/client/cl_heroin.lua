@@ -142,46 +142,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Blips]
-
-Citizen.CreateThread(function()
-  heroin = AddBlipForCoord(Drugs.Heroin.Sell.x,Drugs.Heroin.Sell.y,Drugs.Heroin.Sell.z)
-  SetBlipSprite(heroin, 586)
-  SetBlipScale(heroin, 0.8)
-  SetBlipDisplay(heroin, 2)
-  SetBlipColour(heroin, 1)
-  SetBlipAsShortRange(heroin, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Heroin Seller")
-  EndTextCommandSetBlipName(heroin)
-  end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Heroin.Gather.x,Drugs.Heroin.Gather.y,Drugs.Heroin.Gather.z)
-  SetBlipSprite(blip, 586)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 1)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Heroin Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Heroin.Process.x,Drugs.Heroin.Process.y,Drugs.Heroin.Process.z)
-  SetBlipSprite(blip, 586)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 1)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Heroin Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
-
 function isInArea(v, dis) 
     
   if #(GetEntityCoords(PlayerPedId(-1)) - v) <= dis then  

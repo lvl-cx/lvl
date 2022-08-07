@@ -142,45 +142,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Blips]
-
-Citizen.CreateThread(function()
-  lsd = AddBlipForCoord(Drugs.LSD.Sell.x,Drugs.LSD.Sell.y,Drugs.LSD.Sell.z)
-  SetBlipSprite(lsd, 441)
-  SetBlipScale(lsd, 0.6)
-  SetBlipDisplay(lsd, 2)
-  SetBlipColour(lsd, 8)
-  SetBlipAsShortRange(lsd, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("LSD Seller")
-  EndTextCommandSetBlipName(lsd)
-  end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.LSD.Gather.x,Drugs.LSD.Gather.y,Drugs.LSD.Gather.z)
-  SetBlipSprite(blip, 441)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 8)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("LSD Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.LSD.Process.x,Drugs.LSD.Process.y,Drugs.LSD.Process.z)
-  SetBlipSprite(blip, 441)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 8)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("LSD Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
 
 function isInArea(v, dis) 
     

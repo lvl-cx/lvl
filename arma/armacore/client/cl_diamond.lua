@@ -149,34 +149,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Blips]
-
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Diamond.Gather.x,Drugs.Diamond.Gather.y,Drugs.Diamond.Gather.z)
-  SetBlipSprite(blip, 616)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 3)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Diamond Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Diamond.Process.x,Drugs.Diamond.Process.y,Drugs.Diamond.Process.z)
-  SetBlipSprite(blip, 616)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 3)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Diamond Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
 
 function isInArea(v, dis) 
     

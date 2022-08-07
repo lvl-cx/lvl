@@ -142,45 +142,6 @@ RageUI.CreateWhile(1.0, true, function()
 end
 end)
 
--- [Blips]
-
-Citizen.CreateThread(function()
-  weed = AddBlipForCoord(Drugs.Weed.Sell.x,Drugs.Weed.Sell.y,Drugs.Weed.Sell.z)
-  SetBlipSprite(weed, 469)
-  SetBlipScale(weed, 0.6)
-  SetBlipDisplay(weed, 2)
-  SetBlipColour(weed, 2)
-  SetBlipAsShortRange(weed, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Weed Seller")
-  EndTextCommandSetBlipName(weed)
-  end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Weed.Gather.x,Drugs.Weed.Gather.y,Drugs.Weed.Gather.z)
-  SetBlipSprite(blip, 469)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 2)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Weed Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Weed.Process.x,Drugs.Weed.Process.y,Drugs.Weed.Process.z)
-  SetBlipSprite(blip, 469)
-  SetBlipScale(blip, 0.5)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 2)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Weed Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
 
 function isInArea(v, dis) 
     
