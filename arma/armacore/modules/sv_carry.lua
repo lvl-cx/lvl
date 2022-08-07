@@ -67,8 +67,8 @@ AddEventHandler("ARMAEXTRAS:CarryDeclined", function(senderSrc)
     ARMAclient.notify(targetSrc,{"~r~Carry request denied."})
 end)
 
-RegisterServerEvent("GDM:CarryRequest")
-AddEventHandler("GDM:CarryRequest", function(targetSrc, staffMode)
+RegisterServerEvent("ARMA:CarryRequest")
+AddEventHandler("ARMA:CarryRequest", function(targetSrc, staffMode)
     local targetSrc = targetSrc
     local senderSrc = source
     user_id = ARMA.getUserId(senderSrc)
