@@ -8,8 +8,9 @@ licensecentre.dlicenses = {
     {name = "Gang License", group = "Gang",price = 500000},
     {name = "Cocaine License", group = "Cocaine", price = 500000},
     {name = "Heroin License", group = "Heroin", price = 10000000},
-    {name = "LSD License", group = "LSD", price = 20000000},
-    {name = "Rebel License", group = "Rebel",price = 10000000},
+    {name = "LSD License", group = "LSD", price = 50000000},
+    {name = "Rebel License", group = "Rebel",price = 30000000},
+    {name = "Advanced Rebel License", group = "AdvancedRebel",price = 15000000},
 }
 
 licensecentre.licenses = {
@@ -102,7 +103,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
             if cGroup == 'LSD' then 
-                RageUI.Separator("LSD License Price: £20,000,000", function() end)
+                RageUI.Separator("LSD License Price: £50,000,000", function() end)
                 RageUI.Separator("Per Piece: £40,000", function() end)
                 RageUI.Separator("1 x 200KG Run: £2,000,000", function() end)
                 RageUI.Separator("1 x 300KG Run: £3,000,000", function() end)
@@ -127,8 +128,11 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Access to create gang using F5", function() end)
                 RageUI.Separator("Access to take turfs & change commision", function() end)
             elseif cGroup == 'Rebel' then 
-                RageUI.Separator("Rebel License Price: £10,000,000", function() end)
+                RageUI.Separator("Rebel License Price: £30,000,000", function() end)
                 RageUI.Separator("Access to Rebel Gunstore", function() end)
+            elseif cGroup == 'AdvancedRebel' then 
+                RageUI.Separator("Advanced Rebel License Price: £15,000,000", function() end)
+                RageUI.Separator("Access to Advanced Rebel Gunstore", function() end)
         
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
