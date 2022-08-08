@@ -1,19 +1,16 @@
-cop = {}
-nhs = {}
+local clockedon = {}
 
 RegisterServerEvent("ARMA:ENABLEBLIPS")
 AddEventHandler("ARMA:ENABLEBLIPS", function()
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, "police.menu") or ARMA.hasPermission(user_id, "emergency.vehicle") then
-    TriggerClientEvent("ARMA:BLIPS",source,cop,nhs)
+    TriggerClientEvent("ARMA:BLIPS",source,clockedon)
   end
 end)
 
 Citizen.CreateThread(function()
   while true do
     Wait(10000)
-    cop = {}
-    nhs = {}
     local players = GetPlayers()
     for i,v in pairs(players) do
       name = GetPlayerName(v)
@@ -22,11 +19,11 @@ Citizen.CreateThread(function()
         local coords = GetPlayerPed(v)
 
         if ARMA.hasPermission(user_id, "police.menu") then
-          cop[user_id] = {coords,v}
+          clockedon[user_id] = {'metpd'}
         end
 
         if ARMA.hasPermission(user_id, "emergency.vehicle") then
-          nhs[user_id] = {coords,v}
+          clockedon[user_id] = {'nhs'}
         end
       end
     end
