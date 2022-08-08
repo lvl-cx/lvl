@@ -28,29 +28,19 @@ local Index = 1
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("ARMAStores", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-        RageUI.Separator("Item Name: " .. cName, function() end)
-        RageUI.Separator("Item Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
-        RageUI.Separator("Item Description: " .. cDescription, function() end)
-        --RageUI.Separator("Are you sure you want to purchase this Item?", function() end)
-        RageUI.List(cName, ShopAMT, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
-            if Hovered then
-
-            end
-
-            Index = AIndex
-        end)
-        RageUI.Button("Confirm Purchase" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
-            if Selected then
-
-                TriggerServerEvent("ARMA:BuyStoreItem", cHash, cPrice * Index, tonumber(Index), cLoaction)
-
-            end
-        end, RMenu:Get("ARMAStores", "main"))
-
-       
-
-    end) 
-end
+            RageUI.Separator("Item Name: " .. cName, function() end)
+            RageUI.Separator("Item Price: £" .. getMoneyStringFormatted(cPrice * Index), function() end)
+            RageUI.Separator("Item Description: " .. cDescription, function() end)
+            RageUI.List(cName, ShopAMT, Index, nil, {}, true, function(Hovered, Active, Selected, AIndex)
+                Index = AIndex
+            end)
+            RageUI.Button("Confirm Purchase" , nil, {RightLabel = "→"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("ARMA:BuyStoreItem", cHash, tonumber(Index))
+                end
+            end, RMenu:Get("ARMAStores", "main")) 
+        end) 
+    end
 end)
 
 
