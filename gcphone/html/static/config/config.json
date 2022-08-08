@@ -94,105 +94,9 @@
 
 
   "serviceCall": [
-    {
-      "display": "Police",
-      "icon": "/html/static/img/icons_services/police.png",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "Police"
-          }
-        },
-        {
-          "title": "Call to emergency",
-          "eventName": "gcphone:autoCallNumber",
-          "type": {
-            "number": "999"
-          }
-        }
-      ]
-    },
-    {
-      "display": "Ambulance",
-      "icon": "/html/static/img/icons_services/ems.png",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "111"
-          }
-        }
-      ]
-    },
-    {
-      "display": "Lawyer",
-      "backgroundColor": "green",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "Lawyer"
-          }
-        }
-      ]
-    },
-    {
-      "display": "Mechanic",
-      "icon": "/html/static/img/icons_services/mechanic.png",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "Mechanic"
-          }
-        }
-      ]
-    },
-    {
-      "display": "News",
-      "backgroundColor": "red",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "News"
-          }
-        }
-      ]
-    },
-    {
-      "display": "Taxi",
-      "icon": "/html/static/img/icons_services/taxi.png",
-      "subMenu": [
-        {
-          "title": "Send a message",
-          "eventName": "arma_addons_gcphone:call",
-          "type": {
-            "number": "Taxi"
-          }
-        }
-      ]
-    }
   ],
 
   "defaultContacts": [
-    {
-      "number": "Ambulance",
-      "display": "Ambulance",
-      "icon": "/html/static/img/icons_services/ems.png"
-    },
-    {
-      "number": "Police",
-      "display": "Police",
-      "backgroundColor": "blue",
-      "icon": "/html/static/img/icons_services/police.png"
-    }
   ],
 
   "apps": [{
@@ -273,18 +177,6 @@
       "icons": "/html/static/img/icons_app/banco.png",
       "routeName": "bank",
       "inHomePage": false
-    },
-    {
-      "name": "Bourse",
-      "da_DK__name": "Børsen",
-      "fr_FR__name": "Bourse",
-      "cs_CZ__name": "Burza",
-      "en_US__name": "Stock Market",
-      "de_DE__name": "Börse",
-      "es_ES__name": "Bolsa",
-      "icons": "/html/static/img/icons_app/bourse1.png",
-      "routeName": "bourse",
-      "enabled": true
     },
     {
       "name": "Camera",

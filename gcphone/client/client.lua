@@ -281,11 +281,6 @@ AddEventHandler("gcPhone:allMessage", function(allmessages)
   messages = allmessages
 end)
 
-RegisterNetEvent("gcPhone:getBourse")
-AddEventHandler("gcPhone:getBourse", function(bourse)
-  SendNUIMessage({event = 'updateBourse', bourse = bourse})
-end)
-
 RegisterNetEvent("gcPhone:receiveMessage")
 AddEventHandler("gcPhone:receiveMessage", function(message)
   -- SendNUIMessage({event = 'updateMessages', messages = messages})

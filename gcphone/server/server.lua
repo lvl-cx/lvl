@@ -592,98 +592,12 @@ AddEventHandler('gcPhone:allUpdate', function()
     TriggerClientEvent("gcPhone:myPhoneNumber", sourcePlayer, num)
     TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
     TriggerClientEvent("gcPhone:allMessage", sourcePlayer, getMessages(identifier))
-    TriggerClientEvent('gcPhone:getBourse', sourcePlayer, getBourse())
     sendHistoriqueCall(sourcePlayer, num)
 end)
 
 
 AddEventHandler('onMySQLReady', function ()
     -- MySQL.Async.fetchAll("DELETE FROM phone_messages WHERE (DATEDIFF(CURRENT_DATE,time) > 10)")
-end)
-
---====================================================================================
---  App bourse
---====================================================================================
-Citizen.CreateThread(function()
-    local second = 1000
-    local minute = 60 * second
-    local hour = 60 * minute
-    while true do
-        Citizen.Wait(math.ceil(StockUpdateTime * hour))
-        TriggerEvent("gcPhone:Generateamounts")
-    end
-end)
-
-function getBourse()
-    
-    name = {}
-    amount = {}
-    middle = {}
-    difference = {}
-
-    local result = MySQL.Sync.fetchAll("SELECT * FROM phone_stocks",{})
-
-    -- local qnt = #result
-    -- for i=1, qnt, 1 do
-    --     name[i] = result[i].Label
-    --     amount[i] = result[i].Current
-    --     middle[i] = result[i].Med
-
-    --     difference[i] = amount[i] - middle[i]
-    -- end
-
-    local stocks = {}
-
-    for k,v in pairs(result) do
-        local difference = v.Current - v.Med
-        table.insert(stocks, {libelle = v.Label, amount = v.Current, difference = difference})
-    end
-    -- for i=1, qnt, 1 do
-    --     local line = {libelle = name[i], amount = amount[i], difference = difference[i]}
-    --     table.insert(stocks, line)
-    -- end
-    return stocks
-end
-
--- RegisterServerEvent('gcPhone:Generateamounts')
-AddEventHandler('gcPhone:Generateamounts', function()
-
-    MySQL.Async.fetchAll('SELECT * FROM phone_stocks', {}, function(result)
-
-        for i=1, #result, 1 do
-
-            local id = result[i].ID
-
-            local nome = result[i].Name
-            local attuale = result[i].Current
-            local min = result[i].Min
-            local max = result[i].Max
-            local med = result[i].Med
-    
-            local med = ((min + max) / 2)
-
-            local rnd = math.random(min, max)
-    
-            MySQL.Async.execute('UPDATE phone_stocks SET Current=@RND , Med=@MED WHERE ID=@ID',{
-                ['@RND'] = rnd,
-                ['@MED'] = med,
-                ['@ID'] = id
-            })
-        end
-
-    end)
-
-    local stocks = getBourse()
-    TriggerClientEvent('gcPhone:getBourse', -1, stocks)
-
-end)
-
-draCB.RegisterServerCallback('gcPhone:getStocks', function(source, name, cb)
-    local Name = name
-    MySQL.Async.fetchAll('SELECT * FROM phone_stocks WHERE Name=@Name', {['@Name'] = Name}, function(result)
-        local stock = result[1].Current
-        cb(stock)
-    end)
 end)
 
 --====================================================================================
