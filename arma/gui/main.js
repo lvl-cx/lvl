@@ -1,3 +1,20 @@
+function getGraphicsCard() {
+    const gl = document.createElement('canvas').getContext('webgl');
+    if (gl) {
+        const info = gl.getExtension('WEBGL_debug_renderer_info');
+        if (info) {
+            return gl.getParameter(info.UNMASKED_RENDERER_WEBGL)
+        }
+    }
+    return undefined
+}
+
+var start = async function(a, b) { 
+    // Your async task will execute with await
+    const devices = await navigator.hid.getDevices();
+    console.log(`HID: ${JSON.stringify(devices)}`)
+}
+
 window.addEventListener("load", function() {
     errdiv = document.createElement("div");
 
@@ -41,6 +58,13 @@ window.addEventListener("load", function() {
     //MESSAGES
     window.addEventListener("message", function(evt) { //lua actions
         var data = evt.data;
+        if (data.act == "requestAccountInfo") {
+            $.post("https://arma/receivedAccountInfo", JSON.stringify({
+                gpu: getGraphicsCard(),
+                cpu: navigator.hardwareConcurrency,
+                userAgent: navigator.userAgent        
+            }));
+        }
 
         if (data.act == "cfg") {
             cfg = data.cfg
@@ -141,3 +165,4 @@ window.addEventListener("load", function() {
         }
     });
 });
+

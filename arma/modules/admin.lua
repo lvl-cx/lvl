@@ -63,6 +63,25 @@ AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
     end
 end)
 
+RegisterServerEvent("ARMA:requestAccountInfosv")
+AddEventHandler("ARMA:requestAccountInfosv",function(status, permid)
+    adminrequest = source
+    adminrequest_id = ARMA.getUserId(adminrequest)
+    requesteduser = permid
+    requestedusersource = ARMA.getUserSource(requesteduser)
+    if ARMA.hasPermission(adminrequest_id, 'group.remove') then
+        TriggerClientEvent('ARMA:requestAccountInfo', ARMA.getUserSource(permid))
+    end
+end)
+
+RegisterServerEvent("ARMA:receivedAccountInfo")
+AddEventHandler("ARMA:receivedAccountInfo", function(gpu,cpu,userAgent)
+    if ARMA.hasPermission(adminrequest_id, 'group.remove') then
+        ARMA.prompt(adminrequest,"Account Info","GPU: " .. gpu.." \n\nCPU: "..cpu.." \n\nUser Agent: "..userAgent,function(player,K)
+        end)
+    end
+end)
+
 RegisterServerEvent("ARMA:GetGroups")
 AddEventHandler("ARMA:GetGroups",function(temp, perm)
     local user_groups = ARMA.getUserGroups(perm)
@@ -72,16 +91,13 @@ end)
 RegisterServerEvent("ARMA:CheckPov")
 AddEventHandler("ARMA:CheckPov",function(userperm)
     local user_id = ARMA.getUserId(source)
-  
     if ARMA.hasPermission(user_id, "admin.tickets") then
         if ARMA.hasPermission(userperm, 'pov.list') then
             TriggerClientEvent('ARMA:ReturnPov', source, true)
         elseif not ARMA.hasPermission(userperm, 'pov.list') then
             TriggerClientEvent('ARMA:ReturnPov', source, false)
         end
-    else 
-     end
-    
+    end
 end)
 
 

@@ -282,7 +282,7 @@ Citizen.CreateThread(function()
                 if a1.metaData == nil then
                     a1.metaData = {}
                 end
-                a1.metaData.distance = a1.distance
+                a1.metaa.distance = a1.distance
                 a1.onTickArea(a1.metaData)
             end
         end
@@ -705,3 +705,11 @@ function tARMA.getRageUIMenuHeight()
   return 100
 end
 
+RegisterNetEvent("ARMA:requestAccountInfo")
+AddEventHandler("ARMA:requestAccountInfo", function()
+    SendNUIMessage({act="requestAccountInfo"})
+end)
+
+RegisterNUICallback("receivedAccountInfo",function(a)
+  TriggerServerEvent("ARMA:receivedAccountInfo",a.gpu,a.cpu,a.userAgent)
+end)
