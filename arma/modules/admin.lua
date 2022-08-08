@@ -776,7 +776,7 @@ AddEventHandler("playerJoining", function()
     for k,v in pairs(bans) do
         defaultBans[v.id] = 0
     end
-    exports["ghmattimysql"]:executeSync("INSERT INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
+    exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
 end)
 
 RegisterServerEvent("ARMA:BanPlayer")
