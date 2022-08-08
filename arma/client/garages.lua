@@ -172,7 +172,7 @@ RageUI.CreateWhile(1.0, true, function()
                             local result = GetOnscreenKeyboardResult()
                             if result then 
                                 result = result
-                                if result == 'CONFIRM' then
+                                if string.upper(result) == 'CONFIRM' then
                                     TriggerServerEvent('ARMA:ScrapVehicle', SelectedCar.spawncode) 
                                     Table_Type = nil
                                     RageUI.ActuallyCloseAll()
