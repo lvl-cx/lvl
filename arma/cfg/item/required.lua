@@ -30,7 +30,7 @@ items["money"] = {"Money","Packed money.",function(args)
 end,0}
 
 -- money binder
-items["money_binder"] = {"Money binder","Used to bind 1000$ of money.",function(args)
+items["money_binder"] = {"Money binder","Used to bind £1000 of money.",function(args)
   local choices = {}
   local idname = args[1]
 

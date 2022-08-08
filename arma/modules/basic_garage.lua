@@ -146,13 +146,13 @@ AddEventHandler('ARMA:BuyVehicle', function(vehicle)
         for a, z in pairs(v) do
             if a ~= "_config" and a == vehicle then
                 if ARMA.tryFullPayment(user_id,z[2]) then 
-                    ARMAclient.notify(source,{'~g~You have purchased: ' .. z[1] .. ' for: $' .. z[2]})
+                    ARMAclient.notify(source,{'~g~You have purchased: ' .. z[1] .. ' for: £' .. z[2]})
                     ARMA.getUserIdentity(user_id, function(identity)					
                         MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
                     end)
                     return 
                 else 
-                    ARMAclient.notify(source,{'~r~You do not have enough money to purchase this vehicle! It costs: $' .. z[2]})
+                    ARMAclient.notify(source,{'~r~You do not have enough money to purchase this vehicle! It costs: £' .. z[2]})
                     TriggerClientEvent('ARMA:CloseGarage', source)
                     return 
                 end
@@ -201,7 +201,7 @@ AddEventHandler('ARMA:SellVehicle', function(veh)
 					if user_id ~= nil and user_id ~= "" then 
 						local target = ARMA.getUserSource(tonumber(user_id))
 						if target ~= nil then
-							ARMA.prompt(player,"Price $: ","",function(player,amount)
+							ARMA.prompt(player,"Price £: ","",function(player,amount)
 								if tonumber(amount) and tonumber(amount) > 0 and tonumber(amount) < limit then
 									MySQL.query("ARMA/get_vehicle", {user_id = user_id, vehicle = name}, function(pvehicle, affected)
 										if #pvehicle > 0 then
@@ -213,7 +213,7 @@ AddEventHandler('ARMA:SellVehicle', function(veh)
                                                     ARMAclient.notify(player,{"~r~You cannot sell a rented vehicle!"})
                                                     return
                                                 else
-                                                    ARMA.request(target,GetPlayerName(player).." wants to sell: " ..name.. " Price: $"..amount, 10, function(target,ok)
+                                                    ARMA.request(target,GetPlayerName(player).." wants to sell: " ..name.. " Price: £"..amount, 10, function(target,ok)
                                                         if ok then
                                                             local pID = ARMA.getUserId(target)
                                                             amount = tonumber(amount)
@@ -223,8 +223,8 @@ AddEventHandler('ARMA:SellVehicle', function(veh)
                                                                     MySQL.execute("ARMA/sell_vehicle_player", {user_id = user_id, registration = "P "..identity.registration, oldUser = playerID, vehicle = name}) 
                                                                 end)
                                                                 ARMA.giveBankMoney(playerID, amount)
-                                                                ARMAclient.notify(player,{"~g~You have successfully sold the vehicle to ".. GetPlayerName(target).." for $"..amount.."!"})
-                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you the car for $"..amount.."!"})
+                                                                ARMAclient.notify(player,{"~g~You have successfully sold the vehicle to ".. GetPlayerName(target).." for £"..amount.."!"})
+                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you the car for £"..amount.."!"})
                                                                 TriggerClientEvent('ARMA:CloseGarage', player)
                                                             else
                                                                 ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
@@ -275,7 +275,7 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
 					if user_id ~= nil and user_id ~= "" then 
 						local target = ARMA.getUserSource(tonumber(user_id))
 						if target ~= nil then
-							ARMA.prompt(player,"Price $: ","",function(player,amount)
+							ARMA.prompt(player,"Price £: ","",function(player,amount)
                                 ARMA.prompt(player,"Rent time (in hours): ","",function(player,rent)
                                     if tonumber(rent) and tonumber(rent) >  0 then 
                                         if tonumber(amount) and tonumber(amount) > 0 and tonumber(amount) < limit then
@@ -289,7 +289,7 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                             ARMAclient.notify(player,{"~r~You cannot rent a rented vehicle!"})
                                                             return
                                                         else
-                                                            ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: $"..amount .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
+                                                            ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: £"..amount .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
                                                                 if ok then
                                                                     local pID = ARMA.getUserId(target)
                                                                     amount = tonumber(amount)
@@ -301,8 +301,8 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                                             MySQL.execute("ARMA/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
                                                                         end)
                                                                         ARMA.giveBankMoney(playerID, amount)
-                                                                        ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
-                                                                        ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for $"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                        ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                        ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
                                                                         TriggerClientEvent('ARMA:CloseGarage', player)
                                                                     else
                                                                         ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
