@@ -242,6 +242,38 @@ Citizen.CreateThread(function()
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS phone_calls(
+    id int(11) NOT NULL AUTO_INCREMENT,
+    owner varchar(10) NOT NULL,
+    num varchar(10) NOT NULL,
+    incoming int(11) NOT NULL,
+    time timestamp NOT NULL DEFAULT current_timestamp(),
+    accepts int(11) NOT NULL,
+    PRIMARY KEY (id)
+    )
+    ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS phone_messages(
+    id int(11) NOT NULL AUTO_INCREMENT,
+    transmitter varchar(10) NOT NULL,
+    receiver varchar(10) NOT NULL,
+    message int(255) NOT NULL DEFAULT '0',
+    time timestamp NOT NULL DEFAULT current_timestamp(),
+    isRead int(11) NOT NULL DEFAULT 0,
+    owner int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (id)
+    )
+    ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS phone_users_contacts(
+    id int(11) NOT NULL AUTO_INCREMENT,
+    identifier varchar(60) CHARACTER SET utf8mb4 DEFAULT NULL,
+    number varchar(10) CHARACTER SET utf8mb4 DEFAULT NULL,
+    display varchar(64) CHARACTER SET utf8mb4 NOT NULL DEFAULT '-1',
+    PRIMARY KEY (id)
+    )
+    ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banreason varchar(100) NOT NULL DEFAULT '';")
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS banadmin varchar(100) NOT NULL DEFAULT ''; ")
