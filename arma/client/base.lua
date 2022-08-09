@@ -639,8 +639,7 @@ end
 function tARMA.setUserID(a)
   user_id = a
 end
-function tARMA.userID(Z)
-  print(Z)
+function tARMA.getUserId(Z)
   if Z == nil then
     return user_id
   else

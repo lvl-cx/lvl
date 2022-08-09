@@ -135,7 +135,7 @@ function func_drawGangUI()
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
                 if selectedGangInvite~=nil then 
                     selectedGangInvite=ARMAGangInvites[selectedGangInvite]
-                    local perm1s = tARMA.userID()
+                    local perm1s = tARMA.getUserId()
                     TriggerServerEvent("ARMA:addUserToGang",selectedGangInvite,perm1s)
                     ARMAGangInvites={}
                     showNoGangUI=false
