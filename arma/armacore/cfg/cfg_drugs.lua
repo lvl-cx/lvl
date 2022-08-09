@@ -52,7 +52,7 @@ blips.mapblips = {
     {coords = vector3(2448.0822753906,4990.8056640625,46.542667388916), type = 'Legal Seller', colour = 3, sprite = 617},
     
     {coords = vector3(447.23001098633,-985.09289550781,30.689598083496), type = 'Police Station', colour = 3, sprite = 60},
-    {coords = vector3(-1653.8188476562,-1000.8563232422,13.017389297485), type = 'Parachuting', colour = 1, sprite = 550},
+    {coords = vector3(-753.74310302734, -1510.6815185547, 5.0141487121582), type = 'Parachuting', colour = 1, sprite = 550},
 
     {coords = vector3(1482.8521728516,1168.7008056641,115.06359100342), type = 'Cocaine Collect', colour = 0, sprite = 403},
     {coords = vector3(602.50946044922,-437.46441650391,24.756786346436), type = 'Cocaine Process', colour = 0, sprite = 403},
