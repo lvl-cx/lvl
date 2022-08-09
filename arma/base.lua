@@ -470,17 +470,17 @@ function ARMA.ReLoadChar(source)
                     ARMA.getLastLogin(user_id, function(last_login)
                         tmpdata.last_login = last_login or ""
                         tmpdata.spawns = 0
-                        -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
+                        -- IP SHIT -> local ep = GetPlayerName(source)
                         -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
                         local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                         MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
-                        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined (Perm ID = "..user_id..")")
+                        print("[ARMA] "..name.." ("..GetPlayerName(source)..") joined (Perm ID = "..user_id..")")
                         TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
                         TriggerClientEvent("ARMA:CheckIdRegister", source)
                     end)
                 end)
             else -- already connected
-                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined (Perm ID = "..user_id..")")
+                print("[ARMA] "..name.." ("..GetPlayerName(source)..") re-joined (Perm ID = "..user_id..")")
                 TriggerEvent("ARMA:playerRejoin", user_id, source, name)
                 TriggerClientEvent("ARMA:CheckIdRegister", source)
                 local tmpdata = ARMA.getUserTmpTable(user_id)
@@ -928,7 +928,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                 
                                 Debug.pend()
                             else
-                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: not whitelisted (Perm ID = "..user_id..")")
+                                print("[ARMA] "..name.." ("..GetPlayerName(source)..") rejected: not whitelisted (Perm ID = "..user_id..")")
                                 deferrals.done("[ARMA] Not whitelisted (Perm ID = "..user_id..").")
                             end
                         end)
@@ -963,19 +963,19 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 tmpdata.spawns = 0
                                                 
                                                 -- set last login
-                                                -- IP SHIT -> local ep = ARMA.getPlayerEndpoint(source)
+                                                -- IP SHIT -> local ep = GetPlayerName(source)
                                                 -- Time stamp with IP local last_login_stamp = ep.." "..os.date("%H:%M:%S %d/%m/%Y")
                                                 local last_login_stamp = os.date("%H:%M:%S %d/%m/%Y")
                                                 MySQL.execute("ARMA/set_last_login", {user_id = user_id, last_login = last_login_stamp})
                                                 
                                                 -- trigger join
-                                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") joined after his ban expired. (Perm ID = "..user_id..")")
+                                                print("[ARMA] "..name.." ("..GetPlayerName(source)..") joined after his ban expired. (Perm ID = "..user_id..")")
                                                 TriggerEvent("ARMA:playerJoin", user_id, source, name, tmpdata.last_login)
                                                 deferrals.done()
                                             end)
                                         end)
                                     else -- already connected
-                                        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") re-joined after his ban expired.  (Perm ID = "..user_id..")")
+                                        print("[ARMA] "..name.." ("..GetPlayerName(source)..") re-joined after his ban expired.  (Perm ID = "..user_id..")")
                                         TriggerEvent("ARMA:playerRejoin", user_id, source, name)
                                         deferrals.done()
                                         
@@ -985,22 +985,22 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     end
                                     return 
                                 end
-                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
+                                print("[ARMA] "..name.." ("..GetPlayerName(source)..") rejected: banned (Perm ID = "..user_id..")")
                                 deferrals.done("\n[ARMA] Ban expires on: "..os.date("%c", bantime).."\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by "..banadmin.."\nAppeal @ discord.gg/armarp")
                             else 
-                                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: banned (Perm ID = "..user_id..")")
+                                print("[ARMA] "..name.." ("..GetPlayerName(source)..") rejected: banned (Perm ID = "..user_id..")")
                                 deferrals.done("\n[ARMA] Permanent Ban\nYour ID: "..user_id.."\nReason: "..banreason.."\nBanned by: "..banadmin .."\nAppeal @ discord.gg/armarp")
                             end
                         end)
                     end
                 end)
             else
-                print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: identification error")
+                print("[ARMA] "..name.." ("..GetPlayerName(source)..") rejected: identification error")
                 deferrals.done("[ARMA] Identification error.")
             end
         end)
     else
-        print("[ARMA] "..name.." ("..ARMA.getPlayerEndpoint(source)..") rejected: missing identifiers")
+        print("[ARMA] "..name.." ("..GetPlayerName(source)..") rejected: missing identifiers")
         deferrals.done("[ARMA] Missing identifiers.")
     end
     Debug.pend()
@@ -1013,7 +1013,7 @@ AddEventHandler("playerDropped",function(reason)
         TriggerEvent("ARMA:playerLeave", user_id, source)
         -- save user data table
         ARMA.setUData(user_id,"ARMA:datatable",json.encode(ARMA.getUserDataTable(user_id)))
-        print("[ARMA] "..ARMA.getPlayerEndpoint(source).." disconnected (Perm ID = "..user_id..")")
+        print("[ARMA] "..GetPlayerName(source).." disconnected (Perm ID = "..user_id..")")
         ARMA.users[ARMA.rusers[user_id]] = nil
         ARMA.rusers[user_id] = nil
         ARMA.user_tables[user_id] = nil
@@ -1064,10 +1064,6 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         }
         PerformHttpRequest("https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
         if first_spawn then
-            for k,v in pairs(ARMA.user_sources) do
-                ARMAclient.addPlayer(source,{v})
-            end
-            ARMAclient.addPlayer(-1,{source})
             MySQL.execute("ARMA/setusername", {user_id = user_id, username = GetPlayerName(source)})
             --MySQL.execute("ARMA/setIP", {user_id = user_id, IP = ARMA.getPlayerIP(source)})
         end
