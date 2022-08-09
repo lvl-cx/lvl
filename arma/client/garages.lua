@@ -88,15 +88,6 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
             RentedVeh = false
-            for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == VehiclesFetchedTable[i].config.vtype then 
-                    RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            selected_category = v.vehicles
-                        end
-                    end, RMenu:Get("ARMAGarages", "owned_vehicles_submenu"))
-                end
-            end
             RageUI.Button("[Custom Folders]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then 
                     for i,v in pairs(VehiclesFetchedTable) do 
@@ -106,6 +97,15 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end, RMenu:Get("ARMAGarages", "customfolders"))
+            for i,v in pairs(VehiclesFetchedTable) do 
+                if garage_type == VehiclesFetchedTable[i].config.vtype then 
+                    RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                        if Selected then 
+                            selected_category = v.vehicles
+                        end
+                    end, RMenu:Get("ARMAGarages", "owned_vehicles_submenu"))
+                end
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'owned_vehicles_submenu')) then
