@@ -242,11 +242,6 @@ Citizen.CreateThread(function() -- disable health regen, conflicts with coma sys
     end
 end)
 
-function tARMA.getWeaponName(a)
-    local weaponName = WeaponNames[a]
-    return weaponName
-end
-
 
 Citizen.CreateThread(function()
     local DeathReason, Killer, DeathCauseHash, Weapon
@@ -257,7 +252,7 @@ Citizen.CreateThread(function()
             TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             DeathCauseHash = GetPedCauseOfDeath(PlayerPedId())
-            Weapon = tARMA.getWeaponName(tostring(DeathCauseHash))
+            Weapon = WeaponNames[tostring(DeathCauseHash)]
             if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
                 Killer = NetworkGetPlayerIndexFromPed(PedKiller)
             elseif IsEntityAVehicle(PedKiller) and IsEntityAPed(GetPedInVehicleSeat(PedKiller, -1)) and IsPedAPlayer(GetPedInVehicleSeat(PedKiller, -1)) then
