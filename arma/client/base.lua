@@ -258,38 +258,6 @@ function tARMA.generateUUID(key,length,type)
     return uuid
 end
 
-
-local a=0
-local b=0
-local c=0
-local d=vector3(0,0,0)
-local e=false
-local f=PlayerPedId
-function savePlayerInfo()
-    a=f()
-    b=GetVehiclePedIsIn(a,false)
-    c=PlayerId()
-    d=GetEntityCoords(a)
-    local g=GetPedInVehicleSeat(b,-1)
-    e=g==a 
-end
-_G["PlayerPedId"]=function()
-    return a
-end
-function tARMA.getPlayerPed()
-    return a
-end
-function tARMA.getPlayerVehicle()
-    return b,e 
-end
-function tARMA.getPlayerId()
-    return c 
-end
-
-function tARMA.getPlayerCoords()
-    return d 
-end
-
 function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
   local a0=tARMA.LoadModel(W)
   local a1=CreateVehicle(a0,v,w,H,X,Z,_)
@@ -324,9 +292,56 @@ function tARMA.createThreadOnTick(d2)
     a2[#a2+1]=d2
 end
 
-Citizen.CreateThread(function()
-  tARMA.createThreadOnTick(savePlayerInfo)
-end)
+local a = 0
+local b = 0
+local c = 0
+local d = vector3(0, 0, 0)
+local e = false
+local f = PlayerPedId
+function savePlayerInfo()
+    a = f()
+    b = GetVehiclePedIsIn(a, false)
+    c = PlayerId()
+    d = GetEntityCoords(a)
+    local g = GetPedInVehicleSeat(b, -1)
+    e = g == a
+end
+_G["PlayerPedId"] = function()
+    return a
+end
+function tARMA.getPlayerPed()
+    return a
+end
+function tARMA.getPlayerVehicle()
+    return b, e
+end
+function tARMA.getPlayerId()
+    return c
+end
+function tARMA.getPlayerCoords()
+    return d
+end
+
+createThreadOnTick(savePlayerInfo)
+
+function tARMA.getClosestVehicle(bm)
+  local br = tARMA.getPlayerCoords()
+  local bs = 100
+  local bt = 100
+  for T, bu in pairs(GetGamePool("CVehicle")) do
+      local bv = GetEntityCoords(bu)
+      local bw = #(br - bv)
+      if bw < bt then
+          bt = bw
+          bs = bu
+      end
+  end
+  if bt <= bm then
+      return bs
+  else
+      return nil
+  end
+end
 
 -- ANIM
 

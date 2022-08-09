@@ -1475,7 +1475,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
         }
         local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        TriggerClientEvent('ARMA:FixClient',target)
+        ARMAclient.RevivePlayer(target, {})
         TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Revived Player')
     else
         local player = ARMA.getUserSource(admin_id)

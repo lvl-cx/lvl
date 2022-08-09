@@ -277,6 +277,9 @@ function tARMA.staffMode(status)
     staffMode = status
 
     if staffMode then
+        if GetEntityHealth(PlayerPedId())<=102 then 
+            tARMA.RevivePlayer()
+        end
         if weapons == nil then
             weapons = tARMA.getWeapons()
         end

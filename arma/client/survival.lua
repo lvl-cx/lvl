@@ -33,11 +33,11 @@ Citizen.CreateThread(function() -- coma thread
     exports.spawnmanager:setAutoSpawn(false)
     while true do
         Wait(0)
-        local ped = GetPlayerPed(-1)
+        local ped = PlayerPedId()
         local health = GetEntityHealth(ped)
-        if IsEntityDead(GetPlayerPed(-1)) and not in_coma then --Wait for death check
+        if IsEntityDead(PlayerPedId()) and not in_coma then --Wait for death check
             pbCounter = 100
-            local plyCoords = GetEntityCoords(GetPlayerPed(-1),true)
+            local plyCoords = GetEntityCoords(PlayerPedId(),true)
 
             ARMAserver.StoreWeaponsDead()
             ARMAserver.Coma()
@@ -57,15 +57,15 @@ Citizen.CreateThread(function() -- coma thread
 
         if DeathAnim <= 0  then --Been 10 seconds, proceed to play anim check 
             DeathAnim = 100 
-            local entityDead = GetEntityHealth(GetPlayerPed(-1))
+            local entityDead = GetEntityHealth(PlayerPedId())
             while entityDead <= 100 do
                 Wait(0)
                 local x,y,z = tARMA.getPosition()
-                NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(GetPlayerPed(-1)), true, true, false)
-                entityDead = GetEntityHealth(GetPlayerPed(-1))
+                NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(PlayerPedId()), true, true, false)
+                entityDead = GetEntityHealth(PlayerPedId())
             end
-            SetEntityHealth(GetPlayerPed(-1), 102)
-            SetEntityInvincible(GetPlayerPed(-1),true)
+            SetEntityHealth(PlayerPedId(), 102)
+            SetEntityInvincible(PlayerPedId(),true)
             comaAnim = getRandomComaAnimation()
             if not HasAnimDictLoaded(comaAnim.dict) then
                 RequestAnimDict(comaAnim.dict)
@@ -73,7 +73,7 @@ Citizen.CreateThread(function() -- coma thread
                     Wait(0)
                 end
             end
-            TaskPlayAnim(GetPlayerPed(-1), comaAnim.dict, comaAnim.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0 )
+            TaskPlayAnim(PlayerPedId(), comaAnim.dict, comaAnim.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0 )
         end
 
     end
@@ -103,7 +103,7 @@ Citizen.CreateThread(function()
                 tARMA.disableComa()
                 if IsEntityDead(playerPed) then
                     local x,y,z = tARMA.getPosition()
-                    NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(GetPlayerPed(-1)),true, true, false)
+                    NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(PlayerPedId()),true, true, false)
                     Wait(0)
                 end
                 tARMA.disableComa()
@@ -149,6 +149,37 @@ Citizen.CreateThread(function()
     end 
 end)
 
+function tARMA.RevivePlayer()
+    local x=PlayerPedId()
+    if IsEntityDead(x)then 
+        local x,y,z=tARMA.getPosition()
+        NetworkResurrectLocalPlayer(x,y,z,GetEntityHeading(PlayerPedId()),true,true,false)
+        Citizen.Wait(0)
+    end
+    local D=PlayerId()
+    SetPlayerControl(D,true,false)
+    if not IsEntityVisible(x)then 
+        SetEntityVisible(x,true)
+    end
+    if not IsPedInAnyVehicle(x)then 
+        SetEntityCollision(x,true)
+    end
+    FreezeEntityPosition(x,false)
+    SetPlayerInvincible(D,false)
+    SetEntityHealth(x,200)
+    tARMA.disableComa()
+    i=100
+    local x=PlayerPedId()
+    SetEntityInvincible(x,false)
+    ClearPedSecondaryTask(PlayerPedId())
+    Citizen.CreateThread(function()
+        Wait(500)
+        ClearPedSecondaryTask(PlayerPedId())
+        ClearPedTasks(PlayerPedId())
+    end)
+    TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
+end
+
 AddEventHandler("ARMA:countdownEnded",function()
     secondsTilBleedout = 0
     playerCanRespawn = true
@@ -178,7 +209,7 @@ function tARMA.respawnPlayer()
     DeathString = ""
     secondsTilBleedout = 90
     
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     tARMA.reviveComa()
 end
 
@@ -221,11 +252,11 @@ AddEventHandler("ARMA:FixClient", function()
 end)
 
 function tARMA.reviveComa()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     SetEntityInvincible(ped,false)
     tARMA.setRagdoll(false)
     tARMA.stopScreenEffect(cfg.coma_effect)
-    SetEntityHealth(GetPlayerPed(-1), 200) 
+    SetEntityHealth(PlayerPedId(), 200) 
 end
 
 -- kill the player if in coma
@@ -543,36 +574,36 @@ WeaponNames = {
 
 
 function tARMA.varyHealth(variation)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
 
     local n = math.floor(GetEntityHealth(ped)+variation)
     SetEntityHealth(ped,n)
 end
 
 function tARMA.reviveHealth()
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     if GetEntityHealth(ped) == 102 then
         SetEntityHealth(ped,200)
     end
 end
 
 function tARMA.getHealth()
-    return GetEntityHealth(GetPlayerPed(-1))
+    return GetEntityHealth(PlayerPedId())
 end
 
 function tARMA.getArmour()
-    return GetPedArmour(GetPlayerPed(-1))
+    return GetPedArmour(PlayerPedId())
 end
 
 function tARMA.setHealth(health)
     local n = math.floor(health)
-    SetEntityHealth(GetPlayerPed(-1),n)
+    SetEntityHealth(PlayerPedId(),n)
 end
 
 
 function tARMA.setFriendlyFire(flag)
     NetworkSetFriendlyFireOption(flag)
-    SetCanAttackFriendly(GetPlayerPed(-1), flag, flag)
+    SetCanAttackFriendly(PlayerPedId(), flag, flag)
 end
 
 function tARMA.setPolice(flag)
