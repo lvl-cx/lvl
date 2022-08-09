@@ -1,47 +1,38 @@
-UnallowlistedVehicles = {
-    -- ["SPAWNCODE"] = PERMID,
-
-    -- [CALLUM CARS]
-    ["sanchez"] = 1,
-    ["tkmansory"] = 1,
-    -- [OHASIS CARS]
-    ["rs3d"] = 2,
-    ["regaliad"] = 2,
-    -- [MANAGEMENT CARS]
-    ["tonkat"] = 3,
-    ["takioman"] = 7,
-    ["aivisman"] = 175,
-    -- [PAID LOCKS]
-    ["R8C"] = 5,
-    ["urustc"] = 5,
-    ["venatus"] = 16,
+local h = {
+    ["demonhawkk"] = {1, 2},
 }
-
-local userid = 0
-Citizen.CreateThread(function()
-    while true do
-        Wait(1000)
-        for k,v in pairs(UnallowlistedVehicles) do
-            if IsInVehicle() then
-                if IsVehicleModel(GetVehiclePedIsIn(GetPlayerPed(-1), true), GetHashKey(k)) then
-                    if v ~= tARMA.userID() then
-                        if GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), false)) == 0 then
-                            SetEntityCoords(GetPlayerPed(-1), GetEntityCoords(GetPlayerPed(-1)))
-                            tARMA.notify("~r~You are not allowed in this vehicle.")
-                        end
-                    end
+local function i(j)
+    DisableControlAction(0, 32, true)
+    DisableControlAction(0, 33, true)
+    DisableControlAction(0, 34, true)
+    DisableControlAction(0, 35, true)
+    DisableControlAction(0, 71, true)
+    DisableControlAction(0, 72, true)
+    DisableControlAction(0, 350, true)
+    DisableControlAction(0, 351, true)
+    SetVehicleRocketBoostPercentage(j, 0.0)
+    BeginTextCommandThefeedPost("STRING")
+    AddTextComponentSubstringPlayerName("You have stalled the engine.")
+    EndTextCommandThefeedPostTicker(false, false)
+end
+local function k()
+    local j, l = tARMA.getPlayerVehicle()
+    local m = tARMA.getUserId()
+    if j ~= 0 and l and not tARMA.isDev(m) then
+        local e = GetEntityModel(j)
+        local n = h[e]
+        if n then
+            local o = false
+            for f, p in pairs(n) do
+                if p == m then
+                    o = true
+                    break
                 end
+            end
+            if not o then
+                i(j)
             end
         end
     end
-end)
-
-function IsInVehicle()
-    local ply = GetPlayerPed(-1)
-    if IsPedSittingInAnyVehicle(ply) then
-        return true
-    else
-        return false
-    end
 end
-
+tARMA.createThreadOnTick(k)
