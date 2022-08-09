@@ -70,6 +70,7 @@ RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmen
 RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "checkban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Check Ban',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Types',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "acvehwhitelist", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Vehicle Whitelist',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -81,7 +82,7 @@ RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu",
 RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -387,8 +388,10 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if foundMatch == false then
-                            banningPermID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
-                            banningName = 'ID: ' .. banningPermID
+                            tARMA.clientPrompt("Perm ID:","",function(a)
+                                banningPermID = a
+                                banningName = 'ID: ' .. banningPermID
+                            end)
                         end
                     end
                 end, RMenu:Get('adminmenu', 'banselection'))
@@ -405,13 +408,23 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
             end
             if GlobalAdminLevel >= 6 then
-                RageUI.ButtonWithStyle("Remove Warning", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Remove Warning",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                     if Selected then
-                        local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:RemoveWarning', uid, result)
+                        AddTextEntry('FMMC_MPM_NC', "Enter the Warning ID")
+                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                        while (UpdateOnscreenKeyboard() == 0) do
+                            DisableAllControlActions(0);
+                            Wait(0);
+                        end
+                        if (GetOnscreenKeyboardResult()) then
+                            local result = GetOnscreenKeyboardResult()
+                            if result then 
+                                TriggerServerEvent('ARMA:RemoveWarning', result)
+                            end
+                        end
                     end
-                end)
-            end
+                end,RMenu:Get('adminmenu','moneymenu'))
+            end 
             if GlobalAdminLevel >= 6 then
                 RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -496,11 +509,117 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:checkBlips')
                     end
                 end)
+            end
+            if GlobalAdminLevel >= 9 then
+                RageUI.ButtonWithStyle("Community Pot Menu",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("ARMA:getCommunityPotAmount")
+                    end
+                end,RMenu:Get('communitypot','mainmenu'))
+            end  
+            if GlobalAdminLevel >= 10 then
+                RageUI.ButtonWithStyle("Give Money",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                end,RMenu:Get('adminmenu','moneymenu'))
             end 
         end)
     end
 end)
 
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('adminmenu', 'moneymenu')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if a10 ~= nil then
+                RageUI.Separator("Name: ~b~"..sn)
+                RageUI.Separator("PermID: ~b~"..a10)
+                RageUI.Separator("TempID: ~b~"..sc)
+                RageUI.Separator("Bank Balance: ~b~£"..sb)
+                RageUI.Separator("Wallet Balance: ~b~£"..sw)
+                RageUI.Separator("Casino Balance: ~b~"..sch)
+                RageUI.Separator("")
+                RageUI.ButtonWithStyle("~r~Increase ~w~Bank Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(j)
+                            if tonumber(j) then
+                                TriggerServerEvent('BW:AddPlayerBank',a10,j,"Increase")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+                RageUI.ButtonWithStyle("~r~Decrease ~w~Bank Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(j)
+                            if tonumber(j) then
+                                TriggerServerEvent('BW:AddPlayerBank',a10,j,"Decrease")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+                RageUI.ButtonWithStyle("~r~Increase ~w~Wallet Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(l)
+                            if tonumber(l) then
+                                TriggerServerEvent('BW:AddPlayerCash',a10,l,"Increase")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+                RageUI.ButtonWithStyle("~r~Decrease ~w~Wallet Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(l)
+                            if tonumber(l) then
+                                TriggerServerEvent('BW:AddPlayerCash',a10,l,"Decrease")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+                RageUI.ButtonWithStyle("~r~Increase ~w~Casino Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(l)
+                            if tonumber(l) then
+                                TriggerServerEvent('BW:addCasinoChips',a10,l,"Increase")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+                RageUI.ButtonWithStyle("~r~Decrease ~w~Casino Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                    if y then
+                        tARMA.clientPrompt("Amount:","",function(l)
+                            if tonumber(l) then
+                                TriggerServerEvent('BW:addCasinoChips',a10,l,"Decrease")
+                            else
+                                tARMA.notify("~r~Invalid Amount")
+                            end
+                        end)
+                    end
+                end)
+            end
+            RageUI.ButtonWithStyle("Choose PermID",nil, { RightLabel = "→→→" }, true, function(w,x,y)
+                if y then
+                    tARMA.clientPrompt("PermID:","",function(j)
+                        if tonumber(j) then
+                            a10 = tonumber(j)
+                            tARMA.notify("~g~PermID Set To "..j)
+                            TriggerServerEvent('BW:getUserinformation',a10)
+                        else
+                            tARMA.notify("~r~Invalid PermID")
+                            a10 = nil
+                        end
+                    end)
+                end
+            end, RMenu:Get('bwadminmenu', 'moneymenu'))
+        end)
+    end
+end)
 
 
 RageUI.CreateWhile(1.0, true, function()
@@ -893,18 +1012,19 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel >= 2 then
                 if next(selectedbans) then
-                    if BanMessage ~= "N/A" then
+                    if BanMessage == "N/A" then
+                        RageUI.Separator("~g~Generating ban info, please wait...")
+                    else
                         RageUI.Separator("~r~You are about to ban " ..banningName, function() end)
                         RageUI.Separator("For the following reason(s):", function() end)
                         for k,v in pairs(SeparatorMsg) do
                             RageUI.Separator(v, function() end)
                         end
+                        local U=false
                         if Duration == -1 then
-                            RageUI.Separator("Total Length: Permanent", function() end)
-                        else
-                            RageUI.Separator("Total Length: " ..Duration.. " hrs", function() end)
+                            U=true
                         end
-
+                        RageUI.Separator("~w~Total Length: "..(U and "Permanent" or Duration.." hrs").." ~y~|~w~ Total Points: "..(Duration/24 >= 1 and Duration/24 or 10))
                         RageUI.ButtonWithStyle("Cancel", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                             if Selected then
                                 selectedbans = {}
