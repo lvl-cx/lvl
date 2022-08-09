@@ -1116,7 +1116,7 @@ AddEventHandler('ARMA:RemoveWarning', function(warningid)
                     for k,v in pairs(result) do
                         if v.warning_id == tonumber(warningid) then
                             exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @warning_id", {warning_id = v.warning_id})
-                            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET points = (points-@removepoints) WHERE UserID = @UserID", {UserID = v.user_id, removepoints = (v.duration/24)}, function() end)
+                            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET points = CASE WHEN ((points-@removepoints)>0) THEN (points-@removepoints) ELSE 0 END WHERE UserID = @UserID", {UserID = v.user_id, removepoints = (v.duration/24)}, function() end)
                             ARMAclient.notify(source, {'~g~Removed F10 Warning #'..warningid..' ('..(v.duration/24)..' points) from ID: '..v.user_id})
                             local command = {
                                 {
@@ -2388,7 +2388,6 @@ RegisterCommand("staffon", function(source)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
         ARMAclient.staffMode(source, {true, false})
-        ARMAclient.notify(source, {'~g~Staff Powerz Activated.'})
     end
 end)
 
@@ -2397,7 +2396,6 @@ RegisterCommand("staffoff", function(source)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
         ARMAclient.staffMode(source, {false, false})
-        ARMAclient.notify(source, {'~g~Staff Powerz Deactivated.'})
     end
 end)
 
