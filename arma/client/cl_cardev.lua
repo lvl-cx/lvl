@@ -467,7 +467,7 @@ end
 local function U(O)
     local V=S()
     if not V then 
-        tvRP.notify("~r~Input cancelled.")
+        tARMA.notify("~r~Input cancelled.")
         return 
     end
     local q=getPlayerVehicle()
@@ -476,14 +476,14 @@ local function U(O)
         if W then 
             SetVehicleHandlingFloat(q,"CHandlingData",O.name,W+0.0)
         else 
-            tvRP.notify("~r~Can not parse float.")
+            tARMA.notify("~r~Can not parse float.")
         end 
     elseif O.type=="integer"then 
         local W=tonumber(V)
         if W then 
             SetVehicleHandlingInt(q,"CHandlingData",O.name,math.floor(W))
         else 
-            tvRP.notify("~r~Can not parse integer.")
+            tARMA.notify("~r~Can not parse integer.")
         end 
     elseif O.type=="vector"then 
         local X=stringsplit(V," ")
@@ -494,10 +494,10 @@ local function U(O)
             if Y and Z and _ then 
                 SetVehicleHandlingVector(q,"CHandlingData",O.name,vector3(Y+0.0,Z+0.0,_+0.0))
             else 
-                tvRP.notify("~r~Can not parse vector.")
+                tARMA.notify("~r~Can not parse vector.")
             end 
         else 
-            tvRP.notify("~r~Expected 3 floats.")
+            tARMA.notify("~r~Expected 3 floats.")
         end 
     end
     ModifyVehicleTopSpeed(q,1.0)
