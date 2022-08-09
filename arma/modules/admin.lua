@@ -771,17 +771,21 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                             else
                                 points = 10
                             end
-                            if PlayerOffenses[PlayerID][k] == 1 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
-                            elseif PlayerOffenses[PlayerID][k] == 2 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~2nd Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
-                            elseif PlayerOffenses[PlayerID][k] >= 3 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
-                            end
                             table.insert(PlayerCacheBanMessage, bans[a].name)
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
                                 PlayerBanCachedDuration[PlayerID] = -1
                                 PermOffense = true
+                            end
+                            local U=false
+                            if Duration == -1 then
+                                U=true
+                            end
+                            if PlayerOffenses[PlayerID][k] == 1 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..(PermOffense and "Permanent" or bans[a].durations[PlayerOffenses[PlayerID][k]] .." hrs"))
+                            elseif PlayerOffenses[PlayerID][k] == 2 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~2nd Offense ~y~| ~w~'..(PermOffense and "Permanent" or bans[a].durations[PlayerOffenses[PlayerID][k]] .." hrs"))
+                            elseif PlayerOffenses[PlayerID][k] >= 3 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..(PermOffense and "Permanent" or bans[a].durations[PlayerOffenses[PlayerID][k]] .." hrs"))
                             end
                         end
                     end
@@ -1099,14 +1103,19 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
     end
 end)
 
+
 RegisterServerEvent('ARMA:RemoveWarning')
-AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
-    local admin_id = ARMA.getUserId(admin)
-    if ARMA.hasPermission(admin_id, 'admin.removewarn') then     
-        ARMA.prompt(source,"Warning ID:","",function(source,warningid) 
-            if warningid == "" then return end
+AddEventHandler('ARMA:RemoveWarning', function(warningid)
+    local admin = source
+    local admin_id = vRP.getUserId(admin)
+    local source = source
+    local admin_name = GetPlayerName(source)
+    local playerId = source
+    local user_id = vRP.getUserId(source)
+    if user_id ~= nil then
+        if vRP.hasPermission(admin_id, "admin.remwarning",) then 
             exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Removed warning #'..warningid..'')
+            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Removed F10 Warning #'..warningid..' from Perm ')
             local command = {
                 {
                     ["color"] = "16448403",
@@ -1139,13 +1148,13 @@ AddEventHandler('ARMA:RemoveWarning', function(admin, warningid)
             }
             local webhook = "https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        end)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Warning')
+        else
+            local player = ARMA.getUserSource(admin_id)
+            local name = GetPlayerName(source)
+            Wait(500)
+            reason = "Type #11"
+            TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Warning')
+        end
     end
 end)
 
