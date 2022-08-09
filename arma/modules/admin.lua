@@ -1106,48 +1106,54 @@ end)
 
 RegisterServerEvent('ARMA:RemoveWarning')
 AddEventHandler('ARMA:RemoveWarning', function(warningid)
-    local admin = source
-    local admin_id = vRP.getUserId(admin)
     local source = source
-    local admin_name = GetPlayerName(source)
-    local playerId = source
-    local user_id = vRP.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     if user_id ~= nil then
-        if vRP.hasPermission(admin_id, "admin.remwarning",) then 
-            exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @uid", {uid = warningid})
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Removed F10 Warning #'..warningid..' from Perm ')
-            local command = {
-                {
-                    ["color"] = "16448403",
-                    ["title"] = "ARMA Remove Warning Logs",
-                    ["description"] = "",
-                    ["text"] = "ARMA Server #1",
-                    ["fields"] = {
-                        {
-                            ["name"] = "Admin Name",
-                            ["value"] = GetPlayerName(admin),
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin TempID",
-                            ["value"] = admin,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin PermID",
-                            ["value"] = admin_id,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Warning ID",
-                            ["value"] = warningid,
-                            ["inline"] = true
-                        }
-                    }
-                }
-            }
-            local webhook = "https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ"
-            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+        if ARMA.hasPermission(user_id, "admin.removewarn") then 
+            print('has perms')
+            exports['ghmattimysql']:execute("SELECT * FROM arma_warnings WHERE warning_id = @warning_id", {warning_id = tonumber(warningid)}, function(result) 
+                if result ~= nil then
+                    for k,v in pairs(result) do
+                        if v.warning_id == tonumber(warningid) then
+                            exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @warning_id", {warning_id = v.warning_id})
+                            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET points = (points-@removepoints) WHERE UserID = @UserID", {UserID = v.user_id, removepoints = (v.duration/24)}, function() end)
+                            ARMAclient.notify(source, {'~g~Removed F10 Warning #'..warningid..' ('..(v.duration/24)..' points) from ID: '..v.user_id})
+                            local command = {
+                                {
+                                    ["color"] = "16448403",
+                                    ["title"] = "ARMA Remove Warning Logs",
+                                    ["description"] = "",
+                                    ["text"] = "ARMA Server #1",
+                                    ["fields"] = {
+                                        {
+                                            ["name"] = "Admin Name",
+                                            ["value"] = GetPlayerName(admin),
+                                            ["inline"] = true
+                                        },
+                                        {
+                                            ["name"] = "Admin TempID",
+                                            ["value"] = admin,
+                                            ["inline"] = true
+                                        },
+                                        {
+                                            ["name"] = "Admin PermID",
+                                            ["value"] = admin_id,
+                                            ["inline"] = true
+                                        },
+                                        {
+                                            ["name"] = "Warning ID",
+                                            ["value"] = warningid,
+                                            ["inline"] = true
+                                        }
+                                    }
+                                }
+                            }
+                            local webhook = "https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ"
+                            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+                        end
+                    end
+                end
+            end)
         else
             local player = ARMA.getUserSource(admin_id)
             local name = GetPlayerName(source)
