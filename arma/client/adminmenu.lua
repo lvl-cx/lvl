@@ -709,19 +709,37 @@ RageUI.CreateWhile(1.0, true, function()
             if GlobalAdminLevel >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        inRedZone = false
+                        if SelectedPlayer[2] ~= GetPlayerServerId(PlayerId()) then
+                            inRedZone = false
+                            TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
+                            inSpectatorAdminMode = true
+                            RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
+                        else
+                            notify("~r~You can not spectate yourself")
+                        end
                         TriggerServerEvent('ARMA:SpectatePlayer', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel >= 3 then
+                RageUI.ButtonWithStyle("Spectate Player [Anti-ESP]", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        if SelectedPlayer[2] ~= GetPlayerServerId(PlayerId()) then
+                            inRedZone = false
+                            TriggerServerEvent("ARMA:spectatePlayerEsp", SelectedPlayer[3])
+                            inSpectatorAdminMode = true
+                            RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
+                        else
+                            notify("~r~You can not spectate yourself")
+                        end
+                        TriggerServerEvent('ARMA:SpectatePlayer', SelectedPlayer[3])
+                    end
+                end, RMenu:Get('adminmenu', 'submenu'))
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RevivePlayer', uid, SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end 
+            end
             if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -1404,56 +1422,6 @@ end)
 
 
 
-local InSpectatorMode	= false
-local TargetSpectate	= nil
-local LastPosition		= nil
-local polarAngleDeg		= 0;
-local azimuthAngleDeg	= 90;
-local radius			= -3.5;
-local cam 				= nil
-local PlayerDate		= {}
-local ShowInfos			= false
-local group
-
-local function polar3DToWorld3D(entityPosition, radius, polarAngleDeg, azimuthAngleDeg)
-    local polarAngleRad   = polarAngleDeg   * math.pi / 180.0
-	local azimuthAngleRad = azimuthAngleDeg * math.pi / 180.0
-	local pos = {
-		x = entityPosition.x + radius * (math.sin(azimuthAngleRad) * math.cos(polarAngleRad)),
-		y = entityPosition.y - radius * (math.sin(azimuthAngleRad) * math.sin(polarAngleRad)),
-		z = entityPosition.z - radius * math.cos(azimuthAngleRad)
-	}
-	return pos
-end
-
-
-
-function StopSpectatePlayer()
-    inRedZone = false
-    InSpectatorMode = false
-    TargetSpectate  = nil
-    local playerPed = PlayerPedId()
-    SetCamActive(cam,  false)
-    DestroyCam(cam, true)
-    RenderScriptCams(false, false, 0, true, true)
-    SetEntityVisible(playerPed, true)
-    SetEntityCollision(playerPed, true, true)
-    FreezeEntityPosition(playePed, false)
-    if savedCoords ~= vec3(0,0,1) then SetEntityCoords(PlayerPedId(), savedCoords) else SetEntityCoords(PlayerPedId(), 3537.363, 3721.82, 36.467) end
-end
-
-Citizen.CreateThread(function()
-    while (true) do
-        Wait(0)
-        if InSpectatorMode then
-            DrawHelpMsg("Press ~INPUT_CONTEXT~ to Stop Spectating")
-            if IsControlJustPressed(1, 51) then
-                StopSpectatePlayer()
-            end
-        end
-    end
-end)
-
 RegisterNetEvent("ARMA:GotGroups")
 AddEventHandler("ARMA:GotGroups",function(gotGroups)
     searchPlayerGroups = gotGroups
@@ -1585,52 +1553,12 @@ function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     DrawText(x - width/2, y - height/2 + 0.005)
 end
 
-local Spectating = false;
-local LastCoords = nil;
-RegisterNetEvent('ARMA:Spectate')
-AddEventHandler('ARMA:Spectate', function(plr,tpcoords)
-    local playerPed = PlayerPedId()
-    local targetPed = GetPlayerPed(GetPlayerFromServerId(plr))
-    if not Spectating then
-        LastCoords = GetEntityCoords(playerPed) 
-        if tpcoords then 
-            SetEntityCoords(playerPed, tpcoords - 10.0)
+function func_checkSpectatorMode()
+    if inSpectatorAdminMode then
+        if IsControlJustPressed(0, 51) then
+            inSpectatorAdminMode = false
+            TriggerServerEvent("CMG:stopSpectatePlayer", TargetSpectate)
         end
-        Wait(300)
-        targetPed = GetPlayerPed(GetPlayerFromServerId(plr))
-        if targetPed == playerPed then tARMA.notify('~r~I mean you cannot spectate yourself...') return end
-		NetworkSetInSpectatorMode(true, targetPed)
-        SetEntityCollision(playerPed, false, false)
-        SetEntityVisible(playerPed, false, 0)
-		SetEveryoneIgnorePlayer(playerPed, true)	
-        Spectating = true
-        tARMA.notify('~g~Spectating Player.')
-        TriggerServerEvent('ARMAAntiCheat:setType6', false)
-        while Spectating do
-            local targetArmour = GetPedArmour(targetPed)
-            local targetHealth = GetEntityHealth(targetPed)
-            local targetplayerName = GetPlayerName(GetPlayerFromServerId(plr))
-            local targetSpeedMph = GetEntitySpeed(targetPed) * 2.236936
-            local targetvehiclehealth = GetEntityHealth(GetVehiclePedIsIn(targetPed, false))
-            local targetWeapon = GetSelectedPedWeapon(targetPed)
-            local targetWeaponAmmoCount = GetAmmoInPedWeapon(targetPed, targetWeapon)
-            DrawAdvancedText(0.320, 0.850, 0.025, 0.0048, 0.5, "Health: "..targetHealth, 51, 153, 255, 200, 6, 0)
-            DrawAdvancedText(0.320, 0.828, 0.025, 0.0048, 0.5, "Armour: "..targetArmour, 51, 153, 255, 200, 6, 0)
-            DrawAdvancedText(0.320, 0.806, 0.025, 0.0048, 0.5, "Vehicle Health: "..targetvehiclehealth, 51, 153, 255, 200, 6, 0)
-            bank_drawTxt(0.90, 1.4, 1.0, 1.0, 0.4, "You are currently spectating "..targetplayerName, 51, 153, 255, 200)
-            if IsPedSittingInAnyVehicle(targetPed) then
-               DrawAdvancedText(0.320, 0.784, 0.025, 0.0048, 0.5, "Speed: "..math.floor(targetSpeedMph), 51, 153, 255, 200, 6, 0)
-            end	
-            Wait(0)
-        end
-    else 
-        NetworkSetInSpectatorMode(false, targetPed)
-        SetEntityVisible(playerPed, true, 0)
-		SetEveryoneIgnorePlayer(playerPed, false)
-		SetEntityCollision(playerPed, true, true)
-        Spectating = false;
-        SetEntityCoords(playerPed, LastCoords)
-        tARMA.notify('~r~Stopped Spectating Player.')
-        TriggerServerEvent('ARMAAntiCheat:setType6', true)
-    end 
-end)
+    end
+end
+tARMA.createThreadOnTick(func_checkSpectatorMode)
