@@ -7,7 +7,6 @@ RegisterNetEvent("ARMA:saveTattoos")
 AddEventHandler("ARMA:saveTattoos", function(TattooSaveddata)
     local source = source
     local user_id = ARMA.getUserId({source})
-    print(json.encode(TattooSaveddata))
     ARMA.setUData({user_id, "ARMA:Tattoo:Data", json.encode(TattooSaveddata)})
 end)
 
@@ -21,6 +20,7 @@ AddEventHandler("ARMA:changeTattoos", function()
         end
     end})
 end)
+
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     SetTimeout(1000, function() 
         local source = source
@@ -32,4 +32,3 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         end})
     end)
 end)
-

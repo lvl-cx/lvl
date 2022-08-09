@@ -9,11 +9,9 @@ AddEventHandler("ARMA:saveFaceData", function(faceSaveData)
     local source = source
     local user_id = ARMA.getUserId({source})
     ARMA.setUData({user_id, "ARMA:Face:Data", json.encode(faceSaveData)})
-    --ARMAclient.notify(source, {"~g~Your hairstyle has been saved."})
-
 end)
 
-RegisterNetEvent("ARMA:changeHairStyle") --COULD BE USED FOR STAFFMODE AND STUFF XOTIIC IF U ARE WONDERING, JUST TRIGGER IT AND ITLL SET THE HARISTYLE, NO PARAMS
+RegisterNetEvent("ARMA:changeHairStyle")
 AddEventHandler("ARMA:changeHairStyle", function()
     local source = source
     local user_id = ARMA.getUserId({source})

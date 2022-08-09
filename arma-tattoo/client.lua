@@ -419,11 +419,9 @@ end
 
 RegisterNetEvent("ARMA:setTattoos")
 AddEventHandler("ARMA:setTattoos",function(setTattoos)
-	print(setTattoos)
-	print(json.encode(setTattoos))
     if setTattoos then
 		ClearPedDecorations(PlayerPedId())
-		for k, v in pairs(tattooList) do
+		for k, v in pairs(setTattoos) do
 			if v.Count ~= nil then
 				for i = 1, v.Count do
 					SetPedDecoration(PlayerPedId(), v.collection, v.nameHash)
