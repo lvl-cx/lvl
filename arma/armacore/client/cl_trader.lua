@@ -3,7 +3,7 @@ local b = module("armacore/cfg/cfg_trader")
 Citizen.CreateThread(    function()
     local k = tARMA.loadAnimDict("mini@strip_club@idles@bouncer@base")
     for l, m in pairs(b.trader) do
-        tARMA.addMarker(m.position.x,m.position.y,m.position.z-1,0.7,0.7,0.5,m.colour.r,m.colour.g,m.colour.b,125,50,29,true,true)
+        tARMA.addMarker(m.position.x,m.position.y,m.position.z-0.98,0.7,0.7,0.5,m.colour.r,m.colour.g,m.colour.b,125,50,29,true,true)
         tARMA.createDynamicPed(m.dealerModel,m.dealerPos + vector3(0.0, 0.0, -1.0),m.dealerHeading,true,"mini@strip_club@idles@bouncer@base","base",100,false)
     end
 end)
