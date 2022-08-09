@@ -131,6 +131,32 @@ AddEventHandler('ARMA:SpectatePlayer', function(id)
     end
 end)
 
+RegisterServerEvent("ARMA:stopSpectatePlayer")
+AddEventHandler("ARMA:stopSpectatePlayer", function()
+    local source = source
+    TriggerClientEvent("ARMA:spectate", source,-1)
+    TriggerClientEvent("ARMA:partThree",source,source)
+end)
+RegisterServerEvent("ARMA:spectatePlayer")
+AddEventHandler("ARMA:spectatePlayer", function(id)
+    local playerssource = tonumber(id)
+    local source = source
+    if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
+        M = 1000
+        TriggerClientEvent("ARMA:spectate",source,playerssource,M)
+    end
+end)
+
+RegisterServerEvent("ARMA:spectatePlayerEsp")
+AddEventHandler("ARMA:spectatePlayerEsp", function(id)
+    local playerssource = tonumber(id)
+    local source = source
+    if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
+        TriggerClientEvent("ARMA:spectate",source,playerssource)
+        TriggerClientEvent("ARMA:partTwo", source,source)
+    end
+end)
+
 RegisterServerEvent("ARMA:Giveweapon")
 AddEventHandler("ARMA:Giveweapon",function()
     local source = source
