@@ -11,7 +11,7 @@ client_scripts {
 file 'AllTattoos.json'
 
 server_scripts {
-    "@vrp/lib/utils.lua",
+    "@arma/lib/utils.lua",
     "@mysql-async/lib/MySQL.lua",
     "server.lua",
 }

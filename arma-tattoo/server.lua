@@ -7,15 +7,14 @@ RegisterNetEvent("ARMA:saveTattoos")
 AddEventHandler("ARMA:saveTattoos", function(TattooSaveddata)
     local source = source
     local user_id = ARMA.getUserId({source})
+    print(json.encode(TattooSaveddata))
     ARMA.setUData({user_id, "ARMA:Tattoo:Data", json.encode(TattooSaveddata)})
-
 end)
 
-RegisterNetEvent("ARMA:changeTattoos") --COULD BE USED FOR STAFFMODE AND STUFF XOTIIC IF U ARE WONDERING, JUST TRIGGER IT AND ITLL SET THE HARISTYLE, NO PARAMS
+RegisterNetEvent("ARMA:changeTattoos")
 AddEventHandler("ARMA:changeTattoos", function()
     local source = source
     local user_id = ARMA.getUserId({source})
-
     ARMA.getUData({user_id, "ARMA:Tattoo:Data", function(data)
         if data ~= nil then
             TriggerClientEvent("ARMA:setTattoos", source, json.decode(data))

@@ -1,13 +1,3 @@
---[[
-
-    !!!WARNING!!!
-
-    HORRIBLE, STUPID, HACKY AND PREFORMANCE DEGRADING CODE AHEAD
-
-    PROCEED WITH CAUTION
-    
-]]
-
 RequestStreamedTextureDict("CommonMenu")
 
 ArmaTattoo = { }
@@ -72,24 +62,6 @@ local function isMenuVisible(id)
         return false
     end
 end
-
---[[local function setMenuVisible(id, visible, holdCurrent)
-    if id and menus[id] then
-        setMenuProperty(id, 'visible', visible)
-
-        if not holdCurrent and menus[id] then
-            setMenuProperty(id, 'currentOption', 1)
-        end
-
-        if visible then
-            if id ~= currentMenu and isMenuVisible(currentMenu) then
-                setMenuVisible(currentMenu, false)
-            end
-
-            currentMenu = id
-        end
-    end
-end]]
 
 local function setMenuVisible(id, visible, holdCurrent)
     if id and menus[id] then
@@ -180,14 +152,12 @@ local function drawTitle()
 		if menus[currentMenu].titleFont == "!sprite!" then
 			local color = menus[currentMenu].titleBackgroundColor
 			local textDict, sprite = table.unpack(menus[currentMenu].titleColor)
-			--print("txd:"..textDict.." spr:"..sprite.." col:"..color.r..","..color.g..","..color.b..","..color.a)
 			RequestStreamedTextureDict(textDict, false)
 			HasStreamedTextureDictLoaded(textDict)
 			DrawSprite(textDict, sprite, x, y, menuWidth, titleHeight, 0, color[1], color[2], color[3], color[4])
 		elseif menus[currentMenu].titleFont == "~sprite~" then
 			local color = menus[currentMenu].titleBackgroundColor
 			local textDict, sprite = table.unpack(menus[currentMenu].titleColor)
-			--print("txd:"..textDict.." spr:"..sprite.." col:"..color.r..","..color.g..","..color.b..","..color.a)
 			RequestStreamedTextureDict(textDict, false)
 			HasStreamedTextureDictLoaded(textDict)
 			DrawSprite(textDict, sprite, x, y, menuWidth, titleHeight, 0, color[1], color[2], color[3], color[4])
@@ -197,7 +167,6 @@ local function drawTitle()
                 SetUiLayer(0)
                 DrawSprite("CommonMenu", "interaction_bgd", x, y, menuWidth, titleHeight, 0.0, 255, 255, 255, 255, 0)
             end
-			--drawRect(x, y, menuWidth, titleHeight, menus[currentMenu].titleBackgroundColor)
 			drawText(menus[currentMenu].title, x, y - titleHeight / 2 + titleYOffset, menus[currentMenu].titleFont, menus[currentMenu].titleColor, titleScale, true)
         end
 
@@ -205,30 +174,11 @@ local function drawTitle()
     end
 end
 
--- local function drawSubTitle()
-    -- if menus[currentMenu] then
-        -- local x = menus[currentMenu].x + (menuWidth / 2)
-        -- local y = menus[currentMenu].y + (titleHeight + buttonHeight / 2)
-
-        -- local subTitleColor = { r = menus[currentMenu].titleBackgroundColor.r, g = menus[currentMenu].titleBackgroundColor.g, b = menus[currentMenu].titleBackgroundColor.b, a = 255 }
-        -- local subTitleColor = {255, 255, 255, 255}
-
-        -- drawRect(x, y, menuWidth, buttonHeight, menus[currentMenu].subTitleBackgroundColor)
-        -- drawText(menus[currentMenu].subTitle, menus[currentMenu].x + buttonTextXOffset, y - buttonHeight / 2 + buttonTextYOffset, buttonFont, false, buttonScale, false)
-        -- drawText(tostring(menus[currentMenu].currentOption)..' / '..tostring(optionCount), menus[currentMenu].x + menuWidth, y - buttonHeight / 2 + buttonTextYOffset, buttonFont, false, buttonScale, false, false, true)
-
-        -- local x,y,subTitleColor = nil
-    -- end
--- end
-
 local function drawSubTitle()
     if menus[currentMenu] then
         local x = menus[currentMenu].x + (menuWidth / 2)
         local y = menus[currentMenu].y + (titleHeight + buttonHeight / 2)
-        local subtitle = menus[currentMenu].subTitle
-
-        --local subTitleColor = { r = menus[currentMenu].titleBackgroundColor.r, g = menus[currentMenu].titleBackgroundColor.g, b = menus[currentMenu].titleBackgroundColor.b, a = 255 }
-        --local subTitleColor = {255, 255, 255, 255}    
+        local subtitle = menus[currentMenu].subTitle 
 
         drawRect(x, y, menuWidth, buttonHeight, menus[currentMenu].subTitleBackgroundColor)
         if subtitle:find("|") then

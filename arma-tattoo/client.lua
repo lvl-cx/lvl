@@ -137,6 +137,7 @@ function CloseTattooShop()
 	EnableAllControlActions(0)
 	back = 1
 	opacity = 1
+	TriggerServerEvent("ARMA:saveTattoos", currentTattoos)
 	ResetSkin()
 	return true
 end
@@ -159,7 +160,6 @@ function RemoveTattoo(name, label)
 			table.remove(currentTattoos, k)
 		end
 	end
-	TriggerServerEvent("SmallTattoos:RemoveTattoo", currentTattoos)
 end
 
 function CreateScale(sType)
@@ -285,10 +285,6 @@ Citizen.CreateThread(function()
 									local clicked, hovered = ArmaTattoo.Button(GetLabelText(tattoo.Name), "~HUD_COLOUR_BLUE~→→→")
 									if clicked then
 										BuyTattoo(tattoo.Collection, tattoo.HashNameMale, tattoo.Name, price)
-										TattooData = {}
-										TattooData["collection"] = tattoo.Collection
-										TattooData["hash"] = tattoo.HashNameMale
-										TriggerServerEvent("ARMA:saveTattoos", TattooData)
 									elseif hovered then
 										DrawTattoo(tattoo.Collection, tattoo.HashNameMale)
 									end
@@ -313,10 +309,6 @@ Citizen.CreateThread(function()
 									local clicked, hovered = ArmaTattoo.Button(GetLabelText(tattoo.Name), "~HUD_COLOUR_BLUE~→→→")
 									if clicked then
 										BuyTattoo(tattoo.Collection, tattoo.HashNameFemale, tattoo.Name, price)
-										TattooData = {}
-										TattooData["collection"] = tattoo.Collection
-										TattooData["hash"] = tattoo.HashNameFemale
-										TriggerServerEvent("ARMA:saveTattoos", TattooData)
 									elseif hovered then
 										DrawTattoo(tattoo.Collection, tattoo.HashNameFemale)
 									end
@@ -427,9 +419,19 @@ end
 
 RegisterNetEvent("ARMA:setTattoos")
 AddEventHandler("ARMA:setTattoos",function(setTattoos)
+	print(setTattoos)
+	print(json.encode(setTattoos))
     if setTattoos then
-		collection = setTattoos["collection"]
-		nameHash = setTattoos["hash"]
-		SetPedDecoration(PlayerPedId(), collection, nameHash)
+		ClearPedDecorations(PlayerPedId())
+		for k, v in pairs(tattooList) do
+			if v.Count ~= nil then
+				for i = 1, v.Count do
+					SetPedDecoration(PlayerPedId(), v.collection, v.nameHash)
+				end
+			else
+				SetPedDecoration(PlayerPedId(), v.collection, v.nameHash)
+			end
+		end
+		currentTattoos = setTattoos
     end
 end)
