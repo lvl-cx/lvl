@@ -243,53 +243,6 @@ function tARMA.generateUUID(key,length,type)
 end
 
 
-Citizen.CreateThread(function()
-    while true do
-        local M = tARMA.getPlayerCoords()
-        for a0, a1 in pairs(R) do
-            local a2 = #(a1.position - M)
-            local a3 = a2 <= a1.radius and math.abs(M.z - a1.position.z) <= a1.height
-            a1.distance = a2
-            if a1.player_in and not a3 then
-                if a1.leaveArea then
-                    if a1.metaData == nil then
-                        a1.metaData = {}
-                    end
-                    a1.leaveArea(a1.metaData)
-                else
-                    vRPserver.leaveArea({a0})
-                end
-            elseif not a1.player_in and a3 then
-                if a1.enterArea then
-                    if a1.metaData == nil then
-                        a1.metaData = {}
-                    end
-                    a1.enterArea(a1.metaData)
-                else
-                    vRPserver.enterArea({a0})
-                end
-            end
-            a1.player_in = a3
-        end
-        Wait(0)
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        for a0, a1 in pairs(R) do
-            if a1.player_in and a1.onTickArea then
-                if a1.metaData == nil then
-                    a1.metaData = {}
-                end
-                a1.metaa.distance = a1.distance
-                a1.onTickArea(a1.metaData)
-            end
-        end
-        Wait(0)
-    end
-end)
-
 local a=0
 local b=0
 local c=0
