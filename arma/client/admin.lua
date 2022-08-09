@@ -72,7 +72,7 @@ local function k(l)
     EndScaleformMovieMethod()
     return l
 end
-function tARMA.togglenoclipActive()
+function tARMA.toggleNoclip()
     noclipActive = not noclipActive
     if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) then
         c = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
@@ -89,10 +89,10 @@ function tARMA.togglenoclipActive()
         SetEntityVisible(tARMA.getPlayerPed(), true, false)
     end
 end
-RegisterKeyMapping("noclipActive", "Staff noclipActive", "keyboard", "F4")
-RegisterCommand("noclipActive",function()
+RegisterKeyMapping("noclip", "Staff Noclip", "keyboard", "F4")
+RegisterCommand("noclip",function()
     if tARMA.getStaffLevel() >= 4 then
-        TriggerServerEvent("ARMA:noclipActive")
+        TriggerServerEvent("ARMA:noClip")
     end
 end)
 
