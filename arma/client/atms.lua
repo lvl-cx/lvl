@@ -108,59 +108,60 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 
-
-Citizen.CreateThread(function()
-    for i,v in pairs(cfg.atms) do 
-        local x,y,z = v[1], v[2], v[3]
-        local Blip = AddBlipForCoord(x, y, z)
-        SetBlipSprite(Blip, 272)
-        SetBlipDisplay(Blip, 4)
-        SetBlipScale(Blip, 0.5)
-        SetBlipColour(Blip, 2)
-        SetBlipAsShortRange(Blip, true)
-        AddTextEntry("MAPBLIP", 'ATMs')
-        BeginTextCommandSetBlipName("MAPBLIP")
-        EndTextCommandSetBlipName(Blip)
-        SetBlipCategory(Blip, 1)
-    end
-end)
-
-
-Citizen.CreateThread(function()
-    while true do 
-        Wait(0)
-        for i,v in pairs(cfg.atms) do 
-            local x,y,z = v[1], v[2], v[3]
-            DrawMarker(29, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.4, 0.4, 0.4, 00, 255, 00, 250, true, true, false, false, nil, nil, false)
+local function f()
+    RageUI.CloseAll()
+    RageUI.Visible(RMenu:Get('ARMAATM', 'main'), true) 
+end
+local function g()
+    RageUI.CloseAll()
+    RageUI.Visible(RMenu:Get('ARMAATM', 'main'), false) 
+end
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		local i=function(j)
+            tARMA.setCanAnim(false)
+            f(j.atmId)
+            a=true 
+        end
+        local k=function(j)
+            g(j.atmId)
+            tARMA.setCanAnim(true)
+            a=false 
+        end
+        local l=function(j)
+        end
+        for m,n in pairs(cfg.atms) do
+            tARMA.createArea("atm_"..m,n,1.5,6,i,k,l,{atmId=m})
+            tARMA.addBlip(n.x,n.y,n.z,108,4,"ATM",0.8,true)
+            tARMA.addMarker(n.x,n.y,n.z,0.7,0.7,0.5,0,255,125,125,50,29,false,false,true)
         end 
-    end
+		firstspawn = 1
+	end
 end)
 
-local MenuOpen = false;
-local inMarker = false;
-Citizen.CreateThread(function()
-    while true do 
-        Wait(250)
-        inMarker = false
-        local ped = PlayerPedId()
-        local coords = GetEntityCoords(ped)
-        for i,v in pairs(cfg.atms) do 
-            local x,y,z = v[1], v[2], v[3]
-            if #(coords - vec3(x,y,z)) <= 1.0 then
-                inMarker = true 
-                break
-            end    
-        end
-        if not MenuOpen and inMarker then 
-            MenuOpen = true 
-            PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
-            RageUI.Visible(RMenu:Get('ARMAATM', 'main'), true) 
-        end
-        if MenuOpen and not inMarker then 
-            MenuOpen = false 
-            PlaySound(-1,"Hit","RESPAWN_SOUNDSET",0,0,1)
-            RageUI.ActuallyCloseAll()
-            RageUI.Visible(RMenu:Get('ARMAATM', 'main'), false) 
-        end
+function tARMA.createAtm(q,r)
+    local i=function()
+        tARMA.setCanAnim(false)
+        f()
+        a=true 
     end
-end)
+    local k=function()
+        g()
+        tARMA.setCanAnim(true)
+        a=false 
+    end
+    local s=string.format("atm_%s",q)
+    tARMA.createArea(s,r,1.5,6,i,k,function()
+    end)
+    local t=tARMA.addMarker(r.x,r.y,r.z,0.7,0.7,0.5,0,255,125,125,50,29,false,false,true)
+    p[q]={area=s,marker=t}
+end
+function tARMA.deleteAtm(q)
+    local u=p[q]
+    if u then 
+        tARMA.removeMarker(u.marker)
+        tARMA.removeArea(u.area)
+        p[q]=nil 
+    end 
+end
