@@ -27,15 +27,8 @@ RageUI.CreateWhile(1.0, true, function()
             if b then
                 RageUI.ButtonWithStyle("Spawn Vehicle (No mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        AddTextEntry('FMMC_MPM_NC', "Enter the car spawncode name")
-                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                        while (UpdateOnscreenKeyboard() == 0) do
-                            DisableAllControlActions(0);
-                            Wait(0);
-                        end
-                        if (GetOnscreenKeyboardResult()) then
-                            local result = GetOnscreenKeyboardResult()
-                            if result then 
+                        tARMA.clientPrompt("Spawncode:","",function(result)
+                            if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
                                 local k=tARMA.LoadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
@@ -45,22 +38,15 @@ RageUI.CreateWhile(1.0, true, function()
                                 SetModelAsNoLongerNeeded(k)
                                 SetVehRadioStation(nveh,"OFF")
                                 Wait(500)
-                                SetVehRadioStation(nveh,"OFF")                            
-                            end
-                        end
+                                SetVehRadioStation(nveh,"OFF")          
+                            end 
+                        end)
                     end
                 end)
                 RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        AddTextEntry('FMMC_MPM_NC', "Enter the car spawncode name")
-                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                        while (UpdateOnscreenKeyboard() == 0) do
-                            DisableAllControlActions(0);
-                            Wait(0);
-                        end
-                        if (GetOnscreenKeyboardResult()) then
-                            local result = GetOnscreenKeyboardResult()
-                            if result then 
+                        tARMA.clientPrompt("Spawncode:","",function(result)
+                            if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
                                 local k=tARMA.LoadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
@@ -71,9 +57,9 @@ RageUI.CreateWhile(1.0, true, function()
                                 applymods(nveh)
                                 SetVehRadioStation(nveh,"OFF")
                                 Wait(500)
-                                SetVehRadioStation(nveh,"OFF")                            
+                                SetVehRadioStation(nveh,"OFF")          
                             end
-                        end
+                        end)
                     end
                 end)
                 RageUI.ButtonWithStyle("Fix Vehicle" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
@@ -527,7 +513,8 @@ local function a1()
             a3(string.format("<%s x=\"%s\" y=\"%s\" z=\"%s\" />",O.name,W.x,W.y,W.z))
         end 
     end
-    TriggerServerEvent('ARMA:sendCarDev',{a2})
+    tARMA.clientPrompt("Output (CTRL+A, CTRL+C)",a2,function()
+    end)
 end
 local function a6(a7)
     C=a7
