@@ -527,6 +527,7 @@ WeaponNames = {
     [tostring(GetHashKey("WEAPON_MOSIN"))] = 'Mosin Nagant',
     [tostring(GetHashKey("WEAPON_VECTOR"))] = 'Vector',
     [tostring(GetHashKey("WEAPON_WINCHESTER12"))] = 'Winchester 12',
+    [tostring(GetHashKey("WEAPON_LR300"))] = 'LR-300',
 
     --[[ PD ]]
     [tostring(GetHashKey("WEAPON_SPAR16"))] = 'SPAR-16',

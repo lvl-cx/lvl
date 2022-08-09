@@ -91,7 +91,7 @@ Citizen.CreateThread(function()
                 draw2dText(0.76, 1.44, 1.0, 1.0, 0.4, "Health: " .. D .. "/" .. E, 51, 153, 255, 200)
                 draw2dText(0.76, 1.415, 1.0, 1.0, 0.4, "Armor: " .. G, 51, 153, 255, 200)
                 draw2dText(0.76,1.39,1.0,1.0,0.4,"Vehicle Health: " .. GetEntityHealth(GetVehiclePedIsIn(B, false)),51,153,255,200)
-                local I = tARMA.getWeaponName(F)
+                local I = WeaponNames[tostring(F)]
                 draw2dText(0.76, 1.365, 1.0, 1.0, 0.4, "Weapon: " .. (I or "N/A"), 51, 153, 255, 200)
                 draw2dText(0.76, 1.340, 1.0, 1.0, 0.4, "Ammo: " .. (H or "N/A"), 51, 153, 255, 200)
                 local J = GetActivePlayers()
