@@ -1,16 +1,21 @@
-local noclip = false
-local blips = false
-
-config = {
+noclip = false
+local a = nil
+local b = 1
+local c = 0
+local d = false
+local e = false
+local f = {
     controls = {
-        up = 44,  -- [[W]]
-        down = 38, -- [[S]]
-        goForward = 32,  -- [[W]]
-        goBackward = 33, -- [[S]]
-        changeSpeed = 21, -- [[L-Shift]]
-        decreasespeed = 19,
+        openKey = 288,
+        goUp = 85,
+        goDown = 38,
+        turnLeft = 34,
+        turnRight = 35,
+        goForward = 32,
+        goBackward = 33,
+        reduceSpeed = 19,
+        increaseSpeed = 21
     },
-
     speeds = {
         {label = "Very Slow", speed = 0.1},
         {label = "Slow", speed = 0.5},
@@ -21,110 +26,125 @@ config = {
         {label = "Extremely Fast v2.0", speed = 20},
         {label = "Max Speed", speed = 25}
     },
-        bgR = 0, 
-        bgG = 0, 
-        bgB = 0, 
-        bgA = 80, 
+    offsets = {y = 0.5, z = 0.2, h = 3},
+    bgR = 0,
+    bgG = 0,
+    bgB = 0,
+    bgA = 80
 }
-
+local function g(h)
+    BeginTextCommandScaleformString("STRING")
+    AddTextComponentSubstringKeyboardDisplay(h)
+    EndTextCommandScaleformString()
+end
+local function i(j)
+    ScaleformMovieMethodAddParamPlayerNameString(j)
+end
+local function k(l)
+    local l = RequestScaleformMovie(l)
+    while not HasScaleformMovieLoaded(l) do
+        Citizen.Wait(1)
+    end
+    BeginScaleformMovieMethod(l, "CLEAR_ALL")
+    EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(l, "SET_CLEAR_SPACE")
+    ScaleformMovieMethodAddParamInt(200)
+    EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(l, "SET_DATA_SLOT")
+    ScaleformMovieMethodAddParamInt(1)
+    i(GetControlInstructionalButton(1, f.controls.goBackward, true))
+    i(GetControlInstructionalButton(1, f.controls.goForward, true))
+    g("Go Forwards/Backwards")
+    EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(l, "SET_DATA_SLOT")
+    ScaleformMovieMethodAddParamInt(0)
+    i(GetControlInstructionalButton(2, f.controls.reduceSpeed, true))
+    i(GetControlInstructionalButton(2, f.controls.increaseSpeed, true))
+    g("Increase/Decrease Speed (" .. f.speeds[b].label .. ")")
+    EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(l, "DRAW_INSTRUCTIONAL_BUTTONS")
+    EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(l, "SET_BACKGROUND_COLOUR")
+    ScaleformMovieMethodAddParamInt(f.bgR)
+    ScaleformMovieMethodAddParamInt(f.bgG)
+    ScaleformMovieMethodAddParamInt(f.bgB)
+    ScaleformMovieMethodAddParamInt(f.bgA)
+    EndScaleformMovieMethod()
+    return l
+end
 function tARMA.toggleNoclip()
     noclip = not noclip
-    inRedZone = false
-    if IsPedInAnyVehicle(PlayerPedId(), true) then
-        ped = GetVehiclePedIsIn(PlayerPedId(), true)
+    if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) then
+        c = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
     else
-        ped = PlayerPedId()
+        c = tARMA.getPlayerPed()
     end
-    if noclip then -- set
-        SetPedCanRagdoll(ped, false)
-        SetEntityInvincible(ped, true)
-        SetPlayerInvincible(ped, true)
-        SetEntityVisible(ped, false, false)
-        SetEntityCollision(ped, false)
-    else -- unset
-        SetPedCanRagdoll(ped,true)
-        SetEntityInvincible(ped, false)
-        SetPlayerInvincible(ped, false)
-        SetEntityVisible(ped, true, true)
-        SetEntityCollision(ped, true)
-        FreezeEntityPosition(ped, false)
-        
+    SetEntityCollision(c, not noclip, not noclip)
+    FreezeEntityPosition(c, noclip)
+    SetEntityInvincible(c, noclip)
+    SetVehicleRadioEnabled(c, not noclip)
+    if noclip then
+        SetEntityVisible(tARMA.getPlayerPed(), false, false)
+    else
+        SetEntityVisible(tARMA.getPlayerPed(), true, false)
     end
 end
-
-function tARMA.isNoclip()
-    return noclip
-end
-
-index = 1
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if noclip then
-            currentSpeed = config.speeds[index].speed
-            if IsPedInAnyVehicle(PlayerPedId(), false) then
-                noclipEntity = GetVehiclePedIsIn(PlayerPedId(), false)
-            else
-                noclipEntity = PlayerPedId()
-            end
-            SetEntityCollision(noclipEntity, not noclip, not noclip)
-            FreezeEntityPosition(noclipEntity, noclip)
-            SetEntityInvincible(noclipEntity, noclip)
-            SetVehicleRadioEnabled(noclipEntity, not noclip)
-        end
-
-        if noclip then
-            local yoff = 0.0
-            local zoff = 0.0
-            local x, y, z = tARMA.getPosition()
-            local dx, dy, dz = tARMA.getCamDirection()
-            if IsControlJustPressed(1, config.controls.changeSpeed) then
-                if index ~= #config.speeds then
-                    index = index+1
-                    currentSpeed = config.speeds[index].speed
-                end
-            end
-            if IsControlJustPressed(1, config.controls.decreasespeed) then
-                if index ~= 1 then
-                    index = index-1
-                    currentSpeed = config.speeds[index].speed
-                end
-            end
-				
-			DisableControls()
-			if IsDisabledControlPressed(0, config.controls.goForward) then
-                x = x + currentSpeed * dx
-                y = y + currentSpeed * dy
-                z = z + currentSpeed * dz
-			end
-            if IsDisabledControlPressed(0, config.controls.goBackward) then
-                x = x - currentSpeed * dx
-                y = y - currentSpeed * dy
-                z = z - currentSpeed * dz
-			end
-            local heading = GetGameplayCamRelativeHeading()+GetEntityHeading(PlayerPedId())
-            local newPos = GetOffsetFromEntityInWorldCoords(noclipEntity, 0.0, x,y, zoff * (currentSpeed + 0.3))
-			SetEntityHeading(noclipEntity, heading)
-            SetEntityCoordsNoOffset(noclipEntity, x, y, z, true, true, false)
-        end
+RegisterKeyMapping("noclip", "Staff Noclip", "keyboard", "F4")
+RegisterCommand("noclip",function()
+    if tARMA.getStaffLevel() >= 4 then
+        TriggerServerEvent("ARMA:noClip")
     end
 end)
 
-
-function DisableControls()
-    DisableControlAction(0, 30, true)
-    DisableControlAction(0, 31, true)
-    DisableControlAction(0, 32, true)
-    DisableControlAction(0, 33, true)
-    DisableControlAction(0, 34, true)
-    DisableControlAction(0, 35, true)
-    DisableControlAction(0, 266, true)
-    DisableControlAction(0, 267, true)
-    DisableControlAction(0, 268, true)
-    DisableControlAction(0, 269, true)
-    DisableControlAction(0, 44, true)
-    DisableControlAction(0, 74, true)
-end
+Citizen.CreateThread(function()
+    local m = k("instructional_buttons")
+    local n = f.speeds[b].speed
+    while true do
+        if noclip then
+            DrawScaleformMovieFullscreen(m)
+            local o = 0.0
+            local p = 0.0
+            local r, s, t = tARMA.getPosition()
+            local u, v, w = tARMA.getCamDirection()
+            if IsDisabledControlJustPressed(1, f.controls.reduceSpeed) then
+                if b ~= 1 then
+                    b = b - 1
+                    n = f.speeds[b].speed
+                end
+                k("instructional_buttons")
+            end
+            if IsDisabledControlJustPressed(1, f.controls.increaseSpeed) then
+                if b ~= 8 then
+                    b = b + 1
+                    n = f.speeds[b].speed
+                end
+                k("instructional_buttons")
+            end
+            if IsControlPressed(0, f.controls.goForward) then
+                r = r + n * u
+                s = s + n * v
+                t = t + n * w
+            end
+            if IsControlPressed(0, f.controls.goBackward) then
+                r = r - n * u
+                s = s - n * v
+                t = t - n * w
+            end
+            if IsControlPressed(0, f.controls.goUp) then
+                p = f.offsets.z
+            end
+            if IsControlPressed(0, f.controls.goDown) then
+                p = -f.offsets.z
+            end
+            local x = GetEntityHeading(c)
+            SetEntityVelocity(c, 0.0, 0.0, 0.0)
+            SetEntityRotation(c, u, v, w, 0, false)
+            SetEntityHeading(c, x)
+            SetEntityCoordsNoOffset(c, r, s, t, noclip, noclip, noclip)
+        end
+        Wait(0)
+    end
+end)
 
 local usingDelgun = false
 

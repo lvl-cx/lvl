@@ -715,7 +715,7 @@ RageUI.CreateWhile(1.0, true, function()
                             inSpectatorAdminMode = true
                             RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
                         else
-                            tARMA.notify("~r~You cannot spectate yourself")
+                            tARMA.notify("~r~You cannot spectate yourself.")
                         end
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
@@ -727,7 +727,7 @@ RageUI.CreateWhile(1.0, true, function()
                             inSpectatorAdminMode = true
                             RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
                         else
-                            tARMA.notify("~r~You cannot spectate yourself")
+                            tARMA.notify("~r~You cannot spectate yourself.")
                         end
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
@@ -1462,13 +1462,6 @@ RegisterCommand('openadminmenu',function()
     TriggerServerEvent("ARMA:GetNearbyPlayerData")
     TriggerServerEvent("ARMA:getAdminLevel")
     GlobalAdminLevel = tARMA.getStaffLevel()
-end)
-
-RegisterKeyMapping('openadminmenu', 'Opens the Admin menu', 'keyboard', 'F2')
-
-RegisterKeyMapping('noclip', 'Staff Noclip', 'keyboard', 'F4')       
-RegisterCommand('noclip', function(source, args, RawCommand)
-    TriggerServerEvent("ARMA:noClip")
 end)
 
 RegisterCommand('devmenu',function()
