@@ -271,12 +271,19 @@ end
 RegisterNetEvent("TpToWaypoint")
 AddEventHandler("TpToWaypoint", teleportToWaypoint)
 
+RegisterCommand('staffmode', function()
+    if tARMA.getStaffLevel() > 0 then
+        tARMA.staffMode(not staffMode)
+    end
+end)
+
 staffMode = false
 local isInTicket = false
 function tARMA.staffMode(status)
     staffMode = status
 
     if staffMode then
+        tARMA.notify('~g~Staff Powerz Activated.')
         if GetEntityHealth(PlayerPedId())<=102 then 
             tARMA.RevivePlayer()
         end
@@ -303,6 +310,7 @@ function tARMA.staffMode(status)
         staffClothing[11]={442,0}
         tARMA.setCustomization(staffClothing)
     else
+        tARMA.notify('~g~Staff Powerz Deactivated.')
         tARMA.setCustomization(clothing)
         tARMA.giveWeapons(weapons, true)
         weapons = nil
