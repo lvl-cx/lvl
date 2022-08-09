@@ -281,6 +281,11 @@ AddEventHandler("gcPhone:allMessage", function(allmessages)
   messages = allmessages
 end)
 
+RegisterNetEvent("gcPhone:getBourse")
+AddEventHandler("gcPhone:getBourse", function(bourse)
+  SendNUIMessage({event = 'updateBourse', bourse = bourse})
+end)
+
 RegisterNetEvent("gcPhone:receiveMessage")
 AddEventHandler("gcPhone:receiveMessage", function(message)
   -- SendNUIMessage({event = 'updateMessages', messages = messages})
@@ -291,10 +296,10 @@ AddEventHandler("gcPhone:receiveMessage", function(message)
       if hasPhone == true then
         local text = '~o~New  message'
         if ShowNumberNotification == true then
-          text = '~o~New message from ~y~'.. message.transmitter
+          text = '~g~New message from ~b~'.. message.transmitter
           for _,contact in pairs(contacts) do
             if contact.number == message.transmitter then
-              text = '~o~New message from ~g~'.. contact.display
+              text = '~g~New message from ~b~'.. contact.display
               break
             end
           end
@@ -302,11 +307,7 @@ AddEventHandler("gcPhone:receiveMessage", function(message)
         SetNotificationTextEntry("STRING")
         AddTextComponentString(text)
         DrawNotification(false, false)
-        PlaySound(-1, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1)
-        Citizen.Wait(300)
-        PlaySound(-1, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1)
-        Citizen.Wait(300)
-        PlaySound(-1, "Menu_Accept", "Phone_SoundSet_Default", 0, 0, 1)
+        TriggerEvent("arma:PlaySound", "iphone_ping")
       end
     end)
   end
@@ -387,6 +388,7 @@ AddEventHandler("gcPhone:waitingCall", function(infoCall, initiator)
       if hasPhone == true then
         SendNUIMessage({event = 'waitingCall', infoCall = infoCall, initiator = initiator})
         PhonePlayCall()
+        TriggerEvent("arma:PlaySound", "ringtone")
         if menuIsOpen == false then
           TooglePhone()
         end
@@ -432,6 +434,7 @@ AddEventHandler("gcPhone:rejectCall", function(infoCall)
     end
   end)
   SendNUIMessage({event = 'rejectCall', infoCall = infoCall})
+  TriggerEvent("arma:PlaySound", "hangup")
 end)
 
 
@@ -599,7 +602,6 @@ end)
 --  Gestion des evenements NUI
 --==================================================================================== 
 RegisterNUICallback('log', function(data, cb)
-  print(data)
   cb()
 end)
 RegisterNUICallback('focus', function(data, cb)

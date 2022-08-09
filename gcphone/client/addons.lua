@@ -1,10 +1,4 @@
---
--- Created by IntelliJ IDEA.
--- User: Sling
--- Date: 17-12-2018
--- Time: 00:39
--- Made for CiviliansNetwork
---
+
 ARMA = Proxy.getInterface("ARMA")
 
 RegisterNetEvent('service:call')

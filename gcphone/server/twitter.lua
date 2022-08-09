@@ -272,13 +272,7 @@ AddEventHandler('gcPhone:twitter_setAvatarUrl', function(username, password, ava
   end)
 end)
 
-
---[[
-  Discord WebHook
-  set discord_webhook 'https//....' in config.cfg
---]]
 AddEventHandler('gcPhone:twitter_newTweets', function (tweet)
-  -- print(json.encode(tweet))
   local discord_webhook = GetConvar('discord_webhook', '')
   if discord_webhook == '' then
     return
