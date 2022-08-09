@@ -1,4 +1,4 @@
-noclip = false
+noclipActive = false
 local a = nil
 local b = 1
 local c = 0
@@ -72,27 +72,27 @@ local function k(l)
     EndScaleformMovieMethod()
     return l
 end
-function tARMA.toggleNoclip()
-    noclip = not noclip
+function tARMA.togglenoclipActive()
+    noclipActive = not noclipActive
     if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) then
         c = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
     else
         c = tARMA.getPlayerPed()
     end
-    SetEntityCollision(c, not noclip, not noclip)
-    FreezeEntityPosition(c, noclip)
-    SetEntityInvincible(c, noclip)
-    SetVehicleRadioEnabled(c, not noclip)
-    if noclip then
+    SetEntityCollision(c, not noclipActive, not noclipActive)
+    FreezeEntityPosition(c, noclipActive)
+    SetEntityInvincible(c, noclipActive)
+    SetVehicleRadioEnabled(c, not noclipActive)
+    if noclipActive then
         SetEntityVisible(tARMA.getPlayerPed(), false, false)
     else
         SetEntityVisible(tARMA.getPlayerPed(), true, false)
     end
 end
-RegisterKeyMapping("noclip", "Staff Noclip", "keyboard", "F4")
-RegisterCommand("noclip",function()
+RegisterKeyMapping("noclipActive", "Staff noclipActive", "keyboard", "F4")
+RegisterCommand("noclipActive",function()
     if tARMA.getStaffLevel() >= 4 then
-        TriggerServerEvent("ARMA:noClip")
+        TriggerServerEvent("ARMA:noclipActive")
     end
 end)
 
@@ -100,7 +100,7 @@ Citizen.CreateThread(function()
     local m = k("instructional_buttons")
     local n = f.speeds[b].speed
     while true do
-        if noclip then
+        if noclipActive then
             DrawScaleformMovieFullscreen(m)
             local o = 0.0
             local p = 0.0
@@ -140,7 +140,7 @@ Citizen.CreateThread(function()
             SetEntityVelocity(c, 0.0, 0.0, 0.0)
             SetEntityRotation(c, u, v, w, 0, false)
             SetEntityHeading(c, x)
-            SetEntityCoordsNoOffset(c, r, s, t, noclip, noclip, noclip)
+            SetEntityCoordsNoOffset(c, r, s, t, noclipActive, noclipActive, noclipActive)
         end
         Wait(0)
     end

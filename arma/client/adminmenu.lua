@@ -1397,7 +1397,7 @@ Citizen.CreateThread(function()
             ClearPedLastWeaponDamage(PlayerPedId())
             SetEntityProofs(PlayerPedId(), true, true, true, true, true, true, true, true)
             SetEntityCanBeDamaged(PlayerPedId(), false)			
-        elseif not FrozenPlayer and not noclip and not inSpectatorAdminMode and not staffMode then  
+        elseif not FrozenPlayer and not noclipActive and not inSpectatorAdminMode and not staffMode then  
             SetEntityInvincible(PlayerPedId(), false)
             SetPlayerInvincible(PlayerPedId(), false)
             FreezeEntityPosition(PlayerPedId(), false)
