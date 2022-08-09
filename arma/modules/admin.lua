@@ -775,7 +775,6 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                             end
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
                                 points = points + bans[a].durations[PlayerOffenses[PlayerID][k]]/24
-                                print(points)
                             else
                                 points = 10
                             end
@@ -803,6 +802,15 @@ AddEventHandler("playerJoining", function()
         defaultBans[v.id] = 0
     end
     exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
+end)
+
+RegisterCommand('removepoints', function() -- proof of concept for removing points each month
+    if os.date('%d') == '01' then
+        print('first of month')
+    else
+        print(os.date('%d'))
+        print('not first of month')
+    end
 end)
 
 RegisterServerEvent("ARMA:BanPlayer")
@@ -871,6 +879,14 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                 ARMA.ban(source,PlayerID,banDuration,BanMessage)
                 f10Ban(PlayerID, AdminName, BanMessage, Duration)
                 exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
+                local a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = PlayerID})
+                for k,v in pairs(a) do
+                    if v.UserID == PlayerID then
+                        if v.points > 10 then
+                            ARMA.banConsole(PlayerID,"perm","Excessive F10")
+                        end
+                    end
+                end
             end
         else
             ARMAclient.notify(AdminTemp, {"~r~Evidence field was left empty!"})
