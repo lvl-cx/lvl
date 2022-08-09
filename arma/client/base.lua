@@ -15,10 +15,26 @@ Proxy.addInterface("ARMA",tARMA)
 -- functions
 
 
-function tARMA.teleport(x,y,z)
-  tARMA.unjail() -- force unjail before a teleportation
-  SetEntityCoords(PlayerPedId(), x+0.0001, y+0.0001, z+0.0001, 1,0,0,1)
-  ARMAserver.updatePos({x,y,z})
+function tARMA.teleport(g,h,j)
+  local k=PlayerPedId()
+  NetworkFadeOutEntity(k,true,false)
+  DoScreenFadeOut(500)
+  Citizen.Wait(500)
+  SetEntityCoords(tARMA.getPlayerPed(),g+0.0001,h+0.0001,j+0.0001,1,0,0,1)
+  NetworkFadeInEntity(k,0)
+  DoScreenFadeIn(500)
+end
+
+function tARMA.teleport2(l,m)
+  local k=PlayerPedId()
+  NetworkFadeOutEntity(k,true,false)
+  if tARMA.getPlayerVehicle()==0 or not m then 
+      SetEntityCoords(tARMA.getPlayerPed(),l.x,l.y,l.z,1,0,0,1)
+  else 
+      SetEntityCoords(tARMA.getPlayerVehicle(),l.x,l.y,l.z,1,0,0,1)
+  end
+  Wait(500)
+  NetworkFadeInEntity(k,0)
 end
 
 -- return x,y,z
