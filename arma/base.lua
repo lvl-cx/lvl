@@ -204,7 +204,7 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_bans_offenses(
     UserID INTEGER AUTO_INCREMENT,
     Rules TEXT NULL DEFAULT NULL,
-    points FLOAT(10) NOT NULL DEFAULT 0,
+    points INT(10) NOT NULL DEFAULT 0,
     CONSTRAINT pk_user PRIMARY KEY(UserID)
     );
     ]])
