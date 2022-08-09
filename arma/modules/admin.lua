@@ -1110,7 +1110,6 @@ AddEventHandler('ARMA:RemoveWarning', function(warningid)
     local user_id = ARMA.getUserId(source)
     if user_id ~= nil then
         if ARMA.hasPermission(user_id, "admin.removewarn") then 
-            print('has perms')
             exports['ghmattimysql']:execute("SELECT * FROM arma_warnings WHERE warning_id = @warning_id", {warning_id = tonumber(warningid)}, function(result) 
                 if result ~= nil then
                     for k,v in pairs(result) do
