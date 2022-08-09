@@ -101,6 +101,12 @@ window.addEventListener("load", function() {
         else if (data.act == "prompt") {
             wprompt.open(data.title, data.text);
         }
+        else if (data.act == "open_prompt") {
+			wprompt.open(data.title, data.text, data.type);
+		}
+        else if (data.act == "close_prompt") {
+			wprompt.close();
+		}
         // REQUEST
         else if (data.act == "request") {
             requestmgr.addRequest(data.id, data.text, data.time);
