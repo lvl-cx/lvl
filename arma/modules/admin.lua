@@ -139,7 +139,7 @@ AddEventHandler("ARMA:stopSpectatePlayer", function()
 end)
 RegisterServerEvent("ARMA:spectatePlayer")
 AddEventHandler("ARMA:spectatePlayer", function(id)
-    local playerssource = tonumber(id)
+    local playerssource = ARMA.getUserSource(id)
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
         M = 1000
@@ -149,7 +149,7 @@ end)
 
 RegisterServerEvent("ARMA:spectatePlayerEsp")
 AddEventHandler("ARMA:spectatePlayerEsp", function(id)
-    local playerssource = tonumber(id)
+    local playerssource = ARMA.getUserSource(id)
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
         TriggerClientEvent("ARMA:spectate",source,playerssource)
