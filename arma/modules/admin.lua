@@ -766,17 +766,17 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                                 bans[a].durations[PlayerOffenses[PlayerID][k]] = -1
                             end
                             PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
-                            if PlayerOffenses[PlayerID][k] == 1 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
-                            elseif PlayerOffenses[PlayerID][k] == 2 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~2nd Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
-                            elseif PlayerOffenses[PlayerID][k] >= 3 then
-                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs')
-                            end
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
                                 points = points + bans[a].durations[PlayerOffenses[PlayerID][k]]/24
                             else
                                 points = 10
+                            end
+                            if PlayerOffenses[PlayerID][k] == 1 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
+                            elseif PlayerOffenses[PlayerID][k] == 2 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~2nd Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
+                            elseif PlayerOffenses[PlayerID][k] >= 3 then
+                                table.insert(separatormsg, bans[a].name ..' ~y~| ~w~3rd Offense ~y~| ~w~'..(bans[a].durations[PlayerOffenses[PlayerID][k]]..'hrs' and bans[a].durations[PlayerOffenses[PlayerID][k]] > 0 or 'Permanent'))
                             end
                             table.insert(PlayerCacheBanMessage, bans[a].name)
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
