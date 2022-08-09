@@ -709,7 +709,7 @@ RageUI.CreateWhile(1.0, true, function()
             if GlobalAdminLevel >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        if tonumber(SelectedPlayer[2]) == GetPlayerServerId(PlayerId()) then
+                        if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
                             inRedZone = false
                             TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
                             inSpectatorAdminMode = true
@@ -721,7 +721,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
                 RageUI.ButtonWithStyle("Spectate Player [Anti-ESP]", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        if tonumber(SelectedPlayer[2]) == GetPlayerServerId(PlayerId()) then
+                        if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
                             inRedZone = false
                             TriggerServerEvent("ARMA:spectatePlayerEsp", SelectedPlayer[3])
                             inSpectatorAdminMode = true
