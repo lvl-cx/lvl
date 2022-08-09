@@ -38,6 +38,8 @@ cfg.groups = {
 		"admin.spawnBmx",
 		"admin.idsabovehead",
 		"admin.noclip",
+		"admin.managecommunitypot",
+		"admin.moneymenu",
 		
 			
 		"admin.staffAddGroups",
@@ -113,6 +115,8 @@ cfg.groups = {
 		"admin.licenseAddGroups",
 		"admin.donoAddGroups",
 		"admin.nhsAddGroups",
+		"admin.managecommunitypot",
+		"admin.moneymenu",
 
 		"group.add.vip",
         "group.add.founder",
@@ -188,6 +192,7 @@ cfg.groups = {
 		"admin.spawnBmx",
 		"admin.idsabovehead",
 		"admin.noclip",
+		"admin.managecommunitypot",
 		
 			
 		"admin.staffAddGroups",
@@ -232,6 +237,7 @@ cfg.groups = {
 	    "dev.getcoords",
 		"admin.vehmenu",
 		"admin.special",
+		"admin.managecommunitypot",
 		
 		"admin.menu",
         "admin.warn",
