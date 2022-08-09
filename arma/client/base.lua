@@ -476,6 +476,14 @@ function tARMA.loadAnimDict(dict)
 	end
 end
 
+local m=true
+function tARMA.canAnim()
+    return m 
+end
+function tARMA.setCanAnim(n)
+    m=n 
+end
+
 function tARMA.setWeapon(m, s, t)
   SetCurrentPedWeapon(m, s, t)
 end
