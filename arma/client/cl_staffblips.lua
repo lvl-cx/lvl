@@ -29,7 +29,7 @@ Citizen.CreateThread(function()
                 local G=GetPlayerPed(P)
                 if G~=GetPlayerPed(-1)then 
                     local blip=GetBlipFromEntity(G)
-                    if not DoesBlipExist(blip) and not tARMA.isUserHidden(S)then 
+                    if not DoesBlipExist(blip) then 
                         blip=AddBlipForEntity(G)
                         if GetEntityHealth(G)>102 then 
                             SetBlipSprite(blip,1)
@@ -100,8 +100,4 @@ RegisterNetEvent("ARMA:sendFarblips",function(w)
             end 
         end 
     end 
-end)
-
-RegisterNetEvent("ARMA:disableDevBlips",function()
-    g()
 end)
