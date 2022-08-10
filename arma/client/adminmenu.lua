@@ -1,7 +1,6 @@
 ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 
 local user_id = 0
-
 local foundMatch = false
 local inSpectatorAdminMode = false
 local players = {}
@@ -16,24 +15,19 @@ local SelectedName = nil
 local SelectedPlayerSource = nil
 local hoveredPlayer = nil
 local GlobalAdminLevel = 0
-
 local banreasons = {}
 local selectedbans = {}
 local Duration = 0
 local BanMessage = "N/A"
 local SeparatorMSG = {}
 local BanPoints = 0
-
 local banchecked = {}
-
-
 local f = nil
 local g
 local h = {}
 local i = 1
 local k = {}
 local a10
-
 local acbannedplayers = 0
 local acbannedplayerstable = {}
 local actypes = {}
@@ -945,6 +939,13 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:requestAccountInfosv", true, SelectedPlayer[3])
                     end
                 end,RMenu:Get("adminmenu", "submenu"))
+            end
+            if GlobalAdminLevel > 6 then 
+                RageUI.ButtonWithStyle("Copy To Players Clipboard", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        TriggerServerEvent("ARMA:CopyToClipBoard", SelectedPlayer[3])
+                    end 
+                end,RMenu:Get('adminmenu','submenu'))
             end
             if GlobalAdminLevel > 6 then
                 RageUI.ButtonWithStyle("See Groups", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)

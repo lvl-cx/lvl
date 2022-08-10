@@ -2281,6 +2281,28 @@ AddEventHandler("ARMA:dealershipBucket",function(bool)
     end
 end)
 
+RegisterServerEvent('ARMA:CopyToClipBoard')
+AddEventHandler('ARMA:CopyToClipBoard', function(id)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+
+    if ARMA.hasPermission(user_id, 'group.remove') then
+        ARMA.prompt(source,"Input text to copy to clipboard","",function(source,data) 
+            ARMAclient.CopyToClipBoard(ARMA.getUserSource(id), {data})
+        end)
+    end
+end)
+
+RegisterServerEvent('ARMA:checkBlips')
+AddEventHandler('ARMA:checkBlips', function(status)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+
+    if ARMA.hasPermission(user_id, 'dev.menu') then
+        TriggerClientEvent('ARMA:showBlipscl', source, status)
+    end
+end)
+
 local function ch_list(player,choice)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil and ARMA.hasPermission(user_id,"admin.tickets") then
@@ -2426,14 +2448,4 @@ AddEventHandler('ARMA:getAdminLevel', function()
         adminlevel = 1
     end
     ARMAclient.setStaffLevel(source, {adminlevel})
-end)
-
-RegisterServerEvent('ARMA:checkBlips')
-AddEventHandler('ARMA:checkBlips', function(status)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-
-    if ARMA.hasPermission(user_id, 'dev.menu') then
-        TriggerClientEvent('ARMA:showBlipscl', source, status)
-    end
 end)
