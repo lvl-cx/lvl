@@ -756,11 +756,10 @@ AddEventHandler('ARMA:LootBag', function(netid)
                 if user_id ~= nil then
                     TriggerClientEvent("arma:PlaySound", source, "zipper")
                     LootBagEntities[netid][5] = source
-
                     if ARMA.hasPermission({user_id, "police.armoury"}) then
-                        ARMA.clearInventory({LootBagEntities[netid].id})
+                        LootBagEntities[netid].Items = {}
+                        --ARMA.clearInventory({LootBagEntities[netid].id})
                         ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
-
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
                         OpenInv(source, netid, LootBagEntities[netid].Items)
