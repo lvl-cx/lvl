@@ -4,20 +4,6 @@ local secondsRemaining = 0
 local TakenTurf = false
 
 local c = {}
-local h = {
-    {position = vector3(115.97058868408, -1953.0773925781, 20.7513256073), distance = 50.0},
-    {position = vector3(133.54704284668, -1305.7708740234, 29.154886245728), distance = 50.0},
-    {position = vector3(3575.822265625, 3650.548828125, 33.888591766357), distance = 170.0},
-    {position = vector3(-1111.3946533203, 4936.908203125, 218.38539123535), distance = 170.0},
-    {position = vector3(2487.4445800781, -430.54281616211, 92.992835998535), distance = 120.0}
-}
-local i = {
-    {position = vector3(120.21286010742, -1947.8337402344, 20.7513256073), distance = 100, commissionRate = 0},
-    {position = vector3(94.305938720704, -1293.9291992188, 29.268863677978), distance = 100, commissionRate = 0},
-    {position = vector3(3579.109375, 3649.7827148438, 33.888641357422), distance = 100, commissionRate = 0},
-    {position = vector3(-1114.5859375, 4936.806640625, 218.38012695313), distance = 100, commissionRate = 0},
-    {position = vector3(2485.3552246094, -427.7490234375, 92.992965698242), distance = 100, commissionRate = 0}
-}
 Citizen.CreateThread(
     function()
         local k = tARMA.addBlip(133.73462677002, -1305.0340576172, 29.268741607666, 403, 4, "Cocaine Trader")
@@ -42,13 +28,6 @@ Citizen.CreateThread(
                 blipsize = 50.0
             },
             {
-                title = "Meth Trader",
-                colour = 3,
-                id = 1,
-                position = vector3(-552.90362548828, 5326.1733398438, 72.599586486816),
-                blipsize = 50.0
-            },
-            {
                 title = "Heroin Trader",
                 colour = 1,
                 id = 1,
@@ -61,13 +40,6 @@ Citizen.CreateThread(
                 id = 1,
                 position = vector3(-1118.4926757813, 4926.1889648438, 218.35691833496),
                 blipsize = 170.0
-            },
-            {
-                title = "LSD North Trader",
-                colour = 1,
-                id = 1,
-                position = vector3(1317.0300292969, 4309.8359375, 38.005485534668),
-                blipsize = 90.0
             },
             {
                 title = "LSD South Trader",
@@ -85,15 +57,6 @@ Citizen.CreateThread(
         end
     end
 )
-
-Citizen.CreateThread(function()
-	for B, G in pairs(h) do
-		tARMA.addMarker(G.position.x,G.position.y,G.position.z,0.7,0.7,0.5,200,50,0,200,50,24,false,false,true)
-	end
-	for H, I in pairs(i) do
-		tARMA.addMarker(I.position.x,I.position.y,I.position.z,0.7,0.7,0.5,0,50,200,200,50,30,false,false,true)
-	end
-end)
 
 RegisterNetEvent('ARMA:TakenTurf')
 AddEventHandler('ARMA:TakenTurf', function(isnTurf)
