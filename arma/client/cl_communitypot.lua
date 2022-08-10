@@ -1,6 +1,5 @@
 local a="0"
-RMenu.Add("communitypot","mainmenu",RageUI.CreateMenu("Community Pot","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),nil,nil))
-RMenu:Get("communitypot","mainmenu"):SetSubtitle("~b~Community Pot")
+RMenu.Add("communitypot","mainmenu",RageUI.CreateMenu("","~b~Community Pot",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "communitypot"))
 RegisterNetEvent("ARMA:gotCommunityPotAmount",function(d)
     a=tostring(d)
 end)

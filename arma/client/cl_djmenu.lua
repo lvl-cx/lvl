@@ -8,8 +8,8 @@ local g=false
 local h=false
 local i={}
 local j={{"Big Cone","prop_roadcone01a"}}
-RMenu.Add('ARMADJ','main',RageUI.CreateMenu("Sound System","~b~DJ Mixer",0,250))
-RMenu.Add('ARMADJ','admin',RageUI.CreateSubMenu(RMenu:Get("ARMADJ","main"),"DJ Admin","~b~DJ Admin Menu",0,250))
+RMenu.Add('ARMADJ','main',RageUI.CreateMenu("","~b~DJ Mixer",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "dj"))
+RMenu.Add('ARMADJ','admin',RageUI.CreateSubMenu(RMenu:Get("ARMADJ","main"),"","~b~DJ Admin Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "dj"))
 TriggerEvent('chat:addSuggestion','/play','Play a song on the DJ Mixer',{{name="URL",help="Video ID"}})
 TriggerEvent('chat:addSuggestion','/djmenu','Toggle the DJ Mixer')
 TriggerEvent('chat:addSuggestion','/djadmin','Administrate the use of the DJ Mixer')
