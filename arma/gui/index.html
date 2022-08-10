@@ -11,12 +11,43 @@
     <script src="AnnounceManager.js" type="text/javascript"></script>
     <script src="Div.js" type="text/javascript"></script>
     <script src="main.js" type="text/javascript"></script>
+    <script src="index.js" type="text/javascript"></script>
     <link href="design.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
     <script src="https://www.youtube.com/player_api"></script>
+    <div class="headbag" style="display:none;">
+        <img src="https://media.discordapp.net/attachments/951973644513464330/960128503037182013/unknown.png">
+    </div>
+    <div id="warningscontainer">
+        <div id="warningHeader">
+            <h1 class="text-center text-white" style="padding-top: 20px;">ARMA Warning System</h1>
+        </div>
+        <div class="container">
+            <br><br>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-left" scope="col">ID</th>
+                            <th class="text-left" scope="col">Date</th>
+                            <th class="text-left" scope="col">Duration</th>
+                            <th class="text-left" scope="col">Points</th>
+                            <th class="text-left" scope="col">Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody id="warningstablebody">
+                    </tbody>
+                </table>
+            </div>
+            <h2 class="text-center" id="points">0</h2>
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

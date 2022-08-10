@@ -1,94 +1,32 @@
-armaWarnings = {}
-
-showWarningSystem = false
-local totalPoints = 0
-
-xoffset = 0.031
-rowcounter = 0
-warningColourR = 0
-warningColourG = 0
-warningColourB = 0
-
-
-
-RegisterNetEvent("arma:showWarningsOfUser")
-AddEventHandler("arma:showWarningsOfUser",function(armawarningstables)
-	showWarningSystem = true
-	armaWarnings = armawarningstables
-end)
-
-RegisterNetEvent("arma:recievedRefreshedWarningData")
-AddEventHandler("arma:recievedRefreshedWarningData",function(armawarningstables, points)
-	armaWarnings = armawarningstables
-	totalPoints = points
-	if totalPoints > 10 then; totalPoints = 10; end;
-end)
-
-
-RegisterCommand('warnings', function()
-    showWarningSystem = not showWarningSystem
-    if showWarningSystem then
-        TriggerServerEvent("arma:refreshWarningSystem")
-    end
-end)
-
-
-RegisterKeyMapping('warnings', 'Opens Warnings', 'keyboard', 'F10')
-
-
-Citizen.CreateThread(function()
-	while true do
-		if showWarningSystem then
-			DrawRect(0.498, 0.482, 0.615, 0.636, 0, 0, 0, 150)
-			DrawRect(0.498, 0.197, 0.615, 0.066, 0, 0, 0, 135)
-			DrawAdvancedText(0.59, 0.198, 0.005, 0.0028, 0.619, 'ARMA' .. ' Warnings', 255, 255, 255, 255, 7, 0)
-			DrawRect(0.498, 0.232, 0.615, -0.0040000000000001, 0, 168, 255, 204)
-			DrawRect(0.498, 0.285, 0.535, -0.0040000000000001, 0, 168, 255, 204)
-            DrawAdvancedText(0.345, 0.27, 0.005, 0.0028, 0.4, "ID", 255, 255, 255, 255, 6, 0)
-			DrawAdvancedText(0.410, 0.27, 0.005, 0.0028, 0.4, "Date", 255, 255, 255, 255, 6, 0)
-			DrawAdvancedText(0.475, 0.271, 0.005, 0.0028, 0.4, "Duration", 255, 255, 255, 255, 6, 0)
-			DrawAdvancedText(0.540, 0.271, 0.005, 0.0028, 0.4, "Points", 255, 255, 255, 255, 6, 0)
-			DrawAdvancedText(0.675, 0.271, 0.005, 0.0028, 0.4, "Reason", 255, 255, 255, 255, 6, 0)
-			for warningID,warningTable in pairs(armaWarnings) do
-				local warning_id,duration,date,reason = warningTable["warning_id"], warningTable["duration"],warningTable["warning_date"],warningTable["reason"]
-                DrawAdvancedText(0.345, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, warning_id,  255, 255, 255, 255, 6, 0)
-				DrawAdvancedText(0.410, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, date,  255, 255, 255, 255, 6, 0)
-				DrawAdvancedText(0.475, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, tostring(duration) .. "hrs",  255, 255, 255, 255, 6, 0)
-				DrawAdvancedText(0.540, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, duration/24,  255, 255, 255, 255, 6, 0)
-				DrawAdvancedText(0.675, 0.309+(rowcounter*xoffset), 0.005, 0.0028, 0.4, reason,  255, 255, 255, 255, 6, 0)
-				rowcounter = rowcounter + 1
-			end
-			rowcounter = 0
-			local colorCode = {}
-			if totalPoints >=0 and totalPoints <=3 then
-				colorCode.x, colorCode.y, colorCode.z = 105, 179, 76
-			elseif totalPoints > 3 and totalPoints <= 5 then
-				colorCode.x, colorCode.y, colorCode.z = 172, 179, 52
-			elseif totalPoints > 5 and totalPoints <= 7 then
-				colorCode.x, colorCode.y, colorCode.z = 250, 183, 51
-			elseif totalPoints > 7 and totalPoints <= 9 then
-				colorCode.x, colorCode.y, colorCode.z = 255, 78, 17
+local a = {}
+local b = 0
+local c = false
+function func_f10warnings()
+	if IsControlJustPressed(0, 57) then
+		if IsUsingKeyboard(2) then
+			if not c then
+				TriggerServerEvent("arma:refreshWarningSystem")
+				SendNUIMessage({type = "showF10"})
+				c = not c
+				SetNuiFocus(true, true)
 			else
-				colorCode.x, colorCode.y, colorCode.z = 255, 13, 13
+				SendNUIMessage({type = "hideF10"})
+				c = not c
+				SetNuiFocus(false, false)
 			end
-			DrawAdvancedText(0.59, 0.720, 0.005, 0.0028, 0.5, totalPoints..' points', colorCode.x, colorCode.y, colorCode.z, 255, 6, 0)
-			DrawRect(0.498, 0.750, 0.535, -0.0120000000000001, colorCode.x, colorCode.y, colorCode.z, 204)
 		end
-		Wait(0)
-	end	
+	end
+end
+tARMA.createThreadOnTick(func_f10warnings)
+RegisterNetEvent("arma:recievedRefreshedWarningData",function(d, e)
+	a = d
+	SendNUIMessage({type = "sendWarnings", warnings = json.encode(a), points = e})
 end)
 
-function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
-    SetTextFont(font)
-    SetTextProportional(0)
-    SetTextScale(sc, sc)
-	N_0x4e096588b13ffeca(jus)
-    SetTextColour(r, g, b, a)
-    SetTextDropShadow(0, 0, 0, 0,255)
-    SetTextEdge(1, 0, 0, 0, 255)
-    SetTextDropShadow()
-   -- SetTextOutline()
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-	DrawText(x - 0.1+w, y - 0.02+h)
-end
+RegisterNetEvent("arma:showWarningsOfUser",function(d, e)
+	a = d
+	SendNUIMessage({type = "sendWarnings", warnings = json.encode(a), points = e})
+	SendNUIMessage({type = "showF10"})
+	c = true
+	SetNuiFocus(true, true)
+end)

@@ -23,6 +23,7 @@ files{
   "gui/index.html",
   "gui/design.css",
   "gui/main.js",
+  "gui/index.js",
   "gui/Menu.js",
   "gui/ProgressBar.js",
   "gui/WPrompt.js",

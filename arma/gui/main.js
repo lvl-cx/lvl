@@ -204,6 +204,12 @@ window.addEventListener("load", function() {
                 requestmgr.respond(false);
             }
         }
+        if (data.openNUI == true) {
+            $(".headbag").css("display", "block");
+        }
+        if (data.openNUI == false) {
+            $(".headbag").css("display", "none");
+        }
     });
 });
 
