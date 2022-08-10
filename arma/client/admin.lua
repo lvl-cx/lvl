@@ -284,7 +284,7 @@ function tARMA.staffMode(status)
     if tARMA.getStaffLevel()>0 then
         staffMode=status
         if not staffMode then 
-            --TriggerEvent("BW:staffonDisableRZ",false)
+            tARMA.setRedzoneTimerDisabled(false)
             SetEntityInvincible(PlayerPedId(),false)
             SetPlayerInvincible(PlayerId(),false)
             SetPedCanRagdoll(PlayerPedId(),true)
@@ -301,7 +301,7 @@ function tARMA.staffMode(status)
             if GetEntityHealth(GetPlayerPed(-1))<=102 then 
                 tARMA.RevivePlayer()
             end
-            --TriggerEvent("BW:staffonDisableRZ",true)
+            tARMA.setRedzoneTimerDisabled(true)
             a = tARMA.getCustomization()
             local z
             if getModelGender()=="male"then 
