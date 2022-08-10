@@ -1,45 +1,33 @@
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-		      local ped = PlayerPedId()
-          SetMaxWantedLevel(0)
-          RestorePlayerStamina(PlayerId(), 1.0)
-          DisablePlayerVehicleRewards(PlayerId())
-          SetPedDropsWeaponsWhenDead(GetPlayerPed(-1), 0)
-          RemoveAllPickupsOfType(0xDF711959) -- carbine rifle
-          RemoveAllPickupsOfType(0xF9AFB48F) -- pistol
-          RemoveAllPickupsOfType(0xA9355DCD) -- pumpshotgun
-          for i = 1, 12 do
+        local ped = PlayerPedId()
+        SetMaxWantedLevel(0)
+        RestorePlayerStamina(PlayerId(), 1.0)
+        DisablePlayerVehicleRewards(PlayerId())
+        SetPedDropsWeaponsWhenDead(GetPlayerPed(-1), 0)
+        RemoveAllPickupsOfType(0xDF711959) -- carbine rifle
+        RemoveAllPickupsOfType(0xF9AFB48F) -- pistol
+        RemoveAllPickupsOfType(0xA9355DCD) -- pumpshotgun
+        for i = 1, 12 do
             EnableDispatchService(i, false)
-          end
-          SetPlayerWantedLevel(PlayerId(), 0, false)
-          SetPlayerWantedLevelNow(PlayerId(), false)
-          SetPlayerWantedLevelNoDrop(PlayerId(), 0, false)
-          if IsPedArmed(ped, 6) then
-	    	    DisableControlAction(1, 140, true)
+        end
+        SetPlayerWantedLevel(PlayerId(), 0, false)
+        SetPlayerWantedLevelNow(PlayerId(), false)
+        SetPlayerWantedLevelNoDrop(PlayerId(), 0, false)
+        if IsPedArmed(ped, 6) then
+                DisableControlAction(1, 140, true)
             DisableControlAction(1, 141, true)
             DisableControlAction(1, 142, true)
         end
-		if handsup then
-			DisableControlAction(2, 37, true)
-			DisableControlAction(0,24,true) -- disable attack
-			DisableControlAction(0,25,true) -- disable aim
-			DisableControlAction(0,47,true) -- disable weapon
-			DisableControlAction(0,58,true) -- disable weapon
-			DisablePlayerFiring(GetPlayerPed(-1),true)
-		end
-		if GetSelectedPedWeapon(PlayerPedId()) == GetHashKey("WEAPON_UNARMED") then
-			DisableControlAction(0,263,true)
-			DisableControlAction(0,264,true)
-			DisableControlAction(0,257,true)
-			DisableControlAction(0,140,true) 
-			DisableControlAction(0,141,true) 
-			DisableControlAction(0,142,true)
-			DisableControlAction(0,143,true) 
-			DisableControlAction(0,24,true)
-			DisableControlAction(0,25,true) 
-		end
-	SetPedCanBeDraggedOut(PlayerPedId(),false)
+        if handsup then
+            DisableControlAction(2, 37, true)
+            DisableControlAction(0,24,true) -- disable attack
+            DisableControlAction(0,25,true) -- disable aim
+            DisableControlAction(0,47,true) -- disable weapon
+            DisableControlAction(0,58,true) -- disable weapon
+            DisablePlayerFiring(GetPlayerPed(-1),true)
+        end
     end
 end)
 
@@ -116,14 +104,6 @@ CreateThread(function()
       end
       Wait(1)
     end
-end)
-
--- STAMINA --
-Citizen.CreateThread( function()
-    while true do
-       Citizen.Wait(1)
-       RestorePlayerStamina(PlayerId(), 1.0)
-       end
 end)
 
 -- [Z] BIGGER MINIMAP --
@@ -205,42 +185,6 @@ function taserFX()
     SetPedIsDrunk(playerPed, false)
     SetPedMotionBlur(playerPed, false)
 end
-
--- Disable Aim Assist -- 
-CreateThread(function()
-    while true do
-        Wait(0)
-        SetPlayerTargetingMode(2)
-    end
-end)
-
--- /k emote --
-RegisterCommand("k", function(source,args,rawCommand)
-    TriggerEvent('KneelHU')
-end, false)
-
-
-RegisterNetEvent( 'KneelHU' )
-AddEventHandler( 'KneelHU', function()
-    local player = GetPlayerPed( -1 )
-	if ( DoesEntityExist( player ) and not IsEntityDead( player )) then 
-        tARMA.loadAnimDict( "random@arrests" )
-		tARMA.loadAnimDict( "random@arrests@busted" )
-		if ( IsEntityPlayingAnim( player, "random@arrests@busted", "idle_a", 3 ) ) then 
-			TaskPlayAnim( player, "random@arrests@busted", "exit", 8.0, 1.0, -1, 2, 0, 0, 0, 0 )
-			Wait (3000)
-            TaskPlayAnim( player, "random@arrests", "kneeling_arrest_get_up", 8.0, 1.0, -1, 128, 0, 0, 0, 0 )
-        else
-            TaskPlayAnim( player, "random@arrests", "idle_2_hands_up", 8.0, 1.0, -1, 2, 0, 0, 0, 0 )
-			Wait (4000)
-            TaskPlayAnim( player, "random@arrests", "kneeling_arrest_idle", 8.0, 1.0, -1, 2, 0, 0, 0, 0 )
-			Wait (500)
-			TaskPlayAnim( player, "random@arrests@busted", "enter", 8.0, 1.0, -1, 2, 0, 0, 0, 0 )
-			Wait (1000)
-			TaskPlayAnim( player, "random@arrests@busted", "idle_a", 8.0, 1.0, -1, 9, 0, 0, 0, 0 )
-        end     
-    end
-end )
 
 -- Remove random GTA UI'S --
 
