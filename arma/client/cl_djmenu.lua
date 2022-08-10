@@ -30,7 +30,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if m then 
                         if n~=b.volume then 
                             b.volume=n
-                            if b.volume%10==0 then 
+                            if b.volume%10==0 or b.volume == 1 then 
                                 updateVolume()
                             end
                             drawNativeText("~b~DJ~w~: Volume Updated")
