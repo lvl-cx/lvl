@@ -225,8 +225,6 @@ function tARMA.setCustomization(h,j,k)
               TriggerServerEvent('ARMA:changeHairStyle')
               TriggerServerEvent('ARMA:changeTattoos')
               g=PlayerPedId()
-          else 
-              print("[ARMA] Same model detected, not changing model.")
           end
           for r,s in pairs(h)do 
               if r~="model"and r~="modelhash"then 
