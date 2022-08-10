@@ -46,14 +46,14 @@ RegisterNetEvent("ARMA:addEmergencyCall",function(o, p, q, r, s, t)
         table.insert(d, {o, p, q, v, s, t, u})
         j()
         e[o] = r
-    elseif t == "met" and globalOnPoliceDuty then
+    elseif t == "met" and tARMA.globalOnPoliceDuty() then
         tARMA.notify("~b~MET Police call received.")
         PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
         local v = #(r - GetEntityCoords(tARMA.getPlayerPed()))
         table.insert(d, {o, p, q, v, s, t, u})
         j()
         e[o] = r
-    elseif t == "nhs" and globalOnNHSDuty then
+    elseif t == "nhs" and tARMA.globalOnNHSDuty() then
         tARMA.notify("~b~NHS call received.")
         PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
         local v = #(r - GetEntityCoords(tARMA.getPlayerPed()))
