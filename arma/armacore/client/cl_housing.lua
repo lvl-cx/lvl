@@ -90,7 +90,6 @@ RageUI.CreateWhile(1.0, true, function()
                     for k, v in pairs(wardrobe) do
                         if k == currentOutfit then
                             tARMA.setCustomization(v)
-                            
                             SetTimeout(50, function()
                                 SetPedArmour(PlayerPedId(), savedArmour)
                                 TriggerServerEvent('ARMA:changeHairStyle')
