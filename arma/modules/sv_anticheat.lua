@@ -105,6 +105,10 @@ local allowedEntities = {
     [`ba_prop_battle_club_speaker_large`] = true,
     [`prop_studio_light_01`] = true,
     [`prop_car_airbag`] = true,
+    [`vw_prop_vw_colle_alien`] = true,
+    [`vw_prop_vw_colle_rsrgeneric`] = true,
+    [`vw_prop_vw_colle_prbubble`] = true,
+    [`vw_prop_vw_colle_pogo`] = true,
 }
 
 local otherVehicles = {
