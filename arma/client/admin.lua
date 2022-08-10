@@ -279,46 +279,87 @@ end)
 
 staffMode = false
 local isInTicket = false
+local a = {}
 function tARMA.staffMode(status)
-    staffMode = status
-
-    if staffMode then
-        tARMA.notify('~g~Staff Powerz Activated.')
-        if GetEntityHealth(PlayerPedId())<=102 then 
-            tARMA.RevivePlayer()
-        end
-        if weapons == nil then
-            weapons = tARMA.getWeapons()
-        end
-
-        if clothing == nil then
-            clothing = tARMA.getCustomization()
-        end
-
-        if armour == nil then
-            armour = GetPedArmour(PlayerPedId())
-        end
-
-        if location == nil then
-            location = GetEntityCoords(PlayerPedId())
-        end
-        staffClothing = tARMA.getCustomization()
-        staffClothing[3]={0,0}
-        staffClothing[4]={152,2}
-        staffClothing[6]={141,0}
-        staffClothing[8]={15,0}
-        staffClothing[11]={442,0}
-        tARMA.setCustomization(staffClothing)
-    else
-        tARMA.notify('~g~Staff Powerz Deactivated.')
-        tARMA.setCustomization(clothing)
-        tARMA.giveWeapons(weapons, true)
-        weapons = nil
-        clothing = nil
-        SetTimeout(50, function()
-            SetPedArmour(PlayerPedId(), armour)
-        end)
+    if tARMA.getStaffLevel()>0 then
+        staffMode=status
+        print(staffMode)
+        if not staffMode then 
+            --TriggerEvent("BW:staffonDisableRZ",false)
+            SetEntityInvincible(PlayerPedId(),false)
+            SetPlayerInvincible(PlayerId(),false)
+            SetPedCanRagdoll(PlayerPedId(),true)
+            ClearPedBloodDamage(PlayerPedId())
+            ResetPedVisibleDamage(PlayerPedId())
+            ClearPedLastWeaponDamage(PlayerPedId())
+            SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
+            SetEntityCanBeDamaged(PlayerPedId(),true)
+            SetEntityHealth(PlayerPedId(),200)
+            tARMA.setCustomization(a)
+            tARMA.notify('~g~Staff Powerz Deactivated.')
+        else
+            tARMA.notify('~g~Staff Powerz Activated.')
+            if GetEntityHealth(GetPlayerPed(-1))<=102 then 
+                tARMA.RevivePlayer()
+            end
+            --TriggerEvent("BW:staffonDisableRZ",true)
+            a = tARMA.getCustomization()
+            local z
+            if getModelGender()=="male"then 
+                z="mp_m_freemode_01"
+                local A=loadModel(z)
+                tARMA.setCustomization({modelhash=A})
+                Wait(100)
+                local ped=PlayerPedId()
+                SetPedComponentVariation(ped, 3, 0, 0 , 0) -- Torso
+                SetPedComponentVariation(ped, 4, 152, 2, 0) -- Pants
+                SetPedComponentVariation(ped, 6, 141, 0 , 0) -- Shoes
+                SetPedComponentVariation(ped, 8, 15, 0, 0) -- UnderShirt
+                SetPedComponentVariation(ped, 11, 442, 0, 0) -- Jacket
+            else z="mp_f_freemode_01"
+                local A=loadModel(z)
+                tARMA.setCustomization({modelhash=A})
+                Wait(100)
+                local B=PlayerPedId()
+                SetPedComponentVariation(B,3,3,0,2)
+                SetPedComponentVariation(B,4,106,3,2)
+                SetPedComponentVariation(B,5,0,0,2)
+                SetPedComponentVariation(B,6,2,0,2)
+                SetPedComponentVariation(B,8,3,0,2)
+                SetPedComponentVariation(B,11,466,0,2)
+            end 
+        end 
     end
+end
+
+
+function getModelGender()
+  local B=PlayerPedId()
+  if GetEntityModel(B)==`mp_f_freemode_01`then 
+      return"female"
+  else 
+      return"male"
+  end 
+end
+
+function loadModel(r)
+  local s
+  if type(r)~="string"then 
+      s=r 
+  else 
+      s=GetHashKey(r)
+  end
+  if IsModelInCdimage(s)then 
+      if not HasModelLoaded(s)then 
+          RequestModel(s)
+          while not HasModelLoaded(s)do 
+              Wait(0)
+          end 
+      end
+      return s 
+  else 
+      return nil 
+  end 
 end
 
 RegisterCommand("return", function()
@@ -342,7 +383,16 @@ Citizen.CreateThread(function()
             if not isInTicket then
                 drawNativeText("~r~Reminder: You are /staffon'd.", 255, 0, 0, 255, true)
             end
-            SetEntityInvincible(PlayerPedId(), true)
+            local B=PlayerPedId()
+            SetEntityInvincible(B,true)
+            SetPlayerInvincible(PlayerId(),true)
+            SetPedCanRagdoll(B,false)
+            ClearPedBloodDamage(B)
+            ResetPedVisibleDamage(B)
+            ClearPedLastWeaponDamage(B)
+            SetEntityProofs(B,true,true,true,true,true,true,true,true)
+            SetEntityCanBeDamaged(B,false)
+            SetEntityHealth(B,200)
         end
     end
 end)
