@@ -644,8 +644,14 @@ globalOnNHSDuty = false
 function tARMA.setPolice()
   globalOnPoliceDuty = true
 end
+function tARMA.globalOnPoliceDuty()
+  return globalOnPoliceDuty
+end
 function tARMA.setNHS()
   globalOnNHSDuty = true
+end
+function tARMA.globalOnNHSDuty()
+  return globalOnNHSDuty
 end
 function tARMA.setDev()
     isDev = true
