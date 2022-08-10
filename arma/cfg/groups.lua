@@ -1530,6 +1530,9 @@ cfg.groups = {
   	"pov.list"
   },
 
+  ["DJ"] = {
+	"dj.menu"
+  },
   
   ["TutorialDone"] = {},
 
