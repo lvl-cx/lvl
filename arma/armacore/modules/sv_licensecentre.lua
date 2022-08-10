@@ -14,6 +14,7 @@ licensecentre.prices = {
     {group = "Scrap", price = 100000},
     {group = "Gold", price = 1000000},
     {group = "Diamond", price = 5000000},
+    {group = "DJ", price = 50000000},
 }
 
 RegisterServerEvent("LicenseCentre:BuyGroup")

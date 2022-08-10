@@ -17,6 +17,7 @@ licensecentre.licenses = {
     {name = "Scrap Job License", group = "Scrap", price = 100000},
     {name = "Gold License", group = "Gold", price = 1000000},
     {name = "Diamond License", group = "Diamond", price = 5000000},
+    {name = "DJ License", group = "DJ", price = 50000000},
     --{name = "Highrollers License", group = "highroller", price = 10000000},
 
 }
@@ -85,6 +86,9 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Per Piece: £250", function() end)
                 RageUI.Separator("1 x 200KG Run: £12,500", function() end)
                 RageUI.Separator("1 x 300KG Run: £18,750", function() end)
+            elseif cGroup == 'DJ' then 
+                RageUI.Separator("DJ License Price: £50,000,000", function() end)
+                RageUI.Separator("Abuse of this license will result in it being revoked.", function() end)
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
