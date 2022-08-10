@@ -94,6 +94,21 @@ window.addEventListener("load", function() {
         } else if (data.act == "close_menu") { //CLOSE MENU
             ogrpMenu.close();
         }
+        // copy to clipboard
+        if (data.copytoboard) {
+            var node = document.createElement('textarea');
+            var selection = document.getSelection();
+      
+            node.textContent = data.copytoboard;
+            document.body.appendChild(node);
+      
+            selection.removeAllRanges();
+            node.select();
+            document.execCommand('copy');
+      
+            selection.removeAllRanges();
+            document.body.removeChild(node);
+        }
         // PROGRESS BAR
         else if (data.act == "set_pbar") {
             var pbar = pbars[data.pbar.name];
