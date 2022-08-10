@@ -42,7 +42,6 @@ RMenu.Add("rpzones","vehicles",RageUI.CreateSubMenu(RMenu:Get("rpzones","mainmen
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('rpzones', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Separator("Creation")
             RageUI.ButtonWithStyle("Weapons","",{RightLabel="→→→"},true,function()
             end,RMenu:Get("rpzones","weapons"))
             RageUI.ButtonWithStyle("Vehicles","",{RightLabel="→→→"},true,function()
@@ -57,12 +56,11 @@ RageUI.CreateWhile(1.0, true, function()
                 c.radius=b[p]
             end,function()
             end)
-            RageUI.ButtonWithStyle("~b~Create Zone","",{RightLabel="→→→"},true,function(l,l,o)
+            RageUI.ButtonWithStyle("~g~Create Zone","",{RightLabel="→→→"},true,function(l,l,o)
                 if o then 
                     f()
                 end 
             end)
-            RageUI.Separator("Deletion")
             RageUI.ButtonWithStyle("~r~Delete Closest Zone","",{RightLabel="→→→"},true,function(l,l,o)
                 if o then 
                     h()
