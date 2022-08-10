@@ -60,7 +60,7 @@ local function m(n,o,k)
     SetBlipColour(l,k)
 end
 RegisterCommand("blipson",function()
-    if globalOnPoliceDuty or globalOnNHSDuty then 
+    if tARMA.globalOnPoliceDuty() or tARMA.globalOnNHSDuty() then 
         a=true 
     end 
 end,false)

@@ -1,6 +1,6 @@
 local a=false
 function func_ptt()
-    if globalOnPoliceDuty and tARMA.canAnim() and not globalSurrenderring then 
+    if tARMA.globalOnPoliceDuty() and tARMA.canAnim() and not globalSurrenderring then 
         local b=tARMA.getPlayerPed()
         local c=tARMA.getPlayerId()
         if IsControlJustReleased(0,19)and GetLastInputMethod(2)and tARMA.canAnim()and not IsPedReloading(b)then 

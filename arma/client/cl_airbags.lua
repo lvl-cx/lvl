@@ -10,7 +10,7 @@ Citizen.CreateThread(function()
             if f<=b and a[e]==nil then 
                 local g=GetVehicleClass(e)
                 if g~=8 and g~=16 and g~=15 and g~=13 then 
-                    TriggerServerEvent("BW:playNuiSound","airbag",15.0,soundEventCode)
+                    TriggerServerEvent("ARMA:playNuiSound","airbag",15.0,soundEventCode)
                     createAirbags(e)
                 end 
             else 
