@@ -505,9 +505,15 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
             end
             if GlobalAdminLevel >= 7 then
-                RageUI.ButtonWithStyle("Toggle Blips", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                local P=""
+                if tARMA.hasStaffBlips()then 
+                    P="~r~Turn off blips"
+                else 
+                    P="~g~Turn on blips"
+                end
+                RageUI.ButtonWithStyle("Toggle Blips", P, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:checkBlips')
+                        TriggerServerEvent('ARMA:checkBlips', not tARMA.hasStaffBlips())
                     end
                 end)
             end
