@@ -100,6 +100,10 @@ local allowedEntities = {
     [`ba_prop_battle_barrier_02a`] = true,
     [`prop_mp_barrier_01`] = true,
     [`prop_mp_barrier_01b`] = true,
+    [`ba_prop_battle_dj_stand`] = true,
+    [`ba_prop_battle_club_speaker_large`] = true,
+    [`ba_prop_battle_club_speaker_large`] = true,
+    [`prop_studio_light_01`] = true,
 }
 
 local otherVehicles = {
