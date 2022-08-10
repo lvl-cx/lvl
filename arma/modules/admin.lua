@@ -2267,14 +2267,6 @@ AddEventHandler('ARMA:noClip', function()
     end
 end)
 
-RegisterNetEvent("ARMA:checkBlips")
-AddEventHandler("ARMA:checkBlips",function(status)
-    local source = source
-    if ARMA.hasPermission(user_id, 'group.add') then 
-        TriggerClientEvent('ARMA:showBlips', source)
-    end
-end)
-
 RegisterNetEvent("ARMA:dealershipBucket")
 AddEventHandler("ARMA:dealershipBucket",function(bool)
     local source = source
@@ -2434,4 +2426,14 @@ AddEventHandler('ARMA:getAdminLevel', function()
         adminlevel = 1
     end
     ARMAclient.setStaffLevel(source, {adminlevel})
+end)
+
+RegisterServerEvent('ARMA:checkBlips')
+AddEventHandler('ARMA:checkBlips', function(status)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+
+    if ARMA.hasPermission(user_id, 'dev.menu') then
+        TriggerClientEvent('ARMA:showBlipscl', source, status)
+    end
 end)

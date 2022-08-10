@@ -484,6 +484,10 @@ function tARMA.setCanAnim(n)
     m=n 
 end
 
+function tARMA.announce(j,k)
+  SendNUIMessage({act="announce",background=j,content=k})
+end
+
 function tARMA.setWeapon(m, s, t)
   SetCurrentPedWeapon(m, s, t)
 end
