@@ -23,11 +23,6 @@ Citizen.CreateThread(function()
   end
 end)
 
-function tARMA.setArmour(armour)
-    SetPedArmour(PlayerPedId(), armour)
-end
-
-
 Citizen.CreateThread(function() -- coma thread
     Wait(500)
     exports.spawnmanager:setAutoSpawn(false)
