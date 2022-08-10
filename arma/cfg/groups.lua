@@ -590,6 +590,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Commissioner"] = {
@@ -647,6 +648,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Deputy Commissioner"] = {
@@ -704,6 +706,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Assistant Commissioner"] = {
@@ -761,6 +764,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Deputy Assistant Commissioner"] = {
@@ -818,6 +822,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Commander"] = {
@@ -875,6 +880,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Chief Superintendent"] = {
@@ -932,6 +938,7 @@ cfg.groups = {
 	"police.armoury",
 	"cop.keycard",
 	"police.smartsigns",
+	"police.maxarmour",
   },
 
   ["Superintendent"] = {
@@ -1110,7 +1117,7 @@ cfg.groups = {
 	"clockon.menu",
   },
 
-  ["Special Police Constable Clocked"] = {
+  ["Special Constable Clocked"] = {
     _config = { gtype = "job",
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
@@ -1161,12 +1168,12 @@ cfg.groups = {
 	"police.smartsigns",
   },
 
-  ["Special Police Constable"] = {
+  ["Special Constable"] = {
     "specialpc.clockon",
 	"clockon.menu",
   },
 
-  ["Senior Police Constable Clocked"] = {
+  ["Senior Constable Clocked"] = {
     _config = { gtype = "job",
 	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
       onspawn = function(player) ARMAclient.setCop(player,{true}) end,
@@ -1218,7 +1225,7 @@ cfg.groups = {
 	"police.smartsigns",
   },
 
-  ["Senior Police Constable"] = {
+  ["Senior Constable"] = {
     "srpc.clockon",
 	"clockon.menu",
   },
@@ -1335,10 +1342,6 @@ cfg.groups = {
 	"clockon.menu",
   },
 
-  ["SCO-19"] = {
-    "sco.armoury",
-  },
-  --[NHS Groups]
   ["Head Chief Medical Officer Clocked"] = {
     "nhs.revive",
 	"nhs.heal",

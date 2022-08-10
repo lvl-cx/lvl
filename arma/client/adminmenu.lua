@@ -140,11 +140,10 @@ local getUserMPDGroups = {
     ["Chief Inspector"] = "Chief Inspector",
     ["Inspector"] = "Inspector",
     ["Sergeant"] = "Sergeant",
-    ["Special Police Constable"] = "Special Police Constable",
-    ["Senior Police Constable"] = "Senior Police Constable",
+    ["Special Constable"] = "Special Police Constable",
+    ["Senior Constable"] = "Senior Police Constable",
     ["Police Constable"] = "Police Constable",
     ["PCSO"] = "PCSO",
-    ["SCO-19"] = "SCO-19",
 }
 
 local getUserNHSGroups = {
