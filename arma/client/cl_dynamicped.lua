@@ -1,7 +1,7 @@
 local a = {}
 local b = 1
 function tARMA.createDynamicPed(c, d, e, f, g, h, i, j, k)
-    local c = tARMA.LoadModel(c)
+    local c = tARMA.loadModel(c)
     local l = CreatePed(26, c, d.x, d.y, d.z, e, false, false)
     if not j then
         a[b] = {

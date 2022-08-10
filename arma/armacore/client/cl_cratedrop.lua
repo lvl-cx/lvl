@@ -8,7 +8,7 @@ RegisterNetEvent("crateDrop")
 AddEventHandler("crateDrop", function(c)
     TriggerEvent("removeCrate")
     for k,v in pairs(models) do
-        tARMA.LoadModel(v)
+        tARMA.loadModel(v)
      end
 
     local z = math.random(150.0, 350.0)

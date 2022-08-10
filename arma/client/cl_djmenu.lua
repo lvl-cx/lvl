@@ -179,7 +179,7 @@ function setupDj()
     createDjObject(0.0,-1.2,0.0,`prop_studio_light_01`,180.0)
 end
 function createDjObject(C,D,E,F,G)
-    local F=tARMA.LoadModel(F)
+    local F=tARMA.loadModel(F)
     coords=GetOffsetFromEntityInWorldCoords(tARMA.getPlayerPed(),C,D,E)
     local H=CreateObject(F,coords.x,coords.y,coords.z,true,true,true)
     table.insert(a.handles,H)

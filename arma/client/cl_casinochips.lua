@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
         Wait(0)
     end
     for j,k in pairs(h)do 
-        local l=tARMA.LoadModel(k.model)
+        local l=tARMA.loadModel(k.model)
         local m=CreatePed(26,l,k.pedPosition.x,k.pedPosition.y,k.pedPosition.z,100.0,false,true)
         SetModelAsNoLongerNeeded(l)
         SetEntityCanBeDamaged(m,0)

@@ -29,7 +29,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         tARMA.clientPrompt("Spawncode:","",function(result)
                             if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
-                                local k=tARMA.LoadModel(result)
+                                local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 SetVehicleOnGroundProperly(nveh)
@@ -47,7 +47,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         tARMA.clientPrompt("Spawncode:","",function(result)
                             if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
-                                local k=tARMA.LoadModel(result)
+                                local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 SetVehicleOnGroundProperly(nveh)
@@ -199,7 +199,7 @@ RageUI.CreateWhile(1.0, true, function()
             if b then
                 RageUI.ButtonWithStyle("Spawn Vehicle (No mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local k=tARMA.LoadModel(veh)
+                        local k=tARMA.loadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
                         local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
@@ -213,7 +213,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local k=tARMA.LoadModel(veh)
+                        local k=tARMA.loadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
                         local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
@@ -276,7 +276,7 @@ function cleanveh()
 end
 
 function spawnVehicle(W,v,w,H,X,Y,Z,_)
-    local a0=tARMA.LoadModel(W)
+    local a0=tARMA.loadModel(W)
     local a1=CreateVehicle(a0,v,w,H,X,Z,_)
     SetEntityAsMissionEntity(a1)
     SetModelAsNoLongerNeeded(a0)

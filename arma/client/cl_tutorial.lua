@@ -19,7 +19,7 @@ local function n()
 end
 local function o()
     n()
-    tARMA.LoadModel(g)
+    tARMA.loadModel(g)
     f = CreateObject(g, 1.0, 1.0, 1.0, 1, 1, 0)
     local p = GetPedBoneIndex(PlayerPedId(), 28422)
     AttachEntityToEntity(f, PlayerPedId(), p, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1, 1, 0, 0, 2, 1)
@@ -291,7 +291,7 @@ function beginTutorial()
     DoScreenFadeIn(3000)
     d = "I called a taxi for you"
     Wait(2000)
-    local I = tARMA.LoadModel("londontaxi")
+    local I = tARMA.loadModel("londontaxi")
     d = "Oh shit looks like he had to run It should be parked pretty close"
     Wait(5000)
     d = "Get in the taxi and make your way to the Job Centre a waypoint has been set on your GPS"

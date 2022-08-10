@@ -259,7 +259,7 @@ function tARMA.generateUUID(key,length,type)
 end
 
 function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
-  local a0=tARMA.LoadModel(W)
+  local a0=tARMA.loadModel(W)
   local a1=CreateVehicle(a0,v,w,H,X,Z,_)
   SetEntityAsMissionEntity(a1)
   SetModelAsNoLongerNeeded(a0)
@@ -492,7 +492,7 @@ function tARMA.setWeapon(m, s, t)
   SetCurrentPedWeapon(m, s, t)
 end
 
-function tARMA.LoadModel(modelName)
+function tARMA.loadModel(modelName)
   local modelHash
   if type(modelName) ~= "string" then
       modelHash = modelName
@@ -545,6 +545,61 @@ function tARMA.KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
 		return nil 
 	end
 end
+
+RegisterNetEvent('__BW_callback:client')
+AddEventHandler('__BW_callback:client',function(aJ,...)
+    local aK=promise.new()
+    TriggerEvent(string.format('c__BW_callback:%s',aJ),function(...)
+        aK:resolve({...})end,...)
+    local aL=Citizen.Await(aK)
+    TriggerServerEvent(string.format('__BW_callback:server:%s:%s',aJ,...),table.unpack(aL))
+end)
+tARMA.TriggerServerCallback=function(aJ,...)
+    assert(type(aJ)=='string','Invalid Lua type at argument #1, expected string, got '..type(aJ))
+    local aK=promise.new()
+    local aM=GetGameTimer()
+    RegisterNetEvent(string.format('__BW_callback:client:%s:%s',aJ,aM))
+    local aN=AddEventHandler(string.format('__BW_callback:client:%s:%s',aJ,aM),function(...)
+        aK:resolve({...})
+    end)
+    TriggerServerEvent('__BW_callback:server',aJ,aM,...)
+    local aL=Citizen.Await(aK)
+    RemoveEventHandler(aN)
+    return table.unpack(aL)
+end
+tARMA.RegisterClientCallback=function(aJ,aO)
+    assert(type(aJ)=='string','Invalid Lua type at argument #1, expected string, got '..type(aJ))
+    assert(type(aO)=='function','Invalid Lua type at argument #2, expected function, got '..type(aO))
+    AddEventHandler(string.format('c__BW_callback:%s',aJ),function(aP,...)
+        aP(aO(...))
+    end)
+end
+
+
+local prevtime,curframes = GetGameTimer()
+local prevframes,curframes = GetFrameCount()  
+local fps = -1
+Citizen.CreateThread(function()	  
+    while not NetworkIsPlayerActive(PlayerId()) or not NetworkIsSessionStarted() do	        
+        Citizen.Wait(250)
+        prevframes = GetFrameCount()
+        prevtime = GetGameTimer()            
+    end
+    while true do		 
+        curtime = GetGameTimer()
+        curframes = GetFrameCount()	   
+        if((curtime - prevtime) > 1000) then
+            fps = (curframes - prevframes) - 1				
+            prevtime = curtime
+            prevframes = curframes
+        end          
+        Citizen.Wait(1)
+    end
+end)
+
+tARMA.RegisterClientCallback("ARMA:requestClientFPS",function(...)
+    return fps,...
+end)
 
 function tARMA.drawTxt(L, M, N, D, E, O, P, Q, R, S)
   SetTextFont(M)
