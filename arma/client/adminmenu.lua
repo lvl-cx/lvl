@@ -425,7 +425,7 @@ RageUI.CreateWhile(1.0, true, function()
                             end
                         end
                     end
-                end,RMenu:Get('adminmenu','moneymenu'))
+                end)
             end 
             if GlobalAdminLevel >= 6 then
                 RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -537,69 +537,69 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("PermID: ~b~"..a10)
                 RageUI.Separator("TempID: ~b~"..sc)
                 RageUI.Separator("Bank Balance: ~b~£"..sb)
-                RageUI.Separator("Wallet Balance: ~b~£"..sw)
-                RageUI.Separator("Casino Balance: ~b~"..sch)
+                RageUI.Separator("Cash Balance: ~b~£"..sw)
+                RageUI.Separator("Casino Chips: ~b~"..sch)
                 RageUI.Separator("")
-                RageUI.ButtonWithStyle("~g~Increase ~w~Bank Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Bank Balance ~g~+",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(j)
                             if tonumber(j) then
-                                TriggerServerEvent('ARMA:AddPlayerBank',a10,j,"Increase")
+                                TriggerServerEvent('ARMA:ManagePlayerBank',a10,j,"Increase")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("~r~Decrease ~w~Bank Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Bank Balance ~r~-",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(j)
                             if tonumber(j) then
-                                TriggerServerEvent('ARMA:AddPlayerBank',a10,j,"Decrease")
+                                TriggerServerEvent('ARMA:ManagePlayerBank',a10,j,"Decrease")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("~g~Increase ~w~Wallet Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Cash Balance ~g~+~w~",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(l)
                             if tonumber(l) then
-                                TriggerServerEvent('ARMA:AddPlayerCash',a10,l,"Increase")
+                                TriggerServerEvent('ARMA:ManagePlayerCash',a10,l,"Increase")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("~r~Decrease ~w~Wallet Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Cash Balance ~r~-",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(l)
                             if tonumber(l) then
-                                TriggerServerEvent('ARMA:AddPlayerCash',a10,l,"Decrease")
+                                TriggerServerEvent('ARMA:ManagePlayerCash',a10,l,"Decrease")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("~g~Increase ~w~Casino Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Casino Chips ~g~+",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(l)
                             if tonumber(l) then
-                                TriggerServerEvent('ARMA:addCasinoChips',a10,l,"Increase")
+                                TriggerServerEvent('ARMA:ManagePlayerChips',a10,l,"Increase")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("~r~Decrease ~w~Casino Balance",nil,{RightLabel="→→→"},true,function(w,x,y)
+                RageUI.ButtonWithStyle("Casino Chips ~r~-",nil,{RightLabel="→→→"},true,function(w,x,y)
                     if y then
                         tARMA.clientPrompt("Amount:","",function(l)
                             if tonumber(l) then
-                                TriggerServerEvent('ARMA:addCasinoChips',a10,l,"Decrease")
+                                TriggerServerEvent('ARMA:ManagePlayerChips',a10,l,"Decrease")
                             else
                                 tARMA.notify("~r~Invalid Amount")
                             end
