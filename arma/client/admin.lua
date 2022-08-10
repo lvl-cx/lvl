@@ -283,7 +283,6 @@ local a = {}
 function tARMA.staffMode(status)
     if tARMA.getStaffLevel()>0 then
         staffMode=status
-        print(staffMode)
         if not staffMode then 
             --TriggerEvent("BW:staffonDisableRZ",false)
             SetEntityInvincible(PlayerPedId(),false)
