@@ -27,7 +27,6 @@ Citizen.CreateThread(function()
 end)
 local z=0
 function tARMA.setArmour(A,B)
-    print(A,B)
     local C=math.floor(A)
     z=C
     SetPedArmour(PlayerPedId(),C)
