@@ -13,6 +13,7 @@ shared_scripts {
   "sharedcfg/*",
   "armacore/cfg/cfg_*.lua",
   "cfg/cfg_*.lua",
+  "shared/*.lua",
 }
 
 
