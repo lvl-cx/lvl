@@ -510,6 +510,8 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:checkBlips', not tARMA.hasStaffBlips())
                     end
                 end)
+                RageUI.ButtonWithStyle("RP Zones",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                end,RMenu:Get("rpzones","mainmenu"))
             end
             if GlobalAdminLevel >= 9 then
                 RageUI.ButtonWithStyle("Community Pot Menu",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
