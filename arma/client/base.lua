@@ -700,11 +700,18 @@ local user_id = nil
 local stafflevel = 0
 globalOnPoliceDuty = false
 globalOnNHSDuty = false
+globalOnPrisonDuty = false
 function tARMA.setPolice()
   globalOnPoliceDuty = true
 end
 function tARMA.globalOnPoliceDuty()
   return globalOnPoliceDuty
+end
+function tARMA.setHMP()
+  globalOnPrisonDuty = true
+end
+function tARMA.globalOnPrisonDuty()
+  return globalOnPrisonDuty
 end
 function tARMA.setNHS()
   globalOnNHSDuty = true
