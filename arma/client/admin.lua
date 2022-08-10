@@ -395,23 +395,6 @@ AddEventHandler("wk:fixVehicle", function()
     end
 end)
 
-RegisterNetEvent("ARMA:showBlips")
-AddEventHandler("ARMA:showBlips",function()
-    blips = not blips
-    if blips then
-        tARMA.notify("~g~Blips enabled")
-    else
-        tARMA.notify("~r~Blips disabled")
-        for k, v in ipairs(GetActivePlayers()) do
-            local Q = GetPlayerPed(v)
-            if GetPlayerPed(v) ~= PlayerPedId() then
-                Q = GetPlayerPed(v)
-                blip = GetBlipFromEntity(Q)
-                RemoveBlip(blip)
-            end
-        end
-    end
-end)
 Citizen.CreateThread(function()
     while true do
         if blips then
