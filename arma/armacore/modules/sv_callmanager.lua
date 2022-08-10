@@ -1,36 +1,56 @@
-local adminTickets = {}
-local pdCalls = {}
-local NHSCalls = {}
+local tickets = {}
+local callID = 0
 --table.insert(adminTickets, {name = 'Test', permID = 1, tempID = 1}) test case
 
-RegisterNetEvent("ARMA:RequestTickets")
-AddEventHandler("ARMA:RequestTickets", function()
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, "admin.tickets") then
-        TriggerClientEvent("ARMA:RecieveTickets", source, adminTickets)
-    end
-    if ARMA.hasPermission(user_id, "police.perms") then
-        TriggerClientEvent("ARMA:ReceivePDCalls", source, pdCalls)
-    end
-    if ARMA.hasPermission(user_id, "nhs.menu") then
-        TriggerClientEvent("ARMA:ReceiveNHSCalls", source, NHSCalls)
+-- local o, p, q, v, s, t, u = table.unpack(n)
+-- o = coords
+-- p = name
+-- q = perm id
+-- v = distance blah blah
+-- s = reason
+-- t = ticket type
+-- u = time since
+
+-- RegisterNetEvent("ARMA:addEmergencyCall",function(o, p, q, r, s, t)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(60000*5)
+        for k,v in pairs(tickets) do
+            if tickets[k].cooldown then
+                tickets[k].cooldown = false
+            end
+        end
     end
 end)
+
+
 
 RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
-        if value ~= "" then
-            adminTickets[value] = {
+    local cooldown = false
+    for k,v in pairs(tickets) do
+        if tickets[k].permID == user_id then
+            if tickets[k].cooldown then
+                ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
+                return
+            end
+        end
+    end
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, reason)
+        if reason ~= "" then
+            callID = callID + 1
+            tickets[callID] = {
                 name = GetPlayerName(user_source),
                 permID = user_id,
                 tempID = user_source,
+                reason = reason,
+                type = 'admin',
+                cooldown = true,
             }
             for k, v in pairs(ARMA.getUsers({})) do
-                if ARMA.hasPermission(k, "admin.tickets") then
-                    ARMAclient.notify(v,{"~g~Admin ticket recieved!"})
-                end
+                TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
             end
             ARMAclient.notify(user_source,{"~g~Sent admin ticket."})
         else
@@ -42,18 +62,18 @@ end)
 RegisterCommand("999", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
-        if value ~= "" then
-            pdCalls[value] = {
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, reason)
+        if reason ~= "" then
+            callID = callID + 1
+            tickets[callID] = {
                 name = GetPlayerName(user_source),
                 permID = user_id,
                 tempID = user_source,
-                coords = GetEntityCoords(GetPlayerPed(user_source)),
+                reason = reason,
+                type = 'met'
             }
             for k, v in pairs(ARMA.getUsers({})) do
-                if ARMA.hasPermission(k, "police.perms") then
-                    ARMAclient.notify(v,{"~b~Police Call!"})
-                end
+                TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'met')
             end
             ARMAclient.notify(user_source,{"~g~Sent Police Call."})
         else
@@ -65,18 +85,18 @@ end)
 RegisterCommand("111", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, value)
-        if value ~= "" then
-            NHSCalls[value] = {
+    ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, reason)
+        if reason ~= "" then
+            callID = callID + 1
+            tickets[callID] = {
                 name = GetPlayerName(user_source),
                 permID = user_id,
                 tempID = user_source,
-                coords = GetEntityCoords(GetPlayerPed(user_source)),
+                reason = reason,
+                type = 'nhs'
             }
             for k, v in pairs(ARMA.getUsers({})) do
-                if ARMA.hasPermission(k, "nhs.menu") then
-                    ARMAclient.notify(v,{"~g~NHS Call Received!"})
-                end
+                TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'nhs')
             end
             ARMAclient.notify(user_source,{"~g~Sent NHS Call."})
         else
@@ -85,38 +105,17 @@ RegisterCommand("111", function(source)
     end)
 end)
 
-RegisterNetEvent("ARMA:RemoveTicket")
-AddEventHandler("ARMA:RemoveTicket", function(ticketID, a)
-    if a == "Admin" then
-        adminTickets[ticketID] = nil
-    elseif a == "PD" then
-        pdCalls[ticketID] = nil
-    elseif a == "NHS" then
-        NHSCalls[ticketID] = nil
-    end
-    for k, v in pairs(ARMA.getUsers({})) do
-        if ARMA.hasPermission(k, "admin.tickets") then
-            TriggerClientEvent("ARMA:RecieveTickets", v, adminTickets)
-        end
-        if ARMA.hasPermission(k, "police.perms") then
-            TriggerClientEvent("ARMA:RecieveTickets", v, pdCalls)
-        end
-        if ARMA.hasPermission(k, "nhs.menu") then
-            TriggerClientEvent("ARMA:RecieveTickets", v, NHSCalls)
-        end
-    end
-end)
-
 RegisterNetEvent("ARMA:TakeTicket")
-AddEventHandler("ARMA:TakeTicket", function(ticketID, b)
+AddEventHandler("ARMA:TakeTicket", function(ticketID)
     local user_id = ARMA.getUserId(source)
     local admin_source = ARMA.getUserSource(user_id)
-    if ARMA.hasPermission(user_id, "admin.tickets") and b == 'Admin' then
-        if adminTickets[ticketID] ~= nil then
-            for k, v in pairs(adminTickets) do
-                if ticketID == k then
+    if tickets[ticketID] ~= nil then
+        for k, v in pairs(tickets) do
+            if ticketID == k then
+                if tickets[ticketID].type == 'admin' and ARMA.hasPermission(user_id, "admin.tickets") then
                     if ARMA.getUserSource(v.permID) ~= nil then
-                        if user_id ~= v.permID then
+                        --if user_id ~= v.permID then
+                        if user_id == v.permID then
                             local adminbucket = GetPlayerRoutingBucket(admin_source)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             if adminbucket ~= playerbucket then
@@ -126,67 +125,46 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID, b)
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.staffMode(admin_source, {true})
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
-                                ARMA.giveBankMoney(user_id, 3000)
-                                ARMAclient.notify(admin_source,{"~g~You have taken "..v.name.."'s ticket. You have earned £3,000 ❤️"})
+                                ARMA.giveBankMoney(user_id, 10000)
+                                ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
                                 ARMAclient.teleport(admin_source, {x,y,z})
-                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
+                                tickets[ticketID] = nil
+                                TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                             end)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own ticket!"})
                         end
                     else
-                        ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
+                        ARMAclient.notify(admin_source,{"~r~You cannot take a ticket from an offline player."})
+                        TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                     end
-                end
-            end
-        else
-            ARMAclient.notify(admin_source,{"~r~Ticket Already taken!"})
-        end
-    elseif ARMA.hasPermission(user_id, "police.perms") and b == 'PD' then
-        if PDCalls[ticketID] ~= nil then
-            for k, v in pairs(PDCalls) do
-                if ticketID == k then
+                elseif tickets[ticketID].type == 'met' and ARMA.hasPermission(user_id, "police.perms") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
-                            ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
-                                ARMAclient.notify(v.tempID,{"~g~Your police call has been accepted!"})
-                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
-                            end)
+                            ARMAclient.notify(v.tempID,{"~g~Your MET Police call has been accepted!"})
+                            tickets[ticketID] = nil
+                            TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own call!"})
                         end
                     else
-                        ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
+                        TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                     end
-                end
-            end
-        else
-            ARMAclient.notify(admin_source,{"~r~Call Already accepted!"})
-        end
-    elseif ARMA.hasPermission(user_id, "nhs.menu") and b == 'NHS' then
-        if NHSCalls[ticketID] ~= nil then
-            for k, v in pairs(NHSCalls) do
-                if ticketID == k then
+                elseif tickets[ticketID].type == 'nhs' and ARMA.hasPermission(user_id, "nhs.menu") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
-                            ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
-                                ARMAclient.notify(v.tempID,{"~g~Your emergency call has been accepted!"})
-                                TriggerEvent("ARMA:RemoveTicket", ticketID, b)
-                            end)
+                            ARMAclient.notify(v.tempID,{"~g~Your NHS call has been accepted!"})
+                            tickets[ticketID] = nil
+                            TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own call!"})
                         end
                     else
-                        ARMAclient.notify(admin_source,{"~r~Player has left the game."})
-                        TriggerEvent("ARMA:RemoveTicket", ticketID, b)
+                        TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                     end
                 end
             end
-        else
-            ARMAclient.notify(admin_source,{"~r~Call Already accepted!"})
         end
     end         
 end)
@@ -196,15 +174,17 @@ RegisterNetEvent("ARMA:NHSComaCall")
 AddEventHandler("ARMA:NHSComaCall", function()
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    NHSCalls['Immediate Attention'] = {
+    reason = 'Immediate Attention'
+    callID = callID + 1
+    tickets[callID] = {
         name = GetPlayerName(user_source),
         permID = user_id,
         tempID = user_source,
-        coords = GetEntityCoords(GetPlayerPed(user_source)),
+        reason = reason,
+        type = 'nhs'
     }
     for k, v in pairs(ARMA.getUsers({})) do
-        if ARMA.hasPermission(k, "nhs.menu") then
-            ARMAclient.notify(v,{"~g~NHS Call Received!"})
-        end
+        TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'nhs')
     end
+    ARMAclient.notify(user_source,{"~g~Sent NHS Call."})
 end)
