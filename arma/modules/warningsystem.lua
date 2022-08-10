@@ -8,8 +8,13 @@ RegisterCommand('sw', function(player, args)
     local permID =  tonumber(args[1])
     if permID ~= nil then
         if ARMA.hasPermission(user_id,"admin.showwarn") then
-            armawarningstables = getarmaWarnings(permID,player)
-            TriggerClientEvent("arma:showWarningsOfUser",player,armawarningstables)
+			armawarningstables = getarmaWarnings(permID,player)
+			a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = permID})
+			for k,v in pairs(a) do
+				if v.UserID == permID then
+					TriggerClientEvent("arma:showWarningsOfUser",player,armawarningstables,v.points)
+				end
+			end
         end
     end
 end)
