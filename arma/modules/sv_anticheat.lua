@@ -104,6 +104,7 @@ local allowedEntities = {
     [`ba_prop_battle_club_speaker_large`] = true,
     [`ba_prop_battle_club_speaker_large`] = true,
     [`prop_studio_light_01`] = true,
+    [`prop_car_airbag`] = true,
 }
 
 local otherVehicles = {
