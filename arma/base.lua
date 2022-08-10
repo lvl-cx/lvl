@@ -229,7 +229,7 @@ Citizen.CreateThread(function()
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_casino_chips(
     user_id INT(11),
-    chips INT(11) NOT NULL DEFAULT 0,
+    chips bigint NOT NULL DEFAULT 0,
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
