@@ -65,7 +65,7 @@ RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmen
 RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "checkban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Check Ban',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Types',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "acvehwhitelist", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Vehicle Whitelist',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -520,6 +520,15 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,RMenu:Get('communitypot','mainmenu'))
             end  
+            if GlobalAdminLevel >= 10 then
+                RageUI.ButtonWithStyle("Give Money",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                end,RMenu:Get('adminmenu','moneymenu'))
+                RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent('ARMA:AddCar')
+                    end
+                end, RMenu:Get('adminmenu', 'functions'))
+            end
         end)
     end
 end)
@@ -615,7 +624,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end)
                 end
-            end, RMenu:Get('bwadminmenu', 'moneymenu'))
+            end, RMenu:Get('adminmenu', 'moneymenu'))
         end)
     end
 end)
@@ -633,11 +642,6 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Give Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
-                    end
-                end, RMenu:Get('adminmenu', 'devfunctions'))
-                RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
                 RageUI.ButtonWithStyle("Spawn Vehicle", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -682,8 +686,6 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-                RageUI.ButtonWithStyle("Give Money",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
-                end,RMenu:Get('adminmenu','moneymenu'))
             end        
         end)
     end
