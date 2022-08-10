@@ -78,38 +78,6 @@ Citizen.CreateThread(function()
 	end	
 end)
 
-function getWarningUserID()
-	AddTextEntry('FMMC_MPM_NA', "Enter ID of the player you want to warn?")
-	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter ID of the player you want to warn?", "1", "", "", "", 30)
-    while (UpdateOnscreenKeyboard() == 0) do
-        DisableAllControlActions(0);
-        Wait(0);
-    end
-    if (GetOnscreenKeyboardResult()) then
-        local result = GetOnscreenKeyboardResult()
-		if result then
-			return result
-		end
-    end
-	return false
-end
-
-function getWarningUserMsg()
-	AddTextEntry('FMMC_MPM_NA', "Enter warning message")
-	DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter warning message", "", "", "", "", 30)
-    while (UpdateOnscreenKeyboard() == 0) do
-        DisableAllControlActions(0);
-        Wait(0);
-    end
-    if (GetOnscreenKeyboardResult()) then
-        local result = GetOnscreenKeyboardResult()
-		if result then
-			return result
-		end
-    end
-	return false
-end
-
 function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
     SetTextFont(font)
     SetTextProportional(0)
