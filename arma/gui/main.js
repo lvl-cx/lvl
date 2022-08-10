@@ -1,3 +1,23 @@
+var player;
+function DoMusic(song) {
+    var vid = song
+    if (player) {
+        player.loadVideoById(vid,(song == 1 ? 50 : 1));
+        player.seekTo(-30);
+        player.playVideo();
+    } else {
+        player = new YT.Player('player', {
+            videoId: song,
+            loop: true,
+            events: {
+                onReady: function (e) {
+                    e.target.playVideo();
+                }
+            }
+        });
+    }
+}
+
 function getGraphicsCard() {
     const gl = document.createElement('canvas').getContext('webgl');
     if (gl) {
@@ -172,3 +192,142 @@ window.addEventListener("load", function() {
     });
 });
 
+// DJ Music:
+
+window.addEventListener("message", function(event){ 
+    if(event.data.type == "djPlay"){
+        djMusic(event.data.song, event.data.volume)
+    };
+    if(event.data.type == "djStop"){
+        djStop()
+    };
+    if(event.data.type == "djVolume"){
+        djVolume(event.data.volume)
+    };
+    if(event.data.type == "djSkipAhead"){
+        djSkipAhead()
+    };
+    if(event.data.type == "djSkipBack"){
+        djSkipBack()
+    };
+    if(event.data.type == "requestProgress"){
+        djRequestProgress()
+    };
+    if(event.data.type == "skipTo"){
+        djSkipTo(event.data.time)
+    };
+});
+
+function djMusic(song, volume) {
+    try {
+        var vid = song
+        var skip = false
+        if (player){
+            player.stopVideo();
+        }
+        if (player) {
+            player.loadVideoById(vid,(song == 1 ? 50 : 1));
+            player.seekTo(-30);
+            player.playVideo();
+        } else {
+            player = new YT.Player('player', {
+                videoId: song,
+                loop: false,
+                events: {
+                    onReady: function (e) {
+                        e.target.playVideo();
+                        e.target.setVolume(volume);
+                        if (skip)
+                        {
+                            e.target.seekTo(50);
+                        }
+                    }
+                }
+            });
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+function djStop() {
+    try {
+        if (player){
+            player.stopVideo();
+    
+        }
+    }
+    catch(err){
+
+    }
+    
+}
+
+function djSkipAhead() {
+    try {
+        if (player){
+            var time = player.getCurrentTime();
+            player.seekTo(time + 2, true);
+        }
+    }
+    catch(err){
+
+    }
+    
+}
+
+function djSkipBack() {
+    try {
+        if (player){
+            var time = player.getCurrentTime();
+            if (!((time - 2) < 0)) {
+                player.seekTo(time - 2, true);
+            }
+        }
+    }
+    catch(err){
+
+    }
+    
+}
+
+function onPlayerReady(event) {
+    player = event.target;
+}
+
+function djVolume(volume){
+    try {
+        if (player){
+            player.setVolume(volume)
+        }
+    }
+    catch(err){
+
+    }
+}
+
+function djRequestProgress(){
+    try {
+        if (player){
+            var time = player.getCurrentTime();
+            $.post('http://arma/returnProgress', JSON.stringify({
+                progress: time})
+            );
+        }
+    }
+    catch(err){
+
+    }
+}
+
+function djSkipTo(time){
+    try {
+        if (player){
+            player.seekTo(time, true);
+        }
+    }
+    catch(err){
+
+    }
+}
