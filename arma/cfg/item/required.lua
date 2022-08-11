@@ -1,5 +1,6 @@
 
 local items = {}
+local a = module("cfg/weapons")
 
 items["medkit"] = {"Medical Kit","Used to reanimate unconscious people.",nil,0.5}
 items["dirty_money"] = {"Dirty money","Illegally earned money.",nil,0}
@@ -81,6 +82,7 @@ local wbody_choices = function(args)
         local weapons = {}
         weapons[args[2]] = {ammo = 0}
         ARMAclient.giveWeapons(player, {weapons})
+        SetPedAmmo(GetPlayerPed(player), args[2], 0)
 
         ARMA.closeMenu(player)
       end
@@ -116,27 +118,25 @@ local wammo_choices = function(args)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
       local amount = ARMA.getInventoryItemAmount(user_id, fullidname)
-      TriggerClientEvent('checkAmmo', player)
       ARMA.prompt(player, "Amount to load ? (max "..amount..")", "", function(player,ramount)
         ramount = parseInt(ramount)
-
-        ARMAclient.getWeapons(player, {}, function(uweapons)
-            for i,v in pairs(ARMAAmmoTypes[ammotype]) do
-                if uweapons[v] ~= nil then -- check if the weapon is equiped
-                
-                      if ARMA.tryGetInventoryItem(user_id, fullidname, ramount, true) then -- give weapon ammo
-                        local weapons = {}
-                        weapons[v] = {ammo = ramount}
-                        ARMAclient.giveWeapons(player, {weapons,false})
-                        ARMA.closeMenu(player)
-                        TriggerEvent('ARMA:RefreshInventory', player)
-                        return
-                      end
-      
-                    end
-         
+        ARMAclient.getWeapons(player, {}, function(uweapons) -- gets current weapons
+          for k,v in pairs(a.weapons) do -- goes through new weapons cfg
+            for c,d in pairs(uweapons) do -- goes through current weapons
+              if k == c then  -- if weapon in new cfg is the same as in current weapons
+                if fullidname == v.ammo then -- check if ammo being loaded is the same as the ammo for that gun
+                  if ARMA.tryGetInventoryItem(user_id, fullidname, ramount, true) then -- take ammo from inv
+                    local weapons = {}
+                    weapons[k] = {ammo = ramount}
+                    ARMAclient.giveWeapons(player, {weapons,false})
+                    ARMA.closeMenu(player)
+                    TriggerEvent('ARMA:RefreshInventory', player)
+                    return
+                  end
+                end
+              end
             end
-            --ARMAclient.notify(player,{'~r~You do not have any guns that fit this ammo type.'})
+          end
         end)
       end)
     end
