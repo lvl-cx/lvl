@@ -20,8 +20,6 @@ Citizen.CreateThread(function()
       ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
       ARMAserver.updateWeapons({tARMA.getWeapons()})
       ARMAserver.updateCustomization({tARMA.getCustomization()})
-      TriggerServerEvent('ARMA:changeHairStyle')
-      TriggerServerEvent('ARMA:changeTattoos')
     end
   end
 end)
