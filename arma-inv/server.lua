@@ -829,7 +829,6 @@ function OpenInv(source, netid, LootBagItems)
     end
     local maxVehKg = 200
     TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({LootBagItems}), maxVehKg)
-    print(json.encode(FormattedInventoryData))
 end
 
 
