@@ -107,9 +107,9 @@ morphine_choices["Take"] = {function(player,choice)
   end
 end}
 
-items["pills"] = {"Pills","A simple medication.",function(args) return pills_choices end,0.1}
 items["weed"] = {"Weed","A some weed.",function(args) return smoke_choices end,0.10}
 items["cocaine"] = {"Cocaine","Some cocaine.",function(args) return smell_choices end,0.5}
 items["lsd"] = {"Lsd","Some LSD.",function(args) return lsd_choices end,0.1}
+items["morphine"] = {"Morphine","Some Morphine.",function(args) return morphine_choices end,0.1}
 
 return items
