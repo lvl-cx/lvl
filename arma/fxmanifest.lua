@@ -56,6 +56,7 @@ client_scripts{
   "cfg/cfg_attachments.lua",
   "cfg/skinshops.lua",
   "cfg/cfg_peds.lua",
+  "cfg/cfg_dvsa.lua",
   "lib/utils.lua",
   "lib/cl_mouse.lua",
   "client/Tunnel.lua",
