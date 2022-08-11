@@ -933,8 +933,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Request Screenshot')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Request Screenshot')
     end   
 end)
 
@@ -1014,8 +1013,7 @@ AddEventHandler('ARMA:noF10Kick', function()
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to No F10 Kick Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to No F10 Kick Someone')
     end
 end)
 
@@ -1098,8 +1096,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Kick Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Kick Someone')
     end
 end)
 
@@ -1157,8 +1154,7 @@ AddEventHandler('ARMA:RemoveWarning', function(warningid)
             local player = ARMA.getUserSource(admin_id)
             local name = GetPlayerName(source)
             Wait(500)
-            reason = "Type #11"
-            TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Warning')
+                TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Remove Warning')
         end
     end
 end)
@@ -1210,8 +1206,7 @@ AddEventHandler("ARMA:Unban",function()
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Unban Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Unban Someone')
     end
 end)
 
@@ -1299,8 +1294,7 @@ AddEventHandler("ARMA:addNote",function(admin, player)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Add Note')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Add Note')
     end
 end)
 
@@ -1373,8 +1367,7 @@ AddEventHandler("ARMA:removeNote",function(admin, player)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Remove Note')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Remove Note')
     end
 end)
 
@@ -1435,8 +1428,7 @@ AddEventHandler('ARMA:SlapPlayer', function(admin, target)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Slap Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Slap Someone')
     end
 end)
 
@@ -1495,8 +1487,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Revive Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Revive Someone')
     end
 end)
 
@@ -1617,8 +1608,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Freeze Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Freeze Someone')
     end
 end)
 
@@ -1687,8 +1677,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport TO Someone')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport TO Someone')
     end
 end)
 
@@ -1774,8 +1763,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport Someone to Them')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
     end
 end)
 
@@ -1832,8 +1820,7 @@ AddEventHandler('ARMA:GetCoords', function()
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Get Coords')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Get Coords')
     end
 end)
 
@@ -1863,8 +1850,7 @@ AddEventHandler('ARMA:Tp2Coords', function()
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport to Coords')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport to Coords')
     end
 end)
 
@@ -1945,8 +1931,7 @@ AddEventHandler('ARMA:GiveMoneyMenu', function()
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Give Money Menu')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Give Money Menu')
     end
 end)
 
@@ -1991,8 +1976,7 @@ AddEventHandler('ARMA:GiveCratesMenu', function()
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Give Money Menu')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Give Money Menu')
     end
 end)
 
@@ -2066,8 +2050,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport Someone to Admin Island')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone to Admin Island')
     end
 end)
 
@@ -2082,8 +2065,7 @@ AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeA
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport Someone Back from Admin Zone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone Back from Admin Zone')
     end
 end)
 
@@ -2100,8 +2082,7 @@ AddEventHandler("ARMA:Teleport",function(id, coords)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", admin_id, reason, name, player, 'Attempted to Teleport to Someone')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport to Someone')
     end
 end)
 
@@ -2193,8 +2174,7 @@ AddEventHandler('ARMA:AddCar', function()
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Add Car')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Add Car')
     end
 end)
 
