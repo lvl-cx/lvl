@@ -186,5 +186,6 @@ AddEventHandler("ARMA:NHSComaCall", function()
     for k, v in pairs(ARMA.getUsers({})) do
         TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'nhs')
     end
-    ARMAclient.notify(user_source,{"~g~Sent NHS Call."})
+    docsOnline = #ARMA.getUsersByPermission('nhs.menu')
+    TriggerClientEvent('ARMA:getNumberOfDocsOnline', user_source, docsOnline)
 end)
