@@ -135,6 +135,3 @@ end)
 function getPedMenuId(string)
     return stringsplit(string,"_")[2]
 end
-function Goku()
-    TriggerServerEvent("BW:turnIntoGoku")
-end
