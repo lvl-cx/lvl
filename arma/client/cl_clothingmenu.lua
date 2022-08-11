@@ -356,31 +356,31 @@ RageUI.CreateWhile(1.0, true, function()
         end
         if RageUI.Visible(RMenu:Get('ARMAclothing', 'clearProps')) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-                RageUI.Button('Remove Hat',nil,{},function(L,M,N)
+                RageUI.Button('Remove Hat',nil,{},true,function(L,M,N)
                     if N then 
                         ClearPedProp(tARMA.getPlayerPed(),0)
                     end 
                 end,function()
                 end,nil)
-                RageUI.Button('Remove Glasses',nil,{},function(L,M,N)
+                RageUI.Button('Remove Glasses',nil,{},true,function(L,M,N)
                     if N then 
                         ClearPedProp(tARMA.getPlayerPed(),1)
                     end 
                 end,function()
                 end,nil)
-                RageUI.Button('Remove Ear Accessory',nil,{},function(L,M,N)
+                RageUI.Button('Remove Ear Accessory',nil,{},true,function(L,M,N)
                     if N then 
                         ClearPedProp(tARMA.getPlayerPed(),2)
                     end 
                 end,function()
                 end,nil)
-                RageUI.Button('Remove Watch',nil,{},function(L,M,N)
+                RageUI.Button('Remove Watch',nil,{},true,function(L,M,N)
                     if N then 
                         ClearPedProp(tARMA.getPlayerPed(),6)
                     end 
                 end,function()
                 end,nil)
-                RageUI.Button('Remove Bracelet',nil,{},function(L,M,N)
+                RageUI.Button('Remove Bracelet',nil,{},true,function(L,M,N)
                     if N then 
                         ClearPedProp(tARMA.getPlayerPed(),7)
                     end 
