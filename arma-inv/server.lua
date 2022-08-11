@@ -7,6 +7,7 @@ local Inventory = module("arma", "cfg/inventory")
 local InventorySpamTrack = {} -- Stops inventory being spammed by users.
 local LootBagEntities = {}
 local InventoryCoolDown = {}
+local a = module("cfg/weapons")
 
 
 RegisterNetEvent('ARMA:FetchPersonalInventory')
@@ -18,7 +19,6 @@ AddEventHandler('ARMA:FetchPersonalInventory', function()
         local data = ARMA.getUserDataTable({UserId})
         if data and data.inventory then
             local FormattedInventoryData = {}
-            --print(json.encode(data.inventory))
             for i,v in pairs(data.inventory) do
                 FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
             end
@@ -757,8 +757,18 @@ AddEventHandler('ARMA:LootBag', function(netid)
                     TriggerClientEvent("arma:PlaySound", source, "zipper")
                     LootBagEntities[netid][5] = source
                     if ARMA.hasPermission({user_id, "police.armoury"}) then
+                        -- this will eventually stop pd weapons from being seized cba to finish tonight icl
+                        --[[ local savePDWeapons = {}
+                        for k,v in pairs(a.weapons) do
+                            print(LootBagEntities[netid].Items[k])
+                            if LootBagEntities[netid].Items[k] == k then
+                                if v.policeWeapon then
+                                    table.insert(savePDWeapons, k)
+                                end
+                            end
+                        end ]]
                         LootBagEntities[netid].Items = {}
-                        --ARMA.clearInventory({LootBagEntities[netid].id})
+                        --LootBagEntities[netid].Items = savePDWeapons
                         ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
