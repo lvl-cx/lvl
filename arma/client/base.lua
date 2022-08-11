@@ -57,6 +57,26 @@ function tARMA.isInside()
   return not (GetInteriorAtCoords(x,y,z) == 0)
 end
 
+local aWeapons=module("cfg/cfg_attachments")
+function tARMA.getAllWeaponAttachments(weapon,Q)
+  local R=PlayerPedId()
+  local S={}
+  if Q then 
+      for T,U in pairs(aWeapons.attachments)do 
+          if HasPedGotWeaponComponent(R,weapon,GetHashKey(U))and not table.has(givenAttachmentsToRemove[weapon]or{},U)then 
+              table.insert(S,U)
+          end 
+      end 
+  else 
+      for T,U in pairs(aWeapons.attachments)do 
+          if HasPedGotWeaponComponent(R,weapon,GetHashKey(U))then 
+              table.insert(S,U)
+          end 
+      end 
+  end
+  return S 
+end
+
 -- return vx,vy,vz
 function tARMA.getSpeed()
   local vx,vy,vz = table.unpack(GetEntityVelocity(PlayerPedId()))
