@@ -1539,30 +1539,6 @@ cfg.groups = {
   
   ["TutorialDone"] = {},
 
-
--- COSMETIC ITEMS --
-
--- CHAINS / WATCHES --
-  ["Rolex"] = {},
-  ["AP"] = {},
-
--- CHAINS --
-  ["Gold Chain"] = {},
-
--- VESTS --
-  ["Army Black Armed Vest"] = {},
-  ["Army Green Armed Vest"] = {},
-  ["Army Black Ammo Vest"] = {},
-  ["Army Green Ammo Vest"] = {},
-  ["Army Black Large Vest"] = {},
-  ["Army Green Large Vest"] = {},
-  ["Standard Grey Vest"] = {},
-  ["Small Army Green Vest"] = {},
-  ["Camo Green Vest"] = {},
-  ["Blue Untar Vest"] = {},
-  ["British Grey Armed Vest"] = {},
-  ["Pink Icons Vest"] = {},
-
 }
 
 -- groups are added dynamically using the API or the menu, but you can add group when an user join here
