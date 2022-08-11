@@ -340,12 +340,12 @@ cfg.weapons = {
         showonback = true,
         weight = 7.5,
     },
-    ["WEAPON_ANARCHY"] = {
-        name = "Anarchy lr300",
+    ["WEAPON_LR300"] = {
+        name = "LR300",
         class = "AR",
         ammo = "5.56 NATO",
         policeWeapon = false,
-        model = "w_ar_anarchy",
+        model = "w_ar_lr300",
         showonback = true,
         weight = 7.5,
     },
