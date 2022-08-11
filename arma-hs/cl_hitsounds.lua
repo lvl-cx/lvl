@@ -59,14 +59,8 @@ end)
 
 
 RegisterNetEvent("hs:triggerSounds")
-AddEventHandler("hs:triggerSounds", function()
-    notplayingHeadshotSounds = not notplayingHeadshotSounds
-    if notplayingHeadshotSounds then
-    notify("~g~Hitsounds Enabled.")
-    end
-    if not notplayingHeadshotSounds then
-        notify("~r~Hitsounds Disabled.")
-    end
+AddEventHandler("hs:triggerSounds", function(status)
+    notplayingHeadshotSounds = not status
 end)
 
 function notify(string)
