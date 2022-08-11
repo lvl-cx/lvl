@@ -38,3 +38,15 @@ Citizen.CreateThread(function()
         end 
     end 
 end)
+
+RegisterNetEvent('morphine')
+AddEventHandler('morphine', function()
+    while true do 
+        Citizen.Wait(1000)
+        SetEntityHealth(PlayerPedId(), GetEntityHealth(PlayerPedId()) + 2)
+        if GetEntityHealth(PlayerPedId()) == 200 then 
+            notify('~r~The morphine effect has stopped!')
+            break; 
+        end
+    end
+end)
