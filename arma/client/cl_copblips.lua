@@ -61,13 +61,17 @@ local function m(n,o,k)
 end
 RegisterCommand("blipson",function()
     if tARMA.globalOnPoliceDuty() or tARMA.globalOnNHSDuty() then 
+        tARMA.notify('~g~Emergency blips enabled.')
         a=true 
     end 
 end,false)
 
 RegisterCommand("blipsoff",function()
-    a=false
-    d()
+    if tARMA.globalOnPoliceDuty() or tARMA.globalOnNHSDuty() then 
+        tARMA.notify('~r~Emergency blips disabled.')
+        a=false
+        d()
+    end 
 end,false)
 
 Citizen.CreateThread(function()
@@ -94,23 +98,3 @@ AddEventHandler("ARMA:BLIPS", function(clockedon)
     end 
   end
 end)
-
---[[ local u=true
-local v=GetPlayerServerId(PlayerId())
-CreateThread(function()
-    Wait(20000)
-    u=false
-end)
-
-RegisterNetEvent("BW:sendFarBlips",function(w)
-    if not u then
-        g()
-        if a then
-            for e,x in pairs(w)do 
-                if x.source~=v and GetPlayerFromServerId(x.source)==-1 then 
-                    m(x.position,x.dead,x.colour)
-                end 
-            end 
-        end
-    end 
-end) ]]
