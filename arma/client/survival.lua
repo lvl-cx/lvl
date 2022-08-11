@@ -11,7 +11,7 @@ local comaAnim = {}
 local DeathAnim = 100
 
 WeaponNames={}
-local o=module("arma","cfg/weapons")
+local o=module("cfg/weapons")
 local p={}
 local q={}
 Citizen.CreateThread(function()
@@ -312,45 +312,32 @@ Citizen.CreateThread(function()
 end)
 
 
-
-function tARMA.varyHealth(variation)
-    local ped = PlayerPedId()
-
-    local n = math.floor(GetEntityHealth(ped)+variation)
-    SetEntityHealth(ped,n)
+function tARMA.varyHealth(X)
+    local x=PlayerPedId()
+    local Y=math.floor(GetEntityHealth(x)+X)SetEntityHealth(x,Y)
 end
-
-function tARMA.reviveHealth()
-    local ped = PlayerPedId()
-    if GetEntityHealth(ped) == 102 then
-        SetEntityHealth(ped,200)
-    end
-end
-
 function tARMA.getHealth()
     return GetEntityHealth(PlayerPedId())
 end
-
-function tARMA.getArmour()
-    return GetPedArmour(PlayerPedId())
+function tARMA.setHealth(y)
+    local Y=math.floor(y)
+    SetEntityHealth(PlayerPedId(),Y)
 end
-
-function tARMA.setHealth(health)
-    local n = math.floor(health)
-    SetEntityHealth(PlayerPedId(),n)
+function tARMA.setFriendlyFire(Z)
+    NetworkSetFriendlyFireOption(Z)
+    SetCanAttackFriendly(GetPlayerPed(-1),Z,Z)
 end
-
-
-function tARMA.setFriendlyFire(flag)
-    NetworkSetFriendlyFireOption(flag)
-    SetCanAttackFriendly(PlayerPedId(), flag, flag)
+function tARMA.setPolice(Z)
+    local D=PlayerId()
+    SetPoliceIgnorePlayer(D,not Z)
+    SetDispatchCopsForPlayer(D,Z)
 end
-
-function tARMA.setPolice(flag)
-    local player = PlayerId()
-    SetPoliceIgnorePlayer(player, not flag)
-    SetDispatchCopsForPlayer(player, flag)
-end
+Citizen.CreateThread(function()
+    if true then 
+        tARMA.setPolice(false)
+        tARMA.setFriendlyFire(true)
+    end 
+end)
 
 function getRandomComaAnimation()
 -- --death emotes
