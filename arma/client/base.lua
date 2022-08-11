@@ -518,6 +518,17 @@ function tARMA.setWeapon(m, s, t)
   SetCurrentPedWeapon(m, s, t)
 end
 
+function tARMA.getPedServerId(a5)
+  local a6=GetActivePlayers()
+  for T,U in pairs(a6)do 
+      if a5==GetPlayerPed(U)then 
+          local a7=GetPlayerServerId(U)
+          return a7 
+      end 
+  end
+  return nil 
+end
+
 function tARMA.loadModel(modelName)
   local modelHash
   if type(modelName) ~= "string" then
