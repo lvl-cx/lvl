@@ -33,34 +33,6 @@ Citizen.CreateThread(function()
   end
 end)
 
--- def
-local weapon_types = {
--- Small Arms
-"WEAPON_M1911",
-"WEAPON_BERETTA",
-"WEAPON_REVOLVERS",
-"WEAPON_MAC11",
-
--- Rebel Trader
-"WEAPON_VANDALG",
-"WEAPON_ar15",
-"WEAPON_M16A1",
-"WEAPON_DEAGLE",
-
--- LARGE ARMS
-"WEAPON_PPSH",
-"WEAPON_UMP45",
-"WEAPON_ITACHA",
-"WEAPON_LR300",
-
--- SHANK
-"WEAPON_KITCHENKNIFE",
-"WEAPON_FIREAXE",
-"WEAPON_RAMBO",
-"WEAPON_SHOVEL",
-"WEAPON_BASEBALLBAT",
-}
-
 function tARMA.spawnAnim(a, b)
   ExecuteCommand("hideui")
   local g = b
@@ -96,52 +68,6 @@ function tARMA.spawnAnim(a, b)
   tARMA.setCustomization(a)
 end
 
-function tARMA.getWeaponTypes()
-  return weapon_types
-end
-
-function tARMA.getWeapons()
-  local player = PlayerPedId()
-
-  local ammo_types = {} -- remember ammo type to not duplicate ammo amount
-
-  local weapons = {}
-  for k,v in pairs(weapon_types) do
-    local hash = GetHashKey(v)
-    if HasPedGotWeapon(player,hash) then
-      local weapon = {}
-      weapons[v] = weapon
-
-      local atype = Citizen.InvokeNative(0x7FEAD38B326B9F74, player, hash)
-      if ammo_types[atype] == nil then
-        ammo_types[atype] = true
-        weapon.ammo = GetAmmoInPedWeapon(player,hash)
-      else
-        weapon.ammo = 0
-      end
-    end
-  end
-
-  return weapons
-end
-
-function tARMA.giveWeapons(weapons,clear_before)
-  local player = PlayerPedId()
-
-  -- give weapons to player
-
-  if clear_before then
-    RemoveAllPedWeapons(player,true)
-  end
-
-  for k,weapon in pairs(weapons) do
-    local hash = GetHashKey(k)
-    local ammo = weapon.ammo or 0
-
-    GiveWeaponToPed(player, hash, ammo, false)
-  end
-  return true
-end
 
 --[[
 function tARMA.dropWeapon()
