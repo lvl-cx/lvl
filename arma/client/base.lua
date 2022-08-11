@@ -496,6 +496,12 @@ function tARMA.loadAnimDict(dict)
 	end
 end
 
+function tARMA.drawNativeNotification(A)
+  SetTextComponentFormat('STRING')
+  AddTextComponentString(A)
+  DisplayHelpTextFromStringLabel(0,0,1,-1)
+end
+
 local m=true
 function tARMA.canAnim()
     return m 

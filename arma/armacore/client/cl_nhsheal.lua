@@ -1,60 +1,40 @@
-local markers = {
-    {308.89663696289,-592.33825683594,43.28405380249}, -- St Thomas
-    {1832.9697265625,3682.7734375,34.270053863525}, -- Sandy
-    {-254.51573181152,6332.248046875,32.427242279053}, -- Paleto
+local a=GetGameTimer()-30000
+local b={
+    ["city"]=vector3(309.04260253906,-592.22509765625,42.284008026123),
+    ["sandy"]=vector3(1833.0328369141,3682.8110351563,33.270057678223),
+    ["paleto"]=vector3(-251.9546661377,6334.146484375,31.427177429199),
+    ["london"]=vector3(355.45614624023,-1416.0190429688,32.510429382324),
+    ["mountzenah"]=vector3(-436.04296875,-326.27416992188,33.910766601562)
 }
-
-cooldown = false
-
-Citizen.CreateThread(function() 
-    while true do 
-        Citizen.Wait(0)
-        for k, v in pairs(markers) do 
-            local v1 = vector3(table.unpack(v))
-            DrawMarker(25, v1.x,v1.y,v1.z -0.95, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.8, 0.8, 0.8, 0, 200, 0, 150, 0, 0, 2, 0, 0, 0, false)
-            if Vdist2(GetEntityCoords(PlayerPedId()), v1) <= 1.4 then 
-                alert('Press ~INPUT_VEH_HORN~ to get medical help')
-                if IsControlJustPressed(0, 51) then 
-                    if not cooldown then 
-                        cooldown = true
-                        SetEntityHealth(PlayerPedId(), 200)
-                        tARMA.notify("~g~You have been healed, free of charge by the NHS.")
-                    elseif cooldown then
-                        tARMA.notify("~r~You cannot get healed, try again later")
-                    end
-                end
-            end
+Citizen.CreateThread(function()
+    if true then 
+        local e=function(f)
+            tARMA.drawNativeNotification("Press ~INPUT_PICKUP~ to recieve medical attention.")
         end
-    end
+        local g=function(f)
+        end
+        local h=function(f)
+            if IsControlJustPressed(1,51)then 
+                local i=tARMA.getPlayerPed()
+                if not tARMA.isInComa()then 
+                    if tARMA.getPlayerVehicle()==0 then 
+                        if GetGameTimer()>a+30000 then 
+                            SetEntityHealth(i,200)
+                            tARMA.notify("~g~Healed, free of charge by the NHS.")
+                            a=GetGameTimer()
+                        else 
+                            tARMA.notify("~r~Healing cooldown, come back later.")
+                        end 
+                    else 
+                        tARMA.notify("~r~You can not heal whilst in a vehicle.")
+                    end
+                else tARMA.notify("~r~You are bleeding out, call a doctor ASAP!")
+                end 
+            end 
+        end
+        for j,k in pairs(b)do 
+            tARMA.addMarker(k.x,k.y,k.z,1.0,1.0,1.0,0,0,255,100,50,27,false,false,true)
+            tARMA.createArea(j.."_hospital",k,1.5,6,e,g,h,{})
+        end 
+    end 
 end)
-
-Citizen.CreateThread(function()
-    while true do
-    Wait(15000)
-      if cooldown == true then
-        cooldown = false
-      end
-    end
-  end)
-
-
-local hospitals = {
-  {coords = vector3(1832.9547119141,3682.9191894531,34.270072937012), name = 'Sandy Hospital'},
-  {coords = vector3(-254.43467712402,6332.3833007812,32.42724609375), name = 'Paleto Hospital'},
-  {coords = vector3(308.84286499023,-592.34204101562,43.284061431885), name = 'St Thomas Hospital'},
-}
--- [Blips]
-Citizen.CreateThread(function()
-  for k,v in pairs(hospitals) do
-    blip = AddBlipForCoord(v.coords)
-    SetBlipSprite(blip, 80)
-    SetBlipScale(blip, 0.4)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 2)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString(v.name)
-    EndTextCommandSetBlipName(blip)
-  end
-end)
-  
