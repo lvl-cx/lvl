@@ -364,7 +364,12 @@ end
 RegisterCommand("return", function()
     if staffMode then
         if location ~= nil then
+            DoScreenFadeOut(1000)
+            NetworkFadeOutEntity(PlayerPedId(), true, false)
+            Wait(1000)
             SetEntityCoords(PlayerPedId(), location)
+            NetworkFadeInEntity(PlayerPedId(), 0)
+            DoScreenFadeIn(1000)
             location = nil
             tARMA.notify("~g~Returned to position.")
         else
