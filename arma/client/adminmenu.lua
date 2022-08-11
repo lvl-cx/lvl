@@ -22,7 +22,6 @@ local BanMessage = "N/A"
 local SeparatorMSG = {}
 local BanPoints = 0
 local banchecked = {}
-local f = nil
 local g
 local h = {}
 local i = 1
@@ -230,7 +229,8 @@ local df = {{"10%", 0.1},{"20%", 0.2},{"30%", 0.3},{"40%", 0.4},{"50%", 0.5},{"6
 local d = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%", "150%", "200%", "250%", "300%", "350%", "400%", "450%", "500%", "600%", "700%", "800%", "900%", "1000%"}
 local dts = 10
 
-
+local a=0
+local b=0
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'MainMenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -244,17 +244,32 @@ RageUI.CreateWhile(1.0, true, function()
                     ExecuteCommand("compass")
                 end
             end)
-            RageUI.Checkbox("Toggle Hitsounds", nil, hitsoundchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
+            RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",a,{Style=RageUI.CheckboxStyle.Car},function(Hovered, Active, Selected, Checked)
                 if Selected then
-                    hitsoundchecked = not hitsoundchecked
-                    if hitsoundchecked then
-                        tARMA.notify("~g~Hitsounds Enabled!")
-                        SetResourceKvpInt('hitsoundchecked', 1)
+                    if a then
+                        TriggerEvent("ARMA:setVerticalWeapons")
+                        a=false
+                        tARMA.setDiagonalWeaponSetting(a)
                     else
-                        tARMA.notify("~r~Hitsounds Disabled!")
-                        SetResourceKvpInt('hitsoundchecked', 0)
+                        TriggerEvent("ARMA:setDiagonalWeapons")
+                        a=true
+                        tARMA.setDiagonalWeaponSetting(a)
                     end
-                    TriggerEvent("hs:triggerSounds", hitsoundchecked)
+                end
+            end)
+            RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",b,{Style=RageUI.CheckboxStyle.Car},function(Hovered, Active, Selected, Checked)
+                if Selected then
+                    if b then
+                        TriggerEvent("hs:triggerSounds", false)
+                        b=false
+                        tARMA.setHitMarkerSetting(b)
+                        tARMA.notify("~y~Experimental Headshot sounds now set to "..tostring(b))
+                    else
+                        TriggerEvent("hs:triggerSounds", true)
+                        b=true
+                        tARMA.setHitMarkerSetting(b)
+                        tARMA.notify("~y~Experimental Headshot sounds now set to "..tostring(b))
+                    end
                 end
             end)
             RageUI.Checkbox("Toggle Hud", nil, hudchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
@@ -1664,6 +1679,31 @@ AddEventHandler("ARMA:EntityWipe", function(id)
         end
     end)
 end)
+
+Citizen.CreateThread(function()
+    local diagkvp=GetResourceKvpString("ARMA_diagonalweapons")or"false"
+    if diagkvp=="false"then 
+        a=false
+        TriggerEvent("ARMA:setVerticalWeapons")
+    else 
+        a=true
+        TriggerEvent("ARMA:setDiagonalWeapons")
+    end
+    local hitsoundskvp=GetResourceKvpString("ARMA_hitmarkersounds")or"false"
+    if hitsoundskvp=="false"then 
+        b=false
+        TriggerEvent("hs:triggerSounds", false)
+    else 
+        b=true
+        TriggerEvent("hs:triggerSounds", true)
+    end 
+end)
+function tARMA.setDiagonalWeaponSetting(f)
+    SetResourceKvp("ARMA_diagonalweapons",tostring(f))
+end
+function tARMA.setHitMarkerSetting(f)
+    SetResourceKvp("ARMA_hitmarkersounds",tostring(f))
+end
 
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)
