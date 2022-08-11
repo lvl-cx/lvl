@@ -1,7 +1,7 @@
 -- [CFG]
 licensecentre = {}
-licensecentre.location = vector3(-926.37622070312,-2037.8065185547,9.4023275375366)
-licensecentre.marker = vector3(-926.37622070312,-2037.8065185547,9.4023275375366-0.98)
+licensecentre.location = vector3(-547.30133056641,-200.14054870605,47.414928436279)
+licensecentre.marker = vector3(-547.30133056641,-200.14054870605,47.414928436279-0.98)
 
 licensecentre.dlicenses = {
     {name = "Weed License", group = "Weed", price = 200000},
