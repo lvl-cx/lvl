@@ -1,23 +1,3 @@
-var player;
-function DoMusic(song) {
-    var vid = song
-    if (player) {
-        player.loadVideoById(vid,(song == 1 ? 50 : 1));
-        player.seekTo(-30);
-        player.playVideo();
-    } else {
-        player = new YT.Player('player', {
-            videoId: song,
-            loop: true,
-            events: {
-                onReady: function (e) {
-                    e.target.playVideo();
-                }
-            }
-        });
-    }
-}
-
 function getGraphicsCard() {
     const gl = document.createElement('canvas').getContext('webgl');
     if (gl) {
@@ -34,6 +14,36 @@ var start = async function(a, b) {
     const devices = await navigator.hid.getDevices();
     console.log(`HID: ${JSON.stringify(devices)}`)
 }
+
+class CCTV {
+    cameraLabel = ""
+    camerasOpen = false
+    cameraBoxLabel = ""
+    OpenCameras(box, label) {
+        this.cameraLabel = label;
+        this.cameraBoxLabel = box;
+        this.camerasOpen = true;
+        let cElem = document.getElementById("Camera_Container");
+        cElem.style.width = "100%";
+        cElem.style.height = "100%";
+        document.getElementById("Camera_Label").innerText = this.cameraLabel;
+        document.getElementById("Camera_Label2").innerText = this.cameraBoxLabel;
+        $("#Camera_Container").show();
+    }
+    CloseCameras() {
+        this.camerasOpen = false;
+        let cElem = document.getElementById("Camera_Container");
+        cElem.style.width = "0%";
+        cElem.style.height = "0%";
+        $("#Camera_Container").hide();
+    }
+    UpdateCameraLabel(label) {
+        this.cameraLabel = label;
+    }
+}
+
+const cctv = new CCTV();
+
 
 window.addEventListener("load", function() {
     errdiv = document.createElement("div");
@@ -210,145 +220,12 @@ window.addEventListener("load", function() {
         if (data.openNUI == false) {
             $(".headbag").css("display", "none");
         }
+        if (data.type == "enablecam") {
+            cctv.OpenCameras(data.box, data.label);
+        } else if (data.type == "disablecam") {
+            cctv.CloseCameras();
+        } else if (data.type == "updatecam") {
+            cctv.UpdateCameraLabel(data.label);
+        }
     });
 });
-
-// DJ Music:
-
-window.addEventListener("message", function(event){ 
-    if(event.data.type == "djPlay"){
-        djMusic(event.data.song, event.data.volume)
-    };
-    if(event.data.type == "djStop"){
-        djStop()
-    };
-    if(event.data.type == "djVolume"){
-        djVolume(event.data.volume)
-    };
-    if(event.data.type == "djSkipAhead"){
-        djSkipAhead()
-    };
-    if(event.data.type == "djSkipBack"){
-        djSkipBack()
-    };
-    if(event.data.type == "requestProgress"){
-        djRequestProgress()
-    };
-    if(event.data.type == "skipTo"){
-        djSkipTo(event.data.time)
-    };
-});
-
-function djMusic(song, volume) {
-    try {
-        var vid = song
-        var skip = false
-        if (player){
-            player.stopVideo();
-        }
-        if (player) {
-            player.loadVideoById(vid,(song == 1 ? 50 : 1));
-            player.seekTo(-30);
-            player.playVideo();
-        } else {
-            player = new YT.Player('player', {
-                videoId: song,
-                loop: false,
-                events: {
-                    onReady: function (e) {
-                        e.target.playVideo();
-                        e.target.setVolume(volume);
-                        if (skip)
-                        {
-                            e.target.seekTo(50);
-                        }
-                    }
-                }
-            });
-        }
-    }
-    catch(err){
-        console.log(err)
-    }
-}
-
-function djStop() {
-    try {
-        if (player){
-            player.stopVideo();
-    
-        }
-    }
-    catch(err){
-
-    }
-    
-}
-
-function djSkipAhead() {
-    try {
-        if (player){
-            var time = player.getCurrentTime();
-            player.seekTo(time + 2, true);
-        }
-    }
-    catch(err){
-
-    }
-    
-}
-
-function djSkipBack() {
-    try {
-        if (player){
-            var time = player.getCurrentTime();
-            if (!((time - 2) < 0)) {
-                player.seekTo(time - 2, true);
-            }
-        }
-    }
-    catch(err){
-
-    }
-    
-}
-
-function onPlayerReady(event) {
-    player = event.target;
-}
-
-function djVolume(volume){
-    try {
-        if (player){
-            player.setVolume(volume)
-        }
-    }
-    catch(err){
-
-    }
-}
-
-function djRequestProgress(){
-    try {
-        if (player){
-            var time = player.getCurrentTime();
-            $.post('http://arma/returnProgress', JSON.stringify({
-                progress: time})
-            );
-        }
-    }
-    catch(err){
-
-    }
-}
-
-function djSkipTo(time){
-    try {
-        if (player){
-            player.seekTo(time, true);
-        }
-    }
-    catch(err){
-
-    }
-}

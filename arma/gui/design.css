@@ -391,3 +391,28 @@ page-break-inside: avoid;
 .table tbody + tbody {
   border-top: 2px solid #dee2e6;
 }
+
+/* CCTV */
+#Camera_Container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 20px;
+    background-color: transparent !important;
+}
+
+#Camera_Label {
+    position: relative;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+#Camera_Label2 {
+    position: relative;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    color: white;
+}

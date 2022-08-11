@@ -58,9 +58,6 @@ window.addEventListener("message", function(event){
 });
 
 function djMusic(song, volume) {
-    console.log($("#dj"))
-    // $("#dj").tubeplayer("cue", song);
-    // $("#dj").tubeplayer("play");
     try {
         var vid = song
         var skip = false
