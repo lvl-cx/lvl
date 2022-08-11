@@ -13,8 +13,8 @@ ownedHouses = {}
 
 RMenu.Add("ARMAHousing", "main", RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
 RMenu.Add("ARMAHousing", "leave", RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
-RMenu.Add("ARMAHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
-RMenu.Add("ARMAHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("ARMAHousing", "wardrobe"), "", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","housing"))
+RMenu.Add("ARMAHousing", "wardrobe", RageUI.CreateMenu("", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","cstore"))
+RMenu.Add("ARMAHousing", "wardrobesub", RageUI.CreateSubMenu(RMenu:Get("ARMAHousing", "wardrobe"), "", "~b~Wardrobe", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","cstore"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAHousing', 'main')) then
@@ -222,14 +222,10 @@ AddEventHandler("ARMAHousing:UpdateWardrobe", function(newWardrobe)
     wardrobe = newWardrobe
 end)
 
--- RegisterNetEvent("printownedhouses")
--- AddEventHandler("printownedhouses", function(test)
---     ownedHouses = test
---     for k,v in pairs(ownedHouses) do
---     print(k)
---     end
--- end)
-
+RegisterNetEvent("ARMAHousing:openOutfitMenu")
+AddEventHandler("ARMAHousing:openOutfitMenu", function()
+    RageUI.Visible(RMenu:Get('ARMAHousing', 'wardrobe'), true)
+end)
 
 function alert(msg) 
     SetTextComponentFormat("STRING")
