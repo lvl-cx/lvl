@@ -1,4 +1,5 @@
 local cfg = module("cfg/player_state")
+local a = module("cfg/weapons")
 local lang = ARMA.lang
 
 -- client -> server events
@@ -228,14 +229,11 @@ function tARMA.StoreWeaponsDead()
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                    ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                    if v.ammo > 0 then
-                        for i,c in pairs(ARMAAmmoTypes) do
-                            for a,d in pairs(c) do
-                                if d == k then  
-                                    print(i)
-                                    ARMA.giveInventoryItem(user_id, i, v.ammo, true)
-                                end
+                    if k ~= 'GADGET_PARACHUTE' then
+                        ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                        for i,c in pairs(a.weapons) do
+                            if i == k then
+                                ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
                             end   
                         end
                     end
