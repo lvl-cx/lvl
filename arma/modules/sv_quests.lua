@@ -13,14 +13,13 @@ AddEventHandler("ARMA:setQuestCompleted", function()
     for k,v in pairs(a) do
         if v.user_id == user_id then
             if v.quests_completed < 51 and not v.reward_claimed then
-                exports['ghmattimysql']:execute("UPDATE arma_quests SET quests_completed = (quests_completed+1) WHERE user_id = @user_id", {user_id = user_ids}, function() end)
+                exports['ghmattimysql']:execute("UPDATE arma_quests SET quests_completed = (quests_completed+1) WHERE user_id = @user_id", {user_id = user_id}, function() end)
             else
                 -- ban player for attempting to set quest completed when claimed or attempting to go over 50
                 local player = ARMA.getUserSource(user_id)
                 local name = GetPlayerName(player)
                 Wait(500)
-                reason = "Type #11"
-                TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Trigger Plat days Quest')
+                TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Trigger Plat days Quest')
             end
         end
     end
@@ -44,8 +43,7 @@ AddEventHandler("ARMA:claimQuestReward", function()
                 local player = ARMA.getUserSource(user_id)
                 local name = GetPlayerName(player)
                 Wait(500)
-                reason = "Type #11"
-                TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Trigger Plat days Reward')
+                TriggerEvent("ARMA:acBan", user_id, 11, name, player,  'Attempted to Trigger Plat days Reward')
             end
         end
     end
