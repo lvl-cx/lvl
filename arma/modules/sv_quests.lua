@@ -30,14 +30,16 @@ AddEventHandler("ARMA:claimQuestReward", function()
 	local source = source
 	local user_id = ARMA.getUserId(source)
     local a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_quests WHERE user_id = @user_id", {user_id = user_id})
+    local plathours = 0
     for k,v in pairs(a) do
         if v.user_id == user_id then
             if not v.reward_claimed and v.quests_completed == 50 then
                 -- code to give plat days
                 MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
                     plathours = rows[1].plathours
+                    MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + 168})
+                    exports['ghmattimysql']:execute("UPDATE arma_quests SET reward_claimed = true WHERE user_id = @user_id", {user_id = user_id}, function() end)
                 end)
-                MySQL.execute("subscription/set_plushours", {user_id = user_id, plathours = plathours + 168})
             else
                 -- ban player for attempting to get plat days when not got 50 quests done or reward is claimed
                 local player = ARMA.getUserSource(user_id)
