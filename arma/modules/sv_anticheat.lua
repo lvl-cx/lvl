@@ -1,7 +1,7 @@
 local m = module("arma-vehicles", "garages")
 m=m.garage_types
-local f = module("arma-weapons", "cfg_weaponsonback")
-f=f.RealWeapons
+local f = module("cfg/weapons")
+f=f.weapons
 
 local gettingScreenshot = false
 
