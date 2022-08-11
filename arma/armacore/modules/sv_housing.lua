@@ -18,7 +18,6 @@ AddEventHandler('ARMA:getHouses', function()
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.user_id == user_id then
-                    --print(user_id..' '..v.home)
                     table.insert(houses, v.home)
                 end
             end
