@@ -413,7 +413,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 gettingScreenshot = false
                 TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
                 ARMA.banConsole(user_id,"perm","Cheating "..reason)
-                exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`) VALUES (@user_id, @username, @reason);", {user_id = user_id, username = name, reason = reason}, function() end) 
+                exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
             end)
         end
     end
