@@ -52,6 +52,8 @@ client_scripts{
   "lib/cl_cache.lua",
   "lib/cl_util.lua",
   "cfg/atms.lua",
+  "cfg/weapons.lua",
+  "cfg/cfg_attachments.lua",
   "cfg/skinshops.lua",
   "lib/utils.lua",
   "lib/cl_mouse.lua",
