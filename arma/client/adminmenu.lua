@@ -1508,44 +1508,18 @@ AddEventHandler('ARMA:SlapPlayer', function()
 end)
 
 
-FrozenPlayer = false
+frozen = false
 RegisterNetEvent('ARMA:Freeze')
 AddEventHandler('ARMA:Freeze', function(isFrozen)
-    FrozenPlayer = isFrozen
-    TriggerEvent('godmodebypass', isFrozen)
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if FrozenPlayer then
-            FreezeEntityPosition(PlayerPedId(), true)
-            DisableControlAction(0,24,true) -- disable attack
-            DisableControlAction(0,25,true) -- disable aim
-            DisableControlAction(0,47,true) -- disable weapon
-            DisableControlAction(0,58,true) -- disable weapon
-            DisableControlAction(0,263,true) -- disable melee
-            DisableControlAction(0,264,true) -- disable melee
-            DisableControlAction(0,257,true) -- disable melee
-            DisableControlAction(0,140,true) -- disable melee
-            DisableControlAction(0,141,true) -- disable melee
-            DisableControlAction(0,142,true) -- disable melee
-            DisableControlAction(0,143,true) -- disable melee
-            SetPedCanRagdoll(PlayerPedId(), false)
-            ClearPedBloodDamage(PlayerPedId())
-            ResetPedVisibleDamage(PlayerPedId())
-            ClearPedLastWeaponDamage(PlayerPedId())
-            SetEntityProofs(PlayerPedId(), true, true, true, true, true, true, true, true)
-            SetEntityCanBeDamaged(PlayerPedId(), false)			
-        elseif not FrozenPlayer and not noclipActive and not inSpectatorAdminMode and not staffMode then  
-            SetEntityInvincible(PlayerPedId(), false)
-            SetPlayerInvincible(PlayerPedId(), false)
-            FreezeEntityPosition(PlayerPedId(), false)
-            SetPedCanRagdoll(PlayerPedId(), true)
-            ClearPedBloodDamage(PlayerPedId())
-            ResetPedVisibleDamage(PlayerPedId())
-            ClearPedLastWeaponDamage(PlayerPedId())
+    frozen = isFrozen
+    if frozen then
+        FreezeEntityPosition(PlayerPedId(-1), true)
+        while frozen==true do
+            Citizen.Wait(0)
+            SetCurrentPedWeapon(PlayerPedId(),`WEAPON_UNARMED`,true)
         end
+    else
+        FreezeEntityPosition(PlayerPedId(-1), false)
     end
 end)
 
