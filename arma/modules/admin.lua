@@ -295,8 +295,8 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
         'Chief Inspector Clocked',
         'Inspector Clocked',
         'Sergeant Clocked',
-        'Special Police Constable Clocked',
-        'Senior Police Constable Clocked',
+        'Special Constable Clocked',
+        'Senior Constable Clocked',
         'Police Constable Clocked',
         'PCSO Clocked',
         'Head Chief Medical Officer Clocked',
@@ -1851,87 +1851,6 @@ AddEventHandler('ARMA:Tp2Coords', function()
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport to Coords')
-    end
-end)
-
-RegisterServerEvent('ARMA:GiveMoneyMenu')
-AddEventHandler('ARMA:GiveMoneyMenu', function()
-    local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    local admin_name = GetPlayerName(admin)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, "dev.givemoney") then
-        ARMA.prompt(source,"Perm ID:","",function(source,playerid) 
-            if playerid == '' then return end
-            if playerid ~= nil then
-                ARMA.prompt(source,"Amount:","",function(source,amount) 
-                    if amount == '' then return end
-                    amount = parseInt(amount)
-                    local player_source = ARMA.getUserSource(playerid)
-                    if player_source == nil then return end
-                    ARMA.giveBankMoney(tonumber(playerid), amount)
-                    ARMAclient.notify(source, {"~g~You have gave ID: "..playerid.." ~y~£"..amount.." ~g~"})
-                    local givemoney = {
-                        {
-                            ["color"] = "16448403",
-                            ["title"] = "ARMA Give Money Logs",
-                            ["description"] = "",
-                            ["text"] = "ARMA Server #1",
-                            ["fields"] = {
-                                {
-                                    ["name"] = "Admin Name",
-                                    ["value"] = GetPlayerName(admin),
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Admin TempID",
-                                    ["value"] = source,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Admin PermID",
-                                    ["value"] = admin_id,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player Name",
-                                    ["value"] = GetPlayerName(player_source),
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player TempID",
-                                    ["value"] = source,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player PermID",
-                                    ["value"] = user_id,
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Player Hours",
-                                    ["value"] = "0 hours",
-                                    ["inline"] = true
-                                },
-                                {
-                                    ["name"] = "Amount Given",
-                                    ["value"] = amount,
-                                    ["inline"] = true
-                                }
-                            }
-                        }
-                    }
-                    local webhook = "https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9"
-                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = givemoney}), { ['Content-Type'] = 'application/json' })
-                end)
-            end
-        end)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Give Money Menu')
     end
 end)
 
