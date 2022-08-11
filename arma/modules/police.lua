@@ -2,6 +2,7 @@
 -- this module define some police tools and functions
 local lang = ARMA.lang
 local cfg = module("cfg/police")
+local a = module("cfg/weapons")
 
 -- police records
 
@@ -581,20 +582,17 @@ local choice_store_weapons = function(player, choice)
             isStoring[player] = true
             if ARMA.getInventoryWeight(user_id) <= 25 then
               ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
-
                     for k,v in pairs(weapons) do
+                      if k ~= 'GADGET_PARACHUTE' then
                         ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                         if v.ammo > 0 then
-                          for i,c in pairs(ARMAAmmoTypes) do
-                            for a,d in pairs(c) do
-                                if d == k then  
-
-                                    ARMA.giveInventoryItem(user_id, i, v.ammo, true)
-                            
-                                end
+                          for i,c in pairs(a.weapons) do
+                            if i == k then
+                              ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
                             end   
                           end
                         end
+                      end
                     end
                     ARMAclient.notify(player,{"~g~Weapons Stored"})
                     TriggerEvent('ARMA:RefreshInventory', source)
@@ -610,6 +608,29 @@ local choice_store_weapons = function(player, choice)
     end)
 end
 
-RegisterCommand('storeweapons', function(source)
+RegisterServerEvent("ARMA:forceStoreSingleWeapon")
+AddEventHandler("ARMA:forceStoreSingleWeapon",function(model)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if model ~= nil then
+      ARMAclient.getWeapons(source,{},function(weapons)
+        for k,v in pairs(weapons) do
+          if k == model then
+            RemoveWeaponFromPed(GetPlayerPed(source), k)
+            ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+            if v.ammo > 0 then
+              for i,c in pairs(a.weapons) do
+                if i == model then
+                  ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
+                end   
+              end
+            end
+          end
+        end
+      end)
+    end
+end)
+
+RegisterCommand('storeallweapons', function(source)
   choice_store_weapons(source)
 end)
