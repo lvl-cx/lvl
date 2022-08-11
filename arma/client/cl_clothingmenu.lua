@@ -340,7 +340,7 @@ RageUI.CreateWhile(1.0, true, function()
                                     J=Q
                                     K=k.textureN
                                     SetPedHairColor(PlayerPedId(),k.textureN,k.textureN)
-                                    TriggerServerEvent("BW:saveFaceHairData",GetPedDrawableVariation(tARMA.getPlayerPed(),2),GetPedHairColor(tARMA.getPlayerPed()))
+                                    TriggerServerEvent("ARMA:saveClothingHairData",GetPedDrawableVariation(tARMA.getPlayerPed(),2),GetPedHairColor(tARMA.getPlayerPed()))
                                 elseif I~=k.index or J~=Q or K~=k.textureN then 
                                     I=k.index
                                     J=Q
