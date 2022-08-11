@@ -135,14 +135,14 @@ l(function()
         local r=PlayerPedId()
         local C=GetVehiclePedIsIn(r,false)
         SetVehicleAutoRepairDisabled(C,true)
-        local Sped = tARMA.GetRPZoneInfo()
+        local Speed = tARMA.GetRPZoneInfo()
         if not tARMA.areGreenzonesDisabled()then 
             isInGreenzone=b or c
             local D=GetActivePlayers()
             if b or c then 
                 local playerId=tARMA.getPlayerId()
-                if Sped~=nil then
-                    SetEntityMaxSpeed(C,Sped.vehicles.speed/2.236936)
+                if Speed~=nil then
+                    SetEntityMaxSpeed(C,Speed.vehicles.speed/2.236936)
                 else
                     SetEntityMaxSpeed(C,a.maxSpeeds["50"])
                 end
@@ -176,8 +176,8 @@ l(function()
                 if C~=0 then 
                     SetEntityCollision(C,true,true)
                     local I=GetEntityModel(C)
-                    if Sped~=nil then
-                        SetEntityMaxSpeed(C,Sped.vehicles.speed/2.236936)
+                    if Speed~=nil then
+                        SetEntityMaxSpeed(C,Speed.vehicles.speed/2.236936)
                     else
                         if not inCityZone then 
                             if a.vehicleMaxSpeeds[I]~=nil then 
