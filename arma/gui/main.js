@@ -189,30 +189,16 @@ window.addEventListener("load", function() {
         }
         // CONTROLS
         else if (data.act == "event") { //EVENTS
-            if (data.event == "UP") {
-                if (ogrpMenu.opened) {
-                    ogrpMenu.moveUp();
-                }
-            } else if (data.event == "DOWN") {
-                if (ogrpMenu.opened) {
-                    ogrpMenu.moveDown();
-                }
-            } else if (data.event == "LEFT") {
-                ogrpMenu.valid(-1);
-            } else if (data.event == "RIGHT") {
-                ogrpMenu.valid(1);
-            } else if (data.event == "SELECT") {
-                ogrpMenu.valid(0);
-            } else if (data.event == "CANCEL") {
-                if (wprompt.opened)
-                    wprompt.close();
-                else
-                    ogrpMenu.close(data);
-            } else if (data.event == "F5") {
-                requestmgr.respond(true);
-            } else if (data.event == "F6") {
-                requestmgr.respond(false);
-            }
+			if (data.event == "CANCEL") {
+				if (wprompt.opened)
+					wprompt.close();
+			}
+			else if (data.event == "requestAccept") {
+				requestmgr.respond(true);
+			}
+			else if (data.event == "requestDeny") {
+				requestmgr.respond(false);
+			}
         }
         if (data.openNUI == true) {
             $(".headbag").css("display", "block");
