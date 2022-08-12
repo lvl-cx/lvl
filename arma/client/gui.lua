@@ -4,7 +4,7 @@ function tARMA.request(a,b,c)
 end
 RegisterNUICallback("request",function(d,e)
   if d.act=="response"then 
-      vRPserver.requestResult({d.id,d.ok})
+      ARMAserver.requestResult({d.id,d.ok})
   end 
 end)
 function tARMA.announce(f,g)
