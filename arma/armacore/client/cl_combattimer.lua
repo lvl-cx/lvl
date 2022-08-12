@@ -7,7 +7,6 @@ local c = {
     ["LargeArms"] = {vector3(-1118.4926757813, 4926.1889648438, 218.35691833496), 170.0},
     ["LargeArmsCayo"] = {vector3(5115.7465820312, -4623.2915039062, 2.642692565918), 85.0},
     ["RebelCayo"] = {vector3(4982.5634765625, -5175.1079101562, 2.4887988567352), 120.0},
-    ["LSDNorth"] = {vector3(1317.0300292969, 4309.8359375, 38.005485534668), 90.0},
     ["LSDSouth"] = {vector3(2539.0964355469, -376.51586914063, 92.986785888672), 120.0}
 }
 
@@ -26,10 +25,9 @@ function tARMA.getPlayerCombatTimer()
     return b 
 end
 
-RegisterNetEvent("ARMA:SendLSDCoords")
-AddEventHandler("ARMA:SendLSDCoords", function(A)
-    c["LSD"] = {A[1],A[4]}
+Citizen.CreateThread(function()
     while true do 
+        Citizen.Wait(0)
         if not a then 
             local h=GetEntityCoords(tARMA.getPlayerPed())
             globalInRedzone=false
@@ -47,7 +45,7 @@ AddEventHandler("ARMA:SendLSDCoords", function(A)
                     local n=false
                     while not n do 
                         h=GetEntityCoords(tARMA.getPlayerPed())
-                        while d(h,k)<=l and not q() do 
+                        while d(h,k)<=l and not globalOnPoliceDuty and not globalOnPrisonDuty and not globalNHSOnDuty do
                             h=GetEntityCoords(tARMA.getPlayerPed())
                             m=h
                             if IsPedShooting(tARMA.getPlayerPed())and GetSelectedPedWeapon(tARMA.getPlayerPed())~=`WEAPON_UNARMED`then 
@@ -63,7 +61,7 @@ AddEventHandler("ARMA:SendLSDCoords", function(A)
                         if b==0 then 
                             n=true 
                         else 
-                            if tARMA.isstaffedOn() or inSpectatorAdminMode then
+                            if tARMA.isstaffedOn() or inSpectatorAdminMode or tARMA.isNoclipping() then
                                 b = 0
                                 n=true
                             else
@@ -88,7 +86,6 @@ AddEventHandler("ARMA:SendLSDCoords", function(A)
                 end 
             end 
         end
-        Wait(500)
     end 
 end)
 
@@ -100,7 +97,3 @@ Citizen.CreateThread(function()
         Wait(1000)
     end 
 end)
-
-local function q()
-    return globalOnPoliceDuty or globalOnPrisonDuty or globalNHSOnDuty
-end
