@@ -110,26 +110,6 @@ AddEventHandler("wk:fixVehicle",function()
     end
 end)
 
-local onesync = GetConvar('onesync', nil)
-RegisterNetEvent('ARMA:SpectatePlayer')
-AddEventHandler('ARMA:SpectatePlayer', function(id)
-    local source = source 
-    local SelectedPlrSource = ARMA.getUserSource(id) 
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasPermission(userid, "admin.spectate") then
-        if SelectedPlrSource then  
-            if onesync ~= "off" then 
-                local ped = GetPlayerPed(SelectedPlrSource)
-                local pedCoords = GetEntityCoords(ped)
-                TriggerClientEvent('ARMA:Spectate', source, SelectedPlrSource, pedCoords)
-            else 
-                TriggerClientEvent('ARMA:Spectate', source, SelectedPlrSource)
-            end
-        else 
-            ARMAclient.notify(source,{"~r~This player may have left the game."})
-        end
-    end
-end)
 
 RegisterServerEvent("ARMA:stopSpectatePlayer")
 AddEventHandler("ARMA:stopSpectatePlayer", function()

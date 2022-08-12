@@ -957,15 +957,11 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:requestAccountInfosv", true, SelectedPlayer[3])
                     end
                 end,RMenu:Get("adminmenu", "submenu"))
-            end
-            if GlobalAdminLevel > 6 then 
                 RageUI.ButtonWithStyle("Copy To Players Clipboard", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         TriggerServerEvent("ARMA:CopyToClipBoard", SelectedPlayer[3])
                     end 
                 end,RMenu:Get('adminmenu','submenu'))
-            end
-            if GlobalAdminLevel > 6 then
                 RageUI.ButtonWithStyle("See Groups", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[2], SelectedPlayer[3])
