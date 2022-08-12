@@ -502,6 +502,19 @@ function tARMA.drawNativeNotification(A)
   DisplayHelpTextFromStringLabel(0,0,1,-1)
 end
 
+function tARMA.announceMpBigMsg(I,J,K)
+  local L=Scaleform("MP_BIG_MESSAGE_FREEMODE")
+  L.RunFunction("SHOW_SHARD_WASTED_MP_MESSAGE",{I,J,0,false,false})
+  local M=false
+  SetTimeout(K,function()
+      M=true 
+  end)
+  while not M do 
+      L.Render2D()
+      Wait(0)
+  end 
+end
+
 local m=true
 function tARMA.canAnim()
     return m 
@@ -736,7 +749,7 @@ local carDev = false
 local user_id = nil
 local stafflevel = 0
 globalOnPoliceDuty = false
-globalOnNHSDuty = false
+globalNHSOnDuty = false
 globalOnPrisonDuty = false
 function tARMA.setPolice()
   globalOnPoliceDuty = true
@@ -751,10 +764,10 @@ function tARMA.globalOnPrisonDuty()
   return globalOnPrisonDuty
 end
 function tARMA.setNHS()
-  globalOnNHSDuty = true
+  globalNHSOnDuty = true
 end
-function tARMA.globalOnNHSDuty()
-  return globalOnNHSDuty
+function tARMA.globalNHSOnDuty()
+  return globalNHSOnDuty
 end
 function tARMA.setDev()
     isDev = true
@@ -784,7 +797,12 @@ end
 function tARMA.getStaffLevel()
   return stafflevel
 end
-
+function tARMA.isstaffedOn()
+  return staffMode
+end
+function tARMA.isNoclipping()
+  return noclipActive
+end
 
 function tARMA.getRageUIMenuWidth()
   local w, h = GetActiveScreenResolution()
