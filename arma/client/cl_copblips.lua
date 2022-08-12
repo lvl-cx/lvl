@@ -60,14 +60,14 @@ local function m(n,o,k)
     SetBlipColour(l,k)
 end
 RegisterCommand("blipson",function()
-    if tARMA.globalOnPoliceDuty() or tARMA.globalOnNHSDuty() then 
+    if tARMA.globalOnPoliceDuty() or tARMA.globalNHSOnDuty() then 
         tARMA.notify('~g~Emergency blips enabled.')
         a=true 
     end 
 end,false)
 
 RegisterCommand("blipsoff",function()
-    if tARMA.globalOnPoliceDuty() or tARMA.globalOnNHSDuty() then 
+    if tARMA.globalOnPoliceDuty() or tARMA.globalNHSOnDuty() then 
         tARMA.notify('~r~Emergency blips disabled.')
         a=false
         d()

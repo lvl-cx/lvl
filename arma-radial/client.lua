@@ -313,7 +313,7 @@ function revive(entityId)
     local player = GetPlayerByEntityID(entityId)
     local playerSrc = GetPlayerServerId(player)
     if playerSrc > 0 then
-        if globalOnNHSDuty then
+        if globalNHSOnDuty then
             TriggerClientEvent('ARMA:cprAnim', player, nplayer)
         else
             if not cpr_in_progress then
