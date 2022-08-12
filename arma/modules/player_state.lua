@@ -57,7 +57,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             if ARMA.hasGroup(user_id, 'cardev') then
                 ARMAclient.setCarDev(source, {})
             end
-            if ARMA.hasPermission(user_id, 'police.perms') then
+            if ARMA.hasPermission(user_id, 'police.onduty.permission') then
                 ARMAclient.setPolice(source, {})
             end
             if ARMA.hasPermission(user_id, 'nhs.menu') then

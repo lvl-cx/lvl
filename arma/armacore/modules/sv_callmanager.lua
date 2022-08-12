@@ -139,7 +139,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                         ARMAclient.notify(admin_source,{"~r~You cannot take a ticket from an offline player."})
                         TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                     end
-                elseif tickets[ticketID].type == 'met' and ARMA.hasPermission(user_id, "police.perms") then
+                elseif tickets[ticketID].type == 'met' and ARMA.hasPermission(user_id, "police.onduty.permission") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
                             ARMAclient.notify(v.tempID,{"~g~Your MET Police call has been accepted!"})
