@@ -11,8 +11,7 @@ RegisterCommand("delgun",function()
     if tARMA.getStaffLevel() > 0 then
         usingDelgun = not usingDelgun
         local g = tARMA.getPlayerPed()
-        --local h = "WEAPON_STAFFGUN"
-        local h = "WEAPON_LR300"
+        local h = "WEAPON_STAFFGUN"
         if usingDelgun then
             a = HasPedGotWeapon(g, h, false)
             GiveWeaponToPed(g, h, nil, false, true)

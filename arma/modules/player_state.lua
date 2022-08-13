@@ -229,7 +229,7 @@ function tARMA.StoreWeaponsDead()
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                    if k ~= 'GADGET_PARACHUTE' then
+                    if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
                         ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                         for i,c in pairs(a.weapons) do
                             if i == k then
