@@ -9,11 +9,6 @@ AddEventHandler("ARMA:GiveWap", function(Y)
     TriggerServerEvent('ARMA:banType44')
 end)
 
-function tARMA.setHealth(y)
-    local X=math.floor(y)
-    SetEntityHealth(PlayerPedId(),X)
-end
-
 function tARMA.giveWeapons(d,e)
     local f=PlayerPedId()
     if e then 

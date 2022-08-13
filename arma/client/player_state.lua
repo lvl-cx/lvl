@@ -33,6 +33,8 @@ end)
 
 function tARMA.spawnAnim(a, b)
   ExecuteCommand("hideui")
+  TriggerServerEvent('ARMA:changeHairstyle')
+  TriggerServerEvent('ARMA:changeTattoos')
   local g = b
   RequestCollisionAtCoord(g.x, g.y, g.z)
   SetEntityCoordsNoOffset(PlayerPedId(), g.x, g.y, g.z, true, false, false)
