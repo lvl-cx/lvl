@@ -93,7 +93,15 @@ cfg.weapons = {
         showonback = false,
         weight = 2.5,
     },
-    
+    ["WEAPON_STAFFGUN"] = {
+        name = "Delgun",
+        class = "Melee",
+        ammo = "",
+        policeWeapon = true,
+        model = "w_pi_staffgun",
+        showonback = false,
+        weight = 2.5,
+    },
     ["WEAPON_FORRESTAX"] = {
         name = "The Forrest Axe",
         class = "Melee",
