@@ -16,17 +16,9 @@ Citizen.CreateThread(function()
         SetPlayerWantedLevelNow(PlayerId(), false)
         SetPlayerWantedLevelNoDrop(PlayerId(), 0, false)
         if IsPedArmed(ped, 6) then
-                DisableControlAction(1, 140, true)
+            DisableControlAction(1, 140, true)
             DisableControlAction(1, 141, true)
             DisableControlAction(1, 142, true)
-        end
-        if handsup then
-            DisableControlAction(2, 37, true)
-            DisableControlAction(0,24,true) -- disable attack
-            DisableControlAction(0,25,true) -- disable aim
-            DisableControlAction(0,47,true) -- disable weapon
-            DisableControlAction(0,58,true) -- disable weapon
-            DisablePlayerFiring(GetPlayerPed(-1),true)
         end
     end
 end)
