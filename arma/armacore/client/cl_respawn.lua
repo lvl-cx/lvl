@@ -74,7 +74,7 @@ RageUI.CreateWhile(1.0, true, function()
                         Wait(100)
                         TriggerEvent('spawn:teleport')
                         Wait(100)
-                        RageUI.CloseAll()
+                        RageUI.ActuallyCloseAll()
                     end
                 end)
             end
@@ -120,7 +120,7 @@ end
 RegisterNetEvent('spawn:teleport')
 AddEventHandler('spawn:teleport', function()
 	inMenu = false
-    RageUI.CloseAll()
+    RageUI.ActuallyCloseAll()
     inRedZone = false
     local spawnCoords = spawn.position
 	TriggerEvent("arma:PlaySound", "gtaloadin")

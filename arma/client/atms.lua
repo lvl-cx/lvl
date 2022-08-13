@@ -109,11 +109,11 @@ end)
 
 
 local function f()
-    RageUI.CloseAll()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAATM', 'main'), true) 
 end
 local function g()
-    RageUI.CloseAll()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAATM', 'main'), false) 
 end
 local firstspawn = 0

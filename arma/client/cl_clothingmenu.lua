@@ -19,45 +19,39 @@ local n=false
 local o={}
 local p=tARMA.getPlayerPed()
 local q=false
-local r={
-    --3 == normal green, 13==pd, lfb = 1, nhs = 81,hmps = 250,
-    --MET PD
-    {coords = vector3(449.81854248047,-993.30865478516,30.689584732056),name = "MET PD Clothing",type = "police",colourRGB={0,50,200},colourmap = 13},
-    {coords = vector3(-455.61834716797,6012.7348632813,31.7164478302),name = "MET PD Clothing",type = "police",colourRGB={0,50,200},colourmap = 13},
-    {coords = vector3(-1098.4307861328,-831.42083740234,14.282784461975),name = "MET PD Clothing",type = "police",colourRGB={0,50,200},colourmap = 13},
-    {coords = vector3(243.71351623535,-1370.1625976563,39.534339904785),name = "MET PD Clothing",type = "police",colourRGB={0,50,200},colourmap = 13},
-    --NHS
-    {coords = vector3(298.98516845703,-598.02362060547,43.284023284912),name = "NHS Clothing",type = "nhs",colourRGB={0,200,0},colourmap = 81},
-    {coords = vector3(-443.05731201172,-311.21786499023,34.910472869873),name = "NHS Clothing",type = "nhs",colourRGB={0,200,0},colourmap = 81},
-    --LFB
-    {coords = vector3(1213.8666992188,-1474.5180664063,35.073650360107),name = "LFB Clothing",type = "lfb",colourRGB={200,0,0},colourmap = 1},
-    --HMPSs
-    {coords = vector3(1780.2961425781,2547.8825683594,45.797790527344),name = "HMPS Clothing",type = "hmps",colourRGB={0, 0, 255},colourmap = 250},
-
-    {coords = vector3(72.2545394897461,-1399.10229492188,29.3761386871338),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-703.77685546875,-152.258544921875,37.4151458740234),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-167.863754272461,-298.969482421875,39.7332878112793),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(428.694885253906,-800.1064453125,29.4911422729492),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-829.413269042969,-1073.71032714844,11.3281078338623),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-1193.42956542969,-772.262329101563,17.3244285583496),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-1447.7978515625,-242.461242675781,49.8207931518555),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(11.6323690414429,6514.224609375,31.8778476715088),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(1696.29187011719,4829.3125,42.0631141662598),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(123.64656829834,-219.440338134766,54.5578384399414),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(618.093444824219,2759.62939453125,42.0881042480469),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(1190.55017089844,2713.44189453125,38.2226257324219),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-3172.49682617188,1048.13330078125,20.8632030487061),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-1108.44177246094,2708.92358398438,19.1078643798828),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(127.57326507568,-1038.4321289063,29.55548095703),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-2152.7907714844,5231.9516601563,18.788805007935),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(1439.3804931641,6331.80078125,23.954704284668),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(1103.0277099609,197.00813293457,-49.440055847168),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(1839.0124511719,3689.259765625,34.270027160645),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-253.41467285156,6309.4458007813,32.427234649658),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(902.40808105469,-2115.2661132813,30.771173477173),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(-565.46356201172,287.12573242188,91.797775268555),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(4489.6123046875,-4452.7778320312,4.366425037384),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3},
-    {coords = vector3(277.69772338867,-1335.5568847656,24.537786483765),name = "Clothing Store",type = "basic",colourRGB={10,255,81},colourmap = 3}
+local r = {
+    vector3(72.2545394897461, -1399.10229492188, 29.3761386871338),
+    vector3(449.81854248047, -993.30865478516, 30.689584732056),
+    vector3(-703.77685546875, -152.258544921875, 37.4151458740234),
+    vector3(-167.863754272461, -298.969482421875, 39.7332878112793),
+    vector3(428.694885253906, -800.1064453125, 29.4911422729492),
+    vector3(-829.413269042969, -1073.71032714844, 11.3281078338623),
+    vector3(-1193.42956542969, -772.262329101563, 17.3244285583496),
+    vector3(-1447.7978515625, -242.461242675781, 49.8207931518555),
+    vector3(11.6323690414429, 6514.224609375, 31.8778476715088),
+    vector3(1696.29187011719, 4829.3125, 42.0631141662598),
+    vector3(123.64656829834, -219.440338134766, 54.5578384399414),
+    vector3(618.093444824219, 2759.62939453125, 42.0881042480469),
+    vector3(1190.55017089844, 2713.44189453125, 38.2226257324219),
+    vector3(-3172.49682617188, 1048.13330078125, 20.8632030487061),
+    vector3(-1108.44177246094, 2708.92358398438, 19.1078643798828),
+    vector3(127.57326507568, -1038.4321289063, 29.555480957031),
+    vector3(-2152.7907714844, 5231.9516601563, 18.788805007935),
+    vector3(1213.8666992188, -1474.5180664063, 35.073650360107),
+    vector3(-455.61834716797, 6012.7348632813, 31.7164478302),
+    vector3(1439.3804931641, 6331.80078125, 23.954704284668),
+    vector3(-1098.4307861328, -831.42083740234, 14.282784461975),
+    vector3(243.71351623535, -1370.1625976563, 39.534339904785),
+    vector3(1103.0277099609, 197.00813293457, -49.440055847168),
+    vector3(298.98516845703, -598.02362060547, 43.284023284912),
+    vector3(1839.0124511719, 3689.259765625, 34.270027160645),
+    vector3(-253.41467285156, 6309.4458007813, 32.427234649658),
+    vector3(902.40808105469, -2115.2661132813, 30.771173477173),
+    vector3(-565.46356201172, 287.12573242188, 91.797775268555),
+    vector3(1780.2961425781, 2547.8825683594, 45.797790527344),
+    vector3(4489.6123046875, -4452.7778320312, 4.366425037384),
+    vector3(-443.05731201172, -311.21786499023, 34.910472869873),
+    vector3(277.69772338867, -1335.5568847656, 24.537786483765)
 }
 local s=1
 local t=false
@@ -157,22 +151,11 @@ local function F()
     z=nil 
 end
 
-function CanOpenClothing(Y)
-    if Y == "police" and not tARMA.globalOnPoliceDuty() then
-        return false
-    elseif Y == "nhs" and not tARMA.globalNHSOnDuty() then
-        return false
-    elseif Y == "hmps" and not tARMA.globalOnPrisonDuty() then
-        return false
-    end
-    return true
-end
-
 Citizen.CreateThread(function()
     while true do 
         local G=GetEntityCoords(tARMA.getPlayerPed())
         for H=1,#r do 
-            if#(G-r[H].coords)<=2.5 and not t and CanOpenClothing(r[H].type) then 
+            if#(G-r[H])<=2.5 and not t then 
                 s=H
                 t=true
                 for H=1,#a,1 do 
@@ -182,10 +165,10 @@ Citizen.CreateThread(function()
                 h=true
                 RageUI.Visible(RMenu:Get('ARMAclothing','mainMenu'),true)
             elseif s==H then 
-                if#(G-r[H].coords)>2.5 and t then 
+                if#(G-r[H])>2.5 and t then 
                     t=false
                     m=false
-                    RageUI.CloseAll()
+                    RageUI.ActuallyCloseAll()
                 end
                 if not RageUI.Visible(RMenu:Get('ARMAclothing','changeClothing'))then 
                     F()
@@ -592,8 +575,8 @@ end)
 Citizen.CreateThread(function()
     if true then 
         for a7,a8 in pairs(r)do 
-            tARMA.addBlip(a8.coords.x,a8.coords.y,a8.coords.z,73,a8.colourmap,a8.name,0.7)
-            tARMA.addMarker(a8.coords.x,a8.coords.y,a8.coords.z,0.6,0.6,0.6,a8.colourRGB[1],a8.colourRGB[2],a8.colourRGB[3],170,50,9,false,false,true,"dp_clothing","top",90.0,90.0,0.0)
+            tARMA.addBlip(a8.x,a8.y,a8.z,73,3,"Clothing Store",0.7)
+            tARMA.addMarker(a8.x,a8.y,a8.z,0.6,0.6,0.6,10,255,81,170,50,9,false,false,true,"dp_clothing","top",90.0,90.0,0.0)
         end 
     end 
 end)

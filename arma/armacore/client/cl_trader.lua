@@ -15,7 +15,7 @@ AddEventHandler('playerSpawned', function(spawn)
         end
         local u = function(t)
             RageUI.Visible(RMenu:Get('SellerMenu', 'main'), false)
-            RageUI.CloseAll()
+            RageUI.ActuallyCloseAll()
         end
         local v = function(t)
             if IsControlJustPressed(1, 38) then
