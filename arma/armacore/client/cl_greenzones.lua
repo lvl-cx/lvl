@@ -160,7 +160,7 @@ l(function()
                 SetPlayerInvincible(playerId,true)
                 ClearPedBloodDamage(r)
                 if usingDelgun then 
-                    tARMA.setWeapon(r,`WEAPON_SPEEDGUNBW`,true)
+                    tARMA.setWeapon(r,`WEAPON_STAFFGUN`,true)
                 else 
                     tARMA.setWeapon(r,`WEAPON_UNARMED`,true)
                 end
