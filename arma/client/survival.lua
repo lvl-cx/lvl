@@ -6,6 +6,7 @@ local playerCanRespawn = false
 local calledNHS = false
 local deathString = ""
 local deathPosition
+spawning = true
 
 local comaAnim = {}
 local DeathAnim = 100
@@ -45,7 +46,7 @@ Citizen.CreateThread(function() -- coma thread
         Wait(0)
         local ped = PlayerPedId()
         local health = GetEntityHealth(ped)
-        if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed then --Wait for death check
+        if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed and not spawning then --Wait for death check
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
 

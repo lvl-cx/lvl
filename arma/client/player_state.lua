@@ -66,6 +66,7 @@ function tARMA.spawnAnim(a, b)
   FreezeEntityPosition(PlayerPedId(), false)
   ExecuteCommand("showui")
   tARMA.setCustomization(a)
+  spawning = false
 end
 
 
@@ -144,8 +145,8 @@ function tARMA.setCustomization(h,j,k)
               tARMA.giveWeapons(o,true)
               tARMA.setArmour(q)
               if k==nil or k==false then 
-                  print("[ARMA] Customisation, setting health to ",p)
-                  tARMA.setHealth(p)
+                print("[ARMA] Customisation change, setting health to ",p)
+                tARMA.setHealth(p)
               end
               SetModelAsNoLongerNeeded(l)
               TriggerServerEvent('ARMA:changeHairStyle')
