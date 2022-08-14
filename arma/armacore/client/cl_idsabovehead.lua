@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
                 b[g] = #(j - m)
             end
         end
-        if not tARMA.isStaffedOn() then
+        if not tARMA.isstaffedOn() then
             a = 7
         end
         Citizen.Wait(1000)
@@ -71,7 +71,7 @@ end)
 
 SetMpGamerTagsUseVehicleBehavior(false)
 RegisterCommand("farids",function(o, p, q)
-    if tARMA.getStaffLevel() > 2 and tARMA.isStaffedOn() then
+    if tARMA.getStaffLevel() > 2 and tARMA.isstaffedOn() then
         local r = p[1]
         if r ~= nil and tonumber(r) then
             a = tonumber(r) + 000.1
