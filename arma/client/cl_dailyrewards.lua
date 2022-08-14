@@ -23,6 +23,21 @@ RageUI.CreateWhile(1.0, true, function()
                     TriggerServerEvent('ARMA:hoursReward', 50)
                 end
             end) 
+            RageUI.ButtonWithStyle("~g~100 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
+                if Selected then
+                    TriggerServerEvent('ARMA:hoursReward', 100)
+                end
+            end) 
+            RageUI.ButtonWithStyle("~g~250 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
+                if Selected then
+                    TriggerServerEvent('ARMA:hoursReward', 250)
+                end
+            end)  
+            RageUI.ButtonWithStyle("~g~500 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
+                if Selected then
+                    TriggerServerEvent('ARMA:hoursReward', 500)
+                end
+            end) 
         end)
     end
 end)

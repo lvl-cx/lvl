@@ -1495,15 +1495,12 @@ cfg.groups = {
   },
 
 -- HOUR REWARDS --
-  ["10hrs"] = {
-    "hours.claim",
-  },
-  ["25hrs"] = {
-    "hours.claim",
-  },
-  ["50hrs"] = {
-    "hours.claim",
-  },
+  ["10hrs"] = {},
+  ["25hrs"] = {},
+  ["50hrs"] = {},
+  ["100hrs"] = {},
+  ["250hrs"] = {},
+  ["500hrs"] = {},
 
   ["Gang"] = {
     "gang.whitelist",
