@@ -31,8 +31,6 @@ local bodyBones = {
 }
 
 
--- FYI you could have just asked and I would have Happily gave you this script....
-
 local notplayingHeadshotSounds = true
 AddEventHandler("gameEventTriggered", function(eventName, eventArguments)
     if not notplayingHeadshotSounds then return end

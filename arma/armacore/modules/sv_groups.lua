@@ -121,9 +121,9 @@ AddEventHandler('ARMA:SellLicense', function(group)
                                             ARMA.addUserGroup(tonumber(userid), group)
 
                                             ARMAclient.notify(source, {'~g~Sold ' .. group .. ' License for £' .. price .. ' to ' .. GetPlayerName(target) .. ' [ID: ' .. userid .. ']'})
-                                            TriggerClientEvent("ARMA:PlaySound", source, 1)
+                                            TriggerClientEvent("arma:PlaySound", source, 1)
                                             ARMAclient.notify(target, {'~g~Bought ' .. group .. ' License for £' .. price .. ' from ' .. GetPlayerName(source) .. ' [ID: ' .. user_id .. ']'})
-                                            TriggerClientEvent("ARMA:PlaySound", target, 1)
+                                            TriggerClientEvent("arma:PlaySound", target, 1)
                                         else
                                             ARMAclient.notify(source, {'~r~User does not have enough money.'})
                                             ARMAclient.notify(target, {'~r~You do not have enough money.'})
@@ -131,7 +131,7 @@ AddEventHandler('ARMA:SellLicense', function(group)
                                     else
                                         ARMAclient.notify(source, {'~r~User Denied.'})
                                         ARMAclient.notify(target, {'~r~You Denied.'})
-                                        TriggerClientEvent("ARMA:PlaySound", source, 2)
+                                        TriggerClientEvent("arma:PlaySound", source, 2)
                                     end
                                 end)
                             else

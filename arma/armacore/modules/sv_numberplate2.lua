@@ -104,11 +104,11 @@
 -- 			MySQL.execute("ARMA/update_numplate2", {user_id = user_id, registration = plateName, vehicle = vehicle})
 -- 			MySQL.execute("ARMA/update_numplate2", {user_id = user_id, registration = plateName})
 -- 			TriggerClientEvent("ARMA:RecieveNumberPlate", source, plateName)
--- 			TriggerClientEvent("ARMA:PlaySound", source, 1)
+-- 			TriggerClientEvent("arma:PlaySound", source, 1)
 -- 			TriggerEvent('ARMA:getCars')
 -- 		else
 -- 			ARMAclient.notify(source,{"~r~You don't have enough money!"})
--- 			TriggerClientEvent("ARMA:PlaySound", source, 2)
+-- 			TriggerClientEvent("arma:PlaySound", source, 2)
 -- 		end
 -- 	end})
 -- end)

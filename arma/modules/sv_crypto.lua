@@ -47,7 +47,7 @@ AddEventHandler('ARMACrypto:Withdraw:Crypto', function(system)
             exports['ghmattimysql']:executeSync("UPDATE c_cryptominers SET amountmined = 0 WHERE user_id = @user_id AND machineid = @machineid", {user_id = user_id, machineid = system.machineid}, function() end)
             ARMA.giveBankMoney(user_id, CalculateBitcoin(system.amountmined))
             ARMAclient.notify(source, {"~g~Withdraw Successfull: £"..amount_bank})
-            TriggerClientEvent("ARMA:PlaySound", source, 1)
+            TriggerClientEvent("arma:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
         end
@@ -71,7 +71,7 @@ AddEventHandler('ARMACrypto:Sell:System', function(system)
             ARMA.giveMoney(user_id,sell_amount)
 
             ARMAclient.notify(source, {"~g~You have sold a System for £".. sell_amount})
-            TriggerClientEvent("ARMA:PlaySound", source, 1)
+            TriggerClientEvent("arma:PlaySound", source, 1)
         else
             print(user_id .. " Is Cheating Or He Moved Away From The Mining Spot")
         end
@@ -99,11 +99,11 @@ AddEventHandler("ARMACrypto:buy_crypto_system", function(system)
         if ARMA.tryBankPayment(user_id,system.price) then
             ARMAclient.notify(player, {"~g~You bought a System For £"..price})
         
-            TriggerClientEvent("ARMA:PlaySound", source, 1)
+            TriggerClientEvent("arma:PlaySound", source, 1)
             exports['ghmattimysql']:executeSync("INSERT INTO c_cryptominers(user_id, pc_id,amountmined) VALUES( @user_id, @pc_id, @amountmined)", {user_id = user_id, pc_id = idofmachine, amountmined = 0}, function() end)        
         else
             ARMAclient.notify(player, {"~r~Not enough money.."})
-            TriggerClientEvent("ARMA:PlaySound", source, 2)
+            TriggerClientEvent("arma:PlaySound", source, 2)
         end
     else
         print(user_id ..' Might Be Cheating, Take A Look')

@@ -190,6 +190,7 @@ AddEventHandler("ARMA:ChangeIdentity", function(first, second, age)
         if ARMA.tryBankPayment(user_id,5000) then
             MySQL.execute("ARMA/set_identity", {user_id = user_id, firstname = first, name = second, age = age})
             ARMAclient.notifyPicture(source,{"CHAR_FACEBOOK",1,"GOV.UK",false,"You have purchased a new identity!"})
+            TriggerClientEvent("arma:PlaySound", source, 1)
         else
             ARMAclient.notify(source,{"~r~You don't have enough money!"})
         end

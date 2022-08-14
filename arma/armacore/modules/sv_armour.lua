@@ -12,7 +12,7 @@ AddEventHandler("ARMA:getArmour",function()
         elseif ARMA.hasGroup(user_id, "PCSO Clocked") or ARMA.hasGroup(user_id, "Police Constable Clocked") then
             ARMAclient.setArmour(source, {25})
         end
-        TriggerClientEvent("ARMA:PlaySound", source, 1)
+        TriggerClientEvent("arma:PlaySound", source, 1)
         ARMAclient.notify(source, {"~g~You have received your armour."})
     end
 end)

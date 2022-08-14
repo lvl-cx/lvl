@@ -93,8 +93,8 @@ AddEventHandler('ARMA:Handcuff', function()
           local nuser_id = ARMA.getUserId(nplayer)
           if nuser_id ~= nil then
             if not isHandcuffed then 
-              TriggerClientEvent("ARMA:PlaySound", source, "handcuff")
-              TriggerClientEvent("ARMA:PlaySound", nplayer, "handcuff")
+              TriggerClientEvent("arma:PlaySound", source, "handcuff")
+              TriggerClientEvent("arma:PlaySound", nplayer, "handcuff")
               TriggerClientEvent("ARMA:CuffAnim", source)
               TriggerClientEvent("ARMA:ArrestAnim", nplayer)
               TriggerClientEvent('ARMA:AttachPlayer', nplayer, source)
@@ -102,8 +102,8 @@ AddEventHandler('ARMA:Handcuff', function()
             else
                 TriggerClientEvent("ARMA:UnCuffAnim", source)
                 TriggerClientEvent('ARMA:AttachPlayer', nplayer, source)
-                TriggerClientEvent("ARMA:PlaySound", source, "handcuff")
-                TriggerClientEvent("ARMA:PlaySound", nplayer, "handcuff")
+                TriggerClientEvent("arma:PlaySound", source, "handcuff")
+                TriggerClientEvent("arma:PlaySound", nplayer, "handcuff")
                 isHandcuffed = false
             end
             Citizen.Wait(5000)

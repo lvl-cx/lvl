@@ -14,11 +14,11 @@ AddEventHandler('Ammo:BuyAmmo', function(price, hash, amount)
     if #(playerCoords - coords) <= 5.0 then 
         if ARMA.tryPayment(userid, price) then
             ARMA.giveInventoryItem(userid, hash, amount, false)
-            TriggerClientEvent("ARMA:PlaySound", source, 1)
+            TriggerClientEvent("arma:PlaySound", source, 1)
             ARMAclient.notify(source, {"~g~Paid ".. '£' ..tostring(price)})
         else 
             ARMAclient.notify(source, {"~r~Not enough money."})
-            TriggerClientEvent("ARMA:PlaySound", source, 2)
+            TriggerClientEvent("arma:PlaySound", source, 2)
         end
     else 
         TriggerEvent("ARMA:acBan", userid, 11, GetPlayerName(source), source, 'Trigger Ammo purchase')

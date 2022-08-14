@@ -28,17 +28,17 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
     if #(playerCoords - coords) <= 5.0 then
         if ARMA.hasGroup(userid, job) then 
             ARMAclient.notify(source, {"~o~You have already purchased this license!"})
-            TriggerClientEvent("ARMA:PlaySound", source, 2)
+            TriggerClientEvent("arma:PlaySound", source, 2)
         else
             for k,v in pairs(licensecentre.prices) do
                 if v.group == job then
                     if ARMA.tryFullPayment(userid, v.price) then
                         ARMA.addUserGroup(userid,job)
                         ARMAclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..tostring(getMoneyStringFormatted(v.price)) .. " ❤️"})
-                        TriggerClientEvent("ARMA:PlaySound", source, 1)
+                        TriggerClientEvent("arma:PlaySound", source, 1)
                     else 
                         ARMAclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
-                        TriggerClientEvent("ARMA:PlaySound", source, 2)
+                        TriggerClientEvent("arma:PlaySound", source, 2)
                     end
                 end
             end
