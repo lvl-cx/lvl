@@ -118,11 +118,33 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     if not itemId then    ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         if ARMA.getInventoryMaxWeight({user_id}) == 30 then
-            --[[ if itemId == "guccipouch" then
+            if itemId == "offwhitebag" then
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
-                tARMA.updateInvCap(user_id, 50)
-            end ]]
-        end
+                ARMA.updateInvCap({user_id, 45})
+            elseif itemId == "guccibag" then 
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                ARMA.updateInvCap({user_id, 50})
+            elseif itemId == "nikebag" then 
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                ARMA.updateInvCap({user_id, 60})
+            elseif itemId == "huntingbackpack" then 
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                ARMA.updateInvCap({user_id, 65})
+            elseif itemId == "greenhikingbackpack" then 
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                ARMA.updateInvCap({user_id, 70})
+            elseif itemId == "rebelbackpack" then 
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                ARMA.updateInvCap({user_id, 100})
+            end
+            TriggerEvent('ARMA:RefreshInventory', source)
+        else
+            if itemId == "offwhitebag" or itemId == "guccibag" or itemId == "nikebag" or itemId == "huntingbackpack" or itemId == "greenhikingbackpack" or itemId == "rebelbackpack" then
+                ARMAclient.notify(source, {'~r~You already have a backpack equipped.'})
+            end
+        end      
+    end
+    if itemLoc == "Plr" then
         ARMA.RunInventoryTask({source, itemId})
         TriggerEvent('ARMA:RefreshInventory', source)
     else
