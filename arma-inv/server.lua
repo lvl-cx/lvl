@@ -114,11 +114,17 @@ end)
 RegisterNetEvent('ARMA:UseItem')
 AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     local source = source
+    local user_id = ARMA.getUserId({source}) 
     if not itemId then    ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
+        if ARMA.getInventoryMaxWeight({user_id}) == 30 then
+            --[[ if itemId == "guccipouch" then
+                ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
+                tARMA.updateInvCap(user_id, 50)
+            end ]]
+        end
         ARMA.RunInventoryTask({source, itemId})
         TriggerEvent('ARMA:RefreshInventory', source)
-        
     else
         ARMAclient.notify(source, {'~r~You need to have this item on you to use it.'})
     end
