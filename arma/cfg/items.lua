@@ -19,10 +19,15 @@ cfg.items = {
 -- [LSD]
   ["lsd"] = {"LSD", "", nil, 4},
   ["acid"] = {"Lysergic Acid", "", nil, 1}, 
--- [Armour Store]
-  ["body_armor"] = {"Level 4 Armour Plate", "", nil, 5}, -- no choices
-  ["body_armor2"] = {"Level 2 Armour Plate", "", nil, 5}, -- no choices
-  ["body_armor3"] = {"Level 1 Armour Plate", "", nil, 5}, -- no choices
+
+  ["greenhikingbackpack"] = {"Green Hiking Backpack", "", nil, 5.00},
+  ["tanhikingbackpack"] = {"Tan Hiking Backpack", "", nil, 5.00}, 
+  ["guccibag"] = {"Gucci Bag", "Just A Louis Vuitton Bag", nil, 5.00},
+  ["offwhitebag"] = {"Off White Bag", "", nil, 5.00},
+  ["nikebag"] = {"Nike Bag", "", nil, 5.00},
+  ["huntingbackpack"] = {"Hunting Backpack", "", nil, 5.00},
+  ["primarkbag"] = {"Primark Bag", "", nil, 5.00},
+  ["rebelbackpack"] = {"Rebel Backpack", "", nil, 5.00},
 }
 
 local function load_item_pack(name)
