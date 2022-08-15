@@ -220,6 +220,19 @@ function tARMA.UpdatePlayTime()
     end
 end
 
+function tARMA.updateInvCap(user_id, invcap)
+    if user_id ~= nil then
+        local data = ARMA.getUserDataTable(user_id)
+        if data ~= nil then
+            if data.invcap ~= nil then
+                data.invcap = invcap
+            else
+                data.invcap = 30
+            end
+        end
+    end
+end
+
 local isStoring = {}
 function tARMA.StoreWeaponsDead()
     local player = source 

@@ -346,10 +346,16 @@ function ARMA.getInventoryWeight(user_id)
   return 0
 end
 
--- return maximum weight of the user inventory
 function ARMA.getInventoryMaxWeight(user_id)
-  return cfg.inventory_weight
+  local data = ARMA.getUserDataTable(user_id)
+  if data.invcap ~= nil then
+    return data.invcap
+  else
+    tARMA.updateInvCap(user_id, 30)
+    return 30
+  end
 end
+
 
 -- clear connected user inventory
 function ARMA.clearInventory(user_id)
