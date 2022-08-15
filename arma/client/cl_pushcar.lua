@@ -114,126 +114,80 @@ local function m(n)
     end
     return false
 end
-Citizen.CreateThread(
-    function()
-        while true do
-            Citizen.Wait(5)
-            local y = GetPlayerPed(-1)
-            Vehicle = {Coords = nil, Vehicle = nil, Dimensions = nil, IsInFront = false, Distance = nil}
-            l = GetVehiclePedIsIn(GetPlayerPed(-1), true)
-            if l == nil then
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5)
+        local y = GetPlayerPed(-1)
+        Vehicle = {Coords = nil, Vehicle = nil, Dimensions = nil, IsInFront = false, Distance = nil}
+        l = GetVehiclePedIsIn(GetPlayerPed(-1), true)
+        if l == nil then
+            l = GetVehiclePedIsTryingToEnter(GetPlayerPed(-1))
+        end
+        if l then
+            local z = GetEntityCoords(l)
+            local A = GetEntityCoords(l)
+            local B = GetEntityCoords(GetPlayerPed(-1))
+            local C = #(A - B)
+            if IsVehicleSeatFree(l, -1) and GetVehicleEngineHealth(l) <= PushCarConfig.DamageNeeded and not IsEntityInWater(l) then
+                if C < 10 then
+                    DrawText3DTest(z.x, z.y, z.z, "Press [~g~SHIFT~w~] and [~g~E~w~] to push the vehicle")
+                end
+            else
                 l = GetVehiclePedIsTryingToEnter(GetPlayerPed(-1))
             end
-            if l then
-                local z = GetEntityCoords(l)
+            if IsControlPressed(0, a["LEFTSHIFT"]) and GetEntityHealth(GetPlayerPed(-1)) > 102 and IsVehicleSeatFree(l, -1) and not IsEntityAttachedToEntity(y, l) and IsControlJustPressed(0, a["E"]) and GetVehicleEngineHealth(l) <= PushCarConfig.DamageNeeded then
                 local A = GetEntityCoords(l)
                 local B = GetEntityCoords(GetPlayerPed(-1))
                 local C = #(A - B)
-                if
-                    IsVehicleSeatFree(l, -1) and GetVehicleEngineHealth(l) <= PushCarConfig.DamageNeeded and
-                        not IsEntityInWater(l)
-                 then
-                    if C < 10 then
-                        DrawText3DTest(z.x, z.y, z.z, "Press [~g~SHIFT~w~] and [~g~E~w~] to push the vehicle")
+                if C < 10 and not m(l) then
+                    NetworkRequestControlOfEntity(l)
+                    local z = GetEntityCoords(y)
+                    if #(GetEntityCoords(l) + GetEntityForwardVector(l) - GetEntityCoords(y)) > #(GetEntityCoords(l) + GetEntityForwardVector(l) * -1 - GetEntityCoords(y)) then
+                        Vehicle.IsInFront = false
+                    else
+                        Vehicle.IsInFront = true
                     end
-                else
-                    l = GetVehiclePedIsTryingToEnter(GetPlayerPed(-1))
-                end
-                if
-                    IsControlPressed(0, a["LEFTSHIFT"]) and GetEntityHealth(GetPlayerPed(-1)) > 102 and
-                        IsVehicleSeatFree(l, -1) and
-                        not IsEntityAttachedToEntity(y, l) and
-                        IsControlJustPressed(0, a["E"]) and
-                        GetVehicleEngineHealth(l) <= PushCarConfig.DamageNeeded
-                 then
-                    local A = GetEntityCoords(l)
-                    local B = GetEntityCoords(GetPlayerPed(-1))
-                    local C = #(A - B)
-                    if C < 10 and not m(l) then
-                        NetworkRequestControlOfEntity(l)
-                        local z = GetEntityCoords(y)
-                        if
-                            #(GetEntityCoords(l) + GetEntityForwardVector(l) - GetEntityCoords(y)) >
-                                #(GetEntityCoords(l) + GetEntityForwardVector(l) * -1 - GetEntityCoords(y))
-                         then
-                            Vehicle.IsInFront = false
-                        else
-                            Vehicle.IsInFront = true
+                    local D = vector3(0.0, 0.0, 0.0)
+                    local E = vector3(5.0, 5.0, 5.0)
+                    Vehicle.Dimensions = GetModelDimensions(GetEntityModel(l), D, E)
+                    if Vehicle.IsInFront then
+                        AttachEntityToEntity(GetPlayerPed(-1),l,GetPedBoneIndex(6286),0.0,Vehicle.Dimensions.y * -1 + 0.1,Vehicle.Dimensions.z + 1.0,0.0,0.0,180.0,0.0,false,false,true,false,true)
+                    else
+                        AttachEntityToEntity(GetPlayerPed(-1),l,GetPedBoneIndex(6286),0.0,Vehicle.Dimensions.y - 0.3,Vehicle.Dimensions.z + 1.0,0.0,0.0,0.0,0.0,false,false,true,false,true)
+                    end
+                    dict = "missfinale_c2ig_11"
+                    RequestAnimDict(dict)
+                    while not HasAnimDictLoaded(dict) do
+                        Citizen.Wait(100)
+                    end
+                    TaskPlayAnim(y, "missfinale_c2ig_11", "pushcar_offcliff_m", 2.0, -8.0, -1, 35, 0, 0, 0, 0)
+                    Citizen.Wait(200)
+                    local F = l
+                    while true do
+                        Citizen.Wait(5)
+                        if IsDisabledControlPressed(0, a["A"]) then
+                            TaskVehicleTempAction(GetPlayerPed(-1), F, 11, 1000)
                         end
-                        local D = vector3(0.0, 0.0, 0.0)
-                        local E = vector3(5.0, 5.0, 5.0)
-                        Vehicle.Dimensions = GetModelDimensions(GetEntityModel(l), D, E)
+                        if IsDisabledControlPressed(0, a["D"]) then
+                            TaskVehicleTempAction(GetPlayerPed(-1), F, 10, 1000)
+                        end
                         if Vehicle.IsInFront then
-                            AttachEntityToEntity(
-                                GetPlayerPed(-1),
-                                l,
-                                GetPedBoneIndex(6286),
-                                0.0,
-                                Vehicle.Dimensions.y * -1 + 0.1,
-                                Vehicle.Dimensions.z + 1.0,
-                                0.0,
-                                0.0,
-                                180.0,
-                                0.0,
-                                false,
-                                false,
-                                true,
-                                false,
-                                true
-                            )
+                            SetVehicleForwardSpeed(F, -1.0)
                         else
-                            AttachEntityToEntity(
-                                GetPlayerPed(-1),
-                                l,
-                                GetPedBoneIndex(6286),
-                                0.0,
-                                Vehicle.Dimensions.y - 0.3,
-                                Vehicle.Dimensions.z + 1.0,
-                                0.0,
-                                0.0,
-                                0.0,
-                                0.0,
-                                false,
-                                false,
-                                true,
-                                false,
-                                true
-                            )
+                            SetVehicleForwardSpeed(F, 1.0)
                         end
-                        dict = "missfinale_c2ig_11"
-                        RequestAnimDict(dict)
-                        while not HasAnimDictLoaded(dict) do
-                            Citizen.Wait(100)
+                        if HasEntityCollidedWithAnything(F) then
+                            SetVehicleOnGroundProperly(F)
                         end
-                        TaskPlayAnim(y, "missfinale_c2ig_11", "pushcar_offcliff_m", 2.0, -8.0, -1, 35, 0, 0, 0, 0)
-                        Citizen.Wait(200)
-                        local F = l
-                        while true do
-                            Citizen.Wait(5)
-                            if IsDisabledControlPressed(0, a["A"]) then
-                                TaskVehicleTempAction(GetPlayerPed(-1), F, 11, 1000)
-                            end
-                            if IsDisabledControlPressed(0, a["D"]) then
-                                TaskVehicleTempAction(GetPlayerPed(-1), F, 10, 1000)
-                            end
-                            if Vehicle.IsInFront then
-                                SetVehicleForwardSpeed(F, -1.0)
-                            else
-                                SetVehicleForwardSpeed(F, 1.0)
-                            end
-                            if HasEntityCollidedWithAnything(F) then
-                                SetVehicleOnGroundProperly(F)
-                            end
-                            if not IsDisabledControlPressed(0, a["E"]) or IsEntityInWater(F) then
-                                DetachEntity(y, false, false)
-                                StopAnimTask(y, "missfinale_c2ig_11", "pushcar_offcliff_m", 2.0)
-                                FreezeEntityPosition(y, false)
-                                break
-                            end
+                        if not IsDisabledControlPressed(0, a["E"]) or IsEntityInWater(F) then
+                            DetachEntity(y, false, false)
+                            StopAnimTask(y, "missfinale_c2ig_11", "pushcar_offcliff_m", 2.0)
+                            FreezeEntityPosition(y, false)
+                            break
                         end
                     end
                 end
             end
         end
     end
-)
+end)
