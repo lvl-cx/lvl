@@ -214,7 +214,7 @@ cfg.test = {
                 limit = 30.0,
                 action = function()
                     dvsaSound("driveToTopFloor")
-                    BW.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Listen carefully for directions, drive to the top floor of the car park", "Reverse Park", "DVSA")
+                    tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Listen carefully for directions, drive to the top floor of the car park", "Reverse Park", "DVSA")
                     currentTest.subtitle = "Drive to the ~y~top floor ~w~of the car park"
                     drawNativeNotification("Drive to the ~y~top floor")
                 end
@@ -225,7 +225,7 @@ cfg.test = {
                 action = function()
                     dvsaSound("nowReversePark")
                     PlaySoundFrontend(-1, "Out_Of_Bounds_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS", 1)
-                    BW.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Once at the top, you must reverse park in the marked bay.", "Reverse Park", "DVSA")
+                    tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Once at the top, you must reverse park in the marked bay.", "Reverse Park", "DVSA")
                     currentTest.subtitle = "Drive round to top and round to ~y~the right"
                     currentTest.subtitle = "~y~Reverse ~w~park in the marked bay, within the white lines"
                 end
@@ -276,7 +276,7 @@ cfg.test = {
                         end
                         if issueHeadingMinor then issueMinor("Reverse Park - Heading") end
                         if issueHeadingSerious then issueSerious("Reverse Park - Heading") end
-                        local coordsDifference = math.abs(#(BW.getPlayerCoords() - vector3(361.9121, -1673.248, 48.2865)))
+                        local coordsDifference = math.abs(#(tARMA.getPlayerCoords() - vector3(361.9121, -1673.248, 48.2865)))
                         if coordsDifference > 1.0 then
                             issueMinor("Reverse Park - Positioning")
                             if coordsDifference > 4.0 then
@@ -285,7 +285,7 @@ cfg.test = {
                         end
                     end
 
-                    BW.notifyPicture(cfg.images.dict, cfg.images.govLarge, "The reverse park exercise is now completed", "Reverse Park", "DVSA")
+                    tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "The reverse park exercise is now completed", "Reverse Park", "DVSA")
                     dvsaSound("reverseParkComplete")
                     currentTest.subtitle = "Thank you, please ~y~drive down ~w~to the ~y~bottom ~w~of the car park"
                     Wait(5000)
@@ -306,7 +306,7 @@ cfg.test = {
                 limit = 30.0,
                 action = function()
                     dvsaSound("turningRightJunction")
-                    BW.notifyPicture(cfg.images.dict, cfg.images.govLarge, "We are turning right", "DVSA", "Directions")
+                    tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "We are turning right", "DVSA", "Directions")
                 end
             },
             {
