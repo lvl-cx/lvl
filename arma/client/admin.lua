@@ -236,6 +236,7 @@ function loadModel(r)
   end 
 end
 
+local location = nil
 RegisterCommand("return", function()
     if staffMode then
         if location ~= nil then
@@ -277,9 +278,10 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent('ARMA:sendTicketInfo')
-AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
+AddEventHandler('ARMA:sendTicketInfo', function(permid, name, prevcoords)
     if permid ~= nil and name ~= nil then
         isInTicket = true
+        location = prevcoords
     end
     while isInTicket do
         Wait(0)

@@ -124,7 +124,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
                                 ARMAclient.staffMode(admin_source, {true})
-                                TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
+                                TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name, GetEntityCoords(GetPlayerPed(admin_source)))
                                 ARMA.giveBankMoney(user_id, 10000)
                                 ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
