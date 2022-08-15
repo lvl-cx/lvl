@@ -220,7 +220,7 @@ function tARMA.UpdatePlayTime()
     end
 end
 
-function tARMA.updateInvCap(user_id, invcap)
+function ARMA.updateInvCap(user_id, invcap)
     if user_id ~= nil then
         local data = ARMA.getUserDataTable(user_id)
         if data ~= nil then
