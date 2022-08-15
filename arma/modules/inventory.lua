@@ -351,7 +351,7 @@ function ARMA.getInventoryMaxWeight(user_id)
   if data.invcap ~= nil then
     return data.invcap
   else
-    tARMA.updateInvCap(user_id, 30)
+    ARMA.updateInvCap(user_id, 30)
     return 30
   end
 end
@@ -382,12 +382,6 @@ function ARMA.openInventory(source)
       local hue = math.floor(math.max(125*(1-weight/max_weight), 0))
       menudata["<div class=\"dprogressbar\" data-value=\""..string.format("%.2f",weight/max_weight).."\" data-color=\"hsl("..hue..",100%,50%)\" data-bgcolor=\"hsl("..hue..",100%,25%)\" style=\"height: 12px; border: 3px solid black;\"></div>"] = {function()end, lang.inventory.info_weight({string.format("%.2f",weight),max_weight})}
       local kitems = {}
-
-      if ARMA.computeItemsWeight(data.inventory) > 15 then
-        TriggerClientEvent("equipBackpack", source)
-      else
-        TriggerClientEvent("removeBackpack", source)
-      end
 
       -- choose callback, nested menu, create the item menu
       local choose = function(player,choice)
@@ -625,3 +619,35 @@ function ARMA.openChest(source, name, max_weight, cb_close, cb_in, cb_out)
     end
   end
 end
+
+RegisterCommand("storebackpack", function(source, args)
+  Wait(1000)
+  local user_id = ARMA.getUserId(source)
+  local data = ARMA.getUserDataTable(user_id)
+  if ARMA.computeItemsWeight(data.inventory) == 0 then
+    if data.invcap == 30 then
+      ARMAclient.notify(source,{"~r~You do not have a backpack equipped."})
+      return
+    end
+    if data.invcap - 15 == 30 then
+      ARMA.giveInventoryItem(user_id, "offwhitebag", 1, false)
+    elseif data.invcap - 20 == 30 then
+      ARMA.giveInventoryItem(user_id, "guccibag", 1, false)
+    elseif data.invcap - 30 == 30  then
+      ARMA.giveInventoryItem(user_id, "nikebag", 1, false)
+    elseif data.invcap - 35 == 30  then
+      ARMA.giveInventoryItem(user_id, "huntingbackpack", 1, false)
+    elseif data.invcap - 40 == 30  then
+      ARMA.giveInventoryItem(user_id, "greenhikingbackpack", 1, false)
+    elseif data.invcap - 70 == 30  then
+      ARMA.giveInventoryItem(user_id, "rebelbackpack", 1, false)
+    end
+
+    ARMA.updateInvCap(user_id, 30)
+    Wait(299)
+    ARMAclient.notify(source,{"~g~Backpack Stored"})
+  else
+    ARMAclient.notify(source,{"~r~Make Sure Your Inventory Is Empty Before Storing Your Backpack"})
+  end
+  TriggerClientEvent('ARMA:removeBackpack', source)
+end)
