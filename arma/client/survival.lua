@@ -49,9 +49,12 @@ Citizen.CreateThread(function() -- coma thread
         if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed and not spawning then --Wait for death check
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
-
+            --[[ if currentBackpack then
+                TriggerServerEvent("ARMA:storeBackpack", currentBackpack, false, true)
+            end ]]
             ARMAserver.StoreWeaponsDead()
             ARMAserver.Coma()
+            tARMA.ejectVehicle()
             TriggerEvent('ARMA:IsInMoneyComa', true)
             TriggerServerEvent('ARMA:InComa')
             ARMAserver.MoneyDrop()
