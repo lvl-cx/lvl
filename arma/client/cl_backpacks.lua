@@ -7,15 +7,7 @@ function previewBackpack(c)
     local prop0, prop1, prop2, backpackname, price, size, backpackstorename = c[1], c[2], c[3], c[4], c[5], c[6], c[7]
     SetPedComponentVariation(tARMA.getPlayerPed(), prop0, prop1, prop2, 2)
 end
-function removeBackpack()
-    if currentBackpack ~= nil then
-        ped = tARMA.getPlayerPed()
-        SetPedComponentVariation(tARMA.getPlayerPed(), 5, 0, 0, 2)
-        currentBackpack = nil
-        b = nil
-        c = nil
-    end
-end
+
 RegisterNetEvent("ARMA:boughtBackpack",function(prop0, prop1, prop2, size, backpackname)
     currentBackpack = backpackname
     b = {prop0, prop1, prop2}
@@ -26,15 +18,15 @@ RegisterNetEvent("ARMA:boughtBackpack",function(prop0, prop1, prop2, size, backp
     EnableAllControlActions(1)
 end)
 
-RegisterNetEvent("ARMA:removeBackpack2",function()
-    removeBackpack()
-end)
-
-RegisterCommand("storebackpack",function()
+RegisterNetEvent("ARMA:removeBackpack",function()
     if currentBackpack ~= nil then
-        TriggerServerEvent("ARMA:storeBackpack", currentBackpack, true, false)
+        ped = tARMA.getPlayerPed()
+        SetPedComponentVariation(tARMA.getPlayerPed(), 5, 0, 0, 2)
+        currentBackpack = nil
+        b = nil
+        c = nil
     end
-end,false)
+end)
 
 local firstspawn = 0
 AddEventHandler('playerSpawned', function(spawn)
@@ -100,7 +92,6 @@ AddEventHandler('playerSpawned', function(spawn)
                         tARMA.notify("~r~You already have this backpack!")
                     end
                     Wait(250)
-                    backpackStoreToBeShown = nil
                     EnableAllControlActions(1)
                 end
             end
