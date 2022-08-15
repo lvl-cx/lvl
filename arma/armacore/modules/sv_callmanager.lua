@@ -15,10 +15,10 @@ local callID = 0
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(60000*5)
+        Citizen.Wait(60000)
         for k,v in pairs(tickets) do
-            if tickets[k].cooldown then
-                tickets[k].cooldown = false
+            if tickets[k].cooldown > 0 then
+                tickets[k].cooldown = tickets[k].cooldown - 1
             end
         end
     end
@@ -32,7 +32,7 @@ RegisterCommand("calladmin", function(source)
     local cooldown = false
     for k,v in pairs(tickets) do
         if tickets[k].permID == user_id then
-            if tickets[k].cooldown then
+            if tickets[k].cooldown > 0 then
                 ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
                 return
             end
@@ -47,7 +47,7 @@ RegisterCommand("calladmin", function(source)
                 tempID = user_source,
                 reason = reason,
                 type = 'admin',
-                cooldown = true,
+                cooldown = 5,
             }
             for k, v in pairs(ARMA.getUsers({})) do
                 TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
