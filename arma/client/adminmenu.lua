@@ -1516,7 +1516,7 @@ function func_checkSpectatorMode()
     if inSpectatorAdminMode then
         if IsControlJustPressed(0, 51) then
             inSpectatorAdminMode = false
-            TriggerServerEvent("ARMA:stopSpectatePlayer", TargetSpectate)
+            TriggerServerEvent("ARMA:stopSpectatePlayer")
         end
     end
 end

@@ -115,15 +115,14 @@ RegisterServerEvent("ARMA:stopSpectatePlayer")
 AddEventHandler("ARMA:stopSpectatePlayer", function()
     local source = source
     TriggerClientEvent("ARMA:spectate", source,-1)
-    TriggerClientEvent("ARMA:partThree",source,source)
+    TriggerClientEvent("ARMA:partThree",-1,source)
 end)
 RegisterServerEvent("ARMA:spectatePlayer")
 AddEventHandler("ARMA:spectatePlayer", function(id)
     local playerssource = ARMA.getUserSource(id)
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
-        M = 1000
-        TriggerClientEvent("ARMA:spectate",source,playerssource,M)
+        TriggerClientEvent("ARMA:spectate",source,playerssource,1000)
     end
 end)
 
@@ -133,7 +132,7 @@ AddEventHandler("ARMA:spectatePlayerEsp", function(id)
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
         TriggerClientEvent("ARMA:spectate",source,playerssource)
-        TriggerClientEvent("ARMA:partTwo", source,source)
+        TriggerClientEvent("ARMA:partTwo", playerssource,source)
     end
 end)
 
