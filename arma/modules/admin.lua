@@ -1599,64 +1599,18 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
     if ARMA.hasPermission(user_id, 'admin.tp2player') then
         local playerName = GetPlayerName(source)
         local playerOtherName = GetPlayerName(newtarget)
-        local command = {
-            {
-                ["color"] = "16448403",
-                ["title"] = "ARMA Teleport Logs",
-                ["description"] = "",
-                ["text"] = "ARMA Server #1",
-                ["fields"] = {
-                    {
-                        ["name"] = "Admin Name",
-                        ["value"] = GetPlayerName(source),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin TempID",
-                        ["value"] = source,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin PermID",
-                        ["value"] = user_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Name",
-                        ["value"] = GetPlayerName(ARMA.getUserSource(player_id)),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player TempID",
-                        ["value"] = ARMA.getUserSource(player_id),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player PermID",
-                        ["value"] = player_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Hours",
-                        ["value"] = "0 hours",
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Teleport Type",
-                        ["value"] = "Teleport to Player",
-                        ["inline"] = true
-                    }
-                }
-            }
-        }
-        local webhook = "https://discord.com/api/webhooks/991476057393872966/TQBcjsriIZJIxdd4BCzC5mbL4uAfW7UKxA1sYJ8iWaFBQxymAtpxWpYmV1M_MsT4CwFn"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        TriggerClientEvent('ARMA:Teleport', source, coords)
+        local adminbucket = GetPlayerRoutingBucket(source)
+        local playerbucket = GetPlayerRoutingBucket(newtarget)
+        if adminbucket ~= playerbucket then
+            SetPlayerRoutingBucket(source, playerbucket)
+            ARMAclient.notify(source, {'~g~The person was in a different bucket, you have followed them there.'})
+        end
+        ARMAclient.teleport(source, coords)
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport TO Someone')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport to Someone')
     end
 end)
 
@@ -1666,74 +1620,18 @@ AddEventHandler('ARMA:BringPlayer', function(id)
     local source = source 
     local SelectedPlrSource = ARMA.getUserSource(id) 
     local user_id = ARMA.getUserId(source)
+    local source = source 
+    local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.summon') then
-        if SelectedPlrSource then  
-            if onesync ~= "off" then 
-                local ped = GetPlayerPed(source)
-                local otherPlr = GetPlayerPed(SelectedPlrSource)
-                local otherPlrC = GetEntityCoords(otherPlr)
-                local pedCoords = GetEntityCoords(ped)
-                local playerOtherName = GetPlayerName(SelectedPlrSource)
-
-                local player_id = ARMA.getUserId(SelectedPlrSource)
-                local playerName = GetPlayerName(source)
-                
-                SetEntityCoords(otherPlr, pedCoords)
-                local otherPlrCN = GetEntityCoords(otherPlr)
-                local command = {
-                    {
-                        ["color"] = "16448403",
-                        ["title"] = "ARMA Teleport Logs",
-                        ["description"] = "",
-                        ["text"] = "ARMA Server #1",
-                        ["fields"] = {
-                            {
-                                ["name"] = "Admin Name",
-                                ["value"] = GetPlayerName(source),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Admin TempID",
-                                ["value"] = source,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Admin PermID",
-                                ["value"] = user_id,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player Name",
-                                ["value"] = GetPlayerName(ARMA.getUserSource(id)),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player TempID",
-                                ["value"] = ARMA.getUserSource(id),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player PermID",
-                                ["value"] = id,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player Hours",
-                                ["value"] = "0 hours",
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Teleport Type",
-                                ["value"] = "Teleport to me",
-                                ["inline"] = true
-                            }
-                        }
-                    }
-                }
-                local webhook = "https://discord.com/api/webhooks/991476085248237659/YByx_T6sIDT2OUrNS9ZrHnsQ84tkqyxhClp6f-Dni3zi4U--lIuTssKLibN9L59XdlXh"
-                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-            else 
-                TriggerClientEvent('ARMA:BringPlayer', SelectedPlrSource, false, id)  
+        if id then  
+            local ped = GetPlayerPed(source)
+            local pedCoords = GetEntityCoords(ped)
+            ARMAclient.teleport(id, pedCoords)
+            local adminbucket = GetPlayerRoutingBucket(source)
+            local playerbucket = GetPlayerRoutingBucket(id)
+            if adminbucket ~= playerbucket then
+                SetPlayerRoutingBucket(id, adminbucket)
+                ARMAclient.notify(source, {'~g~The person was in a different bucket, they have been moved to yours.'})
             end
         else 
             ARMAclient.notify(source,{"~r~This player may have left the game."})
@@ -1742,7 +1640,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
+        TriggerEvent("RDMAdmin:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
     end
 end)
 
@@ -1807,7 +1705,7 @@ RegisterServerEvent('ARMA:Tp2Coords')
 AddEventHandler('ARMA:Tp2Coords', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, "dev.tp2coords") then
+    if ARMA.hasPermission(user_id, "admin.tp2coords") then
         ARMA.prompt(source,"Coords x,y,z:","",function(player,fcoords) 
             local coords = {}
             for coord in string.gmatch(fcoords or "0,0,0","[^,]+") do
@@ -1830,51 +1728,6 @@ AddEventHandler('ARMA:Tp2Coords', function()
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport to Coords')
-    end
-end)
-
-RegisterServerEvent('ARMA:GiveCratesMenu')
-AddEventHandler('ARMA:GiveCratesMenu', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, "dev.givemoney") then
-        ARMA.prompt(source,"Perm ID:","",function(source,playerid) 
-            if playerid == '' then return end
-            if playerid ~= nil then
-                ARMA.prompt(source,"Amount:","",function(source,amount) 
-                    if amount == '' then return end
-                    amount = parseInt(amount)
-                    ARMAclient.notify(source, {"~g~You have given ID: "..playerid.." ~y~"..amount.." ~g~crates."})
-                    exports['ghmattimysql']:execute("SELECT * FROM `user_crates` WHERE user_id = @user_id", {user_id = user_id}, function(result)
-                        if result ~= nil then 
-                            for k,v in pairs(result) do
-                                if v.user_id == user_id then
-                                    crates = v.crates+amount
-                                    exports['ghmattimysql']:execute("UPDATE user_crates SET crates = @crates WHERE user_id = @user_id", {user_id = user_id, crates = crates}, function() end)
-                                end
-                            end
-                        end
-                    end)
-                    webhook = "https://discord.com/api/webhooks/991456793379221564/7lJUj2h_apXDdiKB43_go8bLj6TnaaAyrbgwH1R9REpScBesVsnMtaA2x-rVm8USB2hH"
-                    PerformHttpRequest(webhook, function(err, text, headers) 
-                    end, "POST", json.encode({username = "ARMA", embeds = {
-                        {
-                            ["color"] = "16448403",
-                            ["title"] = "Crate Logs",
-                            ["description"] = "**Admin ID: **"..user_id.."\n**Player ID:**"..playerid.."\n**Amount: **"..amount,
-                            ["footer"] = {
-                                ["text"] = "Time - "..os.date("%x %X %p"),
-                            }
-                    }
-                }}), { ["Content-Type"] = "application/json" })
-                end)
-            end
-        end)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Give Money Menu')
     end
 end)
 

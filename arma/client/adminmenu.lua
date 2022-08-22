@@ -736,25 +736,17 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if GlobalAdminLevel > 0 then
-                RageUI.ButtonWithStyle("Teleport to Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local newSource = GetPlayerServerId(PlayerId())
-                        savedCoords1 = GetEntityCoords(PlayerPedId())
                         TriggerServerEvent('ARMA:TeleportToPlayer', newSource, SelectedPlayer[2])
-                        inTP2P = true
-                        inTP2P2 = true
-                        
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
-                RageUI.ButtonWithStyle("Teleport Player to Me", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.Button("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:BringPlayer', SelectedPlayer[3])
+                        TriggerServerEvent('ARMA:BringPlayer', SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Admin Zone", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         inRedZone = false
@@ -762,22 +754,16 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:Teleport2AdminIsland", SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport Back from Admin Zone", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:TeleportBackFromAdminZone", SelectedPlayer[2], savedCoordsBeforeAdminZone)
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Teleport to Legion", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Teleport", SelectedPlayer[2], vector3(151.61740112305,-1035.05078125,29.339416503906))
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Freeze", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())

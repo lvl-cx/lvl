@@ -804,6 +804,10 @@ function tARMA.isNoclipping()
   return noclipActive
 end
 
+RegisterCommand('test', function()
+  print(json.encode(baseplayers))
+end)
+
 function tARMA.getRageUIMenuWidth()
   local w, h = GetActiveScreenResolution()
 
