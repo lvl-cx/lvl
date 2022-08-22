@@ -21,7 +21,7 @@ function RageUI.Separator(Label)
                             CurrentMenu.Index = RageUI.CurrentMenu.Options
                         end
                     else
-                        CurrentMenu.Index = Option + 1
+                        --CurrentMenu.Index = Option + 1
                     end
                 end
             end
