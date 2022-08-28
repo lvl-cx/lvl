@@ -1,5 +1,4 @@
 local lang = ARMA.lang
-local cfg = module("cfg/police")
 
 RegisterServerEvent('ARMA:OpenPoliceMenu')
 AddEventHandler('ARMA:OpenPoliceMenu', function()

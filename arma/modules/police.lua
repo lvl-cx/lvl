@@ -1,7 +1,6 @@
 
 -- this module define some police tools and functions
 local lang = ARMA.lang
-local cfg = module("cfg/police")
 local a = module("cfg/weapons")
 
 -- police records
@@ -145,37 +144,6 @@ local function ch_closebusiness(player,choice)
     else
       ARMAclient.notify(player,{lang.common.no_player_near()})
     end
-  end)
-end
-
--- track vehicle
-local function ch_trackveh(player,choice)
-  ARMA.prompt(player,lang.police.pc.trackveh.prompt_reg(),"",function(player, reg) -- ask reg
-    ARMA.getUserByRegistration(reg, function(user_id)
-      if user_id ~= nil then
-        ARMA.prompt(player,lang.police.pc.trackveh.prompt_note(),"",function(player, note) -- ask note
-          -- begin veh tracking
-          ARMAclient.notify(player,{lang.police.pc.trackveh.tracking()})
-          local seconds = math.random(cfg.trackveh.min_time,cfg.trackveh.max_time)
-          SetTimeout(seconds*1000,function()
-            local tplayer = ARMA.getUserSource(user_id)
-            if tplayer ~= nil then
-              ARMAclient.getAnyOwnedVehiclePosition(tplayer,{},function(ok,x,y,z)
-                if ok then -- track success
-                  ARMA.sendServiceAlert(nil, cfg.trackveh.service,x,y,z,lang.police.pc.trackveh.tracked({reg,note}))
-                else
-                  ARMAclient.notify(player,{lang.police.pc.trackveh.track_failed({reg,note})}) -- failed
-                end
-              end)
-            else
-              ARMAclient.notify(player,{lang.police.pc.trackveh.track_failed({reg,note})}) -- failed
-            end
-          end)
-        end)
-      else
-        ARMAclient.notify(player,{lang.common.not_found()})
-      end
-    end)
   end)
 end
 
@@ -399,7 +367,7 @@ local choice_seize_weapons = {function(player, choice)
     end)
   end
 end, lang.police.menu.seize.weapons.description()}
-
+--[[ 
 local choice_seize_items = {function(player, choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
@@ -431,9 +399,9 @@ local choice_seize_items = {function(player, choice)
       end
     end)
   end
-end, lang.police.menu.seize.items.description()}
+end, lang.police.menu.seize.items.description()} ]]
 
--- toggle jail nearest player
+--[[ -- toggle jail nearest player
 local choice_jail = {function(player, choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
@@ -475,104 +443,7 @@ local choice_jail = {function(player, choice)
       end
     end)
   end
-end, lang.police.menu.jail.description()}
-
-local choice_fine = {function(player, choice)
-  local user_id = ARMA.getUserId(player)
-  if user_id ~= nil then
-    ARMAclient.getNearestPlayer(player, {5}, function(nplayer)
-      local nuser_id = ARMA.getUserId(nplayer)
-      if nuser_id ~= nil then
-        local money = ARMA.getMoney(nuser_id)+ARMA.getBankMoney(nuser_id)
-
-        -- build fine menu
-        local menu = {name=lang.police.menu.fine.title(),css={top="75px",header_color="rgba(0,125,255,0.75)"}}
-
-        local choose = function(player,choice) -- fine action
-          local amount = cfg.fines[choice]
-          if amount ~= nil then
-            if ARMA.tryFullPayment(nuser_id, amount) then
-              ARMA.insertPoliceRecord(nuser_id, lang.police.menu.fine.record({choice,amount}))
-              ARMAclient.notify(player,{lang.police.menu.fine.fined({choice,amount})})
-              ARMAclient.notify(nplayer,{lang.police.menu.fine.notify_fined({choice,amount})})
-              ARMA.closeMenu(player)
-            else
-              ARMAclient.notify(player,{lang.money.not_enough()})
-            end
-          end
-        end
-
-        for k,v in pairs(cfg.fines) do -- add fines in function of money available
-          if v <= money then
-            menu[k] = {choose,v}
-          end
-        end
-
-        -- open menu
-        ARMA.openMenu(player, menu)
-      else
-        ARMAclient.notify(player,{lang.common.no_player_near()})
-      end
-    end)
-  end
-end, lang.police.menu.fine.description()}
-
--- WANTED SYNC
-
-local wantedarma_players = {}
-
-function ARMA.getUserWantedLevel(user_id)
-  return wantedarma_players[user_id] or 0
-end
-
--- receive wanted level
-function tARMA.updateWantedLevel(level)
-  local player = source
-  local user_id = ARMA.getUserId(player)
-  if user_id ~= nil then
-    local was_wanted = (ARMA.getUserWantedLevel(user_id) > 0)
-    wantedarma_players[user_id] = level
-    local is_wanted = (level > 0)
-
-    -- send wanted to listening service
-    if not was_wanted and is_wanted then
-      ARMAclient.getPosition(player, {}, function(x,y,z)
-        ARMA.sendServiceAlert(nil, cfg.wanted.service,x,y,z,lang.police.wanted({level}))
-      end)
-    end
-
-    if was_wanted and not is_wanted then
-      ARMAclient.removeNamedBlip(-1, {"ARMA:wanted:"..user_id}) -- remove wanted blip (all to prevent phantom blip)
-    end
-  end
-end
-
--- delete wanted entry on leave
-AddEventHandler("ARMA:playerLeave", function(user_id, player)
-  wantedarma_players[user_id] = nil
-  ARMAclient.removeNamedBlip(-1, {"ARMA:wanted:"..user_id})  -- remove wanted blip (all to prevent phantom blip)
-end)
-
--- display wanted positions
-local function task_wanted_positions()
-  local listeners = ARMA.getUsersByPermission("police.wanted")
-  for k,v in pairs(wantedarma_players) do -- each wanted player
-    local player = ARMA.getUserSource(tonumber(k))
-    if player ~= nil and v ~= nil and v > 0 then
-      ARMAclient.getPosition(player, {}, function(x,y,z)
-        for l,w in pairs(listeners) do -- each listening player
-          local lplayer = ARMA.getUserSource(w)
-          if lplayer ~= nil then
-            ARMAclient.setNamedBlip(lplayer, {"ARMA:wanted:"..k,x,y,z,cfg.wanted.blipid,cfg.wanted.blipcolor,lang.police.wanted({v})})
-          end
-        end
-      end)
-    end
-  end
-
-  SetTimeout(5000, task_wanted_positions)
-end
-task_wanted_positions()
+end, lang.police.menu.jail.description()} ]]
 
 local isStoring = {}
 local choice_store_weapons = function(player, choice)
