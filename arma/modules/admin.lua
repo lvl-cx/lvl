@@ -680,7 +680,7 @@ local bans = {
     {id = "combatlogging", name = "Combat Logging", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
     {id = "combatstoring", name = "Combat Storing", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
     {id = "badrp", name = "Bad-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "failrp", name = "Fail-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours",itemchecked = false},
+    {id = "failrp", name = "Fail-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
     {id = "invalidinitiation", name = "Invalid-Initiation", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
     {id = "nlr", name = "NLR", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
     {id = "trolling", name = "Trolling", durations = {48, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 168 Hours\n3rd offense: Permanent", itemchecked = false},
@@ -754,10 +754,6 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
                                 PlayerBanCachedDuration[PlayerID] = -1
                                 PermOffense = true
-                            end
-                            local U=false
-                            if Duration == -1 then
-                                U=true
                             end
                             if PlayerOffenses[PlayerID][k] == 1 then
                                 table.insert(separatormsg, bans[a].name ..' ~y~| ~w~1st Offense ~y~| ~w~'..(PermOffense and "Permanent" or bans[a].durations[PlayerOffenses[PlayerID][k]] .." hrs"))
