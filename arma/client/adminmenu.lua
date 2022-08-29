@@ -26,6 +26,7 @@ local g
 local h = {}
 local i = 1
 local k = {}
+local o = ''
 local a10
 local acbannedplayers = 0
 local acbannedplayerstable = {}
@@ -73,7 +74,7 @@ RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu",
 RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -700,6 +701,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         banningPermID = SelectedPlayer[3]
                         banningName = SelectedPlayer[1]
+                        o = nil
                     end
                 end, RMenu:Get('adminmenu', 'banselection'))
             end
@@ -838,6 +840,15 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'banselection')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel >= 2 then
+                if IsControlJustPressed(0, 37) then
+                    tARMA.clientPrompt("Search for: ","",function(O)
+                        if O ~= "" then
+                            o = string.lower(O)
+                        else
+                            o = nil
+                        end
+                    end)
+                end
                 for k, v in pairs(banreasons) do
                     local function SelectedTrue()
                         selectedbans[v.id] = true
@@ -845,17 +856,19 @@ RageUI.CreateWhile(1.0, true, function()
                     local function SelectedFalse()
                         selectedbans[v.id] = nil
                     end
-                    RageUI.Checkbox(v.name, v.bandescription, v.itemchecked, { Style = RageUI.CheckboxStyle.Tick }, function(Hovered, Selected, Active, Checked)
-                        if Selected then
-                            if v.itemchecked then
-                                SelectedTrue()
+                    if o == nil or string.match(string.lower(v.id), o) or string.match(string.lower(v.name), o) then
+                        RageUI.Checkbox(v.name, v.bandescription, v.itemchecked, { Style = RageUI.CheckboxStyle.Tick }, function(Hovered, Selected, Active, Checked)
+                            if Selected then
+                                if v.itemchecked then
+                                    SelectedTrue()
+                                end
+                                if not v.itemchecked then
+                                    SelectedFalse()
+                                end
                             end
-                            if not v.itemchecked then
-                                SelectedFalse()
-                            end
-                        end
-                        v.itemchecked = Checked
-                    end)
+                            v.itemchecked = Checked
+                        end)
+                    end
                 end
                 RageUI.ButtonWithStyle("Generate Ban", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
@@ -869,6 +882,7 @@ RageUI.CreateWhile(1.0, true, function()
                         for k, v in pairs(banreasons) do
                             v.itemchecked = false
                         end
+                        o = nil
                         RageUI.ActuallyCloseAll()
                     end
                 end)
