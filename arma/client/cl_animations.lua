@@ -67,10 +67,10 @@ function loadAnimDict(testt)
 end
 
 local function c()
-    if GetEntityHealth(GetPlayerPed(-1))<=102 then 
+    if GetEntityHealth(PlayerPedId())<=102 then 
         notify("~r~You try to move but you remember you're dead")
         return true 
-    elseif IsEntityDead(GetPlayerPed(-1))then 
+    elseif IsEntityDead(PlayerPedId())then 
         notify("~r~You try to move but you remember you're dead")
         return true 
     else 
@@ -88,20 +88,19 @@ local function d()
 end
 RegisterCommand("bjgive",function(f,g)
     local i="oddjobs@towing"
-    local k=GetPlayerPed(-1)
-    if DoesEntityExist(k)and 
-    canAnim()and not IsEntityDead(k)and d()then 
+    local k=PlayerPedId()
+    if DoesEntityExist(k) and canAnim() and not IsEntityDead(k) and d() then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"f_blow_job_loop",3)then 
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         else 
             TaskPlayAnim(k,i,"f_blow_job_loop",8.0,1.0,-1,01,0,0,0,0)
             Wait(5000)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         end 
     end 
 end,false)
@@ -109,54 +108,54 @@ end,false)
 
 RegisterCommand("bjget",function(f,g)
     local i="oddjobs@towing"
-    local k=GetPlayerPed(-1)
-    if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
+    local k=PlayerPedId()
+    if DoesEntityExist(k) and canAnim() and not IsEntityDead(k) and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"m_blow_job_loop",3)then 
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         else 
             TaskPlayAnim(k,i,"m_blow_job_loop",8.0,1.0,-1,01,0,0,0,0)
             Wait(5000)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         end 
     end 
 end,false)
 RegisterCommand("sexgive",function(f,g)
     local i="mini@prostitutes@sexlow_veh"
-    local k=GetPlayerPed(-1)
-    if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
+    local k=PlayerPedId()
+    if DoesEntityExist(k) and canAnim() and not IsEntityDead(k) and d() then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"low_car_sex_loop_female",3)then 
-            TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)Wait(100)ClearPedSecondaryTask(GetPlayerPed(-1))
+            TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)Wait(100)ClearPedSecondaryTask(PlayerPedId())
         else 
             TaskPlayAnim(k,i,"low_car_sex_loop_female",8.0,1.0,-1,01,0,0,0,0)
             Wait(5000)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         end 
     end 
 end,false)
 
 RegisterCommand("sexget",function(f,g)
     local i="mini@prostitutes@sexlow_veh"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"low_car_sex_loop_player",3)then 
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         else 
             TaskPlayAnim(k,i,"low_car_sex_loop_player",8.0,1.0,-1,01,0,0,0,0)
             Wait(5000)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         end 
     end 
 end,false)
@@ -169,7 +168,7 @@ end
 local p=false
 RegisterCommand("notes",function(f,g)
     local i="missheistdockssetup1clipboard@base"
-    local e=GetPlayerPed(-1)
+    local e=PlayerPedId()
     loadAnimDict(i)
     loadModel(`prop_notepad_01`)
     loadModel(`prop_pencil_01`)
@@ -178,7 +177,7 @@ RegisterCommand("notes",function(f,g)
         if IsEntityPlayingAnim(e,i,"base",3)then 
             TaskPlayAnim(e,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         else 
             local q=GetEntityCoords(e)
             local prop=CreateObject(`prop_notepad_01`,q.x,q.y,q.z+0.2,true,true,true)
@@ -217,7 +216,7 @@ RegisterCommand("facepalm", function(c, d)
 end, false)
 RegisterCommand("umbrella",function(f,g)
     local i="amb@world_human_drinking@coffee@male@base"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     local prop_name=prop_name or"p_amb_brolly_01"
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
@@ -225,7 +224,7 @@ RegisterCommand("umbrella",function(f,g)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(100)
             DeleteObject(prop)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         else 
             local r,s,t=table.unpack(GetEntityCoords(k))
             prop=CreateObject(GetHashKey(prop_name),r,s,t+0.2,true,true,true)
@@ -236,20 +235,20 @@ RegisterCommand("umbrella",function(f,g)
     end 
 end,false)
 RegisterCommand("bag",function(f,g)
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         GiveWeaponToPed(k,0x88C78EB7,1,false,true)
     end 
 end,false)
 RegisterCommand("bag2",function(f,g)
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         GiveWeaponToPed(k,0x01B79F17,1,false,true)
     end 
 end,false)
 RegisterCommand("damn",function(f,g)
     local i="gestures@m@standing@casual"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"gesture_damn",3)then 
@@ -276,7 +275,7 @@ RegisterCommand("salute", function(c, d)
 end, false)
 RegisterCommand("fail", function(f, g)
 	local i = "random@car_thief@agitated@idle_a"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, "agitated_idle_a", 3) then
@@ -288,7 +287,7 @@ RegisterCommand("fail", function(f, g)
 end, false)
 RegisterCommand("sign1", function(f, g)
 	local i = "mp_player_int_uppergang_sign_a"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, "mp_player_int_gang_sign_a", 3) then
@@ -300,7 +299,7 @@ RegisterCommand("sign1", function(f, g)
 end, false)
 RegisterCommand("sign2", function(f, g)
 	local i = "mp_player_int_uppergang_sign_b"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, "mp_player_int_gang_sign_b", 3) then
@@ -368,7 +367,7 @@ RegisterCommand("fingerbum",function(c,d)
 end,false)
 RegisterCommand("touchself",function(f,g)
     local i="mp_player_int_uppergrab_crotch"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"mp_player_int_grab_crotch",3)then 
@@ -380,7 +379,7 @@ RegisterCommand("touchself",function(f,g)
 end,false)
 RegisterCommand("wanker",function(f,g)
     local i="mp_player_intwank"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,"mp_player_int_wank",3)then 
@@ -393,7 +392,7 @@ end,false)
 
 globalSurrenderring=false
 function surrender()
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict("random@arrests")
         loadAnimDict("random@arrests@busted")
@@ -422,7 +421,7 @@ function tARMA.globalSurrenderring()
 end
 
 local function u()
-    local v=GetPlayerPed(-1)
+    local v=PlayerPedId()
     if surrendered or IsEntityPlayingAnim(v,'missminuteman_1ig_2','handsup_enter',3)or IsEntityPlayingAnim(v,"random@arrests","idle_2_hands_up",3)or IsEntityPlayingAnim(v,"random@arrests@busted","idle_a",3)then 
         return true 
     end
@@ -474,7 +473,7 @@ RegisterCommand("surrender",function(f,g)
     surrender()
 end,false)
 RegisterCommand("peace",function(f,g)
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     local i="mp_player_int_upperpeace_sign"
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
@@ -485,12 +484,12 @@ RegisterCommand("peace",function(f,g)
             Wait(10000)
             TaskPlayAnim(k,i,"exit",8.0,1.0,-1,49,0,0,0,0)
             Wait(1000)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
         end 
     end 
 end,false)
 RegisterCommand("holster", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "move_m@intimidation@cop@unarmed"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
@@ -504,7 +503,7 @@ RegisterCommand("holster", function(f, g)
 	end
 end, false)
 RegisterCommand("guard", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "rcmepsilonism8"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
@@ -516,7 +515,7 @@ RegisterCommand("guard", function(f, g)
 	end
 end, false)
 RegisterCommand("slowclap", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "anim@mp_player_intcelebrationmale@slow_clap"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
@@ -533,7 +532,7 @@ RegisterCommand("slowclap", function(f, g)
 	end
 end, false)
 RegisterCommand("cheer", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "amb@world_human_cheering@male_a"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
@@ -550,7 +549,7 @@ RegisterCommand("cheer", function(f, g)
 	end
 end, false)
 RegisterCommand("lean", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "amb@lo_res_idles@"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
@@ -564,7 +563,7 @@ RegisterCommand("lean", function(f, g)
 	end
 end, false)
 RegisterCommand("copcrowd", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "amb@code_human_police_crowd_control@idle_a"
 	local j = "idle_a"
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
@@ -581,10 +580,10 @@ RegisterCommand("copcrowd", function(f, g)
 	end
 end, false)
 RegisterCommand("copcrowd2", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local i = "amb@code_human_police_crowd_control@idle_b"
 	local j = "idle_d"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -599,7 +598,7 @@ RegisterCommand("copcrowd2", function(f, g)
 	end
 end, false)
 RegisterCommand("copidle", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		if IsPedActiveInScenario(k) then
 			ClearPedTasks(k)
@@ -621,7 +620,7 @@ local L = "prop_amb_phone"
 local M = nil
 
 RegisterCommand("picture",function(f,g)
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     local N=GetHashKey(L)
     RequestModel(N)
     local O=GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()),0.0,0.0,-5.0)
@@ -642,7 +641,7 @@ RegisterCommand("picture",function(f,g)
             Wait(1840)
             DetachEntity(P)
             DeleteEntity(P)Wait(750)
-            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedSecondaryTask(PlayerPedId())
             K=false 
         else 
             Wait(500)
@@ -669,7 +668,7 @@ end,false)
 RegisterCommand("bong", function(f, g)
 	local T = "anim@safehouse@bong"
 	local U = "bong_stage1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local V = GetHashKey(I)
 	RequestModel(V)
 	local O = GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()), 0, 0, -0)
@@ -679,7 +678,7 @@ RegisterCommand("bong", function(f, g)
 		loadAnimDict(T)
 		if H then
 			Wait(100)
-			ClearPedSecondaryTask(GetPlayerPed(-1))
+			ClearPedSecondaryTask(PlayerPedId())
 			DetachEntity(W)
 			DeleteEntity(W)
 			H = false
@@ -714,7 +713,7 @@ RegisterCommand("ma", function(f, g)
 	local ad2a = "exit"
 	local Z = GetHashKey(F)
 	RequestModel(Z)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local O = GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()), 0, 0, -0)
 	local _ = CreateObject(Z, O.x, O.y, O.z, 1, 1, 1)
 	if DoesEntityExist(k) and (not IsEntityDead(k)) then
@@ -723,7 +722,7 @@ RegisterCommand("ma", function(f, g)
 		SetModelAsNoLongerNeeded(Z)
 		if E then
 			Wait(100)
-			ClearPedSecondaryTask(GetPlayerPed(-1))
+			ClearPedSecondaryTask(PlayerPedId())
 			DetachEntity(_)
 			DeleteEntity(_)
 			E = false
@@ -758,7 +757,7 @@ end, false)
 RegisterCommand("dance1", function(f, g)
 	local i = "anim@amb@nightclub@dancers@black_madonna_entourage@"
 	local j = "li_dance_facedj_11_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -772,7 +771,7 @@ end, false)
 RegisterCommand("dance2", function(f, g)
 	local i = "anim@amb@nightclub@dancers@black_madonna_entourage@"
 	local j = "hi_dance_facedj_09_v2_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -786,7 +785,7 @@ end, false)
 RegisterCommand("dance3", function(f, g)
 	local i = "anim@amb@nightclub@dancers@black_madonna_entourage@"
 	local j = "li_dance_facedj_15_v2_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -800,7 +799,7 @@ end, false)
 RegisterCommand("dance4", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "mi_dance_prop_15_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -814,7 +813,7 @@ end, false)
 RegisterCommand("dance5", function(f, g)
 	local i = "anim@amb@nightclub@djs@dixon@"
 	local j = "dixn_dance_a_dixon"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -828,7 +827,7 @@ end, false)
 RegisterCommand("dance6", function(f, g)
 	local i = "anim@amb@nightclub@djs@solomun@"
 	local j = "sol_trans_out_to_rt_a_sol"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -842,7 +841,7 @@ end, false)
 RegisterCommand("dance7", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -856,7 +855,7 @@ end, false)
 RegisterCommand("dance8", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -870,7 +869,7 @@ end, false)
 RegisterCommand("dance9", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -884,7 +883,7 @@ end, false)
 RegisterCommand("dance10", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -898,7 +897,7 @@ end, false)
 RegisterCommand("dance11", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -912,7 +911,7 @@ end, false)
 RegisterCommand("dance12", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -926,7 +925,7 @@ end, false)
 RegisterCommand("dance13", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -940,7 +939,7 @@ end, false)
 RegisterCommand("dance14", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -954,7 +953,7 @@ end, false)
 RegisterCommand("dance15", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -968,7 +967,7 @@ end, false)
 RegisterCommand("dance16", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -982,7 +981,7 @@ end, false)
 RegisterCommand("dance17", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -996,7 +995,7 @@ end, false)
 RegisterCommand("dance18", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v1_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1010,7 +1009,7 @@ end, false)
 RegisterCommand("dance19", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1024,7 +1023,7 @@ end, false)
 RegisterCommand("dance20", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1038,7 +1037,7 @@ end, false)
 RegisterCommand("dance21", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1052,7 +1051,7 @@ end, false)
 RegisterCommand("dance22", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1066,7 +1065,7 @@ end, false)
 RegisterCommand("dance23", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1080,7 +1079,7 @@ end, false)
 RegisterCommand("dance24", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1094,7 +1093,7 @@ end, false)
 RegisterCommand("dance25", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1108,7 +1107,7 @@ end, false)
 RegisterCommand("dance26", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1122,7 +1121,7 @@ end, false)
 RegisterCommand("dance27", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1136,7 +1135,7 @@ end, false)
 RegisterCommand("dance28", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1150,7 +1149,7 @@ end, false)
 RegisterCommand("dance29", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1164,7 +1163,7 @@ end, false)
 RegisterCommand("dance30", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_09_v2_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1178,7 +1177,7 @@ end, false)
 RegisterCommand("dance31", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1192,7 +1191,7 @@ end, false)
 RegisterCommand("dance32", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1206,7 +1205,7 @@ end, false)
 RegisterCommand("dance33", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1220,7 +1219,7 @@ end, false)
 RegisterCommand("dance34", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1234,7 +1233,7 @@ end, false)
 RegisterCommand("dance35", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1248,7 +1247,7 @@ end, false)
 RegisterCommand("dance36", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1262,7 +1261,7 @@ end, false)
 RegisterCommand("dance37", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1276,7 +1275,7 @@ end, false)
 RegisterCommand("dance38", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1290,7 +1289,7 @@ end, false)
 RegisterCommand("dance39", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1304,7 +1303,7 @@ end, false)
 RegisterCommand("dance40", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1318,7 +1317,7 @@ end, false)
 RegisterCommand("dance41", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1332,7 +1331,7 @@ end, false)
 RegisterCommand("dance42", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v1_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1346,7 +1345,7 @@ end, false)
 RegisterCommand("dance43", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1360,7 +1359,7 @@ end, false)
 RegisterCommand("dance44", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1374,7 +1373,7 @@ end, false)
 RegisterCommand("dance45", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1388,7 +1387,7 @@ end, false)
 RegisterCommand("dance46", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1402,7 +1401,7 @@ end, false)
 RegisterCommand("dance47", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1416,7 +1415,7 @@ end, false)
 RegisterCommand("dance48", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1430,7 +1429,7 @@ end, false)
 RegisterCommand("dance49", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1444,7 +1443,7 @@ end, false)
 RegisterCommand("dance50", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1458,7 +1457,7 @@ end, false)
 RegisterCommand("dance51", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1472,7 +1471,7 @@ end, false)
 RegisterCommand("dance52", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1486,7 +1485,7 @@ end, false)
 RegisterCommand("dance53", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1500,7 +1499,7 @@ end, false)
 RegisterCommand("dance54", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "hi_dance_facedj_11_v2_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1514,7 +1513,7 @@ end, false)
 RegisterCommand("dance55", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1528,7 +1527,7 @@ end, false)
 RegisterCommand("dance56", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1542,7 +1541,7 @@ end, false)
 RegisterCommand("dance57", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1556,7 +1555,7 @@ end, false)
 RegisterCommand("dance58", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1570,7 +1569,7 @@ end, false)
 RegisterCommand("dance59", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1584,7 +1583,7 @@ end, false)
 RegisterCommand("dance60", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1598,7 +1597,7 @@ end, false)
 RegisterCommand("dance61", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1612,7 +1611,7 @@ end, false)
 RegisterCommand("dance62", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1626,7 +1625,7 @@ end, false)
 RegisterCommand("dance63", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1640,7 +1639,7 @@ end, false)
 RegisterCommand("dance64", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1654,7 +1653,7 @@ end, false)
 RegisterCommand("dance65", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1668,7 +1667,7 @@ end, false)
 RegisterCommand("dance66", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v1_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1682,7 +1681,7 @@ end, false)
 RegisterCommand("dance67", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1696,7 +1695,7 @@ end, false)
 RegisterCommand("dance68", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1710,7 +1709,7 @@ end, false)
 RegisterCommand("dance69", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1724,7 +1723,7 @@ end, false)
 RegisterCommand("dance70", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1738,7 +1737,7 @@ end, false)
 RegisterCommand("dance71", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1752,7 +1751,7 @@ end, false)
 RegisterCommand("dance72", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@"
 	local j = "mi_dance_facedj_09_v2_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1766,7 +1765,7 @@ end, false)
 RegisterCommand("dance73", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1780,7 +1779,7 @@ end, false)
 RegisterCommand("dance74", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1794,7 +1793,7 @@ end, false)
 RegisterCommand("dance75", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1808,7 +1807,7 @@ end, false)
 RegisterCommand("dance74", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1822,7 +1821,7 @@ end, false)
 RegisterCommand("dance75", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1836,7 +1835,7 @@ end, false)
 RegisterCommand("dance76", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"
 	local j = "hi_dance_facedj_09_v1_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1850,7 +1849,7 @@ end, false)
 RegisterCommand("dance77", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1864,7 +1863,7 @@ end, false)
 RegisterCommand("dance78", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1878,7 +1877,7 @@ end, false)
 RegisterCommand("dance79", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1892,7 +1891,7 @@ end, false)
 RegisterCommand("dance80", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1906,7 +1905,7 @@ end, false)
 RegisterCommand("dance81", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1920,7 +1919,7 @@ end, false)
 RegisterCommand("dance82", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_low_intensity"
 	local j = "trans_dance_crowd_li_to_hi_09_v1_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1934,7 +1933,7 @@ end, false)
 RegisterCommand("dance83", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1948,7 +1947,7 @@ end, false)
 RegisterCommand("dance84", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1962,7 +1961,7 @@ end, false)
 RegisterCommand("dance85", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1976,7 +1975,7 @@ end, false)
 RegisterCommand("dance86", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -1990,7 +1989,7 @@ end, false)
 RegisterCommand("dance87", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2004,7 +2003,7 @@ end, false)
 RegisterCommand("dance88", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_groups_transitions@from_med_intensity"
 	local j = "trans_dance_crowd_mi_to_hi_09_v1_male^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2018,7 +2017,7 @@ end, false)
 RegisterCommand("dance89", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2032,7 +2031,7 @@ end, false)
 RegisterCommand("dance90", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2046,7 +2045,7 @@ end, false)
 RegisterCommand("dance91", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2060,7 +2059,7 @@ end, false)
 RegisterCommand("dance92", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2074,7 +2073,7 @@ end, false)
 RegisterCommand("dance93", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2088,7 +2087,7 @@ end, false)
 RegisterCommand("dance94", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_female^6"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2102,7 +2101,7 @@ end, false)
 RegisterCommand("dance95", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_male^1"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2116,7 +2115,7 @@ end, false)
 RegisterCommand("dance96", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_male^2"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2130,7 +2129,7 @@ end, false)
 RegisterCommand("dance97", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_male^3"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2144,7 +2143,7 @@ end, false)
 RegisterCommand("dance98", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_male^4"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2158,7 +2157,7 @@ end, false)
 RegisterCommand("dance99", function(f, g)
 	local i = "anim@amb@nightclub@dancers@crowddance_single_props@"
 	local j = "hi_dance_prop_09_v1_male^5"
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2172,7 +2171,7 @@ end, false)
 RegisterCommand("dance100", function(f, g)
 	local i = ""
 	local j = ""
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	if DoesEntityExist(k) and canAnim() and (not IsEntityDead(k)) and d() then
 		loadAnimDict(i)
 		if IsEntityPlayingAnim(k, i, j, 3) then
@@ -2211,8 +2210,8 @@ Citizen.CreateThread(function()
                 end 
             else 
                 a2=false
-                DetachEntity(GetPlayerPed(-1))
-                ClearPedSecondaryTask(GetPlayerPed(-1))
+                DetachEntity(PlayerPedId())
+                ClearPedSecondaryTask(PlayerPedId())
                 local aa=tARMA.GetClosestPlayer(3)
                 local ac=GetPlayerServerId(aa)
                 if ac~=0 then 
@@ -2227,8 +2226,8 @@ end)
 
 RegisterNetEvent("ARMA:animationSyncClStop")
 AddEventHandler("ARMA:animationSyncClStop",function()
-    ClearPedSecondaryTask(GetPlayerPed(-1))
-    DetachEntity(GetPlayerPed(-1))
+    ClearPedSecondaryTask(PlayerPedId())
+    DetachEntity(PlayerPedId())
 end)
 RegisterCommand("baseball",function(f,g)
     local a3="anim@arena@celeb@flat@paired@no_props@"
@@ -2243,7 +2242,7 @@ RegisterCommand("baseball",function(f,g)
     if aa~=nil and not c()and GetEntityHealth(GetPlayerPed(aa))>102 and d()and canAnim()then 
         TriggerServerEvent("ARMA:animationSync",aa,a3,a4,a5,a6,a7,y,ac,a9)
         RequestAnimDict("anim@arena@celeb@flat@paired@no_props@")
-        PlayFacialAnim(GetPlayerPed(-1),"baseball_a_player_a_face","anim@arena@celeb@flat@paired@no_props@")
+        PlayFacialAnim(PlayerPedId(),"baseball_a_player_a_face","anim@arena@celeb@flat@paired@no_props@")
     end
 end,false)
 RegisterCommand("baseball2", function(f, g)
@@ -2565,7 +2564,7 @@ RegisterCommand("slapbum", function(f, g)
 	end
 end, false)
 RegisterCommand("celebrate7", function(f, g)
-	local k = GetPlayerPed(-1)
+	local k = PlayerPedId()
 	local a3 = "anim@arena@celeb@flat@solo@no_props@"
 	local a4 = "jump_c_player_a"
 	local a5 = "jump_c_player_a"
@@ -2733,7 +2732,7 @@ RegisterCommand("handshake",function(f,g)
 end,false)
 RegisterNetEvent("ARMA:animationSyncTarget")
 AddEventHandler("ARMA:animationSyncTarget",function(ac,ad,ae,a6,a7,y,a9,a8,af,animFlagTarget,detachFlag,boneIndex)
-    local e=GetPlayerPed(-1)
+    local e=PlayerPedId()
     local ag=GetPlayerPed(GetPlayerFromServerId(ac))
     RequestAnimDict(ad)
     while not HasAnimDictLoaded(ad)do 
@@ -2742,25 +2741,25 @@ AddEventHandler("ARMA:animationSyncTarget",function(ac,ad,ae,a6,a7,y,a9,a8,af,an
     if a8==nil then 
         a8=180.0 
     end
-    AttachEntityToEntity(GetPlayerPed(-1),ag,boneIndex or 0,a7,a6,y,0.5,0.5,a8,false,false,false,false,2,false)
+    AttachEntityToEntity(PlayerPedId(),ag,boneIndex or 0,a7,a6,y,0.5,0.5,a8,false,false,false,false,2,false)
     Wait(500)
     if detachFlag==nil then 
         detachFlag=0 
     end
     if detachFlag==0 then 
-        DetachEntity(GetPlayerPed(-1),true,false)
+        DetachEntity(PlayerPedId(),true,false)
     end
     if af==nil then 
         af=0 
     end
     TaskPlayAnim(e,ad,ae,8.0,-8.0,a9,af,0,false,false,false)
     Citizen.Wait(a9)
-    DetachEntity(GetPlayerPed(-1),true,false)
+    DetachEntity(PlayerPedId(),true,false)
 end)
 
 RegisterNetEvent("ARMA:animationSyncMe")
 AddEventHandler("ARMA:animationSyncMe",function(ad,ah,a9,af,ai)
-    local e=GetPlayerPed(-1)
+    local e=PlayerPedId()
     RequestAnimDict(ad)
     while not HasAnimDictLoaded(ad)do 
         Citizen.Wait(10)
@@ -2775,7 +2774,7 @@ end)
 RegisterCommand("rope",function(f,g)
     local i="random@burial"
     local j="untie_ped"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,j,3)then 
@@ -2834,7 +2833,7 @@ RegisterCommand("crutch",function(f,g)
 		end
 	end
     local clipSet = "move_lester_CaneUp"
-    local playerPed = GetPlayerPed(-1)
+    local playerPed = PlayerPedId()
     if DoesEntityExist(playerPed)and canAnim()and not IsEntityDead(playerPed)and d()then
         if IsEntityAttachedToEntity(crutchObject, playerPed) then
             if DoesEntityExist(crutchObject) then
@@ -2857,7 +2856,7 @@ end,false)
 --[[ RegisterCommand("laydown",function(f,g)
     local i="anim@gangops@morgue@table@"
     local j="body_search"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,j,3)then 
@@ -2873,7 +2872,7 @@ RegisterCommand("guardwait",function(f,g)
     local j="wait_gate_a"
     local I = "missbigscore1guard_wait_rifle"
     local J="wait_c"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,j,3)then 
@@ -2888,7 +2887,7 @@ end,false)
 RegisterCommand("scared",function(f,g)
     local i="anim@heists@ornate_bank@hostages@cashier_b@"
     local j="flinch_loop_underfire"
-    local k=GetPlayerPed(-1)
+    local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
         loadAnimDict(i)
         if IsEntityPlayingAnim(k,i,j,3)then 
@@ -2907,7 +2906,7 @@ RegisterCommand("blmsign",function(source, args)
 	ClearPedBloodDamage(PlayerPedId())
 	local ad1 = "amb@code_human_wander_drinking@beer@male@base"
 	local ad1a = "static"
-	local player = GetPlayerPed(-1)
+	local player = PlayerPedId()
 	local plyCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()), 0.0, 0.0, -5.0)
 	local sign = CreateObject(GetHashKey(signModel), plyCoords.x, plyCoords.y, plyCoords.z, 1, 1, 1)
 	local netid = ObjToNet(sign)
@@ -2918,7 +2917,7 @@ RegisterCommand("blmsign",function(source, args)
 		RequestModel(GetHashKey(signModel))
 		if holdingSign then
 			Wait(100)
-			ClearPedSecondaryTask(GetPlayerPed(-1))
+			ClearPedSecondaryTask(PlayerPedId())
 			DetachEntity(NetToObj(sign_net), 1, 1)
 			DeleteEntity(NetToObj(sign_net))
 			sign_net = nil
