@@ -219,12 +219,6 @@ function ARMA.giveInventoryItem(user_id,idname,amount,notify)
       data.inventory[idname] = {amount=amount}
     end
 
-    if ARMA.computeItemsWeight(data.inventory) > 15 then
-      TriggerClientEvent("equipBackpack", source)
-    else
-      TriggerClientEvent("removeBackpack", source)
-    end
-
     -- notify
     if notify then
       local player = ARMA.getUserSource(user_id)
@@ -337,12 +331,6 @@ function ARMA.getInventoryWeight(user_id)
     return ARMA.computeItemsWeight(data.inventory)
   end
 
-  if ARMA.computeItemsWeight(data.inventory) > 15 then
-    TriggerClientEvent("equipBackpack", source)
-  else
-    TriggerClientEvent("removeBackpack", source)
-  end
-
   return 0
 end
 
@@ -425,12 +413,6 @@ AddEventHandler("ARMA:playerJoin", function(user_id,source,name,last_login)
   local data = ARMA.getUserDataTable(user_id)
   if data.inventory == nil then
     data.inventory = {}
-
-    if ARMA.computeItemsWeight(data.inventory) > 15 then
-      TriggerClientEvent("equipBackpack", source)
-    else
-      TriggerClientEvent("removeBackpack", source)
-    end
   end
 end)
 
@@ -621,7 +603,7 @@ function ARMA.openChest(source, name, max_weight, cb_close, cb_in, cb_out)
 end
 
 RegisterCommand("storebackpack", function(source, args)
-  Wait(1000)
+  local source = source
   local user_id = ARMA.getUserId(source)
   local data = ARMA.getUserDataTable(user_id)
   if ARMA.computeItemsWeight(data.inventory) == 0 then
@@ -644,10 +626,9 @@ RegisterCommand("storebackpack", function(source, args)
     end
 
     ARMA.updateInvCap(user_id, 30)
-    Wait(299)
     ARMAclient.notify(source,{"~g~Backpack Stored"})
+    TriggerClientEvent('ARMA:removeBackpack', source)
   else
     ARMAclient.notify(source,{"~r~Make Sure Your Inventory Is Empty Before Storing Your Backpack"})
   end
-  TriggerClientEvent('ARMA:removeBackpack', source)
 end)
