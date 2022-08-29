@@ -253,13 +253,13 @@ local function I()
             J=true
             G(g)
             if not e then 
-                exports['arma-notify']:DoHudText('success', "You have entered an RP zone")
+                exports['arma-notify']:DoHudText('rp', "You have entered an RP zone")
             end
             e=true 
         end 
     end
     if e and not J then 
-        exports['arma-notify']:DoHudText('error', "You have left the RP zone")
+        exports['arma-notify']:DoHudText('rp', "You have left the RP zone")
         D(false)
         e=false 
     end 
