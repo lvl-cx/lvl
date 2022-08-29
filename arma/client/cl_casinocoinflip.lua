@@ -101,6 +101,7 @@ local function A(B)
         return vector3(0.0, 0.0, 0.0)
     end
 end
+
 RegisterNetEvent("ARMA:sendCoinflipTableData")
 AddEventHandler("ARMA:sendCoinflipTableData",function(C)
     f = C
@@ -273,11 +274,11 @@ function goToCoinflipSeat(o)
     g = false
 end
 function showHowToCoinflip(W)
-    RageUI.CloseAll()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("armacoinflip", "instructions"), W)
 end
 function showCoinflipMenu(W)
-    RageUI.CloseAll()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("armacoinflip", "mainmenu"), W)
 end
 RMenu.Add("armacoinflip", "instructions", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "cmg_coinflip", "cmg_coinflip"))
@@ -309,24 +310,18 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("---")
             if table.count(h) > 0 then
                 for a0, L in pairs(h) do
-                    RageUI.ButtonWithStyle(
-                        "~y~£" .. getMoneyStringFormatted(L.betAmount),
-                        "",
-                        {RightBadge = RageUI.BadgeStyle.GoldMedal},
-                        true,
-                        function(X, Y, Z)
-                            if Z then
-                                i = a0
-                                j = "£" .. getMoneyStringFormatted(L.betAmount)
-                                if L.user_id == tARMA.getUserId() then
-                                    k = true
-                                else
-                                    k = false
-                                end
+                    RageUI.ButtonWithStyle("~y~£" .. getMoneyStringFormatted(L.betAmount),"",{Style=RageUI.BadgeStyle.GoldMedal},true,function(X, Y, Z)
+                        if Z then
+                            i = a0
+                            j = "£" .. getMoneyStringFormatted(L.betAmount)
+                            if L.user_id == tARMA.getUserId() then
+                                k = true
+                            else
+                                k = false
                             end
-                        end,
-                        RMenu:Get("armacoinflip", "confirm")
-                    )
+                        end
+                    end,
+                    RMenu:Get("armacoinflip", "confirm"))
                 end
             else
                 RageUI.Separator("~r~No pending bets.")
@@ -338,28 +333,25 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("Coinflip " .. j .. "?")
             if k then
                 RageUI.Separator("~y~This is your pending proposal.")
-                RageUI.ButtonWithStyle("Cancel Bet","",{RightBadge = RageUI.BadgeStyle.Tick},true,function(X, Y, Z)
+                RageUI.ButtonWithStyle("Cancel Bet","",{Style = RageUI.BadgeStyle.Tick},true,function(X, Y, Z)
                     if Z then
                         TriggerServerEvent("ARMA:cancelCoinflip")
                     end
                 end,RMenu:Get("armacoinflip", "mainmenu"))
-                RageUI.ButtonWithStyle("Return","",{RightBadge = RageUI.BadgeStyle.Alert},true,function(X, Y, Z)
+                RageUI.ButtonWithStyle("Return","",{Style = RageUI.BadgeStyle.Alert},true,function(X, Y, Z)
                 if Z then
                     end
                 end,
                 RMenu:Get("armacoinflip", "mainmenu"))
             else
-                RageUI.ButtonWithStyle("Accept","",{RightBadge = RageUI.BadgeStyle.Tick},true,function(X, Y, Z)
+                RageUI.ButtonWithStyle("Accept","",{Style = RageUI.BadgeStyle.Tick},true,function(X, Y, Z)
                     if Z then
                         TriggerServerEvent("ARMA:acceptCoinflip", i)
                     end
                 end,
                 RMenu:Get("armacoinflip", "mainmenu"))
-                RageUI.ButtonWithStyle("Decline","",{RightBadge = RageUI.BadgeStyle.Alert},true,function(X, Y, Z)
-                    if Z then
-                    end
-                end,
-                RMenu:Get("armacoinflip", "mainmenu"))
+                RageUI.ButtonWithStyle("Decline","",{Style = RageUI.BadgeStyle.Alert},true,function(X, Y, Z)
+                end,RMenu:Get("armacoinflip", "mainmenu"))
             end
         end)
     end
@@ -372,6 +364,7 @@ AddEventHandler('playerSpawned', function(spawn)
 		firstspawn = 1
 	end
 end)
+
 RegisterNetEvent("ARMA:addCoinflipProposal",function(a0, L)
     h[a0] = L
 end)
@@ -380,7 +373,7 @@ RegisterNetEvent("ARMA:cancelCoinflipBet",function(a0)
     h[a0] = nil
 end)
 
-RegisterNetEvent("ARMA:clearCoinflipBets",function(a0)
+RegisterNetEvent("ARMA:clearCoinflipBets",function()
     h = {}
 end)
 
@@ -445,3 +438,22 @@ RegisterNetEvent("ARMA:coinflipOutcome",function(a3, a4)
     showCoinflipMenu(true)
     l = false
 end)
+
+function getGenericTextInput(a)
+    if a == nil then
+        a = ""
+    end
+    AddTextEntry("FMMC_MPM_NA", "Enter " .. tostring(a))
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter " .. tostring(a) .. " message", "", "", "", "", 30)
+    while UpdateOnscreenKeyboard() == 0 do
+        DisableAllControlActions(0)
+        Wait(0)
+    end
+    if GetOnscreenKeyboardResult() then
+        local b = GetOnscreenKeyboardResult()
+        if b then
+            return b
+        end
+    end
+    return false
+end
