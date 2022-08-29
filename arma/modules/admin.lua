@@ -722,17 +722,14 @@ local defaultBans = {}
 
 RegisterServerEvent("ARMA:GenerateBan")
 AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
-    local AdminTemp = source
-    local AdminPermID = ARMA.getUserId(AdminTemp)
-    local AdminName = GetPlayerName(AdminTemp)
+    local source = source
     local PlayerCacheBanMessage = {}
     local PermOffense = false
     local separatormsg = {}
     local points = 0
     PlayerBanCachedDuration[PlayerID] = 0
     PlayerOffenses[PlayerID] = {}
-    
-    if ARMA.hasPermission(AdminPermID, "admin.tickets") then
+    if ARMA.hasPermission(ARMA.getUserId(source), "admin.tickets") then
         exports['ghmattimysql']:execute("SELECT * FROM arma_bans_offenses WHERE UserID = @UserID", {UserID = PlayerID}, function(result)
             if #result > 0 then
                 points = result[1].points
@@ -769,7 +766,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                     PlayerBanCachedDuration[PlayerID] = -1
                 end
                 Wait(1500)
-                TriggerClientEvent("ARMA:RecieveBanPlayerData", AdminTemp, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, points)
+                TriggerClientEvent("ARMA:RecieveBanPlayerData", source, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, points)
             end
         end)
     end
@@ -794,13 +791,11 @@ end)
 
 RegisterServerEvent("ARMA:BanPlayer")
 AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPoints)
-    local AdminTemp = source
-    local AdminPermID = ARMA.getUserId(AdminTemp)
-    local AdminName = GetPlayerName(AdminTemp)
+    local source = source
+    local AdminPermID = ARMA.getUserId(source)
+    local AdminName = GetPlayerName(source)
     local CurrentTime = os.time()
     local PlayerDiscordID = 0
-    local LogChannel = "webhook"
-    local StaffBanLogs = "webhook"
 
     ARMA.prompt(source, "Ban Evidence","",function(player, Evidence)
         local Evidence = Evidence or ""
@@ -826,7 +821,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                             },
                             {
                                 ["name"] = "**Admin TempID**",
-                                ["value"] = "" ..AdminTemp,
+                                ["value"] = "" ..source,
                                 ["inline"] = true
                             },
                             {
@@ -852,9 +847,8 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                         },
                     }
                 }
-                PerformHttpRequest(LogChannel, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
-                PerformHttpRequest(StaffBanLogs, function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
-                ARMAclient.notify(AdminTemp, {"Banned ID: "..PlayerID})
+                PerformHttpRequest('webhook', function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
+                ARMAclient.notify(source, {"Banned ID: "..PlayerID})
                 ARMA.ban(source,PlayerID,banDuration,BanMessage)
                 f10Ban(PlayerID, AdminName, BanMessage, Duration)
                 exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
@@ -868,7 +862,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                 end
             end
         else
-            ARMAclient.notify(AdminTemp, {"~r~Evidence field was left empty!"})
+            ARMAclient.notify(source, {"~r~Evidence field was left empty!"})
         end
     end)
 end)
@@ -901,8 +895,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
             if error then
                 return print("^1ERROR: " .. error)
             end
-            print("Sent screenshot successfully")
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Successfully took a screenshot of ' ..target_name.. "'s screen.")
+            ARMAclient.notify(admin, {'Successfully took a screenshot of ' ..target_name.. "'s screen."})
         end)
     else
         local player = ARMA.getUserSource(admin_id)
@@ -1065,7 +1058,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
             f10Kick(target_permid, adminName, Reason)
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Kicked Player')
+            ARMAclient.notify(admin, {'~g~Kicked Player.'})
         end)
     else
         local player = ARMA.getUserSource(admin_id)
@@ -1210,7 +1203,7 @@ AddEventHandler("ARMA:addNote",function(admin, player)
         ARMA.prompt(source,"Reason:","",function(source,text) 
             if text == '' then return end
             exports['ghmattimysql']:execute("INSERT INTO arma_user_notes (`user_id`, `text`, `admin_name`, `admin_id`) VALUES (@user_id, @text, @admin_name, @admin_id);", {user_id = playerperm, text = text, admin_name = adminName, admin_id = admin_id}, function() end) 
-            TriggerClientEvent('ARMA:NotifyPlayer', source, '~g~You have added a note to '..playerName..'('..playerperm..') with the reason '..text)
+            TriggerClientEvent(source, {'~g~You have added a note to '..playerName..'('..playerperm..') with the reason '..text})
             TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
             local command = {
                 {
@@ -1283,7 +1276,7 @@ AddEventHandler("ARMA:removeNote",function(admin, player)
         ARMA.prompt(source,"Note ID:","",function(source,noteid) 
             if noteid == '' then return end
             exports['ghmattimysql']:execute("DELETE FROM arma_user_notes WHERE note_id = @noteid", {noteid = noteid}, function() end)
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, '~g~You have removed note #'..noteid..' from '..playerName..'('..playerperm..')')
+            ARMAclient.notify(admin, {'~g~You have removed note #'..noteid..' from '..playerName..'('..playerperm..')'})
             TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
             local command = {
                 {
@@ -1398,7 +1391,7 @@ AddEventHandler('ARMA:SlapPlayer', function(admin, target)
         local webhook = "https://discord.com/api/webhooks/991476247660073040/XNH5g7OwPFDoCA4D1wqNo_HWrZD5EWNbb6QoYc2ducFjV2cPkryg8ACyFOj_ItKSOdSC"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         TriggerClientEvent('ARMA:SlapPlayer', target)
-        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Slapped Player')
+        ARMAclient.notify(admin, {'~g~Slapped Player.'})
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
@@ -1457,7 +1450,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
         local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         ARMAclient.RevivePlayer(target, {})
-        TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Revived Player')
+        ARMAclient.notify(admin, {'Revived Player'})
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
@@ -1523,7 +1516,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             }
             local webhook = "https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Froze Player.')
+            ARMAclient.notify(admin, {'~g~Froze Player.'})
             frozenplayers[user_id] = true
             ARMAclient.notify(newtarget, {'~g~You have been frozen.'})
         else
@@ -1574,7 +1567,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             }
             local webhook = "https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-            TriggerClientEvent('ARMA:NotifyPlayer', admin, 'Unfroze Player.')
+            ARMAclient.notify(admin, {'~g~Unfrozed Player.'})
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
             frozenplayers[user_id] = nil
         end
