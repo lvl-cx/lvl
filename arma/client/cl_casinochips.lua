@@ -71,7 +71,8 @@ RageUI.CreateWhile(1.0, true, function()
                         else 
                             tARMA.notify("~r~Negative amount.")
                         end 
-                    else tARMA.notify("~r~Invalid amount.")
+                    else 
+                        tARMA.notify("~r~Invalid amount.")
                     end 
                 end 
             end)
@@ -226,6 +227,29 @@ Citizen.CreateThread(function()
             end,G,{})
         end 
     end 
+end)
+
+insideDiamondCasino = false
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		local c = vector3(1121.7922363281, 239.42251586914, -50.440742492676)
+        local d = function(e)
+            insideDiamondCasino = true
+            tARMA.setCanAnim(false)
+            TriggerEvent("ARMA:enteredDiamondCasino")
+            TriggerServerEvent('ARMA:getChips')
+        end
+        local f = function(e)
+            insideDiamondCasino = false
+            tARMA.setCanAnim(true)
+            TriggerEvent("ARMA:exitedDiamondCasino")
+        end
+        local g = function(e)
+        end
+        tARMA.createArea("diamondcasino", c, 100.0, 20, d, f, g, {})
+		firstspawn = 1
+	end
 end)
 
 function DrawAdvancedTextNoOutline(v,w,x,y,z,A,B,C,D,E,F,G)
