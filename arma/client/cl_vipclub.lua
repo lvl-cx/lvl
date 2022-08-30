@@ -171,22 +171,15 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             local function R()
                 E=true
-                tARMA.setParachuteSetting(E)
-                tARMA.notify("~g~Parachute enabled.")
+                tARMA.setparachutestting(E)
+                tARMA.notify("~g~Parachute enabled")
             end
             local function S()
                 E=false
-                tARMA.setParachuteSetting(E)
-                tARMA.notify("~r~Parachute disabled.")
+                tARMA.setparachutestting(E)
+                tARMA.notify("~r~Parachute disabled")
             end
-            RageUI.Checkbox("Enable Parachute","~g~This gives you a primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
-                if p then
-                    if E then
-                        S()
-                    else
-                        R()
-                    end
-                end
+            RageUI.Checkbox("Enable Parachute","~g~This gives you primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
             end,R,S)
         end)
     end
