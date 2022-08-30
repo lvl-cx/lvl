@@ -141,12 +141,12 @@ Citizen.CreateThread(function()
                     local plathours = v.plathours
                     local user_id = v.user_id
                     local user = ARMA.getUserSource(user_id)
-                    if plushours > 0 then
+                    if plushours >= 1/60 then
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
                     else
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = 0})
                     end
-                    if plathours > 0 then
+                    if plathours >= 1/60 then
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
                     else
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = 0})
