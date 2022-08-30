@@ -99,7 +99,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Manage Perks","",{RightLabel="→→→"},true,function(o,p,q)
                 end,RMenu:Get("vipclubmenu","manageperks"))
             end
-            if tARMA.isDev() then
+            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 RageUI.ButtonWithStyle("Manage User's Subscription","",{RightLabel="→→→"},true,function(o,p,q)
                 end,RMenu:Get("vipclubmenu","manageusersubscription"))
             end
@@ -126,7 +126,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'manageusersubscription')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() then
+            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 if next(z) then
                     RageUI.Separator('Perm ID: '..z.userid)
                     colourCode = getColourCode(z.hoursOfPlus)
@@ -230,20 +230,6 @@ end)
 RegisterNetEvent("ARMA:setVIPClubData",function(y,z)
     a.hoursOfPlus=y
     a.hoursOfPlatinum=z 
-end)
-
-RegisterNetEvent("ARMA:reducePlusMembershipHour",function()
-    a.hoursOfPlus=a.hoursOfPlus-1
-    if a.hoursOfPlus<0 then 
-        a.hoursOfPlus=0 
-    end 
-end)
-
-RegisterNetEvent("ARMA:reducePlatMembershipHour",function()
-    a.hoursOfPlatinum=a.hoursOfPlatinum-1
-    if a.hoursOfPlatinum<0 then 
-        a.hoursOfPlatinum=0 
-    end 
 end)
 
 RegisterNetEvent("ARMA:getUsersSubscription",function(userid, plussub, platsub)
