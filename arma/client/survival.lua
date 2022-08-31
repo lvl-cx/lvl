@@ -292,7 +292,6 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if IsEntityDead(PlayerPedId()) then
-            Citizen.Wait(500)
             TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             Q=GetPedCauseOfDeath(PlayerPedId())
