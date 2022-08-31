@@ -27,6 +27,7 @@ local h = {}
 local i = 1
 local k = {}
 local o = ''
+local tt= ''
 local a10
 local acbannedplayers = 0
 local acbannedplayerstable = {}
@@ -77,18 +78,12 @@ RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmen
 RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "staffGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "UserGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "POVGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "LicenseGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "MPDGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "NHSGroups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "addgroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "removegroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu:Get('adminmenu', 'main')
 
-local getStaffGroupsGroupIds = {
+local groups = {
 	["founder"] = "Founder",
     ["operationsmanager"] = "Operations Manager",
     ["staffmanager"] = "Staff Manager",
@@ -101,17 +96,11 @@ local getStaffGroupsGroupIds = {
     ["supportteam"] = "Support Team",
     ["trialstaff"] = "Trial Staff",
     ["cardev"] = "Car Developer",
-}
-local getUserGroupsGroupIds = {
     ["Supporter"] = "Supporter",
     ["Platinum"] = "Platinum",
     ["Godfather"] = "Godfather",
     ["Underboss"] = "Underboss",
-}
-local getUserPOVGroups = {
     ["pov"] = "POV List",
-}
-local getUserLicenseGroups = {
     ["Scrap"] = "Scrap License",
     ["Weed"] = "Weed License",
     ["Cocaine"] = "Cocaine License",
@@ -124,9 +113,6 @@ local getUserLicenseGroups = {
     ["AdvancedRebel"] = "Advanced Rebel License",
     ["highroller"] = "Highrollers License",
     ["DJ"] = "DJ License",
-}
-
-local getUserMPDGroups = {
     ["Commissioner"] = "Commissioner",
     ["Deputy Commissioner"] = "Deputy Commissioner",
     ["Assistant Commissioner"] = "Assistant Commissioner",
@@ -141,9 +127,6 @@ local getUserMPDGroups = {
     ["Senior Constable"] = "Senior Police Constable",
     ["Police Constable"] = "Police Constable",
     ["PCSO"] = "PCSO",
-}
-
-local getUserNHSGroups = {
     ["Head Chief Medical Officer"] = "Head Chief Medical Officer",
     ["Assistant Chief Medical Officer"] = "Assistant Chief Medical Officer",
     ["Deputy Chief Medical Officer"] = "Deputy Chief Medical Officer",
@@ -817,6 +800,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end,RMenu:Get('adminmenu','submenu'))
                 RageUI.ButtonWithStyle("See Groups", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
+                        tt = ''
                         TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[2], SelectedPlayer[3])
                     end
                 end,RMenu:Get("adminmenu", "groups"))
@@ -1136,166 +1120,31 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel > 7 then
-                RageUI.ButtonWithStyle("Staff Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'staffGroups'))
-            end
-            if GlobalAdminLevel > 1 then
-                RageUI.ButtonWithStyle("POV Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'POVGroups'))
-            end
-            if GlobalAdminLevel > 7 then
-                RageUI.ButtonWithStyle("License Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'LicenseGroups'))
-            end
-            if GlobalAdminLevel > 7 then
-                RageUI.ButtonWithStyle("MPD Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'MPDGroups'))
-            end
-            if GlobalAdminLevel > 7 then
-                RageUI.ButtonWithStyle("NHS Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'NHSGroups'))
-            end
-            if GlobalAdminLevel > 7 then
-                RageUI.ButtonWithStyle("Donator Groups", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'UserGroups'))
+                if IsControlJustPressed(0, 37) then
+                    tARMA.clientPrompt("Search for: ","",function(S)
+                        tt=string.lower(S)
+                    end)
+                end
+                for k,S in pairs(groups) do
+                    if tt=="" or string.find(string.lower(S),string.lower(tt)) then
+                        if searchPlayerGroups[k] then
+                            RageUI.ButtonWithStyle("~g~"..S,"~g~User has this group.",{RightLabel="→→→"},true,function(x,y,z)
+                                if z then 
+                                    selectedGroup = k
+                                end 
+                            end,RMenu:Get('adminmenu','removegroup'))
+                        else 
+                            RageUI.ButtonWithStyle("~r~"..S,"~r~User does not have this group.",{RightLabel="→→→"},true,function(x,y,z)
+                                if z then 
+                                    selectedGroup = k
+                                end 
+                            end,RMenu:Get('adminmenu','addgroup'))
+                        end 
+                    end
+                end
             end
         end) 
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'staffGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for k,v in pairs(getStaffGroupsGroupIds) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'UserGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for k,v in pairs(getUserGroupsGroupIds) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'POVGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for k,v in pairs(getUserPOVGroups) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'LicenseGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for k,v in pairs(getUserLicenseGroups) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'MPDGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for k,v in pairs(getUserMPDGroups) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('adminmenu', 'NHSGroups')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            for k,v in pairs(getUserNHSGroups) do
-                if searchPlayerGroups[k] ~= nil then
-                    RageUI.ButtonWithStyle("~g~"..v, "~g~User has this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'removegroup'))
-                else
-                    RageUI.ButtonWithStyle("~r~"..v, "~r~User does not have this group.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            selectedGroup = k
-                        end
-                    end, RMenu:Get('adminmenu', 'addgroup'))
-                end
-            end
-        end)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'addgroup')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.ButtonWithStyle("Add this group to user", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
@@ -1305,9 +1154,6 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get('adminmenu', 'groups'))
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'removegroup')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.ButtonWithStyle("Remove user from group", "", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
