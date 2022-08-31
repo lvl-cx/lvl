@@ -99,7 +99,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             for k,v in pairs(players) do
                 baseplayers[v] = ARMA.getUserId(v)
             end
-            ARMAclient.setBasePlayers(baseplayers)
+            ARMAclient.setBasePlayers(source, {baseplayers})
         else
             if data.weapons ~= nil then -- load saved weapons
                 ARMAclient.giveWeapons(source, {data.weapons, true})
@@ -121,7 +121,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         end
 
 
-            ARMA.clearInventory(user_id) 
+        ARMA.clearInventory(user_id) 
      
         
         ARMA.setMoney(user_id, 0)
