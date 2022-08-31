@@ -30,7 +30,10 @@ local l=function()
 end
 local m=function()
 end
-tARMA.createArea("dvsaTestCentre_",i.test.reception,1.5,6,k,l,m)
+RegisterCommand('testdvsa', function()
+    k()
+end)
+tARMA.createArea("dvsaTestCentre_",i.test.reception,1.5,6,k,l,m,{})
 RegisterNetEvent("ARMA:dvsaData",function(n,o,p,q)
     h=true
     a=n

@@ -49,24 +49,21 @@ Citizen.CreateThread(function() -- coma thread
         if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed and not spawning then --Wait for death check
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
-            --[[ if currentBackpack then
-                TriggerServerEvent("ARMA:storeBackpack", currentBackpack, false, true)
-            end ]]
-            ARMAserver.StoreWeaponsDead()
-            ARMAserver.Coma()
             tARMA.ejectVehicle()
             TriggerEvent('ARMA:IsInMoneyComa', true)
-            TriggerServerEvent('ARMA:InComa')
+            if not tARMA.globalOnPoliceDuty() then
+                TriggerServerEvent('ARMA:InComa')
+                ARMAserver.StoreWeaponsDead()
+            end
             ARMAserver.MoneyDrop()
             TriggerEvent('ARMA:3Seconds')
             TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
-            tARMA.ejectVehicle()
             in_coma = true
             deathPosition = plyCoords
             local x,y,z = table.unpack(deathPosition)
             ARMAserver.updatePos({x,y,z})
             ARMAserver.updateHealth({0})
-            Wait(250) --Need wait, otherwise will autorevive in next check
+            Wait(250)
         end
 
         if DeathAnim <= 0  then --Been 10 seconds, proceed to play anim check 

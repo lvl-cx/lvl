@@ -1,15 +1,9 @@
-local Tunnel = module("arma", "lib/Tunnel")
-local Proxy = module("arma", "lib/Proxy")
-local ARMA = Proxy.getInterface("ARMA")
-local ARMAclient = Tunnel.getInterface("ARMA","ARMA")
-
--- Sync Deaths/Kills
 RegisterNetEvent('KillFeed:Killed')
 AddEventHandler('KillFeed:Killed', function(killer, weapon, killedCoords, killerCoords, inEvent, inWager)
     local distance = math.floor(#(killedCoords - killerCoords))
     local creditAmount = math.random(minCreds,maxCreds)
-    local user_id = ARMA.getUserId({source})
-    local killer_id = ARMA.getUserId({killer})
+    local user_id = ARMA.getUserId(source)
+    local killer_id = ARMA.getUserId(killer)
 
     killedGroup = "killed"
     killerGroup = "killer"
@@ -19,7 +13,7 @@ end)
 
 RegisterNetEvent('KillFeed:Died')
 AddEventHandler('KillFeed:Died', function(coords)
-    local user_id = ARMA.getUserId({source})
+    local user_id = ARMA.getUserId(source)
     killedGroup = "killed"
     TriggerClientEvent('KillFeed:AnnounceDeath', -1, GetPlayerName(source), coords, killedGroup)
 end)
