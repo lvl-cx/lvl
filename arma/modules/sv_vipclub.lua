@@ -17,7 +17,7 @@ AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
 
     if ARMA.hasGroup(user_id, 'dev') then
         ARMA.prompt(player,"Number of hours ","",function(player, hours)
-            if tonumber(hours) and tonumber(hours) > 0 then
+            if tonumber(hours) and tonumber(hours) >= 0 then
                 if subtype == "Plus" then
                     MySQL.execute("subscription/set_plushours", {user_id = playerid, plushours = hours})
                 elseif subtype == "Platinum" then
