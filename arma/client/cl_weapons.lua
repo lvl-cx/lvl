@@ -54,42 +54,6 @@ function tARMA.getWeapons()
     end
     return d 
 end
-local p={}
-local q={}
-function tARMA.getCachedWeaponStore()
-    return q 
-end
-RegisterNetEvent("ARMA:addWeaponStore")
-AddEventHandler("ARMA:addWeaponStore",function(b,i)
-    q[b]={weaponHash=i}
-end)
-RegisterNetEvent("ARMA:removeWeaponStore")
-AddEventHandler("ARMA:removeWeaponStore",function(b)
-    q[b]=nil 
-end)
-RegisterNetEvent("ARMA:clearWeaponStore",function()
-    q={}
-end)
-Citizen.CreateThread(function()
-    while true do 
-        local r=tARMA.getCachedWeaponStore()
-        local n={}
-        for b,c in pairs(r)do 
-            local o=GetPedAmmoTypeFromWeapon(PlayerPedId(),c.weaponHash)
-            if n[o]==nil then 
-                n[o]=true
-                r[b].ammo=GetAmmoInPedWeapon(PlayerPedId(),c.weaponHash)
-            else 
-                r[b].ammo=0 
-            end 
-        end
-        if not table.contentEquals(r,p)then 
-            TriggerServerEvent("ARMA:updateAmmoStore",r)
-        end
-        p=table.copy(r)
-        Wait(5000)
-    end 
-end)
 function tARMA.removeAllWeapons()
     RemoveAllPedWeapons(tARMA.getPlayerPed())
 end
