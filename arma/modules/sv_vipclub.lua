@@ -1,8 +1,9 @@
 MySQL.createCommand("subscription/set_plushours","UPDATE arma_subscriptions SET plushours = @plushours WHERE user_id = @user_id")
 MySQL.createCommand("subscription/set_plathours","UPDATE arma_subscriptions SET plathours = @plathours WHERE user_id = @user_id")
+MySQL.createCommand("subscription/set_lastused","UPDATE arma_subscriptions SET last_used = @last_used WHERE user_id = @user_id")
 MySQL.createCommand("subscription/get_subscription","SELECT * FROM arma_subscriptions WHERE user_id = @user_id")
 MySQL.createCommand("subscription/get_all_subscriptions","SELECT * FROM arma_subscriptions")
-MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plushours = 0, plathours = 0")
+MySQL.createCommand("subscription/add_id", "INSERT IGNORE INTO arma_subscriptions SET user_id = @user_id, plushours = 0, plathours = 0, last_used = ''")
 
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
@@ -168,14 +169,24 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
         if #rows > 0 then
             local plushours = rows[1].plushours
             local plathours = rows[1].plathours
-            if plathours > 168 then
-                ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                -- copy for other items
-                ARMAclient.setArmour(source, {100})
-            elseif plushours > 168 then
-                ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                -- copy for other items
-                ARMAclient.setArmour(source, {100})
+            if plathours >= 168 or plushours >= 168 then
+                if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) then
+                    if plathours >= 168 then
+                        ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
+                        -- copy for other items
+                        ARMAclient.setArmour(source, {100})
+                        MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
+                    elseif plushours >= 168 then
+                        ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
+                        -- copy for other items
+                        ARMAclient.setArmour(source, {100})
+                        MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
+                    else
+                        ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})
+                    end
+                else
+                    ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})
+                end
             end
         else
             ARMAclient.notify(player, {"~r~Player not found."})

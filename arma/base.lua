@@ -223,6 +223,7 @@ Citizen.CreateThread(function()
     user_id INT(11),
     plathours FLOAT(10) NULL DEFAULT NULL,
     plushours FLOAT(10) NULL DEFAULT NULL,
+    last_used VARCHAR(100) NOT NULL DEFAULT "",
     CONSTRAINT pk_user PRIMARY KEY(user_id)
     );
     ]])
