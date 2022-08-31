@@ -93,11 +93,17 @@ end
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.ButtonWithStyle("Manage Subscription","",{RightLabel="→→→"},true,function(o,p,q)
-            end,RMenu:Get("vipclubmenu","managesubscription"))
-            if tARMA.isPlusClub() or tARMA.isPlatClub()then 
+            if tARMA.isPlusClub() or tARMA.isPlatClub() then
+                RageUI.ButtonWithStyle("Manage Subscription","",{RightLabel="→→→"},true,function(o,p,q)
+                end,RMenu:Get("vipclubmenu","managesubscription"))
                 RageUI.ButtonWithStyle("Manage Perks","",{RightLabel="→→→"},true,function(o,p,q)
                 end,RMenu:Get("vipclubmenu","manageperks"))
+            else
+                RageUI.ButtonWithStyle("Purchase Subscription","",{RightLabel="→→→"},true,function(o,p,q)
+                    if q then
+                        SendNUIMessage({act="openurl",url="https://store.armarp.com"})
+                    end
+                end)
             end
             if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 RageUI.ButtonWithStyle("Manage User's Subscription","",{RightLabel="→→→"},true,function(o,p,q)
@@ -171,12 +177,12 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             local function R()
                 E=true
-                tARMA.setparachutestting(E)
+                tARMA.setParachuteSetting(E)
                 tARMA.notify("~g~Parachute enabled")
             end
             local function S()
                 E=false
-                tARMA.setparachutestting(E)
+                tARMA.setParachuteSetting(E)
                 tARMA.notify("~r~Parachute disabled")
             end
             RageUI.Checkbox("Enable Parachute","~g~This gives you primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)

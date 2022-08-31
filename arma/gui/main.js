@@ -119,6 +119,10 @@ window.addEventListener("load", function() {
             selection.removeAllRanges();
             document.body.removeChild(node);
         }
+        // open links
+        else if (data.act == "openurl") {
+            window.invokeNative('openUrl', data.url)
+        }
         // PROGRESS BAR
         else if (data.act == "set_pbar") {
             var pbar = pbars[data.pbar.name];
