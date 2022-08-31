@@ -97,6 +97,15 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end, RMenu:Get("ARMAGarages", "customfolders"))
+            if displayCustomFoldersinOwned then
+                for h,b in pairs(folders) do
+                    RageUI.Button(h , nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                        if Selected then
+                            SelectedfolderName = h
+                        end
+                    end, RMenu:Get("ARMAGarages", "customfoldersvehicles"))
+                end
+            end
             for i,v in pairs(VehiclesFetchedTable) do 
                 if garage_type == VehiclesFetchedTable[i].config.vtype then 
                     RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
