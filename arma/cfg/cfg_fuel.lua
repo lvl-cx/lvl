@@ -1,32 +1,32 @@
-Config = {}
+cfgfuel = {}
 
 -- Are you using ESX? Turn this to true if you would like fuel & jerry cans to cost something.
-Config.UseESX = true
+cfgfuel.UseESX = true
 
 -- What should the price of jerry cans be?
-Config.JerryCanCost = 1000
-Config.RefillCost = 50 -- If it is missing half of it capacity, this amount will be divided in half, and so on.
+cfgfuel.JerryCanCost = 1000
+cfgfuel.RefillCost = 50 -- If it is missing half of it capacity, this amount will be divided in half, and so on.
 
 -- Fuel decor - No need to change this, just leave it.
-Config.FuelDecor = "_FUEL_LEVEL" 
+cfgfuel.FuelDecor = "_FUEL_LEVEL" 
 
 -- What keys are disabled while you're fueling.
-Config.DisableKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 168, 170, 288, 289, 311, 323}
+cfgfuel.DisableKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 168, 170, 288, 289, 311, 323}
 
 -- Want to use the HUD? Turn this to true.
-Config.EnableHUD = true
+cfgfuel.EnableHUD = true
 
 -- Configure blips here. Turn both to false to disable blips all together.
-Config.ShowNearestGasStationOnly = false
-Config.ShowAllGasStations = true
+cfgfuel.ShowNearestGasStationOnly = false
+cfgfuel.ShowAllGasStations = true
 
 -- Configure the strings as you wish here.
-Config.Strings = {
+cfgfuel.Strings = {
 	ExitVehicle = "Exit the vehicle to refuel",
 	EToRefuel = "Press ~g~E ~w~to refuel vehicle",
 	JerryCanEmpty = "Jerry can is empty",
 	FullTank = "Tank is full",
-	PurchaseJerryCan = "Press ~g~E ~w~to purchase a jerry can for ~g~£" .. Config.JerryCanCost,
+	PurchaseJerryCan = "Press ~g~E ~w~to purchase a jerry can for ~g~£" .. cfgfuel.JerryCanCost,
 	CancelFuelingPump = "Press ~g~E ~w~to cancel the fueling",
 	CancelFuelingJerryCan = "Press ~g~E ~w~to cancel the fueling",
 	NotEnoughCash = "Not enough cash",
@@ -36,12 +36,12 @@ Config.Strings = {
 	TotalCost = "Cost",
 }
 
-if not Config.UseESX then
-	Config.Strings.PurchaseJerryCan = "Press ~g~E ~w~to grab a jerry can"
-	Config.Strings.RefillJerryCan = "Press ~g~E ~w~ to refill the jerry can"
+if not cfgfuel.UseESX then
+	cfgfuel.Strings.PurchaseJerryCan = "Press ~g~E ~w~to grab a jerry can"
+	cfgfuel.Strings.RefillJerryCan = "Press ~g~E ~w~ to refill the jerry can"
 end
 
-Config.PumpModels = {
+cfgfuel.PumpModels = {
 	[-2007231801] = true,
 	[1339433404] = true,
 	[1694452750] = true,
@@ -52,16 +52,16 @@ Config.PumpModels = {
 }
 
 -- Blacklist certain vehicles. Use names or hashes. https://wiki.gtanet.work/index.php?title=Vehicle_Models
-Config.Blacklist = {
+cfgfuel.Blacklist = {
 	--"Adder",
 	--276773164
 }
 
 -- Do you want the HUD removed from showing in blacklisted vehicles?
-Config.RemoveHUDForBlacklistedVehicle = true
+cfgfuel.RemoveHUDForBlacklistedVehicle = true
 
 -- Class multipliers. If you want SUVs to use less fuel, you can change it to anything under 1.0, and vise versa.
-Config.Classes = {
+cfgfuel.Classes = {
 	[0] = 1.0, -- Compacts
 	[1] = 1.0, -- Sedans
 	[2] = 1.0, -- SUVs
@@ -87,7 +87,7 @@ Config.Classes = {
 }
 
 -- The left part is at percentage RPM, and the right is how much fuel (divided by 10) you want to remove from the tank every second
-Config.FuelUsage = {
+cfgfuel.FuelUsage = {
 	[1.0] = 1.4,
 	[0.9] = 1.2,
 	[0.8] = 1.0,
@@ -101,7 +101,7 @@ Config.FuelUsage = {
 	[0.0] = 0.0,
 }
 
-Config.GasStations = {
+cfgfuel.GasStations = {
 	vector3(49.4187, 2778.793, 58.043),
 	vector3(263.894, 2606.463, 44.983),
 	vector3(1039.958, 2671.134, 39.550),
@@ -131,3 +131,5 @@ Config.GasStations = {
 	vector3(-319.292, -1471.715, 30.549),
 	vector3(1784.324, 3330.55, 41.253)
 }
+
+return cfgfuel
