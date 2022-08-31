@@ -5,6 +5,7 @@ AddEventHandler('ARMA:purchaseHighRollersMembership', function()
     if not ARMA.hasGroup(user_id, 'highroller') then
         if ARMA.tryFullPayment(user_id,10000000) then
             ARMA.addUserGroup(user_id, 'highroller')
+            ARMAclient.notify(source, {'~g~You have purchased the ~b~High Rollers ~g~membership.'})
         else
             ARMAclient.notify(source, {'~r~You do not have enough money to purchase this membership.'})
         end
