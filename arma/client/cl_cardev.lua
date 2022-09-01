@@ -29,6 +29,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         tARMA.clientPrompt("Spawncode:","",function(result)
                             if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
+                                veh = result
                                 local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
@@ -47,6 +48,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         tARMA.clientPrompt("Spawncode:","",function(result)
                             if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
+                                veh = result
                                 local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
                                 local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
@@ -311,7 +313,7 @@ function TakeVehScreenshot()
     end
     TakingCarSS = true
     TriggerServerEvent('ARMAAntiCheat:setType6', false)
-    ExecuteCommand('showhud')
+    ExecuteCommand('hideui')
     ped = GetVehiclePedIsIn(PlayerPedId(), true)
     SetEntityCoords(ped, vector3(-921.20440673828,-3082.5627441406,12.557805664062))
     SetEntityHeading(PlayerPedId(),100.0)
@@ -331,7 +333,7 @@ function TakeVehScreenshot()
     SetEntityProofs(GetVehiclePedIsIn(GetPlayerPed(-1),false),false,false,false,false,false,false,false,false)
     SetEntityCanBeDamaged(GetVehiclePedIsIn(GetPlayerPed(-1),false),true)
     SetEntityCanBeDamaged(GetPlayerPed(-1),true)
-    ExecuteCommand('showhud')
+    ExecuteCommand('showui')
     TriggerServerEvent('ARMAAntiCheat:setType6', true)
 end
 
@@ -532,7 +534,7 @@ function DrawAdvancedTextNoOutline(v,w,x,y,z,A,B,C,D,E,F,G)
     DrawText(v-0.1+x,w-0.02+y)
 end
 local function a8()
-    if not b then 
+    if not b or TakingCarSS then 
         if C then
             a6(false)
         end
