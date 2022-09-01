@@ -266,11 +266,11 @@ AddEventHandler("ARMA:kickMemberFromGang", function(gangid,member)
                     end
                     array[tostring(member)] = nil
                     array = json.encode(array)
-                    ARMAclient.notify(source,{"~r~Successfully kicked member from gang"})
+                    ARMAclient.notify(source,{"~r~Successfully kicked member from gang."})
                     exports['ghmattimysql']:execute("UPDATE arma_gangs SET gangmembers = @gangmembers WHERE gangname=@gangname", {gangmembers=array, gangname = gangid}, function()
                         TriggerClientEvent('ARMA:ForceRefreshData', source)
                         if tonumber(membersource) > 0 then
-                            ARMAclient.notify(source,{"~r~You have been kicked from the gang."})
+                            ARMAclient.notify(membersource,{"~r~You have been kicked from the gang."})
                             TriggerClientEvent('ARMA:disbandedGang', membersource)
                         end
                     end)
