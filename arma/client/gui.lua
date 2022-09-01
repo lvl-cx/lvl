@@ -58,14 +58,14 @@ Citizen.CreateThread(function()
       local l=IsPauseMenuActive()
       if l and not k then 
           k=true
-          TriggerEvent("vRP:pauseChange",k)
+          TriggerEvent("arma:pauseChange",k)
       elseif not l and k then 
           k=false
-          TriggerEvent("vRP:pauseChange",k)
+          TriggerEvent("arma:pauseChange",k)
       end
       Wait(0)
   end 
 end)
-AddEventHandler("vRP:pauseChange",function(k)
+AddEventHandler("arma:pauseChange",function(k)
   SendNUIMessage({act="pause_change",paused=k})
 end)
