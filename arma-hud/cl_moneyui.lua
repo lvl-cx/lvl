@@ -40,13 +40,6 @@ function updateHungerThirstHUD(cash, bank, proximity, topLeftAnchor,yAnchor)
   })
 end
 
-
-function showhudUI(flag)
-  SendNUIMessage({
-    showhud = flag
-  })
-end
-
 RegisterCommand('showui', function()
     SendNUIMessage({
         showhud = true
@@ -61,6 +54,7 @@ RegisterCommand('hideui', function()
     })
     DisplayRadar(false)
     TriggerEvent('showHud', false)
+    ExecuteCommand('hidechat')
 end)
 
 function getMinimapAnchor()

@@ -235,7 +235,13 @@ Citizen.CreateThread(function()
   end
 end)
 
-RegisterNetEvent("ORP:showHUD")
-AddEventHandler("ORP:showHUD",function(flag)
-  hideChat = flag
+RegisterCommand("hidechat", function(source)
+  hideChat = true
+  TriggerEvent('chat:clear')
+  notify("~r~Chat Disabled!")
+end)
+
+RegisterCommand("showchat", function(source)
+  hideChat = false
+  notify("~g~Chat Enabled!")
 end)
