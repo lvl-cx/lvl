@@ -1929,7 +1929,7 @@ AddEventHandler("ARMA:checkBan",function(permid)
                 for k,v in pairs(result) do
                     if v.banned then
                         if v.bantime ~= "perm" then
-                            local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
+                            expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
                             local hoursLeft = ((tonumber(v.bantime)-os.time()))/3600
                             local minutesLeft = nil
                             if hoursLeft < 1 then
