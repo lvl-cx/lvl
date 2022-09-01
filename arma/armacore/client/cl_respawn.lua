@@ -1,4 +1,4 @@
-local Housing = module("armacore/cfg/cfg_housing")
+--[[ local Housing = module("armacore/cfg/cfg_housing")
 
 local hasPD = false
 local inCam = false
@@ -160,4 +160,4 @@ end)
 
 RegisterCommand("testrespawn", function()
     RageUI.Visible(RMenu:Get("RespawnMenu", "main"), true)
-end)
+end) ]]

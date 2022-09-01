@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap);
 
-.BW-location-img {
+.lunar-location-img {
     width: 100%;
     height: 100%;
     /* clip-path: polygon(47% 0, 86% 0, 66% 100%, 28% 100%); */
@@ -10,10 +10,10 @@
     object-fit: cover;
 }
 
-.BW-spawn{
+.lunar-spawn{
     width: 100%;
     height: 100%;
-    background:  url(https://media.discordapp.net/attachments/964303857414987776/964485654572597318/spawnui.png);
+    background:  url(https://cdn.discordapp.com/attachments/791428458424959036/859926002461048862/65.png?test);
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
@@ -31,14 +31,14 @@
 
 
 .glow {
-    filter: drop-shadow(14px 1px 10px rgb(255, 0, 0,0.5));
+    filter: drop-shadow(14px 1px 10px rgb(56, 56, 56));
 }
-.BW-locations{
+.lunar-locations{
     width: 100%;
     height: 100vh;
     overflow:visible;
 }
-.BW-location{
+.lunar-location{
     height: 70%;
     width: 200%;
     position: relative;
@@ -56,7 +56,7 @@
     margin-top: 3%;;
 }
 
-/* .BW-location-img:hover {
+/* .lunar-location-img:hover {
     height: 1000px;
     z-index: 20;
     position: absolute;
@@ -88,14 +88,10 @@
     position: absolute;
     bottom: -20px;
     left: 30px;
-    text-align: center !important;
-    white-space: pre-wrap !important;
-    width: 40%;
-    height: -20%;
 
 }
 
-.BW-spawn-text{
+.lunar-spawn-text{
     position: relative;;
     left: 125px;
     top: -50px;
@@ -129,7 +125,7 @@
 }
 
 .h4 span {
-    color: #c42d2d;
+    color: #268e97;
 }
 
 .--respawn-button {
@@ -138,7 +134,7 @@
     background: none;
     border-style: solid;
     border-width: 4px;
-    border-color: #c42d2d;
+    border-color: #268e97;
     text-align: left;
     font-family: "Akrobat-Bold", sans-serif;
     color: white;
@@ -200,11 +196,11 @@
 
 
 @media only screen and (min-width: 1920px){ 
-    /* .BW-location{
+    /* .lunar-location{
         height: 650px;
         width: 600px;
     } */
-    .BW-spawn-text{
+    .lunar-spawn-text{
         position: relative;;
         left: 125px;
         top: -60px;
@@ -250,7 +246,7 @@
     }
     
 
-    /* .BW-location{
+    /* .lunar-location{
         height: 700px;
         width: 750px;
     } */
@@ -258,7 +254,7 @@
     
     
     
-    .BW-spawn-text{
+    .lunar-spawn-text{
         position: relative;;
         left: 125px;
         top: -150px;
@@ -380,7 +376,7 @@ body {
 
 @font-face {
     font-family: "Akrobat-Bold";
-    src: url("https://cdn.BW.city/content/fonts/Akrobat-Bold.otf") format("opentype");
+    src: url("https://cdn.cmg.city/content/fonts/Akrobat-Bold.otf") format("opentype");
     font-weight: normal;
     font-style: normal; 
 }
@@ -408,7 +404,7 @@ div.death-screen-black-bar{
 }
 
 div.killed-by-text h1 {
-    font-size: 45px;
+    font-size: 65px;
     margin: 0;
     width: 0;
     white-space: nowrap;
@@ -665,12 +661,12 @@ body {
     height: 100% !important;
 }
 
-.BW-ui {
+.lunar-ui {
     width: 100%;
     height: 100% !important;
 }
 
-.BW-router{
+.lunar-router{
     width: 100%;
     height: 100% !important;
 }
@@ -713,13 +709,13 @@ body {
     background-size: 45%; 
 }
 
-.BW-crosshair{
+.lunar-crosshair{
     position: absolute !important;
     top: calc(50% - 4px) !important;
     left: calc(50% - 4px) !important;
 }
 
-.BW-radialmenu {
+.lunar-radialmenu {
     position: absolute !important;
     top: 50%;
     left: 50%;

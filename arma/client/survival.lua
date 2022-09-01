@@ -1,6 +1,5 @@
 local comaAnim = {}
 local in_coma = false
-local coma_left = 90
 local secondsTillBleedout = 90
 local playerCanRespawn = false 
 local calledNHS = false
@@ -32,6 +31,7 @@ Citizen.CreateThread(function()
       if playerCanRespawn and in_coma and secondsTillBleedout < 1 then
         TriggerEvent("ARMA:respawnKeyPressed")
         tARMA.respawnPlayer()
+        TriggerServerEvent('ARMA:SendSpawnMenu')
       end
       Wait(1000)
     end
@@ -156,7 +156,7 @@ Citizen.CreateThread(function()
             DisableControlAction(0,182,true)
             DisableControlAction(0,37,true)
         end
-        Wait(0)
+        Wait(0) 
     end 
 end)
 
@@ -233,48 +233,12 @@ function tARMA.isInComa()
     return in_coma
 end
 
-RegisterNetEvent("ARMA:FixClient")
-AddEventHandler("ARMA:FixClient", function()
-    local resurrectspamm = true
-    Citizen.CreateThread(function()
-        while true do 
-            Wait(0)
-            if resurrectspamm == true then
-                TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
-                DoScreenFadeOut(500)
-                Citizen.Wait(500)
-                local ped = PlayerPedId()
-                local x,y,z = GetEntityCoords(ped)
-                respawnedrecent = false 
-                NetworkResurrectLocalPlayer(x, y, z, true, true, false)
-                Citizen.Wait(0)
-                calledNHS = false
-                ClearPedTasksImmediately(PlayerPedId())
-                resurrectspamm = false
-                secondsTillBleedout = 90
-                in_coma = false
-                EnableControlAction(0, 73, true)
-                tARMA.stopScreenEffect(cfg.coma_effect)
-                DoScreenFadeIn(500)
-                Citizen.Wait(500)
-            end 
-        end
-    end)
-end)
-
 function tARMA.reviveComa()
     local ped = PlayerPedId()
     SetEntityInvincible(ped,false)
     tARMA.setRagdoll(false)
     tARMA.stopScreenEffect(cfg.coma_effect)
     SetEntityHealth(PlayerPedId(), 200) 
-end
-
--- kill the player if in coma
-function tARMA.killComa()
-    if in_coma then
-        coma_left = 0
-    end
 end
 
 Citizen.CreateThread(function() -- disable health regen, conflicts with coma system

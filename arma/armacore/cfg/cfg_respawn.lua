@@ -1,40 +1,97 @@
-respawn = {}
+local cfg = {}
 
-respawn.freeze = true -- [Freeze when Menu is Opened]
-respawn.close = false -- [When Pressing Back Space it closes menu and unfreezes player]
-
-respawn.coords = vector3(341.83953857422,-1397.6486816406,32.509239196777) -- [Coordinate of were you pull out the menu]
- 
-respawn.hospitals = {
-    ["St Thomas Hospital"] = {
-        location = vector3(360.82, -591.43, 28.66),
+cfg.spawnLocations = {
+    ["Mission Row Police Station"] = {
+        name = "Mission Row Police Station",
+        coords = vector3(441.07565307618,-983.34790039062,30.689599990844),
+        permission = {"police.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/missionrowpd.png",
+        price = 0
     },
-    ["Paleto Hospital"] = {
-        location = vector3(-244.62612915039, 6328.8041992188, 32.426197052002),
+    ["Sandy Shores Police Station"] = {
+        name = "Sandy Shores Police Station",
+        coords = vector3(1853.52734375,3686.9440917969,34.286659240723),
+        permission = {"police.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/sandypd.png",
+        price = 0
+    },
+    ["Paleto Police Station"] = {
+        name = "Paleto Police Station",
+        coords = vector3(-441.43273925781,6018.3095703125,31.576251983643),
+        permission = {"police.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/paletopd.png",
+        price = 0
+    },
+    ["Vespucci Police Station"] = {
+        name = "Vespucci Police Station",
+        coords = vector3(-1102.1322021484,-840.05621337891,19.001459121704),
+        permission = {"police.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/vespuccipd.png",
+        price = 0
+    },
+    ["LFB Fire Station"] = {
+        name = "LFB Fire Station",
+        coords = vector3(1200.1696777344,-1454.4307861328,34.969085693359),
+        permission = {"lfb.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/lfb.png",
+        price = 0
+    },
+    ["VIP Island"] = {
+        name = "VIP Island",
+        coords = vector3(-2168.3569335938,5137.6884765625,2.8299977779388),
+        permission = {"vip.island"},
+        image = "https://cdn.cmg.city/content/fivem/houses/vipisland.png",
+        price = 0
+    },
+    ["Rebel Diner"] = {
+        name = "Rebel Diner",
+        coords = vector3(1688.0181884766,6420.9545898438,32.465755462646),
+        permission = {"rebellicense.whitelisted"},
+        image = "https://cdn.cmg.city/content/fivem/houses/rebeldiner.png",
+        price = 0
+    },
+    ["HMP Belmarsh"] = {
+        name = "HMP Belmarsh",
+        coords = vector3(1840.3209228516,2590.2678222656,45.952285766602),
+        permission = {"prisonguard.onduty.permission"},
+        image = "https://cdn.cmg.city/content/fivem/houses/hmpbelmarsh.png",
+        price = 0
+    },
+    ["St Thomas Hospital"] = {
+        name = "St Thomas Hospital",
+        coords = vector3(363.48422241211,-591.30035400391,28.679122924805),
+        permission = {},
+        image = "https://cdn.cmg.city/content/fivem/houses/stthomas.png",
+        price = 0
     },
     ["Royal London Hospital"] = {
-        location = vector3(338.02813720703,-1393.8375244141,32.509239196777),
+        name = "Royal London Hospital",
+        coords = vector3(337.48727416992,-1393.4056396484,32.509284973145),
+        permission = {},
+        image = "https://cdn.cmg.city/content/fivem/houses/royallondon.png",
+        price = 0
     },
-    ["Sandy Hospital"] = {
-        location = vector3(1841.5405273438, 3668.8037109375, 33.679920196533),
+    ["Sandy Shores Medical Centre"] = {
+        name = "Sandy Shores Medical Centre",
+        coords = vector3(1842.0667724609,3669.3212890625,33.679866790771),
+        permission = {},
+        image = "https://cdn.cmg.city/content/fivem/houses/sandymedical.png",
+        price = 0
+    },
+    ["Paleto Medical Centre"] = {
+        name = "Paleto Medical Centre",
+        coords = vector3(-244.62612915039,6328.8041992188,32.426197052002),
+        permission = {},
+        image = "https://cdn.cmg.city/content/fivem/houses/paletomedical.png",
+        price = 0
+    },
+    ["Cayo Perico Airport"] = {
+        name = "Cayo Perico Airport",
+        coords = vector3(4510.021484375,-4513.7797851562,4.0945315361023),
+        permission = {},
+        image = "https://cdn.cmg.city/content/fivem/houses/cayoperico.png",
+        price = 0
     },
 }
 
-respawn.rebel = {
-    ["~r~Rebel Diner"] = {
-        location = vector3(1593.1009521484, 6462.7495117188, 25.31714630127),
-    },
-}
-respawn.vip = {
-    ["~y~VIP Island"] = {
-        location = vector3(-2172.2595214844, 5140.984375, 2.819997549057),
-    },
-}
-respawn.pd = {
-    ["~b~Mission Row PD"] = {
-        location = vector3(446.32061767578,-982.93200683594,30.689336776733),
-    },
-}
-
-
-return respawn
+return cfg

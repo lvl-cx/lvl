@@ -7,7 +7,7 @@ ui_page "ui/index.html"
 
 -- client scripts
 client_scripts{
-    "@ARMA/lib/utils.lua",
+    "@arma/lib/utils.lua",
     "client/*.lua",
 }
 
