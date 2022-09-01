@@ -23,18 +23,6 @@ RegisterCommand("getmytempid", function(source)
 	TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, " Your Temp ID: " .. source, "alert")
 end)
 
-RegisterCommand('getid', function(source, args)
-    if args and args[1] then 
-        local userid = ARMA.getUserId(args[1])
-        if userid then 
-            TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "This Users Perm ID is: " .. userid, "alert")
-        else 
-            TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "Temp ID cannot be found! This user is most likely offline.", "alert")
-        end
-    else 
-        TriggerClientEvent('chatMessage', source, '^7[^1ARMA^7]:', {255, 0, 0}, "Please specify a user eg: /getid [tempid]", "alert")
-    end
-end)
 
 RegisterCommand("s", function(source,args, rawCommand)
     user_id2 = ARMA.getUserId(source)   

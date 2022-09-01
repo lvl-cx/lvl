@@ -301,7 +301,7 @@ Citizen.CreateThread(function()
             if (Killer == PlayerId()) or (Killer == nil) then
                 TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTillBleedout,"N/A","N/A","N/A",true)
             else
-                TriggerEvent("ARMA:SHOW_DEATH_SCREEN", secondsTillBleedout, GetPlayerName(Killer) or "N/A", tARMA.getUserId(tARMA.getPedServerId(PedKiller) ) or "N/A", tostring(R) or "N/A", false)
+                TriggerEvent("ARMA:SHOW_DEATH_SCREEN", secondsTillBleedout, GetPlayerName(Killer) or "N/A", tARMA.getUserId(tARMA.getPedServerId(PedKiller)) or "N/A", tostring(R) or "N/A", false)
             end
         end
         while IsEntityDead(PlayerPedId()) do

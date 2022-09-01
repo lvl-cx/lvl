@@ -2,6 +2,8 @@ local cfg = module("cfg/player_state")
 local a = module("cfg/weapons")
 local lang = ARMA.lang
 
+baseplayers = {}
+
 -- client -> server events
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     Debug.pbegin("playerSpawned_player_state")
@@ -95,7 +97,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             TriggerClientEvent('ARMA:sendGarageSettings', source)
             TriggerClientEvent('ARMA:sendSettings', source)
             players = ARMA.getUsers({})
-            local baseplayers = {}
             for k,v in pairs(players) do
                 baseplayers[v] = ARMA.getUserId(v)
             end

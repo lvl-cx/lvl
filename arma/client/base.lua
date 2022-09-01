@@ -750,7 +750,7 @@ function tARMA.addBasePlayer(player, id)
 end
 
 function tARMA.removeBasePlayer(player)
-  baseplayers[player] = nil
+  --baseplayers[player] = nil
 end
 
 local isDev = false
@@ -799,6 +799,9 @@ function tARMA.getUserId(Z)
   else
     return user_id
   end
+end
+function tARMA.getPermIdFromTemp(tempid)
+  return baseplayers[tempid]
 end
 function tARMA.setStaffLevel(a)
   stafflevel = a
