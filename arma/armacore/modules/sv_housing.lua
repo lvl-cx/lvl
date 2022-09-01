@@ -9,23 +9,6 @@ MySQL.createCommand("ARMA/get_home_owner","SELECT user_id FROM arma_user_homes W
 MySQL.createCommand("ARMA/rm_address","DELETE FROM arma_user_homes WHERE user_id = @user_id AND home = @home")
 MySQL.createCommand("ARMA/set_address","REPLACE INTO arma_user_homes(user_id,home,number) VALUES(@user_id,@home,@number)")
 
-RegisterNetEvent('ARMA:getHouses')
-AddEventHandler('ARMA:getHouses', function()
-    local houses = {}
-    local source = source 
-    local user_id = ARMA.getUserId(source)
-    exports['ghmattimysql']:execute("SELECT * FROM `arma_user_homes` WHERE user_id = @user_id", {user_id = user_id}, function(result)
-        if result ~= nil then 
-            for k,v in pairs(result) do
-                if v.user_id == user_id then
-                    table.insert(houses, v.home)
-                end
-            end
-            TriggerClientEvent('ARMA:HousingTable', source, houses)
-        end
-    end)
-end)
-
 function getUserAddress(user_id, cbr)
     local task = Task(cbr)
   
