@@ -75,8 +75,16 @@ window.addEventListener('message', function (event) {
       audioPlayer.volume = audio.volume;
       audioPlayer.play();
     }
+    else if (event.data.submissionType == "sendSound") {
+      if (audioPlayer != null) {
+        audioPlayer.pause();
+      }
+      audioPlayer = new Howl({src: ["./sounds/" + event.data.submissionFile + ".ogg"]});
+      audioPlayer.volume(event.data.submissionVolume);
+      audioPlayer.play();
+    }
 });
-  
+
 function findAudioToPlay(name) {
     for (a of audio) {
       if (a.name == name) {

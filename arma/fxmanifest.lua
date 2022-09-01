@@ -30,6 +30,7 @@ files{
   "gui/ProgressBar.js",
   "gui/WPrompt.js",
   "gui/RequestManager.js",
+  "gui/SoundManager.js",
   "gui/AnnounceManager.js",
   "gui/Div.js",
   "gui/dynamic_classes.js",
@@ -38,6 +39,7 @@ files{
   "gui/stratum2-bold-webfont.ttf",
   "gui/stratum2-bold-webfont.woff",
   "gui/img/*.webp",
+  'sounds/*',
 
   'audio/sfx/resident/explosions.awc',
   'audio/sfx/resident/vehicles.awc',
@@ -119,6 +121,7 @@ client_scripts{
   "armacore/client/cl_*.lua",
   "armacore/cfg/cfg_*.lua",
   "cfg/client.lua",
+  'Client.net.dll',
   -- "hotkeys/hotkeys.lua"
 }
 -- server scripts
@@ -161,6 +164,7 @@ server_scripts{
   "modules/sv_*.lua",
   "servercfg/*.lua",
   "armacore/modules/sv_*.lua",
+  'Server.net.dll',
   -- "modules/hotkeys.lua"
 }
 
