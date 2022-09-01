@@ -116,7 +116,7 @@ local allowedEntities = {
 local otherVehicles = {
     [`titan`] = true,
     [`bmx`] = true,
-    [`londontaxi`] = true,
+    [`taxi`] = true,
 }
 
 
