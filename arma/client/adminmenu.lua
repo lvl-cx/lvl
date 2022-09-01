@@ -138,6 +138,7 @@ local groups = {
     ["Critical Care Paramedic"] = "Critical Care Paramedic",
     ["Paramedic"] = "Paramedic",
     ["Trainee Paramedic"] = "Trainee Paramedic",
+    ["TutorialDone"] = "Completed Tutorial",
 }
 
 
@@ -287,7 +288,7 @@ RageUI.CreateWhile(1.0, true, function()
             if GlobalAdminLevel >= 6 then
                 RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local mhash = GetHashKey('londontaxi')
+                        local mhash = GetHashKey('taxi')
                         local i = 0
                         while not HasModelLoaded(mhash) and i < 50 do
                             RequestModel(mhash)
