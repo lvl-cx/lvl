@@ -40,7 +40,6 @@ RegisterCommand("sethours", function(source, args)
 end)
 
 
-
 RegisterNetEvent("ARMA:GetNearbyPlayers")
 AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
     local source = source
@@ -1450,7 +1449,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, target)
         local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
         PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         ARMAclient.RevivePlayer(target, {})
-        ARMAclient.notify(admin, {'Revived Player'})
+        ARMAclient.notify(admin, {'~g~Revived Player.'})
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
