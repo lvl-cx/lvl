@@ -1,4 +1,4 @@
-local a=false
+inPTT=false
 function func_ptt()
     if tARMA.globalOnPoliceDuty() and tARMA.canAnim() and not globalSurrenderring then 
         local b=tARMA.getPlayerPed()
@@ -7,7 +7,7 @@ function func_ptt()
             TriggerEvent("arma:PlaySound", "radiooff")
             ClearPedTasks(b)
             SetEnableHandcuffs(b,false)
-            a=false 
+            inPTT=false 
         else 
             if IsControlJustPressed(0,19)and not IsPlayerFreeAiming(c)and GetLastInputMethod(2)and tARMA.canAnim()and not IsPedReloading(b)then 
                 TriggerEvent("arma:PlaySound", "radioon")
@@ -16,7 +16,7 @@ function func_ptt()
                 if not IsPedSwimming(b)and not IsPedSwimmingUnderWater(b)then 
                     SetEnableHandcuffs(b,true)
                 end
-                a=true 
+                inPTT=true 
             elseif IsControlJustPressed(0,19)and IsPlayerFreeAiming(c)and GetLastInputMethod(2)and not IsPedReloading(b)then 
                 TriggerEvent("arma:PlaySound", "radioon")
                 tARMA.loadAnimDict("random@arrests")
@@ -24,9 +24,9 @@ function func_ptt()
                 if not IsPedSwimming(b)and not IsPedSwimmingUnderWater(b)then 
                     SetEnableHandcuffs(b,true)
                 end
-                a=true 
+                inPTT=true 
             end
-            if a then 
+            if inPTT then 
                 if IsEntityPlayingAnim(b,"random@arrests","generic_radio_enter",3)then 
                     DisableActions(b)
                 elseif IsEntityPlayingAnim(b,"random@arrests","radio_chatter",3)then 
