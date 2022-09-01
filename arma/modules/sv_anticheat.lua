@@ -261,9 +261,9 @@ end
 
 AddEventHandler('removeWeaponEvent', function(pedid, weaponType)
     CancelEvent()
-    local source = source
+    local source = pedid
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
+	local player = ARMA.getUserSource(user_id) 
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 5, name, player)
