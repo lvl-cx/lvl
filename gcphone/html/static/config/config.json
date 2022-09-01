@@ -42,7 +42,7 @@
   "background": {
     "White desert": "back001.jpg",
     "Palms": "back002.jpg",
-    "GBRP": "back003.jpg",
+    "Default": "back003.jpg",
 
     "Rute 66": "color.jpg",
     "Tokyo by Night": "humo.jpg",
@@ -57,7 +57,7 @@
   },
   
   "background_default": {
-    "label": "GBRP",
+    "label": "Default",
     "value": "back003.jpg"
   },
 
@@ -431,7 +431,7 @@
       "APP_PHONE_CALL_IGNORE": "Ignore",
       "APP_PHONE_CALL_ANONYMOUS": "Call Anonymous",
       "APP_CALCULATOR_TITLE": "Calculator",
-      "APP_BANK_SALDO": "GBRP",
+      "APP_BANK_SALDO": "Default",
       "APP_BANK_VALUTA": ".",
       "APP_BANK_TO_NUMBER": "Perm ID",
       "APP_BANK_AMOUNT": "Amount",
