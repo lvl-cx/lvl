@@ -1050,6 +1050,7 @@ AddEventHandler("playerDropped",function(reason)
     else 
         print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
     end
+    ARMAclient.removeBasePlayer(-1,{source})
     ARMAclient.removePlayer(-1,{source})
 end)
 
@@ -1063,7 +1064,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
     -- register user sources and then set first spawn to false
     local user_id = ARMA.getUserId(source)
     local player = source
-    ARMAclient.addPlayer(-1,{player, user_id})
+    ARMAclient.addBasePlayer(-1, {player, user_id})
     if user_id ~= nil then
         ARMA.user_sources[user_id] = source
         local tmp = ARMA.getUserTmpTable(user_id)
@@ -1080,6 +1081,10 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         }
         PerformHttpRequest("https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
         if first_spawn then
+            for k,v in pairs(ARMA.user_sources) do
+                ARMAclient.addPlayer(source,{v})
+            end
+            ARMAclient.addPlayer(-1,{source})
             MySQL.execute("ARMA/setusername", {user_id = user_id, username = GetPlayerName(source)})
             --MySQL.execute("ARMA/setIP", {user_id = user_id, IP = ARMA.getPlayerIP(source)})
         end

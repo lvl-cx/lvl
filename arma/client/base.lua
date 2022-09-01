@@ -102,6 +102,15 @@ function tARMA.getCamDirection()
   return x,y,z
 end
 
+
+function tARMA.addPlayer(player)
+  players[player] = true
+end
+
+function tARMA.removePlayer(player)
+  players[player] = nil
+end
+
 function tARMA.getNearestPlayers(radius)
   local r = {}
 
@@ -736,11 +745,11 @@ function tARMA.setBasePlayers(players)
   baseplayers = players
 end
 
-function tARMA.addPlayer(player, id)
+function tARMA.addBasePlayer(player, id)
   baseplayers[player] = id
 end
 
-function tARMA.removePlayer(player)
+function tARMA.removeBasePlayer(player)
   baseplayers[player] = nil
 end
 
@@ -785,10 +794,10 @@ function tARMA.setUserID(a)
   user_id = a
 end
 function tARMA.getUserId(Z)
-  if Z == nil then
-    return user_id
+  if Z then
+    return baseplayers[Z]
   else
-    return baseplayers[z]
+    return user_id
   end
 end
 function tARMA.setStaffLevel(a)
@@ -803,10 +812,6 @@ end
 function tARMA.isNoclipping()
   return noclipActive
 end
-
-RegisterCommand('test', function()
-  print(json.encode(baseplayers))
-end)
 
 function tARMA.getRageUIMenuWidth()
   local w, h = GetActiveScreenResolution()
