@@ -61,6 +61,8 @@ const audio = [
     { name: "testPassed", file: "testPassed.ogg", volume: 0.20},
     { name: "testPassedGoodbye", file: "testPassedGoodbye.ogg", volume: 0.20},
     { name: "turningRightJunction", file: "turningRightJunction.ogg", volume: 0.20},
+    {name:"unlimitedpower", file:"unlimitedpower.ogg", volume: 0.35},
+    {name:"wrathofgod", file:"wrathofgod.webm", volume: 0.35},
 ]
 
 var audioPlayer = null;

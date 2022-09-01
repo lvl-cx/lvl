@@ -2179,3 +2179,13 @@ AddEventHandler("ARMA:delGunDelete", function(object)
         TriggerClientEvent("ARMA:returnObjectDeleted", source, 'This object was created by ~b~'..GetPlayerName(user_source)..' ~w~Temp ID: ~b~'..user_source..' ~w~Perm ID: ~b~'..ARMA.getUserId(user_source))
     end
 end)
+
+RegisterNetEvent('ARMA:zapPlayer')
+AddEventHandler('ARMA:zapPlayer', function(A)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasGroup(source, 'founder') then
+        TriggerClientEvent("ARMA:useTheForceTarget", A)
+        TriggerClientEvent("ARMA:useTheForceSync", -1, GetEntityCoords(GetPlayerPed(A)))
+    end
+end)
