@@ -238,10 +238,8 @@ end)
 RegisterCommand("hidechat", function(source)
   hideChat = true
   TriggerEvent('chat:clear')
-  notify("~r~Chat Disabled!")
 end)
 
 RegisterCommand("showchat", function(source)
   hideChat = false
-  notify("~g~Chat Enabled!")
 end)
