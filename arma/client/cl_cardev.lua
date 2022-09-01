@@ -1,4 +1,6 @@
 RMenu.Add('CARDEV', 'main', RageUI.CreateMenu("","~r~Main Menu",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cardev"))
+RMenu.Add('CARDEV','vehiclemods',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle Mods",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add('CARDEV','vehiclemodindexes',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclemods'),"","~r~Vehicle Mod Indexes",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelist'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
@@ -16,6 +18,58 @@ local r = {
     vector3(1894.57, 3823.71, 31.98),
     vector3(-482.63, -664.24, 32.74),
     vector3(-1728.25, -2894.99, 13.94)
+}
+local f = {
+    [0] = "VMT_SPOILER",
+    [1] = "VMT_BUMPER_F",
+    [2] = "VMT_BUMPER_R",
+    [3] = "VMT_SKIRT",
+    [4] = "VMT_EXHAUST",
+    [5] = "VMT_CHASSIS",
+    [6] = "VMT_GRILL",
+    [7] = "VMT_BONNET",
+    [8] = "VMT_WING_L",
+    [9] = "VMT_WING_R",
+    [10] = "VMT_ROOF",
+    [11] = "VMT_ENGINE",
+    [12] = "VMT_BRAKES",
+    [13] = "VMT_GEARBOX",
+    [14] = "VMT_HORN",
+    [15] = "VMT_SUSPENSION",
+    [16] = "VMT_ARMOUR",
+    [17] = "VMT_NITROUS",
+    [18] = "VMT_TURBO",
+    [19] = "VMT_SUBWOOFER",
+    [20] = "VMT_TYRE_SMOKE",
+    [21] = "VMT_HYDRAULICS",
+    [22] = "VMT_XENON_LIGHTS",
+    [23] = "VMT_WHEELS",
+    [24] = "VMT_WHEELS_REAR_OR_HYDRAULICS",
+    [25] = "VMT_PLTHOLDER",
+    [26] = "VMT_PLTVANITY",
+    [27] = "VMT_INTERIOR1",
+    [28] = "VMT_INTERIOR2",
+    [29] = "VMT_INTERIOR3",
+    [30] = "VMT_INTERIOR4",
+    [31] = "VMT_INTERIOR5",
+    [32] = "VMT_SEATS",
+    [33] = "VMT_STEERING",
+    [34] = "VMT_KNOB",
+    [35] = "VMT_PLAQUE",
+    [36] = "VMT_ICE",
+    [37] = "VMT_TRUNK",
+    [38] = "VMT_HYDRO",
+    [39] = "VMT_ENGINEBAY1",
+    [40] = "VMT_ENGINEBAY2",
+    [41] = "VMT_ENGINEBAY3",
+    [42] = "VMT_CHASSIS2",
+    [43] = "VMT_CHASSIS3",
+    [44] = "VMT_CHASSIS4",
+    [45] = "VMT_CHASSIS5",
+    [46] = "VMT_DOOR_L",
+    [47] = "VMT_DOOR_R",
+    [48] = "VMT_LIVERY_MOD",
+    [49] = "VMT_LIGHTBAR"
 }
 local s = 1
 local savedCoords = nil
@@ -104,6 +158,20 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
+                if GetNumVehicleMods(tARMA.getPlayerVehicle(), v) > 0 then
+                    RageUI.ButtonWithStyle("Vehicle Mods" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
+                        if Selected then 
+                            if i then
+                                local p = tARMA.getPlayerPed()
+                                if IsPedInAnyVehicle(p) then
+                                    local s = GetVehiclePedIsIn(p)
+                                else
+                                    tARMA.notify("~r~Not in a vehicle.")
+                                end
+                            end
+                        end
+                    end, RMenu:Get("CARDEV", "vehiclemods"))
+                end
                 if extraSettings then
                     RageUI.ButtonWithStyle("Take Car Screenshot" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
                         if Selected then 
@@ -161,6 +229,39 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:setCarDev",b)
                     end
                 end)
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclemods')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if b then
+                for v, w in pairs(f) do
+                    if GetNumVehicleMods(tARMA.getPlayerVehicle(), v) > 0 then
+                        RageUI.ButtonWithStyle(w,"",{RightLabel = "→→→"},true,function(g, h, i)
+                            if i then
+                                selectedModType = v
+                            end
+                        end,RMenu:Get("CARDEV", "vehiclemodindexes"))
+                    end
+                end
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclemodindexes')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if b then
+                if GetNumVehicleMods(CMG.getPlayerVehicle(), selectedModType) == 0 then
+                    RageUI.Text("~r~No available mod indexes for this mod type for this vehicle.")
+                else
+                    for v = 0, GetNumVehicleMods(CMG.getPlayerVehicle(), selectedModType) do
+                        RageUI.ButtonWithStyle("Mod " .. v,"",{RightLabel = "→→→"},true,function(g, h, i)
+                            if i then
+                                SetVehicleModKit(CMG.getPlayerVehicle(), 0)
+                                SetVehicleMod(CMG.getPlayerVehicle(), selectedModType, v)
+                            end
+                        end,RMenu:Get("CARDEV", "vehiclemodindexes"))
+                    end
+                end
             end
         end)
     end
