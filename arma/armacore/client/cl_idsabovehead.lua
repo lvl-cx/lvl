@@ -71,13 +71,17 @@ end)
 
 SetMpGamerTagsUseVehicleBehavior(false)
 RegisterCommand("farids",function(o, p, q)
-    if tARMA.getStaffLevel() > 2 and tARMA.isstaffedOn() then
-        local r = p[1]
-        if r ~= nil and tonumber(r) then
-            a = tonumber(r) + 000.1
-            SetMpGamerTagsVisibleDistance(a)
+    if tARMA.getStaffLevel() > 2 then
+        if tARMA.isstaffedOn() then
+            local r = p[1]
+            if r ~= nil and tonumber(r) then
+                a = tonumber(r) + 000.1
+                SetMpGamerTagsVisibleDistance(a)
+            else
+                tARMA.notify("~r~Please enter a valid range! (/farids [range])")
+            end
         else
-            tvRP.notify("~r~Please enter a valid range! (/farids [range])")
+            tARMA.notify("~r~You must be staffed on to use this.")
         end
     end
 end)
