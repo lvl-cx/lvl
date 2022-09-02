@@ -301,14 +301,9 @@ function tARMA.setFriendlyFire(Z)
     NetworkSetFriendlyFireOption(Z)
     SetCanAttackFriendly(GetPlayerPed(-1),Z,Z)
 end
-function tARMA.setPolice(Z)
-    local D=PlayerId()
-    SetPoliceIgnorePlayer(D,not Z)
-    SetDispatchCopsForPlayer(D,Z)
-end
+
 Citizen.CreateThread(function()
     if true then 
-        tARMA.setPolice(false)
         tARMA.setFriendlyFire(true)
     end 
 end)
