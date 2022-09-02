@@ -1,6 +1,6 @@
 local comaAnim = {}
 local in_coma = false
-local secondsTillBleedout = 90
+local secondsTillBleedout = 5
 local playerCanRespawn = false 
 local calledNHS = false
 local deathString = ""
@@ -12,6 +12,7 @@ local DeathAnim = 100
 
 WeaponNames={}
 local o=module("cfg/weapons")
+local T=module("armacore/cfg/cfg_respawn")
 local p={}
 local q={}
 Citizen.CreateThread(function()
@@ -23,6 +24,16 @@ Citizen.CreateThread(function()
         WeaponNames[GetHashKey(r)]=t
         p[GetHashKey(r)]=r 
     end 
+    local v = module("armacore/cfg/cfg_housing")
+    for w, x in pairs(v.homes) do
+        T.spawnLocations[w] = {
+            name = w,
+            coords = vector3(x.entry_point[1], x.entry_point[2], x.entry_point[3]),
+            permission = {},
+            image = x.image or "https://cdn.cmg.city/content/fivem/houses/citysmallhome.png",
+            price = 5000
+        }
+    end
 end)
 
 Citizen.CreateThread(function()
@@ -218,7 +229,7 @@ function tARMA.respawnPlayer()
     playerCanRespawn = false 
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
     DeathString = ""
-    secondsTillBleedout = 90
+    secondsTillBleedout = 5
     
     local ped = PlayerPedId()
     tARMA.reviveComa()
@@ -343,3 +354,66 @@ function DrawAdvancedTextOutline(x,y ,w,h,sc, text, r,g,b,a,font,jus)
     AddTextComponentString(text)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
+
+local N = 0
+RegisterNetEvent("ARMA:OpenSpawnMenu",function(O)
+    DoScreenFadeIn(1000)
+    TriggerScreenblurFadeIn(100.0)
+    ExecuteCommand("hideui")
+    SetPlayerControl(PlayerId(), false, 0)
+    local G = PlayerPedId()
+    local P = tARMA.getPlayerCoords()
+    FreezeEntityPosition(G, true)
+    SetEntityCoordsNoOffset(G, P.x, P.y, -100.0, false, false, false)
+    SetEntityVisible(G, false, 0)
+    --TriggerEvent("CMG:removeBackpack2")
+    N =
+        CreateCameraWithParams(
+        "DEFAULT_SCRIPTED_CAMERA",
+        675.57568359375,
+        1107.1724853516,
+        375.29666137695,
+        0.0,
+        0.0,
+        0.0,
+        65.0,
+        0,
+        2
+    )
+    SetCamActive(N, true)
+    RenderScriptCams(true, true, 0, true, false)
+    SetCamParams(N, -1024.6506347656, -2712.0234375, 79.889106750488, 0.0, 0.0, 0.0, 65.0, 250000, 0, 0, 2)
+    local QQ = {}
+    for I, w in pairs(O) do
+        if T.spawnLocations[w] then
+            table.insert(QQ, T.spawnLocations[w])
+        end
+    end
+    TriggerEvent("ARMADEATHUI:openSpawnMenu", QQ)
+end)
+
+AddEventHandler("ARMA:respawnButtonClicked",function(S, Z)
+    if Z and Z > 0 then
+        TriggerServerEvent("ARMA:takeAmount", Z)
+    end
+    local U = T.spawnLocations[S].coords
+    TriggerEvent("arma:PlaySound", "gtaloadin")
+    SetEntityCoords(PlayerPedId(), U)
+    SetEntityVisible(PlayerPedId(), true, 0)
+    SetPlayerControl(PlayerId(), true, 0)
+    SetFocusPosAndVel(U.x, U.y, U.z + 1000)
+    DestroyCam(N)
+    local V = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", U.x, U.y, U.z + 1000.0, 0.0, 0.0, 0.0, 65.0, 0, 2)
+    SetCamActive(V, true)
+    RenderScriptCams(true, true, 0, true, false)
+    SetCamParams(V, U.x, U.y, U.z, 0.0, 0.0, 0.0, 65.0, 5000, 0, 0, 2)
+    Wait(2500)
+    ClearFocus()
+    Wait(2000)
+    FreezeEntityPosition(PlayerPedId(), false)
+    DestroyCam(V)
+    RenderScriptCams(false, true, 2000, false, false)
+    TriggerScreenblurFadeOut(2000.0)
+    ExecuteCommand("showui")
+    ClearFocus()
+end)
