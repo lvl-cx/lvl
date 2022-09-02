@@ -1510,7 +1510,7 @@ cfg.groups = {
   },
 
   ["Rebel"] = {
-    "rebel.license",
+    "rebellicense.whitelisted",
   },
   ["AdvancedRebel"] = {
     "advancedrebel.license",
