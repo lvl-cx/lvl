@@ -32,7 +32,6 @@ RegisterServerEvent("ARMA:updateFolders")
 AddEventHandler('ARMA:updateFolders', function(FolderUpdated)
     local source = source
     local user_id = ARMA.getUserId(source)
-
     exports["ghmattimysql"]:execute("SELECT * from `arma_custom_garages` WHERE user_id = @user_id", {user_id = user_id}, function(Result)
         if #Result > 0 then
             exports['ghmattimysql']:execute("UPDATE arma_custom_garages SET folder = @folder WHERE user_id = @user_id", {folder = json.encode(FolderUpdated), user_id = user_id}, function() end)
