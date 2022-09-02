@@ -40,6 +40,6 @@ Citizen.CreateThread(function()
           TriggerClientEvent('ARMA:sendDevBlips', v, staffblips)
         end
       end
-      Citizen.Wait(1000)
+      Citizen.Wait(10000)
   end
 end)
