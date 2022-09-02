@@ -18,6 +18,7 @@ licensecentre.licenses = {
     {name = "Gold License", group = "Gold", price = 1000000},
     {name = "Diamond License", group = "Diamond", price = 5000000},
     {name = "DJ License", group = "DJ", price = 50000000},
+    {name = "Long Range Emergency Blips", group = "polblips", price = 5000000},
     --{name = "Highrollers License", group = "highroller", price = 10000000},
 
 }
@@ -88,7 +89,11 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("1 x 300KG Run: £18,750", function() end)
             elseif cGroup == 'DJ' then 
                 RageUI.Separator("DJ License Price: £50,000,000", function() end)
-                RageUI.Separator("Abuse of this license will result in it being revoked.", function() end)
+                RageUI.Separator("~r~Abuse of this license will result in it being revoked.", function() end)
+            elseif cGroup == 'polblips' then 
+                RageUI.Separator("Long Range Emergency Blips Price: £5,000,000", function() end)
+                RageUI.Separator("~g~View fellow members of emergency", function() end)
+                RageUI.Separator("~g~factions all over the map.", function() end)
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
