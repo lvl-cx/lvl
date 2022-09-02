@@ -29,13 +29,13 @@ cfg.spawnLocations = {
         image = "https://cdn.cmg.city/content/fivem/houses/vespuccipd.png",
         price = 0
     },
-    ["LFB Fire Station"] = {
-        name = "LFB Fire Station",
-        coords = vector3(1200.1696777344,-1454.4307861328,34.969085693359),
-        permission = {"lfb.onduty.permission"},
-        image = "https://cdn.cmg.city/content/fivem/houses/lfb.png",
-        price = 0
-    },
+    -- ["LFB Fire Station"] = {
+    --     name = "LFB Fire Station",
+    --     coords = vector3(1200.1696777344,-1454.4307861328,34.969085693359),
+    --     permission = {"lfb.onduty.permission"},
+    --     image = "https://cdn.cmg.city/content/fivem/houses/lfb.png",
+    --     price = 0
+    -- },
     ["VIP Island"] = {
         name = "VIP Island",
         coords = vector3(-2168.3569335938,5137.6884765625,2.8299977779388),
@@ -50,13 +50,13 @@ cfg.spawnLocations = {
         image = "https://cdn.cmg.city/content/fivem/houses/rebeldiner.png",
         price = 0
     },
-    ["HMP Belmarsh"] = {
-        name = "HMP Belmarsh",
-        coords = vector3(1840.3209228516,2590.2678222656,45.952285766602),
-        permission = {"prisonguard.onduty.permission"},
-        image = "https://cdn.cmg.city/content/fivem/houses/hmpbelmarsh.png",
-        price = 0
-    },
+    -- ["HMP Belmarsh"] = {
+    --     name = "HMP Belmarsh",
+    --     coords = vector3(1840.3209228516,2590.2678222656,45.952285766602),
+    --     permission = {"prisonguard.onduty.permission"},
+    --     image = "https://cdn.cmg.city/content/fivem/houses/hmpbelmarsh.png",
+    --     price = 0
+    -- },
     ["St Thomas Hospital"] = {
         name = "St Thomas Hospital",
         coords = vector3(363.48422241211,-591.30035400391,28.679122924805),
@@ -88,10 +88,10 @@ cfg.spawnLocations = {
     ["Cayo Perico Airport"] = {
         name = "Cayo Perico Airport",
         coords = vector3(4510.021484375,-4513.7797851562,4.0945315361023),
-        permission = {},
+        permission = {"rebellicense.whitelisted"},
         image = "https://cdn.cmg.city/content/fivem/houses/cayoperico.png",
         price = 0
-    },
+    }
 }
 
 return cfg
