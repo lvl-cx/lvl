@@ -26,6 +26,13 @@ end
 function tARMA.removeBlip(j)
     RemoveBlip(j)
 end
+function tARMA.removeHouseBlip(x,y,z) -- used to remove green house blips for everyone when purchased
+    for k,v in pairs(globalBlips) do
+        if GetBlipCoords(v) == vector3(x+0.001,y+0.001,z+0.001) then
+            RemoveBlip(v)
+        end
+    end
+end
 local k = {}
 function tARMA.setNamedBlip(l, a, b, c, d, e, f, g)
     tARMA.removeNamedBlip(l)

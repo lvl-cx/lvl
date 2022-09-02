@@ -49,6 +49,7 @@ function leaveHome(user_id, home, number, cbr)
         if k == home then
             local x,y,z = table.unpack(v.entry_point)
             ARMAclient.teleport(player, {x,y,z})
+            ARMAclient.setInHome(player, {false})
             task({true})
         end
     end
@@ -67,6 +68,7 @@ function accessHome(user_id, home, number, cbr)
             SetPlayerRoutingBucket(player, count)
             local x,y,z = table.unpack(v.leave_point)
             ARMAclient.teleport(player, {x,y,z})
+            ARMAclient.setInHome(player, {true})
             task({true})
         end
     end
@@ -76,6 +78,7 @@ end
 
 RegisterNetEvent("ARMAHousing:Buy")
 AddEventHandler("ARMAHousing:Buy", function(house)
+    local source = source
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
@@ -84,25 +87,32 @@ AddEventHandler("ARMAHousing:Buy", function(house)
             getUserByAddress(house,1,function(noowner) --check if house already has a owner
                 if noowner == nil then
                     getUserAddress(user_id, function(address) -- check if user already has a home
-                            if ARMA.tryFullPayment(user_id,v.buy_price) then --try payment
-                                local price = v.buy_price
-                                setUserAddress(user_id,house,1) --set address
-                                ARMAclient.notify(player,{"~g~You bought "..k.."!"}) --notify
-                                local webhook = 'webhook'
-                                local embed = {
-                                    {
-                                        ["color"] = "16777215",
-                                        ["title"] = "House Logs",
-                                        ["description"] = "**User Name:** "..GetPlayerName(source).."\n**User ID:** "..ARMA.getUserId(source).."\n**Price: **".. price.. "\n **House Name: **" ..k,
-                                        ["footer"] = {
-                                            ["text"] = os.date("%X"),
-                                        },
-                                    }
-                                }
-                                PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = 'ARMA', embeds = embed}), { ['Content-Type'] = 'application/json' })
-                            else
-                                ARMAclient.notify(player,{"~r~You do not have enough money to buy "..k}) --not enough money
+                        if ARMA.tryFullPayment(user_id,v.buy_price) then --try payment
+                            local price = v.buy_price
+                            setUserAddress(user_id,house,1) --set address
+                            ARMAclient.notify(player,{"~g~You bought "..k.."!"}) --notify
+                            for a,b in pairs(ARMA.getUsers({})) do
+                                local x,y,z = table.unpack(v.entry_point)
+                                ARMAclient.removeHouseBlip(b,{x,y,z})
+                                if user_id == a then
+                                    ARMAclient.addBlip(b,{x,y,z,374,1,house})
+                                end
                             end
+                            local webhook = 'webhook'
+                            local embed = {
+                                {
+                                    ["color"] = "16777215",
+                                    ["title"] = "House Logs",
+                                    ["description"] = "**User Name:** "..GetPlayerName(source).."\n**User ID:** "..ARMA.getUserId(source).."\n**Price: **".. price.. "\n **House Name: **" ..k,
+                                    ["footer"] = {
+                                        ["text"] = os.date("%X"),
+                                    },
+                                }
+                            }
+                            --PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = 'ARMA', embeds = embed}), { ['Content-Type'] = 'application/json' })
+                        else
+                            ARMAclient.notify(player,{"~r~You do not have enough money to buy "..k}) --not enough money
+                        end
                     end)
                 else
                     ARMAclient.notify(player,{"~r~Someone already owns "..k})
@@ -334,7 +344,6 @@ AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
             if owner == nil then -- check if house is avaliable to be bought aka no owner of home
                 ARMAclient.addBlip(source,{x,y,z,374,2,k}) -- add blip, 374,2 green house symbol
             end
-
             if owner == user_id then -- check if owner is user
                 ARMAclient.addBlip(source,{x,y,z,374,1,k}) -- add blip for owner of home, 374,2 green house symbol
             end

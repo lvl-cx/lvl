@@ -766,6 +766,7 @@ local stafflevel = 0
 globalOnPoliceDuty = false
 globalNHSOnDuty = false
 globalOnPrisonDuty = false
+inHome = false
 function tARMA.setPolice(y)
   globalOnPoliceDuty = y
 end
@@ -820,6 +821,12 @@ function tARMA.isstaffedOn()
 end
 function tARMA.isNoclipping()
   return noclipActive
+end
+function tARMA.setInHome(aretheyinthehome)
+  inHome = aretheyinthehome
+end
+function tARMA.isInHome()
+  return inHome
 end
 
 function tARMA.getRageUIMenuWidth()

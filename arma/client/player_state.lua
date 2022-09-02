@@ -15,7 +15,9 @@ Citizen.CreateThread(function()
     Citizen.Wait(500)
     if IsPlayerPlaying(PlayerId()) and state_ready then
       local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
-      ARMAserver.updatePos({x,y,z})
+      if not tARMA.isInHome() then
+        ARMAserver.updatePos({x,y,z})
+      end
       ARMAserver.updateHealth({tARMA.getHealth()})
       ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
       ARMAserver.updateWeapons({tARMA.getWeapons()})
