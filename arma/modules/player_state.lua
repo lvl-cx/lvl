@@ -60,10 +60,10 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 ARMAclient.setCarDev(source, {})
             end
             if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-                ARMAclient.setPolice(source, {})
+                ARMAclient.setPolice(source, {true})
             end
             if ARMA.hasPermission(user_id, 'nhs.menu') then
-                ARMAclient.setNHS(source, {})
+                ARMAclient.setNHS(source, {true})
             end
                 
             local adminlevel = 0
