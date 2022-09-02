@@ -3,12 +3,14 @@ local Tunnel = module("arma", "lib/Tunnel")
 local Proxy = module("arma", "lib/Proxy")
 local ARMA = Proxy.getInterface("ARMA")
 local ARMAclient = Tunnel.getInterface("ARMA","ARMA") -- server -> client tunnel
+--local Inventory = module("arma-vehicles", "cfg/cfg_inventory") (move this to car repo)
 local Inventory = module("arma", "cfg/inventory")
+local Housing = module("arma", "armacore/cfg/cfg_housing")
 local InventorySpamTrack = {} -- Stops inventory being spammed by users.
 local LootBagEntities = {}
 local InventoryCoolDown = {}
 local a = module("cfg/weapons")
-
+local houseName = ""
 
 RegisterNetEvent('ARMA:FetchPersonalInventory')
 AddEventHandler('ARMA:FetchPersonalInventory', function()
@@ -77,9 +79,10 @@ AddEventHandler("ORP:flashLights", function(nearestVeh)
 end) 
 
 RegisterNetEvent('ARMA:FetchTrunkInventory')
-AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
+AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode, vehid)
     local source = source
-    local user_id = ARMA.getUserId({source})
+    local idz = NetworkGetEntityFromNetworkId(vehid)
+    local user_id = vRP.getUserId({NetworkGetEntityOwner(idz)})
     if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
     ARMA.getSData({carformat, function(cdata)
@@ -95,10 +98,11 @@ AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
 end)
 
 RegisterNetEvent('ARMA:FetchHouseInventory')
-AddEventHandler('ARMA:FetchHouseInventory', function()
+AddEventHandler('ARMA:FetchHouseInventory', function(nameHouse)
     local source = source
+    houseName = nameHouse
     local user_id = ARMA.getUserId({source})
-    local homeformat = "chest:u" .. user_id .. "home"
+    local homeformat = "chest:u" .. user_id .. "home" ..houseName
     ARMA.getSData({homeformat, function(cdata)
         local processedChest = {};
         cdata = json.decode(cdata) or {}
@@ -106,7 +110,7 @@ AddEventHandler('ARMA:FetchHouseInventory', function()
         for i, v in pairs(cdata) do
             FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
         end
-        local maxVehKg = 500
+        local maxVehKg = Housing.chestsize[houseName] or 500
         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
     end})
 end)
@@ -226,7 +230,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
         elseif inventoryType == "Housing" then
             local Quantity = parseInt(1)
             if Quantity then
-                local homeformat = "chest:u" .. UserId .. "home"
+                local homeformat = "chest:u" .. UserId .. "home" ..houseName
                 ARMA.getSData({homeformat, function(cdata)
                     cdata = json.decode(cdata) or {}
                     if cdata[itemId] and cdata[itemId].amount >= 1 then
@@ -243,7 +247,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                             for i, v in pairs(cdata) do
                                 FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                             end
-                            local maxVehKg = 500
+                            local maxVehKg = Housing.chestsize[houseName] or 500
                             TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                             TriggerEvent('ARMA:RefreshInventory', source)
                             ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
@@ -259,12 +263,12 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
             if not Lootbag then
                 if data.inventory[itemId] then
                     if inventoryInfo == "home" then --start of housing intergration (moveitem)
-                        local homeFormat = "chest:u" .. UserId .. "home"
+                        local homeFormat = "chest:u" .. UserId .. "home" ..houseName
                         ARMA.getSData({homeFormat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount >= 1 then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+ARMA.getItemWeight({itemId})
-                                local maxVehKg = 500
+                                local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, 1, true}) then
                                         if cdata[itemId] then
@@ -278,10 +282,10 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                                     for i, v in pairs(cdata) do
                                         FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                                     end
-                                    local maxVehKg = 500
+                                    local maxVehKg = Housing.chestsize[houseName] or 500
                                     TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('ARMA:RefreshInventory', source)
-                                    ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
+                                    ARMA.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                 else 
                                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                                 end
@@ -440,7 +444,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                 Quantity = parseInt(Quantity)
                 TriggerClientEvent('ARMA:ToggleNUIFocus', source, true)
                 if Quantity then
-                    local homeformat = "chest:u" .. UserId .. "home"
+                    local homeformat = "chest:u" .. UserId .. "home" ..houseName
                     ARMA.getSData({homeformat, function(cdata)
                         cdata = json.decode(cdata) or {}
                         if cdata[itemId] and Quantity <= cdata[itemId].amount  then
@@ -457,10 +461,10 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                                 for i, v in pairs(cdata) do
                                     FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                                 end
-                                local maxVehKg = 500
+                                local maxVehKg = Housing.chestsize[houseName] or 500
                                 TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                                 TriggerEvent('ARMA:RefreshInventory', source)
-                                ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
+                                ARMA.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                             else 
                                 ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                             end
@@ -481,12 +485,12 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                             Quantity = parseInt(Quantity)
                             TriggerClientEvent('ARMA:ToggleNUIFocus', source, true)
                             if Quantity then
-                                local homeFormat = "chest:u" .. UserId .. "home"
+                                local homeFormat = "chest:u" .. UserId .. "home" ..houseName
                                 ARMA.getSData({homeFormat, function(cdata)
                                     cdata = json.decode(cdata) or {}
                                     if data.inventory[itemId] and Quantity <= data.inventory[itemId].amount  then
                                         local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * Quantity)
-                                        local maxVehKg = 500
+                                        local maxVehKg = Housing.chestsize[houseName] or 500
                                         if weightCalculation <= maxVehKg then
                                             if ARMA.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
                                                 if cdata[itemId] then
@@ -500,10 +504,10 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                                             for i, v in pairs(cdata) do
                                                 FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                                             end
-                                            local maxVehKg = 500
+                                            local maxVehKg = Housing.chestsize[houseName] or 500
                                             TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                                             TriggerEvent('ARMA:RefreshInventory', source)
-                                            ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
+                                            ARMA.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                         else 
                                             ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                                         end
@@ -635,7 +639,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                 end
             end
         elseif inventoryType == "Housing" then
-            local homeformat = "chest:u" .. UserId .. "home"
+            local homeformat = "chest:u" .. UserId .. "home" ..houseName
             ARMA.getSData({homeformat, function(cdata)
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
@@ -647,10 +651,10 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                         for i, v in pairs(cdata) do
                             FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                         end
-                        local maxVehKg = 500
+                        local maxVehKg = Housing.chestsize[houseName] or 500
                         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                         TriggerEvent('ARMA:RefreshInventory', source)
-                        ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
+                        ARMA.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                     else 
                         ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                     end
@@ -662,12 +666,12 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
             if not Lootbag then
                 if data.inventory[itemId] then
                     if inventoryInfo == "home" then --start of housing intergration (moveitemall)
-                        local homeFormat = "chest:u" .. UserId .. "home"
+                        local homeFormat = "chest:u" .. UserId .. "home" ..houseName
                         ARMA.getSData({homeFormat, function(cdata)
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount <= data.inventory[itemId].amount  then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * data.inventory[itemId].amount)
-                                local maxVehKg = 500
+                                local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
                                         if cdata[itemId] then
@@ -681,10 +685,10 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                                     for i, v in pairs(cdata) do
                                         FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                                     end
-                                    local maxVehKg = 500
+                                    local maxVehKg = Housing.chestsize[houseName] or 500
                                     TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
                                     TriggerEvent('ARMA:RefreshInventory', source)
-                                    ARMA.setSData({"chest:u" .. UserId .. "home", json.encode(cdata)})
+                                    ARMA.setSData({"chest:u" .. UserId .. "home" ..houseName, json.encode(cdata)})
                                 else 
                                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                                 end
