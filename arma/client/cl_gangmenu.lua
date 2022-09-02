@@ -634,7 +634,7 @@ end)
 function closeToBarclays()
     local v=GetEntityCoords(GetPlayerPed(PlayerId()),false)
     local w=#(v-vector3(151.7451171875,-1036.7829589844,29.338624954224))
-    local x=#(v-vector3(-112.93523406982,6469.24609375,31.626703262329))
+    local x=#(v-vector3(4478.2436523438,-4464.0170898438,4.2557549476624))
     if w<10.0 or x<10.0 then 
         return true 
     else 
