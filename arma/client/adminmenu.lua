@@ -806,6 +806,13 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
+            if GlobalAdminLevel >= 11 then
+                RageUI.ButtonWithStyle("Commit Godly Wrath","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("ARMA:zapPlayer", SelectedPlayer[2])
+                    end
+                end,RMenu:Get("adminmenu", "submenu"))
+            end
         end)
     end
 end)
