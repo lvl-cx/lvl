@@ -235,30 +235,31 @@ function ARMA.updateInvCap(user_id, invcap)
 end
 
 local isStoring = {}
-function tARMA.StoreWeaponsDead()
+AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
     local player = source 
     local user_id = ARMA.getUserId(player)
-    ARMAclient.getWeapons(player,{},function(weapons)
+	ARMAclient.getWeapons(player,{},function(weapons)
         if not isStoring[player] then
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                    if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
-                        ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                        for i,c in pairs(a.weapons) do
-                            if i == k then
-                                ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
-                            end   
-                        end
+                  if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
+                    if v.ammo > 0 then
+                      for i,c in pairs(a.weapons) do
+                        if i == k then
+                          ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                        end   
+                      end
                     end
+                  end
                 end
                 ARMAclient.notify(player,{"~g~Weapons Stored"})
-                SetTimeout(10000,function()
-                    isStoring[player] = nil 
+                SetTimeout(3000,function()
+                      isStoring[player] = nil 
                 end)
             end)
         else
             ARMAclient.notify(player,{"~o~Your weapons are already being stored hmm..."})
         end
     end)
-  end
+end)

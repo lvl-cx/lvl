@@ -111,6 +111,7 @@ local allowedEntities = {
     [`vw_prop_vw_colle_pogo`] = true,
     [`vw_prop_casino_blckjack_coinflip`] = true,
     [`vw_prop_vw_luckywheel_02a`] = true,
+    [`xs_prop_arena_bag_01`] = true,
 }
 
 local otherVehicles = {

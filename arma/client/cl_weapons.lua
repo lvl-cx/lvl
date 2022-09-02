@@ -71,17 +71,7 @@ RegisterCommand("storecurrentweapon",function()
         tARMA.notify("~r~Store weapons cooldown, please wait.")
     end 
 end)
---[[ RegisterCommand("storeallweapons",function()
-    if s+3000<GetGameTimer()then 
-        s=GetGameTimer()
-        if HasPedGotWeapon(PlayerPedId(),`WEAPON_PISTOL50`)or HasPedGotWeapon(PlayerPedId(),`WEAPON_MACHINEPISTOL`)then 
-        else 
-            TriggerServerEvent("ARMA:forceStoreWeapons",true)
-        end 
-    else 
-        tARMA.notify("~r~Store weapons cooldown, please wait.")
-    end 
-end) ]]
+
 AddEventHandler('onResourceStop',function(t)
     if t==GetCurrentResourceName()then 
         RemoveAllPedWeapons(PlayerPedId(),true)

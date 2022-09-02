@@ -102,18 +102,20 @@ AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag)
         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
         TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
         FreezeEntityPosition(PlayerPedId(), true)
-        LootBagCrouchLoop = true;
+        LootBagCrouchLoop = true
     end
     if toggle then
-        inventoryOpen = true; 
+        inventoryOpen = true 
         SetNuiFocus(true, true)
         SetNuiFocusKeepInput(true)
         SendNUIMessage({action = 'InventoryDisplay', showInv = true})
     else 
-        inventoryOpen = false;
+        inventoryOpen = false
         SetNuiFocus(false, false)
         SetNuiFocusKeepInput(false)
         SendNUIMessage({action = 'InventoryDisplay', showInv = false})
+        FreezeEntityPosition(PlayerPedId(), false)
+        LootBagCrouchLoop = false
     end
 end)
 

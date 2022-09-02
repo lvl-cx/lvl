@@ -62,9 +62,9 @@ Citizen.CreateThread(function() -- coma thread
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
             tARMA.ejectVehicle()
             TriggerEvent('ARMA:IsInMoneyComa', true)
+            ExecuteCommand('storeallweapons')
             if not tARMA.globalOnPoliceDuty() then
                 TriggerServerEvent('ARMA:InComa')
-                ARMAserver.StoreWeaponsDead()
             end
             ARMAserver.MoneyDrop()
             TriggerEvent('ARMA:3Seconds')
@@ -263,21 +263,31 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
         if IsEntityDead(PlayerPedId()) then
+            local s
             TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             Q=GetPedCauseOfDeath(PlayerPedId())
+            print(Q)
             R=WeaponNames[Q]
+            print(R)
+            s = q[Q]
+            print(s)
             if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
                 Killer = NetworkGetPlayerIndexFromPed(PedKiller)
             elseif IsEntityAVehicle(PedKiller) and IsEntityAPed(GetPedInVehicleSeat(PedKiller, -1)) and IsPedAPlayer(GetPedInVehicleSeat(PedKiller, -1)) then
                 Killer = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(PedKiller, -1))
             end
-            
+            local distance = 0
+            local suicide = false
+            local az = tARMA.getPedServerId(PedKiller)
             if (Killer == PlayerId()) or (Killer == nil) then
                 TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTillBleedout,"N/A","N/A","N/A",true)
+                suicide = true
             else
                 TriggerEvent("ARMA:SHOW_DEATH_SCREEN", secondsTillBleedout, GetPlayerName(Killer) or "N/A", tARMA.getUserId(tARMA.getPedServerId(PedKiller)) or "N/A", tostring(R) or "N/A", false)
+                distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(PedKiller))
             end
+            TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), s, suicide, distance)
         end
         while IsEntityDead(PlayerPedId()) do
             Citizen.Wait(0)

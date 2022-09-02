@@ -367,114 +367,36 @@ local choice_seize_weapons = {function(player, choice)
     end)
   end
 end, lang.police.menu.seize.weapons.description()}
---[[ 
-local choice_seize_items = {function(player, choice)
-  local user_id = ARMA.getUserId(player)
-  if user_id ~= nil then
-    ARMAclient.getNearestPlayer(player, {5}, function(nplayer)
-      local nuser_id = ARMA.getUserId(nplayer)
-      if nuser_id ~= nil and ARMA.hasPermission(nuser_id, "police.seizable") then
-        ARMAclient.isHandcuffed(nplayer,{}, function(handcuffed)  -- check handcuffed
-          if handcuffed then
-            for k,v in pairs(cfg.seizable_items) do -- transfer seizable items
-              local amount = ARMA.getInventoryItemAmount(nuser_id,v)
-              if amount > 0 then
-                local item = ARMA.items[v]
-                if item then -- do transfer
-                  if ARMA.tryGetInventoryItem(nuser_id,v,amount,true) then
-                    ARMA.giveInventoryItem(user_id,v,amount,false)
-                    ARMAclient.notify(player,{lang.police.menu.seize.seized({item.name,amount})})
-                  end
-                end
-              end
-            end
-
-            ARMAclient.notify(nplayer,{lang.police.menu.seize.items.seized()})
-          else
-            ARMAclient.notify(player,{lang.police.not_handcuffed()})
-          end
-        end)
-      else
-        ARMAclient.notify(player,{lang.common.no_player_near()})
-      end
-    end)
-  end
-end, lang.police.menu.seize.items.description()} ]]
-
---[[ -- toggle jail nearest player
-local choice_jail = {function(player, choice)
-  local user_id = ARMA.getUserId(player)
-  if user_id ~= nil then
-    ARMAclient.getNearestPlayer(player, {5}, function(nplayer)
-      local nuser_id = ARMA.getUserId(nplayer)
-      if nuser_id ~= nil then
-        ARMAclient.isJailed(nplayer, {}, function(jailed)
-          if jailed then -- unjail
-            ARMAclient.unjail(nplayer, {})
-            ARMAclient.notify(nplayer,{lang.police.menu.jail.notify_unjailed()})
-            ARMAclient.notify(player,{lang.police.menu.jail.unjailed()})
-          else -- find the nearest jail
-            ARMAclient.getPosition(nplayer,{},function(x,y,z)
-              local d_min = 1000
-              local v_min = nil
-              for k,v in pairs(cfg.jails) do
-                local dx,dy,dz = x-v[1],y-v[2],z-v[3]
-                local dist = math.sqrt(dx*dx+dy*dy+dz*dz)
-
-                if dist <= d_min and dist <= 15 then -- limit the research to 15 meters
-                  d_min = dist
-                  v_min = v
-                end
-
-                -- jail
-                if v_min then
-                  ARMAclient.jail(nplayer,{v_min[1],v_min[2],v_min[3],v_min[4]})
-                  ARMAclient.notify(nplayer,{lang.police.menu.jail.notify_jailed()})
-                  ARMAclient.notify(player,{lang.police.menu.jail.jailed()})
-                else
-                  ARMAclient.notify(player,{lang.police.menu.jail.not_found()})
-                end
-              end
-            end)
-          end
-        end)
-      else
-        ARMAclient.notify(player,{lang.common.no_player_near()})
-      end
-    end)
-  end
-end, lang.police.menu.jail.description()} ]]
 
 local isStoring = {}
 local choice_store_weapons = function(player, choice)
     local user_id = ARMA.getUserId(player)
     ARMAclient.getWeapons(player,{},function(weapons)
       if not isStoring[player] then
-            isStoring[player] = true
-            if ARMA.getInventoryWeight(user_id) <= 25 then
-              ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
-                    for k,v in pairs(weapons) do
-                      if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
-                        ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                        if v.ammo > 0 then
-                          for i,c in pairs(a.weapons) do
-                            if i == k then
-                              ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
-                            end   
-                          end
+          isStoring[player] = true
+          if ARMA.getInventoryWeight(user_id) <= 25 then
+            ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
+                  for k,v in pairs(weapons) do
+                    if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
+                      ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                      if v.ammo > 0 then
+                        for i,c in pairs(a.weapons) do
+                          if i == k then
+                            ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
+                          end   
                         end
                       end
                     end
-                    ARMAclient.notify(player,{"~g~Weapons Stored"})
-                    TriggerEvent('ARMA:RefreshInventory', source)
-                    SetTimeout(3000,function()
-                         isStoring[player] = nil 
-                     end)
-              end)
-            else
-              ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
-            end
-      
+                  end
+                  ARMAclient.notify(player,{"~g~Weapons Stored"})
+                  TriggerEvent('ARMA:RefreshInventory', source)
+                  SetTimeout(3000,function()
+                        isStoring[player] = nil 
+                    end)
+            end)
+          else
+            ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
+          end
        end
     end)
 end

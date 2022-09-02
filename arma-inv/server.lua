@@ -750,19 +750,22 @@ end)
 RegisterNetEvent('ARMA:InComa')
 AddEventHandler('ARMA:InComa', function()
     local source = source
+    local user_id = ARMA.getUserId({source})
     ARMAclient.isInComa(source, {}, function(in_coma) 
         if in_coma then
             Wait(1500)
-            local user_id = ARMA.getUserId({source})
+            local weight = ARMA.getInventoryWeight({user_id})
+            if weight == 0 then return end
             local model = GetHashKey('xs_prop_arena_bag_01')
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
+            local ndata = ARMA.getUserDataTable({user_id})
+            local stored_inventory = nil;
+            TriggerEvent('ARMA:StoreWeaponsRequest', source)
             LootBagEntities[lootbagnetid] = {lootbag, lootbag, false, source}
             LootBagEntities[lootbagnetid].Items = {}
             LootBagEntities[lootbagnetid].name = name1 
-            local ndata = ARMA.getUserDataTable({user_id})
-            local stored_inventory = nil;
             if ndata ~= nil then
                 if ndata.inventory ~= nil then
                     stored_inventory = ndata.inventory
