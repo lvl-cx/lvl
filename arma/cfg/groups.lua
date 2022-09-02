@@ -40,6 +40,7 @@ cfg.groups = {
 		"admin.noclip",
 		"admin.managecommunitypot",
 		"admin.moneymenu",
+		"admin.staffblips",
 		
 			
 		"admin.staffAddGroups",
@@ -117,6 +118,7 @@ cfg.groups = {
 		"admin.nhsAddGroups",
 		"admin.managecommunitypot",
 		"admin.moneymenu",
+		"admin.staffblips",
 
 		"group.add.vip",
         "group.add.founder",
@@ -193,6 +195,7 @@ cfg.groups = {
 		"admin.idsabovehead",
 		"admin.noclip",
 		"admin.managecommunitypot",
+		"admin.staffblips",
 		
 			
 		"admin.staffAddGroups",
@@ -238,6 +241,7 @@ cfg.groups = {
 		"admin.vehmenu",
 		"admin.special",
 		"admin.managecommunitypot",
+		"admin.staffblips",
 		
 		"admin.menu",
         "admin.warn",
@@ -312,6 +316,7 @@ cfg.groups = {
 		"admin.spectate",
 		"admin.screenshot",
 		"admin.slap",
+		"admin.staffblips",
 		"admin.givemoney",
 		"admin.tp2waypoint",
 		"admin.tp2coords",
@@ -370,6 +375,7 @@ cfg.groups = {
 		"admin.removewarn",
 		"admin.spawnBmx",
 		"admin.noclip",
+		"admin.staffblips",
 		"staff.mode",
 		"admin.idsabovehead",
 		"vehicle.delete",
@@ -542,11 +548,11 @@ cfg.groups = {
   -- [Police Groups]
   ["Commissioner Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
+		ARMAclient.setPolice(player, {false})
 		TriggerClientEvent("DeleteBlipsALL", player)
 	  end
 	},
@@ -601,8 +607,8 @@ cfg.groups = {
 
   ["Deputy Commissioner Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -660,8 +666,8 @@ cfg.groups = {
 
   ["Assistant Commissioner Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -719,8 +725,8 @@ cfg.groups = {
 
   ["Deputy Assistant Commissioner Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -778,8 +784,8 @@ cfg.groups = {
 
   ["Commander Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -837,8 +843,8 @@ cfg.groups = {
 
   ["Chief Superintendent Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -895,8 +901,8 @@ cfg.groups = {
 
   ["Superintendent Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -953,8 +959,8 @@ cfg.groups = {
 
   ["Chief Inspector Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1010,8 +1016,8 @@ cfg.groups = {
 
   ["Inspector Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1067,8 +1073,8 @@ cfg.groups = {
 
   ["Sergeant Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1124,8 +1130,8 @@ cfg.groups = {
 
   ["Special Constable Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1180,8 +1186,8 @@ cfg.groups = {
 
   ["Senior Constable Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1237,8 +1243,8 @@ cfg.groups = {
 
   ["Police Constable Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-      onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1293,8 +1299,8 @@ cfg.groups = {
 
   ["PCSO Clocked"] = {
     _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setCop(player,{true}) end,
-	  onspawn = function(player) ARMAclient.setCop(player,{true}) end,
+	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
+	  onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
 	  onleave = function(player)
 		local user_id = ARMA.getUserId(player)  		
 		ARMAclient.setCop(player,{false})
@@ -1540,6 +1546,7 @@ cfg.groups = {
   },
   
   ["TutorialDone"] = {},
+  ["polblips"] = {},
 
 }
 
