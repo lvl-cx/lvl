@@ -58,7 +58,7 @@ cfg.GunStores={
         ["WEAPON_CRAFTEDAXE"]={"Crafted Axe",10000,0,"N/A","w_me_craftedaxe"},
     },
     ["Rebel"]={
-        ["_config"]={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebel.license"},true},
+        ["_config"]={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebellicense.whitelisted"},true},
         ["GADGET_PARACHUTE"]={"Parachute",1000,0,"N/A","p_parachute_s"},
         ["WEAPON_AK200"]={"AK-200",750000,0,"N/A","w_ar_ak200"},
         ["WEAPON_MK14"]={"MK14",4000000,0,"N/A","w_sr_mk14"},
