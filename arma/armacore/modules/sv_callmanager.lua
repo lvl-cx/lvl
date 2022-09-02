@@ -17,7 +17,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(60000)
         for k,v in pairs(tickets) do
-            if tickets[k].cooldown > 0 then
+            if tickets[k].type == 'admin' and tickets[k].cooldown > 0 then
                 tickets[k].cooldown = tickets[k].cooldown - 1
             end
         end
