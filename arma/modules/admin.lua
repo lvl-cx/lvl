@@ -1928,6 +1928,9 @@ AddEventHandler("ARMA:checkBan",function(permid)
         exports['ghmattimysql']:execute("SELECT * FROM arma_users WHERE id = @id", {id = permid}, function(result) 
             if result ~= nil then
                 for k,v in pairs(result) do
+                    if v.username == nil then
+                        v.username = "Unknown"
+                    end
                     if v.banned then
                         if v.bantime ~= "perm" then
                             expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
