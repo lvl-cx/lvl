@@ -1,33 +1,13 @@
-d=false
+local d=false
 local b={}
 local c={}
-
-RegisterNetEvent("ARMA:showBlipscl")
-AddEventHandler("ARMA:showBlipscl",function(N)
-    if tARMA.isDev() then 
-        d=N
-        if d then 
-            tARMA.notify("~g~Blips enabled")
-        else 
-            tARMA.notify("~r~Blips disabled")
-            for O,P in ipairs(GetActivePlayers())do 
-                local Q=GetPlayerPed(P)
-                if GetPlayerPed(P)~=tARMA.getPlayerPed()then 
-                    Q=GetPlayerPed(P)
-                    blip=GetBlipFromEntity(Q)
-                    RemoveBlip(blip)
-                end 
-            end 
-        end 
-    end 
-end)
 
 Citizen.CreateThread(function()
     while true do 
         if d then 
             for O,P in ipairs(GetActivePlayers())do 
                 local G=GetPlayerPed(P)
-                if G~=GetPlayerPed(-1)then 
+                if G~=GetPlayerPed(-1) then
                     local blip=GetBlipFromEntity(G)
                     if not DoesBlipExist(blip) then 
                         blip=AddBlipForEntity(G)
@@ -85,19 +65,40 @@ local function m(n,o,k,info)
     EndTextCommandSetBlipName(l)
 end
 
+function tARMA.staffBlips(N)
+    if tARMA.getStaffLevel() >= 7 then 
+        d=N
+        if d then 
+            tARMA.notify("~g~Blips enabled")
+        else 
+            tARMA.notify("~r~Blips disabled")
+            for O,P in ipairs(GetActivePlayers())do 
+                local Q=GetPlayerPed(P)
+                if GetPlayerPed(P)~=tARMA.getPlayerPed()then
+                    Q=GetPlayerPed(P)
+                    blip=GetBlipFromEntity(Q)
+                    RemoveBlip(blip)
+                end 
+            end 
+        end 
+    end 
+end
+
 local u=true
 local v=GetPlayerServerId(PlayerId())
 CreateThread(function()
     Wait(20000)
     u=false
 end)
-RegisterNetEvent("ARMA:sendFarblips",function(w)
+RegisterNetEvent("ARMA:sendDevBlips",function(w)
     if not u then
         g()
-        for e,x in pairs(w)do 
-            if x.source~=v then 
-                m(x.position,x.dead,x.colour,x.info)
+        if d then
+            for e,x in pairs(w)do 
+                if x.source~=v then 
+                    m(x.position,x.dead,x.colour,x.info)
+                end 
             end 
-        end 
+        end
     end 
 end)
