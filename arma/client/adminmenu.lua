@@ -139,6 +139,7 @@ local groups = {
     ["Paramedic"] = "Paramedic",
     ["Trainee Paramedic"] = "Trainee Paramedic",
     ["TutorialDone"] = "Completed Tutorial",
+    ["polblips"] = "Long Range Emergency Blips",
 }
 
 
@@ -268,7 +269,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
             end
             if GlobalAdminLevel >= 6 then
-                RageUI.ButtonWithStyle("Remove Warning",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Remove Warning","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                     if Selected then
                         AddTextEntry('FMMC_MPM_NC', "Enter the Warning ID")
                         DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
@@ -365,7 +366,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
             if GlobalAdminLevel >= 7 then
                 local P=""
-                if tARMA.hasStaffBlips()then 
+                if tARMA.hasStaffBlips() then 
                     P="~r~Turn off blips"
                 else 
                     P="~g~Turn on blips"
@@ -375,18 +376,18 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:checkBlips', not tARMA.hasStaffBlips())
                     end
                 end)
-                RageUI.ButtonWithStyle("RP Zones",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("RP Zones","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                 end,RMenu:Get("rpzones","mainmenu"))
             end
             if GlobalAdminLevel >= 9 then
-                RageUI.ButtonWithStyle("Community Pot Menu",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Community Pot Menu","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:getCommunityPotAmount")
                     end
                 end,RMenu:Get('communitypot','mainmenu'))
             end  
             if GlobalAdminLevel >= 10 then
-                RageUI.ButtonWithStyle("Give Money",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Give Money","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                 end,RMenu:Get('adminmenu','moneymenu'))
                 RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
