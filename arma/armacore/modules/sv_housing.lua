@@ -39,12 +39,8 @@ end
 
 function leaveHome(user_id, home, number, cbr)
     local task = Task(cbr)
-  
     local player = ARMA.getUserSource(user_id)
-
-    TriggerClientEvent("ARMAHousing:UpdateInHome", player, false)
-    SetPlayerRoutingBucket(player, 0)
-  
+    SetPlayerRoutingBucket(player, 0) 
     for k, v in pairs(cfghomes.homes) do
         if k == home then
             local x,y,z = table.unpack(v.entry_point)
@@ -57,10 +53,7 @@ end
 
 function accessHome(user_id, home, number, cbr)
     local task = Task(cbr)
-  
     local player = ARMA.getUserSource(user_id)
-
-    TriggerClientEvent("ARMAHousing:UpdateInHome", player, true)
     local count = 0
     for k, v in pairs(cfghomes.homes) do
         count = count+1
