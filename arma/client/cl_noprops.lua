@@ -1,31 +1,36 @@
---[[ local a = module("cfg/cfg_noprops")
+local a=module("cfg/cfg_noprops")
 local b={}
 local c={}
 local d={}
 local e={}
 local f={}
-local g=25
-local h=25
-local i=10
-local j=1
+local g=25;
+local h=25;
+local i=10;
+local j=1;
 local function k(l,m)
     if m then 
         local n=GetGameTimer()
         repeat 
             if GetGameTimer()-n>=2500 then 
                 return false 
-            end
+            end;
             RequestStreamedTextureDict(l,false)
             Citizen.Wait(0)
         until HasStreamedTextureDictLoaded(l)
     else 
         SetStreamedTextureDictAsNoLongerNeeded(l)
-    end
+    end;
     return true 
-end
+end;
+local function o(p)
+    if tARMA.isDev()then 
+        print(p)
+    end 
+end;
 local function q(r,s,t,u)
     return r~=t and r~=t/2 or s~=u and s~=u/2 
-end
+end;
 local function v(w)
     tARMA.loadModel(w)
     local x=CreateObject(w,100.0,100.0,10.0,false,false,false)
@@ -34,10 +39,10 @@ local function v(w)
     Citizen.Wait(0)
     local y=StartExpensiveSynchronousShapeTestLosProbe(101.0,101.0,10.5,99.0,99.0,10.5,-1,0,4)
     local z,z,z,z,A=GetShapeTestResult(y)
-    local B=x==A
+    local B=x==A;
     DeleteEntity(x)
     return B 
-end
+end;
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
     for C,w in ipairs(a.models)do 
@@ -45,7 +50,7 @@ Citizen.CreateThread(function()
         if not IsModelInCdimage(D)then 
             table.insert(b,C)
         end 
-    end
+    end;
     if#b<g then 
         for C,w in pairs(a.requiredCollisions)do 
             local D=GetHashKey(w)
@@ -53,15 +58,15 @@ Citizen.CreateThread(function()
                 table.insert(f,C)
             end 
         end 
-    end
+    end;
     if#b<g and#f<j then 
-        local E=0
+        local E=0;
         for l,F in pairs(a.textures)do 
             while E>10 do 
                 Citizen.Wait(0)
-            end
+            end;
             Citizen.CreateThreadNow(function()
-                E=E+1
+                E=E+1;
                 if k(l,true)then 
                     for z,G in ipairs(F)do 
                         local H=G[1]
@@ -88,18 +93,18 @@ Citizen.CreateThread(function()
                     end 
                 else 
                     table.insert(e,GetHashKey(string.format("%s.ytd",l)))
-                end
+                end;
                 k(l,false)
                 E=E-1 
             end)
-        end
+        end;
         while E>0 do 
             Citizen.Wait(0)
         end 
-    end
+    end;
+    o(string.format("Client Information: (%d, %d, %d, %d, %d)",#b,#c,#d,#e,#f))
     if#b>g or#c>h or#d>i or#f>j then 
         TriggerServerEvent("ARMA:alertNoProps",b,c,d,e,f)
-    end
+    end;
     collectgarbage()
 end)
- ]]
