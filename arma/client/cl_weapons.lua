@@ -4,10 +4,6 @@ Citizen.CreateThread(function()
         AddTextEntry(b,c.name)
     end 
 end)
-RegisterNetEvent("ARMA:GiveWap")
-AddEventHandler("ARMA:GiveWap", function(Y)
-    TriggerServerEvent('ARMA:banType44')
-end)
 
 function tARMA.giveWeapons(d,e)
     local f=PlayerPedId()

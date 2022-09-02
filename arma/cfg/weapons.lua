@@ -348,10 +348,10 @@ cfg.weapons = {
         showonback = true,
         weight = 7.5,
     },
-    ["WEAPON_LR300"] = {
+    ["WEAPON_LR300"] = { -- test ar for now
         name = "LR300",
         class = "AR",
-        ammo = "5.56mm NATO",
+        ammo = "Police Issued 5.56mm",
         policeWeapon = false,
         model = "w_ar_lr300",
         showonback = true,
