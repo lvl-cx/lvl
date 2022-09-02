@@ -605,6 +605,12 @@ function tARMA.KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
 	end
 end
 
+function tARMA.syncNetworkId(a8)
+  SetNetworkIdExistsOnAllMachines(a8,true)
+  SetNetworkIdCanMigrate(a8,false)
+  NetworkSetNetworkIdDynamic(a8,true)
+end
+
 RegisterNetEvent('__ARMA_callback:client')
 AddEventHandler('__ARMA_callback:client',function(aJ,...)
     local aK=promise.new()
@@ -760,20 +766,20 @@ local stafflevel = 0
 globalOnPoliceDuty = false
 globalNHSOnDuty = false
 globalOnPrisonDuty = false
-function tARMA.setPolice()
-  globalOnPoliceDuty = true
+function tARMA.setPolice(y)
+  globalOnPoliceDuty = y
 end
 function tARMA.globalOnPoliceDuty()
   return globalOnPoliceDuty
 end
-function tARMA.setHMP()
-  globalOnPrisonDuty = true
+function tARMA.setHMP(x)
+  globalOnPrisonDuty = x
 end
 function tARMA.globalOnPrisonDuty()
   return globalOnPrisonDuty
 end
-function tARMA.setNHS()
-  globalNHSOnDuty = true
+function tARMA.setNHS(w)
+  globalNHSOnDuty = w
 end
 function tARMA.globalNHSOnDuty()
   return globalNHSOnDuty
