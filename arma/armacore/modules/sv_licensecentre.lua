@@ -1,7 +1,7 @@
 
 licensecentre = {}
 
-licensecentre.location = vector3(-926.37622070312,-2037.8065185547,9.4023275375366)
+licensecentre.location = vector3(-547.06958007812,-199.6887512207,47.414916992188)
 
 licensecentre.prices = {
     {group = "Weed", price = 200000},
@@ -15,6 +15,7 @@ licensecentre.prices = {
     {group = "Gold", price = 1000000},
     {group = "Diamond", price = 5000000},
     {group = "DJ", price = 50000000},
+    {group = "polblips", price = 5000000},
 }
 
 RegisterServerEvent("LicenseCentre:BuyGroup")
@@ -25,7 +26,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
 
-    if #(playerCoords - coords) <= 5.0 then
+    if #(playerCoords - coords) <= 15.0 then
         if ARMA.hasGroup(userid, job) then 
             ARMAclient.notify(source, {"~o~You have already purchased this license!"})
             TriggerClientEvent("arma:PlaySound", source, 2)
@@ -34,7 +35,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
                 if v.group == job then
                     if ARMA.tryFullPayment(userid, v.price) then
                         ARMA.addUserGroup(userid,job)
-                        ARMAclient.notify(source, {"~g~Purchased " .. job .. " License for ".. '£' ..tostring(getMoneyStringFormatted(v.price)) .. " ❤️"})
+                        ARMAclient.notify(source, {"~g~Purchased " .. name .. " for ".. '£' ..tostring(getMoneyStringFormatted(v.price)) .. " ❤️"})
                         TriggerClientEvent("arma:PlaySound", source, 1)
                     else 
                         ARMAclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
