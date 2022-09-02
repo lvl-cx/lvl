@@ -305,6 +305,7 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
             ARMA.removeUserGroup(player_perm, v)
             ARMAclient.notify(source,{'~g~User clocked off'})
             ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
+            TriggerClientEvent('ARMA:disableFactionBlips', source)
         end
         local command = {
             {
@@ -2016,9 +2017,8 @@ RegisterServerEvent('ARMA:checkBlips')
 AddEventHandler('ARMA:checkBlips', function(status)
     local source = source
     local user_id = ARMA.getUserId(source)
-
-    if ARMA.hasPermission(user_id, 'dev.menu') then
-        TriggerClientEvent('ARMA:showBlipscl', source, status)
+    if ARMA.hasPermission(user_id, 'admin.staffblips') then
+        ARMAclient.staffBlips(source,{status})
     end
 end)
 
