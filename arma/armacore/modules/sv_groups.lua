@@ -75,14 +75,6 @@ AddEventHandler('ARMA:RefundLicense', function(group)
         else
             ARMAclient.notify(source, {'~r~Error, You do not have this License.'})
         end
-    elseif group == 'highroller' then 
-        if ARMA.hasGroup(user_id, group) then
-            ARMA.removeUserGroup(user_id, group)
-            ARMA.giveBankMoney(user_id, 2500000)
-            ARMAclient.notify(source, {'~g~You have refunded ' .. group .. ' for £2,500,000 [25% of License Price]'})
-        else
-            ARMAclient.notify(source, {'~r~Error, You do not have this License.'})
-        end
     elseif group == 'Scrap' then 
         if ARMA.hasGroup(user_id, group) then
             ARMA.removeUserGroup(user_id, group)
@@ -92,7 +84,6 @@ AddEventHandler('ARMA:RefundLicense', function(group)
             ARMAclient.notify(source, {'~r~Error, You do not have this License.'})
         end
     end
-
 end)
 
 RegisterNetEvent('ARMA:SellLicense')
@@ -114,7 +105,6 @@ AddEventHandler('ARMA:SellLicense', function(group)
                                 ARMAclient.notify(source, {'~g~Sent Request.'})
                                 ARMA.request(target,GetPlayerName(source).." wants to sell: " ..group.. " License for £"..price, 10, function(target,ok)
                                     if ok then
-                                        
                                         if ARMA.tryBankPayment(tonumber(userid), tonumber(price)) then
                                             ARMA.giveBankMoney(user_id, tonumber(price))
                                             ARMA.removeUserGroup(user_id, group)
@@ -161,37 +151,40 @@ AddEventHandler('GroupMenu:Groups', function()
  
  
         if ARMA.hasGroup(user_id, "Scrap") then
-            GroupsL["Scrap"] = true;
+            table.insert(GroupsL, {name = 'Scrap License', group = 'Scrap'})
         end
         if ARMA.hasGroup(user_id, "Weed") then
-            GroupsL["Weed"] = true;
+            table.insert(GroupsL, {name = 'Weed License', group = 'Weed'})
         end
         if ARMA.hasGroup(user_id, "Cocaine") then
-            GroupsL["Cocaine"] = true;
+            table.insert(GroupsL, {name = 'Cocaine License', group = 'Cocaine'})
         end
         if ARMA.hasGroup(user_id, "Gold") then
-            GroupsL["Gold"] = true;
+            table.insert(GroupsL, {name = 'Gold License', group = 'Gold'})
         end
         if ARMA.hasGroup(user_id, "Diamond") then
-            GroupsL["Diamond"] = true;
+            table.insert(GroupsL, {name = 'Diamond License', group = 'Diamond'})
         end
         if ARMA.hasGroup(user_id, "Heroin") then
-            GroupsL["Heroin"] = true;
+            table.insert(GroupsL, {name = 'Heroin License', group = 'Heroin'})
         end
         if ARMA.hasGroup(user_id, "Gang") then
-            GroupsL["Gang"] = true;
+            table.insert(GroupsL, {name = 'Gang License', group = 'Gang'})
         end
         if ARMA.hasGroup(user_id, "Rebel") then
-            GroupsL["Rebel"] = true;
+            table.insert(GroupsL, {name = 'Rebel License', group = 'Rebel'})
         end
         if ARMA.hasGroup(user_id, "AdvancedRebel") then
-            GroupsL["AdvancedRebel"] = true;
+            table.insert(GroupsL, {name = 'Advanced Rebel', group = 'AdvancedRebel'})
         end
         if ARMA.hasGroup(user_id, "LSD") then
-            GroupsL["LSD"] = true;
+            table.insert(GroupsL, {name = 'LSD License', group = 'LSD'})
         end
-        if ARMA.hasGroup(user_id, "highroller") then
-            GroupsL["highroller"] = true;
+        if ARMA.hasGroup(user_id, "DJ") then
+            table.insert(GroupsL, {name = 'DJ License', group = 'DJ'})
+        end
+        if ARMA.hasGroup(user_id, "polblips") then
+            table.insert(GroupsL, {name = 'Long Range Emergency Blips', group = 'polblips'})
         end
 
 
