@@ -2,18 +2,18 @@ local vehicles = {}
 
 
 AllowMoreThenOneCar = true
-function tARMA.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type (one vehicle per type allowed at the same time)
-    local vehicle = vehicles[vtype]
+function tARMA.spawnGarageVehicle(vtype, name, pos, vehiclename, vehicleplate) -- vtype is the vehicle type (one vehicle per type allowed at the same time)
+    local vehicle = vehicles[GetHashKey(name)]
     if vehicle and not IsVehicleDriveable(vehicle[3]) then -- precheck if vehicle is undriveable
         -- despawn vehicle
         SetVehicleHasBeenOwnedByPlayer(vehicle[3], false)
         Citizen.InvokeNative(0xAD738C3085FE7E11, vehicle[3], false, true) -- set not as mission entity
         SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(vehicle[3]))
         Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(vehicle[3]))
-        vehicles[vtype] = nil
+        vehicles[GetHashKey(name)] = nil
     end
 
-    vehicle = vehicles[vtype]
+    vehicle = vehicles[GetHashKey(name)]
     if AllowMoreThenOneCar or vehicle == nil then
         -- load vehicle model
         local mhash = GetHashKey(name)
@@ -32,14 +32,15 @@ function tARMA.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type
                 x, y, z = table.unpack(pos)
             end
 
+            local playerHeading = GetEntityHeading(PlayerPedId())
             local nveh = CreateVehicle(mhash, x, y, z + 0.5, 0.0, true, false)
             local as = nveh
             SetVehicleOnGroundProperly(nveh)
             SetEntityInvincible(nveh, false)
             SetPedIntoVehicle(GetPlayerPed(-1), nveh, -1) -- put player inside
-            SetVehicleNumberPlateText(nveh, "P " .. tARMA.getRegistrationNumber())
-            -- Citizen.InvokeNative(0xAD738C3085FE7E11, nveh, true, true) -- set as mission entity
+            SetVehicleNumberPlateText(nveh, vehicleplate) -- gets individual plate for vehicle from parameter
             SetVehicleHasBeenOwnedByPlayer(nveh, true)
+            SetEntityHeading(nveh, playerHeading)
             TriggerServerEvent("LSC:applyModifications", name, nveh)
             TriggerServerEvent("ARMA:PayVehicleTax")
 
@@ -80,7 +81,7 @@ function tARMA.spawnGarageVehicle(vtype, name, pos) -- vtype is the vehicle type
             SetModelAsNoLongerNeeded(mhash)
         end
     else
-        tARMA.notify("You can only have one Veh type: " .. vtype .. " of vehicle out.")
+        tARMA.notify("~r~Vehicle " ..vehiclename.. " is already out.")
     end
 end
 
@@ -89,9 +90,7 @@ function tARMA.despawnGarageVehicle(vtype, max_range)
     if vehicle then
         local x, y, z = table.unpack(GetEntityCoords(vehicle[3], true))
         local px, py, pz = tARMA.getPosition()
-
         if GetDistanceBetweenCoords(x, y, z, px, py, pz, true) < max_range then -- check distance with the vehicule
-            -- remove vehicle
             SetVehicleHasBeenOwnedByPlayer(vehicle[3], false)
             Citizen.InvokeNative(0xAD738C3085FE7E11, vehicle[3], false, true) -- set not as mission entity
             SetVehicleAsNoLongerNeeded(Citizen.PointerValueIntInitialized(vehicle[3]))

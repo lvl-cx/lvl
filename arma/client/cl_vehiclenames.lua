@@ -1,6 +1,6 @@
 local a=module("arma-vehicles", "garages")
 g_vehicleHashToVehicleName={}
-for b,c in pairs(a.garage_types)do 
+for b,c in pairs(a.garages)do 
     for d,e in pairs(c)do 
         if d~="_config"then
             AddTextEntryByHash(GetHashKey(d),e[1])

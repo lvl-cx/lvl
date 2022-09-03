@@ -1,5 +1,5 @@
 local cfg = module("arma-vehicles", "garages")
-local vehcategories = cfg.garage_types
+local b = cfg.garages
 local garage_type = "Car"
 local selected_category = nil
 local Hovered_Vehicles = nil
@@ -12,6 +12,7 @@ local cantload = {}
 local vehname = nil 
 local folders = {}
 local SelectedfolderName = nil
+local c = {}
 
 local vehicleCannotBeSold = {
     ["demonhawkk"] = true,
@@ -48,6 +49,16 @@ function DeleteCar(veh)
     end
 end
 
+local function aK(E)
+    for J, aL in pairs(b) do
+        for aM in pairs(aL) do
+            if aM ~= "_config" and aM == E then
+                return V(J) and h == aL["_config"].type
+            end
+        end
+    end
+    return true
+end
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'main')) then
@@ -138,6 +149,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Selected then 
                             SelectedCar.spawncode = i 
                             SelectedCar.name = v[1]
+                            SelectedCar.plate = v[3] -- invdividual vehicle plate from db
                             RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. v[1])
                         end
                         if Active then 
@@ -163,7 +175,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
                 RageUI.Button('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
-                        tARMA.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()))
+                        tARMA.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()), SelectedCar.plate)
                         DeleteCar(veh)
                         RageUI.ActuallyCloseAll()
                     end
@@ -459,128 +471,65 @@ AddEventHandler('ARMA:CloseGarage', function()
     RageUI.ActuallyCloseAll()
 end)
 
-
-Citizen.CreateThread(function()
-    while true do 
-        Wait(0)
-        local PlayerCoords = GetEntityCoords(PlayerPedId())
-        for i,v in pairs(cfg.garages) do 
-            local x,y,z = v[2], v[3], v[4]
-            if #(PlayerCoords - vec3(x,y,z)) <= 150 then 
-                local type = v[1]
-                if type == "Car" then 
-                    DrawMarker(36, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 255, 00, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "Rebel" then 
-                    DrawMarker(36, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 0, 00, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "VIP" then 
-                    DrawMarker(36, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 255, 00, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "MET Police" then 
-                    DrawMarker(36, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0, 255, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "Boat" then 
-                    DrawMarker(35, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 255, 00, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "Heli" then 
-                    DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 255, 00, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "MET Police Heli" then 
-                    DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 0, 255, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "VIP Heli" then 
-                    DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 255, 0, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "Aircraft" then 
-                    DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 255, 0, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "VIP Aircraft" then 
-                    DrawMarker(34, x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 255, 0, 50, false, true, 2, true, nil, nil, false)
-                elseif type == "MET Police Boats" then 
-                    DrawMarker(35, x, y, z -1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 00, 0, 255, 50, false, true, 2, true, nil, nil, false)
+local function V(J)
+    for k,v in pairs(c) do
+        if v == J then
+            return true
+        end
+    end
+    return false
+end
+local function W(J)
+    RageUI.ActuallyCloseAll()
+    if V(J) then
+        RageUI.Visible(RMenu:Get("ARMAGarages", "main"), true)
+    end
+end
+local function X(J)
+    RageUI.ActuallyCloseAll()
+    RageUI.Visible(RMenu:Get("ARMAGarages", "main"), false)
+end
+CreateThread(function()
+    local Y = {}
+    local Z = {}
+    for J, G in pairs(cfg.garages) do
+        for L, M in pairs(G) do
+            if L == "_config" then
+                local _, a0, a1, a2, a3, type = M.blipid,M.blipcolor,M.markerid,M.markercolours,M.permissions,M.type
+                for a4, a5 in pairs(cfg.garageInstances) do
+                    local a6, a7, a8 = table.unpack(a5)
+                    if J == a6 then
+                        if a8 then
+                            table.insert(Y, {position = a7, blipId = _, blipColor = a0, name = a6})
+                        end
+                        table.insert(Z, {position = a7, colour = a2, markerId = a1})
+                    end
                 end
             end
         end
-    
+    end
+    local a9 = function(aa)
+        PlaySound(-1, "Hit", "RESPAWN_SOUNDSET", 0, 0, 1)
+        h = b[aa.garageType]["_config"].type
+        W(aa.garageType)
+        selectedGarageVector = aa.position
+    end
+    local ab = function(aa)
+        PlaySound(-1, "Hit", "RESPAWN_SOUNDSET", 0, 0, 1)
+        X(aa.garageType)
+    end
+    local ac = function(aa)
+    end
+    for ad, ae in pairs(cfg.garageInstances) do
+        tARMA.createArea("garage_" .. ad,ae[2],1.5,6,a9,ab,ac,{garageType = ae[1], garageId = ad, position = ae[2]})
+    end
+    for _, af in pairs(Y) do
+        tARMA.addBlip(af.position.x, af.position.y, af.position.z, af.blipId, af.blipColor, af.name, 0.7, false)
+    end
+    for a1, ag in pairs(Z) do
+        tARMA.addMarker(ag.position.x,ag.position.y,ag.position.z,0.7,0.7,0.5,ag.colour[1],ag.colour[2],ag.colour[3],125,50,ag.markerId,true)
     end
 end)
-
-local MenuOpen = false 
-local inMarker = false
-Citizen.CreateThread(function()
-    while true do 
-        Wait(250)
-        local PlayerCoords = GetEntityCoords(PlayerPedId())
-        inMarker = false
-        for i,v in pairs(cfg.garages) do 
-            local x,y,z = v[2], v[3], v[4]
-            if #(PlayerCoords - vec3(x,y,z)) <= 3.0 then 
-                inMarker = true 
-                garage_type = v[1]
-                break
-            end
-        end
-        if not MenuOpen and inMarker then
-            MenuOpen = true
-            RageUI.Visible(RMenu:Get('ARMAGarages', 'main'), true)  
-        end
-        if not inMarker and MenuOpen then
-            DeleteCar(veh)
-            Table_Type = nil
-            RageUI.ActuallyCloseAll()
-            MenuOpen = false
-        end
-    end
-end)
-
-for i,v in pairs(cfg.garages) do 
-    local x,y,z = v[2], v[3], v[4]
-    local Blip = AddBlipForCoord(x, y, z)
-    if v[1] == "Car" then 
-        SetBlipSprite(Blip, 50)
-        SetBlipColour(Blip, 2)
-        AddTextEntry("MAPBLIP", v[1] .. ' Garage')
-    elseif v[1] == "Rebel" then 
-        SetBlipSprite(Blip, 50)
-        SetBlipColour(Blip, 1)
-        AddTextEntry("MAPBLIP", v[1] .. ' Garage')
-    elseif v[1] == "Boat" then 
-        SetBlipSprite(Blip, 427)
-        SetBlipColour(Blip, 2)
-        AddTextEntry("MAPBLIP", v[1] .. 's')
-    elseif v[1] == "MET Police" then 
-        SetBlipSprite(Blip, 225)
-        SetBlipColour(Blip, 38)
-        AddTextEntry("MAPBLIP", v[1] .. ' Garage')
-    elseif v[1] == "Heli" then 
-        SetBlipSprite(Blip, 43)
-        SetBlipColour(Blip, 2)
-        AddTextEntry("MAPBLIP", v[1] .. 'copters')
-    elseif v[1] == "VIP" then 
-        SetBlipSprite(Blip, 225)
-        SetBlipColour(Blip, 5)
-        AddTextEntry("MAPBLIP", v[1] .. ' Garage')
-    elseif v[1] == "VIP Heli" then 
-        SetBlipSprite(Blip, 43)
-        SetBlipColour(Blip, 5)
-        AddTextEntry("MAPBLIP", v[1] .. 'copters')
-    elseif v[1] == "MET Police Heli" then 
-        SetBlipSprite(Blip, 43)
-        SetBlipColour(Blip, 38) 
-        AddTextEntry("MAPBLIP", v[1] .. 'copters')
-    elseif v[1] == "VIP Aircraft" then 
-        SetBlipSprite(Blip, 43)
-        SetBlipColour(Blip, 38) 
-        AddTextEntry("MAPBLIP", v[1] .. 'copters')
-    elseif v[1] == "Aircraft" then 
-        SetBlipSprite(Blip, 43)
-        SetBlipColour(Blip, 38) 
-        AddTextEntry("MAPBLIP", v[1] .. '')
-    elseif v[1] == "MET Police Boats" then 
-        SetBlipSprite(Blip, 427)
-        SetBlipColour(Blip, 38)
-        AddTextEntry("MAPBLIP", v[1] .. '')    
-    else
-        AddTextEntry("MAPBLIP", v[1] .. ' Garage')
-    end
-    SetBlipScale(Blip, 0.55)
-    SetBlipAsShortRange(Blip, true)
-    BeginTextCommandSetBlipName("MAPBLIP")
-    EndTextCommandSetBlipName(Blip)
-    SetBlipCategory(Blip, 1)
-end
 
 function getMoneyStringFormatted(cashString)
 	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
@@ -613,3 +562,39 @@ AddEventHandler('ARMA:sendGarageSettings', function()
         displayCustomFoldersinOwned = false
     end
 end)
+
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		TriggerServerEvent("ARMA:refreshGaragePermissions")
+		firstspawn = 1
+	end
+end)
+
+RegisterNetEvent("ARMA:recieveRefreshedGaragePermissions",function(z)
+    c = z
+end)
+
+-- function tARMA.getIsVip(j)
+--     currentVIP = tARMA.getCurrentPlayerInfo('currentVIP')
+--     if currentVIP then
+--         for a,b in pairs(currentVIP) do
+--             if b == j then
+--                 return true
+--             end
+--         end
+--         return false
+--     end
+-- end
+
+-- function tARMA.getIsRebel(j)
+--     currentRebel = tARMA.getCurrentPlayerInfo('currentRebel')
+--     if currentRebel then
+--         for a,b in pairs(currentRebel) do
+--             if b == j then
+--                 return true
+--             end
+--         end
+--         return false
+--     end
+-- end

@@ -6,7 +6,7 @@ RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','ve
 RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 
 local m = module("arma-vehicles", "garages")
-m=m.garage_types
+m=m.garages
 local garageCategorySelected
 local veh
 local extraSettings = false
