@@ -166,7 +166,7 @@ AddEventHandler("ARMA:Giveweapon",function()
                 },
                 {
                   ["name"] = "Player Hours",
-                  ["value"] = "0 hours",
+                  ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                   ["inline"] = true
                 },
                 {
@@ -236,7 +236,7 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
                         },
                         {
                           ["name"] = "Player Hours",
-                          ["value"] = "0 hours",
+                          ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                           ["inline"] = true
                         },
                         {
@@ -491,7 +491,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "0 hours",
+                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                             ["inline"] = true
                         },
                         {
@@ -587,7 +587,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "0 hours",
+                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                             ["inline"] = true
                         },
                         {
@@ -646,7 +646,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "0 hours",
+                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                             ["inline"] = true
                         },
                         {
@@ -956,7 +956,7 @@ AddEventHandler('ARMA:noF10Kick', function()
                             },
                             {
                                 ["name"] = "Player Hours",
-                                ["value"] = "0 hours",
+                                ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                                 ["inline"] = true
                             },
                             {
@@ -1038,7 +1038,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "0 hours",
+                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                             ["inline"] = true
                         },
                         {
@@ -1667,7 +1667,7 @@ AddEventHandler('ARMA:GetCoords', function()
                             },
                             {
                                 ["name"] = "Player Hours",
-                                ["value"] = "0 hours",
+                                ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                                 ["inline"] = true
                             },
                             {
@@ -1769,7 +1769,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
                     },
                     {
                         ["name"] = "Player Hours",
-                        ["value"] = "0 hours",
+                        ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                         ["inline"] = true
                     },
                     {
@@ -1888,7 +1888,7 @@ AddEventHandler('ARMA:AddCar', function()
                                 },
                                 {
                                   ["name"] = "Player Hours",
-                                  ["value"] = "0 hours",
+                                  ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
                                   ["inline"] = true
                                 },
                                 {
