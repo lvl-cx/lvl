@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
         for f, g in ipairs(GetActivePlayers()) do
             local k = GetPlayerPed(g)
             local l = GetPlayerServerId(g)
-            if k ~= e and (IsEntityVisible(k) or not (tARMA.getStaffLevel() > 0)) then
+            if k ~= e and (IsEntityVisible(k) or not tARMA.getIsStaff(tARMA.getPermIdFromTemp(l))) then
                 local m = GetEntityCoords(k)
                 b[g] = #(j - m)
             end
@@ -48,7 +48,7 @@ Citizen.CreateThread(function()
         if not tARMA.isstaffedOn() then
             a = 7
         end
-        Citizen.Wait(1000)
+        Citizen.Wait(0)
     end
 end)
 
@@ -63,9 +63,9 @@ Citizen.CreateThread(function()
                 RemoveMpGamerTag(d[g])
                 d[g] = nil
             end
-            Wait(0)
+            Citizen.Wait(0)
         end
-        Wait(0)
+        Citizen.Wait(0)
     end
 end)
 
