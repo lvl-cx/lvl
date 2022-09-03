@@ -47,16 +47,6 @@ Citizen.CreateThread(function()
 
 end)
 
--- NO BULLET PROOF HELMETS --
-CreateThread(function()
-    while true do
-        Wait(0)
-        SetPlayerLockon(PlayerId(), false)
-        SetPedConfigFlag(PlayerPedId(), 149, true)
-        SetPedConfigFlag(PlayerPedId(), 438, true)
-    end
-end)
-
 -- NO WANTED --
 Citizen.CreateThread(function()
     while true do
