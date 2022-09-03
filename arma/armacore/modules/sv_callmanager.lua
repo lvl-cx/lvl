@@ -52,9 +52,10 @@ RegisterCommand("calladmin", function(source)
             for k, v in pairs(ARMA.getUsers({})) do
                 TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
             end
-            ARMAclient.notify(user_source,{"~g~Sent admin ticket."})
+            ARMAclient.notify(user_source,{"~b~Your request has been sent."})
+            ARMAclient.notify(user_source,{"~y~If you are reporting a player you can also create a report at www.armarp.gg/forums"})
         else
-            ARMAclient.notify(user_source,{"Please enter a valid reason."})
+            ARMAclient.notify(user_source,{"~r~Please enter a valid reason."})
         end
     end)
 end)
@@ -186,6 +187,10 @@ AddEventHandler("ARMA:NHSComaCall", function()
     for k, v in pairs(ARMA.getUsers({})) do
         TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'nhs')
     end
-    docsOnline = #ARMA.getUsersByPermission('nhs.menu')
-    TriggerClientEvent('ARMA:getNumberOfDocsOnline', user_source, docsOnline)
+end)
+
+RegisterNetEvent("ARMA:getNumOfNHSOnline")
+AddEventHandler("ARMA:getNumOfNHSOnline", function()
+    local source = source
+    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, ARMA.getUsersByPermission('nhs.menu'))
 end)
