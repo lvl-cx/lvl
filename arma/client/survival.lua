@@ -1,6 +1,5 @@
 local comaAnim = {}
 local in_coma = false
-local secondsTillBleedout = 90
 local playerCanRespawn = false 
 local calledNHS = false
 local deathString = ""
@@ -38,7 +37,7 @@ end)
 Citizen.CreateThread(function()
   while true do 
     if IsDisabledControlJustPressed(0,38) then
-      if playerCanRespawn and in_coma and secondsTillBleedout < 1 then
+      if playerCanRespawn and in_coma then
         TriggerEvent("ARMA:respawnKeyPressed")
         tARMA.respawnPlayer()
         TriggerServerEvent('ARMA:SendSpawnMenu')
@@ -60,12 +59,7 @@ Citizen.CreateThread(function() -- coma thread
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
             tARMA.ejectVehicle()
-            TriggerEvent('ARMA:IsInMoneyComa', true)
-            ExecuteCommand('storeallweapons')
-            if not tARMA.globalOnPoliceDuty() then
-                TriggerServerEvent('ARMA:InComa')
-            end
-            ARMAserver.MoneyDrop()
+            TriggerServerEvent("ARMA:getNumOfNHSOnline")
             TriggerEvent('ARMA:3Seconds')
             TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
             in_coma = true
@@ -99,6 +93,65 @@ Citizen.CreateThread(function() -- coma thread
 
     end
 end)
+
+RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
+    c = I
+    if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
+        bleedoutDuration = 50000
+    elseif #c >= 1 and #c <= 3 and not globalNHSOnDuty then
+        bleedoutDuration = 170000
+    elseif #c >= 1 and not globalNHSOnDuty then
+        bleedoutDuration = 290000
+    else
+        bleedoutDuration = 50000
+    end
+    e = bleedoutDuration + 10000
+    f = e / 1000
+    i = 10
+    l = GetGameTimer()
+    m = e
+    local J = false
+    if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
+        J = true
+    else
+        TriggerEvent('ARMA:IsInMoneyComa', true)
+        ExecuteCommand('storeallweapons')
+        if not tARMA.globalOnPoliceDuty() then
+            TriggerServerEvent('ARMA:InComa')
+        end
+        ARMAserver.MoneyDrop()
+    end
+    CreateThread(function()
+        local K = GetGameTimer()
+        while tARMA.getKillerInfo().ready == nil do
+            Wait(0)
+        end
+        local L = tARMA.getKillerInfo()
+        local M = false
+        if L.name == nil then
+            M = true
+        end
+        g = false
+        TriggerEvent("ARMA:SHOW_DEATH_SCREEN", f, L.name or "N/A", L.user_id or "N/A", L.weapon or "N/A", M)
+    end)
+    while i <= 10 and i >= 0 do
+        Wait(1000)
+        i = i - 1
+    end
+    if J then
+        TriggerEvent('ARMA:IsInMoneyComa', true)
+        ExecuteCommand('storeallweapons')
+        if not tARMA.globalOnPoliceDuty() then
+            TriggerServerEvent('ARMA:InComa')
+        end
+        ARMAserver.MoneyDrop()
+    end
+end)
+
+local L = {}
+function tARMA.getKillerInfo()
+    return L
+end
 
 Citizen.CreateThread(function()
     while true do
@@ -190,7 +243,6 @@ function tARMA.RevivePlayer()
 end
 
 AddEventHandler("ARMA:countdownEnded",function()
-    secondsTillBleedout = 0
     playerCanRespawn = true
 end)
 
@@ -216,7 +268,6 @@ function tARMA.respawnPlayer()
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
     calledNHS = false
     DeathString = ""
-    secondsTillBleedout = 90
     local ped = PlayerPedId()
     tARMA.reviveComa()
 end
@@ -260,19 +311,22 @@ Citizen.CreateThread(function()
                 Killer = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(PedKiller, -1))
             end
             local distance = 0
-            local suicide = false
+            local a6 = false
             local az = tARMA.getPedServerId(PedKiller)
             if (Killer == PlayerId()) or (Killer == nil) then
-                TriggerEvent("ARMA:SHOW_DEATH_SCREEN",secondsTillBleedout,"N/A","N/A","N/A",true)
-                suicide = true
+                a6 = true
             else
-                TriggerEvent("ARMA:SHOW_DEATH_SCREEN", secondsTillBleedout, GetPlayerName(Killer) or "N/A", tARMA.getUserId(tARMA.getPedServerId(PedKiller)) or "N/A", tostring(R) or "N/A", false)
+                L.name = GetPlayerName(Killer)
                 distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(PedKiller))
             end
+            L.source = az
+            L.user_id = tARMA.getUserId(tARMA.getPedServerId(PedKiller))
+            L.weapon = tostring(R)
+            L.ready = true
             if not playerCanRespawn and in_coma and IsEntityPlayingAnim(playerPed,comaAnim.dict,comaAnim.anim,3)then
                 TriggerServerEvent("ARMA:onPlayerKilled", "finished off", tARMA.getPedServerId(PedKiller), s)
             else
-                TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), R, suicide, distance)
+                TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), R, a6, distance)
             end
             Killer = nil
             PedKiller = nil
@@ -281,6 +335,7 @@ Citizen.CreateThread(function()
         while IsEntityDead(PlayerPedId()) do
             Citizen.Wait(0)
         end
+        L = {}
     end
 end)
 

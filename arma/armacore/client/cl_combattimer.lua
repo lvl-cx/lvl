@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
                     local n=false
                     while not n do 
                         h=GetEntityCoords(tARMA.getPlayerPed())
-                        while d(h,k)<=l and not globalOnPoliceDuty and not globalOnPrisonDuty and not globalNHSOnDuty do
+                        while d(h,k)<=l do
                             h=GetEntityCoords(tARMA.getPlayerPed())
                             m=h
                             if IsPedShooting(tARMA.getPlayerPed())and GetSelectedPedWeapon(tARMA.getPlayerPed())~=`WEAPON_UNARMED`then 
