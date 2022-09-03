@@ -574,27 +574,3 @@ end)
 RegisterNetEvent("ARMA:recieveRefreshedGaragePermissions",function(z)
     c = z
 end)
-
--- function tARMA.getIsVip(j)
---     currentVIP = tARMA.getCurrentPlayerInfo('currentVIP')
---     if currentVIP then
---         for a,b in pairs(currentVIP) do
---             if b == j then
---                 return true
---             end
---         end
---         return false
---     end
--- end
-
--- function tARMA.getIsRebel(j)
---     currentRebel = tARMA.getCurrentPlayerInfo('currentRebel')
---     if currentRebel then
---         for a,b in pairs(currentRebel) do
---             if b == j then
---                 return true
---             end
---         end
---         return false
---     end
--- end

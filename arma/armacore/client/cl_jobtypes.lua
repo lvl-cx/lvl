@@ -60,16 +60,19 @@ local f={
 
 function tARMA.getJobType(h)
     jobGroups = tARMA.getCurrentPlayerInfo('jobs')
-    for a,b in pairs(jobGroups) do
-        if b.user_id == h then
-            for k,v in pairs(b.jobs) do
-                if c[k] then 
-                    return "nhs"
-                elseif e[k] then 
-                    return "metpd"
-                end 
+    if jobGroups then
+        for a,b in pairs(jobGroups) do
+            if b.user_id == h then
+                for k,v in pairs(b.jobs) do
+                    if c[k] then 
+                        return "nhs"
+                    elseif e[k] then 
+                        return "metpd"
+                    end 
+                end
+                return ""
             end
         end
+        return ""
     end
-    return ""
 end
