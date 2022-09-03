@@ -448,7 +448,7 @@ cfg.weapons = {
         weight = 7.5,
     },
     ["WEAPON_SPAR17"] = {
-        name = "Spar17",
+        name = "Spar 17",
         class = "AR",
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,

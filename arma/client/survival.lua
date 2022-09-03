@@ -1,13 +1,12 @@
 local comaAnim = {}
 local in_coma = false
-local secondsTillBleedout = 5
+local secondsTillBleedout = 90
 local playerCanRespawn = false 
 local calledNHS = false
 local deathString = ""
 local deathPosition
 spawning = true
 
-local comaAnim = {}
 local DeathAnim = 100
 
 WeaponNames={}
@@ -139,19 +138,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-function Initialize(scaleform)
-    local scaleform = RequestScaleformMovie(scaleform)
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(0)
-    end
-    PushScaleformMovieFunction(scaleform, "SHOW_SHARD_WASTED_MP_MESSAGE")
-	PushScaleformMovieFunctionParameterString(DeathString)
-    PushScaleformMovieFunctionParameterString(" ")
-    PopScaleformMovieFunctionVoid()
-    return scaleform
-end
-
-
 Citizen.CreateThread(function()
     while true do 
         if in_coma then
@@ -200,6 +186,7 @@ function tARMA.RevivePlayer()
         ClearPedTasks(PlayerPedId())
     end)
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
+    calledNHS = false
 end
 
 AddEventHandler("ARMA:countdownEnded",function()
@@ -224,13 +211,12 @@ AddEventHandler("ARMA:3Seconds", function()
 end)
 
 function tARMA.respawnPlayer()
-    
     exports.spawnmanager:spawnPlayer()
     playerCanRespawn = false 
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
+    calledNHS = false
     DeathString = ""
-    secondsTillBleedout = 5
-    
+    secondsTillBleedout = 90
     local ped = PlayerPedId()
     tARMA.reviveComa()
 end
@@ -267,11 +253,7 @@ Citizen.CreateThread(function()
             TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             Q=GetPedCauseOfDeath(PlayerPedId())
-            print(Q)
             R=WeaponNames[Q]
-            print(R)
-            s = q[Q]
-            print(s)
             if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
                 Killer = NetworkGetPlayerIndexFromPed(PedKiller)
             elseif IsEntityAVehicle(PedKiller) and IsEntityAPed(GetPedInVehicleSeat(PedKiller, -1)) and IsPedAPlayer(GetPedInVehicleSeat(PedKiller, -1)) then
@@ -287,7 +269,14 @@ Citizen.CreateThread(function()
                 TriggerEvent("ARMA:SHOW_DEATH_SCREEN", secondsTillBleedout, GetPlayerName(Killer) or "N/A", tARMA.getUserId(tARMA.getPedServerId(PedKiller)) or "N/A", tostring(R) or "N/A", false)
                 distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(PedKiller))
             end
-            TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), s, suicide, distance)
+            if not playerCanRespawn and in_coma and IsEntityPlayingAnim(playerPed,comaAnim.dict,comaAnim.anim,3)then
+                TriggerServerEvent("ARMA:onPlayerKilled", "finished off", tARMA.getPedServerId(PedKiller), s)
+            else
+                TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), R, suicide, distance)
+            end
+            Killer = nil
+            PedKiller = nil
+            R = nil
         end
         while IsEntityDead(PlayerPedId()) do
             Citizen.Wait(0)

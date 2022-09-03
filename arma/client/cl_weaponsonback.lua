@@ -41,7 +41,7 @@ Citizen.CreateThread(function()
             if not a.weapons[i].name == d.hash then 
                 if d.class=="SMG"then 
                     table.insert(a.weapons, {bone=58271,x=-0.01,y=0.1,z=-0.07,xRot=-55.0,yRot=0.10, zRot=0.0,category ='smg',model=GetHashKey(d.model)})
-                elseif d.class=="AR"or d.class=="Heavy"then 
+                elseif d.class=="AR"or d.class=="Heavy" or d.class=="LMG"then 
                     table.insert(a.weapons, {bone=24818,x=-0.12,y=-0.12,z=-0.13,xRot=100.0,yRot=-3.0,zRot=5.0,category='assault',model=GetHashKey(d.model)})
                 elseif d.class=="Melee"then 
                     table.insert(a.weapons, {bone=24818,x=0.32,y=-0.15,z=0.13,xRot=0.0,yRot=-90.0,zRot=0.0,category='melee',model=GetHashKey(d.model)})

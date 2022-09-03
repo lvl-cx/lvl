@@ -1,27 +1,185 @@
-RegisterNetEvent('KillFeed:Killed')
-AddEventHandler('KillFeed:Killed', function(killer, weapon, killedCoords, killerCoords, inEvent, inWager)
-    local distance = math.floor(#(killedCoords - killerCoords))
-    local creditAmount = math.random(minCreds,maxCreds)
-    local user_id = ARMA.getUserId(source)
-    local killer_id = ARMA.getUserId(killer)
+local killlogs = 'webhook here'
+local damagelogs = 'webhook here'
 
-    killedGroup = "killed"
-    killerGroup = "killer"
+local f = module("cfg/weapons")
+f=f.weapons
 
-    TriggerClientEvent('KillFeed:AnnounceKill', -1, GetPlayerName(source), GetPlayerName(killer), weapon, distance, killedCoords, killerGroup, killedGroup)
-end)
-
-RegisterNetEvent('KillFeed:Died')
-AddEventHandler('KillFeed:Died', function(coords)
-    local user_id = ARMA.getUserId(source)
-    killedGroup = "killed"
-    TriggerClientEvent('KillFeed:AnnounceDeath', -1, GetPlayerName(source), coords, killedGroup)
-end)
-
-function getMoneyStringFormatted(cashString)
-	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
-	int = int:reverse():gsub("(%d%d%d)", "%1,")
-	return minus .. int:reverse():gsub("^,", "") .. fraction 
+local function getWeaponName(weapon)
+    for k,v in pairs(f) do
+        if v.name == weapon then
+            if v.class == 'AR' then
+                return 'Assault-Rifle'
+            elseif v.class == 'Heavy' then
+                return 'Sniper'
+            else
+                return v.class
+            end
+        end
+    end
+    return "Unknown"
 end
+
+RegisterNetEvent('ARMA:onPlayerKilled')
+AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, suicide, distance)
+    local source = source
+    local killergroup = 'none'
+    local killedgroup = 'none'
+    if distance ~= nil then
+        distance = math.floor(distance) 
+    end
+    if killtype == 'killed' then
+        if ARMA.hasPermission(ARMA.getUserId(source), 'police.menu') then
+            killedgroup = 'police'
+        elseif ARMA.hasPermission(ARMA.getUserId(source), 'nhs.menu') then
+            killedgroup = 'nhs'
+        end
+        if ARMA.hasPermission(ARMA.getUserId(killer), 'police.menu') then
+            killergroup = 'police'
+        elseif ARMA.hasPermission(ARMA.getUserId(killer), 'nhs.menu') then
+            killergroup = 'nhs'
+        end
+        if killer ~= nil then
+            weaponhash = getWeaponName(weaponhash)
+            TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(killer), GetPlayerName(source), weaponhash, suicide, distance, killedgroup, killergroup)
+            local embed = {
+                {
+                  ["color"] = "16448403",
+                  ["title"] = "Kill Logs",
+                  ["description"] = "",
+                  ["text"] = "ARMA Server #1",
+                  ["fields"] = {
+                    {
+                        ["name"] = "Killer Name",
+                        ["value"] = GetPlayerName(killer),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Victim Name",
+                        ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Weapon Used",
+                        ["value"] = weaponhash,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Distance",
+                        ["value"] = distance..'m',
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Killer Group",
+                        ["value"] = killergroup,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Victim Group",
+                        ["value"] = killedgroup,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Kill Type",
+                        ["value"] = killtype,
+                        ["inline"] = true
+                    },
+                  }
+                }
+              }
+              PerformHttpRequest(killlogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
+        else
+            TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(source), GetPlayerName(source), 'suicide', suicide, distance, killedgroup, killergroup)
+        end
+    elseif killtype == 'finished off' and killer ~= nil then
+        weaponhash = getWeaponName(weaponhash)
+        local embed = {
+            {
+              ["color"] = "16448403",
+              ["title"] = "Finished Off Logs",
+              ["description"] = "",
+              ["text"] = "ARMA Server #1",
+              ["fields"] = {
+                {
+                    ["name"] = "Killer Name",
+                    ["value"] = GetPlayerName(killer),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Victim Name",
+                    ["value"] = GetPlayerName(source),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Weapon Used",
+                    ["value"] = weaponhash,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Distance",
+                    ["value"] = distance..'m',
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Killer Group",
+                    ["value"] = killergroup,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Victim Group",
+                    ["value"] = killedgroup,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Kill Type",
+                    ["value"] = killtype,
+                    ["inline"] = true
+                },
+              }
+            }
+          }
+          PerformHttpRequest(killlogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
+    end
+end)
+
+AddEventHandler('weaponDamageEvent', function(sender, ev)
+	if ev.weaponDamage ~= 0 then
+        local embed = {
+            {
+              ["color"] = "16448403",
+              ["title"] = "Damage Logs",
+              ["description"] = "",
+              ["text"] = "ARMA Server #1",
+              ["fields"] = {
+                {
+                    ["name"] = "Player Name",
+                    ["value"] = GetPlayerName(sender),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Player Temp ID",
+                    ["value"] = sender,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Player Perm ID",
+                    ["value"] = ARMA.getUserId(sender),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Damage",
+                    ["value"] = ev.weaponDamage,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Weapon Hash",
+                    ["value"] = ev.weaponType,
+                    ["inline"] = true
+                },
+              }
+            }
+          }        
+        PerformHttpRequest(damagelogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
+	end
+end)
 
 print("[ARMA] ^2Killfeed tables initialised.^0")
