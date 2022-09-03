@@ -58,6 +58,10 @@ Citizen.CreateThread(
     end
 )
 
+function tARMA.isPlayerInTurf()
+    return inTurf 
+end
+
 RegisterNetEvent('ARMA:TakenTurf')
 AddEventHandler('ARMA:TakenTurf', function(isnTurf)
 	
