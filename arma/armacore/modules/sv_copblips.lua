@@ -1,14 +1,3 @@
-RegisterServerEvent("ARMA:getJobGroups")
-AddEventHandler("ARMA:getJobGroups",function()
-    local source = source
-    local playersJobs = {}
-    for k,v in pairs(ARMA.getUsers()) do
-      local user_id = ARMA.getUserId(v)
-      playersJobs[user_id] = {jobs = ARMA.getUserGroups(user_id)}
-    end
-    TriggerClientEvent('ARMA:sendJobGroups', source, playersJobs)
-end)
-
 Citizen.CreateThread(function()
   while true do
       local emergencyblips = {}

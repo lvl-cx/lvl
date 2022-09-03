@@ -1,10 +1,3 @@
-local jobGroups = {}
-
-RegisterNetEvent("ARMA:sendJobGroups")
-AddEventHandler("ARMA:sendJobGroups",function(zzz)
-    jobGroups = zzz
-end)
-
 local a=false
 local b={}
 SetNuiFocus(false,false)
@@ -66,19 +59,17 @@ local f={
 }
 
 function tARMA.getJobType(h)
-    if jobGroups[h] then 
-        for k,v in pairs(jobGroups[h].jobs) do
-            if c[k] then 
-                return "nhs"
-            elseif d[i] then 
-                return "lfb"
-            elseif f[i] then 
-                return "hmp" 
-            elseif e[k] then 
-                return "metpd"
-            end 
+    jobGroups = tARMA.getCurrentPlayerInfo('jobs')
+    for a,b in pairs(jobGroups) do
+        if b.user_id == h then
+            for k,v in pairs(b.jobs) do
+                if c[k] then 
+                    return "nhs"
+                elseif e[k] then 
+                    return "metpd"
+                end 
+            end
         end
-    else 
-        return"",""
-    end 
+    end
+    return ""
 end

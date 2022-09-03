@@ -83,13 +83,6 @@ RegisterNetEvent("ARMA:disableFactionBlips",function()
 end)
 
 Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(10000)
-        TriggerServerEvent("ARMA:getJobGroups")
-    end
-end)
-
-Citizen.CreateThread(function()
     while true do 
         if a then 
             local p=tARMA.getPlayerPed()
