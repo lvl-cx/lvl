@@ -136,10 +136,12 @@ end)
 
 function tARMA.getIsStaff(j)
     currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')
-    for a,b in pairs(currentStaff) do
-        if b == j then
-            return true
+    if currentStaff then
+        for a,b in pairs(currentStaff) do
+            if b == j then
+                return true
+            end
         end
+        return false
     end
-    return false
 end
