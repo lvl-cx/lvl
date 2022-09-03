@@ -78,6 +78,9 @@ end,false)
 
 RegisterNetEvent("ARMA:disableFactionBlips",function()
     a=false
+    tARMA.setPolice(false)
+    tARMA.setHMP(false)
+    tARMA.setNHS(false)
     d()
     g()
 end)
