@@ -38,8 +38,12 @@ files{
   "gui/fonts/GTA.woff",
   "gui/stratum2-bold-webfont.ttf",
   "gui/stratum2-bold-webfont.woff",
-  "gui/img/*.webp",
   'gui/sounds/*',
+  "gui/killfeed/img/*.png",
+  "gui/killfeed/font/stratum2-bold-webfont.woff",
+  "gui/killfeed/index.js",
+  "gui/killfeed/style.css",
+  "gui/progress/*",
 
   'audio/sfx/resident/explosions.awc',
   'audio/sfx/resident/vehicles.awc',
