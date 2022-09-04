@@ -7,14 +7,41 @@ local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
-MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
+MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate, fuel_level FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_rented_vehicles_out", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE rentedid = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_vehicle","SELECT vehicle FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
+MySQL.createCommand("ARMA/get_vehicle_fuellevel","SELECT fuel_level FROM arma_user_vehicles WHERE vehicle = @vehicle")
 MySQL.createCommand("ARMA/check_rented","SELECT * FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle AND rented = 1")
 MySQL.createCommand("ARMA/sell_vehicle_player","UPDATE arma_user_vehicles SET user_id = @user_id, vehicle_plate = @registration WHERE user_id = @oldUser AND vehicle = @vehicle")
 MySQL.createCommand("ARMA/rentedupdate", "UPDATE arma_user_vehicles SET user_id = @id, rented = @rented, rentedid = @rentedid, rentedtime = @rentedunix WHERE user_id = @user_id AND vehicle = @veh")
 MySQL.createCommand("ARMA/fetch_rented_vehs", "SELECT * FROM arma_user_vehicles WHERE rented = 1")
+
+RegisterServerEvent("ARMA:spawnPersonalVehicle")
+AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle, name, valetCalled)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if valetCalled == nil then
+        valetCalled = false
+    end
+    MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
+        if result ~= nil then 
+            for k,v in pairs(result) do
+                if v.vehicle == vehicle then
+                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, name, source, valetCalled, nil, v.plate, v.fuel_level)
+                    return
+                end
+            end
+        end
+    end)
+end)
+
+RegisterServerEvent("ARMA:updateFuel")
+AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    exports["ghmattimysql"]:execute("UPDATE arma_user_vehicles SET fuel_level = @fuel_level WHERE user_id = @user_id AND vehicle = @vehicle", {fuel_level = fuel_level, user_id = user_id, vehicle = vehicle}, function() end)
+end)
 
 RegisterServerEvent("ARMA:getCustomFolders")
 AddEventHandler('ARMA:getCustomFolders', function()
@@ -59,6 +86,7 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
     local source = source
     local user_id = ARMA.getUserId(source)
     local returned_table = {}
+    local fuellevels = {}
     if user_id then
         if not owned then
             for i, v in pairs(vehicle_groups) do
@@ -75,12 +103,13 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
                     end
                     if not noperms then 
                         returned_table[i] = {
-                            ["config"] = config
+                            ["_config"] = config
                         }
                         returned_table[i].vehicles = {}
                         for a, z in pairs(v) do
                             if a ~= "_config" then
-                                returned_table[i].vehicles[a] = {z[1], z[2]}
+                                returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate, veh.fuel_level}
+                                fuellevels[a] = veh.fuel_level
                             end
                         end
                     end
@@ -109,20 +138,21 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
                                     if a ~= "_config" and veh.vehicle == a then
                                         if not returned_table[i] then 
                                             returned_table[i] = {
-                                                ["config"] = config
+                                                ["_config"] = config
                                             }
                                         end
                                         if not returned_table[i].vehicles then 
                                             returned_table[i].vehicles = {}
                                         end
-                                        returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate}
+                                        returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate, veh.fuel_level}
+                                        fuellevels[a] = veh.fuel_level
                                     end
                                 end
                             end
                         end
                     end
                 end
-                TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
+                TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table, fuellevels)
             end)
         end
     end
@@ -363,7 +393,7 @@ AddEventHandler('ARMA:FetchVehiclesIn', function()
                     if a ~= "_config" and veh.vehicle == a then
                         if not returned_table[i] then 
                             returned_table[i] = {
-                                ["config"] = config
+                                ["_config"] = config
                             }
                         end
                         if not returned_table[i].vehicles then 
@@ -411,7 +441,7 @@ AddEventHandler('ARMA:FetchVehiclesOut', function()
                     if a ~= "_config" and veh.vehicle == a then
                         if not returned_table[i] then 
                             returned_table[i] = {
-                                ["config"] = config
+                                ["_config"] = config
                             }
                         end
                         if not returned_table[i].vehicles then 
