@@ -1,6 +1,6 @@
 local cfg = module("arma-vehicles", "garages")
 local b = cfg.garages
-local garage_type = "Car"
+local garage_type = ""
 local selected_category = nil
 local Hovered_Vehicles = nil
 local VehiclesFetchedTable = {}
@@ -102,7 +102,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Button("[Custom Folders]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then 
                     for i,v in pairs(VehiclesFetchedTable) do 
-                        if garage_type == VehiclesFetchedTable[i].config.vtype then 
+                        if garage_type == i then 
                             selected_category = v.vehicles
                         end
                     end
@@ -117,8 +117,8 @@ RageUI.CreateWhile(1.0, true, function()
                     end, RMenu:Get("ARMAGarages", "customfoldersvehicles"))
                 end
             end
-            for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == VehiclesFetchedTable[i].config.vtype then 
+            for i,v in pairs(VehiclesFetchedTable) do  
+                if garage_type == i then 
                     RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             selected_category = v.vehicles
@@ -175,7 +175,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
                 RageUI.Button('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
-                        tARMA.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()), SelectedCar.plate)
+                        tARMA.spawnGarageVehicle(garage_type, SelectedCar.spawncode, GetEntityCoords(PlayerPedId()), SelectedCar.name, SelectedCar.plate)
                         DeleteCar(veh)
                         RageUI.ActuallyCloseAll()
                     end
@@ -348,7 +348,7 @@ RageUI.CreateWhile(1.0, true, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == VehiclesFetchedTable[i].config.vtype then 
+                if garage_type == i then 
                     RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true
@@ -392,7 +392,7 @@ RageUI.CreateWhile(1.0, true, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
             for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == VehiclesFetchedTable[i].config.vtype then 
+                if garage_type == i then 
                     RageUI.Button(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
                             RentedVeh = true
@@ -457,6 +457,7 @@ end)
 RegisterNetEvent('ARMA:ReturnFetchedCars')
 AddEventHandler('ARMA:ReturnFetchedCars', function(table)
     VehiclesFetchedTable = table
+    print(json.encode(table))
 end)
 
 RegisterNetEvent('ARMA:sendFolders')
@@ -512,6 +513,7 @@ CreateThread(function()
         PlaySound(-1, "Hit", "RESPAWN_SOUNDSET", 0, 0, 1)
         h = b[aa.garageType]["_config"].type
         W(aa.garageType)
+        garage_type = aa.garageType
         selectedGarageVector = aa.position
     end
     local ab = function(aa)
