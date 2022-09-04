@@ -3,7 +3,7 @@
 local lang = ARMA.lang
 local cfg = module("arma-vehicles", "garages")
 local cfg_inventory = module("cfg/inventory")
-local vehicle_groups = cfg.garage_types
+local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
@@ -115,7 +115,7 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
                                         if not returned_table[i].vehicles then 
                                             returned_table[i].vehicles = {}
                                         end
-                                        returned_table[i].vehicles[a] = {z[1]}
+                                        returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate}
                                     end
                                 end
                             end
