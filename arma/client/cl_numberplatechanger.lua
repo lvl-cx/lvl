@@ -7,10 +7,10 @@ local location = vector3(-532.84381103516,-192.99229431152,38.222408294678)
 local m = module("arma-vehicles", "garages")
 m=m.garages
 
-RMenu.Add('PlateShop', 'main', RageUI.CreateMenu("Number Plate", "~b~Number Plate", 1350, 50))
-RMenu.Add("PlateShop", "sub", RageUI.CreateSubMenu(RMenu:Get("PlateShop", "main"), "Number Plate", "~b~Number Plate", 1350, 50))
+RMenu.Add('plateshop', 'main', RageUI.CreateMenu("Number Plate", "~b~Number Plate", 1350, 50))
+RMenu.Add("plateshop", "sub", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Number Plate", 1350, 50))
 RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('PlateShop', 'main')) then
+    if RageUI.Visible(RMenu:Get('plateshop', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if next(carstable) == nil then
                 RageUI.Separator('~r~You do not own any vehicles.')
@@ -25,7 +25,7 @@ RageUI.CreateWhile(1.0, true, function()
                                             selectedCar = j[1]
                                             selectedCarName = l[1]
                                         end
-                                    end, RMenu:Get("PlateShop", "sub"))
+                                    end, RMenu:Get("plateshop", "sub"))
                                 end
                             end
                         end
@@ -34,7 +34,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-    if RageUI.Visible(RMenu:Get('PlateShop', 'sub')) then
+    if RageUI.Visible(RMenu:Get('plateshop', 'sub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.Button("Change Number Plate", "~g~Changing plate of "..selectedCarName, {RightLabel = "~g~£50,000"}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -64,13 +64,13 @@ Citizen.CreateThread(function()
             alert('Press ~INPUT_VEH_HORN~ to Change your number plate')
             if IsControlJustPressed(0, 51) then 
                 TriggerServerEvent('ARMA:getCars')
-                RageUI.Visible(RMenu:Get("PlateShop", "main"), true)
+                RageUI.Visible(RMenu:Get("plateshop", "main"), true)
                 isInMenu = true
             end
         end
         if isInArea(location, 1.4) == false and isInMenu then
-            RageUI.Visible(RMenu:Get("PlateShop", "main"), false)
-            RageUI.Visible(RMenu:Get("PlateShop", "sub"), false)
+            RageUI.Visible(RMenu:Get("plateshop", "main"), false)
+            RageUI.Visible(RMenu:Get("plateshop", "sub"), false)
             isInMenu = false
         end
     end
@@ -79,6 +79,9 @@ end)
 RegisterNetEvent("ARMA:RecieveNumberPlate")
 AddEventHandler("ARMA:RecieveNumberPlate", function(numplate)
     currentPlate = numplate
+    RageUI.ActuallyCloseAll()
+    RageUI.Visible(RMenu:Get("plateshop", "main"), true)
+    TriggerServerEvent('ARMA:getCars')
 end)
 
 function isInArea(v, dis) 
