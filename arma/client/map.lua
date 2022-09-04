@@ -1,228 +1,323 @@
--- BLIPS: see https://wiki.gtanet.work/index.php?title=Blips for blip id/color
-
--- TUNNEL CLIENT API
-
--- BLIP
-
--- create new blip, return native id
-function tARMA.addBlip(x,y,z,idtype,idcolor,text)
-  local blip = AddBlipForCoord(x+0.001,y+0.001,z+0.001) -- solve strange gta5 madness with integer -> double
-  SetBlipSprite(blip, idtype) -- Sets the displayed sprite(https://docs.fivem.net/docs/game-references/blips/) for a specific blip.
-  SetBlipAsShortRange(blip, true) -- Sets whether or not the specified blip should only be displayed when nearby, or on the minimap.
-  SetBlipColour(blip,idcolor) --Set Blip Color
-  SetBlipScale(blip, 0.5) -- Set Blip Size on Map
-  SetBlipDisplay(blip,6) -- Shows the blip in map and minimap
-
-  if text ~= nil then
-    AddTextEntry("MAPBLIP", text)
-    BeginTextCommandSetBlipName("MAPBLIP")
-    AddTextComponentString(text)
-    EndTextCommandSetBlipName(blip)
-  end
-
-  return blip
-end
-
--- remove blip by native id
-function tARMA.removeBlip(id)
-  RemoveBlip(id)
-end
-
-
-local named_blips = {}
-
--- set a named blip (same as addBlip but for a unique name, add or update)
--- return native id
-function tARMA.setNamedBlip(name,x,y,z,idtype,idcolor,text)
-  tARMA.removeNamedBlip(name) -- remove old one
-
-  named_blips[name] = tARMA.addBlip(x,y,z,idtype,idcolor,text)
-  return named_blips[name]
-end
-
--- remove a named blip
-function tARMA.removeNamedBlip(name)
-  if named_blips[name] ~= nil then
-    tARMA.removeBlip(named_blips[name])
-    named_blips[name] = nil
-  end
-end
-
--- GPS
-
--- set the GPS destination marker coordinates
-function tARMA.setGPS(x,y)
-  SetNewWaypoint(x+0.0001,y+0.0001)
-end
-
--- set route to native blip id
-function tARMA.setBlipRoute(id)
-  SetBlipRoute(id,true)
-end
-
--- MARKER
-
-local markers = {}
-local marker_ids = Tools.newIDGenerator()
-local named_markers = {}
-local drawing_markers = {}
-
--- add a circular marker to the game map
--- return marker id
-function tARMA.addMarker(x,y,z,sx,sy,sz,r,g,b,a,visible_distance)
-  local marker = {x=x,y=y,z=z,sx=sx,sy=sy,sz=sz,r=r,g=g,b=b,a=a,visible_distance=visible_distance}
-
-
-  -- default values
-  if marker.sx == nil then marker.sx = 2.0 end
-  if marker.sy == nil then marker.sy = 2.0 end
-  if marker.sz == nil then marker.sz = 0.7 end
-
-  if marker.r == nil then marker.r = 0 end
-  if marker.g == nil then marker.g = 155 end
-  if marker.b == nil then marker.b = 255 end
-  if marker.a == nil then marker.a = 200 end
-
-  -- fix gta5 integer -> double issue
-  marker.x = marker.x+0.001
-  marker.y = marker.y+0.001
-  marker.z = marker.z+0.001
-  marker.sx = marker.sx+0.001
-  marker.sy = marker.sy+0.001
-  marker.sz = marker.sz+0.001
-
-  if marker.visible_distance == nil then marker.visible_distance = 150 end
-
-  local id = marker_ids:gen()
-  markers[id] = marker
-
-  return id
-end
-
--- remove marker
-function tARMA.removeMarker(id)
-  if markers[id] ~= nil then
-    markers[id] = nil
-    marker_ids:free(id)
-  end
-end
-
--- set a named marker (same as addMarker but for a unique name, add or update)
--- return id
-function tARMA.setNamedMarker(name,x,y,z,sx,sy,sz,r,g,b,a,visible_distance)
-  tARMA.removeNamedMarker(name) -- remove old marker
-
-  named_markers[name] = tARMA.addMarker(x,y,z,sx,sy,sz,r,g,b,a,visible_distance)
-  return named_markers[name]
-end
-
-function tARMA.removeNamedMarker(name)
-  if named_markers[name] ~= nil then
-    tARMA.removeMarker(named_markers[name])
-    named_markers[name] = nil
-  end
-end
-
--- markers sort loop
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(1000)
-
-    local px,py,pz = table.unpack(tARMA.getPosition())
-
-    for k,v in pairs(markers) do
-      -- 150 is the min distance wich the markers will be starting to be drawn
-      if #(vector3(v.x,v.y,v.z) - vector3(px,py,pz)) <= 150.0 then
-        drawing_markers[k] = v
-      else
-        if drawing_markers[k] then drawing_markers[k] = nil end
-      end
+globalBlips = {}
+function tARMA.addBlip(a, b, c, d, e, f, g, h)
+    local i = AddBlipForCoord(a + 0.001, b + 0.001, c + 0.001)
+    SetBlipSprite(i, d)
+    SetBlipAsShortRange(i, true)
+    SetBlipColour(i, e)
+    if d == 403 or d == 431 or d == 365 or d == 85 or d == 140 or d == 60 or d == 44 or d == 110 or d == 315 then
+        SetBlipScale(i, 1.1)
+    elseif d == 50 then
+        SetBlipScale(i, 0.7)
+    else
+        SetBlipScale(i, 0.8)
     end
-  end
-end)
-
--- markers draw loop
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(0)
-
-    local px,py,pz = table.unpack(tARMA.getPosition())
-
-    -- if this loop get filled with too many markers, the clientside
-    -- starts lagging
-    for k,v in pairs(drawing_markers) do
-      -- check visibility
-      if #(vector3(v.x,v.y,v.z) - vector3(px,py,pz)) <= v.visible_distance then
-        DrawMarker(1,v.x,v.y,v.z,0,0,0,0,0,0,v.sx,v.sy,v.sz,v.r,v.g,v.b,v.a,0,0,0,0)
-      end
+    SetBlipScale(i, g or 0.8)
+    if h then
+        SetBlipDisplay(i, 5)
     end
-  end
-end)
-
--- AREA
-
-local areas = {}
-
--- create/update a cylinder area
-function tARMA.setArea(name,x,y,z,radius,height)
-  local area = {x=x+0.001,y=y+0.001,z=z+0.001,radius=radius,height=height}
-
-  -- default values
-  if area.height == nil then area.height = 6 end
-
-  areas[name] = area
-end
-
--- remove area
-function tARMA.removeArea(name)
-  if areas[name] ~= nil then
-    areas[name] = nil
-  end
-end
-
--- areas triggers detections
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(250)
-
-    local px,py,pz = table.unpack(tARMA.getPosition())
-
-    for k,v in pairs(areas) do
-      -- detect enter/leave
-
-      local player_in = (GetDistanceBetweenCoords(v.x,v.y,v.z,px,py,pz,true) <= v.radius and math.abs(pz-v.z) <= v.height)
-
-      if v.player_in and not player_in then -- was in: leave
-        ARMAserver.leaveArea({k})
-      elseif not v.player_in and player_in then -- wasn't in: enter
-        ARMAserver.enterArea({k})
-      end
-
-      v.player_in = player_in -- update area player_in
+    if f ~= nil then
+        BeginTextCommandSetBlipName("STRING")
+        AddTextComponentSubstringPlayerName(f)
+        EndTextCommandSetBlipName(i)
     end
-  end
+    table.insert(globalBlips, i)
+    return i
+end
+function tARMA.removeBlip(j)
+    RemoveBlip(j)
+end
+function tARMA.removeHouseBlip(x,y,z) -- used to remove green house blips for everyone when purchased
+    for k,v in pairs(globalBlips) do
+        if GetBlipCoords(v) == vector3(x+0.001,y+0.001,z+0.001) then
+            RemoveBlip(v)
+        end
+    end
+end
+local k = {}
+function tARMA.setNamedBlip(l, a, b, c, d, e, f, g)
+    tARMA.removeNamedBlip(l)
+    k[l] = tARMA.addBlip(a, b, c, d, e, f, g)
+    return k[l]
+end
+function tARMA.removeNamedBlip(l)
+    if k[l] ~= nil then
+        tARMA.removeBlip(k[l])
+        k[l] = nil
+    end
+end
+function tARMA.setGPS(a, b)
+    SetNewWaypoint(a + 0.0001, b + 0.0001)
+end
+function tARMA.setBlipRoute(j)
+    SetBlipRoute(j, true)
+end
+local m = {}
+local n = Tools.newIDGenerator()
+local o = {}
+local p = {}
+local q = {}
+function tARMA.addMarker(a, b, c, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H)
+    local I = {
+        position = vector3(a, b, c),
+        sx = r,
+        sy = s,
+        sz = t,
+        r = u,
+        g = v,
+        b = w,
+        a = x,
+        visible_distance = y,
+        mtype = z,
+        faceCamera = A,
+        bopUpAndDown = B,
+        rotate = C,
+        textureDict = D,
+        textureName = E,
+        xRot = F,
+        yRot = G,
+        zRot = H
+    }
+    if I.sx == nil then
+        I.sx = 2.0
+    end
+    if I.sy == nil then
+        I.sy = 2.0
+    end
+    if I.sz == nil then
+        I.sz = 0.7
+    end
+    if I.r == nil then
+        I.r = 0
+    end
+    if I.g == nil then
+        I.g = 155
+    end
+    if I.b == nil then
+        I.b = 255
+    end
+    if I.a == nil then
+        I.a = 200
+    end
+    I.sx = I.sx + 0.001
+    I.sy = I.sy + 0.001
+    I.sz = I.sz + 0.001
+    if I.visible_distance == nil then
+        I.visible_distance = 150
+    end
+    local j = n:gen()
+    m[j] = I
+    q[j] = I
+    return j
+end
+function tARMA.removeMarker(j)
+    if m[j] ~= nil then
+        m[j] = nil
+        n:free(j)
+    end
+    if q[j] then
+        q[j] = nil
+    end
+end
+function tARMA.setNamedMarker(l, a, b, c, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H)
+    tARMA.removeNamedMarker(l)
+    o[l] = tARMA.addMarker(a, b, c, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H)
+    return o[l]
+end
+function tARMA.removeNamedMarker(l)
+    if o[l] ~= nil then
+        tARMA.removeMarker(o[l])
+        o[l] = nil
+    end
+end
+local J = {}
+Citizen.CreateThread(
+    function()
+        while true do
+            for K, L in pairs(p) do
+                if J[K] then
+                    if J[K] <= L.visible_distance then
+                        if L.mtype == nil then
+                            L.mtype = 1
+                        end
+                        DrawMarker(
+                            L.mtype,
+                            L.position.x,
+                            L.position.y,
+                            L.position.z,
+                            0.0,
+                            0.0,
+                            0.0,
+                            L.xRot,
+                            L.yRot,
+                            L.zRot,
+                            L.sx,
+                            L.sy,
+                            L.sz,
+                            L.r,
+                            L.g,
+                            L.b,
+                            L.a,
+                            L.bopUpAndDown,
+                            L.faceCamera,
+                            2,
+                            L.rotate,
+                            L.textureDict,
+                            L.textureName
+                        )
+                    end
+                end
+            end
+            Wait(0)
+        end
+    end
+)
+Citizen.CreateThread(
+    function()
+        while true do
+            local M = tARMA.getPlayerCoords()
+            J = {}
+            for K, L in pairs(q) do
+                J[K] = #(L.position - M)
+                if J[K] <= L.visible_distance then
+                    p[K] = L
+                else
+                    p[K] = nil
+                end
+            end
+            Citizen.Wait(250)
+        end
+    end
+)
+Citizen.CreateThread(
+    function()
+        while true do
+            q = tARMA.getNearbyMarkers()
+            Citizen.Wait(10000)
+        end
+    end
+)
+function tARMA.getNearbyMarkers()
+    local N = {}
+    local O = tARMA.getPlayerCoords()
+    local P = 0
+    for K, L in pairs(m) do
+        if #(L.position - O) <= 250.0 then
+            N[K] = L
+        end
+        P = P + 1
+        if P % 25 == 0 then
+            Wait(0)
+        end
+    end
+    return N
+end
+local Q = {}
+local R = {}
+function tARMA.getNearbyAreas()
+    local S = {}
+    local M = tARMA.getPlayerCoords()
+    local P = 0
+    for K, L in pairs(Q) do
+        if #(L.position - M) <= 250.0 or L.radius > 250 then
+            S[K] = L
+        end
+        P = P + 1
+        if P % 25 == 0 then
+            Wait(0)
+        end
+    end
+    return S
+end
+function tARMA.setArea(l, a, b, c, T, U)
+    local V = {position = vector3(a + 0.001, b + 0.001, c + 0.001), radius = T, height = U}
+    if V.height == nil then
+        V.height = 6
+    end
+    Q[l] = V
+end
+function tARMA.createArea(l, W, T, U, X, Y, Z, _)
+    local V = {position = W, radius = T, height = U, enterArea = X, leaveArea = Y, onTickArea = Z, metaData = _}
+    if V.height == nil then
+        V.height = 6
+    end
+    Q[l] = V
+    R[l] = V
+end
+function tARMA.removeArea(l)
+    if Q[l] then
+        Q[l] = nil
+    end
+end
+function tARMA.doesAreaExist(l)
+    if Q[l] then
+        return true
+    end
+    return false
+end
+Citizen.CreateThread(
+    function()
+        while true do
+            local M = tARMA.getPlayerCoords()
+            for a0, a1 in pairs(R) do
+                local a2 = #(a1.position - M)
+                local a3 = a2 <= a1.radius and math.abs(M.z - a1.position.z) <= a1.height
+                a1.distance = a2
+                if a1.player_in and not a3 then
+                    if a1.leaveArea then
+                        if a1.metaData == nil then
+                            a1.metaData = {}
+                        end
+                        a1.leaveArea(a1.metaData)
+                    else
+                        ARMAserver.leaveArea({a0})
+                    end
+                elseif not a1.player_in and a3 then
+                    if a1.enterArea then
+                        if a1.metaData == nil then
+                            a1.metaData = {}
+                        end
+                        a1.enterArea(a1.metaData)
+                    else
+                        ARMAserver.enterArea({a0})
+                    end
+                end
+                a1.player_in = a3
+            end
+            Wait(0)
+        end
+    end
+)
+Citizen.CreateThread(
+    function()
+        while true do
+            for a0, a1 in pairs(R) do
+                if a1.player_in and a1.onTickArea then
+                    if a1.metaData == nil then
+                        a1.metaData = {}
+                    end
+                    a1.metaData.distance = a1.distance
+                    a1.onTickArea(a1.metaData)
+                end
+            end
+            Wait(0)
+        end
+    end
+)
+Citizen.CreateThread(
+    function()
+        while true do
+            R = tARMA.getNearbyAreas()
+            Citizen.Wait(5000)
+        end
+    end
+)
+local a4
+local a5 = 617
+RegisterCommand("nextblip",function()
+    a5 = a5 + 1
+    if a4 then
+        tARMA.removeBlip(a4)
+    end
+    print("creating blip", a5)
+    a4 = tARMA.addBlip(1103.9739990234, 211.95138549805, -49.440101623535, a5, 0, "Chips Cashier", 0.8, true)
 end)
-
--- DOOR
-
--- set the closest door state
--- doordef: .model or .modelhash
--- locked: boolean
--- doorswing: -1 to 1
-function tARMA.setStateOfClosestDoor(doordef, locked, doorswing)
-  local x,y,z = table.unpack(tARMA.getPosition())
-  local hash = doordef.modelhash
-  if hash == nil then
-    hash = GetHashKey(doordef.model)
-  end
-
-  SetStateOfClosestDoorOfType(hash,x,y,z,locked,doorswing+0.0001)
-end
-
-function tARMA.openClosestDoor(doordef)
-  tARMA.setStateOfClosestDoor(doordef, false, 0)
-end
-
-function tARMA.closeClosestDoor(doordef)
-  tARMA.setStateOfClosestDoor(doordef, true, 0)
-end
