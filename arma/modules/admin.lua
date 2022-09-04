@@ -2172,16 +2172,6 @@ AddEventHandler('ARMA:getAdminLevel', function()
     ARMAclient.setStaffLevel(source, {adminlevel})
 end)
 
-RegisterServerEvent("ARMA:delGunDelete")
-AddEventHandler("ARMA:delGunDelete", function(object)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.tickets') then
-        TriggerClientEvent("ARMA:deletePropClient", -1, object)
-        local user_source = NetworkGetEntityOwner(object)
-        TriggerClientEvent("ARMA:returnObjectDeleted", source, 'This object was created by ~b~'..GetPlayerName(user_source)..' ~w~Temp ID: ~b~'..user_source..' ~w~Perm ID: ~b~'..ARMA.getUserId(user_source))
-    end
-end)
 
 RegisterNetEvent('ARMA:zapPlayer')
 AddEventHandler('ARMA:zapPlayer', function(A)
