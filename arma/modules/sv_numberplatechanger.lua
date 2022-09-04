@@ -91,26 +91,27 @@ AddEventHandler("ARMA:ChangeNumberPlate", function(vehicle)
     local user_id = ARMA.getUserId(source)
 	ARMA.prompt(source,"Plate Name:","",function(source, plateName)
 		if plateName == '' then return end
-		for name in pairs(forbiddenNames) do
-			if plateName == forbiddenNames[name] then
-				ARMAclient.notify(source,{"~r~You cannot have this plate."})
-				return
-			end
-		end
-        exports['ghmattimysql']:execute("SELECT * FROM `arma_user_vehicles` WHERE vehicle_plate = @plate", {plate = plateName}, function(rows)
-            if result ~= nil then 
+		exports['ghmattimysql']:execute("SELECT * FROM `arma_user_vehicles` WHERE vehicle_plate = @plate", {plate = plateName}, function(result)
+            if next(result) then 
                 ARMAclient.notify(source,{"~r~This plate is already taken."})
                 return
+			else
+				for name in pairs(forbiddenNames) do
+					if plateName == forbiddenNames[name] then
+						ARMAclient.notify(source,{"~r~You cannot have this plate."})
+						return
+					end
+				end
+				if ARMA.tryFullPayment(user_id,50000) then
+					ARMAclient.notify(source,{"~g~Changed plate of "..vehicle.." to "..plateName})
+					MySQL.execute("ARMA/update_numplate", {user_id = user_id, registration = plateName, vehicle = vehicle})
+					TriggerClientEvent("ARMA:RecieveNumberPlate", source, plateName)
+					TriggerClientEvent("arma:PlaySound", source, "apple")
+					TriggerEvent('ARMA:getCars')
+				else
+					ARMAclient.notify(source,{"~r~You don't have enough money!"})
+				end
             end
         end)
-		if ARMA.tryFullPayment(user_id,50000) then
-			ARMAclient.notify(source,{"~g~Changed plate of "..vehicle.." to "..plateName})
-			MySQL.execute("ARMA/update_numplate", {user_id = user_id, registration = plateName, vehicle = vehicle})
-			TriggerClientEvent("ARMA:RecieveNumberPlate", source, plateName)
-			TriggerClientEvent("arma:PlaySound", source, "apple")
-			TriggerEvent('ARMA:getCars')
-		else
-			ARMAclient.notify(source,{"~r~You don't have enough money!"})
-		end
 	end)
 end)
