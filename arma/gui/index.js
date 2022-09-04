@@ -174,6 +174,7 @@ function djSkipTo(time){
 
 // Warning System
 let f10Open = false
+let crosshair = false
 window.addEventListener("message", function (event) {
     let data = event.data;
     if (data.type == "showF10") {
@@ -223,6 +224,18 @@ window.addEventListener("message", function (event) {
             document.getElementById("points").style.color = "#FF0D0D"
         }
         this.document.getElementById("warningstablebody").innerHTML = warningsHtml
+    }
+    if (event.data.crosshair == true) {
+        if (!crosshair) {
+            $(".crosshair").addClass('fadeIn');
+            crosshair = !crosshair;
+        }
+        $(".crosshair").css("display","block");
+    }
+    if (event.data.crosshair == false) {
+        $(".crosshair").removeClass('fadeIn');
+        crosshair = !crosshair;
+        $(".crosshair").css("display","none");
     }
 });
 
