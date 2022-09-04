@@ -7,7 +7,7 @@ ARMAclient = Tunnel.getInterface("ARMA", "gcphone")
 
 math.randomseed(os.time()) 
 
-draCB.RegisterServerCallback('gcPhone:hasPhone', function(source, cb, data)
+draCB.RegisterServerCallback('ARMA:hasPhone', function(source, cb, data)
     local user_id = ARMA.getUserId({source})
     if ARMA.getInventoryItemAmount({user_id,"aphone"}) > 0 then
         cb(true)
@@ -123,26 +123,26 @@ function notifyContactChange(source, identifier)
     local sourcePlayer = tonumber(source)
     local identifier = identifier
     if sourcePlayer ~= nil then 
-        TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
+        TriggerClientEvent("ARMA:contactList", sourcePlayer, getContacts(identifier))
     end
 end
 
-RegisterServerEvent('gcPhone:addContact')
-AddEventHandler('gcPhone:addContact', function(display, phoneNumber)
+RegisterServerEvent('ARMA:addContact')
+AddEventHandler('ARMA:addContact', function(display, phoneNumber)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     addContact(sourcePlayer, identifier, phoneNumber, display)
 end)
 
-RegisterServerEvent('gcPhone:updateContact')
-AddEventHandler('gcPhone:updateContact', function(id, display, phoneNumber)
+RegisterServerEvent('ARMA:updateContact')
+AddEventHandler('ARMA:updateContact', function(id, display, phoneNumber)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     updateContact(sourcePlayer, identifier, id, phoneNumber, display)
 end)
 
-RegisterServerEvent('gcPhone:deleteContact')
-AddEventHandler('gcPhone:deleteContact', function(id)
+RegisterServerEvent('ARMA:deleteContact')
+AddEventHandler('ARMA:deleteContact', function(id)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     deleteContact(sourcePlayer, identifier, id)
@@ -159,8 +159,8 @@ function getMessages(identifier)
     --return MySQLQueryTimeStamp("SELECT phone_messages.* FROM phone_messages LEFT JOIN users ON users.identifier = @identifier WHERE phone_messages.receiver = users.phone_number", {['@identifier'] = identifier})
 end
 
-RegisterServerEvent('gcPhone:_internalAddMessage')
-AddEventHandler('gcPhone:_internalAddMessage', function(transmitter, receiver, message, owner, cb)
+RegisterServerEvent('ARMA:_internalAddMessage')
+AddEventHandler('ARMA:_internalAddMessage', function(transmitter, receiver, message, owner, cb)
     cb(_internalAddMessage(transmitter, receiver, message, owner))
 end)
 
@@ -186,10 +186,10 @@ function addMessage(source, identifier, phone_number, message)
     local myPhone = getNumberPhone(identifier)
     if otherIdentifier ~= nil and ARMA.getUserSource({otherIdentifier}) ~= nil then 
         local tomess = _internalAddMessage(myPhone, phone_number, message, 0)
-        TriggerClientEvent("gcPhone:receiveMessage", tonumber(ARMA.getUserSource({otherIdentifier})), tomess)
+        TriggerClientEvent("ARMA:receiveMessage", tonumber(ARMA.getUserSource({otherIdentifier})), tomess)
     end
     local memess = _internalAddMessage(phone_number, myPhone, message, 1)
-    TriggerClientEvent("gcPhone:receiveMessage", sourcePlayer, memess)
+    TriggerClientEvent("ARMA:receiveMessage", sourcePlayer, memess)
 end
 
 function setReadMessageNumber(identifier, num)
@@ -220,59 +220,59 @@ function deleteAllMessage(identifier)
     })
 end
 
-RegisterServerEvent('gcPhone:sendMessage')
-AddEventHandler('gcPhone:sendMessage', function(phoneNumber, message)
+RegisterServerEvent('ARMA:sendMessage')
+AddEventHandler('ARMA:sendMessage', function(phoneNumber, message)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     addMessage(sourcePlayer, identifier, phoneNumber, message)
 end)
 
-RegisterServerEvent('gcPhone:deleteMessage')
-AddEventHandler('gcPhone:deleteMessage', function(msgId)
+RegisterServerEvent('ARMA:deleteMessage')
+AddEventHandler('ARMA:deleteMessage', function(msgId)
     deleteMessage(msgId)
 end)
 
-RegisterServerEvent('gcPhone:deleteMessageNumber')
-AddEventHandler('gcPhone:deleteMessageNumber', function(number)
+RegisterServerEvent('ARMA:deleteMessageNumber')
+AddEventHandler('ARMA:deleteMessageNumber', function(number)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     deleteAllMessageFromPhoneNumber(sourcePlayer,identifier, number)
-    -- TriggerClientEvent("gcphone:allMessage", sourcePlayer, getMessages(identifier))
+    -- TriggerClientEvent("ARMA:allMessage", sourcePlayer, getMessages(identifier))
 end)
 
-RegisterServerEvent('gcPhone:deleteAllMessage')
-AddEventHandler('gcPhone:deleteAllMessage', function()
+RegisterServerEvent('ARMA:deleteAllMessage')
+AddEventHandler('ARMA:deleteAllMessage', function()
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     deleteAllMessage(identifier)
 end)
 
-RegisterServerEvent('gcPhone:setReadMessageNumber')
-AddEventHandler('gcPhone:setReadMessageNumber', function(num)
+RegisterServerEvent('ARMA:setReadMessageNumber')
+AddEventHandler('ARMA:setReadMessageNumber', function(num)
     local identifier = getPlayerID(source)
     setReadMessageNumber(identifier, num)
 end)
 
-RegisterServerEvent('gcPhone:deleteALL')
-AddEventHandler('gcPhone:deleteALL', function()
+RegisterServerEvent('ARMA:deleteALL')
+AddEventHandler('ARMA:deleteALL', function()
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     deleteAllMessage(identifier)
     deleteAllContact(identifier)
     appelsDeleteAllHistorique(identifier)
-    TriggerClientEvent("gcPhone:contactList", sourcePlayer, {})
-    TriggerClientEvent("gcPhone:allMessage", sourcePlayer, {})
+    TriggerClientEvent("ARMA:contactList", sourcePlayer, {})
+    TriggerClientEvent("ARMA:allMessage", sourcePlayer, {})
     TriggerClientEvent("appelsDeleteAllHistorique", sourcePlayer, {})
 end)
 
-AddEventHandler('gcPhone:deleteALLARMAIdentity', function(src,user_id,num)
+AddEventHandler('ARMA:deleteALLARMAIdentity', function(src,user_id,num)
     deleteAllMessage(user_id)
     deleteAllContact(user_id)
     appelsDeleteAllHistorique(user_id)
-    TriggerClientEvent("gcPhone:contactList", src, {})
-    TriggerClientEvent("gcPhone:allMessage", src, {})
+    TriggerClientEvent("ARMA:contactList", src, {})
+    TriggerClientEvent("ARMA:allMessage", src, {})
     TriggerClientEvent("appelsDeleteAllHistorique", src, {})
-    TriggerClientEvent("gcPhone:myPhoneNumber", src, num) -- update phonenumber
+    TriggerClientEvent("ARMA:myPhoneNumber", src, num) -- update phonenumber
 end)
 
 --====================================================================================
@@ -291,7 +291,7 @@ end
 
 function sendHistoriqueCall (src, num) 
     local histo = getHistoriqueCall(num)
-    TriggerClientEvent('gcPhone:historiqueCall', src, histo)
+    TriggerClientEvent('ARMA:historiqueCall', src, histo)
 end
 
 function saveAppels (appelInfo)
@@ -327,8 +327,8 @@ function notifyNewAppelsHisto (src, num)
     sendHistoriqueCall(src, num)
 end
 
-RegisterServerEvent('gcPhone:getHistoriqueCall')
-AddEventHandler('gcPhone:getHistoriqueCall', function()
+RegisterServerEvent('ARMA:getHistoriqueCall')
+AddEventHandler('ARMA:getHistoriqueCall', function()
     local sourcePlayer = tonumber(source)
     local srcIdentifier = getPlayerID(source)
     local srcPhone = getNumberPhone(srcIdentifier)
@@ -336,8 +336,8 @@ AddEventHandler('gcPhone:getHistoriqueCall', function()
 end)
 
 
-RegisterServerEvent('gcPhone:internal_startCall')
-AddEventHandler('gcPhone:internal_startCall', function(source, phone_number, rtcOffer, extraData)
+RegisterServerEvent('ARMA:internal_startCall')
+AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOffer, extraData)
     if FixePhone[phone_number] ~= nil then
         onCallFixePhone(source, phone_number, rtcOffer, extraData)
         return
@@ -389,28 +389,28 @@ AddEventHandler('gcPhone:internal_startCall', function(source, phone_number, rtc
 
             if srcTo ~= nil then
                 AppelsEnCours[indexCall].receiver_src = srcTo
-                -- TriggerEvent('gcPhone:addCall', AppelsEnCours[indexCall])
-                TriggerClientEvent('gcPhone:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
-                TriggerClientEvent('gcPhone:waitingCall', srcTo, AppelsEnCours[indexCall], false)
+                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
+                TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
+                TriggerClientEvent('ARMA:waitingCall', srcTo, AppelsEnCours[indexCall], false)
             else
-                -- TriggerEvent('gcPhone:addCall', AppelsEnCours[indexCall])
-                TriggerClientEvent('gcPhone:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
+                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
+                TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
             end
         end
     else
-        TriggerEvent('gcPhone:addCall', AppelsEnCours[indexCall])
-        TriggerClientEvent('gcPhone:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
+        TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
+        TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
     end
 
 end)
 
-RegisterServerEvent('gcPhone:startCall')
-AddEventHandler('gcPhone:startCall', function(phone_number, rtcOffer, extraData)
-    TriggerEvent('gcPhone:internal_startCall',source, phone_number, rtcOffer, extraData)
+RegisterServerEvent('ARMA:startCall')
+AddEventHandler('ARMA:startCall', function(phone_number, rtcOffer, extraData)
+    TriggerEvent('ARMA:internal_startCall',source, phone_number, rtcOffer, extraData)
 end)
 
-RegisterServerEvent('gcPhone:candidates')
-AddEventHandler('gcPhone:candidates', function (callId, candidates)
+RegisterServerEvent('ARMA:candidates')
+AddEventHandler('ARMA:candidates', function (callId, candidates)
     -- print('send cadidate', callId, candidates)
     if AppelsEnCours[callId] ~= nil then
         local source = source
@@ -419,13 +419,13 @@ AddEventHandler('gcPhone:candidates', function (callId, candidates)
             to = AppelsEnCours[callId].receiver_src
         end
         -- print('TO', to)
-        TriggerClientEvent('gcPhone:candidates', to, candidates)
+        TriggerClientEvent('ARMA:candidates', to, candidates)
     end
 end)
 
 
-RegisterServerEvent('gcPhone:acceptCall')
-AddEventHandler('gcPhone:acceptCall', function(infoCall, rtcAnswer)
+RegisterServerEvent('ARMA:acceptCall')
+AddEventHandler('ARMA:acceptCall', function(infoCall, rtcAnswer)
     local id = infoCall.id
     if AppelsEnCours[id] ~= nil then
         if PhoneFixeInfo[id] ~= nil then
@@ -436,9 +436,9 @@ AddEventHandler('gcPhone:acceptCall', function(infoCall, rtcAnswer)
         if AppelsEnCours[id].transmitter_src ~= nil and AppelsEnCours[id].receiver_src~= nil then
             AppelsEnCours[id].is_accepts = true
             AppelsEnCours[id].rtcAnswer = rtcAnswer
-            TriggerClientEvent('gcPhone:acceptCall', AppelsEnCours[id].transmitter_src, AppelsEnCours[id], true)
+            TriggerClientEvent('ARMA:acceptCall', AppelsEnCours[id].transmitter_src, AppelsEnCours[id], true)
 	    SetTimeout(1000, function() -- change to +1000, if necessary.
-       		TriggerClientEvent('gcPhone:acceptCall', AppelsEnCours[id].receiver_src, AppelsEnCours[id], false)
+       		TriggerClientEvent('ARMA:acceptCall', AppelsEnCours[id].receiver_src, AppelsEnCours[id], false)
 	    end)
             saveAppels(AppelsEnCours[id])
         end
@@ -448,8 +448,8 @@ end)
 
 
 
-RegisterServerEvent('gcPhone:rejectCall')
-AddEventHandler('gcPhone:rejectCall', function (infoCall)
+RegisterServerEvent('ARMA:rejectCall')
+AddEventHandler('ARMA:rejectCall', function (infoCall)
     local id = infoCall.id
     if AppelsEnCours[id] ~= nil then
         if PhoneFixeInfo[id] ~= nil then
@@ -457,22 +457,22 @@ AddEventHandler('gcPhone:rejectCall', function (infoCall)
             return
         end
         if AppelsEnCours[id].transmitter_src ~= nil then
-            TriggerClientEvent('gcPhone:rejectCall', AppelsEnCours[id].transmitter_src)
+            TriggerClientEvent('ARMA:rejectCall', AppelsEnCours[id].transmitter_src)
         end
         if AppelsEnCours[id].receiver_src ~= nil then
-            TriggerClientEvent('gcPhone:rejectCall', AppelsEnCours[id].receiver_src)
+            TriggerClientEvent('ARMA:rejectCall', AppelsEnCours[id].receiver_src)
         end
 
         if AppelsEnCours[id].is_accepts == false then 
             saveAppels(AppelsEnCours[id])
         end
-        TriggerEvent('gcPhone:removeCall', AppelsEnCours)
+        TriggerEvent('ARMA:removeCall', AppelsEnCours)
         AppelsEnCours[id] = nil
     end
 end)
 
-RegisterServerEvent('gcPhone:appelsDeleteHistorique')
-AddEventHandler('gcPhone:appelsDeleteHistorique', function (numero)
+RegisterServerEvent('ARMA:appelsDeleteHistorique')
+AddEventHandler('ARMA:appelsDeleteHistorique', function (numero)
     local sourcePlayer = tonumber(source)
     local srcIdentifier = getPlayerID(source)
     local srcPhone = getNumberPhone(srcIdentifier)
@@ -489,8 +489,8 @@ function appelsDeleteAllHistorique(srcIdentifier)
     })
 end
 
-RegisterServerEvent('gcPhone:appelsDeleteAllHistorique')
-AddEventHandler('gcPhone:appelsDeleteAllHistorique', function ()
+RegisterServerEvent('ARMA:appelsDeleteAllHistorique')
+AddEventHandler('ARMA:appelsDeleteAllHistorique', function ()
     local sourcePlayer = tonumber(source)
     local srcIdentifier = getPlayerID(source)
     appelsDeleteAllHistorique(srcIdentifier)
@@ -544,23 +544,23 @@ AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     getOrGeneratePhoneNumber(sourcePlayer, identifier, function (myPhoneNumber)
-        TriggerClientEvent("gcPhone:myPhoneNumber", sourcePlayer, myPhoneNumber)
-        TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
-        TriggerClientEvent("gcPhone:allMessage", sourcePlayer, getMessages(identifier))
+        TriggerClientEvent("ARMA:myPhoneNumber", sourcePlayer, myPhoneNumber)
+        TriggerClientEvent("ARMA:contactList", sourcePlayer, getContacts(identifier))
+        TriggerClientEvent("ARMA:allMessage", sourcePlayer, getMessages(identifier))
     end)
     local bankM = ARMA.getBankMoney({user_id})
-    TriggerClientEvent('gcphone:setAccountMoney',source,bankM)
+    TriggerClientEvent('ARMA:setAccountMoney',source,bankM)
 end)
 
 -- Just For reload
-RegisterServerEvent('gcPhone:allUpdate')
-AddEventHandler('gcPhone:allUpdate', function()
+RegisterServerEvent('ARMA:allUpdate')
+AddEventHandler('ARMA:allUpdate', function()
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     local num = getNumberPhone(identifier)
-    TriggerClientEvent("gcPhone:myPhoneNumber", sourcePlayer, num)
-    TriggerClientEvent("gcPhone:contactList", sourcePlayer, getContacts(identifier))
-    TriggerClientEvent("gcPhone:allMessage", sourcePlayer, getMessages(identifier))
+    TriggerClientEvent("ARMA:myPhoneNumber", sourcePlayer, num)
+    TriggerClientEvent("ARMA:contactList", sourcePlayer, getContacts(identifier))
+    TriggerClientEvent("ARMA:allMessage", sourcePlayer, getMessages(identifier))
     sendHistoriqueCall(sourcePlayer, num)
 end)
 
@@ -624,8 +624,8 @@ function onCallFixePhone (source, phone_number, rtcOffer, extraData)
     
     PhoneFixeInfo[indexCall] = AppelsEnCours[indexCall]
 
-    TriggerClientEvent('gcPhone:notifyFixePhoneChange', -1, PhoneFixeInfo)
-    TriggerClientEvent('gcPhone:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
+    TriggerClientEvent('ARMA:notifyFixePhoneChange', -1, PhoneFixeInfo)
+    TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
 end
 
 
@@ -639,10 +639,10 @@ function onAcceptFixePhone(source, infoCall, rtcAnswer)
         AppelsEnCours[id].forceSaveAfter = true
         AppelsEnCours[id].rtcAnswer = rtcAnswer
         PhoneFixeInfo[id] = nil
-        TriggerClientEvent('gcPhone:notifyFixePhoneChange', -1, PhoneFixeInfo)
-        TriggerClientEvent('gcPhone:acceptCall', AppelsEnCours[id].transmitter_src, AppelsEnCours[id], true)
+        TriggerClientEvent('ARMA:notifyFixePhoneChange', -1, PhoneFixeInfo)
+        TriggerClientEvent('ARMA:acceptCall', AppelsEnCours[id].transmitter_src, AppelsEnCours[id], true)
 	SetTimeout(1000, function() -- change to +1000, if necessary.
-       		TriggerClientEvent('gcPhone:acceptCall', AppelsEnCours[id].receiver_src, AppelsEnCours[id], false)
+       		TriggerClientEvent('ARMA:acceptCall', AppelsEnCours[id].receiver_src, AppelsEnCours[id], false)
 	end)
         saveAppels(AppelsEnCours[id])
     end
@@ -651,8 +651,8 @@ end
 function onRejectFixePhone(source, infoCall, rtcAnswer)
     local id = infoCall.id
     PhoneFixeInfo[id] = nil
-    TriggerClientEvent('gcPhone:notifyFixePhoneChange', -1, PhoneFixeInfo)
-    TriggerClientEvent('gcPhone:rejectCall', AppelsEnCours[id].transmitter_src)
+    TriggerClientEvent('ARMA:notifyFixePhoneChange', -1, PhoneFixeInfo)
+    TriggerClientEvent('ARMA:rejectCall', AppelsEnCours[id].transmitter_src)
     if AppelsEnCours[id].is_accepts == false then
         saveAppels(AppelsEnCours[id])
     end
@@ -660,8 +660,8 @@ function onRejectFixePhone(source, infoCall, rtcAnswer)
     
 end
 
-RegisterServerEvent('gcPhone:moneyTransfer')
-AddEventHandler('gcPhone:moneyTransfer', function(num, amount)
+RegisterServerEvent('ARMA:moneyTransfer')
+AddEventHandler('ARMA:moneyTransfer', function(num, amount)
     local source = source
     userid = ARMA.getUserId({source})
     reciever = ARMA.getUserSource({tonumber(num)})

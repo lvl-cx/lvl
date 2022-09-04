@@ -86,8 +86,8 @@ function TwitterPostTweet (username, password, message, sourcePlayer, realUser, 
         tweet = tweets[1]
         tweet['author'] = user.author
         tweet['authorIcon'] = user.authorIcon
-        TriggerClientEvent('gcPhone:twitter_newTweets', -1, tweet)
-        TriggerEvent('gcPhone:twitter_newTweets', tweet)
+        TriggerClientEvent('ARMA:twitter_newTweets', -1, tweet)
+        TriggerEvent('ARMA:twitter_newTweets', tweet)
       end)
     end)
   end)
@@ -118,9 +118,9 @@ function TwitterToogleLike (username, password, tweetId, sourcePlayer)
             MySQL.Async.execute('UPDATE `twitter_tweets` SET `likes`= likes + 1 WHERE id = @id', {
               ['@id'] = tweet.id
             }, function ()
-              TriggerClientEvent('gcPhone:twitter_updateTweetLikes', -1, tweet.id, tweet.likes + 1)
-              TriggerClientEvent('gcPhone:twitter_setTweetLikes', sourcePlayer, tweet.id, true)
-              TriggerEvent('gcPhone:twitter_updateTweetLikes', tweet.id, tweet.likes + 1)
+              TriggerClientEvent('ARMA:twitter_updateTweetLikes', -1, tweet.id, tweet.likes + 1)
+              TriggerClientEvent('ARMA:twitter_setTweetLikes', sourcePlayer, tweet.id, true)
+              TriggerEvent('ARMA:twitter_updateTweetLikes', tweet.id, tweet.likes + 1)
             end)    
           end)
         else
@@ -130,9 +130,9 @@ function TwitterToogleLike (username, password, tweetId, sourcePlayer)
             MySQL.Async.execute('UPDATE `twitter_tweets` SET `likes`= likes - 1 WHERE id = @id', {
               ['@id'] = tweet.id
             }, function ()
-              TriggerClientEvent('gcPhone:twitter_updateTweetLikes', -1, tweet.id, tweet.likes - 1)
-              TriggerClientEvent('gcPhone:twitter_setTweetLikes', sourcePlayer, tweet.id, false)
-              TriggerEvent('gcPhone:twitter_updateTweetLikes', tweet.id, tweet.likes - 1)
+              TriggerClientEvent('ARMA:twitter_updateTweetLikes', -1, tweet.id, tweet.likes - 1)
+              TriggerClientEvent('ARMA:twitter_setTweetLikes', sourcePlayer, tweet.id, false)
+              TriggerEvent('ARMA:twitter_updateTweetLikes', tweet.id, tweet.likes - 1)
             end)
           end)
         end
@@ -151,27 +151,27 @@ end
 -- ALTER TABLE `twitter_accounts`	CHANGE COLUMN `username` `username` VARCHAR(50) NOT NULL DEFAULT '0' COLLATE 'utf8_general_ci';
 
 function TwitterShowError (sourcePlayer, title, message)
-  TriggerClientEvent('gcPhone:twitter_showError', sourcePlayer, message)
+  TriggerClientEvent('ARMA:twitter_showError', sourcePlayer, message)
 end
 function TwitterShowSuccess (sourcePlayer, title, message)
-  TriggerClientEvent('gcPhone:twitter_showSuccess', sourcePlayer, title, message)
+  TriggerClientEvent('ARMA:twitter_showSuccess', sourcePlayer, title, message)
 end
 
-RegisterServerEvent('gcPhone:twitter_login')
-AddEventHandler('gcPhone:twitter_login', function(username, password)
+RegisterServerEvent('ARMA:twitter_login')
+AddEventHandler('ARMA:twitter_login', function(username, password)
   local sourcePlayer = tonumber(source)
   getUser(username, password, function (user)
     if user == nil then
       TwitterShowError(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_LOGIN_ERROR')
     else
       TwitterShowSuccess(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_LOGIN_SUCCESS')
-      TriggerClientEvent('gcPhone:twitter_setAccount', sourcePlayer, username, password, user.authorIcon)
+      TriggerClientEvent('ARMA:twitter_setAccount', sourcePlayer, username, password, user.authorIcon)
     end
   end)
 end)
 
-RegisterServerEvent('gcPhone:twitter_changePassword')
-AddEventHandler('gcPhone:twitter_changePassword', function(username, password, newPassword)
+RegisterServerEvent('ARMA:twitter_changePassword')
+AddEventHandler('ARMA:twitter_changePassword', function(username, password, newPassword)
   local sourcePlayer = tonumber(source)
   getUser(username, password, function (user)
     if user == nil then
@@ -183,7 +183,7 @@ AddEventHandler('gcPhone:twitter_changePassword', function(username, password, n
         ['@newPassword'] = newPassword
       }, function (result)
         if (result == 1) then
-          TriggerClientEvent('gcPhone:twitter_setAccount', sourcePlayer, username, newPassword, user.authorIcon)
+          TriggerClientEvent('ARMA:twitter_setAccount', sourcePlayer, username, newPassword, user.authorIcon)
           TwitterShowSuccess(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_NEW_PASSWORD_SUCCESS')
         else
           TwitterShowError(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_NEW_PASSWORD_ERROR')
@@ -194,12 +194,12 @@ AddEventHandler('gcPhone:twitter_changePassword', function(username, password, n
 end)
 
 
-RegisterServerEvent('gcPhone:twitter_createAccount')
-AddEventHandler('gcPhone:twitter_createAccount', function(username, password, avatarUrl)
+RegisterServerEvent('ARMA:twitter_createAccount')
+AddEventHandler('ARMA:twitter_createAccount', function(username, password, avatarUrl)
   local sourcePlayer = tonumber(source)
   TwitterCreateAccount(username, password, avatarUrl, function (id)
     if (id ~= 0) then
-      TriggerClientEvent('gcPhone:twitter_setAccount', sourcePlayer, username, password, avatarUrl)
+      TriggerClientEvent('ARMA:twitter_setAccount', sourcePlayer, username, password, avatarUrl)
       TwitterShowSuccess(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_ACCOUNT_CREATE_SUCCESS')
     else
       TwitterShowError(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_ACCOUNT_CREATE_ERROR')
@@ -207,56 +207,56 @@ AddEventHandler('gcPhone:twitter_createAccount', function(username, password, av
   end)
 end)
 
-RegisterServerEvent('gcPhone:twitter_getTweets')
-AddEventHandler('gcPhone:twitter_getTweets', function(username, password)
+RegisterServerEvent('ARMA:twitter_getTweets')
+AddEventHandler('ARMA:twitter_getTweets', function(username, password)
   local sourcePlayer = tonumber(source)
   if username ~= nil and username ~= "" and password ~= nil and password ~= "" then
     getUser(username, password, function (user)
       local accountId = user and user.id
       TwitterGetTweets(accountId, function (tweets)
-        TriggerClientEvent('gcPhone:twitter_getTweets', sourcePlayer, tweets)
+        TriggerClientEvent('ARMA:twitter_getTweets', sourcePlayer, tweets)
       end)
     end)
   else
     TwitterGetTweets(nil, function (tweets)
-      TriggerClientEvent('gcPhone:twitter_getTweets', sourcePlayer, tweets)
+      TriggerClientEvent('ARMA:twitter_getTweets', sourcePlayer, tweets)
     end)
   end
 end)
 
-RegisterServerEvent('gcPhone:twitter_getFavoriteTweets')
-AddEventHandler('gcPhone:twitter_getFavoriteTweets', function(username, password)
+RegisterServerEvent('ARMA:twitter_getFavoriteTweets')
+AddEventHandler('ARMA:twitter_getFavoriteTweets', function(username, password)
   local sourcePlayer = tonumber(source)
   if username ~= nil and username ~= "" and password ~= nil and password ~= "" then
     getUser(username, password, function (user)
       local accountId = user and user.id
       TwitterGetFavotireTweets(accountId, function (tweets)
-        TriggerClientEvent('gcPhone:twitter_getFavoriteTweets', sourcePlayer, tweets)
+        TriggerClientEvent('ARMA:twitter_getFavoriteTweets', sourcePlayer, tweets)
       end)
     end)
   else
     TwitterGetFavotireTweets(nil, function (tweets)
-      TriggerClientEvent('gcPhone:twitter_getFavoriteTweets', sourcePlayer, tweets)
+      TriggerClientEvent('ARMA:twitter_getFavoriteTweets', sourcePlayer, tweets)
     end)
   end
 end)
 
-RegisterServerEvent('gcPhone:twitter_postTweets')
-AddEventHandler('gcPhone:twitter_postTweets', function(username, password, message)
+RegisterServerEvent('ARMA:twitter_postTweets')
+AddEventHandler('ARMA:twitter_postTweets', function(username, password, message)
   local sourcePlayer = tonumber(source)
   local srcIdentifier = getPlayerID(source)
   TwitterPostTweet(username, password, message, sourcePlayer, srcIdentifier)
 end)
 
-RegisterServerEvent('gcPhone:twitter_toogleLikeTweet')
-AddEventHandler('gcPhone:twitter_toogleLikeTweet', function(username, password, tweetId)
+RegisterServerEvent('ARMA:twitter_toogleLikeTweet')
+AddEventHandler('ARMA:twitter_toogleLikeTweet', function(username, password, tweetId)
   local sourcePlayer = tonumber(source)
   TwitterToogleLike(username, password, tweetId, sourcePlayer)
 end)
 
 
-RegisterServerEvent('gcPhone:twitter_setAvatarUrl')
-AddEventHandler('gcPhone:twitter_setAvatarUrl', function(username, password, avatarUrl)
+RegisterServerEvent('ARMA:twitter_setAvatarUrl')
+AddEventHandler('ARMA:twitter_setAvatarUrl', function(username, password, avatarUrl)
   local sourcePlayer = tonumber(source)
   MySQL.Async.execute("UPDATE `twitter_accounts` SET `avatar_url`= @avatarUrl WHERE twitter_accounts.username = @username AND twitter_accounts.password = @password", {
     ['@username'] = username,
@@ -264,7 +264,7 @@ AddEventHandler('gcPhone:twitter_setAvatarUrl', function(username, password, ava
     ['@avatarUrl'] = avatarUrl
   }, function (result)
     if (result == 1) then
-      TriggerClientEvent('gcPhone:twitter_setAccount', sourcePlayer, username, password, avatarUrl)
+      TriggerClientEvent('ARMA:twitter_setAccount', sourcePlayer, username, password, avatarUrl)
       TwitterShowSuccess(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_AVATAR_SUCCESS')
     else
       TwitterShowError(sourcePlayer, 'Twitter Info', 'APP_TWITTER_NOTIF_LOGIN_ERROR')
@@ -272,7 +272,7 @@ AddEventHandler('gcPhone:twitter_setAvatarUrl', function(username, password, ava
   end)
 end)
 
-AddEventHandler('gcPhone:twitter_newTweets', function (tweet)
+AddEventHandler('ARMA:twitter_newTweets', function (tweet)
   local discord_webhook = GetConvar('discord_webhook', '')
   if discord_webhook == '' then
     return

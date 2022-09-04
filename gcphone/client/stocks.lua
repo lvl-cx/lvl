@@ -9,11 +9,11 @@ AddEventHandler('onClientResourceStart', function (resourceName)
   if(GetCurrentResourceName() ~= resourceName) then
     return
   end
-  TriggerServerEvent("gcPhone:GeneratePrices", object)
-  TriggerServerEvent("gcPhone:allUpdate")
+  TriggerServerEvent("ARMA:GeneratePrices", object)
+  TriggerServerEvent("ARMA:allUpdate")
   while true do
     Citizen.Wait(StockUpdateTime * hour)
-    TriggerServerEvent("gcPhone:GeneratePrices", object)
-    TriggerServerEvent("gcPhone:allUpdate")
+    TriggerServerEvent("ARMA:GeneratePrices", object)
+    TriggerServerEvent("ARMA:allUpdate")
   end
 end)

@@ -13,21 +13,21 @@ function TchatAddMessage (channel, message)
   }
   MySQL.Async.insert(Query, Parameters, function (id)
     MySQL.Async.fetchAll(Query2, { ['@id'] = id }, function (reponse)
-      TriggerClientEvent('gcPhone:tchat_receive', -1, reponse[1])
+      TriggerClientEvent('ARMA:tchat_receive', -1, reponse[1])
     end)
   end)
 end
 
 
-RegisterServerEvent('gcPhone:tchat_channel')
-AddEventHandler('gcPhone:tchat_channel', function(channel)
+RegisterServerEvent('ARMA:tchat_channel')
+AddEventHandler('ARMA:tchat_channel', function(channel)
   local sourcePlayer = tonumber(source)
   TchatGetMessageChannel(channel, function (messages)
-    TriggerClientEvent('gcPhone:tchat_channel', sourcePlayer, channel, messages)
+    TriggerClientEvent('ARMA:tchat_channel', sourcePlayer, channel, messages)
   end)
 end)
 
-RegisterServerEvent('gcPhone:tchat_addMessage')
-AddEventHandler('gcPhone:tchat_addMessage', function(channel, message)
+RegisterServerEvent('ARMA:tchat_addMessage')
+AddEventHandler('ARMA:tchat_addMessage', function(channel, message)
   TchatAddMessage(channel, message)
 end)

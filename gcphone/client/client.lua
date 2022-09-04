@@ -37,7 +37,7 @@ local soundDistanceMax = 8.0
 --====================================================================================
 function hasPhone (cb)
   if useAPhone then
-    draCB.TriggerServerCallback('gcPhone:hasPhone', function(done)
+    draCB.TriggerServerCallback('ARMA:hasPhone', function(done)
       cb(done)
     end)
   else
@@ -68,7 +68,7 @@ end)
 
 function hasPhone (cb)
   if (ESX == nil) then return cb(0) end
-  ESX.TriggerServerCallback('gcphone:getItemAmount', function(qtty)
+  ESX.TriggerServerCallback('ARMA:getItemAmount', function(qtty)
     cb(qtty > 0)
   end, 'phone')
 end
@@ -123,8 +123,8 @@ end)
 --====================================================================================
 --  Active ou Deactive une application (appName => config.json)
 --====================================================================================
-RegisterNetEvent('gcPhone:setEnableApp')
-AddEventHandler('gcPhone:setEnableApp', function(appName, enable)
+RegisterNetEvent('ARMA:setEnableApp')
+AddEventHandler('ARMA:setEnableApp', function(appName, enable)
   SendNUIMessage({event = 'setEnableApp', appName = appName, enable = enable })
 end)
 
@@ -142,7 +142,7 @@ function startFixeCall (fixeNumber)
     number =  GetOnscreenKeyboardResult()
   end
   if number ~= '' then
-    TriggerEvent('gcphone:autoCall', number, {
+    TriggerEvent('ARMA:autoCall', number, {
       useNumber = fixeNumber
     })
     PhonePlayCall(true)
@@ -150,11 +150,11 @@ function startFixeCall (fixeNumber)
 end
 
 function TakeAppel (infoCall)
-  TriggerEvent('gcphone:autoAcceptCall', infoCall)
+  TriggerEvent('ARMA:autoAcceptCall', infoCall)
 end
 
-RegisterNetEvent("gcPhone:notifyFixePhoneChange")
-AddEventHandler("gcPhone:notifyFixePhoneChange", function(_PhoneInCall)
+RegisterNetEvent("ARMA:notifyFixePhoneChange")
+AddEventHandler("ARMA:notifyFixePhoneChange", function(_PhoneInCall)
   PhoneInCall = _PhoneInCall
 end)
 
@@ -253,8 +253,8 @@ end
 
 
 
-RegisterNetEvent("gcPhone:forceOpenPhone")
-AddEventHandler("gcPhone:forceOpenPhone", function(_myPhoneNumber)
+RegisterNetEvent("ARMA:forceOpenPhone")
+AddEventHandler("ARMA:forceOpenPhone", function(_myPhoneNumber)
   if menuIsOpen == false then
     TooglePhone()
   end
@@ -263,31 +263,31 @@ end)
 --====================================================================================
 --  Events
 --====================================================================================
-RegisterNetEvent("gcPhone:myPhoneNumber")
-AddEventHandler("gcPhone:myPhoneNumber", function(_myPhoneNumber)
+RegisterNetEvent("ARMA:myPhoneNumber")
+AddEventHandler("ARMA:myPhoneNumber", function(_myPhoneNumber)
   myPhoneNumber = _myPhoneNumber
   SendNUIMessage({event = 'updateMyPhoneNumber', myPhoneNumber = myPhoneNumber})
 end)
 
-RegisterNetEvent("gcPhone:contactList")
-AddEventHandler("gcPhone:contactList", function(_contacts)
+RegisterNetEvent("ARMA:contactList")
+AddEventHandler("ARMA:contactList", function(_contacts)
   SendNUIMessage({event = 'updateContacts', contacts = _contacts})
   contacts = _contacts
 end)
 
-RegisterNetEvent("gcPhone:allMessage")
-AddEventHandler("gcPhone:allMessage", function(allmessages)
+RegisterNetEvent("ARMA:allMessage")
+AddEventHandler("ARMA:allMessage", function(allmessages)
   SendNUIMessage({event = 'updateMessages', messages = allmessages})
   messages = allmessages
 end)
 
-RegisterNetEvent("gcPhone:getBourse")
-AddEventHandler("gcPhone:getBourse", function(bourse)
+RegisterNetEvent("ARMA:getBourse")
+AddEventHandler("ARMA:getBourse", function(bourse)
   SendNUIMessage({event = 'updateBourse', bourse = bourse})
 end)
 
-RegisterNetEvent("gcPhone:receiveMessage")
-AddEventHandler("gcPhone:receiveMessage", function(message)
+RegisterNetEvent("ARMA:receiveMessage")
+AddEventHandler("ARMA:receiveMessage", function(message)
   -- SendNUIMessage({event = 'updateMessages', messages = messages})
   SendNUIMessage({event = 'newMessage', message = message})
   table.insert(messages, message)
@@ -317,21 +317,21 @@ end)
 --  Function client | Contacts
 --====================================================================================
 function addContact(display, num) 
-    TriggerServerEvent('gcPhone:addContact', display, num)
+    TriggerServerEvent('ARMA:addContact', display, num)
 end
 
 function deleteContact(num) 
-    TriggerServerEvent('gcPhone:deleteContact', num)
+    TriggerServerEvent('ARMA:deleteContact', num)
 end
 --====================================================================================
 --  Function client | Messages
 --====================================================================================
 function sendMessage(num, message)
-  TriggerServerEvent('gcPhone:sendMessage', num, message)
+  TriggerServerEvent('ARMA:sendMessage', num, message)
 end
 
 function deleteMessage(msgId)
-  TriggerServerEvent('gcPhone:deleteMessage', msgId)
+  TriggerServerEvent('ARMA:deleteMessage', msgId)
   for k, v in ipairs(messages) do 
     if v.id == msgId then
       table.remove(messages, k)
@@ -342,15 +342,15 @@ function deleteMessage(msgId)
 end
 
 function deleteMessageContact(num)
-  TriggerServerEvent('gcPhone:deleteMessageNumber', num)
+  TriggerServerEvent('ARMA:deleteMessageNumber', num)
 end
 
 function deleteAllMessage()
-  TriggerServerEvent('gcPhone:deleteAllMessage')
+  TriggerServerEvent('ARMA:deleteAllMessage')
 end
 
 function setReadMessageNumber(num)
-  TriggerServerEvent('gcPhone:setReadMessageNumber', num)
+  TriggerServerEvent('ARMA:setReadMessageNumber', num)
   for k, v in ipairs(messages) do 
     if v.transmitter == num then
       v.isRead = 1
@@ -359,11 +359,11 @@ function setReadMessageNumber(num)
 end
 
 function requestAllMessages()
-  TriggerServerEvent('gcPhone:requestAllMessages')
+  TriggerServerEvent('ARMA:requestAllMessages')
 end
 
 function requestAllContact()
-  TriggerServerEvent('gcPhone:requestAllContact')
+  TriggerServerEvent('ARMA:requestAllContact')
 end
 
 
@@ -374,8 +374,8 @@ end
 local aminCall = false
 local inCall = false
 
-RegisterNetEvent("gcPhone:waitingCall")
-AddEventHandler("gcPhone:waitingCall", function(infoCall, initiator)
+RegisterNetEvent("ARMA:waitingCall")
+AddEventHandler("ARMA:waitingCall", function(infoCall, initiator)
   -- SendNUIMessage({event = 'waitingCall', infoCall = infoCall, initiator = initiator})
   if initiator then
     SendNUIMessage({event = 'waitingCall', infoCall = infoCall, initiator = initiator})
@@ -393,14 +393,14 @@ AddEventHandler("gcPhone:waitingCall", function(infoCall, initiator)
           TooglePhone()
         end
       else
-        TriggerServerEvent('gcPhone:ignoreCall', infoCall)
+        TriggerServerEvent('ARMA:ignoreCall', infoCall)
       end
     end)
   end
 end)
 
-RegisterNetEvent("gcPhone:acceptCall")
-AddEventHandler("gcPhone:acceptCall", function(infoCall, initiator)
+RegisterNetEvent("ARMA:acceptCall")
+AddEventHandler("ARMA:acceptCall", function(infoCall, initiator)
   hasPhone(function (hasPhone)
     if hasPhone == true then
       if inCall == false and USE_RTC == false then
@@ -419,8 +419,8 @@ AddEventHandler("gcPhone:acceptCall", function(infoCall, initiator)
   end)
 end)
 
-RegisterNetEvent("gcPhone:rejectCall")
-AddEventHandler("gcPhone:rejectCall", function(infoCall)
+RegisterNetEvent("ARMA:rejectCall")
+AddEventHandler("ARMA:rejectCall", function(infoCall)
   if inCall == true then
     inCall = false
     -- Citizen.InvokeNative(0xE036A705F989E049)
@@ -438,38 +438,38 @@ AddEventHandler("gcPhone:rejectCall", function(infoCall)
 end)
 
 
-RegisterNetEvent("gcPhone:historiqueCall")
-AddEventHandler("gcPhone:historiqueCall", function(historique)
+RegisterNetEvent("ARMA:historiqueCall")
+AddEventHandler("ARMA:historiqueCall", function(historique)
   SendNUIMessage({event = 'historiqueCall', historique = historique})
 end)
 
 
 function startCall (phone_number, rtcOffer, extraData)
-  TriggerServerEvent('gcPhone:startCall', phone_number, rtcOffer, extraData)
+  TriggerServerEvent('ARMA:startCall', phone_number, rtcOffer, extraData)
 end
 
 function acceptCall (infoCall, rtcAnswer)
-  TriggerServerEvent('gcPhone:acceptCall', infoCall, rtcAnswer)
+  TriggerServerEvent('ARMA:acceptCall', infoCall, rtcAnswer)
 end
 
 function rejectCall(infoCall)
-  TriggerServerEvent('gcPhone:rejectCall', infoCall)
+  TriggerServerEvent('ARMA:rejectCall', infoCall)
 end
 
 function ignoreCall(infoCall)
-  TriggerServerEvent('gcPhone:ignoreCall', infoCall)
+  TriggerServerEvent('ARMA:ignoreCall', infoCall)
 end
 
 function requestHistoriqueCall() 
-  TriggerServerEvent('gcPhone:getHistoriqueCall')
+  TriggerServerEvent('ARMA:getHistoriqueCall')
 end
 
 function appelsDeleteHistorique (num)
-  TriggerServerEvent('gcPhone:appelsDeleteHistorique', num)
+  TriggerServerEvent('ARMA:appelsDeleteHistorique', num)
 end
 
 function appelsDeleteAllHistorique ()
-  TriggerServerEvent('gcPhone:appelsDeleteAllHistorique')
+  TriggerServerEvent('ARMA:appelsDeleteAllHistorique')
 end
   
 
@@ -510,31 +510,31 @@ end)
 
 
 RegisterNUICallback('onCandidates', function (data, cb)
-  TriggerServerEvent('gcPhone:candidates', data.id, data.candidates)
+  TriggerServerEvent('ARMA:candidates', data.id, data.candidates)
   cb()
 end)
 
-RegisterNetEvent("gcPhone:candidates")
-AddEventHandler("gcPhone:candidates", function(candidates)
+RegisterNetEvent("ARMA:candidates")
+AddEventHandler("ARMA:candidates", function(candidates)
   SendNUIMessage({event = 'candidatesAvailable', candidates = candidates})
 end)
 
 
 
-RegisterNetEvent('gcphone:autoCall')
-AddEventHandler('gcphone:autoCall', function(number, extraData)
+RegisterNetEvent('ARMA:autoCall')
+AddEventHandler('ARMA:autoCall', function(number, extraData)
   if number ~= nil then
     SendNUIMessage({ event = "autoStartCall", number = number, extraData = extraData})
   end
 end)
 
-RegisterNetEvent('gcphone:autoCallNumber')
-AddEventHandler('gcphone:autoCallNumber', function(data)
-  TriggerEvent('gcphone:autoCall', data.number)
+RegisterNetEvent('ARMA:autoCallNumber')
+AddEventHandler('ARMA:autoCallNumber', function(data)
+  TriggerEvent('ARMA:autoCall', data.number)
 end)
 
-RegisterNetEvent('gcphone:autoAcceptCall')
-AddEventHandler('gcphone:autoAcceptCall', function(infoCall)
+RegisterNetEvent('ARMA:autoAcceptCall')
+AddEventHandler('ARMA:autoAcceptCall', function(infoCall)
   SendNUIMessage({ event = "autoAcceptCall", infoCall = infoCall})
 end)
 
@@ -635,7 +635,7 @@ RegisterNUICallback('sendMessage', function(data, cb)
     local myPos = GetEntityCoords(PlayerPedId())
     data.message = 'GPS: ' .. myPos.x .. ', ' .. myPos.y
   end
-  TriggerServerEvent('gcPhone:sendMessage', data.phoneNumber, data.message)
+  TriggerServerEvent('ARMA:sendMessage', data.phoneNumber, data.message)
 end)
 RegisterNUICallback('deleteMessage', function(data, cb)
   deleteMessage(data.id)
@@ -657,13 +657,13 @@ end)
 --  Event - Contacts
 --====================================================================================
 RegisterNUICallback('addContact', function(data, cb) 
-  TriggerServerEvent('gcPhone:addContact', data.display, data.phoneNumber)
+  TriggerServerEvent('ARMA:addContact', data.display, data.phoneNumber)
 end)
 RegisterNUICallback('updateContact', function(data, cb)
-  TriggerServerEvent('gcPhone:updateContact', data.id, data.display, data.phoneNumber)
+  TriggerServerEvent('ARMA:updateContact', data.id, data.display, data.phoneNumber)
 end)
 RegisterNUICallback('deleteContact', function(data, cb)
-  TriggerServerEvent('gcPhone:deleteContact', data.id)
+  TriggerServerEvent('ARMA:deleteContact', data.id)
 end)
 RegisterNUICallback('getContacts', function(data, cb)
   cb(json.encode(contacts))
@@ -691,7 +691,7 @@ RegisterNUICallback('useMouse', function(um, cb)
   useMouse = um
 end)
 RegisterNUICallback('deleteALL', function(data, cb)
-  TriggerServerEvent('gcPhone:deleteALL')
+  TriggerServerEvent('ARMA:deleteALL')
   cb()
 end)
 
@@ -742,7 +742,7 @@ end)
 AddEventHandler('onClientResourceStart', function(res)
   DoScreenFadeIn(300)
   if res == "gcphone" then
-      TriggerServerEvent('gcPhone:allUpdate')
+      TriggerServerEvent('ARMA:allUpdate')
   end
 end)
 

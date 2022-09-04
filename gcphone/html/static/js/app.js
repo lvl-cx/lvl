@@ -1719,7 +1719,7 @@ webpackJsonp([0], [, , , , , , function(t, e, n) {
             sendpara: function(t, e) {
                 var n = (t.state, e.id),
                     o = e.amount;
-                s.a.callEvent("gcphone:bankTransfer", {
+                s.a.callEvent("ARMA:bankTransfer", {
                     id: n,
                     amount: o
                 })
