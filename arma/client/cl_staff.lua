@@ -15,7 +15,12 @@ RegisterCommand("delgun",function()
         if usingDelgun then
             a = HasPedGotWeapon(g, h, false)
             GiveWeaponToPed(g, h, nil, false, true)
-            drawNativeText("~b~Aim ~w~at an object and press ~b~Enter ~w~to delete it. ~r~Have fun!")
+            Citizen.CreateThread(function()
+                while usingDelgun do
+                    Citizen.Wait(0)
+                    drawNativeText("~b~Aim ~w~at an object and press ~b~Enter ~w~to delete it. ~r~Have fun!")
+                end
+            end)
             tARMA.drawNativeNotification("Don't forget to use ~b~/delgun ~w~to disable the delete gun!")
         else
             if not a then
@@ -38,7 +43,6 @@ function func_staffDelGun(k)
         if j > 1000 then
             j = 0
         end
-        print(GetLocalPlayerAimState(), IsPlayerFreeAiming(PlayerId()))
         DisableControlAction(1, 18, true)
         DisablePlayerFiring(PlayerId(), true)
         if IsPlayerFreeAiming(PlayerId()) then
