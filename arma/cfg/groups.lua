@@ -263,6 +263,7 @@ cfg.groups = {
 		"admin.removewarn",
 		"admin.spawnBmx",
 		"admin.noclip",
+		"admin.managecommunitypot",
     	"staff.mode",
 		"admin.idsabovehead",
 		"vehicle.delete",
