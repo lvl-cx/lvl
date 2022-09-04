@@ -1641,7 +1641,8 @@ AddEventHandler('ARMA:GetCoords', function()
     local source = source 
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.getPosition(source,{},function(x,y,z)
+        ARMAclient.getPosition(source,{},function(coords)
+            local x,y,z = table.unpack(coords)
             ARMA.prompt(source,"Copy the coordinates using Ctrl-A Ctrl-C",x..","..y..","..z,function(player,choice) 
                 local command = {
                     {
