@@ -785,6 +785,9 @@ inHome = false
 function tARMA.setPolice(y)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalOnPoliceDuty = y
+  if y then
+    TriggerServerEvent("ARMA:getCallsign", "police")
+  end
 end
 function tARMA.globalOnPoliceDuty()
   return globalOnPoliceDuty
@@ -792,6 +795,9 @@ end
 function tARMA.setHMP(x)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalOnPrisonDuty = x
+  if x then
+    TriggerServerEvent("ARMA:getCallsign", "prison")
+  end
 end
 function tARMA.globalOnPrisonDuty()
   return globalOnPrisonDuty
