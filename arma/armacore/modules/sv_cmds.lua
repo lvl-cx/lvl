@@ -271,62 +271,6 @@ end)
 
 
 
-
-
-
-RegisterCommand("announce", function(source, args, raw)
-	local user_id = ARMA.getUserId(source)
-	if ARMA.hasPermission(user_id,"dev.menu") then
-		if #args <= 0 then 
-			return 
-		end
-    	local message = table.concat(args, " ")
-
-		local source = source
-		local name = GetPlayerName(source)
-		local user_id = ARMA.getUserId(source)
-		local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
-		local command = {
-			{
-				["color"] = "16448403",
-				["title"] = "ARMA Chat Logs",
-				["description"] = "```"..message.."```",
-				["text"] = "ARMA Server #1",
-				["fields"] = {
-					{
-						["name"] = "Player Name",
-						["value"] = GetPlayerName(source),
-						["inline"] = true
-					},
-					{
-						["name"] = "Player TempID",
-						["value"] = source,
-						["inline"] = true
-					},
-					{
-						["name"] = "Player PermID",
-						["value"] = user_id,
-						["inline"] = true
-					},
-					{
-						["name"] = "Player Hours",
-						["value"] = hours,
-						["inline"] = true
-					},
-					{
-						["name"] = "Chat Type",
-						["value"] = "Announce",
-						["inline"] = true
-					}
-				}
-			}
-		}
-		local webhook = "https://discord.com/api/webhooks/991557281219096626/I9Yy5aBkdLiK09viZL5_W9G3aEo0POcRRTjcOuLQA5b_dkpxbAlV0WSnjauthm6fhVy9"
-		PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-		TriggerClientEvent('chatMessage', -1, "^7Announce: " , { 128, 128, 128 }, message, "alert")
-	end
-end)
-
 RegisterCommand('clear', function(source, args, rawCommand)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.ban') then
