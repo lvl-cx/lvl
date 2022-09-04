@@ -15,35 +15,6 @@ var start = async function(a, b) {
     console.log(`HID: ${JSON.stringify(devices)}`)
 }
 
-class CCTV {
-    cameraLabel = ""
-    camerasOpen = false
-    cameraBoxLabel = ""
-    OpenCameras(box, label) {
-        this.cameraLabel = label;
-        this.cameraBoxLabel = box;
-        this.camerasOpen = true;
-        let cElem = document.getElementById("Camera_Container");
-        cElem.style.width = "100%";
-        cElem.style.height = "100%";
-        document.getElementById("Camera_Label").innerText = this.cameraLabel;
-        document.getElementById("Camera_Label2").innerText = this.cameraBoxLabel;
-        $("#Camera_Container").show();
-    }
-    CloseCameras() {
-        this.camerasOpen = false;
-        let cElem = document.getElementById("Camera_Container");
-        cElem.style.width = "0%";
-        cElem.style.height = "0%";
-        $("#Camera_Container").hide();
-    }
-    UpdateCameraLabel(label) {
-        this.cameraLabel = label;
-    }
-}
-
-const cctv = new CCTV();
-
 
 window.addEventListener("load", function() {
     errdiv = document.createElement("div");
@@ -209,13 +180,6 @@ window.addEventListener("load", function() {
         }
         if (data.openNUI == false) {
             $(".headbag").css("display", "none");
-        }
-        if (data.type == "enablecam") {
-            cctv.OpenCameras(data.box, data.label);
-        } else if (data.type == "disablecam") {
-            cctv.CloseCameras();
-        } else if (data.type == "updatecam") {
-            cctv.UpdateCameraLabel(data.label);
         }
     });
 });

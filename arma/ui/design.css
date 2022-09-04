@@ -416,3 +416,33 @@ page-break-inside: avoid;
     font-size: 20px;
     color: white;
 }
+
+/* Start Notify System */
+#notif{
+    /* position:relative;
+    min-width:960px; */
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+#text{
+    margin-left: 3px;
+    margin-right: 3px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#iconspan{
+    margin-right: 5px;
+}
+
+.alertify-notifier .ajs-message, .ajs-success{
+    /* color: #000000 !important; */
+    font-family: 'Roboto', sans-serif !important;
+    border: none !important;
+    text-shadow: none !important;
+    height: auto!important;
+    width: 23vh !important;
+}
+/* End Notify System */
