@@ -14,7 +14,10 @@ cfg.vehicle_chest_weights = {
     ["MH6"] = 150,
     ["al18"] = 150,
     ["sjtoyota"] = 50,
-
+    ["sjtoyota"] = 50,
+    ["m977l"] = 200,
+    ["m977t"] = 200,
+    ["Brickade"] = 100,
 }
 
 return cfg
