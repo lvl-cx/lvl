@@ -173,65 +173,67 @@ Citizen.CreateThread(function()
 	end
 end)
 
-Citizen.CreateThread(function()
-	while true do
-		Citizen.Wait(0)
-		local _ped = PlayerPedId()
-		local _sleep = true
-		if IsPedArmed(_ped, 6) then
-			_sleep = false
-			local weaponselected = GetSelectedPedWeapon(_ped)
-			if true then
-				if GetWeaponDamageModifier(weaponselected) > 1.0 then
-					Wait(500)
-					TriggerServerEvent("ARMA:acType8", 'Damage Modifier')
-				end
-
-				if GetPlayerWeaponDamageModifier(PlayerId()) > 1.0 then
-					Wait(500)
-					TriggerServerEvent("ARMA:acType8", 'Damage Modifier')
-				end
-
-				local clip, ammo = GetAmmoInClip(_ped, weaponselected)
-				local clip3, ammo2 = GetMaxAmmo(_ped, weaponselected)
-				local _weaponammo = GetAmmoInPedWeapon(_ped, weaponselected)
-				if ammo > 499 or ammo2 > 499 then
-					Wait(500)
-					TriggerServerEvent("ARMA:acType8", 'Extra Ammo')
-				end
-				if _weaponammo > ammo2 then
-					Wait(500)
-					TriggerServerEvent("ARMA:acType8", 'Extra Ammo')
-				end
-			end
-			local clip, ammo = GetAmmoInClip(_ped, weaponselected)
-			if IsAimCamActive() then
-				if IsPedShooting(_ped) then
-					local clip, ammo = GetAmmoInClip(_ped, weaponselected)
-					if ammo == GetMaxAmmoInClip(_ped, weaponselected) then
-						Wait(1000)
-						TriggerServerEvent("ARMA:acType8", 'Infinite Ammo')
-					end
-				end
-			end
-		end
-		if _sleep then Citizen.Wait(840) end
-	end
-end)
-
-Citizen.CreateThread(function()
-    while true do 
-        Wait(5000)
-        if GetPedArmour(PlayerPedId()) > 100 then 
-			TriggerServerEvent("ARMA:acType9", 'More than 100 Armour')
-        elseif GetEntityHealth(PlayerPedId()) > 200 then 
-			TriggerServerEvent("ARMA:acType10", 'More than 200 Health')
-		elseif GetAmmoInPedWeapon(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
-			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Weapon')
-		elseif GetWeaponClipSize(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
-			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Clip')
-		end
+Citizen.CreateThread(
+    function()
+        while true do
+            Citizen.Wait(1000)
+            local i = PlayerId()
+            local j = GetVehiclePedIsIn(i)
+            local y = GetPlayerWeaponDamageModifier(i)
+            local z = GetPlayerWeaponDefenseModifier(i)
+            local A = GetPlayerWeaponDefenseModifier_2(i)
+            local B = GetPlayerVehicleDamageModifier(i)
+            local C = GetPlayerVehicleDefenseModifier(i)
+            local D = GetPlayerMeleeWeaponDefenseModifier(i)
+            if j ~= 0 then
+                local E = GetVehicleTopSpeedModifier(j)
+                if E > 1.0 then
+                    TriggerServerEvent("ARMA:acType8", "GetVehicleTopSpeedModifier "..D)
+                end
+            end
+            local F = GetWeaponDamageModifier(GetCurrentPedWeapon(i))
+            local G = GetPlayerMeleeWeaponDamageModifier()
+            if y > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDamageModifier "..y)
+            end
+            if z > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier "..z)
+            end
+            if A > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier_2 "..A)
+            end
+            if B > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "PlayerVehicleDamageModifier "..B)
+            end
+            if C > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "PlayerVehicleDefenseModifier "..C)
+            end
+            if F > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..D)
+            end
+            if G > 1.0 then
+                TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..D)
+            end
+            RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
+            RemoveAllPickupsOfType("PICKUP_HEALTH_STANDARD")
+        end
     end
+)
+
+local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
+CreateThread(function()
+	while true do
+		local h = tARMA.getPlayerPed()
+		local k = GetSelectedPedWeapon(h)
+		if IsPedShooting(h) and not X[k] then
+			local Y, Z = GetAmmoInClip(h, k)
+			if Z == GetMaxAmmoInClip(h, k) then
+				TriggerServerEvent("ARMA:acType8", "Infinite Ammo")
+				Wait(60000)
+			end
+		end
+		Wait(0)
+	end
 end)
 
 print('[ARMA] - Anti-Cheat initialised (Credits: c)')
