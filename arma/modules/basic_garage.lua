@@ -7,7 +7,7 @@ local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
-MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
+MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_rented_vehicles_out", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE rentedid = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_vehicle","SELECT vehicle FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
@@ -64,7 +64,7 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
             for i, v in pairs(vehicle_groups) do
                 local noperms = false;
                 local config = vehicle_groups[i]._config
-                if config.vtype == type then 
+                if config.type == type then 
                     local perm = config.permissions or nil
                     if perm then
                         for i, v in pairs(perm) do
@@ -95,7 +95,7 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
                     for i, v in pairs(vehicle_groups) do
                         local noperms = false;
                         local config = vehicle_groups[i]._config
-                        if config.vtype == type then 
+                        if i == type then 
                             local perm = config.permissions or nil
                             if perm then
                                 for i, v in pairs(perm) do
