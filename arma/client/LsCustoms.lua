@@ -1013,32 +1013,35 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 end)
 
 RegisterNetEvent("LSC:applyModifications")
-AddEventHandler("LSC:applyModifications", function (vehicle, modifications)
-	if vehicle and modifications then
-		SetVehicleModKit(vehicle, 0)
-		SetVehicleColours(vehicle, modifications.color[1], modifications.color[2])
-		SetVehicleExtraColours(vehicle, modifications.extraColor[1], modifications.extraColor[2])
-		SetVehicleNeonLightEnabled(vehicle, 0, modifications.neon)
-		SetVehicleNeonLightEnabled(vehicle, 1, modifications.neon)
-		SetVehicleNeonLightEnabled(vehicle, 2, modifications.neon)
-		SetVehicleNeonLightEnabled(vehicle, 3, modifications.neon)
-		SetVehicleNeonLightsColour(vehicle, modifications.neonColor[1], modifications.neonColor[2], modifications.neonColor[3])
-		SetVehicleHeadlightsColour(vehicle, modifications.xenonColor)
-		SetVehicleTyreSmokeColor(vehicle, modifications.smokeColor[1], modifications.smokeColor[2], modifications.smokeColor[3])
-		SetVehicleWheelType(vehicle, modifications.wheelType)
-		SetVehicleTyresCanBurst(vehicle, modifications.bulletProofTyres)
-		SetVehicleWindowTint(vehicle, modifications.windowTint)
-		SetVehicleNumberPlateTextIndex(vehicle, modifications.plateIndex)
-		for k, v in pairs(modifications.mods) do
-			k = tonumber(k)
-			if k == 18 or k == 22 then
-				ToggleVehicleMod(vehicle, k, v.mod)
-			elseif k == 23 or k == 24 then
-				SetVehicleMod(vehicle, k, v.mod, v.variation)
-			else
-				SetVehicleMod(vehicle, k, v.mod)
+AddEventHandler("LSC:applyModifications", function (vehicle, modifications, fuellevel)
+	if vehicle then
+		if modifications then
+			SetVehicleModKit(vehicle, 0)
+			SetVehicleColours(vehicle, modifications.color[1], modifications.color[2])
+			SetVehicleExtraColours(vehicle, modifications.extraColor[1], modifications.extraColor[2])
+			SetVehicleNeonLightEnabled(vehicle, 0, modifications.neon)
+			SetVehicleNeonLightEnabled(vehicle, 1, modifications.neon)
+			SetVehicleNeonLightEnabled(vehicle, 2, modifications.neon)
+			SetVehicleNeonLightEnabled(vehicle, 3, modifications.neon)
+			SetVehicleNeonLightsColour(vehicle, modifications.neonColor[1], modifications.neonColor[2], modifications.neonColor[3])
+			SetVehicleHeadlightsColour(vehicle, modifications.xenonColor)
+			SetVehicleTyreSmokeColor(vehicle, modifications.smokeColor[1], modifications.smokeColor[2], modifications.smokeColor[3])
+			SetVehicleWheelType(vehicle, modifications.wheelType)
+			SetVehicleTyresCanBurst(vehicle, modifications.bulletProofTyres)
+			SetVehicleWindowTint(vehicle, modifications.windowTint)
+			SetVehicleNumberPlateTextIndex(vehicle, modifications.plateIndex)
+			for k, v in pairs(modifications.mods) do
+				k = tonumber(k)
+				if k == 18 or k == 22 then
+					ToggleVehicleMod(vehicle, k, v.mod)
+				elseif k == 23 or k == 24 then
+					SetVehicleMod(vehicle, k, v.mod, v.variation)
+				else
+					SetVehicleMod(vehicle, k, v.mod)
+				end
 			end
 		end
+		TriggerEvent('ARMA:garagesFuel', vehicle, fuellevel)
 	end
 end)
 
