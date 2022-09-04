@@ -1,5 +1,5 @@
 local announceTables = {
-    {permission = 'admin.announce', info = {name = "Server Announcement", desc = "Announce something to the server", price = 0}, image = 'https://i.imgur.com/KKkU3XQ.png' },
+    {permission = 'admin.managecommunitypot', info = {name = "Server Announcement", desc = "Announce something to the server", price = 0}, image = 'https://i.imgur.com/KKkU3XQ.png' },
     {permission = 'police.announce', info = {name = "PD Announcement", desc = "Announce something to the server", price = 10000}},
 }
 
@@ -25,6 +25,11 @@ AddEventHandler("ARMA:serviceAnnounce", function(announceType)
             if ARMA.tryFullPayment(user_id, v.info.price) then
                 ARMA.prompt(source,"Input text to announce","",function(source,data) 
                     ARMAclient.announce(-1, {v.image, data})
+                    if v.info.price > 0 then
+                        ARMAclient.notify(source, {"~g~Purchased a "..v.info.name.." for £"..v.info.price.." with content ~b~"..data})
+                    else
+                        ARMAclient.notify(source, {"~g~Sending a "..v.info.name.." with content ~b~"..data})
+                    end
                 end)
             else
                 ARMAclient.notify(source, "~r~You do not have enough money to do this.")

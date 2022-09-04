@@ -1,4 +1,4 @@
-RMenu.Add("armaannouncements","main",RageUI.CreateMenu("","~b~Announcement Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_announceui","cmg_announceui"))
+RMenu.Add("armaannouncements","main",RageUI.CreateMenu("","~b~Announcement Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","announcement"))
 local a = {}
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armaannouncements', 'main')) then
