@@ -50,7 +50,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         end
                     end
                 end)
-            if not ARMAConfig.DevMode then ARMAclient.spawnAnim(source, {data.customization, data.position}) return end
+            ARMAclient.spawnAnim(source, {data.customization, data.position, data.health})
             ARMAclient.setUserID(source, {user_id})
 
             if ARMA.hasGroup(user_id, 'dev') then
@@ -243,7 +243,7 @@ AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                  if k ~= 'GADGET_PARACHUTE' and k ~= 'STAFFGUN' then
+                  if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' then
                     if v.ammo > 0 then
                       for i,c in pairs(a.weapons) do
                         if i == k then
