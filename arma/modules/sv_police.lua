@@ -458,3 +458,11 @@ Citizen.CreateThread(function()
         Citizen.Wait(1000)
     end
 end)
+
+RegisterCommand('handbook', function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permissions') then
+        TriggerClientEvent('ARMA:toggleHandbook', source)
+    end
+end)
