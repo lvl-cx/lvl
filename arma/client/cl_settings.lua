@@ -68,41 +68,15 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.ButtonWithStyle("~b~Crosshair Settings", "~b~Change your crosshair settings", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-            end, RMenu:Get('SettingsMenu', 'crosshairsettings'))
+            RageUI.ButtonWithStyle("Crosshair Settings", "Create a custom built-in crosshair here.", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    ExecuteCommand('crosshair')
+                end
+            end)
        end)
     end
 end)
 
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('SettingsMenu', 'crosshairsettings')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Checkbox("Enable Crosshair", nil, crosshairchecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
-                if Selected then
-                    crosshairchecked = not crosshairchecked
-                    if Checked then
-                        ExecuteCommand("cross")
-                        tARMA.notify("~g~Crosshair Enabled!")
-                    else
-                        ExecuteCommand("cross")
-                        tARMA.notify("~r~Crosshair Disabled!")
-                    end
-                end
-            end)
-            RageUI.ButtonWithStyle("Edit Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    ExecuteCommand("crosse")
-                end
-            end)
-            RageUI.ButtonWithStyle("Reset Crosshair", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    ExecuteCommand("crossr")
-                end
-            end)
-        end)
-    end
-end)
 
 RegisterNetEvent('ARMA:sendSettings')
 AddEventHandler('ARMA:sendSettings', function()
