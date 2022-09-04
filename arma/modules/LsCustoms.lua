@@ -69,10 +69,14 @@ AddEventHandler("LSC:applyModifications", function (model, vehicle)
 		local rows = MySQL.query("ARMAls/get_vehicle_modifications", {user_id = user_id, vehicle = model}, function(rows, affected) 
 			if rows ~= nil then 
 				if #rows > 0 then
-					local modifications = json.decode(rows[1].modifications)
-					if modifications then
-						TriggerClientEvent("LSC:applyModifications", source, vehicle, modifications)
-					end
+					MySQL.query("ARMA/get_vehicle_fuellevel", {vehicle = vehicle}, function(result)
+						local modifications = json.decode(rows[1].modifications)
+						if modifications then
+							TriggerClientEvent("LSC:applyModifications", source, vehicle, modifications, result[1].fuel_level)
+						else
+							TriggerClientEvent("LSC:applyModifications", source, vehicle, nil, result[1].fuel_level)
+						end
+					end)
 				else
 					-- print("#rows is 0")
 				end
