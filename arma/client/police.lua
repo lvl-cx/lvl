@@ -142,7 +142,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(5)
     if jail then
-      local x,y,z = tARMA.getPosition()
+      local x,y,z = table.unpack(tARMA.getPosition())
 
       local dx = x-jail[1]
       local dy = y-jail[2]

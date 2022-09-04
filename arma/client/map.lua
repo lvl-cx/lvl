@@ -128,7 +128,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(1000)
 
-    local px,py,pz = tARMA.getPosition()
+    local px,py,pz = table.unpack(tARMA.getPosition())
 
     for k,v in pairs(markers) do
       -- 150 is the min distance wich the markers will be starting to be drawn
@@ -146,7 +146,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
 
-    local px,py,pz = tARMA.getPosition()
+    local px,py,pz = table.unpack(tARMA.getPosition())
 
     -- if this loop get filled with too many markers, the clientside
     -- starts lagging
@@ -185,7 +185,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(250)
 
-    local px,py,pz = tARMA.getPosition()
+    local px,py,pz = table.unpack(tARMA.getPosition())
 
     for k,v in pairs(areas) do
       -- detect enter/leave
@@ -210,7 +210,7 @@ end)
 -- locked: boolean
 -- doorswing: -1 to 1
 function tARMA.setStateOfClosestDoor(doordef, locked, doorswing)
-  local x,y,z = tARMA.getPosition()
+  local x,y,z = table.unpack(tARMA.getPosition())
   local hash = doordef.modelhash
   if hash == nil then
     hash = GetHashKey(doordef.model)

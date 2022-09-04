@@ -303,7 +303,7 @@ RageUI.CreateWhile(1.0, true, function()
                             end
                         end
                         if HasModelLoaded(mhash) then
-                            local x,y,z = tARMA.getPosition()
+                            local x,y,z = table.unpack(tARMA.getPosition())
                             if pos then
                                 x,y,z = table.unpack(pos)
                             end
@@ -535,7 +535,7 @@ RageUI.CreateWhile(1.0, true, function()
                                     end
                                 end
                                 if HasModelLoaded(mhash) then
-                                    local x,y,z = tARMA.getPosition()
+                                    local x,y,z = table.unpack(tARMA.getPosition())
                                     if pos then
                                         x,y,z = table.unpack(pos)
                                     end
