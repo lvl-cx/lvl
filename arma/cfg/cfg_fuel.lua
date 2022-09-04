@@ -1,32 +1,21 @@
-cfgfuel = {}
+local cfg = {}
 
--- Are you using ESX? Turn this to true if you would like fuel & jerry cans to cost something.
-cfgfuel.UseESX = true
-
--- What should the price of jerry cans be?
-cfgfuel.JerryCanCost = 1000
-cfgfuel.RefillCost = 50 -- If it is missing half of it capacity, this amount will be divided in half, and so on.
+cfg.jerryCanCost = 5000
+cfg.fuelCost = 20000
 
 -- Fuel decor - No need to change this, just leave it.
-cfgfuel.FuelDecor = "_FUEL_LEVEL" 
+cfg.decor = "_FUEL_LEVEL"
 
 -- What keys are disabled while you're fueling.
-cfgfuel.DisableKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 168, 170, 288, 289, 311, 323}
-
--- Want to use the HUD? Turn this to true.
-cfgfuel.EnableHUD = true
-
--- Configure blips here. Turn both to false to disable blips all together.
-cfgfuel.ShowNearestGasStationOnly = false
-cfgfuel.ShowAllGasStations = true
+cfg.disabledKeys = {0, 22, 23, 24, 29, 30, 31, 37, 44, 56, 82, 140, 166, 167, 168, 170, 288, 289, 311, 323}
 
 -- Configure the strings as you wish here.
-cfgfuel.Strings = {
+cfg.translations = {
 	ExitVehicle = "Exit the vehicle to refuel",
 	EToRefuel = "Press ~g~E ~w~to refuel vehicle",
 	JerryCanEmpty = "Jerry can is empty",
 	FullTank = "Tank is full",
-	PurchaseJerryCan = "Press ~g~E ~w~to purchase a jerry can for ~g~£" .. cfgfuel.JerryCanCost,
+	PurchaseJerryCan = "Press ~g~E ~w~to purchase a jerry can for ~g~£" .. cfg.jerryCanCost,
 	CancelFuelingPump = "Press ~g~E ~w~to cancel the fueling",
 	CancelFuelingJerryCan = "Press ~g~E ~w~to cancel the fueling",
 	NotEnoughCash = "Not enough cash",
@@ -36,12 +25,7 @@ cfgfuel.Strings = {
 	TotalCost = "Cost",
 }
 
-if not cfgfuel.UseESX then
-	cfgfuel.Strings.PurchaseJerryCan = "Press ~g~E ~w~to grab a jerry can"
-	cfgfuel.Strings.RefillJerryCan = "Press ~g~E ~w~ to refill the jerry can"
-end
-
-cfgfuel.PumpModels = {
+cfg.pumpModels = {
 	[-2007231801] = true,
 	[1339433404] = true,
 	[1694452750] = true,
@@ -51,43 +35,34 @@ cfgfuel.PumpModels = {
 	[-164877493] = true
 }
 
--- Blacklist certain vehicles. Use names or hashes. https://wiki.gtanet.work/index.php?title=Vehicle_Models
-cfgfuel.Blacklist = {
-	--"Adder",
-	--276773164
-}
-
--- Do you want the HUD removed from showing in blacklisted vehicles?
-cfgfuel.RemoveHUDForBlacklistedVehicle = true
-
 -- Class multipliers. If you want SUVs to use less fuel, you can change it to anything under 1.0, and vise versa.
-cfgfuel.Classes = {
-	[0] = 1.0, -- Compacts
-	[1] = 1.0, -- Sedans
-	[2] = 1.0, -- SUVs
-	[3] = 1.0, -- Coupes
-	[4] = 1.0, -- Muscle
-	[5] = 1.0, -- Sports Classics
-	[6] = 1.0, -- Sports
-	[7] = 1.0, -- Super
-	[8] = 1.0, -- Motorcycles
-	[9] = 1.0, -- Off-road
-	[10] = 1.0, -- Industrial
-	[11] = 1.0, -- Utility
-	[12] = 1.0, -- Vans
+cfg.classes = {
+	[0] = 0.4, -- Compacts
+	[1] = 0.4, -- Sedans
+	[2] = 0.4, -- SUVs
+	[3] = 0.4, -- Coupes
+	[4] = 0.4, -- Muscle
+	[5] = 0.4, -- Sports Classics
+	[6] = 0.4, -- Sports
+	[7] = 0.4, -- Super
+	[8] = 0.4, -- Motorcycles
+	[9] = 0.4, -- Off-road
+	[10] = 0.4, -- Industrial
+	[11] = 0.4, -- Utility
+	[12] = 0.4, -- Vans
 	[13] = 0.0, -- Cycles
-	[14] = 1.0, -- Boats
-	[15] = 1.0, -- Helicopters
-	[16] = 1.0, -- Planes
-	[17] = 1.0, -- Service
-	[18] = 1.0, -- Emergency
-	[19] = 1.0, -- Military
-	[20] = 1.0, -- Commercial
-	[21] = 1.0, -- Trains
+	[14] = 0.0, -- Boats
+	[15] = 0.0, -- Helicopters
+	[16] = 0.0, -- Planes
+	[17] = 0.4, -- Service
+	[18] = 0.4, -- Emergency
+	[19] = 0.4, -- Military
+	[20] = 0.4, -- Commercial
+	[21] = 0.0, -- Trains
 }
 
 -- The left part is at percentage RPM, and the right is how much fuel (divided by 10) you want to remove from the tank every second
-cfgfuel.FuelUsage = {
+cfg.fuelUsage = {
 	[1.0] = 1.4,
 	[0.9] = 1.2,
 	[0.8] = 1.0,
@@ -101,7 +76,7 @@ cfgfuel.FuelUsage = {
 	[0.0] = 0.0,
 }
 
-cfgfuel.GasStations = {
+cfg.stations = {
 	vector3(49.4187, 2778.793, 58.043),
 	vector3(263.894, 2606.463, 44.983),
 	vector3(1039.958, 2671.134, 39.550),
@@ -132,4 +107,4 @@ cfgfuel.GasStations = {
 	vector3(1784.324, 3330.55, 41.253)
 }
 
-return cfgfuel
+return cfg

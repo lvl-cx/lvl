@@ -142,6 +142,7 @@ Citizen.CreateThread(function()
     rentedid varchar(200) NOT NULL DEFAULT '',
     rentedtime varchar(2048) NOT NULL DEFAULT '',
     locked BOOLEAN NOT NULL DEFAULT 0,
+    fuel_level INT NOT NULL DEFAULT 100,
     CONSTRAINT pk_user_vehicles PRIMARY KEY(user_id,vehicle),
     CONSTRAINT fk_user_vehicles_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE
     );

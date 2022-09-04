@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
             DrawScaleformMovieFullscreen(m)
             local o = 0.0
             local p = 0.0
-            local r, s, t = tARMA.getPosition()
+            local r, s, t = table.unpack(tARMA.getPosition())
             local u, v, w = tARMA.getCamDirection()
             if IsDisabledControlJustPressed(1, f.controls.reduceSpeed) then
                 if b ~= 1 then
@@ -179,7 +179,7 @@ function tARMA.staffMode(status)
             tARMA.setRedzoneTimerDisabled(true)
             a = tARMA.getCustomization()
             local z
-            if getModelGender()=="male"then 
+            if tARMA.getModelGender()=="male"then 
                 z="mp_m_freemode_01"
                 local A=loadModel(z)
                 tARMA.setCustomization({modelhash=A})
