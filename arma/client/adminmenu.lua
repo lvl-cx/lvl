@@ -366,6 +366,26 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
+            if GlobalAdminLevel >= 6 then
+                RageUI.ButtonWithStyle("Revive All Nearby", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local D = tARMA.getPlayerCoords()
+                        for E, S in pairs(GetActivePlayers()) do
+                            local T = GetPlayerServerId(S)
+                            local M = GetPlayerPed(S)
+                            if T ~= -1 and M ~= 0 then
+                                local U = GetEntityCoords(M, true)
+                                if #(D - U) < 50.0 then
+                                    local V = tARMA.getPermIdFromTemp(T)
+                                    if V > 0 then
+                                        TriggerServerEvent('ARMA:RevivePlayer', GetPlayerServerId(PlayerId()), V, true)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
             if GlobalAdminLevel >= 7 then
                 local P=""
                 if tARMA.hasStaffBlips() then 
@@ -720,7 +740,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:RevivePlayer', uid, SelectedPlayer[2])
+                        TriggerServerEvent('ARMA:RevivePlayer', uid, SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end

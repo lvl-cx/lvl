@@ -1401,56 +1401,61 @@ AddEventHandler('ARMA:SlapPlayer', function(admin, target)
 end)
 
 RegisterServerEvent('ARMA:RevivePlayer')
-AddEventHandler('ARMA:RevivePlayer', function(admin, target)
+AddEventHandler('ARMA:RevivePlayer', function(admin, targetid, reviveall)
     local admin_id = ARMA.getUserId(admin)
-    local player_id = ARMA.getUserId(target)
+    local player_id = targetid
+    local target = ARMA.getUserSource(player_id)
     if ARMA.hasPermission(admin_id, "admin.revive") then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(target)
-        local command = {
-            {
-                ["color"] = "16448403",
-                ["title"] = "ARMA Revive Logs",
-                ["description"] = "",
-                ["text"] = "ARMA Server #1",
-                ["fields"] = {
-                    {
-                        ["name"] = "Admin Name",
-                        ["value"] = GetPlayerName(admin),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin TempID",
-                        ["value"] = admin,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Admin PermID",
-                        ["value"] = admin_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Name",
-                        ["value"] = GetPlayerName(target),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player TempID",
-                        ["value"] = target,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player PermID",
-                        ["value"] = player_id,
-                        ["inline"] = true
+        ARMAclient.RevivePlayer(target, {})
+        if not reviveall then
+            local playerName = GetPlayerName(source)
+            local playerOtherName = GetPlayerName(target)
+            local command = {
+                {
+                    ["color"] = "16448403",
+                    ["title"] = "ARMA Revive Logs",
+                    ["description"] = "",
+                    ["text"] = "ARMA Server #1",
+                    ["fields"] = {
+                        {
+                            ["name"] = "Admin Name",
+                            ["value"] = GetPlayerName(admin),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin TempID",
+                            ["value"] = admin,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Admin PermID",
+                            ["value"] = admin_id,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player Name",
+                            ["value"] = GetPlayerName(target),
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player TempID",
+                            ["value"] = target,
+                            ["inline"] = true
+                        },
+                        {
+                            ["name"] = "Player PermID",
+                            ["value"] = player_id,
+                            ["inline"] = true
+                        }
                     }
                 }
             }
-        }
-        local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        ARMAclient.RevivePlayer(target, {})
-        ARMAclient.notify(admin, {'~g~Revived Player.'})
+            local webhook = "https://discord.com/api/webhooks/991476015660552252/iEMahT-rQyRIMbOjlFqyI_QpZDZ1XhnsPWUu5BtAm3BY0r1nuv-bfbhnMimmSQE7wAgQ"
+            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+            ARMAclient.notify(admin, {'~g~Revived Player.'})
+            return
+        end
+        ARMAclient.notify(admin, {'~g~Revived all Nearby.'})
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
