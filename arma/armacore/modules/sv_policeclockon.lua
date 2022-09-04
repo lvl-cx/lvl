@@ -51,6 +51,7 @@ AddEventHandler('PoliceMenu:ClockOn', function(policerank)
     if user_id ~= nil and ARMA.hasPermission(user_id, policeperm) and not ARMA.hasGroup(user_id,policerank) then
         ARMA.addUserGroup(user_id,policerank)
         ARMAclient.notify(source,{"~g~You have clocked on as a "..policename})
+        ARMAclient.setPolice(source, {true})
     elseif user_id == nil then
         ARMAclient.notify(source,{"~r~You are a nil User ID, please relog."})
     elseif not ARMA.hasPermission(user_id, policeperm) then
@@ -90,48 +91,53 @@ AddEventHandler('PoliceMenu:ClockOff', function()
 
     if user_id == nil then
         ARMAclient.notify(source,{"~r~You are a nil User ID, please relog."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Commissioner Clocked") then
-        ARMA.removeUserGroup(user_id,"Commissioner Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Deputy Commissioner Clocked") then
-        ARMA.removeUserGroup(user_id,"Deputy Commissioner Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Assistant Commissioner Clocked") then
-        ARMA.removeUserGroup(user_id,"Assistant Commissioner Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Deputy Assistant Commissioner Clocked") then
-        ARMA.removeUserGroup(user_id,"Deputy Assistant Commissioner Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Commander Clocked") then
-        ARMA.removeUserGroup(user_id,"Commander Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Chief Superintendent Clocked") then
-        ARMA.removeUserGroup(user_id,"Chief Superintendent Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Superintendent Clocked") then
-        ARMA.removeUserGroup(user_id,"Superintendent Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Chief Inspector Clocked") then
-        ARMA.removeUserGroup(user_id,"Chief Inspector Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Inspector Clocked") then
-        ARMA.removeUserGroup(user_id,"Inspector Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Sergeant Clocked") then
-        ARMA.removeUserGroup(user_id,"Sergeant Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Special Police Constable Clocked") then
-        ARMA.removeUserGroup(user_id,"Special Police Constable Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Senior Police Constable Clocked") then
-        ARMA.removeUserGroup(user_id,"Senior Police Constable Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "Police Constable Clocked") then
-        ARMA.removeUserGroup(user_id,"Police Constable Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
-    elseif user_id ~= nil and ARMA.hasGroup(user_id, "PCSO Clocked") then
-        ARMA.removeUserGroup(user_id,"PCSO Clocked")
-        ARMAclient.notify(source,{"~r~You clocked off."})
+        return
+    end
+    if ARMA.hasPermission(user_id, "police.onduty.permission") then
+        if ARMA.hasGroup(user_id, "Commissioner Clocked") then
+            ARMA.removeUserGroup(user_id,"Commissioner Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Deputy Commissioner Clocked") then
+            ARMA.removeUserGroup(user_id,"Deputy Commissioner Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Assistant Commissioner Clocked") then
+            ARMA.removeUserGroup(user_id,"Assistant Commissioner Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Deputy Assistant Commissioner Clocked") then
+            ARMA.removeUserGroup(user_id,"Deputy Assistant Commissioner Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Commander Clocked") then
+            ARMA.removeUserGroup(user_id,"Commander Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Chief Superintendent Clocked") then
+            ARMA.removeUserGroup(user_id,"Chief Superintendent Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Superintendent Clocked") then
+            ARMA.removeUserGroup(user_id,"Superintendent Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Chief Inspector Clocked") then
+            ARMA.removeUserGroup(user_id,"Chief Inspector Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Inspector Clocked") then
+            ARMA.removeUserGroup(user_id,"Inspector Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Sergeant Clocked") then
+            ARMA.removeUserGroup(user_id,"Sergeant Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Special Police Constable Clocked") then
+            ARMA.removeUserGroup(user_id,"Special Police Constable Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Senior Police Constable Clocked") then
+            ARMA.removeUserGroup(user_id,"Senior Police Constable Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "Police Constable Clocked") then
+            ARMA.removeUserGroup(user_id,"Police Constable Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        elseif ARMA.hasGroup(user_id, "PCSO Clocked") then
+            ARMA.removeUserGroup(user_id,"PCSO Clocked")
+            ARMAclient.notify(source,{"~r~You clocked off."})
+        end
+        ARMAclient.setPolice(source, {false})
     end
     if #(coords - comparison) > 20 then
         print(GetPlayerName(source).." is a cheating scum, he's trying to clock off as Police!")
