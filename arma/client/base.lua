@@ -532,6 +532,15 @@ function tARMA.setCanAnim(n)
     m=n 
 end
 
+function tARMA.getModelGender()
+  local B=PlayerPedId()
+  if GetEntityModel(B)==`mp_f_freemode_01`then 
+      return"female"
+  else 
+      return"male"
+  end 
+end
+
 function tARMA.announce(j,k)
   SendNUIMessage({act="announce",background=j,content=k})
 end

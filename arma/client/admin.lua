@@ -207,15 +207,6 @@ function tARMA.staffMode(status)
 end
 
 
-function getModelGender()
-  local B=PlayerPedId()
-  if GetEntityModel(B)==`mp_f_freemode_01`then 
-      return"female"
-  else 
-      return"male"
-  end 
-end
-
 function loadModel(r)
   local s
   if type(r)~="string"then 
