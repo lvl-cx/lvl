@@ -156,22 +156,12 @@ AddEventHandler("fuel:refuelFromPump",function(y, s, j)
 			D(S.x, S.y, S.z + 1.2, a.translations.CancelFuelingPump .. T)
 			D(R.x, R.y, R.z + 0.5, l(f, 1) .. "%")
 		else
-			D(
-				R.x,
-				R.y,
-				R.z + 0.5,
-				a.translations.CancelFuelingJerryCan ..
-					"\nGas can: ~g~" ..
-						l(GetAmmoInPedWeapon(s, 883325847) / 4500 * 100, 1) .. "% | Vehicle: " .. l(f, 1) .. "%"
-			)
+			D(R.x,R.y,R.z + 0.5,a.translations.CancelFuelingJerryCan .."\nGas can: ~g~" ..l(GetAmmoInPedWeapon(s, 883325847) / 4500 * 100, 1) .. "% | Vehicle: " .. l(f, 1) .. "%")
 		end
 		if not IsEntityPlayingAnim(s, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 3) then
 			TaskPlayAnim(s, "timetable@gardener@filling_can", "gar_ig_5_filling_can", 2.0, 8.0, -1, 50, 0, 0, 0, 0)
 		end
-		if
-			IsControlJustReleased(0, 38) or DoesEntityExist(GetPedInVehicleSeat(j, -1)) or
-				d and GetEntityHealth(y) <= 0
-			then
+		if IsControlJustReleased(0, 38) or DoesEntityExist(GetPedInVehicleSeat(j, -1)) or d and GetEntityHealth(y) <= 0 then
 			e = false
 		end
 	end
