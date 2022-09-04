@@ -14,6 +14,13 @@ Proxy.addInterface("ARMA",tARMA)
 
 -- functions
 
+function tARMA.isDevMode()
+  if #GetActivePlayers() == 1 then
+      return true
+  else
+      return false
+  end
+end
 
 function tARMA.teleport(g,h,j)
   local k=PlayerPedId()
@@ -39,8 +46,7 @@ end
 
 -- return x,y,z
 function tARMA.getPosition()
-  local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
-  return x,y,z
+  return GetEntityCoords(tARMA.getPlayerPed())
 end
 
 --returns the distance between 2 coordinates (x,y,z) and (x2,y2,z2)
@@ -53,7 +59,7 @@ end
 
 -- return false if in exterior, true if inside a building
 function tARMA.isInside()
-  local x,y,z = tARMA.getPosition()
+  local x,y,z = table.unpack(tARMA.getPosition())
   return not (GetInteriorAtCoords(x,y,z) == 0)
 end
 
@@ -116,7 +122,7 @@ function tARMA.getNearestPlayers(radius)
 
   local ped = GetPlayerPed(i)
   local pid = PlayerId()
-  local px,py,pz = tARMA.getPosition()
+  local px,py,pz = table.unpack(tARMA.getPosition())
 
   for k,v in pairs(players) do
     local player = GetPlayerFromServerId(k)
@@ -389,7 +395,7 @@ function tARMA.playAnim(upper, seq, looping)
 
     local ped = PlayerPedId()
     if seq.task == "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER" then -- special case, sit in a chair
-      local x,y,z = tARMA.getPosition()
+      local x,y,z = table.unpack(tARMA.getPosition())
       TaskStartScenarioAtPosition(ped, seq.task, x, y, z-1, GetEntityHeading(ped), 0, 0, false)
     else
       TaskStartScenarioInPlace(ped, seq.task, 0, not seq.play_exit)
