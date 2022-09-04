@@ -50,7 +50,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         end
                     end
                 end)
-            ARMAclient.spawnAnim(source, {data.customization, data.position})
+            if not ARMAConfig.DevMode then ARMAclient.spawnAnim(source, {data.customization, data.position}) return end
             ARMAclient.setUserID(source, {user_id})
 
             if ARMA.hasGroup(user_id, 'dev') then
