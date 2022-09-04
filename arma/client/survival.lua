@@ -55,7 +55,6 @@ Citizen.CreateThread(function() -- coma thread
         Wait(0)
         local ped = PlayerPedId()
         local health = GetEntityHealth(ped)
-        print(IsEntityDead(PlayerPedId()), in_coma, changingPed, spawning)
         if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed and not spawning then --Wait for death check
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
