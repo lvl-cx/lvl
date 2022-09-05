@@ -499,11 +499,11 @@ cfg.images = {
     govLarge = "gov_uk_large",
     lPlate = "lplate",
     motorway = "motorwaySign",
-    dvsaLogo = "dvsa_logo",
+    dvsaLogo = "dvsa",
     endOf30 = "end_of_30",
     speed30 = "30sign",
     speed40 = "30sign",
-    speed60 = "60sign",
+    speed60 = "70sign",
     speed70 = "70sign",
 }
 
