@@ -572,11 +572,14 @@ Citizen.CreateThread(function()
         Wait(0)
     end 
 end)
-Citizen.CreateThread(function()
-    if true then 
-        for a7,a8 in pairs(r)do 
+
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		for a7,a8 in pairs(r)do 
             tARMA.addBlip(a8.x,a8.y,a8.z,73,3,"Clothing Store",0.7)
             tARMA.addMarker(a8.x,a8.y,a8.z,0.6,0.6,0.6,10,255,81,170,50,9,false,false,true,"dp_clothing","top",90.0,90.0,0.0)
         end 
-    end 
+		firstspawn = 1
+	end
 end)

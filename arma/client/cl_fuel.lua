@@ -1,7 +1,10 @@
 local a = module("cfg/cfg_fuel")
-Citizen.CreateThread(function()
-	for b, c in pairs(a.stations) do
-		tARMA.addBlip(c.x, c.y, c.z, 361, 4, "Petrol Station", 0.6)
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		for b, c in pairs(a.stations) do
+			tARMA.addBlip(c.x, c.y, c.z, 361, 4, "Petrol Station", 0.6)
+		end
 	end
 end)
 local d = false

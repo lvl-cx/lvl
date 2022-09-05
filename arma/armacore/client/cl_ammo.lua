@@ -91,30 +91,11 @@ Citizen.CreateThread(function()
 end)
 
 
--- [Blip]
-Citizen.CreateThread(function()
-    blip = AddBlipForCoord(ammo.location)
-    SetBlipSprite(blip, 549)
-    SetBlipScale(blip, 0.6)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 1)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString('Ammo Trader')
-    EndTextCommandSetBlipName(blip)
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		tARMA.addBlip(ammo.location.x,ammo.location.y,ammo.location.z, 549, 1, "Ammo Trader")
+		tARMA.addBlip(-1705.8489990234,8886.5810546875,28.723564147949, 648, 1, "Oil Rig")
+		firstspawn = 1
+	end
 end)
-
--- [Blip]
-Citizen.CreateThread(function()
-    blip = AddBlipForCoord(-1705.8489990234,8886.5810546875,28.723564147949)
-    SetBlipSprite(blip, 648)
-    SetBlipScale(blip, 0.6)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 1)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Oil Rig")
-    EndTextCommandSetBlipName(blip)
-end)
-
-

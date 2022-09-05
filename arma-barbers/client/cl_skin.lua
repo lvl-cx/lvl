@@ -699,58 +699,12 @@ function drawNativeNotification(text)
     DisplayHelpTextFromStringLabel(0, 0, 1, -1)
 end
 
-local ARMAFaceDataBlips = {
-	{-815.59008789063,-182.16806030273,37.568920135498},
-	{139.21583557129,-1708.9689941406,29.301620483398},
-	{-1281.9802246094,-1119.6861572266,7.0001249313354},
-	{1934.115234375,3730.7399902344,32.854434967041},
-	{1211.0759277344,-475.00064086914,66.218032836914},
-	{-34.97777557373,-150.9037322998,57.086517333984},
-	{-280.37301635742,6227.017578125,31.705526351929}
-}
-
 local playedSound = false
 
-Citizen.CreateThread(function()
-
-	for k, v in pairs(ARMAFaceDataBlips) do
-        local blip = AddBlipForCoord(table.unpack(v))
-        SetBlipSprite(blip, 71)
-        SetBlipDisplay(blip, 4)		
-		SetBlipScale(blip, 0.6)
-        SetBlipAsShortRange(blip, true)
-	    BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString("Barber Shop")
-        EndTextCommandSetBlipName(blip)
-    end
-
-    while true do
-        Citizen.Wait(0)
-
-        for k, v in pairs(ARMAFaceDataBlips) do
-
-            local plyCoords = GetEntityCoords(GetPlayerPed(-1), false)
-            local dist = #(plyCoords-vector3(table.unpack(v)))
-
-			if dist <= 100.0 then
-				DrawMarker(2, vector3(table.unpack(v)), 0, 0, 0, 0, 0, 0, 0.3, 0.3, 0.3, 0, 255, 255, 255, 0, true, false)
-			end
-
-            if dist <= 1.2 then
-				drawNativeNotification("Press ~INPUT_PICKUP~ get a haircut!")
-                if not playedSound then
-                    playedSound = true
-                    PlaySound(-1, "SELECT", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-                end
-				if IsControlJustPressed(1,51) then
-					if not isSkinCreatorOpened then
-						isCameraActive = true
-						SkinCreator(true)
-					end
-				end
-            end
-        end
-    end
+AddEventHandler("ARMA:openBarbershop",function()
+	if not isSkinCreatorOpened then
+		isCameraActive = true
+		SkinCreator(true)
+	end
 end)
-
 

@@ -48,18 +48,6 @@ local inMenu = false
 local currentShop = nil
 
 Citizen.CreateThread(function()
-    for k, v in pairs(cfg.shops) do
-        local blip = AddBlipForCoord(v)
-        SetBlipSprite(blip, 52)
-        SetBlipDisplay(blip, 4)
-        SetBlipScale(blip, 0.5)
-        SetBlipColour(blip, 2)
-        SetBlipAsShortRange(blip, true)
-	    BeginTextCommandSetBlipName("STRING")
-        AddTextComponentString("Shop")
-        EndTextCommandSetBlipName(blip)
-    end
-
     while true do
         Citizen.Wait(0)
         

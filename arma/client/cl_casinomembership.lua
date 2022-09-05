@@ -74,10 +74,10 @@ Citizen.CreateThread(function()
         RemoveAnimDict(f)
     end 
 end)
-Citizen.CreateThread(function()
-    if true then
-        Wait(0)
-        local m=function(n)
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		local m=function(n)
             showCasinoMembership(true)
         end
         local o=function(n)
@@ -90,5 +90,6 @@ Citizen.CreateThread(function()
             tARMA.addMarker(h.entryPosition.x,h.entryPosition.y,h.entryPosition.z,1.0,1.0,1.0,138,43,226,70,50,27)
             tARMA.createArea("casinomembership_"..q,h.entryPosition,1.5,6,m,o,p,{})
         end 
-    end 
+		firstspawn = 1
+	end
 end)

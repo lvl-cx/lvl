@@ -196,11 +196,10 @@ end)
 
 local z={{position=vector3(1149.3828125,269.19174194336,-52.020873718262),radius=100},{position=vector3(54.053936004639,6742.1513671875,-107.354347229),radius=100},{position=vector3(-1896.8582763672,2069.3537597656,144.86274719238),radius=10},{position=vector3(774.75134277344,-552.91137695312,22.498882293701),radius=100},{position=vector3(-1137.8917236328,-184.71762084961,40.0803565979),radius=50},{position=vector3(422.06201171875,18.277492523193,91.935234069824),radius=25}}
 
-
-Citizen.CreateThread(function()
-    if true then
-        Wait(0)
-        RequestStreamedTextureDict("CommonMenu")
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		RequestStreamedTextureDict("CommonMenu")
         local C=function(D)
             showCasinoChipsCashier(true)
         end
@@ -226,7 +225,8 @@ Citizen.CreateThread(function()
             end,function()
             end,G,{})
         end 
-    end 
+		firstspawn = 1
+	end
 end)
 
 insideDiamondCasino = false
