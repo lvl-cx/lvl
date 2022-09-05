@@ -1,5 +1,5 @@
 local announceTables = {
-    {permission = 'admin.managecommunitypot', info = {name = "Server Announcement", desc = "Announce something to the server", price = 0}, image = 'https://i.imgur.com/KKkU3XQ.png' },
+    {permission = 'admin.managecommunitypot', info = {name = "Server Announcement", desc = "Announce something to the server", price = 0}, image = 'https://i.imgur.com/FZMys0F.png' },
     {permission = 'police.announce', info = {name = "PD Announcement", desc = "Announce something to the server", price = 10000}},
 }
 
