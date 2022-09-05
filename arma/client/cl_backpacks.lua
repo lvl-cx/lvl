@@ -33,12 +33,12 @@ AddEventHandler('playerSpawned', function(spawn)
 	if firstspawn == 0 then
 		local g = function()
             setCursor(1)
-            inGUICMG = true
+            inGUIARMA = true
             d = tARMA.getCustomization()
         end
         local h = function()
             setCursor(0)
-            inGUICMG = false
+            inGUIARMA = false
             if d ~= nil then
                 tARMA.setCustomization(d)
             end
