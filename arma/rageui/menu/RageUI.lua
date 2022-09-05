@@ -470,6 +470,7 @@ function RageUI.Subtitle()
                 if RageUI.CurrentMenu.Index > RageUI.CurrentMenu.Options or RageUI.CurrentMenu.Index < 0 then
                     RageUI.CurrentMenu.Index = 1
                 end
+                RageUI.RefreshPagination()
                 if RageUI.CurrentMenu.PageCounter == nil then
                     RenderText(RageUI.CurrentMenu.PageCounterColour .. RageUI.CurrentMenu.Index .. " / " .. RageUI.CurrentMenu.Options, RageUI.CurrentMenu.X + RageUI.Settings.Items.Subtitle.PreText.X + RageUI.CurrentMenu.WidthOffset, RageUI.CurrentMenu.Y + RageUI.Settings.Items.Subtitle.PreText.Y + RageUI.ItemOffset, 0, RageUI.Settings.Items.Subtitle.PreText.Scale, 245, 245, 245, 255, 2)
                 else
@@ -570,7 +571,9 @@ function RageUI.Render(instructionalButton)
                     RageUI.CurrentMenu.Controls.Back.Pressed = false
                     local Audio = RageUI.Settings.Audio
                     RageUI.PlaySound(Audio[Audio.Use].Back.audioName, Audio[Audio.Use].Back.audioRef)
+                    RageUI.ParentCallback()
                     if RageUI.CurrentMenu.Closed ~= nil then
+                        collectgarbage()
                         RageUI.CurrentMenu.Closed()
                     end
                     if RageUI.CurrentMenu.Parent ~= nil then
@@ -591,6 +594,8 @@ function RageUI.Render(instructionalButton)
                     RageUI.Visible(RageUI.CurrentMenu, false)
                     RageUI.Visible(RageUI.NextMenu, true)
                     RageUI.CurrentMenu.Controls.Select.Active = false
+                    RageUI.NextMenu = nil
+                    RageUI.LastControl = false
                 end
             end
         end
@@ -635,6 +640,19 @@ function RageUI.DrawContent(settings, items, panels)
         RageUI.Render(settings.instructionalButton)
     else
         RageUI.Render(true)
+    end
+end
+
+function RageUI.RefreshPagination()
+    if (RageUI.CurrentMenu ~= nil) then
+        if (RageUI.CurrentMenu.Index > 10) then
+            local offset = RageUI.CurrentMenu.Index - 10
+            RageUI.CurrentMenu.Pagination.Minimum = 1 + offset
+            RageUI.CurrentMenu.Pagination.Maximum = 10 + offset
+        else
+            RageUI.CurrentMenu.Pagination.Minimum = 1
+            RageUI.CurrentMenu.Pagination.Maximum = 10
+        end
     end
 end
 
@@ -720,3 +738,4 @@ function RageUI.CreateWhile(wait, enabled, closure, type)
     end)
 end
 
+RageUI.ParentCallback = function() end

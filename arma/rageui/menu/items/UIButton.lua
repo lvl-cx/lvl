@@ -484,5 +484,7 @@ function RageUI.CenterButton(Label, Description, Style, Enabled, Callback, Subme
     end
 end
 
-
+function RageUI.BackspaceMenuCallback(Callback)
+    RageUI.ParentCallback = Callback
+end
 

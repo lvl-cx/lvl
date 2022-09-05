@@ -42,8 +42,8 @@ function RageUI.GoUp(Options)
                             RageUI.CurrentMenu.Pagination.Maximum = Options
                             RageUI.CurrentMenu.Index = Options
                         else
-                            RageUI.CurrentMenu.Pagination.Minimum = RageUI.CurrentMenu.Pagination.Minimum - 1
-                            RageUI.CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Pagination.Maximum - 1
+                            RageUI.CurrentMenu.Pagination.Minimum = (RageUI.CurrentMenu.Pagination.Minimum - 1)
+                            RageUI.CurrentMenu.Pagination.Maximum = (RageUI.CurrentMenu.Pagination.Maximum - 1)
                             RageUI.CurrentMenu.Index = RageUI.CurrentMenu.Index - 1
                         end
                     else
@@ -85,7 +85,7 @@ function RageUI.GoDown(Options)
                             RageUI.CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Pagination.Total
                             RageUI.CurrentMenu.Index = 1
                         else
-                            RageUI.CurrentMenu.Pagination.Maximum = RageUI.CurrentMenu.Pagination.Maximum + 1
+                            RageUI.CurrentMenu.Pagination.Maximum = (RageUI.CurrentMenu.Pagination.Maximum + 1)
                             RageUI.CurrentMenu.Pagination.Minimum = RageUI.CurrentMenu.Pagination.Maximum - (RageUI.CurrentMenu.Pagination.Total - 1)
                             RageUI.CurrentMenu.Index = RageUI.CurrentMenu.Index + 1
                         end
