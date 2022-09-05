@@ -161,12 +161,63 @@ function tARMA.notify(msg)
   DrawNotification(true, false)
 end
 
-function tARMA.notifyPicture(icon, type, sender, title, text)
+
+local function b(c,d,e)
+  return c<d and d or c>e and e or c 
+end
+
+local function f(g)
+  local h=math.floor(#g%99==0 and#g/99 or#g/99+1)
+  local i={}
+  for j=0,h-1 do 
+      i[j+1]=string.sub(g,j*99+1,b(#string.sub(g,j*99),0,99)+j*99)
+  end
+  return i 
+end
+
+local function k(l,m)
+  local n=f(l)
+  SetNotificationTextEntry("CELL_EMAIL_BCON")
+  for o,p in ipairs(n)do 
+      AddTextComponentSubstringPlayerName(p)
+  end
+  if m then 
+      local q=GetSoundId()
+      PlaySoundFrontend(q,"police_notification","DLC_AS_VNT_Sounds",true)
+      ReleaseSoundId(q)
+  end 
+end
+
+function tARMA.notifyPicture(ay,az,l,ac,aA,aB,aC)
+  if ay~=nil and az~=nil then 
+      RequestStreamedTextureDict(ay,true)
+      while not HasStreamedTextureDictLoaded(ay)do 
+          print("stuck loading",ay)
+          Wait(0)
+      end 
+  end
+  k(l,aB=="police")
+  if aC==nil then 
+      aC=0 
+  end
+  local aD=false
+  EndTextCommandThefeedPostMessagetext(ay,az,aD,aC,ac,aA)
+  local aE=true
+  local aF=false
+  EndTextCommandThefeedPostTicker(aF,aE)
+  DrawNotification(false,true)
+  if aB==nil then 
+      PlaySoundFrontend(-1,"CHECKPOINT_NORMAL","HUD_MINI_GAME_SOUNDSET",1)
+  end 
+end
+
+
+--[[ function tARMA.notifyPicture(icon, type, sender, title, text)
     SetNotificationTextEntry("STRING")
     AddTextComponentString(text)
     SetNotificationMessage(icon, icon, true, type, sender, title, text)
     DrawNotification(false, true)
-end
+end ]]
 
 -- SCREEN
 
@@ -879,4 +930,25 @@ end)
 
 RegisterNUICallback("receivedAccountInfo",function(a)
   TriggerServerEvent("ARMA:receivedAccountInfo",a.gpu,a.cpu,a.userAgent)
+end)
+
+local blipscfg = module("cfg/blips_markers")
+local firstspawn = 0
+AddEventHandler('playerSpawned', function(spawn)
+	if firstspawn == 0 then
+		for A, B in pairs(blipscfg.blips) do
+        tARMA.addBlip(B[1], B[2], B[3], B[4], B[5], B[6], B[7] or 0.8)
+    end
+    for A, B in pairs(blipscfg.markers) do
+        tARMA.addMarker(B[1], B[2], B[3], B[4], B[5], B[6], B[7], B[8], B[9], B[10], B[11])
+    end
+		firstspawn = 1
+	end
+end)
+CreateThread(function()
+    while true do
+        ExtendWorldBoundaryForPlayer(-9000.0, -11000.0, 30.0)
+        ExtendWorldBoundaryForPlayer(10000.0, 12000.0, 30.0)
+        Wait(0)
+    end
 end)
