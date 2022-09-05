@@ -108,52 +108,52 @@ RegisterCommand("ooc", function(source, args, raw)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
 			if ARMA.hasGroup(user_id, "founder") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "dev") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^1 Developer ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^1 Developer ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "commanager") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^6 Community Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 Community Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "staffmanager") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^9 Staff Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^9 Staff Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "headadmin") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 Head Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Head Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "senioradmin") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 Senior Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Senior Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "administrator") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^4 Administrator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")		
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^4 Administrator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")		
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "moderator") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^2 Moderator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Moderator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "support") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^2 Support Team ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Support Team ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "trialstaff") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^5 Trial Staff ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^5 Trial Staff ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "VIP") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^1 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^1 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Recruit") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^ |^9 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^ |^9 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Soldier") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc") 
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc") 
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Warrior") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^6 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Champion") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^5 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^5 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			else
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			end
 		else
@@ -214,52 +214,52 @@ RegisterCommand("/", function(source, args, raw)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
 			if ARMA.hasGroup(user_id, "founder") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "dev") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^1 Developer ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^1 Developer ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "commanager") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^6 Community Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 Community Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "staffmanager") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^9 Staff Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^9 Staff Manager ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "headadmin") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 Head Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Head Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "senioradmin") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 Senior Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Senior Admin ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "administrator") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^4 Administrator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")		
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^4 Administrator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")		
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "moderator") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^2 Moderator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Moderator ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "support") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^2 Support Team ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Support Team ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "trialstaff") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^5 Trial Staff ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^5 Trial Staff ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "VIP") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^1 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^1 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Recruit") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^ |^9 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^ |^9 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Soldier") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^3 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc") 
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc") 
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Warrior") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^6 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Champion") then
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r |^5 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^5 " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			else
-				TriggerClientEvent('chatMessage', -1, "^7^*OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r | " .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			end
 		else
