@@ -76,7 +76,7 @@ function tARMA.spawnAnim(a, b, c)
       Citizen.Wait(2000)
     end
     ExecuteCommand("showui")
-    tARMA.setCustomization(a)
+    tARMA.setCustomization(a, true, true)
   end
   spawning = false
 end
