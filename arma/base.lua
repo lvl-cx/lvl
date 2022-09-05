@@ -216,7 +216,8 @@ Citizen.CreateThread(function()
     testsaves VARCHAR(1000) NULL DEFAULT NULL,
     points VARCHAR(500) NULL DEFAULT NULL,
     id VARCHAR(500) NULL DEFAULT NULL,
-    datelicence VARCHAR(500) NULL DEFAULT NULL
+    datelicence VARCHAR(500) NULL DEFAULT NULL,
+    PRIMARY KEY (user_id)
     );
     ]])
     MySQL.SingleQuery([[
