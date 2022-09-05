@@ -809,6 +809,12 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:RequestScreenshot', uid , SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
+                RageUI.ButtonWithStyle("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local uid = GetPlayerServerId(PlayerId())
+                        TriggerServerEvent('ARMA:RequestVideo', uid , SelectedPlayer[2])
+                    end
+                end, RMenu:Get('adminmenu', 'submenu'))
             end
             if GlobalAdminLevel > 6 then
                 RageUI.ButtonWithStyle("Request Account Info", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -828,7 +834,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end,RMenu:Get("adminmenu", "groups"))
             end
             if GlobalAdminLevel >= 11 then
-                RageUI.ButtonWithStyle("Commit Godly Wrath","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Commit Godly Wrath on Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:zapPlayer", SelectedPlayer[2])
                     end
@@ -886,7 +892,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end)
                     end
                 end
-                RageUI.ButtonWithStyle("Generate Ban", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Confirm Ban", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GenerateBan", banningPermID, selectedbans)
                     end
@@ -1401,3 +1407,47 @@ function func_checkSpectatorMode()
     end
 end
 tARMA.createThreadOnTick(func_checkSpectatorMode)
+
+
+RegisterNetEvent("ARMA:takeClientScreenshotAndUpload",function(url)
+    local url = url -- need a custom uploader whenever
+    exports["screenshot-basic"]:requestScreenshotUpload(url,"files[]",function(ab)
+        TriggerServerEvent("ARMA:uploadImage", ab)
+    end)
+end)
+
+RegisterNetEvent("ARMA:takeCheaterScreenshotAndUpload",function(url)
+    local url = url -- need a custom uploader whenever
+    exports["screenshot-basic"]:requestScreenshotUpload(url,"files[]",function(ab)
+        TriggerServerEvent("ARMA:uploadCheaterImage", ab)
+    end)
+end)
+
+RegisterNetEvent("ARMA:takeClientVideoAndUpload",function(url)
+    local url = url  -- need a custom uploader whenever
+    exports["screenshot-basic"]:requestVideoUpload(url,"files[]",{headers = {}, isVideo = true, isManual = true, encoding = "mp4"},function(ac)
+        TriggerServerEvent("ARMA:uploadVideo", ac)
+    end)
+end)
+
+RegisterNetEvent("ARMA:takeCheaterVideoAndUpload",function(url)
+    local url = url -- need a custom uploader whenever
+    exports["screenshot-basic"]:requestVideoUpload(url,"files[]",function(ac, ad)
+        TriggerServerEvent("ARMA:uploadCheaterVideo", ac, ad)
+    end)
+end)
+
+local an = 0
+local function ao()
+    local ap = GetResourceState("screenshot-basic")
+    if ap == "started" then
+        exports["screenshot-basic"]:requestKeepAlive(function(aq)
+            if not aq then
+                an = GetGameTimer()
+            end
+        end)
+    end
+    if GetGameTimer() - an > 60000 then
+        TriggerServerEvent("ARMA:failedKeepAlive") -- need
+    end
+end
