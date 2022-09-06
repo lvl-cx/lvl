@@ -1,235 +1,250 @@
-RMenu.Add('vehiclemenu', 'main', RageUI.CreateMenu("", "~b~Vehicle Mangement", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "vehicle"))
-
-
-local savedvehicle = nil
-local doors = {
-    [0] = "Front Left",
-    [1] = "Front Right" ,
-    [2] = "Back Left",
-    [3] = "Back Right",
-    [4] = "Hood" ,
-    [5] = "Trunk",
-    [6] = "Back" ,
-    [7] = "Back 2"
+local h = {
+  "Front Left",
+  "Front Right",
+  "Back Left",
+  "Back Right",
+  "Hood",
+  "Trunk",
+  "Second Trunk",
+  "Windows",
+  "Close All"
 }
-local index = {
-    door = 1
+local j = {43, 427, 60, 786603, 1074528293, 262716, 537133628, 524860, 1076}
+local k = {
+  vehicle = nil,
+  adSpeed = 1,
+  autoDrive = false,
+  limiterSpeed = 1,
+  limiter = false,
+  predictedMax = nil,
+  door = 1,
+  limitingVehicle = nil,
+  currentLimit = nil,
+  cruise = false,
+  adMode = 1
 }
-
-local cardoors = {}
-for k, v in pairs (doors) do
-    cardoors[k+1] = v
-end
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('vehiclemenu', 'main')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            windowsroll()
-            engine()
-            tglDoorLocks()
-            doorList()
-            speedom()
-        end)
-    end
+local l = false
+local m = false
+local n = false
+local o = false
+local p = false
+local q = 0
+local r = true
+local s = false
+local t = 1
+Citizen.CreateThread(function()
+  while true do
+      if m and tARMA.getPlayerVehicle() ~= k.limitingVehicle then
+          m = false
+          SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), k.predictedMax)
+          predictedMax = nil
+          tARMA.notify("~r~Vehicle Changed, stopping limiter")
+      end
+      Wait(500)
+  end
 end)
-
-RegisterCommand("vehiclemenu", function()
-    if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) or RageUI.Visible(RMenu:Get("vehiclemenu", "main")) then
-      RageUI.ActuallyCloseAll()
-      savedvehicle = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
-      RageUI.Visible(RMenu:Get("vehiclemenu", "main"), not RageUI.Visible(RMenu:Get("vehiclemenu", "main")))
-    else
-        tARMA.notify("~r~You are not in a vehicle!")
-    end
-end)
-
-RegisterKeyMapping("vehiclemenu", "Opens Car Menu", "keyboard", "m")
-
-local engineStatus = true
-
-function engine()
-  RageUI.Button("Toggle Engine" , nil, {
-    LeftBadge = nil,
-    RightBadge = nil,
-    RightLabel = nil
-  }, true, function(Hovered, Active, Selected)
-    if Selected then
-      local ped = PlayerPedId()
-      if engineStatus then
-        if savedvehicle ~= nil then
-          SetVehicleEngineOn(savedvehicle, false, true, true)
-          engineStatus = false
-          tARMA.notify("~r~Engine Off")
-        else
-          SetVehicleEngineOn(GetVehiclePedIsIn(ped, false), false, true, true)
-          engineStatus = false
-          tARMA.notify("~r~Engine Off")
-        end
-      else
-        if savedvehicle ~= nil then
-            SetVehicleEngineOn(savedvehicle, true, true, true)
-            engineStatus = true
-            tARMA.notify("~g~Engine On")
-        else
-            SetVehicleEngineOn(GetVehiclePedIsIn(ped, false), true, true, true)
-            engineStatus = true
-            tARMA.notify("~g~Engine On")
-        end
-      end
-    end
-  end,submenu)
+function convert(speed)
+  return speed * 10 * 0.44704 - 0.5
 end
 
-local lockStatus = false
-
-function tglDoorLocks()
-  RageUI.Button("Toggle Door Locks" , nil, {}, true, function(Hovered, Active, Selected)
-    if Selected then
-      local ped = PlayerPedId()
-      if lockStatus then
-        if savedvehicle ~= nil then
-          SetVehicleDoorsLocked(savedvehicle, 1)
-          SetVehicleDoorsLockedForAllPlayers(savedvehicle, false)
-          SetVehicleDoorsLockedForPlayer(savedvehicle, PlayerId(), false)
-          lockStatus = false
-          tARMA.notify("~g~Doors Unlocked")
-        else
-          SetVehicleDoorsLocked(GetVehiclePedIsIn(ped, false), 1)
-          SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(ped, false), false)
-          SetVehicleDoorsLockedForPlayer(GetVehiclePedIsIn(ped, false), PlayerId(), false)
-          lockStatus = false
-          tARMA.notify("~g~Doors Unlocked")
-        end
-      else
-        if savedvehicle ~= nil then
-          SetVehicleDoorsLocked(savedvehicle, 2)
-          SetVehicleDoorsLockedForAllPlayers(savedvehicle, true)
-          SetVehicleDoorsLockedForPlayer(savedvehicle, PlayerId(), true)
-          lockStatus = true
-          tARMA.notify("~r~Doors Locked")
-        else
-          SetVehicleDoorsLocked(GetVehiclePedIsIn(ped, false), 2)
-          SetVehicleDoorsLockedForAllPlayers(GetVehiclePedIsIn(ped, false), true)
-          SetVehicleDoorsLockedForPlayer(GetVehiclePedIsIn(ped, false), PlayerId(), true)
-          lockStatus = true
-        end
-      end
-    end
-  end)
-end
-
-
-doorStatus = {
-    [0] = false,
-    [1] = false,
-    [2] = false,
-    [3] = false,
-    [4] = false,
-    [5] = false,
-    [6] = false,
-    [7] = false
-}
-
-function doorList()
-  RageUI.List("Toggle Door", cardoors, index.door, nil, {}, true, function(Hovered, Active, Selected, Index)
-    if Selected then
-      local ped = PlayerPedId()
-      local curdoor = (Index-1)
-      if doorStatus[curdoor] then
-        if savedvehicle ~= nil then
-          SetVehicleDoorShut(savedvehicle, curdoor, false, false)
-          doorStatus[curdoor] = false
-        else
-          SetVehicleDoorShut(GetVehiclePedIsIn(ped, false),curdoor, false, false)
-          doorStatus[curdoor] = false
-        end
-      else
-        if savedvehicle ~= nil then
-          SetVehicleDoorOpen(savedvehicle,curdoor, false, false)
-          doorStatus[curdoor] = true
-        else
-          SetVehicleDoorOpen(GetVehiclePedIsIn(ped, false),curdoor, false, false)
-          doorStatus[curdoor] = true
-        end
-      end
-    end
-    if Active then
-      index.door = Index;
-    end
-  end)
-end
-
-local Cruise = false
-local CruiseVel = 0.0
-function speedom()
-  RageUI.Button("Set Cruise Control Speed" , nil, {}, true, function(Hovered, Active, Selected)
-    if Selected then
-      local ped = PlayerPedId()
-      if not Cruise then
-        Citizen.CreateThread(function()
-          local veh = GetVehiclePedIsIn(ped, false)
-          CruiseVel = GetVehicleWheelSpeed(veh, 1)
-          tARMA.notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
-          tARMA.notify("~g~Press break to disable.")
-          if CruiseVel > 1 then
-            Cruise = true
-            while Cruise do
-              Citizen.Wait(10)
-              local speed = CruiseVel * 2.237
-              local vel2 = GetVehicleWheelSpeed(veh, 1)
-              if vel2 < 0.001 then
-                vel2 = 0.01
-              end
-              local diff = CruiseVel + 0.2 - vel2
-              local throttle = 0.2
-              if diff > 1.0 then
-                throttle = 1.0
+function cruise()
+  accelerating = false
+  Citizen.CreateThread(function()
+      cruiseVehicle = GetVehiclePedIsUsing(tARMA.getPlayerPed())
+      local y = GetEntitySpeed(cruiseVehicle)
+      local u = true
+      while k.cruise and IsPedInAnyVehicle(tARMA.getPlayerPed(), false) and u do
+          while not accelerating and k.cruise and u do
+              if
+                  IsControlPressed(1, 71) or IsControlPressed(1, 72) or IsControlPressed(1, 76) or
+                      GetVehicleCurrentGear(cruiseVehicle) == 0
+                  then
+                  accelerating = true
+                  y = acceleratingToNewSpeed(cruiseVehicle)
               else
-                throttle = diff
+                  SetVehicleForwardSpeed(cruiseVehicle, y)
+                  SetVehicleOnGroundProperly(cruiseVehicle)
               end
-              if not IsControlPressed(0, 76) and throttle > 0.01 then
-                SetControlNormal(0, 71, throttle)
-              end
-              if throttle < 0.001 then
-                throttle = 0.0
-              end
-              if IsControlJustPressed(0, 72) or IsControlJustPressed(0, 76) then
-                Cruise = false
-              elseif IsPedInAnyVehicle(ped, true) == false then
-                Cruise = false
-              end
-            end
-            tARMA.notify("~r~Cruise Control disabled.")
+              engineStatus = GetIsVehicleEngineRunning(cruiseVehicle)
+              collision = HasEntityCollidedWithAnything(cruiseVehicle)
+              inWater = IsEntityInWater(cruiseVehicle) and not IsPedInAnyBoat(tARMA.getPlayerPed())
+              u = engineStatus and not collision and not inWater
+              Wait(10)
           end
-        end)
-      else
-        CruiseVel = GetVehicleWheelSpeed(GetVehiclePedIsIn(PlayerPedId(), false), 1)
-        tARMA.notify("~g~Cruise Control Enabled Speed: " .. round(CruiseVel * 2.237) .. " MPH.")
-        tARMA.notify("~g~Press break to disable.")
+          Wait(600)
       end
-    end
+      if collision then
+          tARMA.notify("~r~Cruise control automatically disabled because a collision was detected")
+      elseif not engineStatus then
+          tARMA.notify("~r~Cruise control automatically disabled because the engine was turned off")
+      elseif inWater then
+          tARMA.notify("~r~Cruise control automatically disabled because you are in water")
+      end
+      n = false
+      k.cruise = false
   end)
 end
 
-local Windows = false
-function windowsroll()
-  RageUI.Button("Roll windows" , nil, {}, true, function(Hovered, Active, Selected)
-    if Selected then
-      local ped = PlayerPedId()
-      if Windows == false then
-        RollDownWindows(GetVehiclePedIsIn(ped,false))
-        Windows  = true
-      else
-        Windows = false
-        RollUpWindow(GetVehiclePedIsIn(ped,false), 0)
-        RollUpWindow(GetVehiclePedIsIn(ped,false), 1)
-        RollUpWindow(GetVehiclePedIsIn(ped,false), 2)
-        RollUpWindow(GetVehiclePedIsIn(ped,false), 3)
+function acceleratingToNewSpeed(cruiseVehicle)
+  while IsControlPressed(1, 71) or IsControlPressed(1, 72) or IsControlPressed(1, 76) or
+      GetVehicleCurrentGear(cruiseVehicle) == 0 and IsPedInAnyVehicle(tARMA.getPlayerPed(), false) do
+      Wait(100)
+  end
+  if not IsPedInAnyVehicle(tARMA.getPlayerPed(), false) then
+      accelerating = false
+      k.cruise = false
+  end
+  accelerating = false
+  local cruiseVehicle = GetVehiclePedIsUsing(tARMA.getPlayerPed())
+  return GetEntitySpeed(cruiseVehicle)
+end
+function limiter()
+  Citizen.CreateThread(function()
+      while k.limiter do
+          local z = tARMA.getPlayerVehicle()
+          local speed = k.limiterSpeed
+          if z ~= 0 then
+              k.limitingVehicle = z
+              m = true
+              k.predictedMax = GetVehicleEstimatedMaxSpeed(z)
+              if convert(speed) > k.predictedMax then
+                  SetVehicleMaxSpeed(z, k.predictedMax)
+                  k.currentLimit = k.predictedMax
+              else
+                  SetVehicleMaxSpeed(z, convert(speed))
+                  k.currentLimit = convert(speed)
+              end
+          else
+              tARMA.notify("~r~You are not in a vehicle!")
+              k.limiter = false
+          end
+          Wait(100)
       end
-    end
+      SetVehicleMaxSpeed(k.limitingVehicle, k.predictedMax)
+      p = false
+      m = false
   end)
 end
 
-function round(num, numDecimalPlaces)
-	return tonumber(string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
-end
+RMenu.Add("vehicle_menu", "main", RageUI.CreateMenu("", "", 1300, 100, "banners", "vehiclemenu"))
+RMenu:Get("vehicle_menu", "main"):SetSubtitle("~b~VEHICLE OPTIONS")
+RageUI.CreateWhile(1.0, true, function()
+  if RageUI.Visible(RMenu:Get("vehicle_menu", "main")) then
+      RageUI.DrawContent({ header = true, glare = true, instructionalButton = true}, function()
+          RageUI.Button("Toggle Door Lock", "Select to toggle between doors locked and unlocked",{RightLabel=""},true,function(o,p,q)
+              if q then
+                  local L = tARMA.getPlayerVehicle()
+                  if L ~= 0 then
+                      if GetVehicleDoorLockStatus(L) ~= 2 then
+                          SetVehicleDoorsLocked(L, 2)
+                          tARMA.notify("~w~Doors are now ~r~Locked")
+                      else
+                          SetVehicleDoorsLocked(L, 0)
+                          tARMA.notify("~w~Doors are now ~g~Unlocked")
+                      end
+                  end
+              end
+          end)
+          RageUI.List("Toggle Door",h,k.door,"Select the door you want to toggle open/closed.",{}, true, function(I, J, K, M)
+              if K then
+                  local L = tARMA.getPlayerVehicle()
+                  if L ~= 0 then
+                      local N = M - 1
+                      if M == 9 then
+                          SetVehicleDoorsShut(L, false)
+                          tARMA.notify("~r~Closed ~w~all doors.")
+                      elseif M == 8 then
+                          if r then
+                              r = false
+                              RollDownWindow(L, 0)
+                              RollDownWindow(L, 1)
+                              tARMA.notify("Rolled windows ~r~Down")
+                          else
+                              r = true
+                              RollUpWindow(L, 0)
+                              RollUpWindow(L, 1)
+                              tARMA.notify("Rolled windows ~g~Up")
+                          end
+                      elseif IsVehicleDoorDamaged(L, N) then
+                          tARMA.notify("~r~Cannot shut this door when the door is damaged")
+                      elseif GetVehicleDoorAngleRatio(L, N) == 0 then
+                          SetVehicleDoorOpen(L, N, false, false)
+                          tARMA.notify(string.format("The ~b~%s ~w~door is now ~g~Open", h[M]))
+                      else
+                          SetVehicleDoorShut(L, N, false)
+                          tARMA.notify(string.format("The ~b~%s ~w~door is now ~r~Closed", h[M]))
+                      end
+                  end
+              end
+              k.door = M
+          end)
+          RageUI.Checkbox("Activate Speed Limiter","Select to turn on Speed Limiter",k.limiter,{Style = RageUI.CheckboxStyle.Tick},function(I, K, J, O)
+              if K then
+                  if k.limiter then
+                      RageUI.Text({message = string.format("~w~Speed Limiter is currently ~g~~h~Active")})
+                      k.autoDrive = false
+                      k.cruise = false
+                      if not p then
+                          local speed = GetEntitySpeed(tARMA.getPlayerVehicle())
+                          if convert(speed) < 10.0 then
+                              p = true
+                              limiter()
+                          else
+                              p = false
+                              tARMA.notify("~r~Alert~w~: Please slow down to enable the speed limiter.")
+                          end
+                      end
+                  else
+                      RageUI.Text({message = string.format("~w~Speed Limiter is currently ~r~~h~Inactive")})
+                  end
+              end
+              k.limiter = O
+          end)
+          RageUI.SliderProgress("Speed Limiter",k.limiterSpeed,25,"Select the speed you wish to limit your vehicle to.",{ProgressBackgroundColor = {R = 0, G = 0, B = 0, A = 255},ProgressColor = {R = 0, G = 117, B = 194, A = 255}},true,function(I, K, J, M)
+              if K then
+                  if M ~= k.limiterSpeed then
+                      k.limiterSpeed = M
+                      RageUI.Text(
+                          {
+                              message = string.format(
+                                  "Setting Limiter Speed to: ~r~%s ~w~mph",
+                                  k.limiterSpeed * 10
+                              )
+                          }
+                      )
+                  end
+              end
+          end)
+          RageUI.Button("Toggle Engine","Select to toggle current vehicle engine on/off",{RightBadge = RageUI.BadgeStyle.Key},true,function(I, J, K)
+              if K then
+                  local L = tARMA.getPlayerVehicle()
+                  if GetIsVehicleEngineRunning(L) then
+                      if L ~= 0 then
+                          SetVehicleEngineOn(L, false, true, true)
+                          tARMA.notify("You've turned the ignition into the ~r~off ~w~position.")
+                      end
+                  else
+                      if L then
+                          SetVehicleEngineOn(L, true, false, true)
+                          tARMA.notify("You've turned the ignition to the ~g~on ~w~position.")
+                      end
+                  end
+              end
+          end)
+      end)
+  end
+end)
+
+Citizen.CreateThread(function()
+  while true do
+      Citizen.Wait(0)
+      if IsControlJustPressed(1, 244) then
+          if IsPedInAnyVehicle(tARMA.getPlayerPed(), false) or RageUI.Visible(RMenu:Get("vehicle_menu", "main")) then
+              RageUI.ActuallyCloseAll()
+              RageUI.Visible(RMenu:Get("vehicle_menu", "main"), not RageUI.Visible(RMenu:Get("vehicle_menu", "main")))
+          else
+              tARMA.notify("~r~You are not in a vehicle!")
+          end
+      end
+  end
+end)
