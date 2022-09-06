@@ -18,10 +18,96 @@ function DoMusic(song) {
     }
 }
 
+// Notify System
+$(function(){
+    $("#notif").hide()
+    window.addEventListener("message", function(event){
+        if(event.data.show){
+            console.log(JSON.stringify(event.data))
+            alertify.success(event.data.options.text);
+        };
+    });
+});
+alertify.defaults = {
+    // dialogs defaults
+    autoReset:true,
+    basic:false,
+    closable:true,
+    closableByDimmer:true,
+    invokeOnCloseOff:false,
+    frameless:false,
+    defaultFocusOff:false,
+    maintainFocus:true, // <== global default not per instance, applies to all dialogs
+    maximizable:true,
+    modal:false,
+    movable:false,
+    moveBounded:false,
+    overflow:true,
+    padding: true,
+    pinnable:true,
+    pinned:true,
+    preventBodyShift:false, // <== global default not per instance, applies to all dialogs
+    resizable:false,
+    startMaximized:false,
+    transition:'pulse',
+    transitionOff:false,
+    tabbable:'button:not(:disabled):not(.ajs-reset),[href]:not(:disabled):not(.ajs-reset),input:not(:disabled):not(.ajs-reset),select:not(:disabled):not(.ajs-reset),textarea:not(:disabled):not(.ajs-reset),[tabindex]:not([tabindex^="-"]):not(:disabled):not(.ajs-reset)',  // <== global default not per instance, applies to all dialogs
+
+    // notifier defaults
+    notifier:{
+    // auto-dismiss wait time (in seconds)
+        delay:5,
+    // default position
+        position:'top-right',
+    // adds a close button to notifier messages
+        closeButton: false,
+    // provides the ability to rename notifier classes
+        classes : {
+            base: 'alertify-notifier',
+            prefix:'ajs-',
+            message: 'ajs-message',
+            top: 'ajs-top',
+            right: 'ajs-right',
+            bottom: 'ajs-bottom',
+            left: 'ajs-left',
+            center: 'ajs-center',
+            visible: 'ajs-visible',
+            hidden: 'ajs-hidden',
+            close: 'ajs-close'
+        }
+    },
+
+    // language resources
+    glossary:{
+        // dialogs default title
+        title:'',
+        // ok button text
+        ok: 'OK',
+        // cancel button text
+        cancel: 'Cancel'
+    },
+
+    // theme settings
+    theme:{
+        // class name attached to prompt dialog input textbox.
+        input:'ajs-input',
+        // class name attached to ok button
+        ok:'ajs-ok',
+        // class name attached to cancel button
+        cancel:'ajs-cancel'
+    },
+    // global hooks
+    hooks:{
+        // invoked before initializing any dialog
+        preinit:function(instance){},
+        // invoked after initializing any dialog
+        postinit:function(instance){},
+    },
+};
+
+
 
 $(document).ready(function(){
-
-
     window.addEventListener('message', function (event) {
         if (event.data.type == "playMusic") {
             DoMusic(event.data.song);
@@ -248,107 +334,3 @@ function showF10(bool) {
     }
     f10Open = bool
 }
-
-// Notify System
-$(function(){
-    $("#notif").hide()
-    window.addEventListener("message", function(event){
-        if(event.data.show){
-            // let box = this.document.getElementById("notif")
-            // box.style.color = event.data.options.colour;
-            // box.style.height = event.data.options.height;
-            // box.style.width = event.data.options.width;
-            // box.style.top = event.data.pos.top
-            // box.style.right = event.data.pos.right
-            // // this.document.getElementById("iconSpan").className = event.data.icon
-            // this.document.getElementById("text").innerHTML = `<span id="iconspan"class="${event.data.icon}"></span>${event.data.options.text}`;
-            // box.style.background = event.data.options.background
-
-
-
-            alertify.success(event.data.options.text);
-
-
-            // $("#notif").show();
-        }else{
-            // $("#notif").hide()
-
-        };
-    });
-});
-alertify.defaults = {
-    // dialogs defaults
-    autoReset:true,
-    basic:false,
-    closable:true,
-    closableByDimmer:true,
-    invokeOnCloseOff:false,
-    frameless:false,
-    defaultFocusOff:false,
-    maintainFocus:true, // <== global default not per instance, applies to all dialogs
-    maximizable:true,
-    modal:false,
-    movable:false,
-    moveBounded:false,
-    overflow:true,
-    padding: true,
-    pinnable:true,
-    pinned:true,
-    preventBodyShift:false, // <== global default not per instance, applies to all dialogs
-    resizable:false,
-    startMaximized:false,
-    transition:'pulse',
-    transitionOff:false,
-    tabbable:'button:not(:disabled):not(.ajs-reset),[href]:not(:disabled):not(.ajs-reset),input:not(:disabled):not(.ajs-reset),select:not(:disabled):not(.ajs-reset),textarea:not(:disabled):not(.ajs-reset),[tabindex]:not([tabindex^="-"]):not(:disabled):not(.ajs-reset)',  // <== global default not per instance, applies to all dialogs
-
-    // notifier defaults
-    notifier:{
-    // auto-dismiss wait time (in seconds)
-        delay:5,
-    // default position
-        position:'top-right',
-    // adds a close button to notifier messages
-        closeButton: false,
-    // provides the ability to rename notifier classes
-        classes : {
-            base: 'alertify-notifier',
-            prefix:'ajs-',
-            message: 'ajs-message',
-            top: 'ajs-top',
-            right: 'ajs-right',
-            bottom: 'ajs-bottom',
-            left: 'ajs-left',
-            center: 'ajs-center',
-            visible: 'ajs-visible',
-            hidden: 'ajs-hidden',
-            close: 'ajs-close'
-        }
-    },
-
-    // language resources
-    glossary:{
-        // dialogs default title
-        title:'',
-        // ok button text
-        ok: 'OK',
-        // cancel button text
-        cancel: 'Cancel'
-    },
-
-    // theme settings
-    theme:{
-        // class name attached to prompt dialog input textbox.
-        input:'ajs-input',
-        // class name attached to ok button
-        ok:'ajs-ok',
-        // class name attached to cancel button
-        cancel:'ajs-cancel'
-    },
-    // global hooks
-    hooks:{
-        // invoked before initializing any dialog
-        preinit:function(instance){},
-        // invoked after initializing any dialog
-        postinit:function(instance){},
-    },
-};
