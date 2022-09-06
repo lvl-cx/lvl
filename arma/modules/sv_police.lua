@@ -433,7 +433,6 @@ RegisterCommand('s60', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.announce') then
-        print(args[1], args[2])
         if args[1] ~= nil and args[2] ~= nil then
             local radius = tonumber(args[1])
             local duration = tonumber(args[2])*60
@@ -462,7 +461,7 @@ end)
 RegisterCommand('handbook', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permissions') then
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
         TriggerClientEvent('ARMA:toggleHandbook', source)
     end
 end)

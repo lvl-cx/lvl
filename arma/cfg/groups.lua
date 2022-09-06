@@ -603,7 +603,7 @@ cfg.groups = {
 
   ["Commissioner"] = {
     "commissioner.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Deputy Commissioner Clocked"] = {
@@ -662,7 +662,7 @@ cfg.groups = {
 
   ["Deputy Commissioner"] = {
     "depcommissioner.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Assistant Commissioner Clocked"] = {
@@ -721,7 +721,7 @@ cfg.groups = {
 
   ["Assistant Commissioner"] = {
     "asscommissioner.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Deputy Assistant Commissioner Clocked"] = {
@@ -780,7 +780,7 @@ cfg.groups = {
 
   ["Deputy Assistant Commissioner"] = {
     "depasscommissioner.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Commander Clocked"] = {
@@ -839,7 +839,7 @@ cfg.groups = {
 
   ["Commander"] = {
     "commander.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Chief Superintendent Clocked"] = {
@@ -897,7 +897,7 @@ cfg.groups = {
 
   ["Chief Superintendent"] = {
     "chiefsupint.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Superintendent Clocked"] = {
@@ -955,7 +955,7 @@ cfg.groups = {
 
   ["Superintendent"] = {
     "superint.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Chief Inspector Clocked"] = {
@@ -1012,7 +1012,7 @@ cfg.groups = {
 
   ["Chief Inspector"] = {
     "chiefinsp.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Inspector Clocked"] = {
@@ -1069,7 +1069,7 @@ cfg.groups = {
 
   ["Inspector"] = {
     "inspector.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Sergeant Clocked"] = {
@@ -1126,7 +1126,7 @@ cfg.groups = {
 
   ["Sergeant"] = {
     "sgt.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Special Constable Clocked"] = {
@@ -1182,7 +1182,7 @@ cfg.groups = {
 
   ["Special Constable"] = {
     "specialpc.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Senior Constable Clocked"] = {
@@ -1239,7 +1239,7 @@ cfg.groups = {
 
   ["Senior Constable"] = {
     "srpc.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Police Constable Clocked"] = {
@@ -1295,7 +1295,7 @@ cfg.groups = {
 
   ["Police Constable"] = {
     "pc.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["PCSO Clocked"] = {
@@ -1351,7 +1351,7 @@ cfg.groups = {
 
   ["PCSO"] = {
     "pcso.clockon",
-	"clockon.menu",
+	"cop.whitelisted",
   },
 
   ["Head Chief Medical Officer Clocked"] = {
@@ -1548,6 +1548,19 @@ cfg.groups = {
   
   ["TutorialDone"] = {},
   ["polblips"] = {},
+
+  -- Default Jobs
+  ["AA Mechanic"] = {},
+  ["Royal Mail Driver"] = {},
+  ["Bus Driver"] = {},
+  ["Deliveroo"] = {},
+  ["Fisherman"] = {},
+  ["Scuba Diver"] = {},
+  ["Pilot"] = {},
+  ["G4S Driver"] = {},
+  ["Lorry Driver"] = {},
+  ["Taco Seller"] = {},
+  ["Burger Shot Cook"] = {},
 
 }
 
