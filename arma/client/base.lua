@@ -833,6 +833,7 @@ globalOnPoliceDuty = false
 globalNHSOnDuty = false
 globalOnPrisonDuty = false
 inHome = false
+customizationSaveDisabled = false
 function tARMA.setPolice(y)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalOnPoliceDuty = y
@@ -902,6 +903,9 @@ function tARMA.setInHome(aretheyinthehome)
 end
 function tARMA.isInHome()
   return inHome
+end
+function tARMA.disableCustomizationSave(yesno)
+  customizationSaveDisabled = yesno
 end
 
 function tARMA.getRageUIMenuWidth()

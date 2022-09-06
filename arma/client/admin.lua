@@ -180,10 +180,7 @@ function tARMA.staffMode(status)
             a = tARMA.getCustomization()
             local z
             if tARMA.getModelGender()=="male"then 
-                z="mp_m_freemode_01"
-                local A=loadModel(z)
-                tARMA.setCustomization({modelhash=A})
-                Wait(100)
+                tARMA.loadCustomisationPreset("StaffMale")
                 local ped=PlayerPedId()
                 SetPedComponentVariation(ped, 3, 0, 0 , 0) -- Torso
                 SetPedComponentVariation(ped, 4, 152, 2, 0) -- Pants
@@ -191,16 +188,7 @@ function tARMA.staffMode(status)
                 SetPedComponentVariation(ped, 8, 15, 0, 0) -- UnderShirt
                 SetPedComponentVariation(ped, 11, 442, 0, 0) -- Jacket
             else z="mp_f_freemode_01"
-                local A=loadModel(z)
-                tARMA.setCustomization({modelhash=A})
-                Wait(100)
-                local B=PlayerPedId()
-                SetPedComponentVariation(B,3,3,0,2)
-                SetPedComponentVariation(B,4,106,3,2)
-                SetPedComponentVariation(B,5,0,0,2)
-                SetPedComponentVariation(B,6,2,0,2)
-                SetPedComponentVariation(B,8,3,0,2)
-                SetPedComponentVariation(B,11,466,0,2)
+                tARMA.loadCustomisationPreset("StaffFemale")
             end 
         end 
     end

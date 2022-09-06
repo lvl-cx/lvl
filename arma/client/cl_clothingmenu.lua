@@ -210,61 +210,21 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
                 RageUI.Button('MP Male','WARNING: Resets all your Body Options',{},true,function(L,M,N)
                     if N then 
-                        if GetEntityHealth(PlayerPedId())>102 then 
-                            local O={modelhash=1885233650}
-                            tARMA.setCustomization(O)
-                            Citizen.Wait(200)
-                            local p=tARMA.getPlayerPed()
-                            SetPedPropIndex(p,0,-1,0,0)
-                            SetPedPropIndex(p,1,-1,0,0)
-                            SetPedPropIndex(p,2,-1,0,0)
-                            SetPedPropIndex(p,6,-1,0,0)
-                            SetPedPropIndex(p,7,-1,0,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,8,15,1,0)
-                            SetPedComponentVariation(p,4,0,1,0)
-                            SetPedComponentVariation(p,6,0,1,0)
-                            SetPedComponentVariation(p,5,0,1,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,9,0,1,0)
-                            SetPedComponentVariation(p,7,0,1,0)
-                            SetPedComponentVariation(p,10,0,1,0)
-                            SetPedComponentVariation(p,0,0,0,0)
-                            SetPedComponentVariation(p,3,0,0,0)
-                        else 
+                        if GetEntityHealth(PlayerPedId()) > 102 then
+                            tARMA.loadCustomisationPreset("DefaultMale")
+                        else
                             tARMA.notify("~r~Cannot change gender, you're dead.")
-                        end 
+                        end
                     end 
                 end,function()
                 end)
                 RageUI.Button('MP Female','WARNING: Resets all your Body Options',{},true,function(L,M,N)
                     if N then 
-                        if GetEntityHealth(PlayerPedId())>102 then 
-                            local O={modelhash=-1667301416}
-                            tARMA.setCustomization(O)
-                            Citizen.Wait(200)
-                            local p=tARMA.getPlayerPed()
-                            SetPedPropIndex(p,0,-1,0,0)
-                            SetPedPropIndex(p,1,-1,0,0)
-                            SetPedPropIndex(p,2,-1,0,0)
-                            SetPedPropIndex(p,6,-1,0,0)
-                            SetPedPropIndex(p,7,-1,0,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,8,15,1,0)
-                            SetPedComponentVariation(p,4,0,1,0)
-                            SetPedComponentVariation(p,6,0,1,0)
-                            SetPedComponentVariation(p,5,0,1,0)
-                            SetPedComponentVariation(p,1,0,1,0)
-                            SetPedComponentVariation(p,9,0,1,0)
-                            SetPedComponentVariation(p,7,0,1,0)
-                            SetPedComponentVariation(p,10,0,1,0)
-                            SetPedComponentVariation(p,0,0,0,0)
-                            SetPedComponentVariation(p,3,0,0,0)
-                        else 
+                        if GetEntityHealth(PlayerPedId()) > 102 then
+                            tARMA.loadCustomisationPreset("DefaultFemale")
+                        else
                             tARMA.notify("~r~Cannot change gender, you're dead.")
-                        end 
+                        end
                     end 
                 end,function()
                 end)

@@ -11,7 +11,6 @@ local h=false
 local j={}
 local k={}
 local l=0
-changingPed = false
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAPeds', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -65,7 +64,6 @@ function showPedsDevMenu(DA)
     RageUI.Visible(RMenu:Get('ARMAPeds','main'),DA)
 end
 function spawnPed(q)
-    changingPed = true
     local r=tARMA.getPlayerPed()
     local s=GetEntityHeading(r)
     tARMA.setCustomization({model=q})
@@ -73,7 +71,6 @@ function spawnPed(q)
     Wait(100)
     SetEntityMaxHealth(tARMA.getPlayerPed(),200)
     SetEntityHealth(tARMA.getPlayerPed(),200)
-    changingPed = false
 end
 function revertPedChange()
     tARMA.setCustomization(d)
