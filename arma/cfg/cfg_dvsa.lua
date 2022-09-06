@@ -495,7 +495,7 @@ cfg.drivingOffences = {
 }
 
 cfg.images = {
-    dict = "dvsa_images",
+    dict = "notification_images",
     govLarge = "gov_uk_large",
     lPlate = "lplate",
     motorway = "motorwaySign",
