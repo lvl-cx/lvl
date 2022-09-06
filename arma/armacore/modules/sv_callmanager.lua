@@ -31,7 +31,7 @@ RegisterCommand("calladmin", function(source)
     local user_source = ARMA.getUserSource(user_id)
     local cooldown = false
     for k,v in pairs(tickets) do
-        if tickets[k].permID == user_id then
+        if tickets[k].permID == user_id and tickets[k].type == 'admin' then
             if tickets[k].cooldown > 0 then
                 ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
                 return
@@ -123,13 +123,13 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 SetPlayerRoutingBucket(admin_source, playerbucket)
                                 ARMAclient.notify(admin_source, {'~g~The person was in a different bucket, you have followed them there.'})
                             end
-                            ARMAclient.getPosition(v.tempID, {}, function(x,y,z)
+                            ARMAclient.getPosition(v.tempID, {}, function(coords)
                                 ARMAclient.staffMode(admin_source, {true})
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name, GetEntityCoords(GetPlayerPed(admin_source)))
                                 ARMA.giveBankMoney(user_id, 10000)
                                 ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
-                                ARMAclient.teleport(admin_source, {x,y,z})
+                                ARMAclient.teleport(admin_source, {table.unpack(coords)})
                                 tickets[ticketID] = nil
                                 TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                             end)
