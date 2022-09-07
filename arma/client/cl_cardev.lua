@@ -250,14 +250,14 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclemodindexes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if b then
-                if GetNumVehicleMods(CMG.getPlayerVehicle(), selectedModType) == 0 then
+                if GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) == 0 then
                     RageUI.Text("~r~No available mod indexes for this mod type for this vehicle.")
                 else
-                    for v = 0, GetNumVehicleMods(CMG.getPlayerVehicle(), selectedModType) do
+                    for v = 0, GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) do
                         RageUI.ButtonWithStyle("Mod " .. v,"",{RightLabel = "→→→"},true,function(g, h, i)
                             if i then
-                                SetVehicleModKit(CMG.getPlayerVehicle(), 0)
-                                SetVehicleMod(CMG.getPlayerVehicle(), selectedModType, v)
+                                SetVehicleModKit(tARMA.getPlayerVehicle(), 0)
+                                SetVehicleMod(tARMA.getPlayerVehicle(), selectedModType, v)
                             end
                         end,RMenu:Get("CARDEV", "vehiclemodindexes"))
                     end
