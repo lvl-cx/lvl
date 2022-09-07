@@ -274,11 +274,7 @@ end)
 RegisterCommand('clear', function(source, args, rawCommand)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.ban') then
-        local players = GetPlayers()
-        for i,v in pairs(players) do 
-            local source = v
-            TriggerClientEvent('chat:clear',source)               
-        end
+        TriggerClientEvent('chat:clear',-1)             
     else
         ARMAclient.notify(source,{"~r~You do not have permission to use this command."})
     end
