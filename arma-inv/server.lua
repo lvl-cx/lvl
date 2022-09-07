@@ -79,10 +79,9 @@ AddEventHandler("ORP:flashLights", function(nearestVeh)
 end) 
 
 RegisterNetEvent('ARMA:FetchTrunkInventory')
-AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode, vehid)
+AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
     local source = source
-    local idz = NetworkGetEntityFromNetworkId(vehid)
-    local user_id = ARMA.getUserId({NetworkGetEntityOwner(idz)})
+    local user_id = ARMA.getUserId({source})
     if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
     ARMA.getSData({carformat, function(cdata)
