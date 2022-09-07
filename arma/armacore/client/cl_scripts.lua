@@ -47,37 +47,6 @@ Citizen.CreateThread(function()
 
 end)
 
--- NO WANTED --
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if GetPlayerWantedLevel(PlayerId()) ~= 0 then
-            SetPlayerWantedLevel(PlayerId(), 0, false)
-            SetPlayerWantedLevelNow(PlayerId(), false)
-        end
-    end
-end)
-
--- NO PED DRIVE BY --
-local passengerDriveBy = false
-
-Citizen.CreateThread(function()
-	while true do
-		Wait(1)
-		playerPed = GetPlayerPed(-1)
-		car = GetVehiclePedIsIn(playerPed, false)
-		if car then
-			if GetPedInVehicleSeat(car, -1) == playerPed then
-				SetPlayerCanDoDriveBy(PlayerId(), false)
-			elseif passengerDriveBy then
-				SetPlayerCanDoDriveBy(PlayerId(), true)
-			else
-				SetPlayerCanDoDriveBy(PlayerId(), false)
-			end
-		end
-	end
-end)
-
 -- [Z] BIGGER MINIMAP --
 Citizen.CreateThread(function()
 	while true do
