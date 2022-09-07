@@ -189,7 +189,7 @@ local function aa(ab)
     if ac ~= 0 then
         f = ab
         g = ac
-        TriggerServerEvent("CMG:sendSharedEmoteRequest", ac, ab)
+        TriggerServerEvent("ARMA:sendSharedEmoteRequest", ac, ab)
     else
         tARMA.notify("~r~No player is near by.")
     end
@@ -419,7 +419,7 @@ RegisterCommand("walk",function(aw, ax, ay)
         tARMA.notify("~r~Invalid walk name was specified.")
     end
 end)
-RegisterNetEvent("CMG:sendSharedEmoteRequest",function(aA, ab)
+RegisterNetEvent("ARMA:sendSharedEmoteRequest",function(aA, ab)
     if a.shared[ab] and not a0() then
         h = ab
         i = aA
@@ -427,13 +427,13 @@ RegisterNetEvent("CMG:sendSharedEmoteRequest",function(aA, ab)
         tARMA.notify("~y~Y~w~ to accept, ~r~L~w~ to refuse (~g~" .. a.shared[ab][3] .. "~w~)")
     end
 end)
-RegisterNetEvent("CMG:receiveSharedEmoteRequest",function(ab)
+RegisterNetEvent("ARMA:receiveSharedEmoteRequest",function(ab)
     m()
     Citizen.Wait(300)
     a1(a.shared[ab])
 end)
 
-RegisterNetEvent("CMG:receiveSharedEmoteRequestSource",function()
+RegisterNetEvent("ARMA:receiveSharedEmoteRequestSource",function()
     local aB = GetPlayerFromServerId(g)
     if aB == -1 then
         return
@@ -473,7 +473,7 @@ Citizen.CreateThread(function()
                 if a0() then
                     tARMA.notify("~r~You can not use emotes at this time.")
                 else
-                    TriggerServerEvent("CMG:receiveSharedEmoteRequest", i, a.shared[h][4])
+                    TriggerServerEvent("ARMA:receiveSharedEmoteRequest", i, a.shared[h][4])
                 end
                 aE()
             end
