@@ -1,6 +1,6 @@
 
 -- periodic player state update
-
+local a = module("cfg/cfg_clothing")
 local state_ready = false
 
 AddEventHandler("playerSpawned",function() -- delay state recording
@@ -21,7 +21,9 @@ Citizen.CreateThread(function()
       ARMAserver.updateHealth({tARMA.getHealth()})
       ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
       ARMAserver.updateWeapons({tARMA.getWeapons()})
-      ARMAserver.updateCustomization({tARMA.getCustomization()})
+      if not customizationSaveDisabled then
+        ARMAserver.updateCustomization({tARMA.getCustomization()})
+      end
     end
   end
 end)
@@ -81,109 +83,115 @@ function tARMA.spawnAnim(a, b, c)
   spawning = false
 end
 
-
---[[
-function tARMA.dropWeapon()
-  SetPedDropsWeapon(PlayerPedId())
+local a = module("cfg/cfg_clothing")
+local function b(c)
+    if type(c) == "string" and string.sub(c, 1, 1) == "p" then
+        return true, tonumber(string.sub(c, 2))
+    else
+        return false, tonumber(c)
+    end
 end
---]]
-
--- PLAYER CUSTOMIZATION
-
--- parse part key (a ped part or a prop part)
--- return is_proppart, index
-local function parse_part(key)
-  if type(key) == "string" and string.sub(key,1,1) == "p" then
-    return true,tonumber(string.sub(key,2))
-  else
-    return false,tonumber(key)
-  end
+function tARMA.getDrawables(d)
+    local e, f = b(d)
+    if e then
+        return GetNumberOfPedPropDrawableVariations(PlayerPedId(), f)
+    else
+        return GetNumberOfPedDrawableVariations(PlayerPedId(), f)
+    end
 end
-
-local function a(b)
-  if type(b)=="string"and string.sub(b,1,1)=="p"then 
-      return true,tonumber(string.sub(b,2))
-  else 
-      return false,tonumber(b)
-  end 
+function tARMA.getDrawableTextures(d, g)
+    local e, f = b(d)
+    if e then
+        return GetNumberOfPedPropTextureVariations(PlayerPedId(), f, g)
+    else
+        return GetNumberOfPedTextureVariations(PlayerPedId(), f, g)
+    end
 end
-function tARMA.getDrawables(c)
-  local d,e=a(c)
-  if d then 
-      return GetNumberOfPedPropDrawableVariations(PlayerPedId(),e)
-  else 
-      return GetNumberOfPedDrawableVariations(PlayerPedId(),e)
-  end 
-end
-function tARMA.getDrawableTextures(c,f)
-  local d,e=a(c)
-  if d then 
-      return GetNumberOfPedPropTextureVariations(PlayerPedId(),e,f)
-  else 
-      return GetNumberOfPedTextureVariations(PlayerPedId(),e,f)
-  end 
-end
-
 function tARMA.getCustomization()
-  local g=PlayerPedId()
-  local h={}h.modelhash=GetEntityModel(g)
-  for i=0,20 do 
-      h[i]={GetPedDrawableVariation(g,i),GetPedTextureVariation(g,i),GetPedPaletteVariation(g,i)}
-  end
-  for i=0,10 do 
-      h["p"..i]={GetPedPropIndex(g,i),math.max(GetPedPropTextureIndex(g,i),0)}
-  end
-  return h
+    local h = PlayerPedId()
+    local i = {}
+    i.modelhash = GetEntityModel(h)
+    for j = 0, 20 do
+        i[j] = {GetPedDrawableVariation(h, j), GetPedTextureVariation(h, j), GetPedPaletteVariation(h, j)}
+    end
+    for j = 0, 10 do
+        i["p" .. j] = {GetPedPropIndex(h, j), math.max(GetPedPropTextureIndex(h, j), 0)}
+    end
+    return i
+end
+function tARMA.setCustomization(i, k, l)
+    if i then
+      changingPed = true
+        local h = PlayerPedId()
+        local m = nil
+        if i.modelhash ~= nil then
+            m = i.modelhash
+        elseif i.model ~= nil then
+            m = GetHashKey(i.model)
+        end
+        local n = tARMA.loadModel(m)
+        local o = GetEntityModel(h)
+        if n then
+            if o ~= n or k then
+                local p = tARMA.getWeapons()
+                local q = GetEntityHealth(h)
+                SetPlayerModel(PlayerId(), m)
+                Wait(0)
+                tARMA.giveWeapons(p, true)
+                if l == nil or l == false then
+                    print("[ARMA] Customisation, setting health to ", q)
+                    tARMA.setHealth(q)
+                end
+                TriggerServerEvent('ARMA:changeHairStyle')
+                TriggerServerEvent('ARMA:changeTattoos')
+                h = PlayerPedId()
+            else
+                print("[ARMA] Same model detected, not changing model.")
+            end
+            SetModelAsNoLongerNeeded(m)
+            for r, s in pairs(i) do
+                if r ~= "model" and r ~= "modelhash" then
+                    if tonumber(r) then
+                        r = tonumber(r)
+                    end
+                    local e, f = b(r)
+                    if e then
+                        if s[1] < 0 then
+                            ClearPedProp(h, f)
+                        else
+                            SetPedPropIndex(h, f, s[1], s[2], s[3] or 2)
+                        end
+                    else
+                        SetPedComponentVariation(h, f, s[1], s[2], s[3] or 2)
+                    end
+                end
+            end
+        else
+            print("[ARMA] Failed to load model", m)
+        end
+        changingPed = false
+    end
 end
 
-function tARMA.setCustomization(h,j,k)
-  if h then 
-      local g=PlayerPedId()
-      local l=nil
-      if h.modelhash~=nil then 
-          l=h.modelhash 
-      elseif h.model~=nil then 
-          l=GetHashKey(h.model)
+function tARMA.loadCustomisationPreset(t)
+  local u = a.presets[t]
+  assert(u, string.format("Preset %s does not exist.", t))
+  if u.model then
+      tARMA.setCustomization({modelhash = u.model})
+      Citizen.Wait(100)
+  end
+  local v = PlayerPedId()
+  if u.components then
+      for w, x in pairs(u.components) do
+          SetPedComponentVariation(v, w, x[1], x[2], x[3])
       end
-      local m=tARMA.loadModel(l)
-      local n=GetEntityModel(g)
-      if m then 
-          if n~=m or j then
-              local o=tARMA.getWeapons()
-              local p=GetEntityHealth(g)
-              local q=GetPedArmour(g)
-              SetPlayerModel(PlayerId(),l)
-              Wait(0)
-              tARMA.giveWeapons(o,true)
-              tARMA.setArmour(q)
-              if k==nil or k==false then 
-                print("[ARMA] Customisation change, setting health to ",p)
-                tARMA.setHealth(p)
-              end
-              SetModelAsNoLongerNeeded(l)
-              TriggerServerEvent('ARMA:changeHairStyle')
-              TriggerServerEvent('ARMA:changeTattoos')
-              g=PlayerPedId()
-          end
-          for r,s in pairs(h)do 
-              if r~="model"and r~="modelhash"then 
-                  if tonumber(r)then 
-                      r=tonumber(r)
-                  end
-                  local d,e=a(r)
-                  if d then 
-                      if s[1]<0 then 
-                          ClearPedProp(g,e)
-                      else 
-                          SetPedPropIndex(g,e,s[1],s[2],s[3]or 2)
-                      end 
-                  else 
-                      SetPedComponentVariation(g,e,s[1],s[2],s[3]or 2)
-                  end 
-              end 
-          end 
-      else 
-          print("[ARMA] Failed to load model",l)
-      end 
-  end 
+  end
+  if u.props then
+      for y, z in pairs(u.props) do
+          SetPedPropIndex(v, y, z[1], z[2], z[3])
+      end
+  end
 end
+SetVisualSettingFloat("ped.lod.distance.high", 200.0)
+SetVisualSettingFloat("ped.lod.distance.medium", 400.0)
+SetVisualSettingFloat("ped.lod.distance.low", 700.0)
