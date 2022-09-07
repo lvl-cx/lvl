@@ -33,6 +33,16 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
+            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
+                if W then
+                end
+                if X then
+                end
+                if Y then
+                end
+                if a1 then
+                end
+            end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
             RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",b,{Style=RageUI.CheckboxStyle.Car},function(Hovered, Active, Selected, Checked)
                 if Selected then
                     if b then
