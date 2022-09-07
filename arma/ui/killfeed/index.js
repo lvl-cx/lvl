@@ -30,12 +30,13 @@ class KillFeed extends React.Component {
             };
             if (this.setState({
                     kills: [...this.state.kills, t]
-                }), this.state.kills.length > 6) setTimeout(() => {
-                this.setState({
-                    kills: this.state.kills.filter(e => e.uuid != this.state.kills[0].uuid)
-                })
-            }, 1e3);
-            else {
+                }), this.state.kills.length > 6) {
+                setTimeout(() => {
+                    this.setState({
+                        kills: this.state.kills.filter(e => e.uuid != this.state.kills[0].uuid)
+                    })
+                }, 1e3)
+            } else {
                 0 != this.state.kills.length && setTimeout(() => {
                     setTimeout(() => {
                         this.setState({
@@ -44,9 +45,13 @@ class KillFeed extends React.Component {
                     }, 1e3)
                 }, 1e4)
             }
-        }), _defineProperty(this, "toggleKillFeed", () => {
+        }), _defineProperty(this, "killFeedEnable", () => {
             this.setState({
-                active: !this.state.active
+                active: true
+            })
+        }), _defineProperty(this, "killFeedDisable", () => {
+            this.setState({
+                active: false
             })
         })
     }
