@@ -3,7 +3,7 @@ local b = a.selectors
 local c = {}
 local d = false
 local e = ""
-RMenu.Add("main","groupselector",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "cmg_licenseui", "cmg_licenseui"))
+RMenu.Add("main","groupselector",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu:Get("main", "groupselector"):SetSubtitle("~b~Select a job.")
 local firstspawn = 0
 AddEventHandler('playerSpawned', function(spawn)
