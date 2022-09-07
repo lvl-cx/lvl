@@ -99,7 +99,7 @@ cfg.locations = {
     },
 }
 
-cfg.jobPosition = vector3(-2173.5478515625,-393.03881835938,13.32670879364) --vector3(-2195.6926269531,-394.82040405273,13.313161849976)
+cfg.jobPosition = vector3(-2195.6926269531,-394.82040405273,13.313161849976)
 cfg.jobPedModel = `mp_m_freemode_01`
 cfg.jobPedPosition = vector3(-2197.0366210938,-393.71792602539,12.313159942627)
 cfg.jobPedHeading = 230.0
