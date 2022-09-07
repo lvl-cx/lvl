@@ -8,12 +8,6 @@ local VehTypeC = nil;
 local VehTypeA = nil;
 local IsLootBagOpening = false;
 local inventoryType = nil;
-local NearLootBag = false; 
-local LootBagID = nil;
-local LootBagIDNew = nil;
-local LootBagCoords = nil;
-local PlayerInComa = false;
-local model = GetHashKey('xs_prop_arena_bag_01')
 tARMA = Proxy.getInterface("ARMA")
 
 local LootBagCrouchLoop = false;
@@ -30,11 +24,8 @@ RegisterCommand('inventory', function()
                 BootCar = GetEntityCoords(PlayerPedId())
                 VehTypeC = VehType
                 VehTypeA = NVeh
-
-
                 tARMA.vc_openDoor({VehTypeC, 5})
                 inventoryType = 'CarBoot'
-                
                 TriggerServerEvent('ARMA:FetchTrunkInventory', NVeh)
             end
 
@@ -93,8 +84,9 @@ AddEventHandler("ARMA:OpenHomeStorage", function(toggle, houseName)
 end)
 
 RegisterNetEvent('ARMA:InventoryOpen')
-AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag)
+AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag, bagid)
     IsLootBagOpening = lootbag
+    LootBagIDNew = bagid
     if IsLootBagOpening then
         TriggerEvent("arma:PlaySound", "zipper")
         LoadAnimDict('amb@medic@standing@kneel@base')
@@ -276,98 +268,6 @@ Citizen.CreateThread(function()
 end)
 
 RegisterKeyMapping('inventory', 'Opens / Closes your inventory', 'keyboard', 'L')
-
-
-
--- LOOT BAG CODE BELOW 
-
-
-AddEventHandler('ARMA:IsInComa', function(coma)
-    PlayerInComa = coma;
-    if coma then 
-        LootBagCoords = false;
-        NearLootBag = false; 
-        LootBagID = nil;
-    end
-end)
-
-Citizen.CreateThread(function()
-    while true do 
-        Wait(250)
-        if not PlayerInComa then
-            local coords = GetEntityCoords(PlayerPedId())
-            if DoesObjectOfTypeExistAtCoords(coords, 10.5, model, true) then
-                if not NearLootBag then
-                    NearLootBag = true;
-                    LootBagID = GetClosestObjectOfType(coords, 10.5, model, false, false, false)
-                    LootBagIDNew = ObjToNet(LootBagID)
-                    LootBagCoords = GetEntityCoords(LootBagID)
-                end
-            else 
-                LootBagCoords = false;
-                NearLootBag = false; 
-                LootBagID = nil;
-            end
-        end
-    end
-end)
-
--- Citizen.CreateThread(function()
---     while true do 
---         Wait(0)
---         if NearLootBag then 
---             Draw3DText(LootBagCoords, "~g~~w~[~r~E~w~] to loot")
---             if IsControlJustPressed(0, 38) then
---                 TriggerServerEvent('ARMA:LootBag', LootBagIDNew)
---             end
---         end
---     end
--- end)
-
--- [Lootbags]
-
-local LootBagIDNew2 = nil;
-local MoneydropIDNew2 = nil;
-local Entity2, farCoordsX2, farCoordsY2, farCoordsZ2 = nil,nil,nil,nil
-local EntityType2 = nil
-local model2 = GetHashKey('xs_prop_arena_bag_01')
-
-
-Citizen.CreateThread(function()
-    while true do
-        hit2, coords2, Entity2 = RayCastGamePlayCamera(6.0)
-        EntityType2 = GetEntityType(Entity2)
-
-        if EntityType2 then
-            local playerPed2 = PlayerPedId()
-            local playerVehicle2 = GetVehiclePedIsIn(playerPed2,false)
-
-            if playerIsAlive() and playerVehicle2 == 0 then
-                if EntityType2 == 3 then
-                    local entityModel2 = GetEntityModel(Entity2)
-                    local coords2 = GetEntityCoords(PlayerPedId())
-               
-                    if `xs_prop_arena_bag_01` == entityModel2 then
-                        TriggerEvent('Crosshair', true)
-                        if IsControlJustReleased(1, 38) then
-                      
-                            local MoneydropID2 = GetClosestObjectOfType(coords2, 5.0, GetHashKey('xs_prop_arena_bag_01'), false, false, false)
-                            local MoneydropIDNew2 = ObjToNet(MoneydropID2)
-                            TriggerServerEvent('ARMA:LootBag', LootBagIDNew)
-                            Wait(1000)
-                        end
-                    end
-                    
-                else
-                    TriggerEvent('Crosshair', false)
-                end
-            else
-                TriggerEvent('Crosshair', false)
-            end
-        end
-        Citizen.Wait(0)
-	end
-end)
 
 function notify(string)
     SetNotificationTextEntry("STRING")
