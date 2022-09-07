@@ -402,16 +402,6 @@ cfg.simeonsCategories = {
         ["diamondchgr14"] = {"Casino Charger",0, ""},
         ["diamondtaurus"] = {"Casino Taurus",0, ""},
     },
-    ["SOA Gang Vehicles"] = {
-        ["_config"] = {permissionTable={"soa2.whitelisted"}},
-        ["soabobber"] = {"SOA Bobber",500000, ""},
-        ["soavan"] = {"SOA Van",500000, ""},
-        ["soatowtruck"] = {"SOA Towtruck",500000, ""},
-    },
-    ["CMG Trader Vehicles"] = {
-        ["_config"] = {permissionTable={"cmgtrader.whitelisted"}},
-        ["nmule"] = {"CMG Trader Van",10000000, ""},
-    },
     ["HMP Vehicles"] = {
         ["_config"] = {permissionTable={"prisonguard.onduty.permission"}},
         ["rbgator"] = {"HMPS Cart",0},
