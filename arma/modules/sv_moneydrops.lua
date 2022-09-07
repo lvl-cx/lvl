@@ -29,7 +29,6 @@ end
         
                 TriggerClientEvent("ARMA:MoneyNotInBag",source)
                 if MoneydropEntities[netid].Money ~= 0 then
-                    --print("YES")
                     ARMA.giveMoney(user_id,MoneydropEntities[netid].Money)
                     ARMAclient.notify(source,{"~g~You have taken £"..tonumber(MoneydropEntities[netid].Money)})
                     MoneydropEntities[netid].Money = 0
