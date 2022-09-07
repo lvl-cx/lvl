@@ -13,7 +13,6 @@ RegisterCommand("togglekillfeed",function()
     end
 end)
 RegisterNetEvent("ARMA:showHUD",function(c)
-    print('killfeed')
     a = not c
     if b then
         if c then

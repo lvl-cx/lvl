@@ -40,24 +40,22 @@ function updateHungerThirstHUD(cash, bank, proximity, topLeftAnchor,yAnchor)
   })
 end
 
-RegisterCommand('showui', function()
+RegisterNetEvent("ARMAHUD:show")
+AddEventHandler("ARMAHUD:show", function()
     SendNUIMessage({
         showhud = true
     })
     DisplayRadar(true)
-    TriggerEvent('showHud', true)
-    ExecuteCommand('showchat')
-    TriggerEvent('ARMA:toggleKillfeed', true)
+    TriggerEvent('ARMA:showHUD', true)
 end)
 
-RegisterCommand('hideui', function()
+RegisterNetEvent("ARMAHUD:hide")
+AddEventHandler("ARMAHUD:hide", function()
     SendNUIMessage({
         showhud = false
     })
     DisplayRadar(false)
-    TriggerEvent('showHud', false)
-    ExecuteCommand('hidechat')
-    TriggerEvent('ARMA:toggleKillfeed', false)
+    TriggerEvent('ARMA:showHUD', false)
 end)
 
 function getMinimapAnchor()

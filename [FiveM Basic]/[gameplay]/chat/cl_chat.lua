@@ -19,19 +19,21 @@ RegisterNetEvent('_chat:messageEntered')
 
 --deprecated, use chat:addMessage
 AddEventHandler('chatMessage', function(author, color, text, msgType)
-  local args = { text }
-  if author ~= "" then
-    table.insert(args, 1, author)
+  if not hideChat then
+    local args = { text }
+    if author ~= "" then
+      table.insert(args, 1, author)
+    end
+    SendNUIMessage({
+      type = 'ON_MESSAGE',
+      message = {
+      msgType = msgType,
+        color = color,
+        multiline = true,
+        args = args
+      }
+    })
   end
-  SendNUIMessage({
-    type = 'ON_MESSAGE',
-    message = {
-	  msgType = msgType,
-      color = color,
-      multiline = true,
-      args = args
-    }
-  })
 end)
 
 AddEventHandler('__cfx_internal:serverPrint', function(msg)
@@ -235,11 +237,14 @@ Citizen.CreateThread(function()
   end
 end)
 
-RegisterCommand("hidechat", function(source)
-  hideChat = true
-  TriggerEvent('chat:clear')
+
+RegisterNetEvent("ARMACHAT:show")
+AddEventHandler("ARMACHAT:show", function()
+  hideChat = false
 end)
 
-RegisterCommand("showchat", function(source)
-  hideChat = false
+RegisterNetEvent("ARMACHAT:hide")
+AddEventHandler("ARMACHAT:hide", function()
+  hideChat = true
+  TriggerEvent('chat:clear')
 end)

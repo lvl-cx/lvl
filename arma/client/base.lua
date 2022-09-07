@@ -955,3 +955,23 @@ CreateThread(function()
         Wait(0)
     end
 end)
+
+RegisterCommand('showui', function()
+  TriggerEvent('ARMAHUD:show')
+  TriggerEvent('ARMACHAT:show')
+end)
+
+RegisterCommand('hideui', function()
+  tARMA.notify("~g~/showui to re-enable UI")
+  TriggerEvent('ARMAHUD:hide')
+  TriggerEvent('ARMACHAT:hide')
+end)
+
+RegisterCommand('showchat', function()
+  TriggerEvent('ARMACHAT:show')
+end)
+
+RegisterCommand('hidechat', function()
+  tARMA.notify("~g~/showui to re-enable Chat")
+  TriggerEvent('ARMACHAT:hide')
+end)

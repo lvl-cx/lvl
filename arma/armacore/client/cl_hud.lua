@@ -2,19 +2,10 @@ local hudToggle = true
 
 Citizen.CreateThread(function ()
     while true do
-     
-
-           C_Hud()
-     
-
+        C_Hud()
 		Wait(0)
 	end
 end)
-
-
-
-  
--- [Functions]
 
 showHud = true
 function C_Hud()
@@ -36,11 +27,9 @@ function C_Hud()
     end
 end
 
-RegisterNetEvent('showHud')
-AddEventHandler('showHud', function(bool)
-    showHud = bool
+RegisterNetEvent("ARMA:showHUD",function(c)
+    showHud = c
 end)
-
 
 function GetMinimapAnchor()
     local safezone = GetSafeZoneSize()
@@ -80,7 +69,7 @@ Citizen.CreateThread(function()
         ScaleformMovieMethodAddParamInt(3)
         EndScaleformMovieMethod()
     end
-  end)
+end)
 
 
   

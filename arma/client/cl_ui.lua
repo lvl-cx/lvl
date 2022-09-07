@@ -1,3 +1,5 @@
+local hideUI = false
+
 local function a()
     local b = GetSafeZoneSize()
     local c = 1.0 / 20.0
@@ -38,9 +40,14 @@ end
 local function p(q, r, s, t, u, v, w, x)
     DrawRect(q + s / 2, r + t / 2, s, t, u, v, w, x)
 end
+
+AddEventHandler("ARMA:showHUD",function(flag)
+    hideUI = not flag
+end)
+
 Citizen.CreateThread(function()
     while true do
-        if not globalHideUi then
+        if not hideUI then
             if not globalHideEmergencyCallUI then
                 local y = tARMA.getPlayerPed()
                 local f, g = GetActiveScreenResolution()
