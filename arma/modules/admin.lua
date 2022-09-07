@@ -867,7 +867,6 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
     end)
 end)
 
-
 RegisterServerEvent('ARMA:RequestScreenshot')
 AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local target_id = ARMA.getUserId(target)
@@ -875,28 +874,23 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        exports["discord-screenshot"]:requestClientScreenshotUploadToDiscord(target,
-        {
-        username = "ARMA",
-        avatar_url = "",
-        embeds = {
-            {
-                color = 16448403,
-                title = admin_name.."["..admin_id.."] Took a screenshot",
-                description = "**Admin Name:** " ..admin_name.. "\n**Admin ID:** " ..admin_id.. "\n**Player Name:** " ..target_name.. "\n**Player ID:** " ..target_id,
-                footer = {
-                    text = ""..os.date("%x %X %p"),
-                }
-            }
-        }
-        },
-        30000,
-        function(error)
-            if error then
-                return print("^1ERROR: " .. error)
-            end
-            ARMAclient.notify(admin, {'Successfully took a screenshot of ' ..target_name.. "'s screen."})
-        end)
+        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, "https://cmgstudios.net/upld/upload.php")
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Request Screenshot')
+    end   
+end)
+
+RegisterServerEvent('ARMA:RequestVideo')
+AddEventHandler('ARMA:RequestVideo', function(admin,target)
+    local target_id = ARMA.getUserId(target)
+    local target_name = GetPlayerName(target)
+    local admin_id = ARMA.getUserId(admin)
+    local admin_name = GetPlayerName(source)
+    if ARMA.hasPermission(admin_id, 'admin.screenshot') then
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://cmgstudios.net/upld/upload.php")
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
