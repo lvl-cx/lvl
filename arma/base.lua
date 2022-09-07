@@ -1092,6 +1092,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
             --MySQL.execute("ARMA/setIP", {user_id = user_id, IP = ARMA.getPlayerIP(source)})
         end
         TriggerEvent("ARMA:playerSpawn",user_id,player,first_spawn)
+        TriggerClientEvent("ARMA:onClientSpawn",player,user_id,first_spawn)
     end
     Debug.pend()
 end)
