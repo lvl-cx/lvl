@@ -217,6 +217,7 @@ Citizen.CreateThread(function()
     points VARCHAR(500) NULL DEFAULT NULL,
     id VARCHAR(500) NULL DEFAULT NULL,
     datelicence VARCHAR(500) NULL DEFAULT NULL,
+    penalties VARCHAR(500) NULL DEFAULT NULL,
     PRIMARY KEY (user_id)
     );
     ]])
