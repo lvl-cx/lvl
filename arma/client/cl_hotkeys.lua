@@ -14,18 +14,21 @@ Citizen.CreateThread(function()
 			if closestPlayer then
 				targetSrc = GetPlayerServerId(closestPlayer)
 				if targetSrc then
-                    TriggerServerEvent('ARMA:Drag')
+                    TriggerServerEvent('ARMA:dragPlayer')
 				end
 			end
             Wait(1000)
 		end
 	    if IsControlPressed(1, 19) and IsDisabledControlJustPressed(1,185) then -- LEFTALT + F
-			TriggerServerEvent('ARMA:TakeOutOfVehicle')
+			TriggerServerEvent('ARMA:ejectFromVehicle')
             Wait(1000)
 		end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) then -- LEFTALT + G
-			TriggerServerEvent("ARMA:Knockout")
-            Wait(1000)
+			local c=GetSelectedPedWeapon(tARMA.getPlayerPed())
+			if c~=`WEAPON_SNOWBALL` then
+				TriggerServerEvent("ARMA:Knockout")
+			end
+			Wait(1000)
 	    end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,8) and (tARMA.getUserId() == 1 or tARMA.getUserId() == 2) then -- LEFTALT + S
 			Wait(1000)
