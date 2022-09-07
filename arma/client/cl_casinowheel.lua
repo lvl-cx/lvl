@@ -150,9 +150,8 @@ function goToWheel()
     end
 end
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		local H = function(I)
             showCasinoLuckyWheelUI(true)
         end
@@ -167,7 +166,6 @@ AddEventHandler('playerSpawned', function(spawn)
             tARMA.addBlip(N.entryPosition.x, N.entryPosition.y, N.entryPosition.z, 681, 0, "ARMA Wheel", 0.7, true)
             tARMA.createArea("armawheel_" .. M, N.entryPosition, 1.5, 6, H, J, K, {})
         end
-		firstspawn = 1
 	end
 end)
 

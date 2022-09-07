@@ -526,10 +526,9 @@ end
 RegisterNetEvent("ARMA:updateStoreRobBlips",function(p)
     refreshStoreBlips(p)
 end)
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		TriggerServerEvent("ARMA:getStoreRobBlips")
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        TriggerServerEvent("ARMA:getStoreRobBlips")
         while p == nil do
             Wait(0)
         end
@@ -542,8 +541,7 @@ AddEventHandler('playerSpawned', function(spawn)
             end
             Wait(1000)
         end
-		firstspawn = 1
-	end
+    end
 end)
 function playStorePedCashRegisterAnimation(x, w, v)
     if not IsPedDeadOrDying(x) then

@@ -7,10 +7,10 @@ local a = {
     vector3(-34.97777557373, -150.9037322998, 57.086517333984),
     vector3(-280.37301635742, 6227.017578125, 31.705526351929)
 }
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local d = function()
+
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local d = function()
             drawNativeNotification("Press ~INPUT_PICKUP~ to get a haircut.")
             PlaySound(-1, "SELECT", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
         end
@@ -26,6 +26,5 @@ AddEventHandler('playerSpawned', function(spawn)
             tARMA.addMarker(h.x, h.y, h.z - 0.2, 0.5, 0.5, 0.5, 0, 50, 255, 170, 50, 20, false, false, true)
             tARMA.addBlip(h.x, h.y, h.z, 71, 13, "Barber Shop")
         end
-		firstspawn = 1
-	end
+    end
 end)

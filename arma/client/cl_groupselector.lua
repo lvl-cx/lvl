@@ -5,11 +5,9 @@ local d = false
 local e = ""
 RMenu.Add("main","groupselector",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu:Get("main", "groupselector"):SetSubtitle("~b~Select a job.")
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		TriggerServerEvent("ARMA:getJobSelectors")
-		firstspawn = 1
 	end
 end)
 RegisterNetEvent("ARMA:gotJobSelectors",function(h)

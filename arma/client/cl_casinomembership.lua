@@ -74,9 +74,8 @@ Citizen.CreateThread(function()
         RemoveAnimDict(f)
     end 
 end)
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		local m=function(n)
             showCasinoMembership(true)
         end
@@ -90,6 +89,5 @@ AddEventHandler('playerSpawned', function(spawn)
             tARMA.addMarker(h.entryPosition.x,h.entryPosition.y,h.entryPosition.z,1.0,1.0,1.0,138,43,226,70,50,27)
             tARMA.createArea("casinomembership_"..q,h.entryPosition,1.5,6,m,o,p,{})
         end 
-		firstspawn = 1
 	end
 end)

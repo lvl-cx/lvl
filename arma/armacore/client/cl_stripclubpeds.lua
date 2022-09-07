@@ -34,10 +34,9 @@ local function d()
     end
 end
 local j = vector3(123.43956756592, -1288.5036621094, 29.674297332764)
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local m = function()
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local m = function()
             if not c then
                 d()
             end
@@ -51,7 +50,5 @@ AddEventHandler('playerSpawned', function(spawn)
             end
         end
         tARMA.createArea("stripclub", j, 100.0, 6, m, n, nil, {})
-		firstspawn = 1
-	end
+    end
 end)
-

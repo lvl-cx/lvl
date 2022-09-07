@@ -91,11 +91,9 @@ Citizen.CreateThread(function()
 end)
 
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		tARMA.addBlip(ammo.location.x,ammo.location.y,ammo.location.z, 549, 1, "Ammo Trader")
+AddEventHandler("ARMA:onClientSpawn",function(G, H)
+    if H then
+        tARMA.addBlip(ammo.location.x,ammo.location.y,ammo.location.z, 549, 1, "Ammo Trader")
 		tARMA.addBlip(-1705.8489990234,8886.5810546875,28.723564147949, 648, 1, "Oil Rig")
-		firstspawn = 1
-	end
+    end
 end)

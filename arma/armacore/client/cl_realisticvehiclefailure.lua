@@ -241,16 +241,14 @@ if cfg2.randomTireBurstInterval ~= 0 then tireBurstLuckyNumber = math.random(tir
 local fixMessagePos = math.random(repaircfg2.fixMessageCount)
 local noFixMessagePos = math.random(repaircfg2.noFixMessageCount)
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		if (cfg2.displayBlips == true) then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        if (cfg2.displayBlips == true) then
 			for _, item in pairs(repaircfg2.mechanics) do
 				tARMA.addBlip(item.x, item.y, item.z,402,0,item.name,0.8,true)
 			end
 		end
-		firstspawn = 1
-	end
+    end
 end)
 local function notification(msg)
 	SetNotificationTextEntry("STRING")

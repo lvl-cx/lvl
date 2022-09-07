@@ -40,9 +40,8 @@ function goParachuting()
 end
 
 local d = {vector3(-753.74310302734, -1510.6815185547, 5.0141487121582)}
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		local g = function()
             drawNativeNotification("Press ~INPUT_PICKUP~ to go parachuting! (£5,000)")
         end
@@ -58,6 +57,5 @@ AddEventHandler('playerSpawned', function(spawn)
             tARMA.createArea("parachute_" .. j, k, 1.5, 6, g, h, i, {})
             tARMA.addMarker(k.x, k.y, k.z, 1.0, 1.0, 1.0, 255, 0, 0, 170, 50, 40, false, false, true)
         end
-		firstspawn = 1
 	end
 end)

@@ -517,20 +517,6 @@ RegisterNUICallback("radialClick", function(data)
     end
 end)
 
-RegisterNetEvent("ARMA:setPoliceOnDuty")
-AddEventHandler("ARMA:setPoliceOnDuty", function(onduty)
-	globalOnPoliceDuty = onduty
-end)
-
-RegisterNetEvent("ARMA:RecieveNHSOnDutyFlag")
-AddEventHandler("ARMA:RecieveNHSOnDutyFlag", function(onduty)
-	globalOnNHSDuty = onduty
-end)
-
-RegisterNetEvent("ARMA:setPrisonGuardOnDuty", function(status)
-    globalOnPrisonDuty = status
-end)
-
 function GetPlayerByEntityID(i)
 	for _, id in ipairs(GetActivePlayers()) do
         if i == GetPlayerPed(id) then

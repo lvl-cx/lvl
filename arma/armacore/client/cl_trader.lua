@@ -8,10 +8,9 @@ Citizen.CreateThread(    function()
     end
 end)
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local s = function(t)
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local s = function(t)
         end
         local u = function(t)
             RageUI.Visible(RMenu:Get('SellerMenu', 'main'), false)
@@ -30,6 +29,5 @@ AddEventHandler('playerSpawned', function(spawn)
                 tARMA.createArea("trader_" .. z, m.position, 1.5, 6, s, u, v, {traderId = z, traderName = m.type})
             end
         end
-		firstspawn = 1
-	end
+    end
 end)

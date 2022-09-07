@@ -28,10 +28,9 @@ RegisterNetEvent("ARMA:removeBackpack",function()
     end
 end)
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local g = function()
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local g = function()
             setCursor(1)
             inGUIARMA = true
             d = tARMA.getCustomization()
@@ -108,9 +107,9 @@ AddEventHandler('playerSpawned', function(spawn)
                 end
             end
         end
-		firstspawn = 1
-	end
+    end
 end)
+
 
 local function C()
     if not b then

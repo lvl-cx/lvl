@@ -4,10 +4,9 @@ local secondsRemaining = 0
 local TakenTurf = false
 
 local c = {}
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local k = tARMA.addBlip(133.73462677002, -1305.0340576172, 29.268741607666, 403, 4, "Cocaine Trader")
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local k = tARMA.addBlip(133.73462677002, -1305.0340576172, 29.268741607666, 403, 4, "Cocaine Trader")
         local l = tARMA.addBlip(103.47916412354, -1937.1091308594, 19.803705215454, 140, 2, "Weed Trader")
         local m = tARMA.addBlip(3569.8334960938, 3662.5893554688, 33.920593261718, 586, 1, "Heroin Trader")
         local n = tARMA.addBlip(-1118.4926757813, 4926.1889648438, 218.35691833496, 150, 1, "Large Arms Trader")
@@ -56,8 +55,7 @@ AddEventHandler('playerSpawned', function(spawn)
             SetBlipColour(u, t.colour)
             SetBlipAlpha(u, 180)
         end
-		firstspawn = 1
-	end
+    end
 end)
 
 function tARMA.isPlayerInTurf()

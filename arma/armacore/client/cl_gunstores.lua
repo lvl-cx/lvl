@@ -229,10 +229,9 @@ Citizen.CreateThread(function()
         Wait(0)
     end 
 end)
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		for m,n in pairs(i)do 
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        for m,n in pairs(i)do 
             local P,Q,R,S,u,T=table.unpack(n["_config"])
             for K,U in pairs(P)do 
                 if T then 
@@ -254,8 +253,7 @@ AddEventHandler('playerSpawned', function(spawn)
                 tARMA.createArea("gunstore_"..m.."_"..K,U,1.5,6,V,W,X,{})
             end 
         end 
-		firstspawn = 1
-	end
+    end
 end)
 
 local Y={}

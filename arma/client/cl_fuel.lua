@@ -1,7 +1,6 @@
 local a = module("cfg/cfg_fuel")
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		for b, c in pairs(a.stations) do
 			tARMA.addBlip(c.x, c.y, c.z, 361, 4, "Petrol Station", 0.6)
 		end

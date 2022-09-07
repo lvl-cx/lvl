@@ -937,18 +937,17 @@ RegisterNUICallback("receivedAccountInfo",function(a)
 end)
 
 local blipscfg = module("cfg/blips_markers")
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		for A, B in pairs(blipscfg.blips) do
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+      for A, B in pairs(blipscfg.blips) do
         tARMA.addBlip(B[1], B[2], B[3], B[4], B[5], B[6], B[7] or 0.8)
-    end
-    for A, B in pairs(blipscfg.markers) do
+      end
+      for A, B in pairs(blipscfg.markers) do
         tARMA.addMarker(B[1], B[2], B[3], B[4], B[5], B[6], B[7], B[8], B[9], B[10], B[11])
+      end
     end
-		firstspawn = 1
-	end
 end)
+
 CreateThread(function()
     while true do
         ExtendWorldBoundaryForPlayer(-9000.0, -11000.0, 30.0)

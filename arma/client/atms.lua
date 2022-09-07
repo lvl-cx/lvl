@@ -116,10 +116,9 @@ local function g()
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAATM', 'main'), false) 
 end
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		local i=function(j)
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        local i=function(j)
             tARMA.setCanAnim(false)
             f(j.atmId)
             a=true 
@@ -136,9 +135,9 @@ AddEventHandler('playerSpawned', function(spawn)
             tARMA.addBlip(n.x,n.y,n.z,108,4,"ATM",0.8,true)
             tARMA.addMarker(n.x,n.y,n.z,0.7,0.7,0.5,0,255,125,125,50,29,false,false,true)
         end 
-		firstspawn = 1
-	end
+    end
 end)
+
 
 function tARMA.createAtm(q,r)
     local i=function()
