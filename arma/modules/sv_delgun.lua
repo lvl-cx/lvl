@@ -2,7 +2,7 @@ local netObjects = {}
 
 RegisterServerEvent("ARMA:spawnVehicleCallback")
 AddEventHandler('ARMA:spawnVehicleCallback', function(a, b)
-    netObjects[b] = {source = a, id = ARMA.getUserId(a), name = GetPlayerName(a)}
+    netObjects[b] = {source = ARMA.getUserSource(a), id = a, name = GetPlayerName(ARMA.getUserSource(a))}
 end)
 
 RegisterServerEvent("ARMA:delGunDelete")
