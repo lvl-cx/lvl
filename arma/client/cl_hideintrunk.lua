@@ -128,6 +128,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent("CMG:removeHiddenInBoot",function()
+RegisterNetEvent("ARMA:removeHiddenInBoot",function()
     j = false
 end)
