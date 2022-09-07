@@ -1,15 +1,65 @@
 local currenttests = {}
 local dvsamodule = module("cfg/cfg_dvsa")
+
+
+local dvsaAlerts = {
+    --{title = 'DVSA', message = 'No current alerts.', date = 'Wednesday 7th September 2022'},
+}
+
+AddEventHandler("playerJoining", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    exports['ghmattimysql']:execute("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id}, function(result)
+        if next(result) then 
+            for k,v in pairs(result) do
+                if v.user_id == user_id then
+                    local data1 = {}
+                    local licence = {}
+                    local date = os.date("%d/%m/%Y")
+                    local updateddata = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
+                    if updateddata ~= nil then
+                        licence = {
+                            ["banned"] = updateddata.licence == "banned",
+                            ["full"] = updateddata.licence == "full",
+                            ["active"] = updateddata.licence == "active",
+                            ["points"] = updateddata.points or 0,
+                            ["id"] = updateddata.id or "No Licence",
+                            ["date"] = date or os.date("%d/%m/%Y")
+                        }
+                    end
+                    -- updateddata.penalties will be penalty points reasons like speeding, drink driving etc (s.offence, s.type, s.date, s.points)
+                    -- need pnc for this tho so will do later
+                    TriggerClientEvent('ARMA:dvsaData',source,licence,json.decode(updateddata.penalties),json.decode(updateddata.testsaves),dvsaAlerts)
+                    return
+                end
+            end
+        else
+            exports['ghmattimysql']:execute("INSERT INTO arma_dvsa (user_id,licence,datelicence) VALUES (@user_id, 'none',"..os.date("%d/%m/%Y")..")", {user_id = user_id})
+            local data1 = {}
+            local licence = {}
+            local date = os.date("%d/%m/%Y")
+            local updateddata = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
+            if updateddata ~= nil then
+                licence = {
+                    ["banned"] = updateddata.licence == "banned",
+                    ["full"] = updateddata.licence == "full",
+                    ["active"] = updateddata.licence == "active",
+                    ["points"] = updateddata.points or 0,
+                    ["id"] = updateddata.id or "No Licence",
+                    ["date"] = date or os.date("%d/%m/%Y")
+                }
+            end
+            TriggerClientEvent('ARMA:dvsaData',source,licence,{},{},dvsaAlerts)
+            return
+        end
+    end)
+end)
+
 function dvsaUpdate(user_id)
     local source = ARMA.getUserSource(user_id)
     local data = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
     local licence = {}
-    local date = 0
-    if data.date == nil then date = 0 end
-    if data.date ~= nil then
-        date = tonumber(data.date) / 1000
-        date = os.date('%Y-%m-%d', date)
-    end
+    local date = os.date("%d/%m/%Y")
     if data ~= nil then
         licence = {
             ["banned"] = data.licence == "banned",
@@ -20,7 +70,7 @@ function dvsaUpdate(user_id)
             ["date"] = date or os.date("%d/%m/%Y")
         }
     end
-    TriggerClientEvent('ARMA:updateDvsaData',source,licence,{},data.testsaves,nil)
+    TriggerClientEvent('ARMA:updateDvsaData',source,licence,{},json.decode(data.testsaves),dvsaAlerts)
 end
 RegisterServerEvent("ARMA:dvsaBucket")
 AddEventHandler("ARMA:dvsaBucket", function(bool)
@@ -43,79 +93,63 @@ AddEventHandler("ARMA:dvsaBucket", function(bool)
         currenttests[user_id] = {
             ["bucket"] = highestcount
         }
-        SetPlayerRoutingBucket(source,21)
+        SetPlayerRoutingBucket(source,currenttests[user_id].bucket)
     elseif not bool then
         if currenttests[user_id] ~= nil then
             currenttests[user_id] = nil
-        else
-            ARMAclient.notify(source,{'~r~You do not have a test in progress.'})
-            return
         end
         SetPlayerRoutingBucket(source,0)
     end
 end)
+
 RegisterServerEvent("ARMA:candidatePassed")
-AddEventHandler("ARMA:candidatePassed", function(seriousissues,minorissues,U)
-    local licencetype = {
-        ["banned"] = false,
-        ["active"] = false,
-        ["full"] = false
-    }
-    local testsaves = {
-        ["Result"] = "Passed",
-        ["Date"] = os.date("%A (%d/%m/%Y) at %X"),
-        ["Serious Issues"] = seriousissues,
-        ["Minor Issues"] = minorissues
-    }
+AddEventHandler("ARMA:candidatePassed", function(seriousissues,minorissues,minorreasons)
+    local localday = os.date("%A (%d/%m/%Y) at %X")
     local source = source
-    local newlicence = "active"
     local licence
     local user_id = ARMA.getUserId(source)
     exports['ghmattimysql']:execute('SELECT * FROM arma_dvsa WHERE user_id = @user_id', {user_id = user_id}, function(GotLicence)
         licence = GotLicence[1].licence
-        if licence == "active" then
-            exports['ghmattimysql']:execute("INSERT INTO arma_dvsa (user_id,licence,testsaves) VALUES(@user_id,@licence,@testsaves)", {user_id = user_id,licence = "full",testsaves=testsaves}, function() end)
-            licence = "full"
-            if licence == "full" then
-                licencetype.banned = false
-                licencetype.active = false
-                licencetype.full = true
-            end
-            if licence == "active" then
-                licencetype.banned = false
-                licencetype.active = true
-                licencetype.full = false
-            end
-            if licence == "banned" then
-                licencetype.banned = true
-                licencetype.active = false
-                licencetype.full = false
-            end
-            TriggerClientEvent('ARMA:updateDvsaData', source,licencetype,nil,nil,nil)
+        local previoustests = {}
+        local testsaves = json.decode(GotLicence[1].testsaves)
+        if testsaves ~= nil then
+            previoustests = testsaves
+            table.insert(previoustests, {date = localday, serious = seriousissues, minor = minorissues, minorsReason = minorreasons, pass = true}) 
         else
-            ARMAclient.notify(source,{"~r~You already have a licence."})
+            table.insert(previoustests, {date = localday, serious = seriousissues,  minor = minorissues, minorsReason = minorreasons, pass = true})
+        end
+        if licence == "active" then
+            exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = 'full', testsaves = @testsaves WHERE user_id = @user_id", {user_id = user_id,testsaves=json.encode(previoustests)}, function() end)
+            Wait(100)
+            dvsaUpdate(user_id)
         end
     end)
 end)
+
 RegisterServerEvent("ARMA:candidateFailed")
-AddEventHandler("ARMA:candidateFailed", function(seriousissues,minorissues,V,U)    
+AddEventHandler("ARMA:candidateFailed", function(seriousissues,minorissues,seriousreasons,minorreasons)    
     local localday = os.date("%A (%d/%m/%Y) at %X")
-    local licencetype = {
-        ["banned"] = false,
-        ["active"] = true,
-        ["full"] = false
-    }
-    local testsaves = {
-        ["Result"] = "Passed",
-        ["Date"] = localday,
-        ["Serious Issues"] = seriousissues,
-        ["Minor Issues"] = minorissues
-    }
     local source = source
     local licence
     local user_id = ARMA.getUserId(source)
-    exports['ghmattimysql']:execute("INSERT INTO arma_dvsa (user_id,testsaves) VALUES(@user_id,@testsaves)", {user_id = user_id,testsaves=testsaves}, function() end)
+    exports['ghmattimysql']:execute('SELECT * FROM arma_dvsa WHERE user_id = @user_id', {user_id = user_id}, function(GotLicence)
+        licence = GotLicence[1].licence
+        local previoustests = {}
+        local testsaves = json.decode(GotLicence[1].testsaves)
+        if testsaves ~= nil then
+            previoustests = testsaves
+            table.insert(previoustests, {date = localday, serious = seriousissues, seriousReason = seriousreasons, minor = minorissues, minorsReason = minorreasons})
+        else
+            table.insert(previoustests, {date = localday, serious = seriousissues, seriousReason = seriousreasons, minor = minorissues, minorsReason = minorreasons})
+        end
+        if licence == "active" then
+            exports['ghmattimysql']:execute("UPDATE arma_dvsa SET testsaves = @testsaves WHERE user_id = @user_id", {user_id = user_id,testsaves=json.encode(previoustests)}, function() end)
+            Wait(100)
+            dvsaUpdate(user_id)
+        end
+    end)
 end)
+
 RegisterServerEvent("ARMA:beginTest")
 AddEventHandler("ARMA:beginTest", function()
     local source = source
@@ -131,6 +165,7 @@ AddEventHandler("ARMA:beginTest", function()
         --ac ban
     end
 end)
+
 RegisterServerEvent("ARMA:surrenderLicence")
 AddEventHandler("ARMA:surrenderLicence", function()
     local source = source
@@ -142,13 +177,14 @@ AddEventHandler("ARMA:surrenderLicence", function()
         --ac ban
         return
     end
-    if data.licence == ("active" or "full" or "none") then
+    if data.licence == "active" or data.licence == "full" then
         exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = @licence WHERE user_id = @user_id", {licence = "none", user_id = user_id})
         exports['ghmattimysql']:execute("UPDATE arma_dvsa SET id = @id WHERE user_id = @user_id", {id = uuid, user_id = user_id})
+        Wait(100)
+        dvsaUpdate(user_id)
     end
-    Wait(100)
-    dvsaUpdate(user_id)
 end)
+
 RegisterServerEvent("ARMA:activateLicence")
 AddEventHandler("ARMA:activateLicence", function()
     local source = source
@@ -157,12 +193,13 @@ AddEventHandler("ARMA:activateLicence", function()
     local data = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
     if data == nil then return end
     if data.licence == "none" then
-        exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = @licence WHERE user_id = @user_id", {licence = "active", user_id = user_id})
+        exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = @licence, datelicence = @datelicense WHERE user_id = @user_id", {licence = "active", datelicense = os.date("%d/%m/%Y"), user_id = user_id})
         exports['ghmattimysql']:execute("UPDATE arma_dvsa SET id = @id WHERE user_id = @user_id", {id = uuid, user_id = user_id})
         Wait(100)
         dvsaUpdate(user_id)
     end
 end)
+
 RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
     local source = source
     local user_id = ARMA.getUserId(source)
@@ -171,12 +208,13 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
     local speed = tonumber(speed)
     local overspeed = speed-180
     local fine = 5000
-    if ARMA.hasPermission(user_id,"police.menu") then
+    if ARMA.hasPermission(user_id,"police.onduty.permission") then
         return
     end
     if tonumber(bank) > 5000 then
         ARMA.setBankMoney(user_id,bank-5000)
         TriggerClientEvent('ARMA:dvsaMessage', source,"DVSA","UK Government","You were fined £"..fine.." for going "..overspeed.."MPH over the speed limit.")
+        -- could add in the future that it gives points to a license
         return
     else
         ARMAclient.notify(source,{'~r~You could not afford the fine. Benefits paid.'})
@@ -184,58 +222,10 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
     end
 end)
 
-RegisterServerEvent("ARMA:gettingDVSAData")
-AddEventHandler("ARMA:gettingDVSAData", function()
+
+RegisterCommand('getdvsa', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
-    exports['ghmattimysql']:execute("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id}, function(result)
-        if result ~= nil then 
-            for k,v in pairs(result) do
-                if v.user_id == user_id then
-                    local data1 = {}
-                    local licence = {}
-                    local date = 0
-                    local updateddata = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
-                    if updateddata.date == nil then date = 0 end
-                    if updateddata.date ~= nil then
-                        date = tonumber(updateddata.date) / 1000
-                        date = os.date('%Y-%m-%d', date)
-                    end
-                    if updateddata ~= nil then
-                        licence = {
-                            ["banned"] = updateddata.licence == "banned",
-                            ["full"] = updateddata.licence == "full",
-                            ["active"] = updateddata.licence == "active",
-                            ["points"] = updateddata.points or 0,
-                            ["id"] = updateddata.id or "No Licence",
-                            ["date"] = date or os.date("%d/%m/%Y")
-                        }
-                    end
-                    TriggerClientEvent('ARMA:dvsaData',source,licence,data1,updateddata.testsaves,nil)
-                    return
-                end
-            end
-            exports['ghmattimysql']:execute("INSERT INTO arma_dvsa (user_id,licence,datelicence) VALUES (@user_id, 'none',"..os.date("%d/%m/%Y")..")", {user_id = user_id})
-            local data1 = {}
-            local licence = {}
-            local date = 0
-            local updateddata = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
-            if updateddata.date == nil then date = 0 end
-            if updateddata.date ~= nil then
-                date = tonumber(updateddata.date) / 1000
-                date = os.date('%Y-%m-%d', date)
-            end
-            if updateddata ~= nil then
-                licence = {
-                    ["banned"] = updateddata.licence == "banned",
-                    ["full"] = updateddata.licence == "full",
-                    ["active"] = updateddata.licence == "active",
-                    ["points"] = updateddata.points or 0,
-                    ["id"] = updateddata.id or "No Licence",
-                    ["date"] = date or os.date("%d/%m/%Y")
-                }
-            end
-            TriggerClientEvent('ARMA:dvsaData',source,licence,data1,updateddata.testsaves,nil)
-        end
-    end)
+    Wait(100)
+    dvsaUpdate(user_id)
 end)

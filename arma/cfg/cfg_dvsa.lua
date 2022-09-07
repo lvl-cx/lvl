@@ -38,7 +38,7 @@ cfg.test = {
                 coords = vector3(68.38681, -1279.873, 29.26306),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("motorwayExplained")
+                    TriggerEvent("arma:PlaySound", "motorwayExplained")
                     currentTest.subtitle = "We are approaching the ~y~motorway~w~, a key element of the test"
                     Wait(3000)
                     currentTest.subtitle = "It is important to ~y~build up ~w~your speed ~y~appropriately"
@@ -56,7 +56,7 @@ cfg.test = {
                 coords = vector3(725.6967, -1248.013, 31.97583),
                 limit = 70.0,
                 action = function()
-                    dvsaSound("leavingMotorwayTurningRight")
+                    TriggerEvent("arma:PlaySound", "leavingMotorwayTurningRight")
                     currentTest.subtitle = "We are now ~y~leaving the motorway~w~, turning ~y~right"
                     Wait(2000)
                 end
@@ -81,7 +81,7 @@ cfg.test = {
                 coords = vector3(788.9934, -1400.532, 27.13989),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     currentTest.subtitle = "We are turning ~y~right ~w~at this junction"
                     Wait(2000)
                 end
@@ -97,7 +97,7 @@ cfg.test = {
                 coords = vector3(572.0835, -1561.727, 28.72375),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     currentTest.subtitle = "We are turning ~y~right ~w~at the next junction"
                     local crashScene = {
                         vehicleModel = `forklift`,
@@ -126,7 +126,7 @@ cfg.test = {
                 coords = vector3(496.2725, -1875.31, 26.26379),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     currentTest.subtitle = "We are turning ~y~right ~w~at this junction"
                     stopSignDetection()
                 end
@@ -157,7 +157,7 @@ cfg.test = {
                 coords = vector3(281.1692, -2015.67, 19.67542),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     currentTest.subtitle = "We are turning ~y~right ~w~at this junction"
                     local crashScene = {
                         vehicleModel = `mower`,
@@ -174,7 +174,7 @@ cfg.test = {
                 coords = vector3(182.3736, -2036.255, 18.22632),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     currentTest.subtitle = "We are turning ~y~right ~w~at this junction"
                     local crashScene = {
                         vehicleModel = `scorcher`,
@@ -213,7 +213,7 @@ cfg.test = {
                 coords = vector3(347.8154, -1705.82, 30.39197),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("driveToTopFloor")
+                    TriggerEvent("arma:PlaySound", "driveToTopFloor")
                     tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Listen carefully for directions, drive to the top floor of the car park", "Reverse Park", "DVSA")
                     currentTest.subtitle = "Drive to the ~y~top floor ~w~of the car park"
                     drawNativeNotification("Drive to the ~y~top floor")
@@ -223,7 +223,7 @@ cfg.test = {
                 coords = vector3(361.7538, -1682.308, 47.37659),
                 limit = 30.0,
                 action = function()
-                    dvsaSound("nowReversePark")
+                    TriggerEvent("arma:PlaySound", "nowReversePark")
                     PlaySoundFrontend(-1, "Out_Of_Bounds_Timer", "DLC_HEISTS_GENERAL_FRONTEND_SOUNDS", 1)
                     tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "Once at the top, you must reverse park in the marked bay.", "Reverse Park", "DVSA")
                     currentTest.subtitle = "Drive round to top and round to ~y~the right"
@@ -286,7 +286,7 @@ cfg.test = {
                     end
 
                     tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "The reverse park exercise is now completed", "Reverse Park", "DVSA")
-                    dvsaSound("reverseParkComplete")
+                    TriggerEvent("arma:PlaySound", "reverseParkComplete")
                     currentTest.subtitle = "Thank you, please ~y~drive down ~w~to the ~y~bottom ~w~of the car park"
                     Wait(5000)
                     currentTest.subtitle = "Follow the ~y~sat nav"
@@ -305,7 +305,7 @@ cfg.test = {
                 coords = vector3(343.3451, -1704.224, 30.08862), -- Bottom level of car park, on ramp
                 limit = 30.0,
                 action = function()
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                     tARMA.notifyPicture(cfg.images.dict, cfg.images.govLarge, "We are turning right", "DVSA", "Directions")
                 end
             },
@@ -329,7 +329,7 @@ cfg.test = {
                     }
                     makeVehicleCrash(crashScene.vehicleModel, crashScene.pedModel, crashScene.startCoords, crashScene.endCoords, crashScene.startHeading)
                     currentTest.subtitle = "We are turning ~y~right ~w~at the next junction"
-                    dvsaSound("turningRightJunction")
+                    TriggerEvent("arma:PlaySound", "turningRightJunction")
                 end
             },
             {
@@ -352,7 +352,7 @@ cfg.test = {
                     }
                     makeVehicleCrash(crashScene.vehicleModel, crashScene.pedModel, crashScene.startCoords, crashScene.endCoords, crashScene.startHeading)
                     Citizen.SetTimeout(50, function()
-                        dvsaSound("closeCall")
+                        TriggerEvent("arma:PlaySound", "closeCall")
                         currentTest.subtitle = "Once again, that was a ~y~close call~w~, be very careful for other vehicles"
                     end)
                 end
