@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 async function RegisterVueComponent(component, path) {
-    const response = await fetch("nui://cmg/ui/pnc/components/"+path);
+    const response = await fetch("nui://arma/ui/pnc/components/"+path);
     component.template = await response.text();
     Vue.component(component.name, component);
 }
@@ -150,7 +150,7 @@ function RegisterVue() {
         methods: {
             addMarker() {
                 if(!this.doesPlayerHaveWarningMarkerOfType(this.selectedWarningMarkerType)) {
-                    $.post('http://cmg/addmarker', JSON.stringify({
+                    $.post('http://arma/addmarker', JSON.stringify({
                         id: this.selectedPerson.id,
                         type: this.selectedWarningMarkerType,
                         reason: this.warningMarkerReason
@@ -159,7 +159,7 @@ function RegisterVue() {
                 }
             },
             wipeAllMarkers() {
-                $.post('http://cmg/wipeallmarkers', JSON.stringify({
+                $.post('http://arma/wipeallmarkers', JSON.stringify({
                     code: this.enteredAccessCode
                 }));
             },
@@ -178,7 +178,7 @@ function RegisterVue() {
                 this.selectedpoints.splice(index, 1);
             },
             addPoint() {
-                $.post('http://cmg/addpoint', JSON.stringify({
+                $.post('http://arma/addpoint', JSON.stringify({
                     points: this.selectedpoints,
                     id: this.selectedPerson.id
                 }));
@@ -188,22 +188,22 @@ function RegisterVue() {
                     if (this.selectedPerson.id){
                         this.page = page
                     }else{
-                        console.log("[CMG PNC] Person needs to be selected to enter this page")
+                        console.log("[arma PNC] Person needs to be selected to enter this page")
                     }
                 }else {
                     this.page = page;
                 }
             },
             closePNC() {
-                $.post('http://cmg/exit', JSON.stringify({}));
+                $.post('http://arma/exit', JSON.stringify({}));
             },
             searchPerson(){
                 let first = this.personFirstName;
                 let last = this.personLastName;
                 if (first == "" || last == "") {
-                    console.log("[CMG PNC] Full name needs to be provided")
+                    console.log("[arma PNC] Full name needs to be provided")
                 }else{
-                    $.post('http://cmg/personsearch', JSON.stringify({
+                    $.post('http://arma/personsearch', JSON.stringify({
                         firstname: first,
                         lastname: last
                     }));
@@ -214,7 +214,7 @@ function RegisterVue() {
                     this.plateSearchErr = "Please enter a plate"
                     return
                 }
-                $.post("http://cmg/platesearch", JSON.stringify({
+                $.post("http://arma/platesearch", JSON.stringify({
                     plate: this.plate
                 }))
             },
@@ -256,7 +256,7 @@ function RegisterVue() {
                 if (this.newFine.fines.length == 0 || this.newFine.amount == 0) {
                     return;
                 }
-                $.post('http://cmg/submitfine', JSON.stringify({
+                $.post('http://arma/submitfine', JSON.stringify({
                     charges: this.newFine.fines,
                     amount: this.newFine.amount,
                     notes: this.newFine.notes,
@@ -283,7 +283,7 @@ function RegisterVue() {
                 if (this.ADInput.length === 0) {
                     return console.log("Attention Drawn Field can not be empty")
                 }else {
-                    $.post('http://cmg/addattentiondrawn', JSON.stringify({
+                    $.post('http://arma/addattentiondrawn', JSON.stringify({
                         ad: this.ADInput
                     }));
                 }
@@ -292,7 +292,7 @@ function RegisterVue() {
             removeAD(index, ad) {
                 if(this.askedIfSure) {
                     this.attention_drawn.splice(this.selectedAd.index, 1);
-                    $.post('http://cmg/removeattentiondrawn', JSON.stringify({
+                    $.post('http://arma/removeattentiondrawn', JSON.stringify({
                         ad: this.selectedAd.index
                     }));
                     this.shouldDisplayDeleteButton = false
@@ -311,7 +311,7 @@ function RegisterVue() {
                 this.shouldDisplayDeleteButton = true
             },
             saveNotes() {
-                $.post('http://cmg/savenotes', JSON.stringify({
+                $.post('http://arma/savenotes', JSON.stringify({
                     notes: this.searchedVehicle.notes,
                     user_id: this.searchedVehicle.owner.user_id,
                     vehicle: this.searchedVehicle.vehicle
@@ -335,13 +335,13 @@ function RegisterVue() {
                 return `https://api.arthur.gg/cmgimage/tax?plate=${plate}&name=${name}&id=${id}`
             },
             savePersonNotes() {
-                $.post("http://cmg/savepersonnotes", JSON.stringify({
+                $.post("http://arma/savepersonnotes", JSON.stringify({
                     user_id: this.selectedPerson.id,
                     notes: this.selectedPerson.notes
                 }))
             },
             GetWarrant() {
-                $.post("http://cmg/generatewarrant", JSON.stringify({}))
+                $.post("http://arma/generatewarrant", JSON.stringify({}))
             }
             },
 
