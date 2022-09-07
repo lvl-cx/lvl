@@ -159,6 +159,10 @@ local allowedEntities = {
     [`vw_prop_casino_blckjack_coinflip`] = true,
     [`vw_prop_vw_luckywheel_02a`] = true,
     [`xs_prop_arena_bag_01`] = true,
+    [`speed_camera_prop`] = true,
+    [`prop_lplate`] = true,
+    [`xm_prop_body_bag`] = true,
+    [`prop_lifepak`] = true,
 }
 
 local otherVehicles = {
@@ -206,7 +210,7 @@ AddEventHandler('entityCreating', function(entity)
         end
     end
     if not allowSpawn then
-        CancelEvent()
+        --CancelEvent()
     end
 end)
 
