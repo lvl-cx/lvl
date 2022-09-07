@@ -142,6 +142,17 @@ local groups = {
     ["Trainee Paramedic"] = "Trainee Paramedic",
     ["TutorialDone"] = "Completed Tutorial",
     ["polblips"] = "Long Range Emergency Blips",
+    ["AA Mechanic"] = "AA Mechanic",
+    ["Royal Mail Driver"] = "Royal Mail Driver",
+    ["Bus Driver"] = "Bus Driver",
+    ["Deliveroo"] = "Deliveroo",
+    ["Fisherman"] = "Fisherman",
+    ["Scuba Diver"] = "Scuba Diver",
+    ["Pilot"] = "Pilot",
+    ["G4S Driver"] = "G4S Driver",
+    ["Lorry Driver"] = "Lorry Driver",
+    ["Taco Seller"] = "Taco Seller",
+    ["Burger Shot Cook"] = "Burger Shot Cook",
 }
 
 
