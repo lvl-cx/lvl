@@ -6,6 +6,7 @@ items["medkit"] = {"Medical Kit","Used to reanimate unconscious people.",nil,0.5
 items["dirty_money"] = {"Dirty money","Illegally earned money.",nil,0}
 items["parcels"] = {"Parcels","Parcels to deliver",nil,0.10}
 items["repairkit"] = {"Repair Kit","Used to repair vehicles.",nil,0.5}
+items["headbag"] = {"Head Bag","Used to cover someone's head.",nil,0.5}
 
 
 -- money
