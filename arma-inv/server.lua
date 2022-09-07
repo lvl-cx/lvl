@@ -866,7 +866,7 @@ function OpenInv(source, netid, LootBagItems)
     else 
         print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
-    TriggerClientEvent('ARMA:InventoryOpen', source, true, true)
+    TriggerClientEvent('ARMA:InventoryOpen', source, true, true, netid)
     local FormattedInventoryData = {}
     for i, v in pairs(LootBagItems) do
         FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
