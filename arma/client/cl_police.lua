@@ -69,21 +69,14 @@ AddEventHandler("ARMA:undrag",function(p)
 end)
 RegisterNetEvent("ARMA:clearPoliceStuff",function()
     stopAutoClosingInventory = false
-    SetTimeout(
-        10000,
-        function()
-            stopAutoClosingInventory = true
-        end
-    )
+    SetTimeout(10000,function()
+        stopAutoClosingInventory = true
+    end)
     while not stopAutoClosingInventory do
         drawInventoryUI = false
         Wait(0)
     end
 end)
-
-function GetFounderPerks()
-    TriggerServerEvent("ARMA:getDADDYCNRPERKS")
-end
 
 TriggerEvent("chat:addSuggestion","/s60","Authorise a new Section 60 order",{{name = "Radius", help = "In metres"}, {name = "Duration", help = "In Minutes"}})
 local q = {}
@@ -102,20 +95,17 @@ RegisterNetEvent("ARMA:addS60",function(r, s, t)
     q[t] = {v, u}
     local x = GetStreetNameAtCoord(r.x, r.y, r.z)
     local y = GetStreetNameFromHashKey(x)
-    print("Metropolitan Police: <br/>A Section 60 has been authorised for the area of" .. y .. ".<br/><br/>This gives officers the power to search any person or vehicle in the area, without any grounds. <br/><br/>This has been authorised in line with legislation.")
     TriggerEvent("ARMA:showNotification",
-        {
-            text = "Metropolitan Police: <br/>A Section 60 has been authorised for the area of" ..
-            y .. ".<br/><br/>This gives officers the power to search any person or vehicle in the area, without any grounds. <br/><br/>This has been authorised in line with legislation.",
-            height = "auto",
-            width = "auto",
-            colour = "#FFF",
-            background = "#3287cd",
-            pos = "bottom-right",
-            icon = "success"
-        },
-        100000
-    )
+    {
+        text = "Metropolitan Police: <br/>A Section 60 has been authorised for the area of " .. y .. ".<br/><br/>This gives officers the power to search any person or vehicle in the area, without any grounds. <br/><br/>This has been authorised in line with legislation.",
+        height = "auto",
+        width = "auto",
+        colour = "#FFF",
+        background = "#3287cd",
+        pos = "bottom-right",
+        icon = "success"
+    },
+    100000)
 end)
 
 RegisterNetEvent("ARMA:removeS60",function(t)
@@ -187,204 +177,141 @@ RMenu.Add("policehandbook","main",RageUI.CreateMenu("Police Handbook", "~b~Offic
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('policehandbook', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Button(
-                    "Arrest",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "The time now is ___. <br/>You are currently under arrest on suspision of ___. <br/>You do not have to say anything. But, it may harm your defence if you do not mention when questioned something which you later rely on in court. <br/>Anything you do say may be given in evidence. <br/>Do you understand?. <br/>The necessities for your arrest are to ___.",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Search - GOWISELY",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "Before you stop and search someone you must remember GO-WISELY. <br/>You do not have to use this after arrest. <br/>Grounds: for the search. <br/>Object: of the search. <br/>Warrant card: If not in uniform. <br/>Identity: I am PC ___. <br/>Station: attached to ___ Police Station. <br/>Entitlement: Entitled to a copy of this search up to ___ months. <br/>Legal power: Searching under s1 PACE (1984) / s23 MODA (1971). <br/>You: You are currently detained for the purpose of a search.",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "PACE - Key Legislation",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "Police and Criminal Evidence Act 1984  - PACE.<br/> Section 1 - Stop and search (Stolen property, prohibited articles, weapons, articles used to commit an offence.<br/>Section 17 - Entry for the purpose of life and arrest<br/> Section 18 - Entry to search after an arrest <br/>Section 19 - Power of seizure<br/> Section 24 - Power of arrest <br/> Section 32 - Search after an arrest",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Identify Codes",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "IC1:~s~ White - North European. <br/>IC2: White - South European. <br/>IC3: Black. <br/>IC4: Asian. <br/>IC5: Chinese, Japanese or other South East Asian. <br/>IC6: Arabic or North African. <br/>IC9: Unknown",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Traffic Offence Report",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "I am reporting you for consideration of the question of prosecuting you for the offence(s) of ___. <br/><br/>You do not have to say anything but it may harm your defence if you do not mention NOW something which you may later rely on in court. Anything you do say may be given in evidence. <br/><br/>You are not under arrest - you are entitled to legal advice and you are not obliged to remain with me.",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Initial Phase Pursuit",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "VEHICLE DESCRIPTION: MAKE/MODEL/VRM. <br/>LOCATION & DIRECTION: ___. <br/>SPEED: ___. <br/>VEHICLE DENSITY: LOW/MED/HIGH. <br/>PEDESTRIAN DENSITY: LOW/MED/HIGH. <br/>ROAD CONDITIONS: WET/DRY/DIRT. <br/>WEATHER: CLEAR/LIGHT/DARK. <br/>VISIBILITY: CLEAR/MED/LOW. <br/>DRIVER CLASSIFICATION: IPP/ADV/TPAC. <br/>POLICE VEHICLE: MARKED/UNMARKED",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Warning Markers",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "FI: FIREARMS. <br/>WE: WEAPONS. <br/>XP: EXPLOSIVES. <br/>VI: VIOLENT. <br/>CO: CONTAGIOUS. <br/>ES: ESCAPER. <br/>AG: ALLEGES. <br/>AT: AILMENT. <br/>SU: SUICIDAL. <br/>MH: MENTAL HEALTH. <br/>DR: DRUGS. <br/>IM: MALE IMPERSONATOR. <br/>IF: FEMALE IMPERSONATOR",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "s136 - Mental Healt Act",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "A constable may take a person to (or keep at) a place of a safety. <br/>This can be done without a warrant if: The individual appears to have a mental disorder, and they are in any place other than a house, flat or room where a person is living, or garden or garage that only one household has access to, and they are in need of immediate care or control. <br/><br/>A registered medical practitioner/healthcare professional must be consulted if practicable to do so.",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
-                RageUI.Button(
-                    "Arrest Necessities",
-                    nil,
-                    {},
-                    function(D, E, F)
-                        if F then
-                            TriggerEvent(
-                                "ARMA:showNotification",
-                                {
-                                    text = "You require at least two of the following necessities to arrest a suspect: <br/><br/>Investigation: conduct a prompt and effective. <br/>Disappearance: prevent the prosecution being hindered. <br/>Child or Vulnerable person: to protect a. <br/>Obstruction: of the highway unlawfully (preventing). <br/>Physical Injury: prevent to themselves or other person. <br/>Public Decency: prevent an offence being committed against. <br/>Loss or Damage: prevent to property. <br/>Address: enable to be ascertained (not readily available). <br/>Name: enable to be ascertained (not readily available).",
-                                    height = "auto",
-                                    width = "auto",
-                                    colour = "#FFF",
-                                    background = "#3287cd",
-                                    pos = "bottom-right",
-                                    icon = "success"
-                                },
-                                100000
-                            )
-                        end
-                    end
-                )
+            RageUI.Button("Arrest",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "The time now is ___. <br/>You are currently under arrest on suspision of ___. <br/>You do not have to say anything. But, it may harm your defence if you do not mention when questioned something which you later rely on in court. <br/>Anything you do say may be given in evidence. <br/>Do you understand?. <br/>The necessities for your arrest are to ___.",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Search - GOWISELY",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "Before you stop and search someone you must remember GO-WISELY. <br/>You do not have to use this after arrest. <br/>Grounds: for the search. <br/>Object: of the search. <br/>Warrant card: If not in uniform. <br/>Identity: I am PC ___. <br/>Station: attached to ___ Police Station. <br/>Entitlement: Entitled to a copy of this search up to ___ months. <br/>Legal power: Searching under s1 PACE (1984) / s23 MODA (1971). <br/>You: You are currently detained for the purpose of a search.",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("PACE - Key Legislation",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "Police and Criminal Evidence Act 1984  - PACE.<br/> Section 1 - Stop and search (Stolen property, prohibited articles, weapons, articles used to commit an offence.<br/>Section 17 - Entry for the purpose of life and arrest<br/> Section 18 - Entry to search after an arrest <br/>Section 19 - Power of seizure<br/> Section 24 - Power of arrest <br/> Section 32 - Search after an arrest",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Identify Codes",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "IC1:~s~ White - North European. <br/>IC2: White - South European. <br/>IC3: Black. <br/>IC4: Asian. <br/>IC5: Chinese, Japanese or other South East Asian. <br/>IC6: Arabic or North African. <br/>IC9: Unknown",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Traffic Offence Report",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "I am reporting you for consideration of the question of prosecuting you for the offence(s) of ___. <br/><br/>You do not have to say anything but it may harm your defence if you do not mention NOW something which you may later rely on in court. Anything you do say may be given in evidence. <br/><br/>You are not under arrest - you are entitled to legal advice and you are not obliged to remain with me.",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Initial Phase Pursuit",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "VEHICLE DESCRIPTION: MAKE/MODEL/VRM. <br/>LOCATION & DIRECTION: ___. <br/>SPEED: ___. <br/>VEHICLE DENSITY: LOW/MED/HIGH. <br/>PEDESTRIAN DENSITY: LOW/MED/HIGH. <br/>ROAD CONDITIONS: WET/DRY/DIRT. <br/>WEATHER: CLEAR/LIGHT/DARK. <br/>VISIBILITY: CLEAR/MED/LOW. <br/>DRIVER CLASSIFICATION: IPP/ADV/TPAC. <br/>POLICE VEHICLE: MARKED/UNMARKED",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Warning Markers",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "FI: FIREARMS. <br/>WE: WEAPONS. <br/>XP: EXPLOSIVES. <br/>VI: VIOLENT. <br/>CO: CONTAGIOUS. <br/>ES: ESCAPER. <br/>AG: ALLEGES. <br/>AT: AILMENT. <br/>SU: SUICIDAL. <br/>MH: MENTAL HEALTH. <br/>DR: DRUGS. <br/>IM: MALE IMPERSONATOR. <br/>IF: FEMALE IMPERSONATOR",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("s136 - Mental Healt Act",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "A constable may take a person to (or keep at) a place of a safety. <br/>This can be done without a warrant if: The individual appears to have a mental disorder, and they are in any place other than a house, flat or room where a person is living, or garden or garage that only one household has access to, and they are in need of immediate care or control. <br/><br/>A registered medical practitioner/healthcare professional must be consulted if practicable to do so.",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
+            RageUI.Button("Arrest Necessities",nil,{},true,function(D, E, F)
+                if F then
+                    TriggerEvent("ARMA:showNotification",
+                    {
+                        text = "You require at least two of the following necessities to arrest a suspect: <br/><br/>Investigation: conduct a prompt and effective. <br/>Disappearance: prevent the prosecution being hindered. <br/>Child or Vulnerable person: to protect a. <br/>Obstruction: of the highway unlawfully (preventing). <br/>Physical Injury: prevent to themselves or other person. <br/>Public Decency: prevent an offence being committed against. <br/>Loss or Damage: prevent to property. <br/>Address: enable to be ascertained (not readily available). <br/>Name: enable to be ascertained (not readily available).",
+                        height = "auto",
+                        width = "auto",
+                        colour = "#FFF",
+                        background = "#3287cd",
+                        pos = "bottom-right",
+                        icon = "success"
+                    },
+                    100000)
+                end
+            end)
         end)
     end
 end)
@@ -466,33 +393,21 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             local V = tARMA.getPlayerVehicle()
             if V ~= 0 then
-                RMenu:Get("vehicleExtraMenu", "main"):SetSubtitle(
-                    "Vehicle Model: " .. GetDisplayNameFromVehicleModel(GetEntityModel(V))
-                )
+                RMenu:Get("vehicleExtraMenu", "main"):SetSubtitle("Vehicle Model: " .. GetDisplayNameFromVehicleModel(GetEntityModel(V)))
                 for k = 1, 12 do
                     if DoesExtraExist(V, k) then
                         if IsVehicleExtraTurnedOn(V, k) then
-                            RageUI.Button(
-                                "Disable Extra " .. k,
-                                nil,
-                                {RightLabel = tostring(k)},
-                                function(D, E, F)
-                                    if F then
-                                        SetVehicleExtra(V, k, true)
-                                    end
+                            RageUI.Button("Disable Extra " .. k,nil,{RightLabel = tostring(k)},function(D, E, F)
+                                if F then
+                                    SetVehicleExtra(V, k, true)
                                 end
-                            )
+                            end)
                         else
-                            RageUI.Button(
-                                "Enable Extra " .. k,
-                                nil,
-                                {RightLabel = tostring(k)},
-                                function(D, E, F)
-                                    if F then
-                                        SetVehicleExtra(V, k, false)
-                                    end
+                            RageUI.Button("Enable Extra " .. k,nil,{RightLabel = tostring(k)},function(D, E, F)
+                                if F then
+                                    SetVehicleExtra(V, k, false)
                                 end
-                            )
+                            end)
                         end
                     end
                 end
@@ -509,86 +424,62 @@ RageUI.CreateWhile(1.0, true, function()
             local V = tARMA.getPlayerVehicle()
             if GetEntityModel(V) == "incidentsupportunit" then
                 W.active = true
-                RageUI.Checkbox(
-                    "Vehicle Sign Up",
-                    "Toggle the vehicle sign on/off",
-                    W.signUp,
-                    {Style = RageUI.CheckboxStyle.Car},
-                    function(D, F, E, X)
-                        if F then
-                            if W.signUp then
-                                RageUI.Text({message = string.format("~w~Sign is now ~g~~h~up")})
-                                SetVehicleExtra(V, 12, false)
-                                SetVehicleExtra(V, 11, true)
-                                SetVehicleExtra(V, 5, true)
-                                SetVehicleExtra(V, 6, true)
-                            else
-                                RageUI.Text({message = string.format("~w~Sign is now ~g~~h~down")})
-                                SetVehicleExtra(V, 12, true)
-                                SetVehicleExtra(V, 5, true)
-                                SetVehicleExtra(V, 6, true)
-                                SetVehicleExtra(V, 11, false)
-                            end
+                RageUI.Checkbox("Vehicle Sign Up","Toggle the vehicle sign on/off",W.signUp,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
+                    if F then
+                        if W.signUp then
+                            RageUI.Text({message = string.format("~w~Sign is now ~g~~h~up")})
+                            SetVehicleExtra(V, 12, false)
+                            SetVehicleExtra(V, 11, true)
+                            SetVehicleExtra(V, 5, true)
+                            SetVehicleExtra(V, 6, true)
+                        else
+                            RageUI.Text({message = string.format("~w~Sign is now ~g~~h~down")})
+                            SetVehicleExtra(V, 12, true)
+                            SetVehicleExtra(V, 5, true)
+                            SetVehicleExtra(V, 6, true)
+                            SetVehicleExtra(V, 11, false)
                         end
-                        W.signUp = X
                     end
-                )
+                    W.signUp = X
+                end)
                 if W.signUp then
-                    RageUI.Checkbox(
-                        "Accident Message",
-                        "Toggle the vehicle accident sign on/off",
-                        W.accidentSign,
-                        {Style = RageUI.CheckboxStyle.Car},
-                        function(D, F, E, X)
-                            if F then
-                                if W.accidentSign then
-                                    RageUI.Text({message = string.format("~w~Accident Message is now ~g~~h~on")})
-                                    SetVehicleExtra(V, 6, false)
-                                else
-                                    RageUI.Text({message = string.format("~w~Accident Message now ~g~~h~off")})
-                                    SetVehicleExtra(V, 6, true)
-                                    W.flashing = false
-                                end
+                    RageUI.Checkbox("Accident Message","Toggle the vehicle accident sign on/off",W.accidentSign,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
+                        if F then
+                            if W.accidentSign then
+                                RageUI.Text({message = string.format("~w~Accident Message is now ~g~~h~on")})
+                                SetVehicleExtra(V, 6, false)
+                            else
+                                RageUI.Text({message = string.format("~w~Accident Message now ~g~~h~off")})
+                                SetVehicleExtra(V, 6, true)
+                                W.flashing = false
                             end
-                            W.accidentSign = X
                         end
-                    )
-                    RageUI.Checkbox(
-                        "Ahead Message",
-                        "Toggle the vehicle ahead sign on/off",
-                        W.aheadSign,
-                        {Style = RageUI.CheckboxStyle.Car},
-                        function(D, F, E, X)
-                            if F then
-                                if W.aheadSign then
-                                    RageUI.Text({message = string.format("~w~Ahead Message is now ~g~~h~on")})
-                                    SetVehicleExtra(V, 5, false)
-                                else
-                                    RageUI.Text({message = string.format("~w~Ahead Message now ~g~~h~off")})
-                                    SetVehicleExtra(V, 5, true)
-                                end
+                        W.accidentSign = X
+                    end)
+                    RageUI.Checkbox("Ahead Message","Toggle the vehicle ahead sign on/off",W.aheadSign,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
+                        if F then
+                            if W.aheadSign then
+                                RageUI.Text({message = string.format("~w~Ahead Message is now ~g~~h~on")})
+                                SetVehicleExtra(V, 5, false)
+                            else
+                                RageUI.Text({message = string.format("~w~Ahead Message now ~g~~h~off")})
+                                SetVehicleExtra(V, 5, true)
                             end
-                            W.aheadSign = X
                         end
-                    )
-                    RageUI.Checkbox(
-                        "Matrix Flash",
-                        "Toggle the flashing of the matrix sign ahead sign on/off",
-                        W.flashing,
-                        {Style = RageUI.CheckboxStyle.Car},
-                        function(D, F, E, X)
-                            if F then
-                                if W.flashing then
-                                    RageUI.Text({message = string.format("~w~Flashing is now ~g~~h~enabled")})
-                                    W.flashing = true
-                                    W.active = true
-                                else
-                                    RageUI.Text({message = string.format("~w~Flashing now ~g~~h~disabled")})
-                                end
+                        W.aheadSign = X
+                    end)
+                    RageUI.Checkbox("Matrix Flash","Toggle the flashing of the matrix sign ahead sign on/off",W.flashing,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
+                        if F then
+                            if W.flashing then
+                                RageUI.Text({message = string.format("~w~Flashing is now ~g~~h~enabled")})
+                                W.flashing = true
+                                W.active = true
+                            else
+                                RageUI.Text({message = string.format("~w~Flashing now ~g~~h~disabled")})
                             end
-                            W.flashing = X
                         end
-                    )
+                        W.flashing = X
+                    end)
                 end
             end
         end)
@@ -672,17 +563,11 @@ local a8 = ""
 local a9 = ""
 local aa = false
 RegisterNetEvent("ARMA:receivePoliceCallsign",function(ab, ac, ad)
-    a3 = ac
-    a4 = ab
-    a5 = ad
-    a6 = true
+    a3 = ac; a4 = ab; a5 = ad; a6 = true
     print("Your PD rank is: " .. a3 .. "\nYour callsign is: " .. a4)
 end)
 RegisterNetEvent("ARMA:receiveHmpCallsign",function(ab, ac, ad)
-    a7 = ac
-    a8 = ab
-    a9 = ad
-    aa = true
+    a7 = ac; a8 = ab; a9 = ad; aa = true
     print("Your HMP rank is: " .. a9 .. "\nYour callsign is: " .. a8)
 end)
 function tARMA.getPoliceCallsign()
