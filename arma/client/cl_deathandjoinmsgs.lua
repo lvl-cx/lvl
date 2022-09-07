@@ -1,18 +1,26 @@
+local a = false
 local b = true
 RegisterCommand("togglekillfeed",function()
-    b = not b
-    if b then
-        tARMA.notify("~g~Killfeed is now enabled")
-    else
-        tARMA.notify("~r~Killfeed is now disabled")
+    if not a then
+        b = not b
+        if b then
+            tARMA.notify("~g~Killfeed is now enabled")
+            SendNUIMessage({type = "killFeedEnable"})
+        else
+            tARMA.notify("~r~Killfeed is now disabled")
+            SendNUIMessage({type = "killFeedDisable"})
+        end
     end
-    SendNUIMessage({type = "toggleKillFeed"})
 end)
-
-RegisterNetEvent("ARMA:toggleKillfeed",function(c)
-    if b ~= c then
-        b = c
-        SendNUIMessage({type = "toggleKillFeed"})
+RegisterNetEvent("ARMA:showHUD",function(c)
+    print('killfeed')
+    a = not c
+    if b then
+        if c then
+            SendNUIMessage({type = "killFeedEnable"})
+        else
+            SendNUIMessage({type = "killFeedDisable"})
+        end
     end
 end)
 
