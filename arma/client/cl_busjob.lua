@@ -126,20 +126,15 @@ end)
 RegisterNetEvent('ARMA:onClientSpawn')
 AddEventHandler("ARMA:onClientSpawn",function(g,h)
     if h then
-        local i = function()
-            tARMA.drawNativeNotification("Press ~INPUT_PICKUP~ to start your bus shift")
-            Citizen.CreateThread(function()
-                while true do
-                    if IsControlJustReleased(1, 38) and not a.onJob then
-                        TriggerServerEvent("ARMA:attemptBeginBusJob")
-                    end
-                    Wait(0)
-                end
-            end)
+        local i = function(j)
+            drawNativeNotification("Press ~INPUT_PICKUP~ to start your bus shift")
         end
-        local k = function()
+        local k = function(j)
         end
         local l = function(j)
+            if IsControlJustReleased(1, 38) and not a.onJob then
+                TriggerServerEvent("ARMA:attemptBeginBusJob")
+            end
         end
         tARMA.addBlip(a.startVector.x, a.startVector.y, a.startVector.z, 106, 1, "Bus Driver Job")
         tARMA.addMarker(a.startVector.x,a.startVector.y,a.startVector.z - 1,1.0,1.0,1.0,255,0,0,70,50,39,false,false,true)
