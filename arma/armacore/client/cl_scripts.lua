@@ -26,22 +26,17 @@ end)
 
 -- NO NPC --
 Citizen.CreateThread(function()
-    while true 
-    	do
+    while true do
     	SetVehicleDensityMultiplierThisFrame(0.0)
 		SetPedDensityMultiplierThisFrame(0.0)
 		SetRandomVehicleDensityMultiplierThisFrame(0.0)
 		SetParkedVehicleDensityMultiplierThisFrame(0.0)
 		SetScenarioPedDensityMultiplierThisFrame(0.0, 0.0)
-		
 		local playerPed = GetPlayerPed(-1)
 		local pos = GetEntityCoords(playerPed) 
 		RemoveVehiclesFromGeneratorsInArea(pos['x'] - 500.0, pos['y'] - 500.0, pos['z'] - 500.0, pos['x'] + 500.0, pos['y'] + 500.0, pos['z'] + 500.0);
-		
-		
 		SetGarbageTrucks(0)
 		SetRandomBoats(0)
-    	
 		Citizen.Wait(1)
 	end
 
@@ -66,66 +61,11 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- window roll down/up --
-local windowup = true
-
-RegisterCommand("windows", function(source, args, raw)
-	local playerPed = GetPlayerPed(-1)
-    if IsPedInAnyVehicle(playerPed, false) then
-        local playerCar = GetVehiclePedIsIn(playerPed, false)
-		if ( GetPedInVehicleSeat( playerCar, -1 ) == playerPed ) then 
-            SetEntityAsMissionEntity( playerCar, true, true )
-		
-			if ( windowup ) then
-				RollDownWindow(playerCar, 0)
-				RollDownWindow(playerCar, 1)
-				TriggerEvent('chatMessage', '', {255,0,0}, 'Windows down')
-				windowup = false
-			else
-				RollUpWindow(playerCar, 0)
-				RollUpWindow(playerCar, 1)
-				TriggerEvent('chatMessage', '', {255,0,0}, 'Windows up')
-				windowup = true
-			end
-		end
-	end
-end, false)
-
 -- ARMA PVP -- 
 AddEventHandler("playerSpawned", function(spawn)
 	SetCanAttackFriendly(GetPlayerPed(-1), true, false)
 	NetworkSetFriendlyFireOption(true)
 end)
-
--- STUN GUN SCREEN --
-Citizen.CreateThread(function()
-	while true do
-        if IsPedBeingStunned(GetPlayerPed(-1)) then
-            taserFX()
-        end
-        Wait(100)
-    end
-end)
-
-function taserFX()
-    local playerPed = GetPlayerPed(-1)
-    RequestAnimSet("move_m@drunk@verydrunk")
-    while not HasAnimSetLoaded("move_m@drunk@verydrunk") do
-      Citizen.Wait(0)
-    end
-    SetPedMinGroundTimeForStungun(GetPlayerPed(-1), 15000)
-    SetPedMovementClipset(playerPed, "move_m@drunk@verydrunk", true)
-    SetTimecycleModifier("spectator5")
-    SetPedIsDrunk(playerPed, true)
-    Wait(15000)
-    SetPedMotionBlur(playerPed, true)
-    Wait(60000)
-    ClearTimecycleModifier()
-    ResetScenarioTypesEnabled()
-    ResetPedMovementClipset(playerPed, 0)
-    SetPedIsDrunk(playerPed, false)
-    SetPedMotionBlur(playerPed, false)
-end
 
 -- AntiVDM --
 Citizen.CreateThread(function()
@@ -151,25 +91,4 @@ Citizen.CreateThread(function()
          end;
          Wait(0)
         end 
-end)
-
--- British Plates --
-Citizen.CreateThread(function()
-
-
-    RequestStreamedTextureDict("regplates")
-    while not HasStreamedTextureDictLoaded("regplates") do
-        Citizen.Wait(1)
-    end
-
-    AddReplaceTexture("vehshare", "plate01", "regplates", "plate01")
-    AddReplaceTexture("vehshare", "plate01_n", "regplates", "plate01_n")
-    AddReplaceTexture("vehshare", "plate02", "regplates", "plate02")
-    AddReplaceTexture("vehshare", "plate02_n", "regplates", "plate02_n")
-    AddReplaceTexture("vehshare", "plate03", "regplates", "plate03")
-    AddReplaceTexture("vehshare", "plate03_n", "regplates", "plate03_n")
-    AddReplaceTexture("vehshare", "plate04", "regplates", "plate04")
-    AddReplaceTexture("vehshare", "plate04_n","regplates", "plate04_n")
-    AddReplaceTexture("vehshare", "plate05", "regplates", "plate05")
-    AddReplaceTexture("vehshare", "plate05_n", "regplates", "plate05_n")
 end)
