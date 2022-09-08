@@ -622,16 +622,16 @@ end
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('dvsa', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button("Driving Licence","View and manage your driving licence",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+            RageUI.ButtonWithStyle("Driving Licence","View and manage your driving licence",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','licence'))
-            RageUI.Button("Driving Test History","View your previous driving tests",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+            RageUI.ButtonWithStyle("Driving Test History","View your previous driving tests",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','tests'))
-            RageUI.Button("DVSA Alerts","View alerts received from the DVSA",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+            RageUI.ButtonWithStyle("DVSA Alerts","View alerts received from the DVSA",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
             end,RMenu:Get('dvsa','alerts'))
             if g then 
                 if not currentTest.active and not a.full and a.active then 
                     if not currentTest.requested then 
-                        RageUI.Button("Begin driving test","Begin your driving test",{Style=RageUI.BadgeStyle.Alert,RightLabel="£"..getMoneyStringFormatted(i.test.price)},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle("Begin driving test","Begin your driving test",{Style=RageUI.BadgeStyle.Alert,RightLabel="£"..getMoneyStringFormatted(i.test.price)},true,function(a8,a9,aa)
                             if aa then 
                                 if a.banned then 
                                     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence has been suspended","UK Government","DVSA")
@@ -645,7 +645,7 @@ RageUI.CreateWhile(1.0, true, function()
                             end 
                         end)
                     else 
-                        RageUI.Button("No tests available","Try again in a few minutes",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle("No tests available","Try again in a few minutes",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                             if aa then 
                                 tARMA.notifyPicture(i.images.dict,i.images.govLarge,"We have no tests available, please try again in a few minutes.","UK Government","Driving Test")
                             end 
@@ -653,7 +653,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end 
                 else 
                     if not currentTest.active and (a.full or a.active) then 
-                        RageUI.Button("Surrender your licence","Surrender your driving licence to the DVSA",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle("Surrender your licence","Surrender your driving licence to the DVSA",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                             if aa then 
                                 a.full=false
                                 a.active=false
@@ -669,33 +669,33 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('dvsa', 'licence')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if a.full then 
-                RageUI.Button("Licence Type:","This indiates if you hold a full licence",{RightLabel="Full",Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+                RageUI.ButtonWithStyle("Licence Type:","This indiates if you hold a full licence",{RightLabel="Full",Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
                     if aa then 
                         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence is full. You have passed your driving test.","UK Government","DVSA")
                     end 
                 end)
             else 
                 if a.banned then 
-                    RageUI.Button("Licence Type:","This indiates if you hold a full licence",{RightLabel="Suspended",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                    RageUI.ButtonWithStyle("Licence Type:","This indiates if you hold a full licence",{RightLabel="Suspended",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                         if aa then 
                             tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence has been suspended","UK Government","DVSA")
                         end 
                     end)
                 else 
                     if a.active then 
-                        RageUI.Button("Licence Type:","This indiates if you hold a full licence",{RightLabel="Provisional",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle("Licence Type:","This indiates if you hold a full licence",{RightLabel="Provisional",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                             if aa then 
                                 tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence is currently provisional, take a test at the DVSA test centre","UK Government","DVSA")
                             end 
                         end)
                     else 
-                        RageUI.Button("Licence Type:","This indiates if you hold a full licence",{RightLabel="No licence",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle("Licence Type:","This indiates if you hold a full licence",{RightLabel="No licence",Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                             if aa then 
                                 tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You do not hold a UK Driving licence.","UK Government","DVSA")
                             end 
                         end)
                         if not f then 
-                            RageUI.Button("Apply for a provisional licence","Apply for a provisional licence",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
+                            RageUI.ButtonWithStyle("Apply for a provisional licence","Apply for a provisional licence",{Style=RageUI.BadgeStyle.Car},true,function(a8,a9,aa)
                                 if aa then 
                                     TriggerServerEvent("ARMA:activateLicence")
                                     f=true
@@ -707,17 +707,17 @@ RageUI.CreateWhile(1.0, true, function()
                  end 
              end
             if a.active then 
-                RageUI.Button("Penalty Points:","This indicates your amount of licence points",{RightLabel=a.points},true,function(a8,a9,aa)
+                RageUI.ButtonWithStyle("Penalty Points:","This indicates your amount of licence points",{RightLabel=a.points},true,function(a8,a9,aa)
                     if aa then 
                         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence currently has "..a.points.." penalty points.","UK Government","DVSA")
                     end 
                 end)
-                RageUI.Button("Licence Number:","This indicates your licence number",{RightLabel=a.id},true,function(a8,a9,aa)
+                RageUI.ButtonWithStyle("Licence Number:","This indicates your licence number",{RightLabel=a.id},true,function(a8,a9,aa)
                     if aa then 
                         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence number is "..a.id..", this is issued with your licence.","UK Government","DVSA")
                     end 
                 end)
-                RageUI.Button("Licence Issued:","This indicates the date and time of issue",{RightLabel=a.date},true,function(a8,a9,aa)
+                RageUI.ButtonWithStyle("Licence Issued:","This indicates the date and time of issue",{RightLabel=a.date},true,function(a8,a9,aa)
                     if aa then 
                         tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your licence was issued at "..a.date..".","UK Government","DVSA")
                     end 
@@ -725,7 +725,7 @@ RageUI.CreateWhile(1.0, true, function()
                 if next(b) then 
                     RageUI.Separator("DVSA - Licence Record")
                     for r,s in pairs(b)do 
-                        RageUI.Button(s.offence,"Date: "..s.date.." | Type: "..s.type,{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                        RageUI.ButtonWithStyle(s.offence,"Date: "..s.date.." | Type: "..s.type,{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                             if aa then 
                                 tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You were given "..s.points.." penalty points on "..s.date..".","UK Government","Offence: "..s.offence)
                             end 
@@ -743,7 +743,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if s.pass then 
                         ac="~g~PASS"
                     end
-                    RageUI.Button(s.date.." | Result: "..ac,"~r~Serious Faults~w~: "..s.serious.." | ~b~Minor Faults~w~: "..s.minor,{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                    RageUI.ButtonWithStyle(s.date.." | Result: "..ac,"~r~Serious Faults~w~: "..s.serious.." | ~b~Minor Faults~w~: "..s.minor,{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                         if aa then 
                             tARMA.notifyPicture(i.images.dict,i.images.govLarge,"Your test result was a "..ac.." ~w~with ~b~"..s.serious.." ~w~serious faults and ~b~"..s.minor.." ~w~minor faults.","UK Government","Driving Test Result")
                             if s.minor~=nil and s.pass and s.minor>0 then 
@@ -771,7 +771,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if s.date==nil then 
                         s.date=""
                     end
-                    RageUI.Button(s.title.." "..s.date,"Press to read this message",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
+                    RageUI.ButtonWithStyle(s.title.." "..s.date,"Press to read this message",{Style=RageUI.BadgeStyle.Alert},true,function(a8,a9,aa)
                         if aa then 
                             tARMA.notifyPicture(i.images.dict,i.images.govLarge,s.message,"UK Government",s.title)
                         end 
