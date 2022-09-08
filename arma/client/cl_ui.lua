@@ -81,3 +81,23 @@ Citizen.CreateThread(function()
         Wait(0)
     end
 end)
+
+Citizen.CreateThread(function()
+    local z = RequestScaleformMovie("minimap")
+    SetRadarBigmapEnabled(true, false)
+    Wait(0)
+    SetRadarBigmapEnabled(false, false)
+    while true do
+        Citizen.Wait(0)
+        HideHudComponentThisFrame(3)
+        HideHudComponentThisFrame(4)
+        HideHudComponentThisFrame(2)
+        HideHudComponentThisFrame(9)
+        HideHudComponentThisFrame(7)
+        HideHudComponentThisFrame(8)
+        HideHudComponentThisFrame(6)
+        BeginScaleformMovieMethod(z, "SETUP_HEALTH_ARMOUR")
+        ScaleformMovieMethodAddParamInt(3)
+        EndScaleformMovieMethod()
+    end
+end)
