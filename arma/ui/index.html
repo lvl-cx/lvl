@@ -123,7 +123,6 @@
 
 <div v-if="page == 'new-fines'">
     <h1>FINES</h1>
-    <!-- <person-search-nav/> -->
     <div class="personNav" style="position: fixed; top: 20%;">
         <p class="inlinep yellow">|</p>
         <p class="inlinep navp" v-on:click="switchPage('personsearch')">Home </p>
@@ -177,7 +176,6 @@
     <div v-for="fine in selectedPerson.otherprevs" v-on:click="selectOldFine(fine)"class="oldfinediv"><p v-for="f in JSON.parse(fine.description)">{{f.fine}}</p></div>
 </div>
     <div v-if="page == 'platesearch'" style="position: fixed; top: 20%;">
-        <!-- <p class="modes">Coming in the garagesv2 update!</p> -->
         <h1 class="modes ownerinfotitle" >OWNER INFORMATION</h1>
         <div class="ownerinfo">
             <p class="modes" style="margin-bottom: 20px;">National Insurance Number: {{searchedVehicle.owner.user_id}}</p>
@@ -191,7 +189,6 @@
             <button class="searchbutton" id="searchP" v-on:click="searchPlate()">Search</button>
             <p>{{plateSearchErr}}</p>
             <p class="modes" style="margin-bottom: 20px;">Vehicle Model: {{searchedVehicle.name}}</p>
-            <!-- <p class="modes" style="margin-bottom: 20px;">Colour: {{searchedVehicle.colour}}</p> -->
             <p class="modes" style="margin-bottom: 20px;">Plate: {{searchedVehicle.plate}}</p>
             <img v-if="!searchedVehicle.owner.user_id == ''" :src="getTaxDisc(searchedVehicle.name, searchedVehicle.plate, searchedVehicle.owner.user_id)" alt="" height="350px" width="350px" id="taxDisc">
             <p v-if="!searchedVehicle.owner.user_id == ''">Vehicle Notes:</p>
@@ -234,7 +231,6 @@
 </div>
     <div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
     <script src="https://www.youtube.com/player_api"></script>
-    <!-- <script src="./js/vue.min.js"></script> -->
     <script
     src = "https://code.jquery.com/jquery-3.3.1.min.js"
     integrity = "sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

@@ -150,7 +150,7 @@ function RegisterVue() {
         methods: {
             addMarker() {
                 if(!this.doesPlayerHaveWarningMarkerOfType(this.selectedWarningMarkerType)) {
-                    $.post('http://arma/addmarker', JSON.stringify({
+                    $.post('https://arma/addmarker', JSON.stringify({
                         id: this.selectedPerson.id,
                         type: this.selectedWarningMarkerType,
                         reason: this.warningMarkerReason
@@ -159,7 +159,7 @@ function RegisterVue() {
                 }
             },
             wipeAllMarkers() {
-                $.post('http://arma/wipeallmarkers', JSON.stringify({
+                $.post('https://arma/wipeallmarkers', JSON.stringify({
                     code: this.enteredAccessCode
                 }));
             },
@@ -178,7 +178,7 @@ function RegisterVue() {
                 this.selectedpoints.splice(index, 1);
             },
             addPoint() {
-                $.post('http://arma/addpoint', JSON.stringify({
+                $.post('https://arma/addpoint', JSON.stringify({
                     points: this.selectedpoints,
                     id: this.selectedPerson.id
                 }));
@@ -188,22 +188,22 @@ function RegisterVue() {
                     if (this.selectedPerson.id){
                         this.page = page
                     }else{
-                        console.log("[arma PNC] Person needs to be selected to enter this page")
+                        console.log("[ARMA PNC] Person needs to be selected to enter this page")
                     }
                 }else {
                     this.page = page;
                 }
             },
             closePNC() {
-                $.post('http://arma/exit', JSON.stringify({}));
+                $.post('https://arma/exit', JSON.stringify({}));
             },
             searchPerson(){
                 let first = this.personFirstName;
                 let last = this.personLastName;
                 if (first == "" || last == "") {
-                    console.log("[arma PNC] Full name needs to be provided")
+                    console.log("[ARMA PNC] Full name needs to be provided")
                 }else{
-                    $.post('http://arma/personsearch', JSON.stringify({
+                    $.post('https://arma/personsearch', JSON.stringify({
                         firstname: first,
                         lastname: last
                     }));
@@ -214,7 +214,7 @@ function RegisterVue() {
                     this.plateSearchErr = "Please enter a plate"
                     return
                 }
-                $.post("http://arma/platesearch", JSON.stringify({
+                $.post("https://arma/platesearch", JSON.stringify({
                     plate: this.plate
                 }))
             },
@@ -256,7 +256,7 @@ function RegisterVue() {
                 if (this.newFine.fines.length == 0 || this.newFine.amount == 0) {
                     return;
                 }
-                $.post('http://arma/submitfine', JSON.stringify({
+                $.post('https://arma/submitfine', JSON.stringify({
                     charges: this.newFine.fines,
                     amount: this.newFine.amount,
                     notes: this.newFine.notes,
@@ -283,7 +283,7 @@ function RegisterVue() {
                 if (this.ADInput.length === 0) {
                     return console.log("Attention Drawn Field can not be empty")
                 }else {
-                    $.post('http://arma/addattentiondrawn', JSON.stringify({
+                    $.post('https://arma/addattentiondrawn', JSON.stringify({
                         ad: this.ADInput
                     }));
                 }
@@ -292,7 +292,7 @@ function RegisterVue() {
             removeAD(index, ad) {
                 if(this.askedIfSure) {
                     this.attention_drawn.splice(this.selectedAd.index, 1);
-                    $.post('http://arma/removeattentiondrawn', JSON.stringify({
+                    $.post('https://arma/removeattentiondrawn', JSON.stringify({
                         ad: this.selectedAd.index
                     }));
                     this.shouldDisplayDeleteButton = false
@@ -311,7 +311,7 @@ function RegisterVue() {
                 this.shouldDisplayDeleteButton = true
             },
             saveNotes() {
-                $.post('http://arma/savenotes', JSON.stringify({
+                $.post('https://arma/savenotes', JSON.stringify({
                     notes: this.searchedVehicle.notes,
                     user_id: this.searchedVehicle.owner.user_id,
                     vehicle: this.searchedVehicle.vehicle
@@ -335,13 +335,13 @@ function RegisterVue() {
                 return `https://api.arthur.gg/cmgimage/tax?plate=${plate}&name=${name}&id=${id}`
             },
             savePersonNotes() {
-                $.post("http://arma/savepersonnotes", JSON.stringify({
+                $.post("https://arma/savepersonnotes", JSON.stringify({
                     user_id: this.selectedPerson.id,
                     notes: this.selectedPerson.notes
                 }))
             },
             GetWarrant() {
-                $.post("http://arma/generatewarrant", JSON.stringify({}))
+                $.post("https://arma/generatewarrant", JSON.stringify({}))
             }
             },
 
@@ -482,7 +482,8 @@ document.onreadystatechange = () => {
                 clearSelectedPerson()
                 pnc.searchPersonPageMessage = ""
                 for(u of item.user){
-                    pnc.searchedPersons.push({fName: u.firstname, warning_markers: u.warning_markers, points:u.points, licence: u.licence, lName:u.lastname, id: u.user_id, age: u.age, notes: u.notes, vehicles: u.vehicles, warrants: u.warrants, home: u.playerhome, isActive: false})
+                    console.log(JSON.stringify(u))
+                    pnc.searchedPersons.push({fName: u.firstname, warning_markers: u.warning_markers, points:u.points, licence: u.licence, lName:u.lastname, id: u.user_id, age: u.age, notes: u.notes, vehicles: u.vehicles, warrants: u.warrants, home: u.playerhome, phone: u.phone, isActive: false})
                 }
 
             }  else if (item.type == "verifyFine"){
@@ -534,7 +535,7 @@ function updateClock(){
 setInterval(updateClock, 10000)
 
 document.onkeydown = function (data) {
-    if (data.which == 118) {
+    if (data.which == 118 || data.which == 27) {
         clearAllPersonData()
         pnc.closePNC()
         return
