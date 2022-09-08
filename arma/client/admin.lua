@@ -158,20 +158,7 @@ local a = {}
 function tARMA.staffMode(status)
     if tARMA.getStaffLevel()>0 then
         staffMode=status
-        if not staffMode then 
-            tARMA.setRedzoneTimerDisabled(false)
-            SetEntityInvincible(PlayerPedId(),false)
-            SetPlayerInvincible(PlayerId(),false)
-            SetPedCanRagdoll(PlayerPedId(),true)
-            ClearPedBloodDamage(PlayerPedId())
-            ResetPedVisibleDamage(PlayerPedId())
-            ClearPedLastWeaponDamage(PlayerPedId())
-            SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
-            SetEntityCanBeDamaged(PlayerPedId(),true)
-            SetEntityHealth(PlayerPedId(),200)
-            tARMA.setCustomization(a)
-            tARMA.notify('~g~Staff Powerz Deactivated.')
-        else
+        if staffMode then 
             tARMA.notify('~g~Staff Powerz Activated.')
             if GetEntityHealth(GetPlayerPed(-1))<=102 then 
                 tARMA.RevivePlayer()
@@ -190,6 +177,19 @@ function tARMA.staffMode(status)
             else z="mp_f_freemode_01"
                 tARMA.loadCustomisationPreset("StaffFemale")
             end 
+        else
+            tARMA.setRedzoneTimerDisabled(false)
+            SetEntityInvincible(PlayerPedId(),false)
+            SetPlayerInvincible(PlayerId(),false)
+            SetPedCanRagdoll(PlayerPedId(),true)
+            ClearPedBloodDamage(PlayerPedId())
+            ResetPedVisibleDamage(PlayerPedId())
+            ClearPedLastWeaponDamage(PlayerPedId())
+            SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
+            SetEntityCanBeDamaged(PlayerPedId(),true)
+            SetEntityHealth(PlayerPedId(),200)
+            tARMA.setCustomization(a)
+            tARMA.notify('~g~Staff Powerz Deactivated.')
         end 
     end
 end
@@ -239,9 +239,6 @@ Citizen.CreateThread(function()
     while true do 
         Citizen.Wait(0)
         if staffMode then 
-            if not isInTicket then
-                drawNativeText("~r~Reminder: You are /staffon'd.", 255, 0, 0, 255, true)
-            end
             local B=PlayerPedId()
             SetEntityInvincible(B,true)
             SetPlayerInvincible(PlayerId(),true)
@@ -252,6 +249,9 @@ Citizen.CreateThread(function()
             SetEntityProofs(B,true,true,true,true,true,true,true,true)
             SetEntityCanBeDamaged(B,false)
             SetEntityHealth(B,200)
+            if not isInTicket then
+                drawNativeText("~r~Reminder: You are /staffon'd.", 255, 0, 0, 255, true)
+            end
         end
     end
 end)
