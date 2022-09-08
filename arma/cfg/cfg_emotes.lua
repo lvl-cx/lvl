@@ -3407,38 +3407,38 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-        ["pickingfruit"] = {"divined@fighting@new", "pickingfruit", "Custom Picking", animationOptions =
+    ["pickingfruit"] = {"divined@fighting@new", "pickingfruit", "Custom Picking", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
     }},
-        ["sitlaughing"] = {"divined@fighting@new", "sitlaughing", "Custom Sit Laughing", animationOptions =
+    ["sitlaughing"] = {"divined@fighting@new", "sitlaughing", "Custom Sit Laughing", animationOptions =
     {
         emoteLoop = true,
     }},
-        ["standdie"] = {"divined@fighting@new", "standdie", "Custom Die Standing", animationOptions =
+    ["standdie"] = {"divined@fighting@new", "standdie", "Custom Die Standing", animationOptions =
     {
         emoteLoop = true,
     }},
-        ["strutwalk"] = {"divined@fighting@new", "strutwalk", "Custom Strut Walk", animationOptions =
-    {
-        emoteLoop = true,
-        emoteMoving = true,
-    }},
-        ["stunned"] = {"divined@fighting@new", "stunned", "Custom Stunned", animationOptions =
-    {
-        emoteLoop = true,
-    }},
-        ["textingwalk"] = {"divined@fighting@new", "textingwalk", "Custom Texting Walk", animationOptions =
+    ["strutwalk"] = {"divined@fighting@new", "strutwalk", "Custom Strut Walk", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
     }},
-        ["tripping"] = {"divined@fighting@new", "tripping", "Custom Tripping", animationOptions =
+    ["stunned"] = {"divined@fighting@new", "stunned", "Custom Stunned", animationOptions =
     {
         emoteLoop = true,
     }},
-        ["divdance1"] = {"divined@dancesv2@new", "divdance1", "Custom Dance 13", animationOptions =
+    ["textingwalk"] = {"divined@fighting@new", "textingwalk", "Custom Texting Walk", animationOptions =
+    {
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
+    ["tripping"] = {"divined@fighting@new", "tripping", "Custom Tripping", animationOptions =
+    {
+        emoteLoop = true,
+    }},
+    ["divdance1"] = {"divined@dancesv2@new", "divdance1", "Custom Dance 13", animationOptions =
     {
         emoteLoop = true
     }},
@@ -3494,7 +3494,7 @@ cfg.custom = {
     {
         emoteLoop = true
     }},
-        ["dbdance1"] = {"divined@fndances@new", "dbdance1", "Mdance", animationOptions =
+    ["dbdance1"] = {"divined@fndances@new", "dbdance1", "Mdance", animationOptions =
     {
         emoteLoop = true,
     }},
@@ -3530,11 +3530,11 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-        ["dbdance10"] = {"divined@fndances@new", "dbdance10", "Electro Swing", animationOptions =
+    ["dbdance10"] = {"divined@fndances@new", "dbdance10", "Electro Swing", animationOptions =
     {
         emoteLoop = true,
     }},
-        ["dbdance11"] = {"divined@fndances@new", "dbdance11", "Electro Shuffle", animationOptions =
+    ["dbdance11"] = {"divined@fndances@new", "dbdance11", "Electro Shuffle", animationOptions =
     {
         emoteLoop = true,
     }},
@@ -3658,7 +3658,7 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-        ["drdance1"] = {"divined@randomdances@new", "drdance1", "Gymnastics Dance", animationOptions =
+    ["drdance1"] = {"divined@randomdances@new", "drdance1", "Gymnastics Dance", animationOptions =
     {
         emoteLoop = true,
     }},
