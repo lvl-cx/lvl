@@ -128,7 +128,7 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
     end
     e = bleedoutDuration + 10000
     f = e / 1000
-    DeathAnim = 10
+    DeathAnim = 3
     l = GetGameTimer()
     m = e
     local J = false
@@ -155,7 +155,7 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
         g = false
         TriggerEvent("ARMA:SHOW_DEATH_SCREEN", f, L.name or "N/A", L.user_id or "N/A", L.weapon or "N/A", M)
     end)
-    while DeathAnim <= 10 and DeathAnim >= 0 do
+    while DeathAnim <= 3 and DeathAnim >= 0 do
         Wait(1000)
         DeathAnim = DeathAnim - 1
     end
