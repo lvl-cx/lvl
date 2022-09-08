@@ -29,19 +29,20 @@ local passengerPeds = {
     {pedModel = 'a_f_m_salton_01'},   
     {pedModel = 'a_f_m_skidrow_01'}, 
 }
-local b = 15
+local b = 10
 RegisterNetEvent("ARMA:beginBusJob",function()
     a.tempVehicle = tARMA.spawnVehicle("bus",a.spawnVehicleVector.x,a.spawnVehicleVector.y,a.spawnVehicleVector.z,343,true,true,true)
     a.onJob = true
     tARMA.notify("~g~Bus Job started, exit the bus station and head to the first bus stop.")
     while a.onJob do
-        DrawGTATimerBar("PACKAGES:", a.stopNumber .. "/" .. b, 2)
+        DrawGTATimerBar("PASSENGERS:", a.stopNumber .. "/" .. b, 2)
         DrawGTATimerBar("~g~EARNED:", "£" .. getMoneyStringFormatted(a.cashEarned), 1)
         Wait(0)
     end
 end)
 RegisterNetEvent("ARMA:endBusJob",function()
     tARMA.notify("~g~Shift complete.")
+    DeletePed(busJobPed)
     DeleteVehicle(GetVehiclePedIsIn(GetPlayerPed(-1), false))
     DeleteVehicle(a.tempVehicle)
     a.onJob = false
@@ -88,6 +89,7 @@ RegisterNetEvent("ARMA:nextStopReachedBusJob",function(d)
         until onGround
         safeCoords = vector3(coords.x + math.random(-radius, radius), coords.y + math.random(-radius, radius), safeZ)
     end
+    DeletePed(busJobPed)
     busJobPed=CreatePed(26,B,safeCoords.x,safeCoords.y,safeCoords.z,GetEntityHeading(e),false,true)
     while not DoesEntityExist(busJobPed)do 
         Wait(0)

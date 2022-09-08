@@ -1,17 +1,36 @@
 local usersInBusJob={}
 local busJobStops={
     [1]={
-        stopPosition=vector3(402.40344238281,-722.01306152344,29.228933334351)
+        stopPosition=vector3(396.8274230957,-993.54077148438,29.404117584229)
     },
     [2]={
-        stopPosition=vector3(403.75317382812,-788.14752197266,29.26558303833)
+        stopPosition=vector3(146.29943847656,-1002.9825439453,29.345203399658)
     },
     [3]={
-        stopPosition=vector3(352.87112426758,-841.11608886719,29.112545013428)
+        stopPosition=vector3(-45.810665130615,-1129.7127685547,26.039571762085)
     },
-    -- need to add up to 15 stops (last one take back to bus station)
+    [4]={
+        stopPosition=vector3(-230.99066162109,-979.03881835938,29.242504119873)
+    },
+    [5]={
+        stopPosition=vector3(62.544189453125,-728.20678710938,44.133487701416)
+    },
+    [6]={
+        stopPosition=vector3(-349.51934814453,-1.5412160158157,47.257663726807)
+    },
+    [7]={
+        stopPosition=vector3(-459.90826416016,-366.56008911133,33.858005523682)
+    },
+    [8]={
+        stopPosition=vector3(153.43214416504,-1029.8165283203,29.21466255188)
+    },
+    [9]={
+        stopPosition=vector3(399.83349609375,-995.69421386719,29.457012176514)
+    },
+    [10]={
+        stopPosition=vector3(472.25814819336,-598.60290527344,28.499515533447)
+    }
 }
-
 RegisterNetEvent("ARMA:attemptBeginBusJob")
 AddEventHandler("ARMA:attemptBeginBusJob",function()
     local source=source
@@ -41,13 +60,13 @@ Citizen.CreateThread(function()
                 for a,b in pairs(busJobStops)do
                     if ARMA.getUserSource(k)then
                         if#(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-busJobStops[v.currentJob.stopNumber].stopPosition)<5.0 then
-                            v.currentJob.stopNumber=v.currentJob.stopNumber+1
                             local pay = math.random(1000,1500)
-                            TriggerClientEvent("ARMA:nextStopReachedBusJob",ARMA.getUserSource(k),pay)
                             ARMA.giveMoney(k,pay)
-                            if busJobStops[v.currentJob.stopNumber]==15 then
+                            TriggerClientEvent("ARMA:nextStopReachedBusJob",ARMA.getUserSource(k),pay)
+                            if v.currentJob.stopNumber==10 then
                                 TriggerClientEvent("ARMA:endBusJob", ARMA.getUserSource(k))
                             else
+                                v.currentJob.stopNumber=v.currentJob.stopNumber+1
                                 TriggerClientEvent("ARMA:setNextBusJobBlip",ARMA.getUserSource(k),busJobStops[v.currentJob.stopNumber].stopPosition)
                             end
                         end
