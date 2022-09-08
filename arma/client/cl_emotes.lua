@@ -1,12 +1,12 @@
 local a = module("cfg/cfg_emotes")
-RMenu.Add("emotesmenu","mainmenu",RageUI.CreateMenu("ARMA Emotes","Main Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","emotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"ARMA Emotes","Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","danceemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Dance Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","customemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Custom Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","propemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Prop Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","sharedemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Shared Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","walkingstyles",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Walking Styles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
-RMenu.Add("emotesmenu","moods",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"ARMA Emotes","Moods",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_sm_hangar","shopui_title_sm_hangar"))
+RMenu.Add("emotesmenu","mainmenu",RageUI.CreateMenu("","Main Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","emotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","danceemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Dance Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","customemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Custom Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","propemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Prop Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","sharedemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Shared Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","walkingstyles",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Walking Styles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","moods",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Moods",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 local b = false
 local c = ""
 local d = {}
