@@ -41,6 +41,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         if killer ~= nil then
             weaponhash = getWeaponName(weaponhash)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(killer), GetPlayerName(source), weaponhash, suicide, distance, killedgroup, killergroup)
+            TriggerEvent('ARMA:checkOrganHeistKill', source, killer)
             local embed = {
                 {
                   ["color"] = "16448403",
@@ -88,6 +89,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
               }
               PerformHttpRequest(killlogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
         else
+            TriggerEvent('ARMA:checkOrganHeistKill', source)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(source), GetPlayerName(source), 'suicide', suicide, distance, killedgroup, killergroup)
         end
     elseif killtype == 'finished off' and killer ~= nil then
