@@ -1,4 +1,5 @@
 local cfg = module("armacore/cfg/cfg_gunstores")
+local organheist = module('cfg/cfg_organheist')
 
 RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
@@ -17,6 +18,15 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
             for a,b in pairs(v[1]) do
                 if #(GetEntityCoords(GetPlayerPed(source)) - b) < 10 then
                     withinRadius = true
+                end
+            end
+            for c,d in pairs(organheist.locations) do
+                for e,f in pairs(d.gunStores) do
+                    for g,h in pairs(f) do
+                        if #(GetEntityCoords(GetPlayerPed(source)) - h[3]) < 10 then
+                            withinRadius = true
+                        end
+                    end
                 end
             end
             if not withinRadius then
