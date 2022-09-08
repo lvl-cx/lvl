@@ -357,12 +357,10 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
-		TriggerServerEvent("ARMA:requestCoinflipTableData")
-		firstspawn = 1
-	end
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+        TriggerServerEvent("ARMA:requestCoinflipTableData")
+    end
 end)
 
 RegisterNetEvent("ARMA:addCoinflipProposal",function(a0, L)
