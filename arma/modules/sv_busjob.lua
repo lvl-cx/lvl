@@ -31,6 +31,7 @@ local busJobStops={
         stopPosition=vector3(472.25814819336,-598.60290527344,28.499515533447)
     }
 }
+
 RegisterNetEvent("ARMA:attemptBeginBusJob")
 AddEventHandler("ARMA:attemptBeginBusJob",function()
     local source=source

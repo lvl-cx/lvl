@@ -47,7 +47,6 @@ function func_staffDelGun(k)
         DisablePlayerFiring(PlayerId(), true)
         if IsPlayerFreeAiming(PlayerId()) then
             local l, m = GetEntityPlayerIsFreeAimingAt(PlayerId())
-            print(l,m)
             if l then
                 local n = GetEntityType(m)
                 local o = true

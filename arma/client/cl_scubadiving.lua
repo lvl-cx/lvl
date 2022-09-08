@@ -168,8 +168,6 @@ function startScubaDiving()
     TriggerServerEvent("ARMA:finishScubaJob", c, d)
 end
 RegisterNetEvent("ARMA:createScubaJob",function(J, K)
-    print(json.encode(J))
-    print(K)
     c = K
     e = true
     tARMA.disableCustomizationSave(e)
