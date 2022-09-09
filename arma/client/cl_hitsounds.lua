@@ -1,3 +1,23 @@
+local playingHeadshotSounds = false
+RegisterNetEvent("ARMA:hsSounds")
+AddEventHandler("ARMA:hsSounds", function(status)
+    playingHeadshotSounds = status
+end)
+
+CreateThread(function()
+    RequestScriptAudioBank("DLC_HITMARKERS\\HITMARKERS_ONE")
+    while not RequestScriptAudioBank("DLC_HITMARKERS\\HITMARKERS_ONE") do
+        Wait(0)
+    end
+    if not HasStreamedTextureDictLoaded("hitmarker") then
+        RequestStreamedTextureDict("hitmarker")
+        while not HasStreamedTextureDictLoaded("hitmarker") do
+            Wait(0)
+        end
+    end
+end)
+
+
 local function Bool(num) 
     return num == 1 or num == true
 end
@@ -30,42 +50,29 @@ local bodyBones = {
     [64729] = true, --Neck
 }
 
-
-local notplayingHeadshotSounds = true
 AddEventHandler("gameEventTriggered", function(eventName, eventArguments)
-    if not notplayingHeadshotSounds then return end
-    local args = {}
-    if eventName == "CEventNetworkEntityDamage" then
-        local victimEntity, attackEntity, damage, _, _, fatalBool, weaponUsed, _, _, _, entityType = table.unpack(eventArguments)
-        args = { victimEntity, attackEntity, fatalBool == 1, weaponUsed, entityType,
-            math.floor(string.unpack("f", string.pack("i4", damage))) -- Convert ieee754 to a decimal/number
-        }
-        if (attackEntity == PlayerPedId()) and IsPedAPlayer(attackEntity) and IsPedAPlayer(victimEntity) and victimEntity ~= attackEntity and victimEntity ~= PlayerPedId() then
-            local hit, vicBone = GetPedLastDamageBone(victimEntity)
-            if headBones[vicBone] then
-              SendNUIMessage({
-                transactionType = "headshot",
-              })
-            else
-              SendNUIMessage({
-                transactionType = "bodyshot",
-              })
+    if playingHeadshotSounds then 
+        local args = {}
+        if eventName == "CEventNetworkEntityDamage" then
+            local victimEntity, attackEntity, damage, _, _, fatalBool, weaponUsed, _, _, _, entityType = table.unpack(eventArguments)
+            args = { victimEntity, attackEntity, fatalBool == 1, weaponUsed, entityType,
+                math.floor(string.unpack("f", string.pack("i4", damage))) -- Convert ieee754 to a decimal/number
+            }
+            if (attackEntity == PlayerPedId()) and IsPedAPlayer(attackEntity) and IsPedAPlayer(victimEntity) and victimEntity ~= attackEntity and victimEntity ~= PlayerPedId() then
+                local hit, vicBone = GetPedLastDamageBone(victimEntity)
+                if headBones[vicBone] then
+                SendNUIMessage({
+                    transactionType = "headshot",
+                })
+                else
+                SendNUIMessage({
+                    transactionType = "bodyshot",
+                })
+                end
             end
         end
     end
 end)
-
-
-RegisterNetEvent("hs:triggerSounds")
-AddEventHandler("hs:triggerSounds", function(status)
-    notplayingHeadshotSounds = not status
-end)
-
-function notify(string)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(string)
-    DrawNotification(true, false)
-end
 
 
 RegisterNetEvent("arma:PlaySound")
