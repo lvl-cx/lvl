@@ -12,17 +12,16 @@ AddEventHandler("ARMA:joinOrganHeist",function()
     local user_id = ARMA.getUserId(source)
     if not playersInOrganHeist[user_id] then
         if inWaitingStage then
-            local randomSafePosition = math.random(2)
             if ARMA.hasPermission(user_id, 'police.onduty.permission') then
                 playersInOrganHeist[user_id] = {type = 'police'}
                 policeInGame = policeInGame+1
                 TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, user_id, 'police')
-                TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[1].safePositions[randomSafePosition], timeTillOrgan, 'police', 1)
+                TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[1].safePositions[math.random(2)], timeTillOrgan, 'police', 1)
             else
                 playersInOrganHeist[user_id] = {type = 'civ'}
                 civsInGame = civsInGame+1
                 TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, user_id, 'civ')
-                TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[randomSafePosition], timeTillOrgan, 'civ', 2)
+                TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[math.random(2)], timeTillOrgan, 'civ', 2)
                 ARMAclient.giveWeapons(source, {{['WEAPON_M1911'] = {ammo = 250}}, false})
             end
         else
@@ -39,16 +38,11 @@ AddEventHandler("ARMA:checkOrganHeistKill",function(killed, killer)
             local killerID = ARMA.getUserId(killer)
             ARMA.giveBankMoney(killerID, 25000)
             TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(killed))
-            playersInOrganHeist[ARMA.getUserId(killed)] = nil
-            TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
-            TriggerClientEvent('ARMA:endOrganHeist', killed)
-            ARMAclient.setDeathInOrganHeist(killed, {})
-        else
-            playersInOrganHeist[killedID] = nil
-            TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
-            TriggerClientEvent('ARMA:endOrganHeist', killed)
-            ARMAclient.setDeathInOrganHeist(killed, {})
         end
+        TriggerClientEvent('ARMA:endOrganHeist', killed)
+        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
+        playersInOrganHeist[killedID] = nil
+        ARMAclient.setDeathInOrganHeist(killed, {})
     end
 end)
 
@@ -80,18 +74,13 @@ Citizen.CreateThread(function()
                     civAlive = civAlive +1
                 end
             end
-            if policeAlive == 0 then
+            if policeAlive == 0 or civAlive == 0 then
                 for k,v in pairs(playersInOrganHeist) do
-                    TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Civillians')
-                    TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                    ARMA.giveBankMoney(k, 250000)
-                end
-                playersInOrganHeist = {}
-                inWaitingStage = false
-                inGameStage = false
-            elseif civAlive == 0 then
-                for k,v in pairs(playersInOrganHeist) do
-                    TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
+                    if policeAlive == 0 then
+                        TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Civillians')
+                    elseif civAlive == 0 then
+                        TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
+                    end
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
                     ARMA.giveBankMoney(k, 250000)
                 end
