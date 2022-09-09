@@ -171,34 +171,35 @@ AddEventHandler("ARMA:save", function()
   end
 end)
 
-local function ch_give(player,choice)
-  -- get nearest player
-  local user_id = ARMA.getUserId(player)
+RegisterNetEvent('ARMA:giveCashToPlayer')
+AddEventHandler('ARMA:giveCashToPlayer', function()
+  local source = source
+  local user_id = ARMA.getUserId(source)
   if user_id ~= nil then
-    ARMAclient.getNearestPlayer(player,{10},function(nplayer)
+    ARMAclient.getNearestPlayer(source,{10},function(nplayer)
       if nplayer ~= nil then
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
           -- prompt number
-          ARMA.prompt(player,lang.money.give.prompt(),"",function(player,amount)
+          ARMA.prompt(source,lang.money.give.prompt(),"",function(source,amount)
             local amount = parseInt(amount)
             if amount > 0 and ARMA.tryPayment(user_id,amount) then
               ARMA.giveMoney(nuser_id,amount)
-              ARMAclient.notify(player,{lang.money.given({amount})})
+              ARMAclient.notify(source,{lang.money.given({amount})})
               ARMAclient.notify(nplayer,{lang.money.received({amount})})
             else
-              ARMAclient.notify(player,{lang.money.not_enough()})
+              ARMAclient.notify(source,{lang.money.not_enough()})
             end
           end)
         else
-          ARMAclient.notify(player,{lang.common.no_player_near()})
+          ARMAclient.notify(source,{lang.common.no_player_near()})
         end
       else
-        ARMAclient.notify(player,{lang.common.no_player_near()})
+        ARMAclient.notify(source,{lang.common.no_player_near()})
       end
     end)
   end
-end
+end)
 
 
 function Comma(amount)
