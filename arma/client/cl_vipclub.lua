@@ -29,47 +29,41 @@ RegisterCommand("vipclub",function()
     RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu'),not RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu')))
 end)
 
-local d={
-    ["Default"]={checked=true,soundId="dead"},
-    ["Fortnite"]={checked=false,soundId="fortnite_death"},
-    ["Roblox"]={checked=false,soundId="roblox_death"},
-    ["Minecraft"]={checked=false,soundId="minecraft_death"},
-    ["Pac-Man"]={checked=false,soundId="pacman_death"},
-    ["Mario"]={checked=false,soundId="mario_death"},
-    ["CS:GO"]={checked=false,soundId="csgo_death"}
+local c = {
+    ["Default"] = {checked = true, soundId = "dead"},
+    ["Fortnite"] = {checked = false, soundId = "fortnite_death"},
+    ["Roblox"] = {checked = false, soundId = "roblox_death"},
+    ["Minecraft"] = {checked = false, soundId = "minecraft_death"},
+    ["Pac-Man"] = {checked = false, soundId = "pacman_death"},
+    ["Mario"] = {checked = false, soundId = "mario_death"},
+    ["CS:GO"] = {checked = false, soundId = "csgo_death"}
 }
 
-local E=true
-Citizen.CreateThread(function()
-    local f=GetResourceKvpString("ARMA_vipParachute") or "true"
-    if f=="true"then
-        E=true
-    else 
-        E=true
-    end 
-end)
-function tARMA.setParachuteSetting(f)
-    SetResourceKvp("ARMA_vipParachute",tostring(f))
+local function m(h)
+    SendNUIMessage({transactionType = h})
 end
 
-AddEventHandler("playerSpawned", function()
-    TriggerServerEvent('ARMA:getPlayerSubscription')
-    Wait(5000)
-    local i=tARMA.getDeathSound()
-    local j="dead"
-    for k,l in pairs(d)do 
-        if l.soundId==i then 
-            j=k 
+AddEventHandler("ARMA:onClientSpawn",function(f, g)
+    if g then
+        TriggerServerEvent('ARMA:getPlayerSubscription')
+        Wait(5000)
+        local i=tARMA.getDeathSound()
+        local j="dead"
+        for k,l in pairs(c)do 
+            if l.soundId==i then 
+                j=k 
+            end 
+        end
+        for k,m in pairs(c)do 
+            if j~=k then 
+                m.checked=false 
+            else 
+                m.checked=true 
+            end 
         end 
     end
-    for k,m in pairs(d)do 
-        if j~=k then 
-            m.checked=false 
-        else 
-            m.checked=true 
-        end 
-    end 
 end)
+
 
 function tARMA.setDeathSound(i)
     if tARMA.isPlusClub() or tARMA.isPlatClub() then 
@@ -175,37 +169,20 @@ RageUI.CreateWhile(1.0, true, function()
                     TriggerServerEvent("ARMA:claimWeeklyKit")
                 end 
             end)
-            local function R()
-                E=true
-                tARMA.setParachuteSetting(E)
-                tARMA.notify("~g~Parachute enabled")
-            end
-            local function S()
-                E=false
-                tARMA.setParachuteSetting(E)
-                tARMA.notify("~r~Parachute disabled")
-            end
-            RageUI.Checkbox("Enable Parachute","~g~This gives you primary and reserve parachute.",E,{Style=RageUI.CheckboxStyle.Car},function(o,q,p,t)
-            end,R,S)
         end)
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'deathsounds')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for u,l in pairs(d) do 
-                RageUI.Checkbox(u, "", l.checked, {Style = RageUI.CheckboxStyle.Tick}, function(Hovered, Selected, Active, Checked)
-                    if Selected then
-                        if l.checked then
-                            for k,v in pairs(d)do 
-                                if k~=u then 
-                                    v.checked=false
-                                end 
-                            end
-                            tARMA.setDeathSound(l.soundId)
-                        end
+            for t, k in pairs(c) do
+                RageUI.Checkbox(t,"",k.checked,{},function()end,function()
+                    for u, l in pairs(c) do
+                        l.checked = false
                     end
-                    l.checked = Checked
-                end)
-            end 
+                    k.checked = true
+                    m(k.soundId)
+                    tARMA.setDeathSound(k.soundId)
+                end,function()end)
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'vehicleextras')) then
@@ -245,7 +222,7 @@ end)
 Citizen.CreateThread(function()
     while true do 
         if tARMA.isPlatClub()then 
-            if not HasPedGotWeapon(PlayerPedId(),`GADGET_PARACHUTE`,false) and E then 
+            if not HasPedGotWeapon(PlayerPedId(),`GADGET_PARACHUTE`,false) then 
                 GiveWeaponToPed(PlayerPedId(),`GADGET_PARACHUTE`)
                 SetPlayerHasReserveParachute(PlayerId())
             end 
