@@ -42,7 +42,7 @@ AddEventHandler("ARMA:CreateGang", function(gangname)
     local logs = "NOTHING"
     exports['ghmattimysql']:execute('SELECT gangname FROM arma_gangs WHERE gangname = @gangname', {gangname = gangname}, function(gotGang)
         if not ARMA.hasGroup(user_id,"Gang") then
-            ARMAclient.notify(source,{"~r~You do not have a gang licence."})
+            ARMAclient.notify(source,{"~r~You do not have a gang license."})
             return
         end
         if json.encode(gotGang) ~= "[]" and gotGang ~= nil and json.encode(gotGang) ~= nil then
