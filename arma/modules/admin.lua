@@ -468,8 +468,6 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
             local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
-    else
-        --print("Stop trying to add a group u fucking cheater")
     end
 end)
 
@@ -623,8 +621,6 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
             local webhook = "https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
         end
-    else 
-        --print("Stop trying to add a group u fucking cheater")
     end
 end)
 
@@ -765,7 +761,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                     banDuration = CurrentTime + (60 * 60 * tonumber(Duration))
                 end
 
-                local communityname = "vRP Staff Logs"
+                local communityname = ""
                 local communtiylogo = "" --Must end with .png or .jpg
                 local command = {
                     {
