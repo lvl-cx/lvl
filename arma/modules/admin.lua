@@ -261,52 +261,10 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
     local user_id = ARMA.getUserId(source)
     local name = GetPlayerName(source)
     local player_perm = ARMA.getUserId(player_temp)
-    local player_name = GetPlayerName(player_temp)
-    local table = {
-        'Commissioner Clocked',
-        'Deputy Commissioner Clocked',
-        'Assistant Commissioner Clocked',
-        'Deputy Assistant Commissioner Clocked',
-        'Commander Clocked',
-        'Chief Superintendent Clocked',
-        'Superintendent Clocked',
-        'Chief Inspector Clocked',
-        'Inspector Clocked',
-        'Sergeant Clocked',
-        'Special Constable Clocked',
-        'Senior Constable Clocked',
-        'Police Constable Clocked',
-        'PCSO Clocked',
-        'Head Chief Medical Officer Clocked',
-        'Assistant Chief Medical Officer Clocked',
-        'Deputy Chief Medical Officer Clocked',
-        'Captain Clocked',
-        'Consultant Clocked',
-        'Specialist Clocked',
-        'Senior Doctor Clocked',
-        'Junior Doctor Clocked',
-        'Critical Care Paramedic Clocked',
-        'Paramedic Clocked',
-        'Trainee Paramedic Clocked',
-        'Head Chief Medical Officer',
-        'Assistant Chief Medical Officer',
-        'Deputy Chief Medical Officer',
-        'Captain',
-        'Consultant',
-        'Specialist',
-        'Senior Doctor',
-        'Junior Doctor',
-        'Critical Care Paramedic',
-        'Paramedic',
-        'Trainee Paramedic'
-    }
     if ARMA.hasPermission(user_id,"admin.tp2waypoint") then
-        for k,v in pairs(table) do
-            ARMA.removeUserGroup(player_perm, v)
-            ARMAclient.notify(source,{'~g~User clocked off'})
-            ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
-            TriggerClientEvent('ARMA:disableFactionBlips', source)
-        end
+        ARMA.removeAllJobs(player_perm)
+        ARMAclient.notify(source,{'~g~User clocked off'})
+        ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
         local command = {
             {
                 ["color"] = "16448403",
@@ -363,7 +321,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
     local playerName = GetPlayerName(source)
     local povName = GetPlayerName(permsource)
     if ARMA.hasPermission(user_id, "group.add") then
-        if selgroup == "founder" and not ARMA.hasPermission(admin_perm, "group.add.founder") then
+        if selgroup == "Founder" and not ARMA.hasPermission(admin_perm, "group.add.founder") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
         elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.add.operationsmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
@@ -523,7 +481,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
     local playerName = GetPlayerName(source)
     local povName = GetPlayerName(permsource)
     if ARMA.hasPermission(user_id, "group.remove") then
-        if selgroup == "founder" and not ARMA.hasPermission(user_id, "group.remove.founder") then
+        if selgroup == "Founder" and not ARMA.hasPermission(user_id, "group.remove.founder") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
         elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.remove.operationsmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
@@ -1591,7 +1549,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
         local playerbucket = GetPlayerRoutingBucket(newtarget)
         if adminbucket ~= playerbucket then
             SetPlayerRoutingBucket(source, playerbucket)
-            ARMAclient.notify(source, {'~g~The person was in a different bucket, you have followed them there.'})
+            ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
         end
         ARMAclient.teleport(source, coords)
     else
@@ -1619,7 +1577,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
             local playerbucket = GetPlayerRoutingBucket(id)
             if adminbucket ~= playerbucket then
                 SetPlayerRoutingBucket(id, adminbucket)
-                ARMAclient.notify(source, {'~g~The person was in a different bucket, they have been moved to yours.'})
+                ARMAclient.notify(source, {'~g~Player was in another bucket, they have been set into your bucket.'})
             end
         else 
             ARMAclient.notify(source,{"~r~This player may have left the game."})
@@ -2146,7 +2104,7 @@ AddEventHandler('ARMA:getAdminLevel', function()
     local adminlevel = 0
     if ARMA.hasGroup(user_id,"dev") then
         adminlevel = 12
-    elseif ARMA.hasGroup(user_id,"founder") then
+    elseif ARMA.hasGroup(user_id,"Founder") then
         adminlevel = 11
     elseif ARMA.hasGroup(user_id,"operationsmanager") then
         adminlevel = 10
@@ -2177,7 +2135,7 @@ RegisterNetEvent('ARMA:zapPlayer')
 AddEventHandler('ARMA:zapPlayer', function(A)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(source, 'founder') then
+    if ARMA.hasGroup(source, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         TriggerClientEvent("ARMA:useTheForceSync", -1, GetEntityCoords(GetPlayerPed(A)))
     end
