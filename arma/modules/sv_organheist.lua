@@ -107,23 +107,3 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
-RegisterCommand('organheist', function(source, args, rawCommand) -- test case for organ heist
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'founder') then
-        inWaitingStage = true
-        timeTillOrgan = 10
-        Wait(10000)
-        if civsInGame > 0 and policeInGame > 0 then
-            TriggerClientEvent('ARMA:startOrganHeist', -1)
-            inGameStage = true
-        else
-            for k,v in pairs(playersInOrganHeist) do
-                TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
-                SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
-            end
-        end
-    end
-end)
