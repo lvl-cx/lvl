@@ -139,7 +139,15 @@ textarea:focus, input:focus {
 }
 
 .staff {
-    background-color: rgba(32, 196, 59, 0.534);
+    background-color: rgba(226, 255, 98, 0.534);
+}
+
+.police {
+    background-color: rgba(86, 138, 250, 0.534);
+}
+
+.faction {
+    background-color: rgba(255, 175, 71, 0.534);
 }
 
 .msgIcon {
