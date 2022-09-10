@@ -18,23 +18,42 @@ MySQL.createCommand("ARMA/rentedupdate", "UPDATE arma_user_vehicles SET user_id 
 MySQL.createCommand("ARMA/fetch_rented_vehs", "SELECT * FROM arma_user_vehicles WHERE rented = 1")
 
 RegisterServerEvent("ARMA:spawnPersonalVehicle")
-AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle, name, valetCalled)
+AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if valetCalled == nil then
-        valetCalled = false
-    end
     MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.vehicle == vehicle then
-                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, name, source, valetCalled, nil, v.plate, v.fuel_level)
+                    MySQL.query("ARMA/get_vehicle_fuellevel", {vehicle = vehicle}, function(result)
+                        TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
+                    end)
                     return
                 end
             end
         end
     end)
 end)
+
+RegisterServerEvent("ARMA:valetSpawnVehicle")
+AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
+        if result ~= nil then 
+            for k,v in pairs(result) do
+                if v.vehicle == spawncode then
+                    MySQL.query("ARMA/get_vehicle_fuellevel", {vehicle = vehicle}, function(result)
+                        TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
+                    end)
+                    return
+                end
+            end
+        end
+    end)
+end)
+
+
 
 RegisterServerEvent("ARMA:updateFuel")
 AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)
@@ -90,18 +109,20 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
     if user_id then
         if not owned then
             for i, v in pairs(vehicle_groups) do
-                local noperms = false;
+                local perms = false
                 local config = vehicle_groups[i]._config
-                if config.type == type then 
+                if config.type == vehicle_groups[type]._config.type then 
                     local perm = config.permissions or nil
-                    if perm then
+                    if next(perm) then
                         for i, v in pairs(perm) do
-                            if not ARMA.hasPermission(user_id, v) then
-                                noperms = true;
+                            if ARMA.hasPermission(user_id, v) then
+                                perms = true
                             end
                         end
+                    else
+                        perms = true
                     end
-                    if not noperms then 
+                    if perms then 
                         returned_table[i] = {
                             ["_config"] = config
                         }
@@ -113,7 +134,7 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
                             end
                         end
                     end
-                end 
+                end
             end
             TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
         else
@@ -122,18 +143,20 @@ AddEventHandler('ARMA:FetchCars', function(owned, type)
             }, function(pvehicles, affected)
                 for _, veh in pairs(pvehicles) do
                     for i, v in pairs(vehicle_groups) do
-                        local noperms = false;
+                        local perms = false
                         local config = vehicle_groups[i]._config
-                        if i == type then 
+                        if config.type == vehicle_groups[type]._config.type then 
                             local perm = config.permissions or nil
-                            if perm then
+                            if next(perm) then
                                 for i, v in pairs(perm) do
-                                    if not ARMA.hasPermission(user_id, v) then
-                                        noperms = true;
+                                    if ARMA.hasPermission(user_id, v) then
+                                        perms = true
                                     end
                                 end
+                            else
+                                perms = true
                             end
-                            if not noperms then 
+                            if perms then 
                                 for a, z in pairs(v) do
                                     if a ~= "_config" and veh.vehicle == a then
                                         if not returned_table[i] then 
@@ -671,7 +694,6 @@ end)
 RegisterNetEvent("ARMA:PayVehicleTax")
 AddEventHandler("ARMA:PayVehicleTax", function()
     local user_id = ARMA.getUserId(source)
-
     if user_id ~= nil then
         local bank = ARMA.getBankMoney(user_id)
         local payment = bank / 10000
