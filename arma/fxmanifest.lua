@@ -107,6 +107,7 @@ client_scripts{
   "client/base.lua",
   "utils/cl_*.lua",
   "client/iplloader.lua",
+  "client/cl_lscustomsmenu.lua",
   "client/gui.lua",
   "client/player_state.lua",
   "client/survival.lua",
