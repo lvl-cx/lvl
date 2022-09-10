@@ -192,12 +192,32 @@ l(function()
                 end 
             end
             if d and g==false then 
-				exports['arma-notify']:DoHudText('success', "You have entered the greenzone")
+				TriggerEvent("ARMA:showNotification",
+                {
+                    text = "You have entered the greenzone",
+                    height = "200px",
+                    width = "auto",
+                    colour = "#FFF",
+                    background = "#32CD32",
+                    pos = "bottom-right",
+                    icon = "success"
+                },
+                5000)
                 g=true
                 h=false 
             end
             if e and h==false then 
-				exports['arma-notify']:DoHudText('error', "You have left the greenzone")
+				TriggerEvent("ARMA:showNotification",
+                {
+                    text = "You have left the greenzone",
+                    height = "60px",
+                    width = "auto",
+                    colour = "#FFF",
+                    background = "#ff0000",
+                    pos = "bottom-right",
+                    icon = "bad"
+                },
+                5000)
                 h=true
                 g=false 
             end
