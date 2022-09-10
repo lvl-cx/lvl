@@ -56,6 +56,7 @@ files{
   "ui/pnc/img/plates.png",
   "ui/pnc/components/*.js",
   "ui/pnc/components/*.html",
+  "ui/playerlist_images/*.png",
 
   'audio/sfx/resident/explosions.awc',
   'audio/sfx/resident/vehicles.awc',
