@@ -69,23 +69,18 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-
 		for i=1, #a.weapons, 1 do
-
 			local weaponHash = GetHashKey(a.weapons[i].name)
-
 			if HasPedGotWeapon(GetPlayerPed(-1), weaponHash, false) then
 				local onPlayer = false
-
 				for k, entity in pairs(Weapons) do
-				if entity then
-					if entity.weapon == a.weapons[i].name then
-						onPlayer = true
-						break
+					if entity then
+						if entity.weapon == a.weapons[i].name then
+							onPlayer = true
+							break
+						end
 					end
 				end
-				end
-				
 				if not onPlayer and weaponHash ~= GetSelectedPedWeapon(GetPlayerPed(-1)) then
 					SetGear(a.weapons[i].name)
 				elseif onPlayer and weaponHash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
@@ -102,7 +97,6 @@ end)
  -- Remove only one weapon that's on the ped
 function RemoveGear(weapon)
 	local _Weapons = {}
-
 	for i, entity in pairs(Weapons) do
 		if entity.weapon ~= weapon then
 			_Weapons[i] = entity
@@ -110,7 +104,6 @@ function RemoveGear(weapon)
 			DeleteWeapon(entity.obj)
 		end
 	end
-
 	Weapons = _Weapons
 end
 
@@ -123,18 +116,13 @@ function RemoveGears()
 end
 
 function SpawnObject(model, coords, cb)
- 
    	local model = (type(model) == 'number' and model or GetHashKey(model))
- 
    	Citizen.CreateThread(function()
-
 		RequestModel(model)
 		while not HasModelLoaded(model) do
 			Citizen.Wait(0)
 		end
-	
 		local obj = CreateObject(model, coords.x, coords.y, coords.z, true, true, true)
-	
 		if cb ~= nil then
 			cb(obj)
 		end
