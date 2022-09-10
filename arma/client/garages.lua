@@ -186,12 +186,10 @@ local function ar(as)
     SetBlipAsShortRange(at, true)
 end
 
-RegisterNetEvent("ARMA:garagesFuel",function(E, fuel_level)
-    q[E] = fuel_level
-end)
-
-RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, name, av, valetCalled, ax, plate, fuel_level)
+local fuel_level
+RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, plate, fuel)
     X()
+    fuel_level = fuel
     if GetVehiclePedIsIn(tARMA.getPlayerPed(), false) == d then
         DeleteEntity(d)
     end
@@ -218,28 +216,25 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, name, av, valetCalled, 
                 local aF = CreatePedInsideVehicle(as, "PED_TYPE_CIVMALE", "s_m_y_xmech_01", -1, false, false)
                 TaskVehicleDriveToCoord(aF, as, aE.x, aE.y, aE.z, 15.0, 1.0, ak, 786603, 5.0)
                 ar(as)
-                SetTimeout(
-                    5000,
-                    function()
-                        while GetEntitySpeed(as) > 5.0 do
-                            Wait(500)
-                        end
-                        TaskLeaveVehicle(aF, as, 64)
-                        TaskWanderStandard(aF, 10.0, 10)
-                        Wait(10000)
-                        DeletePed(aF)
+                SetTimeout(5000,function()
+                    while GetEntitySpeed(as) > 5.0 do
+                        Wait(500)
                     end
-                )
+                    TaskLeaveVehicle(aF, as, 64)
+                    TaskWanderStandard(aF, 10.0, 10)
+                    Wait(10000)
+                    DeletePed(aF)
+                end)
                 print("[ARMA] Spawned vehicle with spawncode:" .. tostring(E))
                 DecorSetInt(as, "vRP_owner", tARMA.getUserId())
                 DecorSetInt(as, "vRP_vmodel", E)
                 SetVehicleNumberPlateText(as, plate)
                 globalVehicleOwnership[E] = {E, as}
-                setVehicleFuel(as, q[E])
+                setVehicleFuel(as, fuel_level)
                 while tARMA.getPlayerVehicle() ~= as do
                     Wait(100)
                 end
-                TriggerServerEvent("LSC:applyModifications", name, as)
+                TriggerServerEvent("LSC:applyModifications", E, as)
                 TriggerServerEvent("ARMA:spawnVehicleCallback", av, VehToNet(as))
                 table.insert(m, as)
             end
@@ -250,9 +245,10 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, name, av, valetCalled, 
             print("[ARMA] Spawned vehicle with spawncode:" .. tostring(E))
             DecorSetInt(as, "vRP_owner", tARMA.getUserId())
             DecorSetInt(as, "vRP_vmodel", E)
+            SetVehicleNumberPlateText(as, plate)
             globalVehicleOwnership[E] = {E, as}
-            setVehicleFuel(as, q[E])
-            TriggerServerEvent("LSC:applyModifications", name, as)
+            setVehicleFuel(as, fuel_level)
+            TriggerServerEvent("LSC:applyModifications", E, as)
             TriggerServerEvent("ARMA:PayVehicleTax")
             TriggerServerEvent("ARMA:spawnVehicleCallback", av, VehToNet(as))
             table.insert(m, as)
@@ -277,9 +273,9 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, name, av, valetCalled, 
         end
         while DoesEntityExist(as) do
             local aI = GetFuel(as)
-            if q[E] ~= aI then
+            if fuel_level ~= aI then
                 TriggerServerEvent("ARMA:updateFuel", E, math.floor(aI * 1000) / 1000)
-                q[E] = aI
+                fuel_level = aI
                 SetEntityInvincible(as, false)
                 SetEntityCanBeDamaged(as, true)
             end
@@ -339,7 +335,7 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get("ARMAGarages", "owned_vehicles"))
             RageUI.ButtonWithStyle("Store Vehicle", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
                 if Selected then 
-                    local aR = GetVehiclePedIsIn(tARMA..getPlayerPed(), false)
+                    local aR = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
                     Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(aR))
                     if DoesEntityExist(aR) then
                         DeleteEntity(aR)
@@ -529,7 +525,7 @@ RageUI.CreateWhile(1.0, true, function()
                             SetEntityCollision(tARMA.getPlayerPed(), true, true)
                             local ay = globalVehicleOwnership[e]
                             if ay == nil or not DoesEntityExist(ay[2]) then
-                                TriggerServerEvent("ARMA:spawnPersonalVehicle", e, f)
+                                TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
                             else
                                 tARMA.notify("~r~Vehicle is already out!")
                             end
@@ -619,7 +615,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.ButtonWithStyle("[Create Custom Folder]" , "Create a custom folder.", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
-                    if folderName ~= nil then
+                    if folderName ~= nil and folderName ~= '' then
                         if folders[folderName] == nil then
                             folders[folderName] = {}
                             TriggerServerEvent("ARMA:updateFolders", folders)
@@ -636,7 +632,7 @@ RageUI.CreateWhile(1.0, true, function()
                 if Selected then
                     local folderName = tARMA.KeyboardInput("Enter Folder name", "", 25)
                     if folderName ~= nil then
-                        if folders[folderName] ~= nil then
+                        if folders[folderName] ~= nil and folderName ~= '' then
                             folders[folderName] = nil
                             tARMA.notify("~g~Deleted custom folder "..folderName)
                             TriggerServerEvent("ARMA:updateFolders", folders)
@@ -765,54 +761,6 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 
-Citizen.CreateThread(function()
-    while true do 
-        Wait(0)
-        if Hovered_Vehicles then 
-            if vehname and vehname ~= Hovered_Vehicles then 
-                DeleteEntity(veh)
-                vehname = Hovered_Vehicles
-            end
-            local hash = GetHashKey(Hovered_Vehicles)
-            if not DoesEntityExist(veh) and not IsPedInAnyVehicle(PlayerPedId(), false) and not cantload[Hovered_Vehicles] and Hovered_Vehicles then
-                local i = 0
-                while not HasModelLoaded(hash) do
-                    RequestModel(hash)
-                    i = i + 1
-                    Citizen.Wait(10)
-                    if i > 30 then
-                        tARMA.notify('~r~Model could not be loaded!') 
-                        if vehname then 
-                            cantload[vehname] = true
-                        end
-                        break 
-                    end
-                end
-                local coords = GetEntityCoords(PlayerPedId())
-                vehname = Hovered_Vehicles
-                veh = CreateVehicle(hash,coords.x, coords.y, coords.z + 1, 0.0,false,false)
-                FreezeEntityPosition(veh,true)
-                SetEntityInvincible(veh,true)
-                SetVehicleDoorsLocked(veh,4)
-                SetModelAsNoLongerNeeded(hash)
-                for i = 0,24 do
-                    SetVehicleModKit(veh,0)
-                    RemoveVehicleMod(veh,i)
-                end
-                SetEntityCollision(veh, false, false)
-                Citizen.CreateThread(function()
-                    while DoesEntityExist(veh) do
-                        Citizen.Wait(25)
-                        SetEntityHeading(veh, GetEntityHeading(veh)+1 %360)
-                    end
-                end)
-            end
-        end
-    end
-end)
-
-
-
 RegisterNetEvent('ARMA:ReturnFetchedCars')
 AddEventHandler('ARMA:ReturnFetchedCars', function(table, fuellevels)
     VehiclesFetchedTable = table
@@ -892,17 +840,53 @@ AddEventHandler('ARMA:sendGarageSettings', function()
     end
 end)
 
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	if firstspawn == 0 then
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		TriggerServerEvent("ARMA:refreshGaragePermissions")
-		firstspawn = 1
 	end
 end)
 
 RegisterNetEvent("ARMA:recieveRefreshedGaragePermissions",function(z)
     c = z
 end)
+
+function tARMA.getVehicleIdFromHash(bQ)
+    return globalVehicleModelHashMapping[bQ]
+end
+
+function tARMA.getVehicleInfos(am)
+    if am and DecorExistOn(am, "vRP_owner") and DecorExistOn(am, "vRP_vmodel") then
+        local x = DecorGetInt(am, "vRP_owner")
+        local b4 = DecorGetInt(am, "vRP_vmodel")
+        local b5 = globalVehicleModelHashMapping[GetEntityModel(am)]
+        if b5 then
+            return x, b5
+        end
+    end
+end
+function tARMA.getNetworkedVehicleInfos(b6)
+    local am = NetToVeh(b6)
+    if am and DecorExistOn(am, "vRP_owner") and DecorExistOn(am, "vRP_vmodel") then
+        local x = DecorGetInt(am, "vRP_owner")
+        local b4 = DecorGetInt(am, "vRP_vmodel")
+        local b5 = globalVehicleModelHashMapping[GetEntityModel(am)]
+        if b5 then
+            return x, b5
+        end
+    end
+end
+function stringsplit(b7, b8)
+    if b8 == nil then
+        b8 = "%s"
+    end
+    local b9 = {}
+    i = 1
+    for ba in string.gmatch(b7, "([^" .. b8 .. "]+)") do
+        b9[i] = ba
+        i = i + 1
+    end
+    return b9
+end
 
 function getVehicleSoundNameFromId(bk)
     return w[bk]
@@ -1162,3 +1146,7 @@ function tARMA.vc_toggleLock(bl)
         end
     end
 end
+
+AddEventHandler("ARMA:johnnyCantMakeIt",function()
+    SendNUIMessage({transactionType = "MPCT_ALAA_0" .. math.random(1, 5)})
+end)
