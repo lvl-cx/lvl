@@ -26,7 +26,7 @@ cfg.GunStores={
         ["WEAPON_SPEEDGUN"]={"Speed Gun",0,0,"N/A","w_pi_speedgun"},
         ["WEAPON_STUNGUN"]={"Tazer",0,0,"N/A","w_pi_stungun"},
     },
---[[     ["prisonArmoury"]={
+    ["prisonArmoury"]={
         ["_config"]={{vector3(1779.3741455078,2542.5639648438,45.797782897949)},110,5,"Prison Armoury",{"prisonguard.onduty.permission"},false,true},
         ["WEAPON_FLARE"]={"Flare",0,0,"N/A","w_am_flare"},
         ["WEAPON_FLAREGUN"]={"Flare Gun",0,0,"N/A","w_pi_flaregun"},
@@ -35,20 +35,20 @@ cfg.GunStores={
         ["WEAPON_NIGHTSTICK"]={"Nightstick",0,0,"N/A","w_me_nightstick"},
         ["WEAPON_REMINGTON870"]={"Remington 870",0,0,"N/A","w_sg_remington870"},
         ["WEAPON_STUNGUN"]={"Tazer",0,0,"N/A","w_pi_stungun"},
-    }, ]]
+    },
     ["NHS"]={
         ["_config"]={{vector3(340.41757202148,-582.71209716797,27.973259765625),vector3(-435.27032470703,-318.29010009766,34.08971484375)},110,5,"NHS Armoury",{"nhs.onduty.permission"},false,true},
         ["WEAPON_FLARE"]={"Flare",0,0,"N/A","w_am_flare"},
         ["WEAPON_FLAREGUN"]={"Flare Gun",0,0,"N/A","w_pi_flaregun"},
         ["WEAPON_FLASHLIGHT"]={"Flashlight",0,0,"N/A","w_me_flashlight"},
     },
---[[     ["LFB"]={
+    ["LFB"]={
         ["_config"]={{vector3(1210.193359375,-1484.1494140625,34.241326171875),vector3(216.63296508789,-1648.6680908203,29.0179375)},110,5,"LFB Armoury",{"lfb.onduty.permission"},false,true},
         ["WEAPON_FLARE"]={"Flare",0,0,"N/A","w_am_flare"},
         ["WEAPON_FLAREGUN"]={"Flare Gun",0,0,"N/A","w_pi_flaregun"},
         ["WEAPON_FLASHLIGHT"]={"Flashlight",0,0,"N/A","w_me_flashlight"},
         ["WEAPON_FIREAXE"]={"Fireaxe",0,0,"N/A","w_me_fireaxe"},
-    }, ]]
+    },
     ["VIP"]={
         ["_config"]={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{"vip.gunstore"},true},
         ["WEAPON_FORRESTAX"]={"The Forrest Axe",10000,0,"N/A","w_me_forrestax"},
@@ -70,10 +70,10 @@ cfg.GunStores={
         ["WEAPON_AA12"]={"A12 Assault Shotgun",350000,0,"N/A","w_sg_aa12"},
         ["WEAPON_SPAZ"]={"Spaz 12 Shotgun",350000,0,"N/A","w_sg_spaz"},
         ["WEAPON_VAL"]={"AS VAL",350000,0,"N/A","w_ar_val"},
-        ["item"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-        ["item"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
-        ["item"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
-        ["item"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
+        ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
+        ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
         ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
     },
     ["LargeArmsDealer"]={
@@ -83,8 +83,8 @@ cfg.GunStores={
         ["WEAPON_WINCHESTER12"]={"Winchester Shotgun",300000,0,"N/A","w_sg_winchester12"},
         ["WEAPON_UMP45"]={"UMP45 SMG",250000,0,"N/A","w_sb_ump45"},
         ["WEAPON_MAC11"]={"Mac11 SMG",300000,0,"N/A","w_sb_mac11"},
-        ["item"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-        ["item"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
     },
     ["SmallArmsDealer"]={
         ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1129.3187255859,-2005.0549316406,34.512053710937)},110,1,"Small Arms Dealer",{""},true},
@@ -93,7 +93,7 @@ cfg.GunStores={
         ["WEAPON_TX22"]={"TX22 Pistol",60000,0,"N/A","w_pi_tx22"},
         ["WEAPON_UMP45"]={"UMP-45",250000,0,"N/A","w_sb_ump45"},
         ["WEAPON_MPXC"]={"Sig MPXC",300000,0,"N/A","w_sb_mpxc"},
-        ["item"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
     },
     ["Shank"]={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
