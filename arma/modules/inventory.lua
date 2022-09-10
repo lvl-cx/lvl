@@ -239,7 +239,6 @@ function ARMA.RunTrashTask(source, itemName)
         local user_id = ARMA.getUserId(source)
         local data = ARMA.getUserDataTable(user_id)
         data.inventory[itemName] = nil;
-        print('[^7JamesUKInventory]^1: Invalid item removed from inventory space. Usually caused by spawned in staff items. User item from: ' .. user_id .. ' Item Name: ' .. itemName)
     end
     TriggerEvent('ARMA:RefreshInventory', source)
 end
