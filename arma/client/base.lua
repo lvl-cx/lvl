@@ -352,9 +352,6 @@ function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
   if Y then 
       TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
   end
-  if GetResourceState("ARMAFuel")=="started"then 
-      exports['ARMAFuel']:SetFuel(a1,100)
-  end
   return a1 
 end
 

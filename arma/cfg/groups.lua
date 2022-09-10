@@ -82,7 +82,7 @@ cfg.groups = {
 		"admin.whitelisted",
 		"admin.tickets",
 	},
-	["founder"] = {
+	["Founder"] = {
 		
 		"admin.menu",
         "admin.warn",

@@ -86,7 +86,7 @@ RMenu.Add("adminmenu", "removegroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu"
 RMenu:Get('adminmenu', 'main')
 
 local groups = {
-	["founder"] = "Founder",
+	["Founder"] = "Founder",
     ["operationsmanager"] = "Operations Manager",
     ["staffmanager"] = "Staff Manager",
     ["commanager"] = "Community Manager",

@@ -107,7 +107,7 @@ RegisterCommand("ooc", function(source, args, raw)
 	Wait(100)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
-			if ARMA.hasGroup(user_id, "founder") then
+			if ARMA.hasGroup(user_id, "Founder") then
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "dev") then
@@ -213,7 +213,7 @@ RegisterCommand("/", function(source, args, raw)
 	Wait(100)
 	if lastmsg ~= nil then
 		if ChatCooldown == 0 then 
-			if ARMA.hasGroup(user_id, "founder") then
+			if ARMA.hasGroup(user_id, "Founder") then
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^8 Founder ^7^r" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 0
 			elseif ARMA.hasGroup(user_id, "dev") then

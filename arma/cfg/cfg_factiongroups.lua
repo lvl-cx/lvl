@@ -64,10 +64,4 @@ cfg.hmpRanks = {
     {"Governor", 60000},
 }
 
-cfg.casinoRanks = {
-    {"Casino Security", 20000},
-    {"Casino Manager", 30000},
-    {"Casino Owner", 50000},
-}
-
 return cfg

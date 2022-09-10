@@ -20,10 +20,6 @@ cfg.selectorTypes = {
             {"Burger Shot Cook", 0},
         }
     },
-    ["casino"] = {
-        _config = {name="Casino Jobs", blipid = 351, blipcolor = 47, permissions = {"casino.whitelisted"},TextureDictionary = "banners", texture = "clockon"},
-        jobs = groupCfg.casinoRanks
-    },
     ["police"] = {
         _config = {name="Met Police", blipid = 351, blipcolor = 38, permissions = {"cop.whitelisted"}, TextureDictionary = "banners", texture = "clockon"},
         jobs = groupCfg.metPoliceRanks
@@ -60,9 +56,6 @@ cfg.selectors = {
 
     --hmp
     {type="hmp", position=vector3(1835.4084472656,2590.39453125,45.952346801758)},-- prison
-
-    --casino
-    {type="casino", position=vector3(1120.7814941406, 256.43078613281, -45.840976715088)},-- Diamond Casino
 
     --default
     {type="default", position=vector3(-566.03192138672,-193.77198791504,38.219692230225)},-- city hall

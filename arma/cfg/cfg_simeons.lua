@@ -395,13 +395,6 @@ cfg.simeonsCategories = {
         ["hypermotard"] = {"Ducati Hypermotard",3000000, ""},
         ["ktm530"] = {"2010 KTM 520 redbull",3000000, ""},
     },
-    ["Diamond Casino"] = {
-        ["_config"] = {permissionTable={"casino.whitelisted"}},
-        ["diamondchgr"] = {"Casino Charger",0, ""},
-        ["diamondexplo"] = {"Casino Explorer",0, ""},
-        ["diamondchgr14"] = {"Casino Charger",0, ""},
-        ["diamondtaurus"] = {"Casino Taurus",0, ""},
-    },
     ["HMP Vehicles"] = {
         ["_config"] = {permissionTable={"prisonguard.onduty.permission"}},
         ["rbgator"] = {"HMPS Cart",0},
@@ -469,9 +462,6 @@ cfg.simeonsInstances = {
             "LFB Garage",
             "NHS Vehicles",
             "MET Police Boats",
-            "Diamond Casino",
-            "SOA Gang Vehicles",
-            "CMG Trader Vehicles",
             "HMP Vehicles",
         }
     },
