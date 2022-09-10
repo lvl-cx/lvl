@@ -313,14 +313,10 @@ Citizen.CreateThread(
 )
 local a4
 local a5 = 617
-RegisterCommand(
-    "nextblip",
-    function()
-        a5 = a5 + 1
-        if a4 then
-            tARMA.removeBlip(a4)
-        end
-        print("creating blip", a5)
-        a4 = tARMA.addBlip(1103.9739990234, 211.95138549805, -49.440101623535, a5, 0, "Chips Cashier", 0.8, true)
+RegisterCommand("nextblip",function()
+    a5 = a5 + 1
+    if a4 then
+        tARMA.removeBlip(a4)
     end
-)
+    a4 = tARMA.addBlip(1103.9739990234, 211.95138549805, -49.440101623535, a5, 0, "Chips Cashier", 0.8, true)
+end)
