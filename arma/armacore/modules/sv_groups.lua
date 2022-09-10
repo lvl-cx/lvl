@@ -186,6 +186,9 @@ AddEventHandler('GroupMenu:Groups', function()
         if ARMA.hasGroup(user_id, "polblips") then
             table.insert(GroupsL, {name = 'Long Range Emergency Blips', group = 'polblips'})
         end
+        if ARMA.hasGroup(user_id, "PilotLicense") then
+            table.insert(GroupsL, {name = 'Pilot License', group = 'PilotLicense'})
+        end
 
 
   

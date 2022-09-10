@@ -1545,6 +1545,9 @@ cfg.groups = {
   ["DJ"] = {
 	"dj.menu"
   },
+  ["PilotLicense"] = {
+	"air.whitelisted"
+  },
   
   ["TutorialDone"] = {},
   ["polblips"] = {},

@@ -18,6 +18,7 @@ licensecentre.licenses = {
     {name = "Gold License", group = "Gold", price = 1000000},
     {name = "Diamond License", group = "Diamond", price = 5000000},
     {name = "DJ License", group = "DJ", price = 50000000},
+    {name = "Pilot License", group = "PilotLicense", price = 1500000},
     {name = "Long Range Emergency Blips", group = "polblips", price = 5000000},
     --{name = "Highrollers License", group = "highroller", price = 10000000},
 
@@ -87,6 +88,9 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("Per Piece: £250", function() end)
                 RageUI.Separator("1 x 200KG Run: £12,500", function() end)
                 RageUI.Separator("1 x 300KG Run: £18,750", function() end)
+            elseif cGroup == 'PilotLicense' then 
+                RageUI.Separator("Pilot License Price: £1,500,000", function() end)
+                RageUI.Separator("~g~Required to access Aircraft garages.", function() end)
             elseif cGroup == 'DJ' then 
                 RageUI.Separator("DJ License Price: £50,000,000", function() end)
                 RageUI.Separator("~r~Abuse of this license will result in it being revoked.", function() end)

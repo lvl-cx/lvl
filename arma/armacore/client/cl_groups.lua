@@ -136,6 +136,10 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("License Name: " .. SelectedName, function() end)
                 RageUI.Separator("Price of License: " .. '£5,000,000', function() end)
                 RageUI.Separator("License Type: " .. 'Legal License', function() end)
+            elseif SelectedGroup == 'PilotLicense' then 
+                RageUI.Separator("License Name: " .. SelectedName, function() end)
+                RageUI.Separator("Price of License: " .. '£1,500,000', function() end)
+                RageUI.Separator("License Type: " .. 'Legal License', function() end)
             elseif SelectedGroup == 'Gold' then 
                 RageUI.Separator("License Name: " .. SelectedName, function() end)
                 RageUI.Separator("Price of License: " .. '£1,000,000', function() end)
