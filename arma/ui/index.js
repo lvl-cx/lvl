@@ -20,7 +20,34 @@ function DoMusic(song) {
 
 
 $(document).ready(function(){
+    $(document).keydown(function (e) {
+        if (e.which == 36) {
+            $('#playerlist').fadeOut();
+            $.post('https://arma/closeARMAPlayerList', JSON.stringify({}));
+        }
+    });
     window.addEventListener('message', function (event) {
+        if (event.data.showPlayerList == true) {
+            $('#playerlist').fadeIn();
+        }
+        if (event.data.appendToContentPlayerList) {
+            $('.playerlist_content').append(event.data.appendToContentPlayerList);
+        }
+        if (event.data.wipePlayerList) {
+            $('.playerlist_content').empty();
+        }
+        if (event.data.appendToFooterPlayerList) {
+            $('#playerlist_footer').append(event.data.appendToFooterPlayerList);
+        }
+        if (event.data.wipeFooterPlayerList) {
+            $('#playerlist_footer').empty();
+        }
+        if (event.data.setServerMetaData) {
+            $('#playerlist_header').append(event.data.setServerMetaData);
+        }
+        if (event.data.clearServerMetaData) {
+            $('#playerlist_header').empty();
+        }
         if (event.data.type == "playMusic") {
             DoMusic(event.data.song);
         } else if (event.data.type == "stopMusic") {
@@ -235,7 +262,7 @@ function djRequestProgress(){
     try {
         if (player){
             var time = player.getCurrentTime();
-            $.post('http://arma/returnProgress', JSON.stringify({
+            $.post('https://arma/returnProgress', JSON.stringify({
                 progress: time})
             );
         }
