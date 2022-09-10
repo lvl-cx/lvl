@@ -4,7 +4,6 @@ local announceTables = {
     {permission = 'nhs.announce', info = {name = "NHS Announcement", desc = "Announce something to the server", price = 10000}, image = 'https://i.imgur.com/SypLbMo.png'},
     {permission = 'lfb.announce', info = {name = "LFB Announcement", desc = "Announce something to the server", price = 10000}, image = 'https://i.imgur.com/AFqPgYk.png'},
     {permission = 'hmp.announce', info = {name = "HMP Announcement", desc = "Announce something to the server", price = 10000}, image = 'https://i.imgur.com/rPF5FgQ.png'},
-    --{permission = 'casino.announce', info = {name = "Casino Announcement", desc = "Announce something to the server", price = 10000}, image = 'awawd'},
 }
 
 RegisterServerEvent("ARMA:getAnnounceMenu")
@@ -13,7 +12,7 @@ AddEventHandler("ARMA:getAnnounceMenu", function()
     local user_id = ARMA.getUserId(source)
     local hasPermsFor = {}
     for k,v in pairs(announceTables) do
-        if ARMA.hasPermission(user_id, v.permission) then
+        if ARMA.hasPermission(user_id, v.permission) or ARMA.hasGroup(user_id, 'Founder') then
             table.insert(hasPermsFor, v.info)
         end
     end
@@ -25,7 +24,7 @@ AddEventHandler("ARMA:serviceAnnounce", function(announceType)
     local source = source
     local user_id = ARMA.getUserId(source)
     for k,v in pairs(announceTables) do
-        if v.info.name == announceType and ARMA.hasPermission(user_id, v.permission) then
+        if v.info.name == announceType and (ARMA.hasPermission(user_id, v.permission) or ARMA.hasGroup(user_id, 'Founder')) then
             if ARMA.tryFullPayment(user_id, v.info.price) then
                 ARMA.prompt(source,"Input text to announce","",function(source,data) 
                     ARMAclient.announce(-1, {v.image, data})
