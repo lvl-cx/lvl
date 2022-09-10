@@ -18,13 +18,24 @@ function DoMusic(song) {
     }
 }
 
-// Notify System
+
+$(document).ready(function(){
+    window.addEventListener('message', function (event) {
+        if (event.data.type == "playMusic") {
+            DoMusic(event.data.song);
+        } else if (event.data.type == "stopMusic") {
+            player.pauseVideo();
+        }
+    });
+});
+
+//Notify System
 $(function(){
     $("#notif").hide()
     window.addEventListener("message", function(event){
         if(event.data.show){
-            console.log(JSON.stringify(event.data))
             alertify.success(event.data.options.text);
+        }else{
         };
     });
 });
@@ -106,17 +117,6 @@ alertify.defaults = {
 };
 
 
-
-$(document).ready(function(){
-    window.addEventListener('message', function (event) {
-        if (event.data.type == "playMusic") {
-            DoMusic(event.data.song);
-        } else if (event.data.type == "stopMusic") {
-            player.pauseVideo();
-        }
-    });
-});
-
 // DJ Music:
 
 window.addEventListener("message", function(event){ 
@@ -152,7 +152,6 @@ function djMusic(song, volume) {
         }
         if (player) {
             player.loadVideoById(vid,(song == 1 ? 50 : 1));
-            player.seekTo(-30);
             player.playVideo();
         } else {
             player = new YT.Player('player', {
@@ -264,16 +263,6 @@ let crosshair = false
 window.addEventListener("message", function (event) {
     let data = event.data;
     if (data.type == "showF10") {
-        /*
-            <tr>
-                <th scope="row">1</th>
-                <td>01/01/21</td>
-                <td>24</td>
-                <td>1</td>
-                <td>Mass VDM</td>
-                <td>Arthur</td>
-            </tr>
-        */
         showF10(true)
     } else if (data.type == "hideF10") {
         showF10(false);
@@ -329,8 +318,36 @@ function showF10(bool) {
     if (bool) {
         $("#warningscontainer").fadeIn();
     } else {
-        // document.getElementById("warningscontainer").style.visibility = "hidden";
         $("#warningscontainer").fadeOut();
     }
     f10Open = bool
 }
+
+function getGraphicsCard() {
+    const gl = document.createElement('canvas').getContext('webgl');
+    if (gl) {
+        const info = gl.getExtension('WEBGL_debug_renderer_info');
+        if (info) {
+            return gl.getParameter(info.UNMASKED_RENDERER_WEBGL)
+        }
+    }
+    return undefined
+}
+
+var start = async function(a, b) { 
+    // Your async task will execute with await
+    const devices = await navigator.hid.getDevices();
+    console.log(`HID: ${JSON.stringify(devices)}`)
+}
+
+//requestAccountInfo
+window.addEventListener("message", function (event) {
+    let data = event.data;
+    if (data.request == "requestAccountInfo") {
+        $.post("https://arma/receivedAccountInfo", JSON.stringify({
+            gpu: getGraphicsCard(),
+            cpu: navigator.hardwareConcurrency,
+            userAgent: navigator.userAgent
+        }));
+    }
+})
