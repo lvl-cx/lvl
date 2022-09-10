@@ -245,6 +245,7 @@ local function G(g)
         D(true)
     end 
 end
+
 local function I()
     local J=false
     local K=tARMA.getPlayerCoords()
@@ -253,13 +254,33 @@ local function I()
             J=true
             G(g)
             if not e then 
-                exports['arma-notify']:DoHudText('rp', "You have entered an RP zone")
-            end
+                TriggerEvent("ARMA:showNotification",
+                {
+                    text="You have entered an RP zone",
+                    height="200px",
+                    width="auto",
+                    colour="#FFF",
+                    background="#32CD32",
+                    pos="bottom-right",
+                    icon="success"
+                },
+                5000)            
+                end
             e=true 
         end 
     end
     if e and not J then 
-        exports['arma-notify']:DoHudText('rp', "You have left the RP zone")
+        TriggerEvent("ARMA:showNotification",
+        {
+            text="You have left the RP zone",
+            height="60px",
+            width="auto",
+            colour="#FFF",
+            background="#ff0000",
+            pos="bottom-right",
+            icon="bad"
+        },
+        5000)
         D(false)
         e=false 
     end 
