@@ -30,6 +30,13 @@ function tARMA.isPlayerArmed()
 	return false
 end
 
+function tARMA.hasWeapon(hash)
+	if HasPedGotWeapon(PlayerPedId(), string.upper(hash)) then
+        return true
+    end
+    return false
+end
+
 function tARMA.getWeapons()
     local f=PlayerPedId()
     local n={}
