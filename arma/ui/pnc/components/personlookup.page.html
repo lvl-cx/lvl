@@ -27,7 +27,7 @@
         <p class="modes" style="margin-bottom: 20px;">Licence: {{$parent.selectedPerson.licence}}</p>
         <p class="modes" style="margin-bottom: 20px;">Owned Vehicles: {{$parent.selectedPerson.vehicles.length}}</p>
         <select v-if="!$parent.selectedPerson.id == ''" name="" id="" size="9" class="playerVehicles" style="margin-right: 5px;">
-            <option v-for="home in $parent.selectedPerson.homes">{{home.number}} {{home.home}}</option>
+            <option v-for="home in $parent.selectedPerson.homes">{{home}}</option>
         </select>
     </div>
         <select v-if="!$parent.selectedPerson.id == ''" v-model="$parent.selectedWarningMarkerType" style="top: 30%; width:30%;" name="" id="" class="personHouses option">
