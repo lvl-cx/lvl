@@ -41,6 +41,8 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                         hasPerm = true
                     end
                 end
+            else
+                hasPerm = true
             end
             for c,d in pairs(cfg.GunStores[weaponshop]) do
                 if c ~= '_config' then
@@ -48,13 +50,37 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                         if c == spawncode then
                             if price == d[2] and name == d[1] then
                                 if ARMA.tryPayment(user_id,price) then
-                                    if price > 0 then
-                                        ARMAclient.notify(source, {'~g~You bought a '..name..' for £'..price..'.'})
-                                    else
-                                        ARMAclient.notify(source, {'~g~'..name..' purchased.'})
+                                    if purchasetype == 'weapon' then
+                                        ARMAclient.hasWeapon(source, {spawncode}, function(hasWeapon)
+                                            if hasWeapon then
+                                                ARMAclient.notify(source, {'~r~Please store this weapon before purchasing another.'})
+                                            else
+                                                if price > 0 then
+                                                    ARMAclient.notify(source, {'~g~You bought a '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                                else
+                                                    ARMAclient.notify(source, {'~g~'..name..' purchased.'})
+                                                end
+                                                TriggerClientEvent("arma:PlaySound", source, 1)
+                                                GiveWeaponToPed(source, spawncode, 250, false, false)
+                                            end
+                                        end)
+                                    elseif purchasetype == 'armour' then
+                                        if GetPedArmour(GetPlayerPed(source)) > (price/1000) then
+                                            ARMAclient.notify(source, {'~r~You already have '..GetPedArmour(GetPlayerPed(source))..'% armour.'})
+                                        else
+                                            ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                            TriggerClientEvent("arma:PlaySound", source, 1)
+                                            SetPedArmour(GetPlayerPed(source), (math.floor(price/1000)))
+                                        end
+                                    elseif purchasetype == 'ammo' then
+                                        if price > 0 then
+                                            ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})
+                                        else
+                                            ARMAclient.notify(source, {'~g~250x Ammo purchased.'})
+                                        end
+                                        TriggerClientEvent("arma:PlaySound", source, 1)
+                                        SetPedAmmo(GetPlayerPed(source), spawncode, 250)
                                     end
-                                    TriggerClientEvent("arma:PlaySound", source, 1)
-                                    GiveWeaponToPed(source, spawncode, 250, false, false)
                                 else
                                     ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
                                     TriggerClientEvent("arma:PlaySound", source, 2)
@@ -70,7 +96,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                         if weaponshop == 'policeLargeArms' or weaponshop == 'policeSmallArms' then
                             ARMAclient.notify(source, {"~r~You shouldn't be in here, ALARM TRIGGERED!!!"})
                         else
-                            ARMAclient.notify(source, {"~r~You do not have permissions to access this store."})
+                            ARMAclient.notify(source, {"~r~You do not have permission to access this store."})
                         end
                     end
                 end
