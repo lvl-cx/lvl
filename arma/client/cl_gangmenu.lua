@@ -153,60 +153,88 @@ function func_drawGangUI()
         end 
     end
     if showFundsGangUI then 
-        DrawRect(0.501,0.558,0.421,0.326,0,0,0,150)
-        DrawRect(0.501,0.374,0.421,0.047,18,82,228,248)
+        DrawRect(0.501, 0.558, 0.421, 0.326, 0, 0, 0, 150)
+        DrawRect(0.501, 0.374, 0.421, 0.047, 18, 82, 228, 248)
         DrawAdvancedText(0.591,0.378,0.005,0.0028,0.48,"ARMA Gang - Funds",255,255,255,255,7,0)
-        DrawAdvancedText(0.581,0.464,0.005,0.0028,0.5,"Gang Funds",255,255,255,255,0,0)
-        DrawAdvancedText(0.581,0.502,0.005,0.0028,0.4,"£"..GangBalance,25,199,65,255,0,0)
-        DrawAdvancedText(0.536,0.578,0.005,0.0028,0.4,"Deposit (1% Fee)",255,255,255,255,6,0)
-        DrawAdvancedText(0.637,0.578,0.005,0.0028,0.4,"Withdraw",255,255,255,255,6,0)
+        DrawAdvancedText(0.581, 0.464, 0.005, 0.0028, 0.5, "Gang Funds", 255, 255, 255, 255, 0, 0)
+        DrawAdvancedText(0.581, 0.502, 0.005, 0.0028, 0.4, "£" .. GangBalance, 25, 199, 65, 255, 0, 0)
+        DrawAdvancedText(0.436, 0.578, 0.005, 0.0028, 0.4, "Deposit (1% Fee)", 255, 255, 255, 255, 6, 0)
+        DrawAdvancedText(0.536, 0.578, 0.005, 0.0028, 0.4, "Deposit All (1% Fee)", 255, 255, 255, 255, 6, 0)
+        DrawAdvancedText(0.637, 0.578, 0.005, 0.0028, 0.4, "Withdraw", 255, 255, 255, 255, 6, 0)
+        DrawAdvancedText(0.737, 0.578, 0.005, 0.0028, 0.4, "Withdraw All", 255, 255, 255, 255, 6, 0)
         DrawAdvancedText(0.775,0.693,0.005,0.0028,0.4,"Back",255,255,255,255,4,0)
-        if CursorInArea(0.4083,0.4718,0.5490,0.5999)then 
-            DrawRect(0.441,0.576,0.065,0.056,a,b,c,150)
-            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
-                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                amount=GetMoneyAmountText()
-                if amount~=nil then 
-                    if closeToBarclays()then 
-                        TriggerServerEvent("ARMA:depositGangBalance",amount)
-                    end 
-                else 
+        if CursorInArea(0.3083, 0.3718, 0.5490, 0.5999) then
+            DrawRect(0.341, 0.576, 0.075, 0.056, a, b, c, 150)
+            if IsControlJustPressed(1, 329) or IsDisabledControlJustPressed(1, 329) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                amount = GetMoneyAmountText()
+                if amount ~= nil then
+                    if closeToBarclays() then
+                        TriggerServerEvent("ARMA:depositGangBalance", amount)
+                    end
+                else
                     tARMA.notify("~r~No amount entered!")
-                end 
-            end 
-        else 
-            DrawRect(0.441,0.576,0.065,0.056,0,0,0,150)
+                end
+            end
+        else
+            DrawRect(0.341, 0.576, 0.075, 0.056, 0, 0, 0, 150)
         end
-        if CursorInArea(0.5088,0.5739,0.5481,0.6018)then 
-            DrawRect(0.542,0.576,0.065,0.056,a,b,c,150)
-            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
-                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                amount=GetMoneyAmountText()
-                if amount~=nil then 
-                    if gangPermission>=3 then 
-                        if closeToBarclays()then 
-                            TriggerServerEvent("ARMA:withdrawGangBalance",amount)
-                        end 
-                    else 
+        if CursorInArea(0.4083, 0.4718, 0.5490, 0.5999) then
+            DrawRect(0.441, 0.576, 0.075, 0.056, a, b, c, 150)
+            if IsControlJustPressed(1, 329) or IsDisabledControlJustPressed(1, 329) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                if closeToBarclays() then
+                    TriggerServerEvent("ARMA:depositAllGangBalance")
+                end
+            end
+        else
+            DrawRect(0.441, 0.576, 0.075, 0.056, 0, 0, 0, 150)
+        end
+        if CursorInArea(0.5088, 0.5739, 0.5481, 0.6018) then
+            DrawRect(0.542, 0.576, 0.075, 0.056, a, b, c, 150)
+            if IsControlJustPressed(1, 329) or IsDisabledControlJustPressed(1, 329) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                amount = GetMoneyAmountText()
+                if amount ~= nil then
+                    if gangPermission >= 3 then
+                        if closeToBarclays() then
+                            TriggerServerEvent("ARMA:withdrawGangBalance", amount)
+                        end
+                    else
                         tARMA.notify("~r~You don't have a high enough rank to withdraw")
-                    end 
-                else 
+                    end
+                else
                     tARMA.notify("~r~No amount entered!")
-                end 
-            end 
-        else 
-            DrawRect(0.542,0.576,0.065,0.056,0,0,0,150)
+                end
+            end
+        else
+            DrawRect(0.542, 0.576, 0.075, 0.056, 0, 0, 0, 150)
         end
-        if CursorInArea(0.6583,0.7056,0.6712,0.7064)then 
-            DrawRect(0.681,0.689,0.045,0.036,a,b,c,150)
-            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
-                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                showFundsGangUI=false
-                showGangUI=true 
-            end 
-        else 
-            DrawRect(0.681,0.689,0.045,0.036,0,0,0,150)
-        end 
+        if CursorInArea(0.6088, 0.6739, 0.5481, 0.6018) then
+            DrawRect(0.642, 0.576, 0.075, 0.056, a, b, c, 150)
+            if IsControlJustPressed(1, 329) or IsDisabledControlJustPressed(1, 329) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                if gangPermission >= 3 then
+                    if closeToBarclays() then
+                        TriggerServerEvent("ARMA:withdrawAllGangBalance")
+                    end
+                else
+                    tARMA.notify("~r~You don't have a high enough rank to withdraw")
+                end
+            end
+        else
+            DrawRect(0.642, 0.576, 0.075, 0.056, 0, 0, 0, 150)
+        end
+        if CursorInArea(0.6583, 0.7056, 0.6712, 0.7064) then
+            DrawRect(0.681, 0.689, 0.045, 0.036, a, b, c, 150)
+            if IsControlJustPressed(1, 329) or IsDisabledControlJustPressed(1, 329) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                showFundsGangUI = false
+                showGangUI = true
+            end
+        else
+            DrawRect(0.681, 0.689, 0.045, 0.036, 0, 0, 0, 150)
+        end
     end
     if showMembersGangUI then 
         DrawRect(0.501,0.525,0.421,0.387,0,0,0,150)

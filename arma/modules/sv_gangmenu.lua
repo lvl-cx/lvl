@@ -127,6 +127,49 @@ AddEventHandler("ARMA:depositGangBalance", function(amount)
     end)
     TriggerClientEvent('ARMA:ForceRefreshData', source)
 end)
+RegisterServerEvent("ARMA:depositAllGangBalance")
+AddEventHandler("ARMA:depositAllGangBalance", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local name = GetPlayerName(source)
+    local date = os.date("%d/%m/%Y at %X")
+    local amount = ARMA.getMoney(user_id)
+    exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+        for K,V in pairs(gotGangs) do
+            local array = json.decode(V.gangmembers)
+            for I,L in pairs(array) do
+                if tostring(user_id) == I then
+                    local funds = V.funds
+                    local gangname = V.gangname
+                    if tonumber(amount) < 0 then
+                        ARMAclient.notify(source,{"~r~Invalid Amount"})
+                        return
+                    end
+                    ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))-tonumber(amount))
+                    ARMAclient.notify(source,{"~g~Deposited £"..amount})
+                    local newamount = tonumber(amount)+tonumber(funds)
+                    local tax = tonumber(amount)*0.01
+                    local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
+                    local embed = {
+                        {
+                            ["color"] = "16777215",
+                            ["title"] = "Gang Funds",
+                            ["description"] = "**User Name:** "..GetPlayerName(source).."\n**User ID:** "..ARMA.getUserId(source).."\n**Deposit:** £"..getMoneyStringFormatted(amount).."\n**Gang Name:** "..gangname,
+                            ["footer"] = {
+                                ["text"] = "ARMA - "..os.date("%X"),
+                            },
+                        }
+                    }
+                    PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = 'ARMA', embeds = embed}), { ['Content-Type'] = 'application/json' })
+                    exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount)-tostring(tax), gangname = gangname}, function()
+                        TriggerClientEvent('ARMA:ForceRefreshData', -1)
+                    end)
+                end
+            end
+        end
+    end)
+    TriggerClientEvent('ARMA:ForceRefreshData', source)
+end)
 RegisterServerEvent("ARMA:withdrawGangBalance")
 AddEventHandler("ARMA:withdrawGangBalance", function(amount)
     local source = source
@@ -145,6 +188,48 @@ AddEventHandler("ARMA:withdrawGangBalance", function(amount)
                         return
                     end
                     if tonumber(funds) < tonumber(amount) then
+                        ARMAclient.notify(source,{"~r~Invalid Amount."})
+                    else
+                        ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
+                        ARMAclient.notify(source,{"~g~Withdrew £"..amount})
+                        local newamount = tonumber(funds)-tonumber(amount)
+                        local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
+                        local embed = {
+                            {
+                                ["color"] = "16777215",
+                                ["title"] = "Gang Funds",
+                                ["description"] = "**User Name:** "..GetPlayerName(source).."\n**User ID:** "..ARMA.getUserId(source).."\n**Withdrew:** £"..getMoneyStringFormatted(amount).."\n**Gang Name:** "..gangname,
+                                ["footer"] = {
+                                    ["text"] = "ARMA - "..os.date("%X"),
+                                },
+                            }
+                        }
+                        PerformHttpRequest(webhook, function (err, text, headers) end, 'POST', json.encode({username = 'ARMA', embeds = embed}), { ['Content-Type'] = 'application/json' })
+                        exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount), gangname = gangname}, function()
+                            TriggerClientEvent('ARMA:ForceRefreshData', -1)
+                        end)
+                    end
+                end
+            end
+        end
+    end)
+    TriggerClientEvent('ARMA:ForceRefreshData', source)
+end)
+RegisterServerEvent("ARMA:withdrawAllGangBalance")
+AddEventHandler("ARMA:withdrawAllGangBalance", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local name = GetPlayerName(source)
+    local date = os.date("%d/%m/%Y at %X")
+    exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+        for K,V in pairs(gotGangs) do
+            local array = json.decode(V.gangmembers)
+            for I,L in pairs(array) do
+                if tostring(user_id) == I then
+                    local funds = V.funds
+                    local gangname = V.gangname
+                    local amount = V.funds
+                    if tonumber(funds) < 1 then
                         ARMAclient.notify(source,{"~r~Invalid Amount."})
                     else
                         ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
