@@ -26,7 +26,7 @@ AddEventHandler("ARMA:getJobSelectors",function()
     TriggerClientEvent("ARMA:gotJobSelectors",source,jobSelectors)
 end)
 
-function removeAllJobs(user_id)
+function ARMA.removeAllJobs(user_id)
     local source = ARMA.getUserSource(user_id)
     for i,j in pairs(cfg.selectorTypes) do
         for k,v in pairs(j.jobs)do
@@ -43,7 +43,6 @@ function removeAllJobs(user_id)
     ARMAclient.setNHS(source, {false})
     ARMAclient.setHMP(source, {false})
     ARMAclient.setLFB(source, {false})
-    ARMAclient.setCasino(source, {false})
     TriggerClientEvent('ARMA:disableFactionBlips', source)
 end
 
@@ -56,12 +55,12 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
         return
     end
     if b == "Unemployed" then
-        removeAllJobs(user_id)
+        ARMA.removeAllJobs(user_id)
         ARMAclient.notify(source, {"~g~You are now unemployed."})
     else
         if cfg.selectors[a].type == 'police' then
             if ARMA.hasPermission(user_id, string.lower(b)..'.clockon') then
-                removeAllJobs(user_id)
+                ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setPolice(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
@@ -70,7 +69,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             end
         elseif a == 'nhs' then
             if ARMA.hasPermission(user_id, string.lower(b)..'.clockon') then
-                removeAllJobs(user_id)
+                ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setNHS(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
@@ -79,7 +78,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             end
         elseif a == 'lfb' then
             if ARMA.hasPermission(user_id, string.lower(b)..'.clockon') then
-                removeAllJobs(user_id)
+                ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setLFB(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
@@ -88,24 +87,15 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             end
         elseif a == 'hmp' then
             if ARMA.hasPermission(user_id, string.lower(b)..'.clockon') then
-                removeAllJobs(user_id)
+                ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setHMP(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
-        elseif a == 'casino' then
-            if ARMA.hasPermission(user_id, string.lower(b)..'.clockon') then
-                removeAllJobs(user_id)
-                ARMA.addUserGroup(user_id,b..' Clocked')
-                ARMAclient.setCasino(source, {true})
-                ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
-            else
-                ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
-            end
         else
-            removeAllJobs(user_id)
+            ARMA.removeAllJobs(user_id)
             ARMA.addUserGroup(user_id,b)
             ARMAclient.notify(source, {"~g~Employed as "..b.."."})
             TriggerClientEvent('ARMA:jobInstructions',source,b)
