@@ -115,6 +115,7 @@ local groups = {
     ["AdvancedRebel"] = "Advanced Rebel License",
     ["highroller"] = "Highrollers License",
     ["DJ"] = "DJ License",
+    ["PilotLicense"] = "Pilot License",
     ["Commissioner"] = "Commissioner",
     ["Deputy Commissioner"] = "Deputy Commissioner",
     ["Assistant Commissioner"] = "Assistant Commissioner",
