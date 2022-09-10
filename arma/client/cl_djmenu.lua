@@ -64,7 +64,17 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.Button("Help","Assistance message",{},true,function(k,l,m)
                     if m then 
-                        exports['arma-notify']:DoHudText('inform', "The Video ID is the ID at the end of the YouTube URL after =")
+                        TriggerEvent("ARMA:showNotification",
+                        {   
+                            text="The Video ID is the ID at the end of the YouTube URL after =",
+                            height="200px",
+                            width="auto",
+                            colour="#FFF",
+                            background="#32CD32",
+                            pos="bottom-right",
+                            icon="success"
+                        },
+                        5000)
                     end 
                 end)
             end 
