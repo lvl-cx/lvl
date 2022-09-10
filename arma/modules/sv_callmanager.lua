@@ -76,7 +76,7 @@ RegisterCommand("999", function(source)
             for k, v in pairs(ARMA.getUsers({})) do
                 TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'met')
             end
-            ARMAclient.notify(user_source,{"~g~Sent Police Call."})
+            ARMAclient.notify(user_source,{"~b~Sent Police Call."})
         else
             ARMAclient.notify(user_source,{"Please enter a valid reason."})
         end
@@ -143,7 +143,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                 elseif tickets[ticketID].type == 'met' and ARMA.hasPermission(user_id, "police.onduty.permission") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
-                            ARMAclient.notify(v.tempID,{"~g~Your MET Police call has been accepted!"})
+                            ARMAclient.notify(v.tempID,{"~b~Your MET Police call has been accepted!"})
                             tickets[ticketID] = nil
                             TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                         else
