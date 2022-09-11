@@ -804,10 +804,8 @@ Citizen.CreateThread(function()
             local vehicle=tARMA.getPlayerVehicle()
             if vehicle~=0 and GetPedInVehicleSeat(vehicle,-1)==tARMA.getPlayerPed()then 
                 if not e.active then 
-                    print('adding plate')
                     createPlate(vehicle)
                 elseif not vehicle==e.vehicle then 
-                    print('removing plate')
                     removePlate()
                     Wait(1000)
                     createPlate(vehicle)
@@ -912,14 +910,11 @@ function createPlate(vehicle)
     local t=tARMA.getPlayerCoords()
     e.handle=CreateObject(B,t.x,t.y,t.z,false,false,false)
     e.handle2=CreateObject(B,t.x,t.y,t.z,false,false,false)
-    print('got handle ', e.handle..' and handle2 '..e.handle2)
     while not DoesEntityExist(e.handle)and not DoesEntityExist(e.handle2)do 
         Wait(0)
     end
-    print('adding to the windscreen')
     local aq=GetEntityBoneIndexByName(vehicle,"windscreen")
     AttachEntityToEntity(e.handle,vehicle,aq,0.0,0.3,-0.1,-25.0,0.0,180.0,true,true,false,true,0,true)
-    print('adding to the back windscreen')
     local ar=GetEntityBoneIndexByName(vehicle,"windscreen_r")
     AttachEntityToEntity(e.handle2,vehicle,ar,0.0,0.2,-0.1,-10.0,0.0,0.0,true,true,false,true,0,true)
     tARMA.notifyPicture(i.images.dict,i.images.lPlate,i.notifications.lPlatesAdded,"DVSA","Licence Services")
