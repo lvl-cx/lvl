@@ -169,6 +169,7 @@ local otherVehicles = {
     [`titan`] = true,
     [`bmx`] = true,
     [`taxi`] = true,
+    [`police2`] = true,
 }
 
 
