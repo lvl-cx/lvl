@@ -92,8 +92,8 @@ Citizen.CreateThread(function()
         if tonumber(time["hour"]) == (organHeistTime-1) and tonumber(time["min"]) >= 50 and tonumber(time["sec"]) == 0 then
             inWaitingStage = true
             timeTillOrgan = ((60-tonumber(time["min"]))*60)
-            TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..(timeTillOrgan/60).." minutes.", { 128, 128, 128 }, message, "alert")
-        elseif tonumber(time["hour"]) == organHeistTime and tonumber(time["mine"]) == 0 and tonumber(time["sec"]) == 0 then
+            TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..math.floor((timeTillOrgan/60)).." minutes.", { 128, 128, 128 }, message, "alert")
+        elseif tonumber(time["hour"]) == organHeistTime and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
             if civsInGame > 0 and policeInGame > 0 then
                 TriggerClientEvent('ARMA:startOrganHeist', -1)
                 inGameStage = true
