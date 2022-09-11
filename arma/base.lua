@@ -1098,3 +1098,14 @@ AddEventHandler("ARMAcli:playerSpawned", function()
 end)
 
 RegisterServerEvent("ARMA:playerDied")
+
+
+exports("getServerStatus", function(params, cb)
+    if ARMAConfig.Status == 'Development' then
+        cb("🔒 Development")
+    elseif ARMAConfig.Status == 'Whitelisted' then
+        cb("🛑 Whitelisted")
+    elseif ARMAConfig.Status == 'Online' then
+        cb("✅ Online")
+    end
+end)
