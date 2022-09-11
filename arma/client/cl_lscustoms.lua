@@ -1021,7 +1021,6 @@ end)
 
 RegisterNetEvent("LSC:applyModifications")
 AddEventHandler("LSC:applyModifications", function(vehicle, modifications)
-	print('client side ls applying mods')
 	if vehicle and modifications then
 		SetVehicleModKit(vehicle, 0)
 		SetVehicleColours(vehicle, modifications.color[1], modifications.color[2])
