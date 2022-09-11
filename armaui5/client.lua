@@ -9,6 +9,18 @@ local globalOnPrisonDuty = false
 local hideHud = false
 local draggedPed = 0
 
+RegisterNetEvent("ARMAUI5:globalOnPoliceDuty")
+AddEventHandler("ARMAUI5:globalOnPoliceDuty",function(a)
+    globalOnPoliceDuty = a
+end)
+RegisterNetEvent("ARMAUI5:globalOnNHSDuty")
+AddEventHandler("ARMAUI5:globalOnNHSDuty",function(b)
+    globalOnNHSDuty = b
+end)
+RegisterNetEvent("ARMAUI5:globalOnPrisonDuty")
+AddEventHandler("ARMAUI5:globalOnPrisonDuty",function(c)
+    globalOnPrisonDuty = c
+end)
 RegisterNetEvent("ARMA:showHUD")
 AddEventHandler("ARMA:showHUD",function(flag)
     hideHud = not flag
@@ -289,7 +301,7 @@ function impoundVehicle(entityId)
     if globalOnPoliceDuty then
         local user_id = tonumber(DecorGetInt(entityId, "vRP_owner"))
         if user_id > 0 then
-            exports.ARMA:impound(user_id, GetEntityModel(entityId), VehToNet(entityId),entityId)
+            exports.ARMA:impound(user_id, GetEntityModel(entityId), VehToNet(entityId), entityId)
         else
             TriggerEvent("ARMA:Notify","~r~Vehicle is not owned by anyone")
             if GetPedInVehicleSeat(entityId, -1) == 0 and GetPedInVehicleSeat(entityId, 0) == 0 and NetworkGetEntityIsNetworked(entityId) then
