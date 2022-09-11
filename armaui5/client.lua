@@ -242,7 +242,7 @@ local savedBoot
 function openBoot(entityId)
     savedBoot = entityId
     SetVehicleDoorOpen(entityId, 5, true)
-    TriggerEvent("ARMA:clOpenTrunk")
+    ExecuteCommand('inventory')
     trunkStatus = true
     SendNUIMessage({
         closeMenu = true
@@ -300,6 +300,7 @@ end
 function impoundVehicle(entityId)
     if globalOnPoliceDuty then
         local user_id = tonumber(DecorGetInt(entityId, "vRP_owner"))
+        print(user_id)
         if user_id > 0 then
             exports.ARMA:impound(user_id, GetEntityModel(entityId), VehToNet(entityId), entityId)
         else

@@ -22,11 +22,9 @@ RegisterCommand('inventory', function()
             local VehInRadius, VehType, NVeh = tARMA.getNearestOwnedVehicle({3.5})
             if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
                 BootCar = GetEntityCoords(PlayerPedId())
-                VehTypeC = VehType
-                VehTypeA = NVeh
-                tARMA.vc_openDoor({VehTypeC, 5})
+                tARMA.vc_openDoor({VehType, 5})
                 inventoryType = 'CarBoot'
-                TriggerServerEvent('ARMA:FetchTrunkInventory', NVeh)
+                TriggerServerEvent('ARMA:FetchTrunkInventory', VehType)
             end
 
         else
@@ -114,7 +112,6 @@ end)
 
 RegisterNetEvent('ARMA:ToggleNUIFocus')
 AddEventHandler('ARMA:ToggleNUIFocus', function(value)
-    --print('focus', value)
     SetNuiFocus(value, value)
     SetNuiFocusKeepInput(value)
 end)
