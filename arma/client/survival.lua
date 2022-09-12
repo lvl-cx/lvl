@@ -35,23 +35,38 @@ Citizen.CreateThread(function()
     end
 end)
 
+
 Citizen.CreateThread(function()
-  while true do 
-    if IsDisabledControlJustPressed(0,38) then
-      if g and not calledNHS then
-        calledNHS = true
-        tARMA.notify('~g~NHS called to your approximate location')
-        TriggerServerEvent('ARMA:NHSComaCall')
-        TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
-      elseif g and in_coma then
-        TriggerEvent("ARMA:respawnKeyPressed")
-        tARMA.respawnPlayer()
-        TriggerServerEvent('ARMA:SendSpawnMenu')
+    while true do 
+        if in_coma then
+			if not calledNHS then
+				if IsControlJustPressed(1, 51) then
+					calledNHS = true
+					tARMA.notify('~g~NHS called to your approximate location')
+					TriggerServerEvent('ARMA:NHSComaCall')
+                    TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
+				end
+			end
+            DisableControlAction(0,323,true)
+            DisableControlAction(0,182,true)
+            DisableControlAction(0,37,true)
+        end
+        Wait(0) 
+    end 
+end)
+
+Citizen.CreateThread(function()
+    while true do 
+      if IsDisabledControlJustPressed(0,38) then
+        if g and in_coma then
+          TriggerEvent("ARMA:respawnKeyPressed")
+          tARMA.respawnPlayer()
+          TriggerServerEvent('ARMA:SendSpawnMenu')
+        end
+        Wait(1000)
       end
-      Wait(1000)
+      Wait(0)
     end
-    Wait(0)
-  end
 end)
 
 Citizen.CreateThread(function() -- coma thread
