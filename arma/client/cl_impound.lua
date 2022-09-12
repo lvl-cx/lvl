@@ -202,7 +202,7 @@ function tARMA.impoundVehicleOptions(Z, _, x, a0)
     if a2 == 18 then
         tARMA.notifyPicture("polnotification","notification","Emergency vehicles cannot be impounded.","Metropolitan Police","Impound",nil,nil)
     elseif a.disallowedVehicleClasses[a2] then
-        tARMA.notifyPicture("polnotification","notification","That vehicle is too large to be impounded.","Metropolitan Police","Impound",nil,            nil)
+        tARMA.notifyPicture("polnotification","notification","That vehicle is too large to be impounded.","Metropolitan Police","Impound",nil,nil)
     else
         TriggerServerEvent("ARMA:fetchInfoForVehicleToImpound", Z, a1, x)
         RageUI.Visible(RMenu:Get("armaimpound", "reasons"), true)
