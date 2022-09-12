@@ -163,6 +163,7 @@ local allowedEntities = {
     [`prop_lplate`] = true,
     [`xm_prop_body_bag`] = true,
     [`prop_lifepak`] = true,
+    [`prop_clamp`] = true,
 }
 
 local otherVehicles = {
