@@ -5,19 +5,6 @@ local opacity = 1
 local scaleType = nil
 local scaleString = ""
 
-Citizen.CreateThread(function()
-	AddTextEntry("ParaTattoos", "Tattoo Shop")
-	for k, v in pairs(Config.Shops) do
-		local blip = AddBlipForCoord(v)
-		SetBlipSprite(blip, 75)
-		SetBlipColour(blip, 1)
-		SetBlipScale(blip, 0.6)
-		SetBlipAsShortRange(blip, true)
-		BeginTextCommandSetBlipName("ParaTattoos")
-		EndTextCommandSetBlipName(blip)
-	end
-end)
-
 AddEventHandler('skinchanger:modelLoaded', function()
 	if tattooList then
 		ClearPedDecorations(PlayerPedId())
