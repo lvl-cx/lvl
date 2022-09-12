@@ -25,9 +25,7 @@ AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle)
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.vehicle == vehicle then
-                    MySQL.query("ARMA/get_vehicle_fuellevel", {vehicle = vehicle}, function(result)
-                        TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
-                    end)
+                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
                     return
                 end
             end
@@ -43,9 +41,7 @@ AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.vehicle == spawncode then
-                    MySQL.query("ARMA/get_vehicle_fuellevel", {vehicle = vehicle}, function(result)
-                        TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
-                    end)
+                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
                     return
                 end
             end
