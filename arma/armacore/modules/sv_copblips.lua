@@ -11,10 +11,10 @@ Citizen.CreateThread(function()
         else
           dead = 1
         end
-        if ARMA.hasPermission(ARMA.getUserId(v), 'police.menu') then
+        if ARMA.hasPermission(ARMA.getUserId(v), 'police.onduty.permission') then
           colour = 3
           table.insert(emergencyblips, {source = v, position = GetEntityCoords(GetPlayerPed(v)), dead = dead, colour = colour})
-        elseif ARMA.hasPermission(ARMA.getUserId(v), 'nhs.menu') then
+        elseif ARMA.hasPermission(ARMA.getUserId(v), 'nhs.onduty.permission') then
           colour = 2
           table.insert(emergencyblips, {source = v, position = GetEntityCoords(GetPlayerPed(v)), dead = dead, colour = colour})
         end
