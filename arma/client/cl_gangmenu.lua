@@ -659,6 +659,10 @@ AddEventHandler('GlobalrecieveTurf', function(global2)
     globalturf = global2
 end)
 
+RegisterNetEvent("ARMA:Notify",function(u)
+    tARMA.notify(u)
+end)
+
 function closeToBarclays()
     local v=GetEntityCoords(GetPlayerPed(PlayerId()),false)
     local w=#(v-vector3(151.7451171875,-1036.7829589844,29.338624954224))
