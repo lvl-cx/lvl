@@ -15,7 +15,6 @@ currentTest={active=false,ped=0,vehicle=0,parkingSpace=0,route=0,waypoint=0,blip
 local i=module("cfg/cfg_dvsa")
 tARMA.addMarker(i.test.reception.x,i.test.reception.y,i.test.reception.z-0.96,1.2,1.2,1.2,0,255,125,125,50,27,true,false,false,nil,nil,0.0,0.0,0.0)
 local j=tARMA.addBlip(i.test.reception.x,i.test.reception.y,i.test.reception.z,523,47,"DVSA Test Centre",1.0,false)
-TriggerServerEvent('ARMA:getDVSAData')
 local k=function()
     RageUI.ActuallyCloseAll()
     g=true

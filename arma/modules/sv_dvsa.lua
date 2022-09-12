@@ -32,7 +32,10 @@ AddEventHandler("playerJoining", function()
                     if updateddata.penalties == nil then
                         updateddata.penalties = {}
                     end
-                    TriggerClientEvent('ARMA:dvsaData',source,licence,json.decode(updateddata.penalties),json.decode(updateddata.testsaves),dvsaAlerts)
+                    if updateddata.testsaves == nil then
+                        updateddata.testsaves = {}
+                    end
+                    TriggerClientEvent('ARMA:dvsaData',source,licence,updateddata.penalties,updateddata.testsaves,dvsaAlerts)
                     return
                 end
             end
@@ -73,7 +76,7 @@ function dvsaUpdate(user_id)
             ["date"] = date or os.date("%d/%m/%Y")
         }
     end
-    TriggerClientEvent('ARMA:updateDvsaData',source,licence,{},json.decode(data.testsaves),dvsaAlerts)
+    TriggerClientEvent('ARMA:updateDvsaData',source,licence,json.decode(data.penalties),json.decode(data.testsaves),dvsaAlerts)
 end
 RegisterServerEvent("ARMA:dvsaBucket")
 AddEventHandler("ARMA:dvsaBucket", function(bool)
@@ -223,12 +226,4 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
         ARMAclient.notify(source,{'~r~You could not afford the fine. Benefits paid.'})
         return
     end
-end)
-
-
-RegisterCommand('getdvsa', function(source)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    Wait(100)
-    dvsaUpdate(user_id)
 end)
