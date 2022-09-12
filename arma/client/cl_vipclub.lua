@@ -95,7 +95,7 @@ RageUI.CreateWhile(1.0, true, function()
             else
                 RageUI.ButtonWithStyle("Purchase Subscription","",{RightLabel="→→→"},true,function(o,p,q)
                     if q then
-                        SendNUIMessage({act="openurl",url="https://store.armarp.com"})
+                        SendNUIMessage({act="openurl",url="https://store.armarp.co.uk"})
                     end
                 end)
             end

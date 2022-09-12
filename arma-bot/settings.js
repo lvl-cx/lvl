@@ -5,7 +5,7 @@ exports.settings = {
     Level4Perm: "| Administrator",
     Level5Perm: "| Management",
     Level6Perm: "| Founder",
-    ip: "armarp.com", // ip of the server or domain!
+    ip: "armarp.co.uk", // ip of the server or domain!
     StatusEnabled: true, // Whether the status is enabled be sure to fill out the bottom too!
     GuildID: "975490533344559154", // Guild ID 
     StatusChannel: "・status", // The status channel, 
