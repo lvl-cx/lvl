@@ -548,932 +548,252 @@ cfg.groups = {
 
   -- [Police Groups]
   ["Commissioner Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setPolice(player, {false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-	"police.putinveh",
-	"cop.glock",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"commissioner.paycheck",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"com.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
 	"police.loadshop2",
   },
 
   ["Commissioner"] = {
-    "commissioner.clockon",
 	"cop.whitelisted",
   },
 
   ["Deputy Commissioner Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-	"police.getoutveh",
-	"deputycommissioner.paycheck",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-	"police.seize.weapons",
-	"cop.glock",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"depcom.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
 	"police.loadshop2",
   },
 
   ["Deputy Commissioner"] = {
-    "depcommissioner.clockon",
 	"cop.whitelisted",
   },
 
   ["Assistant Commissioner Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-	"police.putinveh",
-	"assistantcommissioner.paycheck",
-    "police.getoutveh",
-	"police.service",
-	"cop.glock",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"assistcom.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
 	"police.loadshop2",
   },
 
   ["Assistant Commissioner"] = {
-    "asscommissioner.clockon",
 	"cop.whitelisted",
   },
 
   ["Deputy Assistant Commissioner Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-	"police.getoutveh",
-	"assistantdeputycommissioner.paycheck",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"cop.glock",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"depassist.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
 	"police.loadshop2",
   },
 
   ["Deputy Assistant Commissioner"] = {
-    "depasscommissioner.clockon",
 	"cop.whitelisted",
   },
 
   ["Commander Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"commander.paycheck",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"cop.glock",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"com.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
 	"police.loadshop2",
   },
 
   ["Commander"] = {
-    "commander.clockon",
 	"cop.whitelisted",
   },
 
   ["Chief Superintendent Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-	"police.putinveh",
-	"chiefsuperintendent.paycheck",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-	"police.seize.items",
-	"cop.glock",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"chiefsupt.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
   },
 
   ["Chief Superintendent"] = {
-    "chiefsupint.clockon",
 	"cop.whitelisted",
   },
 
   ["Superintendent Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-	"cop.glock",
-	"police.wanted",
-	"superintendent.paycheck",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"supt.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
 	"police.maxarmour",
   },
 
   ["Superintendent"] = {
-    "superint.clockon",
 	"cop.whitelisted",
   },
 
   ["Chief Inspector Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-	"police.service",
-	"chiefinspector.paycheck",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-	"cop.glock",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"chiefinspector.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Chief Inspector"] = {
-    "chiefinsp.clockon",
 	"cop.whitelisted",
   },
 
   ["Inspector Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"inspector.paycheck",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-	"cop.glock",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"inspector.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Inspector"] = {
-    "inspector.clockon",
 	"cop.whitelisted",
   },
 
   ["Sergeant Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"sergeant.paycheck",
-	"police.easy_unjail",
-	"cop.glock",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"sergeant.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Sergeant"] = {
-    "sgt.clockon",
 	"cop.whitelisted",
   },
 
   ["Special Constable Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"cop.glock",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-	"police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"spc.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Special Constable"] = {
-    "specialpc.clockon",
 	"cop.whitelisted",
   },
 
   ["Senior Constable Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-	"police.wanted",
-	"cop.glock",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-	"police.announce",
-	"spc.paycheck",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"response.armor",
-	"seniorpc.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Senior Constable"] = {
-    "srpc.clockon",
 	"cop.whitelisted",
   },
 
   ["Police Constable Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-      onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"cop.glock",
-	"response.armor",
-	"policeconstable.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["Police Constable"] = {
-    "pc.clockon",
 	"cop.whitelisted",
   },
 
   ["PCSO Clocked"] = {
-    _config = { gtype = "job",
-	  onjoin = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onspawn = function(player) ARMAclient.setPolice(player, {true}) end,
-	  onleave = function(player)
-		local user_id = ARMA.getUserId(player)  		
-		ARMAclient.setCop(player,{false})
-		TriggerClientEvent("DeleteBlipsALL", player)
-	  end
-	},
-	"Chief.cloakroom",
-    "police.pc",
-    --"police.handcuff",
-    "police.putinveh",
-    "police.getoutveh",
-    "police.service",
-	"police.drag",
-	"police.easy_cuff",
-	"police.easy_fine",
-	"police.easy_jail",
-	"police.easy_unjail",
-	"police.spikes",
-	"police.menu",
-    "police.check",
-	"toggle.service",
-	"police.freeze",
-    "police.wanted",
-    "police.seize.weapons",
-    "police.seize.items",
-    --"police.jail",
-    --"police.fine",
-    "police.announce",
-    --"-police.store_weapons",
-    "police.seizable",	-- negative permission, police can't seize itself, even if another group add the permission
-	"police.vehicle",
-	"police.loadshop",
-	"emergency.market",
-	"emergency.revive",
-	"emergency.shop",
 	"cop.whitelisted",
-	"cop.glock",
-	"pcso.armor",
-	"pcso.paycheck",
-	"police.menu_interaction",
 	"police.onduty.permission",
-	"police.mission",
 	"police.armoury",
-	"cop.keycard",
-	"police.smartsigns",
   },
 
   ["PCSO"] = {
-    "pcso.clockon",
 	"cop.whitelisted",
   },
 
-  ["Head Chief Medical Officer Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Head Chief Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Assistant Chief Medical Officer Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Assistant Chief Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Deputy Chief Medical Officer Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Deputy Chief Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Captain Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Captain Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Consultant Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Consultant Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Specialist Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Specialist Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Senior Doctor Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Senior Doctor Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Junior Doctor Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Doctor Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Critical Care Paramedic Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Junior Doctor Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Paramedic Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Critical Care Clocked"] = {
+    "nhs.onduty.permission",
   },
 
-  ["Trainee Paramedic Clocked"] = {
-    "nhs.revive",
-	"nhs.heal",
-	"nhs.menu",
+  ["NHS Paramedic Clocked"] = {
+    "nhs.onduty.permission",
+  },
+
+  ["NHS Trainee Paramedic Clocked"] = {
+    "nhs.onduty.permission",
   },
 
   --[[ NHS Clock On Groups ]]--
-  ["Head Chief Medical Officer"] = {
-    "hcmo.clockon",
-	"clockon.nhs",
+  ["NHS Head Chief"] = {
+	"nhs.whitelisted",
   },
 
-  ["Assistant Chief Medical Officer"] = {
-    "acmo.clockon",
-	"clockon.nhs",
+  ["NHS Assistant Chief"] = {
+	"nhs.whitelisted",
   },
 
-  ["Deputy Chief Medical Officer"] = {
-    "dcmo.clockon",
-	"clockon.nhs",
+  ["NHS Deputy Chief Officer"] = {
+	"nhs.whitelisted",
   },
 
-  ["Captain"] = {
-    "capt.clockon",
-	"clockon.nhs",
+  ["NHS Captain"] = {
+	"nhs.whitelisted",
   },
 
-  ["Consultant"] = {
-    "consultant.clockon",
-	"clockon.nhs",
+  ["NHS Consultant"] = {
+	"nhs.whitelisted",
   },
 
-  ["Specialist"] = {
-    "specialist.clockon",
-	"clockon.nhs",
+  ["NHS Specialist"] = {
+	"nhs.whitelisted",
   },
 
-  ["Senior Doctor"] = {
-    "srdoctor.clockon",
-	"clockon.nhs",
+  ["NHS Senior Doctor"] = {
+	"nhs.whitelisted",
   },
 
-  ["Junior Doctor"] = {
-    "jrdoctor.clockon",
-	"clockon.nhs",
+  ["NHS Doctor"] = {
+	"nhs.whitelisted",
   },
 
-  ["Critical Care Paramedic"] = {
-    "ccp.clockon",
-	"clockon.nhs",
+  ["NHS Junior Doctor"] = {
+	"nhs.whitelisted",
   },
 
-  ["Paramedic"] = {
-    "paramedic.clockon",
-	"clockon.nhs",
+  ["NHS Critical Care"] = {
+	"nhs.whitelisted",
   },
 
-  ["Trainee Paramedic"] = {
-    "tparamedic.clockon",
-	"clockon.nhs",
+  ["NHS Paramedic"] = {
+	"nhs.whitelisted",
+  },
+
+  ["NHS Trainee Paramedic"] = {
+	"nhs.whitelisted",
   },
 
 -- ILLEGAL LICENSES --
