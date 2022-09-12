@@ -4,6 +4,7 @@ RegisterCommand('restartserver', function(source, args)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasGroup(user_id, 'Founder') or ARMA.hasGroup(user_id, 'dev') then
         ARMA.prompt(source,"Input time till restart","",function(source,timeLeft) 
+            if timeLeft == '' then return end
             TriggerClientEvent('ARMA:announceRestart', -1, tonumber(timeLeft), false)
             TriggerEvent('ARMA:restartTime', timeLeft)
         end)
