@@ -1,6 +1,8 @@
-RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", '~b~'.."Settings Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners","settings")) 
-RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~'..'Crosshair Settings',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
-RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~'..'Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", "~b~Settings Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners","settings")) 
+RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Crosshair Settings',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "killeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Kill Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+
 
 local a = module("cfg/cfg_settings")
 local b = 0
@@ -152,6 +154,8 @@ RageUI.CreateWhile(1.0, true, function()
             end)
             RageUI.ButtonWithStyle("Graphic Presets","View a list of preconfigured graphic settings.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "graphicpresets"))
+            RageUI.ButtonWithStyle("Kill Effects","Toggle effects that occur on killing a player.",,{RightLabel = "→→→"},true,function()
+            end,RMenu:Get("SettingsMenu", "killeffects"))
        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'graphicpresets')) then

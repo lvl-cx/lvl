@@ -29,6 +29,9 @@ AddEventHandler("playerJoining", function()
                     end
                     -- updateddata.penalties will be penalty points reasons like speeding, drink driving etc (s.offence, s.type, s.date, s.points)
                     -- need pnc for this tho so will do later
+                    if updateddata.penalties == nil then
+                        updateddata.penalties = {}
+                    end
                     TriggerClientEvent('ARMA:dvsaData',source,licence,json.decode(updateddata.penalties),json.decode(updateddata.testsaves),dvsaAlerts)
                     return
                 end
