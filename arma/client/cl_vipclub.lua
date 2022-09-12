@@ -1,7 +1,7 @@
-RMenu.Add('vipclubmenu','mainmenu',RageUI.CreateMenu("","~b~ARMA VIP Membership",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
-RMenu.Add('vipclubmenu','managesubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA VIP Membership",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
-RMenu.Add('vipclubmenu','manageusersubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA VIP Manage Membership",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
-RMenu.Add('vipclubmenu','manageperks',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA VIP Membership Perks",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
+RMenu.Add('vipclubmenu','mainmenu',RageUI.CreateMenu("","~b~ARMA Club",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
+RMenu.Add('vipclubmenu','managesubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA Club",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
+RMenu.Add('vipclubmenu','manageusersubscription',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA Club Manage",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
+RMenu.Add('vipclubmenu','manageperks',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','mainmenu'),"","~b~ARMA Club Perks",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu.Add('vipclubmenu','deathsounds',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","~b~Manage Death Sounds",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 RMenu.Add('vipclubmenu','vehicleextras',RageUI.CreateSubMenu(RMenu:Get('vipclubmenu','manageperks'),"","~b~Vehicle Extras",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "vipclub"))
 local a={hoursOfPlus=0,hoursOfPlatinum=0}
