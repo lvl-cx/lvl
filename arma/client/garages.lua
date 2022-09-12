@@ -1,3 +1,5 @@
+DecorRegister("vRP_owner", 3)
+DecorRegister("vRP_vmodel", 3)
 local cfg = module("arma-vehicles", "garages")
 local b = cfg.garages
 local garage_type = ""
@@ -405,13 +407,7 @@ RageUI.CreateWhile(1.0, true, function()
             for T, K in pairs(aW) do  
                 local J = K.title
                 local M = K["value"]["_config"]
-                local _, a0, a1, a2, a3, aX =
-                    M.blipid,
-                    M.blipcolor,
-                    M.markerid,
-                    M.markercolours,
-                    M.permissions,
-                    M.type
+                local _, a0, a1, a2, a3, aX = M.blipid,M.blipcolor,M.markerid,M.markercolours,M.permissions,M.type
                 if V(J) and h == aX then
                     RageUI.ButtonWithStyle(J, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
@@ -464,9 +460,9 @@ RageUI.CreateWhile(1.0, true, function()
                                     elseif a_ <= 100 then
                                         b0 = "~g~"
                                     end
-                                    --[[ if tARMA.isVehicleImpounded(E) then -- i'll add sometime when I do more PD shit
+                                    if tARMA.isVehicleImpounded(E) then
                                         aT = aT .. " ~r~(IMPOUNDED)"
-                                    end ]]
+                                    end
                                     RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
                                         if aP then
                                             if (k == 0 or l ~= E) and not t then
@@ -843,6 +839,7 @@ end)
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
     if E then
 		TriggerServerEvent("ARMA:refreshGaragePermissions")
+        TriggerServerEvent("ARMA:getImpoundedVehicles")
 	end
 end)
 
