@@ -300,9 +300,8 @@ end
 function impoundVehicle(entityId)
     if globalOnPoliceDuty then
         local user_id = tonumber(DecorGetInt(entityId, "vRP_owner"))
-        print(user_id)
         if user_id > 0 then
-            exports.ARMA:impound(user_id, GetEntityModel(entityId), VehToNet(entityId), entityId)
+            exports.arma:impound(user_id, GetEntityModel(entityId), VehToNet(entityId), entityId)
         else
             TriggerEvent("ARMA:Notify","~r~Vehicle is not owned by anyone")
             if GetPedInVehicleSeat(entityId, -1) == 0 and GetPedInVehicleSeat(entityId, 0) == 0 and NetworkGetEntityIsNetworked(entityId) then
