@@ -183,5 +183,3 @@ AddEventHandler('weaponDamageEvent', function(sender, ev)
         PerformHttpRequest(damagelogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
 	end
 end)
-
-print("[ARMA] ^2Killfeed tables initialised.^0")
