@@ -12,7 +12,7 @@ AddEventHandler("ARMA:delGunDelete", function(object)
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         TriggerClientEvent("ARMA:deletePropClient", -1, object)
         if netObjects[object] then
-            TriggerClientEvent("ARMA:returnObjectDeleted", source, 'This object was created by ~b~'..netObjects[object].name..' ~w~Temp ID: ~b~'..netObjects[object].source..' ~w~Perm ID: ~b~'..netObjects[object].id)
+            TriggerClientEvent("ARMA:returnObjectDeleted", source, 'This object was created by ~b~'..netObjects[object].name..'~w~. Temp ID: ~b~'..netObjects[object].source..'~w~.Perm ID: ~b~'..netObjects[object].id..'~w~.')
         end
     end
 end)
