@@ -152,7 +152,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                     else
                         TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                     end
-                elseif tickets[ticketID].type == 'nhs' and ARMA.hasPermission(user_id, "nhs.menu") then
+                elseif tickets[ticketID].type == 'nhs' and ARMA.hasPermission(user_id, "nhs.onduty.permission") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
                             ARMAclient.notify(v.tempID,{"~g~Your NHS call has been accepted!"})
@@ -192,5 +192,5 @@ end)
 RegisterNetEvent("ARMA:getNumOfNHSOnline")
 AddEventHandler("ARMA:getNumOfNHSOnline", function()
     local source = source
-    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, ARMA.getUsersByPermission('nhs.menu'))
+    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, ARMA.getUsersByPermission('nhs.onduty.permission'))
 end)
