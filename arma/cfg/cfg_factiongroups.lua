@@ -1,13 +1,13 @@
 local cfg = {}
 
 cfg.metPoliceRanks = {
-    {"CID Constable", 30000},
-    {"CID Sergeant", 40000},
+    --{"CID Constable", 30000},
+    --{"CID Sergeant", 40000},
     {"Special Constable", 55000},
-    {"NPAS", 45000},
+    --{"NPAS", 45000},
     {"Custody Sergeant", 20000},
     {"PCSO", 20000},
-    {"PC", 25000},
+    {"Police Constable", 25000},
     {"Senior Constable", 30000},
     {"Sergeant", 35000},
     {"Inspector", 40000},
@@ -15,7 +15,7 @@ cfg.metPoliceRanks = {
     {"Superintendent", 50000},
     {"Chief Superintendent", 55000},
     {"Commander", 60000},
-    {"Dep. Asst. Commissioner", 65000},
+    {"Deputy Assistant Commissioner", 65000},
     {"Assistant Commissioner", 70000},
     {"Deputy Commissioner", 75000},
     {"Commissioner", 80000}
