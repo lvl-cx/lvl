@@ -63,7 +63,9 @@ AddEventHandler("ARMA:claimScubaReward", function(PermID)
     local user_id = ARMA.getUserId(source)
     if PermID == user_id then
         if currentDivers[PermID]~=nil and currentDivers[PermID].currentJob.jobActive==false then
-            ARMA.giveBankMoney(PermID,tonumber("1"..currentDivers[PermID].currentJob.collectedPackages.."000"))
+            local reward = tonumber("1"..currentDivers[PermID].currentJob.collectedPackages.."000")
+            ARMA.giveBankMoney(PermID,reward)
+            ARMAclient.notify(source, {"~g~You have been paid £"..getMoneyStringFormatted(reward).."."})
             currentDivers[PermID]=nil
         end
     end
