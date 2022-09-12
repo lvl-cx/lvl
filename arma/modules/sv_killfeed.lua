@@ -42,6 +42,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
             weaponhash = getWeaponName(weaponhash)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(killer), GetPlayerName(source), weaponhash, suicide, distance, killedgroup, killergroup)
             TriggerEvent('ARMA:checkOrganHeistKill', source, killer)
+            TriggerClientEvent('ARMA:onPlayerKilledPed', killer, source)
             local embed = {
                 {
                   ["color"] = "16448403",
