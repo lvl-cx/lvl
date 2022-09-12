@@ -828,7 +828,39 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, "https://cmgstudios.net/upld/upload.php")
+        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        local command = {
+            {
+                ["color"] = "16448403",
+                ["title"] = "ARMA Screenshot Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(target),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = target,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = target_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Hours",
+                        ["value"] = math.ceil(ARMA.getUserDataTable(target_id).PlayerTime/60) or 0,
+                        ["inline"] = true
+                    },
+                }
+            }
+        }
+        local webhook = "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
@@ -844,7 +876,39 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://cmgstudios.net/upld/upload.php")
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        local command = {
+            {
+                ["color"] = "16448403",
+                ["title"] = "ARMA Video Logs",
+                ["description"] = "",
+                ["text"] = "ARMA Server #1",
+                ["fields"] = {
+                    {
+                        ["name"] = "Player Name",
+                        ["value"] = GetPlayerName(target),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player TempID",
+                        ["value"] = target,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player PermID",
+                        ["value"] = target_id,
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Player Hours",
+                        ["value"] = math.ceil(ARMA.getUserDataTable(target_id).PlayerTime/60) or 0,
+                        ["inline"] = true
+                    },
+                }
+            }
+        }
+        local webhook = "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY"
+        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
