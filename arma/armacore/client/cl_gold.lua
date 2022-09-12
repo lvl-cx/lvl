@@ -108,36 +108,6 @@ function Animation()
   end)
 end
 
--- [Blips]
-
-
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Gold.Gather.x,Drugs.Gold.Gather.y,Drugs.Gold.Gather.z)
-  SetBlipSprite(blip, 85)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 5)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Gold Gather")
-  EndTextCommandSetBlipName(blip)
-end)
-
-Citizen.CreateThread(function()
-  blip = AddBlipForCoord(Drugs.Gold.Process.x,Drugs.Gold.Process.y,Drugs.Gold.Process.z)
-  SetBlipSprite(blip, 85)
-  SetBlipScale(blip, 0.6)
-  SetBlipDisplay(blip, 2)
-  SetBlipColour(blip, 5)
-  SetBlipAsShortRange(blip, true)
-  BeginTextCommandSetBlipName("STRING")
-  AddTextComponentString("Gold Process")
-  EndTextCommandSetBlipName(blip)
-end)
--- [Functions]
-
-
 function isInArea(v, dis) 
     
   if #(GetEntityCoords(PlayerPedId(-1)) - v) <= dis then  

@@ -1413,33 +1413,19 @@ function UnfakeVeh()
 	SetVehicleWindowTint(veh, myveh.windowtint)
 end
 
---Still the good old way of adding blips
-local function AddBlips()
-	for i,pos in ipairs(garages) do
-		local blip = AddBlipForCoord(pos.inside.x,pos.inside.y,pos.inside.z)
-		SetBlipSprite(blip, 72)
-		SetBlipAsShortRange(blip,true)
-		SetBlipScale(blip, 0.7)
-		if i == 5 then
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Los Santos Customs")
-			EndTextCommandSetBlipName(blip)
-		elseif i == 6 then
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Los Santos Customs")
-			EndTextCommandSetBlipName(blip)
-		end
-	end
-end
-
---Adding all blips on first spawn
-local firstspawn = 0
-AddEventHandler('playerSpawned', function(spawn)
-	FreezeEntityPosition(GetPlayerPed(-1), false)
-	if firstspawn == 0 then
-		AddBlips()
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
 		TriggerServerEvent('getGarageInfo')
-		firstspawn = 1
+		FreezeEntityPosition(GetPlayerPed(-1), false)
+		local m=function(n)
+        end
+        local o=function(n)
+        end
+        local p=function(n)
+        end
+        for q,h in pairs(garages)do 
+            tARMA.addBlip(h.inside.x,h.inside.y,h.inside.z,72, nil, "LS Customs")
+        end 
 	end
 end)
 
