@@ -158,7 +158,6 @@ function startScubaDiving()
     while GetVehiclePedIsIn(PlayerPedId(), false) ~= B do
         Wait(250)
     end
-    --tARMA.notify("~g~Scuba Diving job ended, return to HQ to get paid!")
     f = "~g~Scuba Diving job ended, return to HQ to get paid!"
     SetNewWaypoint(-2195.6926269531, -394.82040405273)
     y()
