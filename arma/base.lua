@@ -145,6 +145,7 @@ Citizen.CreateThread(function()
     fuel_level INT NOT NULL DEFAULT 100,
     impounded BOOLEAN NOT NULL DEFAULT 0,
     impound_info varchar(2048) NOT NULL DEFAULT '',
+    impound_time VARCHAR(100) NOT NULL DEFAULT '',
     CONSTRAINT pk_user_vehicles PRIMARY KEY(user_id,vehicle),
     CONSTRAINT fk_user_vehicles_users FOREIGN KEY(user_id) REFERENCES arma_users(id) ON DELETE CASCADE
     );
