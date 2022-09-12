@@ -4,20 +4,6 @@ AddEventHandler("ARMA:hsSounds", function(status)
     playingHeadshotSounds = status
 end)
 
-CreateThread(function()
-    RequestScriptAudioBank("DLC_HITMARKERS\\HITMARKERS_ONE")
-    while not RequestScriptAudioBank("DLC_HITMARKERS\\HITMARKERS_ONE") do
-        Wait(0)
-    end
-    if not HasStreamedTextureDictLoaded("hitmarker") then
-        RequestStreamedTextureDict("hitmarker")
-        while not HasStreamedTextureDictLoaded("hitmarker") do
-            Wait(0)
-        end
-    end
-end)
-
-
 local function Bool(num) 
     return num == 1 or num == true
 end
