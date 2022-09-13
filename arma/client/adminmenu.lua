@@ -154,6 +154,7 @@ local groups = {
     ["Lorry Driver"] = "Lorry Driver",
     ["Taco Seller"] = "Taco Seller",
     ["Burger Shot Cook"] = "Burger Shot Cook",
+    ["Cinematic"] = "Cinematic Menu",
 }
 
 
