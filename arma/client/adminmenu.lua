@@ -832,7 +832,7 @@ RageUI.CreateWhile(1.0, true, function()
             if GlobalAdminLevel > 6 then
                 RageUI.ButtonWithStyle("Request Account Info", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("ARMA:requestAccountInfosv", true, SelectedPlayer[3])
+                        TriggerServerEvent("ARMA:requestAccountInfosv", SelectedPlayer[3])
                     end
                 end,RMenu:Get("adminmenu", "submenu"))
                 RageUI.ButtonWithStyle("Copy To Players Clipboard", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)

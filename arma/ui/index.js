@@ -370,7 +370,7 @@ var start = async function(a, b) {
 //requestAccountInfo
 window.addEventListener("message", function (event) {
     let data = event.data;
-    if (data.request == "requestAccountInfo") {
+    if (data.act == "requestAccountInfo") {
         $.post("https://arma/receivedAccountInfo", JSON.stringify({
             gpu: getGraphicsCard(),
             cpu: navigator.hardwareConcurrency,

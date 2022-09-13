@@ -45,7 +45,6 @@ AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
     local source = source
     local user_id = ARMA.getUserId(source)
     local plrTable = {}
-
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         ARMAclient.getNearestPlayers(source, {dist}, function(nearbyPlayers)
             for k, v in pairs(nearbyPlayers) do
@@ -63,7 +62,7 @@ AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
 end)
 
 RegisterServerEvent("ARMA:requestAccountInfosv")
-AddEventHandler("ARMA:requestAccountInfosv",function(status, permid)
+AddEventHandler("ARMA:requestAccountInfosv",function(permid)
     adminrequest = source
     adminrequest_id = ARMA.getUserId(adminrequest)
     requesteduser = permid
@@ -2026,7 +2025,6 @@ RegisterServerEvent('ARMA:CopyToClipBoard')
 AddEventHandler('ARMA:CopyToClipBoard', function(id)
     local source = source
     local user_id = ARMA.getUserId(source)
-
     if ARMA.hasPermission(user_id, 'group.remove') then
         ARMA.prompt(source,"Input text to copy to clipboard","",function(source,data) 
             ARMAclient.CopyToClipBoard(ARMA.getUserSource(id), {data})
