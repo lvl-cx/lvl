@@ -51,7 +51,7 @@ Citizen.CreateThread(function()
     while true do
         math.randomseed(GetGameTimer())
         num = math.random(1,#ARMATips)
-        TriggerEvent("chatMessage", "^1[ARMA Tips]^1  " .. "^5" .. ARMATips[num] .. "^5")
+        TriggerEvent("chatMessage", "", {255, 0, 0}, "^1[ARMA Tips]^1  " .. "^5" .. ARMATips[num], "ooc")
         Wait(600000)
     end
 end)
