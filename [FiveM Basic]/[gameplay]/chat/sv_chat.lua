@@ -13,9 +13,6 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
     if not message or not author then
         return
     end
-    -- TriggerEvent('chatMessage', source, author, message)
-    -- TriggerClientEvent('chatMessage', -1, author,  { 255, 255, 255 }, message, "twt")
-
     if not WasEventCanceled() then
         for word in pairs(blockedWords) do
             if(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(message:lower(), "-", ""), ",", ""), "%.", ""), " ", ""), "*", ""), "+", ""):find(blockedWords[word])) then

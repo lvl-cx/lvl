@@ -271,7 +271,7 @@ end)
 
 
 
-RegisterCommand('clear', function(source, args, rawCommand)
+RegisterCommand('cc', function(source, args, rawCommand)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.ban') then
         TriggerClientEvent('chat:clear',-1)             
