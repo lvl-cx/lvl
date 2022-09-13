@@ -136,11 +136,9 @@ AddEventHandler('ARMA:getPlayerListData', function()
         local hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0
         if ARMA.hasPermission(k, 'admin.tickets') then
             staff[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'staff'), hours = hours}
-            print(json.encode(staff))
         end
         if ARMA.hasPermission(k, 'police.onduty.permission') then
             police[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
-            print(json.encode(police))
         elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
             nhs[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
         elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
@@ -193,7 +191,7 @@ Citizen.CreateThread(function()
                         ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
                     end
                 end
-            elseif ARMA.hasPermission(k, "nhs perm") then
+            elseif ARMA.hasPermission(k, "nhs.onduty.permission") then
                 for a,b in pairs(paycheckscfg.nhsRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', '') then
                         ARMA.giveMoney(k, b[2])
@@ -207,7 +205,7 @@ Citizen.CreateThread(function()
                         ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
                     end
                 end
-            elseif ARMA.hasPermission(k, "hmp perm") then
+            elseif ARMA.hasPermission(k, "prisonguard.onduty.permission") then
                 for a,b in pairs(paycheckscfg.hmpRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', '') then
                         ARMA.giveMoney(k, b[2])
