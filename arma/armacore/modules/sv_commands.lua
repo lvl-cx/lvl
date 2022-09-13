@@ -9,7 +9,7 @@ RegisterCommand("getmytempid", function(source)
 end)
 
 
-RegisterCommand("s", function(source,args, rawCommand)
+RegisterCommand("a", function(source,args, rawCommand)
     user_id = ARMA.getUserId(source)   
     if not ARMA.hasPermission(user_id, "admin.tickets") then
         local playerName = "Server "
@@ -18,12 +18,12 @@ RegisterCommand("s", function(source,args, rawCommand)
         return 
     end
     local msg = rawCommand:sub(2)
-    local playerName =  "^7[Staff Chat] " .. GetPlayerName(source)..": "
+    local playerName =  "^3Admin Chat | " .. GetPlayerName(source)..": "
     local players = GetPlayers()
-    for i,v in pairs(players) do 
+    for i,v in pairs(ARMA.getUsersByPermission('admin.tickets')) do 
         name = GetPlayerName(v)
         user_id = ARMA.getUserId(v)   
-        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "staff")
+        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "ooc")
     end
 end)
 
@@ -38,14 +38,14 @@ RegisterCommand("p", function(source,args, rawCommand)
     local msg = rawCommand:sub(2)
     local playerName =  "^7[Police Chat] " .. GetPlayerName(source)..": "
     local players = GetPlayers()
-    for i,v in pairs(players) do 
+    for i,v in pairs(ARMA.getUsersByPermission('police.onduty.permission')) do 
         name = GetPlayerName(v)
         user_id = ARMA.getUserId(v)   
         TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "police")
     end
 end)
 
-RegisterCommand("f", function(source,args, rawCommand)
+--[[ RegisterCommand("f", function(source,args, rawCommand)
     user_id = ARMA.getUserId(source)   
     if not ARMA.hasPermission(user_id, "police.onduty.permission") and not ARMA.hasPermission(user_id, "prisonguard.onduty.permission") then
         local playerName = "Server "
@@ -61,7 +61,7 @@ RegisterCommand("f", function(source,args, rawCommand)
         user_id = ARMA.getUserId(v)   
         TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "faction")
     end
-end)
+end) ]]
 
 
 
