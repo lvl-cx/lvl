@@ -3,7 +3,7 @@ local cfg = {}
 
 
 cfg.groups = {
-	["dev"] = {
+	["Developer"] = {
         "dev.menu",
         "dev.spawncar",
         "dev.spawnweapon",
@@ -157,81 +157,7 @@ cfg.groups = {
 		"chat.announce",
 		"cardev.menu",
 	},
-	["operationsmanager"] = {
-        "dev.menu",
-        "dev.spawncar",
-        "dev.spawnweapon",
-        "dev.deletecar",
-        "dev.fixcar",
-		"dev.tp2coords",
-	    "dev.getcoords",
-		"admin.special",
-		"cardev.menu",
-		"chat.announce",
-
-
-		"admin.addcar",
-		"admin.spawnGun",
-        "admin.menu",
-        "admin.warn",
-		"admin.vehmenu",
-        "admin.showwarn",
-        "admin.ban",
-		"admin.unban",
-        "admin.kick",
-        "admin.revive",
-        "admin.tp2player",
-        "admin.summon",
-        "admin.freeze",
-        "admin.getgroups",
-        "admin.spectate",
-        "admin.screenshot",
-        "admin.slap",
-        "admin.givemoney",
-        "admin.tp2waypoint",
-        "admin.tp2coords",
-		"admin.removewarn",
-		"admin.spawnBmx",
-		"admin.idsabovehead",
-		"admin.noclip",
-		"admin.managecommunitypot",
-		"admin.staffblips",
-		
-			
-		"admin.staffAddGroups",
-		"admin.povAddGroups",
-		"admin.mpdAddGroups",
-
-		"group.add.vip",
-        "group.add.staffmanager",
-        "group.add.commanager",
-        "group.add.headadmin",
-        "group.add.senioradmin",
-        "group.add.administrator",
-        "group.add.srmoderator",
-        "group.add.moderator",
-        "group.add.supportteam",
-        "group.add.trial",
-		"group.add.pov",
-        "group.add",
-
-		"group.remove.vip",
-        "group.remove.staffmanager",
-        "group.remove.commanager",
-        "group.remove.headadmin",
-        "group.remove.senioradmin",
-        "group.remove.administrator",
-        "group.remove.srmoderator",
-        "group.remove.moderator",
-        "group.remove.supportteam",
-        "group.remove.trial",
-		"group.remove.pov",
-		"group.remove",
-		
-		"admin.whitelisted",
-		"admin.tickets",
-	},
-	["staffmanager"] = {
+	["Staff Manager"] = {
 		"dev.menu",
         "dev.spawncar",
         "dev.deletecar",
@@ -300,7 +226,7 @@ cfg.groups = {
 		"admin.tickets",
 		"chat.announce",
 	},
-	["commanager"] = {
+	["Community Manager"] = {
 		
 		"admin.menu",
 		"admin.warn",
@@ -356,7 +282,7 @@ cfg.groups = {
 		"admin.tickets",
 		"chat.announce",
 	  },
-	["headadmin"] = {
+	["Head Admin"] = {
 		
 		"admin.menu",
 		"admin.warn",
@@ -410,7 +336,7 @@ cfg.groups = {
 		"admin.tickets",
 		"chat.announce",
   },
-  ["senioradmin"] = {
+  ["Senior Admin"] = {
 	
 		"admin.menu",
 		"admin.warn",
@@ -437,7 +363,7 @@ cfg.groups = {
 		"admin.whitelisted",
 		"admin.tickets",
   },
-  ["administrator"] = {
+  ["Admin"] = {
 	
 		"admin.menu",
 		"admin.warn",
@@ -463,7 +389,7 @@ cfg.groups = {
 		"admin.idsabovehead",
 		"vehicle.delete",
   },
-  ["srmoderator"] = {
+  ["Senior Mod"] = {
 	
 		"admin.menu",
 		"admin.warn",
@@ -485,7 +411,7 @@ cfg.groups = {
 		"admin.idsabovehead",
 		"vehicle.delete",
     },
-  ["moderator"] = {
+  ["Moderator"] = {
 	
 		"admin.menu",
 		"admin.warn",
@@ -507,7 +433,7 @@ cfg.groups = {
 		"vehicle.delete",
 		
   },
-  ["supportteam"] = {
+  ["Support Team"] = {
 		"admin.menu",
 		"admin.warn",
 		"admin.showwarn",
@@ -525,7 +451,7 @@ cfg.groups = {
 		"admin.ban",
 		
   },
-  ["trialstaff"] = {
+  ["Trial Staff"] = {
 		"admin.menu",
 		"admin.warn",
 		"admin.showwarn",

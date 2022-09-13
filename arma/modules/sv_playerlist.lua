@@ -1,6 +1,15 @@
 local staffGroups = {
     ['Founder'] = true,
     ['Developer'] = true,
+    ['Staff Manager'] = true,
+    ['Community Manager'] = true,
+    ['Head Admin'] = true,
+    ['Senior Admin'] = true,
+    ['Admin'] = true,
+    ['Senior Moderator'] = true,
+    ['Moderator'] = true,
+    ['Support Team'] = true,
+    ['Trial Staff'] = true,
 }
 local pdGroups = {
     ["Commissioner Clocked"]=true,
@@ -123,28 +132,29 @@ AddEventHandler('ARMA:getPlayerListData', function()
     local hmp = {}
     local lfb = {}
     local civillians = {}
-    for k,v in pairs(ARMA.getUsersByPermission("admin.tickets")) do
-        staff[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = getGroupInGroups(k, 'staff'), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
-    end
-    for k,v in pairs(ARMA.getUsersByPermission("police.onduty.permission")) do
-        police[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
-    end
-    for k,v in pairs(ARMA.getUsersByPermission("nhs perm")) do
-        nhs[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
-    end
-    for k,v in pairs(ARMA.getUsersByPermission("lfb perm")) do
-        lfb[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
-    end
-    for k,v in pairs(ARMA.getUsersByPermission("prisonguard.onduty.permission")) do
-        hmp[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
-    end
     for k,v in pairs(ARMA.getUsers()) do
+        local hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0
+        if ARMA.hasPermission(k, 'admin.tickets') then
+            staff[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'staff'), hours = hours}
+            print(json.encode(staff))
+        end
+        if ARMA.hasPermission(k, 'police.onduty.permission') then
+            police[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
+            print(json.encode(police))
+        elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
+            nhs[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
+        elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
+            hmp[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
+        elseif ARMA.hasPermission(k, 'lfb perm') then
+            lfb[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = hours}
+        end
         if not ARMA.hasPermission(k, "police.onduty.permission") and not ARMA.hasPermission(k, "nhs perm") and not ARMA.hasPermission(k, "lfb perm") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
-            civillians[k] = {name = GetPlayerName(ARMA.getUserSource(k)), rank = getGroupInGroups(k, 'default'), hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0}
+            civillians[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'default'), hours = hours}
         end
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
 end)
+
 
 
 

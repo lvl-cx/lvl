@@ -2155,34 +2155,32 @@ AddEventHandler('ARMA:getAdminLevel', function()
     local source = source
     local user_id = ARMA.getUserId(source)
 
-    if ARMA.hasGroup(user_id, 'dev') then
+    if ARMA.hasGroup(user_id, 'Developer') then
         ARMAclient.setDev(source, {})
     end
         
     local adminlevel = 0
-    if ARMA.hasGroup(user_id,"dev") then
+    if ARMA.hasGroup(user_id,"Developer") then
         adminlevel = 12
     elseif ARMA.hasGroup(user_id,"Founder") then
         adminlevel = 11
-    elseif ARMA.hasGroup(user_id,"operationsmanager") then
-        adminlevel = 10
-    elseif ARMA.hasGroup(user_id,"staffmanager") then    
+    elseif ARMA.hasGroup(user_id,"Staff Manager") then    
         adminlevel = 9
-    elseif ARMA.hasGroup(user_id,"commanager") then
+    elseif ARMA.hasGroup(user_id,"Community Manager") then
         adminlevel = 8
-    elseif ARMA.hasGroup(user_id,"headadmin") then
+    elseif ARMA.hasGroup(user_id,"Head Admin") then
         adminlevel = 7
-    elseif ARMA.hasGroup(user_id,"senioradmin") then
+    elseif ARMA.hasGroup(user_id,"Senior Admin") then
         adminlevel = 6
-    elseif ARMA.hasGroup(user_id,"administrator") then
+    elseif ARMA.hasGroup(user_id,"Admin") then
         adminlevel = 5
-    elseif ARMA.hasGroup(user_id,"srmoderator") then
+    elseif ARMA.hasGroup(user_id,"Senior Mod") then
         adminlevel = 4
-    elseif ARMA.hasGroup(user_id,"moderator") then
+    elseif ARMA.hasGroup(user_id,"Moderator") then
         adminlevel = 3
-    elseif ARMA.hasGroup(user_id,"supportteam") then
+    elseif ARMA.hasGroup(user_id,"Support Team") then
         adminlevel = 2
-    elseif ARMA.hasGroup(user_id,"trialstaff") then
+    elseif ARMA.hasGroup(user_id,"Trial Staff") then
         adminlevel = 1
     end
     ARMAclient.setStaffLevel(source, {adminlevel})
