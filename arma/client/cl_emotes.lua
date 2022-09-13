@@ -195,14 +195,12 @@ local function aa(ab)
     end
 end
 local function ad(z)
-    Citizen.CreateThreadNow(
-        function()
-            local ae = z[1]
-            tARMA.loadAnimDict(ae)
-            SetPedMovementClipset(PlayerPedId(), ae, 0.2)
-            RemoveAnimSet(ae)
-        end
-    )
+    Citizen.CreateThreadNow(function()
+        local ae = z[1]
+        tARMA.loadAnimDict(ae)
+        SetPedMovementClipset(PlayerPedId(), ae, 0.2)
+        RemoveAnimSet(ae)
+    end)
 end
 local function af(ag, ah)
     local ai, aj = type(ag), type(ah)
