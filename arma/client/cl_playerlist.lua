@@ -60,37 +60,37 @@ function sendFullPlayerListData()
     if H >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_staff">Staff</span>'})
     end
-    for S, T in ipairs(sortedPlayersStaff) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+    for S, T in pairs(sortedPlayersStaff) do
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersStaff[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersStaff[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersStaff[S].hours) .. "hrs</span><br/>"})
     end
     if I >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_police">MET Police</span>'})
     end
-    for S, T in ipairs(sortedPlayersPolice) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+    for S, T in pairs(sortedPlayersPolice) do
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersPolice[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersPolice[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersPolice[S].hours) .. "hrs</span><br/>"})
     end
     if J >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_nhs">NHS</span>'})
     end
-    for S, T in ipairs(sortedPlayersNHS) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+    for S, T in pairs(sortedPlayersNHS) do
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersNHS[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersNHS[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersNHS[S].hours) .. "hrs</span><br/>"})
     end
     if K >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_lfb">LFB</span>'})
     end
-    for S, T in ipairs(sortedPlayersLFB) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+    for S, T in pairs(sortedPlayersLFB) do
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersLFB[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersLFB[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersLFB[S].hours) .. "hrs</span><br/>"})
     end
     if L >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_hmp">HMP</span>'})
     end
-    for S, T in ipairs(sortedPlayersHMP) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+    for S, T in pairs(sortedPlayersHMP) do
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersHMP[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersHMP[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersHMP[S].hours) .. "hrs</span><br/>"})
     end
     if M >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_civs">Civilians</span>'})
     end
     for S, T in ipairs(sortedPlayersCivillians) do
-        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(T.name) ..'</span><span class="job">' ..tostring(T.rank) .. '</span><span class="playtime">' .. tostring(T.hours) .. "hrs</span><br/>"}        )
+        SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersCivillians[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersCivillians[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersCivillians[S].hours) .. "hrs</span><br/>"})
     end
 end
