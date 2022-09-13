@@ -2198,3 +2198,13 @@ AddEventHandler('ARMA:zapPlayer', function(A)
         TriggerClientEvent("ARMA:useTheForceSync", -1, GetEntityCoords(GetPlayerPed(A)))
     end
 end)
+
+RegisterNetEvent('ARMA:theForceSync')
+AddEventHandler('ARMA:theForceSync', function(A, q, r, s)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasGroup(source, 'Founder') then
+        TriggerClientEvent("ARMA:useTheForceSync", A, q, r, s)
+        TriggerClientEvent("ARMA:useTheForceTarget", A)
+    end
+end)
