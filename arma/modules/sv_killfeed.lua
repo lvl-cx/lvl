@@ -28,14 +28,14 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         distance = math.floor(distance) 
     end
     if killtype == 'killed' then
-        if ARMA.hasPermission(ARMA.getUserId(source), 'police.menu') then
+        if ARMA.hasPermission(ARMA.getUserId(source), 'police.onduty.permission') then
             killedgroup = 'police'
-        elseif ARMA.hasPermission(ARMA.getUserId(source), 'nhs.menu') then
+        elseif ARMA.hasPermission(ARMA.getUserId(source), 'nhs.onduty.permission') then
             killedgroup = 'nhs'
         end
-        if ARMA.hasPermission(ARMA.getUserId(killer), 'police.menu') then
+        if ARMA.hasPermission(ARMA.getUserId(killer), 'police.onduty.permission') then
             killergroup = 'police'
-        elseif ARMA.hasPermission(ARMA.getUserId(killer), 'nhs.menu') then
+        elseif ARMA.hasPermission(ARMA.getUserId(killer), 'nhs.onduty.permission') then
             killergroup = 'nhs'
         end
         if killer ~= nil then
