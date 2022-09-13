@@ -279,10 +279,8 @@ end
 
 
 RegisterCommand("dv", function()
-    if staffMode or tARMA.isDev() then
+    if staffMode or tARMA.isDev() or tARMA.globalOnPoliceDuty() then
         TriggerEvent( "wk:deleteVehicle" )
-    else
-        TriggerServerEvent('other:deletevehicle')
     end
 end)
 
@@ -316,20 +314,17 @@ local numRetries = 5
 RegisterNetEvent("wk:deleteVehicle")
 AddEventHandler("wk:deleteVehicle", function()
     local ped = GetPlayerPed( -1 )
-
     if ( DoesEntityExist( ped ) and not IsEntityDead( ped ) ) then 
         local pos = GetEntityCoords( ped )
-
         if ( IsPedSittingInAnyVehicle( ped ) ) then 
             local vehicle = GetVehiclePedIsIn( ped, false )
-
             if ( GetPedInVehicleSeat( vehicle, -1 ) == ped ) then 
                 DeleteGivenVehicle( vehicle, numRetries )
             else 
-                tARMA.notify( "You must be in the driver's seat!" )
+                tARMA.notify( "~r~You must be in the driver's seat!" )
             end 
         else
-            tARMA.notify( "You must be in a vehicle to delete it." )
+            tARMA.notify( "~r~You must be in a vehicle to delete it." )
         end 
     end 
 end )
