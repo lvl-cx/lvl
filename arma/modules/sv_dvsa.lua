@@ -212,7 +212,7 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
     local name = GetPlayerName(source)
     local bank = ARMA.getBankMoney(user_id)
     local speed = tonumber(speed)
-    local overspeed = speed-180
+    local overspeed = speed-150
     local fine = 5000
     if ARMA.hasPermission(user_id,"police.onduty.permission") then
         return
