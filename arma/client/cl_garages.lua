@@ -6,6 +6,8 @@ local garage_type = ""
 local selected_category = nil
 local Hovered_Vehicles = nil
 local VehiclesFetchedTable = {}
+local RentedVehiclesIn = {}
+local RentedVehiclesOut = {}
 local Table_Type = nil
 local RentedVeh = false
 local SelectedCar = {spawncode = nil, name = nil, plate = nil}
@@ -36,12 +38,12 @@ RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Arma Garages",tARMA.g
 RMenu.Add('ARMAGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_information',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_manage")))
 RMenu.Add('ARMAGarages', 'owned_vehicles_submenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
 RMenu.Add('ARMAGarages', 'owned_vehicles_submenu_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu")))
 RMenu.Add('ARMAGarages', 'scrap_vehicle_confirmation',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage")))
 RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage_submenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_out_information',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage_submenu")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_out_information',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage")))
 RMenu.Add('ARMAGarages', 'customfolders',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
 RMenu.Add('ARMAGarages', 'customfoldersvehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "customfolders")))
 RMenu.Add('ARMAGarages', 'settings',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
@@ -330,8 +332,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.ButtonWithStyle("Garages", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
                 if Selected then
                     VehiclesFetchedTable = {}
-                    Table_Type = true
-                    TriggerServerEvent('ARMA:FetchCars', Table_Type, garage_type)
+                    TriggerServerEvent('ARMA:FetchCars', garage_type)
                     TriggerServerEvent('ARMA:getCustomFolders')
                 end
             end, RMenu:Get("ARMAGarages", "owned_vehicles"))
@@ -344,7 +345,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.ButtonWithStyle("Rent Manager", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAGarages", "rented_vehicles"))
+            RageUI.ButtonWithStyle("Rent Manager", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
+                if Selected then
+                    TriggerServerEvent('ARMA:FetchRented')
+                end
+            end, RMenu:Get("ARMAGarages", "rented_vehicles"))
             RageUI.ButtonWithStyle("Settings", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAGarages", "settings"))
             RageUI.ButtonWithStyle("~y~Fuel all vehicles. (£25,000)", f, {RightLabel = "→→→"}, true,function(aO, aP, aQ)
                 if aQ then
@@ -421,64 +426,52 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'owned_vehicles_submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            if RentedVeh then 
-                RageUI.Separator("~g~Rent Manager")
-                RageUI.ButtonWithStyle(v[1], "Click to manage", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then 
-                        e = i 
-                        f = v[1]
-                        SelectedCar.timeleft = v[2]
-                        RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. v[1])
+            for J,K in pairs(b) do
+                if J == g then
+                    selectedCustomFolder = nil
+                    local aY = {}  
+                    for E, P in pairs(K) do
+                        table.insert(aY, {vehicleId = E, vehicleName = P[1] or "z"})
                     end
-                end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
-            else
-                for J,K in pairs(b) do
-                    if J == g then
-                        selectedCustomFolder = nil
-                        local aY = {}  
-                        for E, P in pairs(K) do
-                            table.insert(aY, {vehicleId = E, vehicleName = P[1] or "z"})
+                    table.sort(aY,function(R, S)
+                        return R.vehicleName < S.vehicleName
+                    end)
+                    for T, K in pairs(aY) do
+                        local E = K.vehicleId
+                        local aT = K.vehicleName
+                        local aZ = false
+                        if selected_category[E] then
+                            aZ = true
                         end
-                        table.sort(aY,function(R, S)
-                            return R.vehicleName < S.vehicleName
-                        end)
-                        for T, K in pairs(aY) do
-                            local E = K.vehicleId
-                            local aT = K.vehicleName
-                            local aZ = false
-                            if selected_category[E] then
-                                aZ = true
-                            end
-                            if E ~= "_config" then
-                                if aZ then
-                                    local a_ = math.floor((q[E] or 0) * 1000) / 1000
-                                    local b0 = ""
-                                    if a_ <= 20 then
-                                        b0 = "~r~"
-                                    elseif a_ <= 50 then
-                                        b0 = "~y~"
-                                    elseif a_ <= 100 then
-                                        b0 = "~g~"
-                                    end
-                                    if tARMA.isVehicleImpounded(E) then
-                                        aT = aT .. " ~r~(IMPOUNDED)"
-                                    end
-                                    RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
-                                        if aP then
-                                            if (k == 0 or l ~= E) and not t then
-                                                DeleteVehicle(k)
-                                                t = true
-                                                aj(E)
-                                                l = E
-                                            end
-                                        end
-                                        if aQ then
-                                            e = E
-                                            f = aT
-                                            RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. aT)
-                                        end
-                                    end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
+                        if E ~= "_config" then
+                            if aZ then
+                                local a_ = math.floor((q[E] or 0) * 1000) / 1000
+                                local b0 = ""
+                                if a_ <= 20 then
+                                    b0 = "~r~"
+                                elseif a_ <= 50 then
+                                    b0 = "~y~"
+                                elseif a_ <= 100 then
+                                    b0 = "~g~"
                                 end
+                                if tARMA.isVehicleImpounded(E) then
+                                    aT = aT .. " ~r~(IMPOUNDED)"
+                                end
+                                RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
+                                    if aP then
+                                        if (k == 0 or l ~= E) and not t then
+                                            DeleteVehicle(k)
+                                            t = true
+                                            aj(E)
+                                            l = E
+                                        end
+                                    end
+                                    if aQ then
+                                        e = E
+                                        f = aT
+                                        RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. aT)
+                                    end
+                                end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
                             end
                         end
                     end
@@ -488,48 +481,37 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            if RentedVeh then
-                RageUI.Separator("~g~Rent Info")
-                RageUI.Separator("Vehicle: " .. f)
-                RageUI.Separator("Spawncode: " .. e)
-                --RageUI.Separator("Time Left: " .. SelectedCar.timeleft) fix later
-                RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..f, {}, true, function(Hovered, Active, Selected)
-                    if Selected then 
-                        TriggerServerEvent("ARMA:CancelRent", e, f, 'renter')
-                    end
-                end)
-            end
-                RageUI.ButtonWithStyle('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then 
-                        RageUI.ActuallyCloseAll()
-                        for F, G in pairs(m) do
-                            if not DoesEntityExist(G) then
-                                table.remove(m, F)
-                            end
+            RageUI.ButtonWithStyle('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                if Selected then 
+                    RageUI.ActuallyCloseAll()
+                    for F, G in pairs(m) do
+                        if not DoesEntityExist(G) then
+                            table.remove(m, F)
                         end
-                        if #m <= 5 then
-                            DeleteVehicle(k)
-                            k = 0
-                            l = 0
-                            n = false
-                            DestroyCam(ah, 0)
-                            RenderScriptCams(0, 0, 1, 1, 1)
-                            ah = 0
-                            SetFocusEntity(GetPlayerPed(PlayerId()))
-                            SetEntityAlpha(tARMA.getPlayerPed(), 255)
-                            FreezeEntityPosition(tARMA.getPlayerPed(), false)
-                            SetEntityCollision(tARMA.getPlayerPed(), true, true)
-                            local ay = globalVehicleOwnership[e]
-                            if ay == nil or not DoesEntityExist(ay[2]) then
-                                TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
-                            else
-                                tARMA.notify("~r~Vehicle is already out!")
-                            end
+                    end
+                    if #m <= 5 then
+                        DeleteVehicle(k)
+                        k = 0
+                        l = 0
+                        n = false
+                        DestroyCam(ah, 0)
+                        RenderScriptCams(0, 0, 1, 1, 1)
+                        ah = 0
+                        SetFocusEntity(GetPlayerPed(PlayerId()))
+                        SetEntityAlpha(tARMA.getPlayerPed(), 255)
+                        FreezeEntityPosition(tARMA.getPlayerPed(), false)
+                        SetEntityCollision(tARMA.getPlayerPed(), true, true)
+                        local ay = globalVehicleOwnership[e]
+                        if ay == nil or not DoesEntityExist(ay[2]) then
+                            TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
                         else
-                            tARMA.notify("~r~You may only take out a maximum of 5 vehicles at a time.")
+                            tARMA.notify("~r~Vehicle is already out!")
                         end
+                    else
+                        tARMA.notify("~r~You may only take out a maximum of 5 vehicles at a time.")
                     end
-                end)
+                end
+            end)
             if not RentedVeh then
                 RageUI.ButtonWithStyle('Crush Vehicle', 'This will ~r~DELETE ~w~this vehicle from your garage.', {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
                     if Selected then
@@ -679,46 +661,24 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
-            RageUI.ButtonWithStyle('Rented Vehicles Out', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    Table_Type = nil
-                    TriggerServerEvent('ARMA:FetchVehiclesOut')
-                end
-            end,RMenu:Get("ARMAGarages", "rented_vehicles_out_manage"))
-            RageUI.ButtonWithStyle('Rented Vehicles In', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Selected then
-                    Table_Type = nil
-                    RentedVeh = true
-                    TriggerServerEvent('ARMA:FetchVehiclesIn')
-                end
-            end,RMenu:Get("ARMAGarages", "rented_vehicles_manage"))
+            if next(RentedVehiclesOut) then
+                RageUI.ButtonWithStyle('Rented Vehicles Out', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                end,RMenu:Get("ARMAGarages", "rented_vehicles_out_manage"))
+            end
+            if next(RentedVehiclesIn) then
+                RageUI.ButtonWithStyle('Rented Vehicles In', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                end,RMenu:Get("ARMAGarages", "rented_vehicles_manage"))
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_out_manage')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == i then 
-                    RageUI.ButtonWithStyle(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            RentedVeh = true
-                            selected_category = v.vehicles
-                        end
-                    end, RMenu:Get("ARMAGarages", "rented_vehicles_out_manage_submenu"))
-                end
-            end
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_out_manage_submenu')) then 
-        RageUI.DrawContent({header = true, glare = false, instructionalButton = true}, function()
-            for i,v in pairs(selected_category) do 
-                RageUI.ButtonWithStyle(v[1], 'Click to view rental information', {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            for i,v in pairs(RentedVehiclesOut.vehicles) do
+                RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        e = v[4]
-                        f = v[1]
-                        SelectedCar.timeleft = v[2]
-                        SelectedCar.rentedto = v[3]
+                        RentedVehicle = i
                     end
                 end, RMenu:Get("ARMAGarages", "rented_vehicles_out_information"))
             end
@@ -726,30 +686,51 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_out_information')) then 
         RageUI.DrawContent({header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Separator("~g~Rent Info")
-            RageUI.Separator("Vehicle: " .. f)
-            RageUI.Separator("Spawncode: " .. e)
-            RageUI.Separator("Time Left: " .. SelectedCar.timeleft)
-            RageUI.Separator("Rented To ID: " .. SelectedCar.rentedto)
-            RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..f, {}, true, function(Hovered, Active, Selected)
-                if Selected then 
-                    TriggerServerEvent("ARMA:CancelRent", e, f, 'owner')
+            for i,v in pairs(RentedVehiclesOut.vehicles) do
+                if RentedVehicle == i then
+                    RageUI.Separator("~g~Rent Info")
+                    RageUI.Separator("Vehicle: " .. v[1])
+                    RageUI.Separator("Spawncode: " .. i)
+                    RageUI.Separator("Time Left: " .. v[2])
+                    RageUI.Separator("Rented To ID: " .. v[3])
+                    RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
+                        if Selected then 
+                            TriggerServerEvent("ARMA:CancelRent", i, v[1], 'owner')
+                        end
+                    end)
                 end
-            end)
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_manage')) then 
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            for i,v in pairs(VehiclesFetchedTable) do 
-                if garage_type == i then 
-                    RageUI.ButtonWithStyle(i, nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            for i,v in pairs(RentedVehiclesIn.vehicles) do
+                RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        RentedVehicle = i
+                    end
+                end, RMenu:Get("ARMAGarages", "rented_vehicles_information"))
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_information')) then 
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+            Hovered_Vehicles = nil 
+            DeleteCar(veh)
+            for i,v in pairs(RentedVehiclesIn.vehicles) do
+                if RentedVehicle == i then
+                    RageUI.Separator("~g~Rent Info")
+                    RageUI.Separator("Vehicle: " .. v[1])
+                    RageUI.Separator("Spawncode: " .. i)
+                    RageUI.Separator("Time Left: " .. v[2])
+                    RageUI.Separator("Rented To ID: " .. v[3])
+                    RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
                         if Selected then 
-                            RentedVeh = true
-                            selected_category = v.vehicles
+                            TriggerServerEvent("ARMA:CancelRent", i, v[1], 'renter')
                         end
-                    end, RMenu:Get("ARMAGarages", "owned_vehicles_submenu"))
+                    end)
                 end
             end
         end)
@@ -761,6 +742,12 @@ RegisterNetEvent('ARMA:ReturnFetchedCars')
 AddEventHandler('ARMA:ReturnFetchedCars', function(table, fuellevels)
     VehiclesFetchedTable = table
     q = fuellevels
+end)
+
+RegisterNetEvent('ARMA:ReturnedRentedCars')
+AddEventHandler('ARMA:ReturnedRentedCars', function(rentedin, rentedout)
+    RentedVehiclesIn = rentedin
+    RentedVehiclesOut = rentedout
 end)
 
 RegisterNetEvent('ARMA:sendFolders')

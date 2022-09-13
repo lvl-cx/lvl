@@ -7,7 +7,7 @@ local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
-MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate, fuel_level FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 0")
+MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate, fuel_level FROM arma_user_vehicles WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_rented_vehicles_out", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE rentedid = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_vehicle","SELECT vehicle FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
@@ -97,83 +97,47 @@ Citizen.CreateThread(function()
 end)
 
 RegisterNetEvent('ARMA:FetchCars')
-AddEventHandler('ARMA:FetchCars', function(owned, type)
+AddEventHandler('ARMA:FetchCars', function(type)
     local source = source
     local user_id = ARMA.getUserId(source)
     local returned_table = {}
     local fuellevels = {}
     if user_id then
-        if not owned then
-            for i, v in pairs(vehicle_groups) do
-                local perms = false
-                local config = vehicle_groups[i]._config
-                if config.type == vehicle_groups[type]._config.type then 
-                    local perm = config.permissions or nil
-                    if next(perm) then
-                        for i, v in pairs(perm) do
-                            if ARMA.hasPermission(user_id, v) then
-                                perms = true
+        MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(pvehicles, affected)
+            for _, veh in pairs(pvehicles) do
+                for i, v in pairs(vehicle_groups) do
+                    local perms = false
+                    local config = vehicle_groups[i]._config
+                    if config.type == vehicle_groups[type]._config.type then 
+                        local perm = config.permissions or nil
+                        if next(perm) then
+                            for i, v in pairs(perm) do
+                                if ARMA.hasPermission(user_id, v) then
+                                    perms = true
+                                end
                             end
+                        else
+                            perms = true
                         end
-                    else
-                        perms = true
-                    end
-                    if perms then 
-                        returned_table[i] = {
-                            ["_config"] = config
-                        }
-                        returned_table[i].vehicles = {}
-                        for a, z in pairs(v) do
-                            if a ~= "_config" then
-                                returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate, veh.fuel_level}
-                                fuellevels[a] = veh.fuel_level
+                        if perms then 
+                            for a, z in pairs(v) do
+                                if a ~= "_config" and veh.vehicle == a then
+                                    if not returned_table[i] then 
+                                        returned_table[i] = {["_config"] = config}
+                                    end
+                                    if not returned_table[i].vehicles then 
+                                        returned_table[i].vehicles = {}
+                                    end
+                                    returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate, veh.fuel_level}
+                                    fuellevels[a] = veh.fuel_level
+                                end
                             end
                         end
                     end
                 end
             end
-            TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
-        else
-            MySQL.query("ARMA/get_vehicles", {
-                user_id = user_id
-            }, function(pvehicles, affected)
-                for _, veh in pairs(pvehicles) do
-                    for i, v in pairs(vehicle_groups) do
-                        local perms = false
-                        local config = vehicle_groups[i]._config
-                        if config.type == vehicle_groups[type]._config.type then 
-                            local perm = config.permissions or nil
-                            if next(perm) then
-                                for i, v in pairs(perm) do
-                                    if ARMA.hasPermission(user_id, v) then
-                                        perms = true
-                                    end
-                                end
-                            else
-                                perms = true
-                            end
-                            if perms then 
-                                for a, z in pairs(v) do
-                                    if a ~= "_config" and veh.vehicle == a then
-                                        if not returned_table[i] then 
-                                            returned_table[i] = {
-                                                ["_config"] = config
-                                            }
-                                        end
-                                        if not returned_table[i].vehicles then 
-                                            returned_table[i].vehicles = {}
-                                        end
-                                        returned_table[i].vehicles[a] = {z[1], z[2], veh.vehicle_plate, veh.fuel_level}
-                                        fuellevels[a] = veh.fuel_level
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-                TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table, fuellevels)
-            end)
-        end
+            TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table, fuellevels)
+        end)
     end
 end)
 
@@ -329,36 +293,40 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                         if tonumber(amount) and tonumber(amount) > 0 and tonumber(amount) < limit then
                                             MySQL.query("ARMA/get_vehicle", {user_id = user_id, vehicle = name}, function(pvehicle, affected)
                                                 if #pvehicle > 0 then
-                                                    ARMAclient.notify(player,{"~r~The player already has this vehicle type."})
+                                                    ARMAclient.notify(player,{"~r~The player already has this vehicle."})
                                                 else
                                                     local tmpdata = ARMA.getUserTmpTable(playerID)
                                                     MySQL.query("ARMA/check_rented", {user_id = playerID, vehicle = veh}, function(pvehicles)
                                                         if #pvehicles > 0 then 
-                                                            ARMAclient.notify(player,{"~r~You cannot rent a rented vehicle!"})
                                                             return
                                                         else
-                                                            ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: £"..amount .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
-                                                                if ok then
-                                                                    local pID = ARMA.getUserId(target)
-                                                                    amount = tonumber(amount)
-                                                                    if ARMA.tryFullPayment(pID,amount) then
-                                                                        ARMAclient.despawnGarageVehicle(player,{'car',15}) 
-                                                                        ARMA.getUserIdentity(pID, function(identity)
-                                                                            local rentedTime = os.time()
-                                                                            rentedTime = rentedTime  + (60 * 60 * tonumber(rent)) 
-                                                                            MySQL.execute("ARMA/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
-                                                                        end)
-                                                                        ARMA.giveBankMoney(playerID, amount)
-                                                                        ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
-                                                                        ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
-                                                                        TriggerClientEvent('ARMA:CloseGarage', player)
-                                                                    else
-                                                                        ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
-                                                                        ARMAclient.notify(target,{"~r~You don't have enough money!"})
-                                                                    end
-                                                                else
-                                                                    ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to rent the car."})
-                                                                    ARMAclient.notify(target,{"~r~You have refused to rent "..GetPlayerName(player).."'s car."})
+                                                            ARMA.prompt(player, "Please replace text with YES or NO to confirm", "Rent Details:\nVehicle: "..name.."\nRent Cost: "..amount.."\nDuration: "..rent.." hours\nRenting to player: "..GetPlayerName(target).."("..ARMA.getUserId(target)..")",function(player,details)
+                                                                if string.upper(details) == 'YES' then
+                                                                    ARMAclient.notify(player, {'~g~Rent offer sent!'})
+                                                                    ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: £"..amount .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
+                                                                        if ok then
+                                                                            local pID = ARMA.getUserId(target)
+                                                                            amount = tonumber(amount)
+                                                                            if ARMA.tryFullPayment(pID,amount) then
+                                                                                ARMAclient.despawnGarageVehicle(player,{'car',15}) 
+                                                                                ARMA.getUserIdentity(pID, function(identity)
+                                                                                    local rentedTime = os.time()
+                                                                                    rentedTime = rentedTime  + (60 * 60 * tonumber(rent)) 
+                                                                                    MySQL.execute("ARMA/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
+                                                                                end)
+                                                                                ARMA.giveBankMoney(playerID, amount)
+                                                                                ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                                TriggerClientEvent('ARMA:CloseGarage', player)
+                                                                            else
+                                                                                ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
+                                                                                ARMAclient.notify(target,{"~r~You don't have enough money!"})
+                                                                            end
+                                                                        else
+                                                                            ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to rent the car."})
+                                                                            ARMAclient.notify(target,{"~r~You have refused to rent "..GetPlayerName(player).."'s car."})
+                                                                        end
+                                                                    end)
                                                                 end
                                                             end)
                                                         end
@@ -389,14 +357,13 @@ end)
 
 
 
-RegisterNetEvent('ARMA:FetchVehiclesIn')
-AddEventHandler('ARMA:FetchVehiclesIn', function()
-    local returned_table = {}
+RegisterNetEvent('ARMA:FetchRented')
+AddEventHandler('ARMA:FetchRented', function()
+    local rentedin = {}
+    local rentedout = {}
     local source = source
     local user_id = ARMA.getUserId(source)
-    MySQL.query("ARMA/get_rented_vehicles_in", {
-        user_id = user_id
-    }, function(pvehicles, affected)
+    MySQL.query("ARMA/get_rented_vehicles_in", {user_id = user_id}, function(pvehicles, affected)
         for _, veh in pairs(pvehicles) do
             for i, v in pairs(vehicle_groups) do
                 local config = vehicle_groups[i]._config
@@ -410,13 +377,8 @@ AddEventHandler('ARMA:FetchVehiclesIn', function()
                 end
                 for a, z in pairs(v) do
                     if a ~= "_config" and veh.vehicle == a then
-                        if not returned_table[i] then 
-                            returned_table[i] = {
-                                ["_config"] = config
-                            }
-                        end
-                        if not returned_table[i].vehicles then 
-                            returned_table[i].vehicles = {}
+                        if not rentedin.vehicles then 
+                            rentedin.vehicles = {}
                         end
                         local hoursLeft = ((tonumber(veh.rentedtime)-os.time()))/3600
                         local minutesLeft = nil
@@ -428,60 +390,46 @@ AddEventHandler('ARMA:FetchVehiclesIn', function()
                             hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
                             datetime = hoursLeft .. " hrs" 
                         end
-                        returned_table[i].vehicles[a] = {z[1], datetime}
+                        rentedin.vehicles[a] = {z[1], datetime, veh.user_id, a}
                     end
                 end
             end
         end
-        TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
-    end)
-end)
-
-RegisterNetEvent('ARMA:FetchVehiclesOut')
-AddEventHandler('ARMA:FetchVehiclesOut', function()
-    local returned_table = {}
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    MySQL.query("ARMA/get_rented_vehicles_out", {
-        user_id = user_id
-    }, function(pvehicles, affected)
-        for _, veh in pairs(pvehicles) do
-            for i, v in pairs(vehicle_groups) do
-                local config = vehicle_groups[i]._config
-                local perm = config.permissions or nil
-                if perm then
-                    for i, v in pairs(perm) do
-                        if not ARMA.hasPermission(user_id, v) then
-                            break
+        MySQL.query("ARMA/get_rented_vehicles_out", {user_id = user_id}, function(pvehicles, affected)
+            for _, veh in pairs(pvehicles) do
+                for i, v in pairs(vehicle_groups) do
+                    local config = vehicle_groups[i]._config
+                    local perm = config.permissions or nil
+                    if perm then
+                        for i, v in pairs(perm) do
+                            if not ARMA.hasPermission(user_id, v) then
+                                break
+                            end
                         end
                     end
-                end
-                for a, z in pairs(v) do
-                    if a ~= "_config" and veh.vehicle == a then
-                        if not returned_table[i] then 
-                            returned_table[i] = {
-                                ["_config"] = config
-                            }
+                    for a, z in pairs(v) do
+                        if a ~= "_config" and veh.vehicle == a then
+                            if not rentedout.vehicles then 
+                                rentedout.vehicles = {}
+                            end
+                            local hoursLeft = ((tonumber(veh.rentedtime)-os.time()))/3600
+                            local minutesLeft = nil
+                            if hoursLeft < 1 then
+                                minutesLeft = hoursLeft * 60
+                                minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
+                                datetime = minutesLeft .. " mins" 
+                            else
+                                hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
+                                datetime = hoursLeft .. " hrs" 
+                            end
+                            rentedout.vehicles[a] = {z[1], datetime, veh.user_id, a}
                         end
-                        if not returned_table[i].vehicles then 
-                            returned_table[i].vehicles = {}
-                        end
-                        local hoursLeft = ((tonumber(veh.rentedtime)-os.time()))/3600
-                        local minutesLeft = nil
-                        if hoursLeft < 1 then
-                            minutesLeft = hoursLeft * 60
-                            minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
-                            datetime = minutesLeft .. " mins" 
-                        else
-                            hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                            datetime = hoursLeft .. " hrs" 
-                        end
-                        returned_table[i].vehicles[a .. ':' .. veh.user_id] = {z[1], datetime, veh.user_id, a}
                     end
                 end
             end
-        end
-        TriggerClientEvent('ARMA:ReturnFetchedCars', source, returned_table)
+            print(json.encode(rentedin), json.encode(rentedout))
+            TriggerClientEvent('ARMA:ReturnedRentedCars', source, rentedin, rentedout)
+        end)
     end)
 end)
 
