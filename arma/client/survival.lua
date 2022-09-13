@@ -245,7 +245,7 @@ function tARMA.RevivePlayer()
     SetPlayerInvincible(D,false)
     SetEntityHealth(x,200)
     tARMA.disableComa()
-    u=100
+    i=100
     local x=PlayerPedId()
     SetEntityInvincible(x,false)
     ClearPedSecondaryTask(PlayerPedId())
