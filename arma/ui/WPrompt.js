@@ -17,7 +17,7 @@ function WPrompt()
   this.div.appendChild(this.div_area);
   this.div.appendChild(this.div_help);
 
-  this.div_help.innerHTML = "press [TAB] to finish";
+  this.div_help.innerHTML = "Press [TAB] to close.";
 
   document.body.appendChild(this.div);
 
