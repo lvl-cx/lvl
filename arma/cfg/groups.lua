@@ -869,6 +869,7 @@ cfg.groups = {
 	"air.whitelisted"
   },
   
+  ["Cinematic"] = {},
   ["TutorialDone"] = {},
   ["polblips"] = {},
 
