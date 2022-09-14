@@ -68,6 +68,8 @@ function tARMA.getJobType(h)
                         return "nhs"
                     elseif e[k] then 
                         return "metpd"
+                    elseif f[k] then
+                        return "hmp"
                     end 
                 end
                 return ""
