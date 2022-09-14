@@ -180,6 +180,11 @@ end)
 
 local paycheckscfg = module('cfg/cfg_factiongroups')
 
+local function paycheck(tempid, permid, money)
+    ARMA.giveMoney(permid, money)
+    ARMAclient.notifyPicture(tempid, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(money)), "", 'PAYE', '', 1})
+end
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000*60*30)
@@ -187,29 +192,25 @@ Citizen.CreateThread(function()
             if ARMA.hasPermission(k, "police.onduty.permission") then
                 for a,b in pairs(paycheckscfg.metPoliceRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'police'), ' Clocked', '') then
-                        ARMA.giveMoney(k, b[2])
-                        ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
+                        paycheck(v, k, b[2])
                     end
                 end
             elseif ARMA.hasPermission(k, "nhs.onduty.permission") then
                 for a,b in pairs(paycheckscfg.nhsRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', '') then
-                        ARMA.giveMoney(k, b[2])
-                        ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
+                        paycheck(v, k, b[2])
                     end
                 end
             elseif ARMA.hasPermission(k, "lfb perm") then
                 for a,b in pairs(paycheckscfg.lfbRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', '') then
-                        ARMA.giveMoney(k, b[2])
-                        ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
+                        paycheck(v, k, b[2])
                     end
                 end
             elseif ARMA.hasPermission(k, "prisonguard.onduty.permission") then
                 for a,b in pairs(paycheckscfg.hmpRanks) do
                     if b[1] == string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', '') then
-                        ARMA.giveMoney(k, b[2])
-                        ARMAclient.notifyPicture(v, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(b[2])), "", 'PAYE', '', 1})
+                        paycheck(v, k, b[2])
                     end
                 end
             end
