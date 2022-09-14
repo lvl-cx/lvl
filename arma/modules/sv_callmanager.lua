@@ -115,8 +115,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
             if ticketID == k then
                 if tickets[ticketID].type == 'admin' and ARMA.hasPermission(user_id, "admin.tickets") then
                     if ARMA.getUserSource(v.permID) ~= nil then
-                        --if user_id ~= v.permID then
-                        if user_id == v.permID then
+                        if user_id ~= v.permID then
                             local adminbucket = GetPlayerRoutingBucket(admin_source)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             if adminbucket ~= playerbucket then
