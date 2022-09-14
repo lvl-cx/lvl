@@ -39,3 +39,12 @@ AddEventHandler("ARMA:tryWithdrawCommunityPot", function(amount)
         end)
     end
 end)
+
+RegisterServerEvent("ARMA:addToCommunityPot")
+AddEventHandler("ARMA:addToCommunityPot", function(amount)
+    if source ~= '' then return end
+    exports['ghmattimysql']:execute("SELECT value FROM arma_community_pot", function(potbalance)
+        local newpotbalance = parseInt(potbalance[1].value) + amount
+        exports['ghmattimysql']:execute("UPDATE arma_community_pot SET value = @newpotbalance", {newpotbalance = newpotbalance})
+    end)
+end)
