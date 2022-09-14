@@ -266,7 +266,8 @@ AddEventHandler("ARMA:acType2", function(theweapon)
 end)
 
 
-local BlockedExplosions = {0, 1, 2, 4, 5, 25, 32, 33, 35, 35, 36, 37, 38, 45}
+local BlockedExplosions = {0, 1, 2, 4, 5, --25, 
+32, 33, 35, 35, 36, 37, 38, 45}
 AddEventHandler('explosionEvent', function(source, ev)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
