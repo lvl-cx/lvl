@@ -48,26 +48,3 @@ RegisterCommand('unban', function(source, args)
         print('Incorrect usage: unban [permid]')
     end
 end)
-
-RegisterCommand('whitelist', function(source, args)
-    if source ~= 0 then return end
-    if tonumber(args[1])  then
-        local userid = tonumber(args[1])
-        ARMA.setWhitelisted(userid,true)
-        print('Whitelisted Perm ID: ' .. userid )
-    else 
-        print('Incorrect usage: whitelist [permid]')
-    end
-end)
-
-RegisterCommand('unwhitelist', function(source, args)
-    if source ~= 0 then return end
-    if tonumber(args[1])  then
-        local userid = tonumber(args[1])
-        ARMA.setWhitelisted(userid,false)
-        print('Unwhitelisted Perm ID: ' .. userid )
-    else 
-        print('Incorrect usage: unwhitelist [permid]')
-    end
-end)
-
