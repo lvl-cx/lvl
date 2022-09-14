@@ -63,10 +63,7 @@ RegisterNetEvent("ARMA:sendLocalChat",function(H, I, J)
                 TriggerEvent("chatMessage", "", {255, 0, 0}, " ^6 me | " .. I .. "  " .. "^6  " .. J)
             end
             t("me", J, d, tARMA.getPlayerPed(), 10000)
-        elseif
-            #(GetEntityCoords(tARMA.getPlayerPed()) - GetEntityCoords(GetPlayerPed(K))) < 7.01 and
-                HasEntityClearLosToEntity(tARMA.getPlayerPed(), GetPlayerPed(K), 17) == 1
-            then
+        elseif #(GetEntityCoords(tARMA.getPlayerPed()) - GetEntityCoords(GetPlayerPed(K))) < 7.01 and HasEntityClearLosToEntity(tARMA.getPlayerPed(), GetPlayerPed(K), 17) == 1 then
             if c then
                 TriggerEvent("chatMessage", "", {255, 0, 0}, " ^6 me | " .. I .. "  " .. "^6  " .. J)
             end
