@@ -211,13 +211,12 @@ function tARMA.notifyPicture(ay,az,l,ac,aA,aB,aC)
   end 
 end
 
-
---[[ function tARMA.notifyPicture(icon, type, sender, title, text)
+function tARMA.notifyPicture2(icon, type, sender, title, text)
     SetNotificationTextEntry("STRING")
     AddTextComponentString(text)
     SetNotificationMessage(icon, icon, true, type, sender, title, text)
     DrawNotification(false, true)
-end ]]
+end
 
 -- SCREEN
 
