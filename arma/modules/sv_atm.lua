@@ -4,23 +4,17 @@ local cfg = module("cfg/atms")
 local atms = cfg.atms
 local onesync = GetConvar('onesync', nil)
 local function play_atm_enter(player)
-    ARMAclient.playAnim(player, {false,
-                                {{"amb@prop_human_atm@male@enter", "enter"},
-                                 {"amb@prop_human_atm@male@idle_a", "idle_a"}}, false})
+    ARMAclient.playAnim(player, {false,{{"amb@prop_human_atm@male@enter", "enter"},{"amb@prop_human_atm@male@idle_a", "idle_a"}}, false})
 end
-
 local function play_atm_exit(player)
     ARMAclient.playAnim(player, {false, {{"amb@prop_human_atm@male@exit", "exit"}}, false})
 end
 
 local function atm_choice_deposit(player, choice)
     play_atm_enter(player) -- anim
-
     ARMA.prompt(source, lang.atm.deposit.prompt(), "", function(player, v)
         play_atm_exit(player)
-
         v = parseInt(v)
-
         if v > 0 then
             local user_id = ARMA.getUserId(source)
             if user_id ~= nil then
@@ -41,28 +35,26 @@ RegisterNetEvent('ARMA:Withdraw')
 AddEventHandler('ARMA:Withdraw', function(amount)
     local source = source
     amount = parseInt(amount)
-   
-        --Onesync allows extra security behind events should enable it if it's not already.
-        local ped = GetPlayerPed(source)
-        local playerCoords = GetEntityCoords(ped)
-        for i, v in pairs(cfg.atms) do
-            local coords = vec3(v[1], v[2], v[3])
-            if #(playerCoords - coords) <= 5.0 then
-                if amount > 0 then
-                    local user_id = ARMA.getUserId(source)
-                    if user_id ~= nil then
-                        if ARMA.tryWithdraw(user_id, amount) then
-                            ARMAclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
-                        else
-                            ARMAclient.notify(source, {lang.atm.withdraw.not_enough()})
-                        end
+    --Onesync allows extra security behind events should enable it if it's not already.
+    local ped = GetPlayerPed(source)
+    local playerCoords = GetEntityCoords(ped)
+    for i, v in pairs(cfg.atms) do
+        local coords = vec3(v[1], v[2], v[3])
+        if #(playerCoords - coords) <= 5.0 then
+            if amount > 0 then
+                local user_id = ARMA.getUserId(source)
+                if user_id ~= nil then
+                    if ARMA.tryWithdraw(user_id, amount) then
+                        ARMAclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
+                    else
+                        ARMAclient.notify(source, {lang.atm.withdraw.not_enough()})
                     end
-                else
-                    ARMAclient.notify(source, {lang.common.invalid_value()})
                 end
+            else
+                ARMAclient.notify(source, {lang.common.invalid_value()})
             end
         end
-
+    end
 end)
 
 
@@ -70,28 +62,26 @@ RegisterNetEvent('ARMA:Deposit')
 AddEventHandler('ARMA:Deposit', function(amount)
     local source = source
     amount = parseInt(amount)
-
-        --Onesync allows extra security behind events should enable it if it's not already.
-        local ped = GetPlayerPed(source)
-        local playerCoords = GetEntityCoords(ped)
-        for i, v in pairs(cfg.atms) do
-            local coords = vec3(v[1], v[2], v[3])
-            if #(playerCoords - coords) <= 5.0 then
-                if amount > 0 then
-                    local user_id = ARMA.getUserId(source)
-                    if user_id ~= nil then
-                        if ARMA.tryDeposit(user_id, amount) then
-                            ARMAclient.notify(source, {lang.atm.deposit.deposited({amount})})
-                        else
-                            ARMAclient.notify(source, {lang.money.not_enough()})
-                        end
+    --Onesync allows extra security behind events should enable it if it's not already.
+    local ped = GetPlayerPed(source)
+    local playerCoords = GetEntityCoords(ped)
+    for i, v in pairs(cfg.atms) do
+        local coords = vec3(v[1], v[2], v[3])
+        if #(playerCoords - coords) <= 5.0 then
+            if amount > 0 then
+                local user_id = ARMA.getUserId(source)
+                if user_id ~= nil then
+                    if ARMA.tryDeposit(user_id, amount) then
+                        ARMAclient.notify(source, {lang.atm.deposit.deposited({amount})})
+                    else
+                        ARMAclient.notify(source, {lang.money.not_enough()})
                     end
-                else
-                    ARMAclient.notify(source, {lang.common.invalid_value()})
                 end
+            else
+                ARMAclient.notify(source, {lang.common.invalid_value()})
             end
         end
-
+    end
 end)
 
 RegisterNetEvent('ARMA:WithdrawAll')
@@ -107,18 +97,16 @@ AddEventHandler('ARMA:WithdrawAll', function()
             local coords = vec3(v[1], v[2], v[3])
             if #(playerCoords - coords) <= 5.0 then
             
-                    local user_id = ARMA.getUserId(source)
-                    if user_id ~= nil then
-                        if ARMA.tryWithdraw(user_id, amount) then
-                            ARMAclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
-                        else
-                            ARMAclient.notify(source, {lang.atm.withdraw.not_enough()})
-                        end
+                local user_id = ARMA.getUserId(source)
+                if user_id ~= nil then
+                    if ARMA.tryWithdraw(user_id, amount) then
+                        ARMAclient.notify(source, {lang.atm.withdraw.withdrawn({amount})})
+                    else
+                        ARMAclient.notify(source, {lang.atm.withdraw.not_enough()})
                     end
-   
+                end
             end
         end
-
     end
 end)
 
@@ -128,27 +116,26 @@ AddEventHandler('ARMA:DepositAll', function()
     local source = source
     local userid = ARMA.getUserId(source)
     local amount = ARMA.getMoney(userid)
-
-        --Onesync allows extra security behind events should enable it if it's not already.
-        local ped = GetPlayerPed(source)
-        local playerCoords = GetEntityCoords(ped)
-        for i, v in pairs(cfg.atms) do
-            local coords = vec3(v[1], v[2], v[3])
-            if #(playerCoords - coords) <= 5.0 then
-                if amount > 0 then
-                    local user_id = ARMA.getUserId(source)
-                    if user_id ~= nil then
-                        if ARMA.tryDeposit(user_id, amount) then
-                            ARMAclient.notify(source, {lang.atm.deposit.deposited({amount})})
-                        else
-                            ARMAclient.notify(source, {lang.money.not_enough()})
-                        end
+    --Onesync allows extra security behind events should enable it if it's not already.
+    local ped = GetPlayerPed(source)
+    local playerCoords = GetEntityCoords(ped)
+    for i, v in pairs(cfg.atms) do
+        local coords = vec3(v[1], v[2], v[3])
+        if #(playerCoords - coords) <= 5.0 then
+            if amount > 0 then
+                local user_id = ARMA.getUserId(source)
+                if user_id ~= nil then
+                    if ARMA.tryDeposit(user_id, amount) then
+                        ARMAclient.notify(source, {lang.atm.deposit.deposited({amount})})
+                    else
+                        ARMAclient.notify(source, {lang.money.not_enough()})
                     end
-                else
-                    ARMAclient.notify(source, {lang.common.invalid_value()})
                 end
+            else
+                ARMAclient.notify(source, {lang.common.invalid_value()})
             end
         end
+    end
 end)
 
 local function atm_choice_withdraw(player, choice)
