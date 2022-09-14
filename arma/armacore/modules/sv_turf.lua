@@ -59,7 +59,7 @@ AddEventHandler("ARMA:ChangeCommisionWeed", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller", "alert")
+				TriggerClientEvent('chatMessage', -1, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Weed Seller", "alert")
 			  
 				ARMAclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendWeed(com, source)
@@ -76,7 +76,7 @@ AddEventHandler("ARMA:ChangeCommisionCocaine", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller", "alert")
+				TriggerClientEvent('chatMessage', -1, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Cocaine Seller", "alert")
 			  
 				ARMAclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendCocaine(com, source)
@@ -93,7 +93,7 @@ AddEventHandler("ARMA:ChangeCommisionLSD", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller", "alert")
+				TriggerClientEvent('chatMessage', -1, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at LSD Seller", "alert")
 			  
 				ARMAclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendLSD(com, source)
@@ -110,7 +110,7 @@ AddEventHandler("ARMA:ChangeCommisionHeroin", function(com)
 	if completedTurf == true then
 		if com <= 35 then
 			if com >= 0 then
-				TriggerClientEvent('chatMessage', source, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller", "alert")
+				TriggerClientEvent('chatMessage', -1, "^7[^1ARMA^7]:", {255, 255, 255}, "^3" .. GetPlayerName(source) .. " ^0has changed Commision to ^3" .. com .. "% ^0at Heroin Seller", "alert")
 			  
 				ARMAclient.notify(source,{"~g~You changed commision to " .. com .. "%~g~."})
 				SendHeroin(com, source)
