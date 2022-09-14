@@ -33,7 +33,7 @@ function playFlashbangParticles(coords)
 end
 function func_checkForFlashbang()
     if not a then
-        if GetSelectedPedWeapon(tARMA.getPlayerPed()) == "WEAPON_FLASHBANG" then
+        if GetSelectedPedWeapon(tARMA.getPlayerPed()) == GetHashKey("WEAPON_FLASHBANG") then
             a = true
         else
             a = false
@@ -52,7 +52,9 @@ function func_checkForFlashbang()
                     TriggerServerEvent("ARMA:flashbangThrown", f)
                 end
             end)
-            SetTimeout(5000,function()c = falseend)
+            SetTimeout(5000,function()
+                c = false
+            end)
             a = false
         end
     end
