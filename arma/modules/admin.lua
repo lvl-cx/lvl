@@ -2206,3 +2206,12 @@ AddEventHandler('ARMA:theForceSync', function(A, q, r, s)
         TriggerClientEvent("ARMA:useTheForceTarget", A)
     end
 end)
+
+RegisterCommand("cleararea", function(source, args) -- these events are gonna be used for vehicle cleanup in future also
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.noclip') then
+        TriggerClientEvent('ARMA:clearVehicles', source)
+        TriggerClientEvent('ARMA:clearBrokenVehicles', source)
+    end 
+end)
