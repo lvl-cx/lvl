@@ -198,13 +198,13 @@ end)
 
 RegisterNetEvent("ARMA:fuelAllVehicles")
 AddEventHandler("ARMA:fuelAllVehicles", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
     MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
         if rows[1].plushours > 0 or rows[1].plathours > 0 then
             if ARMA.tryFullPayment(user_id,25000) then
                 exports["ghmattimysql"]:execute("UPDATE arma_user_vehicles SET fuel_level = 100 WHERE user_id = @user_id", {user_id = user_id}, function() end)
-                TriggerClientEvent("arma:PlaySound", source, "zipper")
+                TriggerClientEvent("arma:PlaySound", source, "money")
                 ARMAclient.notify(source,{"~g~Vehicles Refueled."})
             end
         end
