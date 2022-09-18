@@ -137,8 +137,6 @@ AddEventHandler("ARMA:onClientSpawn",function(D, E)
         end
         local L = function(I)
         end
-        for M, N in pairs(a) do
-            tARMA.addBlip(licensecentre.location.x, licensecentre.location.y, licensecentre.location.z, 457, 2, "Job Centre", 0.6, true)
-        end
+        tARMA.addBlip(licensecentre.location.x, licensecentre.location.y, licensecentre.location.z, 457, 2, "Job Centre", 0.6, true)
 	end
 end)
