@@ -646,10 +646,10 @@ cfg.dances = {
     }},
     ["danceglowstick"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_13_mi_hi_sexualgriding_laz", "Dance Glowsticks", animationOptions =
     {
-        prop = 'ba_prop_battle_glowstick_01',
+        prop = "ba_prop_battle_glowstick_01",
         propBone = 28422,
         propPlacement = {0.0700,0.1400,0.0,-80.0,20.0},
-        secondProp = 'ba_prop_battle_glowstick_01',
+        secondProp = "ba_prop_battle_glowstick_01",
         secondPropBone = 60309,
         secondPropPlacement = {0.0700,0.0900,0.0,-120.0,-20.0},
         emoteLoop = true,
@@ -657,20 +657,20 @@ cfg.dances = {
     }},
     ["danceglowstick2"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_12_mi_hi_bootyshake_laz", "Dance Glowsticks 2", animationOptions =
     {
-        prop = 'ba_prop_battle_glowstick_01',
+        prop = "ba_prop_battle_glowstick_01",
         propBone = 28422,
         propPlacement = {0.0700,0.1400,0.0,-80.0,20.0},
-        secondProp = 'ba_prop_battle_glowstick_01',
+        secondProp = "ba_prop_battle_glowstick_01",
         secondPropBone = 60309,
         secondPropPlacement = {0.0700,0.0900,0.0,-120.0,-20.0},
         emoteLoop = true,
     }},
     ["danceglowstick3"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Glowsticks 3", animationOptions =
     {
-        prop = 'ba_prop_battle_glowstick_01',
+        prop = "ba_prop_battle_glowstick_01",
         propBone = 28422,
         propPlacement = {0.0700,0.1400,0.0,-80.0,20.0},
-        secondProp = 'ba_prop_battle_glowstick_01',
+        secondProp = "ba_prop_battle_glowstick_01",
         secondPropBone = 60309,
         secondPropPlacement = {0.0700,0.0900,0.0,-120.0,-20.0},
         emoteLoop = true,
@@ -749,11 +749,13 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteDuration = 2500,
+        allowedPrison = true,
     }},
     ["beast"] = {"anim@mp_fm_event@intro", "beast_transform", "Beast", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 5000,
+        allowedPrison = true,
     }},
     -- ["chill"] = {"switch@trevor@scares_tramp", "trev_scares_tramp_idle_tramp", "Chill", animationOptions =
     -- {
@@ -775,64 +777,79 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteDuration = 1300,
+        allowedPrison = true,
     }},
     ["idle"] = {"anim@heists@heist_corona@team_idles@male_a", "idle", "Idle", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle8"] = {"amb@world_human_hang_out_street@male_b@idle_a", "idle_b", "Idle 8"},
     ["idle9"] = {"friends@fra@ig_1", "base_idle", "Idle 9", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle10"] = {"mp_move@prostitute@m@french", "idle", "Idle 10", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["idle11"] = {"random@countrysiderobbery", "idle_a", "Idle 11", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle2"] = {"anim@heists@heist_corona@team_idles@female_a", "idle", "Idle 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle3"] = {"anim@heists@humane_labs@finale@strip_club", "ped_b_celebrate_loop", "Idle 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle4"] = {"anim@mp_celebration@idles@female", "celebration_idle_f_a", "Idle 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle5"] = {"anim@mp_corona_idles@female_b@idle_a", "idle_a", "Idle 5", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle6"] = {"anim@mp_corona_idles@male_c@idle_a", "idle_a", "Idle 6", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idle7"] = {"anim@mp_corona_idles@male_d@idle_a", "idle_a", "Idle 7", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["wait3"] = {"amb@world_human_hang_out_street@female_hold_arm@idle_a", "idle_a", "Wait 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idledrunk"] = {"random@drunk_driver_1", "drunk_driver_stand_loop_dd1", "Idle Drunk", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idledrunk2"] = {"random@drunk_driver_1", "drunk_driver_stand_loop_dd2", "Idle Drunk 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["idledrunk3"] = {"missarmenian2", "standing_idle_loop_drunk", "Idle Drunk 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["airguitar"] = {"anim@mp_player_intcelebrationfemale@air_guitar", "air_guitar", "Air Guitar"},
     ["airsynth"] = {"anim@mp_player_intcelebrationfemale@air_synth", "air_synth", "Air Synth"},
@@ -840,101 +857,121 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["argue2"] = {"oddjobs@assassinate@vice@hooker", "argue_a", "Argue 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["bartender"] = {"anim@amb@clubhouse@bar@drink@idle_a", "idle_a_bartender", "Bartender", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["blowkiss"] = {"anim@mp_player_intcelebrationfemale@blow_kiss", "blow_kiss", "Blow Kiss"},
     ["blowkiss2"] = {"anim@mp_player_intselfieblow_kiss", "exit", "Blow Kiss 2", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 2000
+        emoteDuration = 2000,
+        allowedPrison = true,
 
     }},
     ["curtsy"] = {"anim@mp_player_intcelebrationpaired@f_f_sarcastic", "sarcastic_left", "Curtsy"},
     ["bringiton"] = {"misscommon@response", "bring_it_on", "Bring It On", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 3000
+        emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["comeatmebro"] = {"mini@triathlon", "want_some_of_this", "Come at me bro", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 2000
+        emoteDuration = 2000,
+        allowedPrison = true,
     }},
     ["cop2"] = {"anim@amb@nightclub@peds@", "rcmme_amanda1_stand_loop_cop", "Cop 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["cop3"] = {"amb@code_human_police_investigate@idle_a", "idle_b", "Cop 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["crossarms"] = {"amb@world_human_hang_out_street@female_arms_crossed@idle_a", "idle_a", "Crossarms", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarms2"] = {"amb@world_human_hang_out_street@male_c@idle_a", "idle_b", "Crossarms 2", animationOptions =
     {
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarms3"] = {"anim@heists@heist_corona@single_team", "single_team_loop_boss", "Crossarms 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarms4"] = {"random@street_race", "_car_b_lookout", "Crossarms 4", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarms5"] = {"anim@amb@nightclub@peds@", "rcmme_amanda1_stand_loop_cop", "Crossarms 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["foldarms2"] = {"anim@amb@nightclub@peds@", "rcmme_amanda1_stand_loop_cop", "Fold Arms 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarms6"] = {"random@shop_gunstore", "_idle", "Crossarms 6", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["foldarms"] = {"anim@amb@business@bgen@bgen_no_work@", "stand_phone_phoneputdown_idle_nowork", "Fold Arms", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["crossarmsside"] = {"rcmnigel1a_band_groupies", "base_m2", "Crossarms Side", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["damn"] = {"gestures@m@standing@casual", "gesture_damn", "Damn", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 1000
+        emoteDuration = 1000,
+        allowedPrison = true,
     }},
     ["damn2"] = {"anim@am_hold_up@male", "shoplift_mid", "Damn 2", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 1000
+        emoteDuration = 1000,
+        allowedPrison = true,
     }},
     ["pointdown"] = {"gestures@f@standing@casual", "gesture_hand_down", "Point Down", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 1000
+        emoteDuration = 1000,
+        allowedPrison = true,
     }},
     -- ["surrender"] = {"random@arrests@busted", "idle_a", "Surrender", animationOptions =
     -- {
@@ -943,22 +980,26 @@ cfg.emotes = {
     ["facepalm2"] = {"anim@mp_player_intcelebrationfemale@face_palm", "face_palm", "Facepalm 2", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 8000
+        emoteDuration = 8000,
+        allowedPrison = true,
     }},
     ["facepalm"] = {"random@car_thief@agitated@idle_a", "agitated_idle_a", "Facepalm", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 8000
+        emoteDuration = 8000,
+        allowedPrison = true,
     }},
     ["facepalm3"] = {"missminuteman_1ig_2", "tasered_2", "Facepalm 3", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 8000
+        emoteDuration = 8000,
+        allowedPrison = true,
     }},
     ["facepalm4"] = {"anim@mp_player_intupperface_palm", "idle_a", "Facepalm 4", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     -- ["fallover"] = {"random@drunk_driver_1", "drunk_fall_over", "Fall Over"},
     -- ["fallover2"] = {"mp_suicide", "pistol", "Fall Over 2"},
@@ -969,6 +1010,7 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["fightme"] = {"anim@deathmatch_intros@unarmed", "intro_male_unarmed_c", "Fight Me"},
     ["fightme2"] = {"anim@deathmatch_intros@unarmed", "intro_male_unarmed_e", "Fight Me 2"},
@@ -976,65 +1018,78 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["finger2"] = {"anim@mp_player_intupperfinger", "idle_a_fp", "Finger 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["handshake"] = {"mp_ped_interaction", "handshake_guy_a", "Handshake", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 3000
+        emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["handshake2"] = {"mp_ped_interaction", "handshake_guy_b", "Handshake 2", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 3000
+        emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["wait4"] = {"amb@world_human_hang_out_street@Female_arm_side@idle_a", "idle_a", "Wait 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["wait5"] = {"missclothing", "idle_storeclerk", "Wait 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait6"] = {"timetable@amanda@ig_2", "ig_2_base_amanda", "Wait 6", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait7"] = {"rcmnigel1cnmt_1c", "base", "Wait 7", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait8"] = {"rcmjosh1", "idle", "Wait 8", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait9"] = {"rcmjosh2", "josh_2_intp1_base", "Wait 9", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait10"] = {"timetable@amanda@ig_3", "ig_3_base_tracy", "Wait 10", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait11"] = {"misshair_shop@hair_dressers", "keeper_base", "Wait 11", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["hiking"] = {"move_m@hiking", "idle", "Hiking", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
 
     ["hug"] = {"mp_ped_interaction", "kisses_guy_a", "Hug"},
@@ -1045,30 +1100,36 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteDuration = 6000,
+        allowedPrison = true,
     }},
     ["jog2"] = {"amb@world_human_jog_standing@male@idle_a", "idle_a", "Jog 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["jog3"] = {"amb@world_human_jog_standing@female@idle_a", "idle_a", "Jog 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["jog4"] = {"amb@world_human_power_walker@female@idle_a", "idle_a", "Jog 4", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["jog5"] = {"move_m@joy@a", "walk", "Jog 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["jumpingjacks"] = {"timetable@reunited@ig_2", "jimmy_getknocked", "Jumping Jacks", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     -- ["kneel2"] = {"rcmextreme3", "idle", "Kneel 2", animationOptions =
     -- {
@@ -1082,32 +1143,39 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["knock2"] = {"missheistfbi3b_ig7", "lift_fibagent_loop", "Knock 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["knucklecrunch"] = {"anim@mp_player_intcelebrationfemale@knuckle_crunch", "knuckle_crunch", "Knuckle Crunch", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["lapdance"] = {"mp_safehouse", "lap_dance_girl", "Lapdance"},
     ["lean2"] = {"amb@world_human_leaning@female@wall@back@hand_up@idle_a", "idle_a", "Lean 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lean3"] = {"amb@world_human_leaning@female@wall@back@holding_elbow@idle_a", "idle_a", "Lean 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lean4"] = {"amb@world_human_leaning@male@wall@back@foot_up@idle_a", "idle_a", "Lean 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lean5"] = {"amb@world_human_leaning@male@wall@back@hands_together@idle_b", "idle_b", "Lean 5", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     --    ["leanflirt"] = {"random@street_race", "_car_a_flirt_girl", "Lean Flirt", animationOptions =
     --    {
@@ -1116,54 +1184,65 @@ cfg.emotes = {
     ["leanbar2"] = {"amb@prop_human_bum_shopping_cart@male@idle_a", "idle_c", "Lean Bar 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["leanbar3"] = {"anim@amb@nightclub@lazlow@ig1_vip@", "clubvip_base_laz", "Lean Bar 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["leanbar4"] = {"anim@heists@prison_heist", "ped_b_loop_a", "Lean Bar 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["leanhigh"] = {"anim@mp_ferris_wheel", "idle_a_player_one", "Lean High", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["leanhigh2"] = {"anim@mp_ferris_wheel", "idle_a_player_two", "Lean High 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["leanside"] = {"timetable@mime@01_gc", "idle_a", "Leanside", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["leanside2"] = {"misscarstealfinale", "packer_idle_1_trevor", "Leanside 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["leanside3"] = {"misscarstealfinalecar_5_ig_1", "waitloop_lamar", "Leanside 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["leanside4"] = {"misscarstealfinalecar_5_ig_1", "waitloop_lamar", "Leanside 4", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = false,
+        allowedPrison = true,
     }},
     ["leanside5"] = {"rcmjosh2", "josh_2_intp1_base", "Leanside 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = false,
+        allowedPrison = true,
     }},
     ["me"] = {"gestures@f@standing@casual", "gesture_me_hard", "Me", animationOptions =
     {
         emoteMoving = true,
-        emoteDuration = 1000
+        emoteDuration = 1000,
+        allowedPrison = true,
     }},
     -- ["mechanic"] = {"mini@repair", "fixing_a_ped", "Mechanic", animationOptions =
     -- {
@@ -1186,6 +1265,7 @@ cfg.emotes = {
     ["medic2"] = {"amb@medic@standing@tendtodead@base", "base", "Medic 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     -- ["meditate"] = {"rcmcollect_paperleadinout@", "meditiate_idle", "Meditiate", animationOptions = -- CHANGE ME
     -- {
@@ -1203,36 +1283,43 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["no"] = {"anim@heists@ornate_bank@chat_manager", "fail", "No", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["no2"] = {"mp_player_int_upper_nod", "mp_player_int_nod_no", "No 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["nosepick"] = {"anim@mp_player_intcelebrationfemale@nose_pick", "nose_pick", "Nose Pick", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["noway"] = {"gestures@m@standing@casual", "gesture_no_way", "No Way", animationOptions =
     {
         emoteDuration = 1500,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["ok"] = {"anim@mp_player_intselfiedock", "idle_a", "OK", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["outofbreath"] = {"re@construction", "out_of_breath", "Out of Breath", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["pickup"] = {"random@domestic", "pickup_low", "Pickup"},
     ["push"] = {"missfinale_c2ig_11", "pushcar_offcliff_f", "Push", animationOptions =
@@ -1247,6 +1334,7 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     -- ["pushup"] = {"amb@world_human_push_ups@male@idle_a", "idle_d", "Pushup", animationOptions =
     -- {
@@ -1256,46 +1344,55 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["pointright"] = {"mp_gun_shop_tut", "indicate_right", "Point Right", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["salute"] = {"anim@mp_player_intincarsalutestd@ds@", "idle_a", "Salute", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["salute2"] = {"anim@mp_player_intincarsalutestd@ps@", "idle_a", "Salute 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["salute3"] = {"anim@mp_player_intuppersalute", "idle_a", "Salute 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["scared"] = {"random@domestic", "f_distressed_loop", "Scared", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["scared2"] = {"random@homelandsecurity", "knees_loop_girl", "Scared 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["screwyou"] = {"misscommon@response", "screw_you", "Screw You", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["shakeoff"] = {"move_m@_idles@shake_off", "shakeoff_1", "Shake Off", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 3500,
+        allowedPrison = true,
     }},
     -- ["shot"] = {"random@dealgonewrong", "idle_a", "Shot", animationOptions =
     -- {
@@ -1309,11 +1406,13 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteDuration = 1000,
+        allowedPrison = true,
     }},
     ["shrug2"] = {"gestures@m@standing@casual", "gesture_shrug_hard", "Shrug 2", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 1000,
+        allowedPrison = true,
     }},
     -- ["sit"] = {"anim@amb@business@bgen@bgen_no_work@", "sit_phone_phoneputdown_idle_nowork", "Sit", animationOptions =
     -- {
@@ -1406,36 +1505,43 @@ cfg.emotes = {
     ["clapangry"] = {"anim@arena@celeb@flat@solo@no_props@", "angry_clap_a_player_a", "Clap Angry", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["slowclap3"] = {"anim@mp_player_intupperslow_clap", "idle_a", "Slow Clap 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["clap"] = {"amb@world_human_cheering@male_a", "base", "Clap", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["slowclap"] = {"anim@mp_player_intcelebrationfemale@slow_clap", "slow_clap", "Slow Clap", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["slowclap2"] = {"anim@mp_player_intcelebrationmale@slow_clap", "slow_clap", "Slow Clap 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["smell"] = {"move_p_m_two_idles@generic", "fidget_sniff_fingers", "Smell", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["stickup"] = {"random@countryside_gang_fight", "biker_02_stickup_loop", "Stick Up", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["stumble"] = {"misscarsteal4@actor", "stumble", "Stumble", animationOptions =
     {
@@ -1457,162 +1563,195 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["t2"] = {"mp_sleep", "bind_pose_180", "T 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["think5"] = {"mp_cp_welcome_tutthink", "b_think", "Think 5", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 2000,
+        allowedPrison = true,
     }},
     ["think"] = {"misscarsteal4@aliens", "rehearsal_base_idle_director", "Think", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["think3"] = {"timetable@tracy@ig_8@base", "base", "Think 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
 
     ["think2"] = {"missheist_jewelleadinout", "jh_int_outro_loop_a", "Think 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["thumbsup3"] = {"anim@mp_player_intincarthumbs_uplow@ds@", "enter", "Thumbs Up 3", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["thumbsup2"] = {"anim@mp_player_intselfiethumbs_up", "idle_a", "Thumbs Up 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["thumbsup"] = {"anim@mp_player_intupperthumbs_up", "idle_a", "Thumbs Up", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["type"] = {"anim@heists@prison_heiststation@cop_reactions", "cop_b_idle", "Type", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["type2"] = {"anim@heists@prison_heistig1_p1_guard_checks_bus", "loop", "Type 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["type3"] = {"mp_prison_break", "hack_loop", "Type 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["type4"] = {"mp_fbi_heist", "loop", "Type 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["warmth"] = {"amb@world_human_stand_fire@male@idle_a", "idle_a", "Warmth", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave4"] = {"random@mugging5", "001445_01_gangintimidation_1_female_idle_b", "Wave 4", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["wave2"] = {"anim@mp_player_intcelebrationfemale@wave", "wave", "Wave 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave3"] = {"friends@fra@ig_1", "over_here_idle_a", "Wave 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave"] = {"friends@frj@ig_1", "wave_a", "Wave", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave5"] = {"friends@frj@ig_1", "wave_b", "Wave 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave6"] = {"friends@frj@ig_1", "wave_c", "Wave 6", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave7"] = {"friends@frj@ig_1", "wave_d", "Wave 7", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave8"] = {"friends@frj@ig_1", "wave_e", "Wave 8", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wave9"] = {"gestures@m@standing@casual", "gesture_hello", "Wave 9", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["whistle"] = {"taxi_hail", "hail_taxi", "Whistle", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 1300,
+        allowedPrison = true,
     }},
     ["whistle2"] = {"rcmnigel1c", "hailing_whistle_waive_a", "Whistle 2", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 2000,
+        allowedPrison = true,
     }},
     ["yeah"] = {"anim@mp_player_intupperair_shagging", "idle_a", "Yeah", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["lift"] = {"random@hitch_lift", "idle_f", "Lift", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["lol"] = {"anim@arena@celeb@flat@paired@no_props@", "laugh_a_player_b", "LOL", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lol2"] = {"anim@arena@celeb@flat@solo@no_props@", "giggle_a_player_b", "LOL 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["statue2"] = {"fra_0_int-1", "cs_lamardavis_dual-1", "Statue 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["statue3"] = {"club_intro2-0", "csb_englishdave_dual-0", "Statue 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["gangsign"] = {"mp_player_int_uppergang_sign_a", "mp_player_int_gang_sign_a", "Gang Sign", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["gangsign2"] = {"mp_player_int_uppergang_sign_b", "mp_player_int_gang_sign_b", "Gang Sign 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     -- ["passout"] = {"missarmenian2", "drunk_loop", "Passout", animationOptions =
     -- {
@@ -1651,125 +1790,150 @@ cfg.emotes = {
     ["flipoff"] = {"anim@arena@celeb@podium@no_prop@", "flip_off_a_1st", "Flip Off", animationOptions =
     {
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["flipoff2"] = {"anim@arena@celeb@podium@no_prop@", "flip_off_c_1st", "Flip Off 2", animationOptions =
     {
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["bow"] = {"anim@arena@celeb@podium@no_prop@", "regal_c_1st", "Bow", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["bow2"] = {"anim@arena@celeb@podium@no_prop@", "regal_a_1st", "Bow 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["keyfob"] = {"anim@mp_player_intmenu@key_fob@", "fob_click", "Key Fob", animationOptions =
     {
         emoteLoop = false,
         emoteMoving = true,
         emoteDuration = 1000,
+        allowedPrison = true,
     }},
     ["golfswing"] = {"rcmnigel1d", "swing_a_mark", "Golf Swing"},
     ["eat"] = {"mp_player_inteat@burger", "mp_player_int_eat_burger", "Eat", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["reaching"] = {"move_m@intimidation@cop@unarmed", "idle", "Reaching", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait"] = {"random@shop_tattoo", "_idle_a", "Wait", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait2"] = {"missbigscore2aig_3", "wait_for_van_c", "Wait 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait12"] = {"rcmjosh1", "idle", "Wait 12", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["wait13"] = {"rcmnigel1a", "base", "Wait 13", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["lapdance1"] = {"mini@strip_club@private_dance@idle", "priv_dance_idle", "Lapdance 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lapdance2"] = {"mini@strip_club@private_dance@part2", "priv_dance_p2", "Lapdance 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["lapdance3"] = {"mini@strip_club@private_dance@part3", "priv_dance_p3", "Lapdance 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["twerk"] = {"switch@trevor@mocks_lapdance", "001443_01_trvs_28_idle_stripper", "Twerk", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["slap"] = {"melee@unarmed@streamed_variations", "plyr_takedown_front_slap", "Slap", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
         emoteDuration = 2000,
+        allowedPrison = true,
     }},
     ["headbutt"] = {"melee@unarmed@streamed_variations", "plyr_takedown_front_headbutt", "Headbutt"},
     ["fishdance"] = {"anim@mp_player_intupperfind_the_fish", "idle_a", "Fish Dance", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace"] = {"mp_player_int_upperpeace_sign", "mp_player_int_peace_sign", "Peace", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace2"] = {"anim@mp_player_intupperpeace", "idle_a", "Peace 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace3"] = {"anim@mp_player_intupperpeace", "idle_a_fp", "Peace 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace4"] = {"anim@mp_player_intincarpeacestd@ds@", "idle_a", "Peace 4", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace5"] = {"anim@mp_player_intincarpeacestd@ds@", "idle_a_fp", "Peace 5", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace6"] = {"anim@mp_player_intincarpeacebodhi@ds@", "idle_a", "Peace 6", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peace7"] = {"anim@mp_player_intincarpeacebodhi@ds@", "idle_a_fp", "Peace 7", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peacef"] = {"anim@mp_player_intcelebrationfemale@peace", "peace", "Peace Female", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     -- ["cpr"] = {"mini@cpr@char_a@cpr_str", "cpr_pumpchest", "CPR", animationOptions =
     -- {
@@ -1788,6 +1952,7 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["peek"] = {"random@paparazzi@peek", "left_peek_a", "Peek", animationOptions =
     {
@@ -1797,6 +1962,7 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["stretch"] = {"mini@triathlon", "idle_e", "Stretch", animationOptions =
     {
@@ -1822,15 +1988,18 @@ cfg.emotes = {
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["superhero"] = {"rcmbarry", "base", "Superhero", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["superhero2"] = {"rcmbarry", "base", "Superhero 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["mindcontrol"] = {"rcmbarry", "mind_control_b_loop", "Mind Control", animationOptions =
     {
@@ -1864,70 +2033,84 @@ cfg.emotes = {
     ["tryclothes"] = {"mp_clothing@female@trousers", "try_trousers_neutral_a", "Try Clothes", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["tryclothes2"] = {"mp_clothing@female@shirt", "try_shirt_positive_a", "Try Clothes 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["tryclothes3"] = {"mp_clothing@female@shoes", "try_shoes_positive_a", "Try Clothes 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["nervous2"] = {"mp_missheist_countrybank@nervous", "nervous_idle", "Nervous 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["nervous"] = {"amb@world_human_bum_standing@twitchy@idle_a", "idle_c", "Nervous", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["nervous3"] = {"rcmme_tracey1", "nervous_loop", "Nervous 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["uncuff"] = {"mp_arresting", "a_uncuff", "Uncuff", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["namaste"] = {"timetable@amanda@ig_4", "ig_4_base", "Namaste", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["dj"] = {"anim@amb@nightclub@djs@dixon@", "dixn_dance_cntr_open_dix", "DJ", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["dj2"] = {"anim@mp_player_intcelebrationmale@dj", "dj", "DJ 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["threaten"] = {"random@atmrobberygen", "b_atm_mugging", "Threaten", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["radio"] = {"random@arrests", "generic_radio_chatter", "Radio", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["pull"] = {"random@mugging4", "struggle_loop_b_thief", "Pull", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["bird"] = {"random@peyote@bird", "wakeup", "Bird"},
     ["chicken"] = {"random@peyote@chicken", "wakeup", "Chicken", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     -- ["bark"] = {"random@peyote@dog", "wakeup", "Bark"},
     --   ["rabbit"] = {"random@peyote@rabbit", "wakeup", "Rabbit"},
@@ -1939,16 +2122,19 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteDuration = 3000,
+        allowedPrison = true,
     }},
     ["adjust"] = {"missmic4", "michael_tux_fidget", "Adjust", animationOptions =
     {
         emoteMoving = true,
         emoteDuration = 4000,
+        allowedPrison = true,
     }},
     ["handsup"] = {"missminuteman_1ig_2", "handsup_base", "Hands Up", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["omgterrorist"] = {"oddjobs@assassinate@hotel@", "alert_gunshot", "Terrorist", animationOptions =
     {
@@ -1959,6 +2145,7 @@ cfg.emotes = {
     {
         --emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["titanic"] = {"nm@hands", "flat_floor", "Titanic", animationOptions =
     {
@@ -1969,26 +2156,31 @@ cfg.emotes = {
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["upyours"] = {"mp_player_int_upperup_yours", "mp_player_int_up_yours", "Up yours", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["chinbrush"] = {"anim@mp_player_intcelebrationfemale@chin_brush", "chin_brush", "Chin Brush", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["physco"] = {"anim@mp_player_intcelebrationfemale@you_loco", "you_loco", "Physco", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["showtits"] = {"mini@strip_club@backroom@", "stripper_b_backroom_idle_b", "Show Tits", animationOptions =
     {
         emoteMoving = true,
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["whatdidido"] = {"oddjobs@assassinate@multi@", "react_big_variations_a", "What Did I Do?", animationOptions =
     {
@@ -2012,43 +2204,50 @@ cfg.emotes = {
     }},
     ["pee"] = {"misscarsteal2peeing", "peeing_loop", "Pee", animationOptions =
     {
-        EmoteStuck = true,
-        PtfxAsset = "scr_amb_chop",
-        PtfxName = "ent_anim_dog_peeing",
+        emoteStuck = true,
+        ptfxAsset = "scr_amb_chop",
+        ptfxName = "ent_anim_dog_peeing",
         PtfxNoprop = true,
-        PtfxPlacement = {-0.05, 0.3, 0.0, 0.0, 90.0, 90.0, 1.0},
-        PtfxInfo = "Hold ~y~G~w~ to pee.",
-        PtfxWait = 3000,
+        ptfxPlacement = {-0.05, 0.3, 0.0, 0.0, 90.0, 90.0, 1.0},
+        ptfxInfo = "Hold ~y~G~w~ to pee.",
+        ptfxWait = 3000,
+        allowedPrison = true,
     }},
     ["valet"] = {"anim@amb@casino@valet_scenario@pose_a@", "base_a_m_y_vinewood_01", "Valet", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = false,
+        allowedPrison = true,
     }},
     ["valet2"] = {"anim@amb@casino@valet_scenario@pose_b@", "base_a_m_y_vinewood_01", "Valet 2", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = false,
+        allowedPrison = true,
     }},
     ["valet3"] = {"anim@amb@casino@valet_scenario@pose_d@", "base_a_m_y_vinewood_01", "Valet 3", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["grieve"] = {"anim@miss@low@fin@vagos@", "idle_ped05", "Grieve The Dead", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["respect"] = {"anim@mp_player_intcelebrationmale@respect", "respect", "Respect Male", animationOptions =
     {
         emoteLoop = false,
         emoteMoving = true,
+        allowedPrison = true,
     }},
     ["respectf"] = {"anim@mp_player_intcelebrationfemale@respect", "respect", "Respect Female", animationOptions =
     {
         emoteLoop = false,
         emoteMoving = true,
+        allowedPrison = true,
     }},
 
     -----------------------------------------------------------------------------------------------------------
@@ -2108,47 +2307,56 @@ cfg.emotes = {
         ["mindblown"] = {"anim@mp_player_intcelebrationmale@mind_blown", "mind_blown", "Mind Blown", animationOptions =
         {
             emoteMoving = true,
-            emoteDuration = 4000
+            emoteDuration = 4000,
+            allowedPrison = true,
         }},
         ["mindblown2"] = {"anim@mp_player_intcelebrationfemale@mind_blown", "mind_blown", "Mind Blown 2", animationOptions =
         {
             emoteMoving = true,
-            emoteDuration = 4000
+            emoteDuration = 4000,
+            allowedPrison = true,
         }},
         ["boxing"] = {"anim@mp_player_intcelebrationmale@shadow_boxing", "shadow_boxing", "Boxing", animationOptions =
         {
             emoteMoving = true,
-            emoteDuration = 4000
+            emoteDuration = 4000,
+            allowedPrison = true,
         }},
         ["boxing2"] = {"anim@mp_player_intcelebrationfemale@shadow_boxing", "shadow_boxing", "Boxing 2", animationOptions =
         {
             emoteMoving = true,
-            emoteDuration = 4000
+            emoteDuration = 4000,
+            allowedPrison = true,
         }},
         ["stink"] = {"anim@mp_player_intcelebrationfemale@stinker", "stinker", "Stink", animationOptions =
         {
             emoteMoving = true,
-            emoteLoop = true
+            emoteLoop = true,
+            allowedPrison = true,
         }},
         ["think4"] = {"anim@amb@casino@hangout@ped_male@stand@02b@idles", "idle_a", "Think 4", animationOptions =
         {
             emoteLoop = true,
             emoteMoving = true,
+            allowedPrison = true,
         }},
         ["adjusttie"] = {"clothingtie", "try_tie_positive_a", "Adjust Tie", animationOptions =
         {
             emoteMoving = true,
-            emoteDuration = 5000
+            emoteDuration = 5000,
+            allowedPrison = true,
         }},
         ["guard2"] = {"rcmepsilonism8", "base_carrier", "Guard 2", animationOptions =
         {
             emoteLoop = true,
-            emoteMoving = false
+            emoteMoving = false,
+            allowedPrison = true,
         }},
         ["lean6"] = {"amb@lo_res_idles@", "world_human_lean_male_foot_up_lo_res_base", "Lean 6", animationOptions =
         {
             emoteLoop = true,
-            emoteMoving = false
+            emoteMoving = false,
+            allowedPrison = true,
         }},
         ["copcrowd"] = {"amb@code_human_police_crowd_control@idle_a", "idle_a", "Cop Crowd", animationOptions =
         {
@@ -2162,15 +2370,18 @@ cfg.emotes = {
         }},
         ["fingerbum"] = {"mp_player_int_upperarse_pick", "mp_player_int_arse_pick", "Finger Bum", animationOptions = {
             emoteLoop = true,
-            emoteMoving = true
+            emoteMoving = true,
+            allowedPrison = true,
         }},
         ["touchself"] = {"mp_player_int_uppergrab_crotch", "mp_player_int_grab_crotch", "Touch Self", animationOptions = {
             emoteLoop = true,
-            emoteMoving = true
+            emoteMoving = true,
+            allowedPrison = true,
         }},
         ["wanker"] = {"mp_player_intwank", "mp_player_int_wank", "Wanker", animationOptions = {
             emoteLoop = false,
-            emoteMoving = false
+            emoteMoving = false,
+            allowedPrison = true,
         }},
         ["carbjgive"] = {"oddjobs@towing", "f_blow_job_loop", "Car Blowjob Give", animationOptions = {
             emoteLoop = false,
@@ -2199,9 +2410,9 @@ cfg.props = {
         emoteLoop = true,
         emoteMoving = true,
     }},
-    ['umbrella2'] = {'rcmnigel1d', 'base_club_shoulder', 'Umbrella 2', animationOptions =
+    ["umbrella2"] = {"rcmnigel1d", "base_club_shoulder", "Umbrella 2", animationOptions =
     {
-        prop = 'p_amb_brolly_01',
+        prop = "p_amb_brolly_01",
         propBone = 28422,
         propPlacement = {0.0700, 0.0100, 0.1100, 2.3402393, -150.9605721, 57.3374916},
         emoteLoop = true,
@@ -2214,10 +2425,10 @@ cfg.props = {
 
     ["notepad"] = {"missheistdockssetup1clipboard@base", "base", "Notepad", animationOptions =
     {
-        prop = 'prop_notepad_01',
+        prop = "prop_notepad_01",
         propBone = 18905,
         propPlacement = {0.1, 0.02, 0.05, 10.0, 0.0, 0.0},
-        secondProp = 'prop_pencil_01',
+        secondProp = "prop_pencil_01",
         secondPropBone = 58866,
         secondPropPlacement = {0.11, -0.02, 0.001, -120.0, 0.0, 0.0},
         -- emoteLoop is used for emotes that should loop, its as simple as that.
@@ -2316,7 +2527,7 @@ cfg.props = {
     }},
     ["smoke2"] = {"amb@world_human_aa_smoke@male@idle_a", "idle_c", "Smoke 2", animationOptions =
     {
-        prop = 'prop_cs_ciggy_01',
+        prop = "prop_cs_ciggy_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2324,7 +2535,7 @@ cfg.props = {
     }},
     ["smoke3"] = {"amb@world_human_aa_smoke@male@idle_a", "idle_b", "Smoke 3", animationOptions =
     {
-        prop = 'prop_cs_ciggy_01',
+        prop = "prop_cs_ciggy_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2332,7 +2543,7 @@ cfg.props = {
     }},
     ["smoke4"] = {"amb@world_human_smoking@female@idle_a", "idle_b", "Smoke 4", animationOptions =
     {
-        prop = 'prop_cs_ciggy_01',
+        prop = "prop_cs_ciggy_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2340,13 +2551,13 @@ cfg.props = {
     }},
     ["bong"] = {"anim@safehouse@bong", "bong_stage3", "Bong", animationOptions =
     {
-        prop = 'hei_heist_sh_bong_01',
+        prop = "hei_heist_sh_bong_01",
         propBone = 18905,
         propPlacement = {0.10,-0.25,0.0,95.0,190.0,180.0},
     }},
     ["fishing1"] = {"amb@world_human_stand_fishing@idle_a", "idle_a", "Fishing1", animationOptions =
     {
-        prop = 'prop_fishing_rod_01',
+        prop = "prop_fishing_rod_01",
         propBone = 60309,
         propPlacement = {0.0,0.0,0.0,0.0,0.0,0.0},
         emoteLoop = true,
@@ -2354,7 +2565,7 @@ cfg.props = {
     }},
     ["fishing2"] = {"amb@world_human_stand_fishing@idle_a", "idle_b", "Fishing2", animationOptions =
     {
-        prop = 'prop_fishing_rod_01',
+        prop = "prop_fishing_rod_01",
         propBone = 60309,
         propPlacement = {0.0,0.0,0.0,0.0,0.0,0.0},
         emoteLoop = true,
@@ -2362,7 +2573,7 @@ cfg.props = {
     }},
     ["fishing3"] = {"amb@world_human_stand_fishing@idle_a", "idle_c", "Fishing3", animationOptions =
     {
-        prop = 'prop_fishing_rod_01',
+        prop = "prop_fishing_rod_01",
         propBone = 60309,
         propPlacement = {0.0,0.0,0.0,0.0,0.0,0.0},
         emoteLoop = true,
@@ -2410,7 +2621,7 @@ cfg.props = {
     }},
     ["mugshot"] = {"mp_character_creation@customise@male_a", "loop", "Mugshot", animationOptions =
     {
-        prop = 'prop_police_id_board',
+        prop = "prop_police_id_board",
         propBone = 58868,
         propPlacement = {0.12, 0.24, 0.0, 5.0, 0.0, 70.0},
         emoteLoop = true,
@@ -2418,7 +2629,7 @@ cfg.props = {
     }},
     ["coffee"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Coffee", animationOptions =
     {
-        prop = 'p_amb_coffeecup_01',
+        prop = "p_amb_coffeecup_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2426,7 +2637,7 @@ cfg.props = {
     }},
     ["whiskey"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Whiskey", animationOptions =
     {
-        prop = 'prop_drink_whisky',
+        prop = "prop_drink_whisky",
         propBone = 28422,
         propPlacement = {0.01, -0.01, -0.06, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2434,7 +2645,7 @@ cfg.props = {
     }},
     ["beer"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Beer", animationOptions =
     {
-        prop = 'prop_amb_beer_bottle',
+        prop = "prop_amb_beer_bottle",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2442,7 +2653,7 @@ cfg.props = {
     }},
     ["cup"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Cup", animationOptions =
     {
-        prop = 'prop_plastic_cup_02',
+        prop = "prop_plastic_cup_02",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
@@ -2450,28 +2661,28 @@ cfg.props = {
     }},
     ["donut"] = {"mp_player_inteat@burger", "mp_player_int_eat_burger", "Donut", animationOptions =
     {
-        prop = 'prop_amb_donut',
+        prop = "prop_amb_donut",
         propBone = 18905,
         propPlacement = {0.13, 0.05, 0.02, -50.0, 16.0, 60.0},
         emoteMoving = true,
     }},
     ["burger"] = {"mp_player_inteat@burger", "mp_player_int_eat_burger", "Burger", animationOptions =
     {
-        prop = 'prop_cs_burger_01',
+        prop = "prop_cs_burger_01",
         propBone = 18905,
         propPlacement = {0.13, 0.05, 0.02, -50.0, 16.0, 60.0},
         emoteMoving = true,
     }},
     ["sandwich"] = {"mp_player_inteat@burger", "mp_player_int_eat_burger", "Sandwich", animationOptions =
     {
-        prop = 'prop_sandwich_01',
+        prop = "prop_sandwich_01",
         propBone = 18905,
         propPlacement = {0.13, 0.05, 0.02, -50.0, 16.0, 60.0},
         emoteMoving = true,
     }},
     ["soda"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Soda", animationOptions =
     {
-        prop = 'prop_ecola_can',
+        prop = "prop_ecola_can",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 130.0},
         emoteLoop = true,
@@ -2479,7 +2690,7 @@ cfg.props = {
     }},
     ["water"] = {"amb@world_human_drinking@coffee@male@idle_a", "idle_c", "Water", animationOptions =
     {
-        prop = 'ba_prop_club_water_bottle',
+        prop = "ba_prop_club_water_bottle",
         propBone = 28422,
         propPlacement = {0.0, 0.0, -0.090, 0.0, 0.0, 130.0},
         emoteLoop = true,
@@ -2487,14 +2698,14 @@ cfg.props = {
     }},
     ["egobar"] = {"mp_player_inteat@burger", "mp_player_int_eat_burger", "Ego Bar", animationOptions =
     {
-        prop = 'prop_choc_ego',
+        prop = "prop_choc_ego",
         propBone = 60309,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteMoving = true,
     }},
     ["wine"] = {"anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", "Wine", animationOptions =
     {
-        prop = 'prop_drink_redwine',
+        prop = "prop_drink_redwine",
         propBone = 18905,
         propPlacement = {0.10, -0.03, 0.03, -100.0, 0.0, -10.0},
         emoteMoving = true,
@@ -2502,7 +2713,7 @@ cfg.props = {
     }},
     ["flute"] = {"anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", "Flute", animationOptions =
     {
-        prop = 'prop_champ_flute',
+        prop = "prop_champ_flute",
         propBone = 18905,
         propPlacement = {0.10, -0.03, 0.03, -100.0, 0.0, -10.0},
         emoteMoving = true,
@@ -2510,7 +2721,7 @@ cfg.props = {
     }},
     ["champagne"] = {"anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", "Champagne", animationOptions =
     {
-        prop = 'prop_drink_champ',
+        prop = "prop_drink_champ",
         propBone = 18905,
         propPlacement = {0.10, -0.03, 0.03, -100.0, 0.0, -10.0},
         emoteMoving = true,
@@ -2518,7 +2729,7 @@ cfg.props = {
     }},
     ["cigar"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cigar", animationOptions =
     {
-        prop = 'prop_cigar_02',
+        prop = "prop_cigar_02",
         propBone = 47419,
         propPlacement = {0.010, 0.0, 0.0, 50.0, 0.0, -80.0},
         emoteMoving = true,
@@ -2526,7 +2737,7 @@ cfg.props = {
     }},
     ["cigar2"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cigar 2", animationOptions =
     {
-        prop = 'prop_cigar_01',
+        prop = "prop_cigar_01",
         propBone = 47419,
         propPlacement = {0.010, 0.0, 0.0, 50.0, 0.0, -80.0},
         emoteMoving = true,
@@ -2534,7 +2745,7 @@ cfg.props = {
     }},
     ["guitar"] = {"amb@world_human_musician@guitar@male@idle_a", "idle_b", "Guitar", animationOptions =
     {
-        prop = 'prop_acc_guitar_01',
+        prop = "prop_acc_guitar_01",
         propBone = 24818,
         propPlacement = {-0.1, 0.31, 0.1, 0.0, 20.0, 150.0},
         emoteMoving = true,
@@ -2542,7 +2753,7 @@ cfg.props = {
     }},
     ["guitar2"] = {"switch@trevor@guitar_beatdown", "001370_02_trvs_8_guitar_beatdown_idle_busker", "Guitar 2", animationOptions =
     {
-        prop = 'prop_acc_guitar_01',
+        prop = "prop_acc_guitar_01",
         propBone = 24818,
         propPlacement = {-0.05, 0.31, 0.1, 0.0, 20.0, 150.0},
         emoteMoving = true,
@@ -2550,7 +2761,7 @@ cfg.props = {
     }},
     ["guitarelectric"] = {"amb@world_human_musician@guitar@male@idle_a", "idle_b", "Guitar Electric", animationOptions =
     {
-        prop = 'prop_el_guitar_01',
+        prop = "prop_el_guitar_01",
         propBone = 24818,
         propPlacement = {-0.1, 0.31, 0.1, 0.0, 20.0, 150.0},
         emoteMoving = true,
@@ -2558,7 +2769,7 @@ cfg.props = {
     }},
     ["guitarelectric2"] = {"amb@world_human_musician@guitar@male@idle_a", "idle_b", "Guitar Electric 2", animationOptions =
     {
-        prop = 'prop_el_guitar_03',
+        prop = "prop_el_guitar_03",
         propBone = 24818,
         propPlacement = {-0.1, 0.31, 0.1, 0.0, 20.0, 150.0},
         emoteMoving = true,
@@ -2566,7 +2777,7 @@ cfg.props = {
     }},
     ["book"] = {"cellphone@", "cellphone_text_read_base", "Book", animationOptions =
     {
-        prop = 'prop_novel_01',
+        prop = "prop_novel_01",
         propBone = 6286,
         propPlacement = {0.15, 0.03, -0.065, 0.0, 180.0, 90.0}, -- This positioning isnt too great, was to much of a hassle
         emoteMoving = true,
@@ -2574,7 +2785,7 @@ cfg.props = {
     }},
     ["bouquet"] = {"impexp_int-0", "mp_m_waremech_01_dual-0", "Bouquet", animationOptions =
     {
-        prop = 'prop_snow_flower_02',
+        prop = "prop_snow_flower_02",
         propBone = 24817,
         propPlacement = {-0.29, 0.40, -0.02, -90.0, -90.0, 0.0},
         emoteMoving = true,
@@ -2582,7 +2793,7 @@ cfg.props = {
     }},
     ["teddy"] = {"impexp_int-0", "mp_m_waremech_01_dual-0", "Teddy", animationOptions =
     {
-        prop = 'v_ilev_mr_rasberryclean',
+        prop = "v_ilev_mr_rasberryclean",
         propBone = 24817,
         propPlacement = {-0.20, 0.46, -0.016, -180.0, -90.0, 0.0},
         emoteMoving = true,
@@ -2590,7 +2801,7 @@ cfg.props = {
     }},
     ["backpack"] = {"move_p_m_zero_rucksack", "idle", "Backpack", animationOptions =
     {
-        prop = 'p_michael_backpack_s',
+        prop = "p_michael_backpack_s",
         propBone = 24818,
         propPlacement = {0.07, -0.11, -0.05, 0.0, 90.0, 175.0},
         emoteMoving = true,
@@ -2598,7 +2809,7 @@ cfg.props = {
     }},
     ["clipboard"] = {"missfam4", "base", "Clipboard", animationOptions =
     {
-        prop = 'p_amb_clipboard_01',
+        prop = "p_amb_clipboard_01",
         propBone = 36029,
         propPlacement = {0.16, 0.08, 0.1, -130.0, -50.0, 0.0},
         emoteMoving = true,
@@ -2606,7 +2817,7 @@ cfg.props = {
     }},
     ["map"] = {"amb@world_human_tourist_map@male@base", "base", "Map", animationOptions =
     {
-        prop = 'prop_tourist_map_01',
+        prop = "prop_tourist_map_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteMoving = true,
@@ -2622,7 +2833,7 @@ cfg.props = {
     }},
     ["beg"] = {"amb@world_human_bum_freeway@male@base", "base", "Beg", animationOptions =
     {
-        prop = 'prop_beggers_sign_03',
+        prop = "prop_beggers_sign_03",
         propBone = 58868,
         propPlacement = {0.19, 0.18, 0.0, 5.0, 0.0, 40.0},
         emoteLoop = true,
@@ -2630,46 +2841,46 @@ cfg.props = {
     }},
     ["makeitrain"] = {"anim@mp_player_intupperraining_cash", "idle_a", "Make It Rain", animationOptions =
     {
-        prop = 'prop_anim_cash_pile_01',
+        prop = "prop_anim_cash_pile_01",
         propBone = 60309,
         propPlacement = {0.0, 0.0, 0.0, 180.0, 0.0, 70.0},
         emoteMoving = true,
         emoteLoop = true,
-        PtfxAsset = "scr_xs_celebration",
-        PtfxName = "scr_xs_money_rain",
-        PtfxPlacement = {0.0, 0.0, -0.09, -80.0, 0.0, 0.0, 1.0},
-        PtfxInfo = "Press ~y~G~w~ to make it rain.",
-        PtfxWait = 500,
+        ptfxAsset = "scr_xs_celebration",
+        ptfxName = "scr_xs_money_rain",
+        ptfxPlacement = {0.0, 0.0, -0.09, -80.0, 0.0, 0.0, 1.0},
+        ptfxInfo = "Press ~y~G~w~ to make it rain.",
+        ptfxWait = 500,
     }},
     ["camera"] = {"amb@world_human_paparazzi@male@base", "base", "Camera", animationOptions =
     {
-        prop = 'prop_pap_camera_01',
+        prop = "prop_pap_camera_01",
         propBone = 28422,
         propPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         emoteLoop = true,
         emoteMoving = true,
-        PtfxAsset = "scr_bike_business",
-        PtfxName = "scr_bike_cfid_camera_flash",
-        PtfxPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0},
-        PtfxInfo = "Press ~y~G~w~ to use camera flash.",
-        PtfxWait = 200,
+        ptfxAsset = "scr_bike_business",
+        ptfxName = "scr_bike_cfid_camera_flash",
+        ptfxPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0},
+        ptfxInfo = "Press ~y~G~w~ to use camera flash.",
+        ptfxWait = 200,
     }},
     ["champagnespray"] = {"anim@mp_player_intupperspray_champagne", "idle_a", "Champagne Spray", animationOptions =
     {
-        prop = 'ba_prop_battle_champ_open',
+        prop = "ba_prop_battle_champ_open",
         propBone = 28422,
         propPlacement = {0.0,0.0,0.0,0.0,0.0,0.0},
         emoteMoving = true,
         emoteLoop = true,
-        PtfxAsset = "scr_ba_club",
-        PtfxName = "scr_ba_club_champagne_spray",
-        PtfxPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-        PtfxInfo = "Hold ~y~G~w~ to spray champagne",
-        PtfxWait = 500,
+        ptfxAsset = "scr_ba_club",
+        ptfxName = "scr_ba_club_champagne_spray",
+        ptfxPlacement = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+        ptfxInfo = "Hold ~y~G~w~ to spray champagne",
+        ptfxWait = 500,
     }},
     ["joint"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Joint", animationOptions =
     {
-        prop = 'p_cs_joint_02',
+        prop = "p_cs_joint_02",
         propBone = 47419,
         propPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0},
         emoteMoving = true,
@@ -2677,7 +2888,7 @@ cfg.props = {
     }},
     ["cig"] = {"amb@world_human_smoking@male@male_a@enter", "enter", "Cig", animationOptions =
     {
-        prop = 'prop_amb_ciggy_01',
+        prop = "prop_amb_ciggy_01",
         propBone = 47419,
         propPlacement = {0.015, -0.009, 0.003, 55.0, 0.0, 110.0},
         emoteMoving = true,
@@ -2827,7 +3038,7 @@ cfg.props = {
         prop = "prop_tennis_bag_01",
         propBone = 57005,
         propPlacement = {0.27, 0.0, 0.0, 91.0, 0.0, -82.9999951},
-        secondProp = 'prop_tennis_rack_01',
+        secondProp = "prop_tennis_rack_01",
         secondPropBone = 60309,
         secondPropPlacement = {0.0800, 0.0300, 0.0, -130.2907295, 3.8782324, 6.588224},
         emoteLoop = true,
@@ -2872,7 +3083,7 @@ cfg.props = {
         prop = "w_am_jerrycan",
         propBone = 18905,
         propPlacement = {0.32, -0.0100, 0.0, -162.423, 74.83, 58.79},
-        secondProp = 'prop_michael_backpack',
+        secondProp = "prop_michael_backpack",
         secondPropBone = 40269,
         secondPropPlacement = {-0.07, -0.21, -0.11, -144.93, 117.358, -6.16},
         emoteLoop = true,
@@ -3013,7 +3224,7 @@ cfg.props = {
         prop = "prop_food_bs_tray_02",
         propBone = 57005,
         propPlacement = {0.2500, 0.1000, 0.0700,-110.5483936, 73.3529273, -16.338362},
-        secondProp = 'prop_food_bs_tray_03',
+        secondProp = "prop_food_bs_tray_03",
         secondPropBone =18905,
         secondPropPlacement = {0.2200, 0.1300, -0.1000, -127.7725487, 110.2074758, -3.5886263},
         emoteLoop = true,
@@ -3024,7 +3235,7 @@ cfg.props = {
         prop = "prop_food_cb_tray_02",
         propBone = 57005,
         propPlacement = {0.2500, 0.1000, 0.0700,-110.5483936, 73.3529273, -16.338362},
-        secondProp = 'prop_food_cb_tray_02',
+        secondProp = "prop_food_cb_tray_02",
         secondPropBone =18905,
         secondPropPlacement = {0.2200, 0.1300, -0.1000, -127.7725487, 110.2074758, -3.5886263},
         emoteLoop = true,
@@ -3035,7 +3246,7 @@ cfg.props = {
         prop = "prop_food_tray_02",
         propBone = 57005,
         propPlacement = {0.2500, 0.1000, 0.0700,-110.5483936, 73.3529273, -16.338362},
-        secondProp = 'prop_food_tray_03',
+        secondProp = "prop_food_tray_03",
         secondPropBone =18905,
         secondPropPlacement = {0.2200, 0.1300, -0.1000, -127.7725487, 110.2074758, -3.5886263},
         emoteLoop = true,
@@ -3046,7 +3257,7 @@ cfg.props = {
         prop = "prop_food_tray_02",
         propBone = 57005,
         propPlacement = {0.2500, 0.1000, 0.0700,-110.5483936, 73.3529273, -16.338362},
-        secondProp = 'prop_food_tray_02',
+        secondProp = "prop_food_tray_02",
         secondPropBone =18905,
         secondPropPlacement = {0.2200, 0.1300, -0.1000, -127.7725487, 110.2074758, -3.5886263},
         emoteLoop = true,
@@ -3153,7 +3364,7 @@ cfg.props = {
         prop = "h4_prop_h4_caviar_tin_01a",
         propBone = 60309,
         propPlacement = {0.0, 0.0300, 0.0100,0.0,0.0,0.0},
-        secondProp = 'h4_prop_h4_caviar_spoon_01a',
+        secondProp = "h4_prop_h4_caviar_spoon_01a",
         secondPropBone = 28422,
         secondPropPlacement = {0.0,0.0,0.0,0.0,0.0,0.0},
         emoteLoop = true,
@@ -3180,7 +3391,7 @@ cfg.props = {
         prop = "prop_toilet_roll_01",
         propBone = 28422,
         propPlacement = {0.0700, -0.02000, -0.2100, 0,0, 0.0, 0.0},
-        secondProp = 'prop_big_shit_01',
+        secondProp = "prop_big_shit_01",
         secondPropBone = 0,
         secondPropPlacement = {-0.0100, 0.0600, -0.1550, 101.3015175, 7.3512213,-29.2665794},
         emoteLoop = true,
@@ -3407,38 +3618,38 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-    ["pickingfruit"] = {"divined@fighting@new", "pickingfruit", "Custom Picking", animationOptions =
+        ["pickingfruit"] = {"divined@fighting@new", "pickingfruit", "Custom Picking", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
     }},
-    ["sitlaughing"] = {"divined@fighting@new", "sitlaughing", "Custom Sit Laughing", animationOptions =
+        ["sitlaughing"] = {"divined@fighting@new", "sitlaughing", "Custom Sit Laughing", animationOptions =
     {
         emoteLoop = true,
     }},
-    ["standdie"] = {"divined@fighting@new", "standdie", "Custom Die Standing", animationOptions =
+        ["standdie"] = {"divined@fighting@new", "standdie", "Custom Die Standing", animationOptions =
     {
         emoteLoop = true,
     }},
-    ["strutwalk"] = {"divined@fighting@new", "strutwalk", "Custom Strut Walk", animationOptions =
-    {
-        emoteLoop = true,
-        emoteMoving = true,
-    }},
-    ["stunned"] = {"divined@fighting@new", "stunned", "Custom Stunned", animationOptions =
-    {
-        emoteLoop = true,
-    }},
-    ["textingwalk"] = {"divined@fighting@new", "textingwalk", "Custom Texting Walk", animationOptions =
+        ["strutwalk"] = {"divined@fighting@new", "strutwalk", "Custom Strut Walk", animationOptions =
     {
         emoteLoop = true,
         emoteMoving = true,
     }},
-    ["tripping"] = {"divined@fighting@new", "tripping", "Custom Tripping", animationOptions =
+        ["stunned"] = {"divined@fighting@new", "stunned", "Custom Stunned", animationOptions =
     {
         emoteLoop = true,
     }},
-    ["divdance1"] = {"divined@dancesv2@new", "divdance1", "Custom Dance 13", animationOptions =
+        ["textingwalk"] = {"divined@fighting@new", "textingwalk", "Custom Texting Walk", animationOptions =
+    {
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
+        ["tripping"] = {"divined@fighting@new", "tripping", "Custom Tripping", animationOptions =
+    {
+        emoteLoop = true,
+    }},
+        ["divdance1"] = {"divined@dancesv2@new", "divdance1", "Custom Dance 13", animationOptions =
     {
         emoteLoop = true
     }},
@@ -3494,7 +3705,7 @@ cfg.custom = {
     {
         emoteLoop = true
     }},
-    ["dbdance1"] = {"divined@fndances@new", "dbdance1", "Mdance", animationOptions =
+        ["dbdance1"] = {"divined@fndances@new", "dbdance1", "Mdance", animationOptions =
     {
         emoteLoop = true,
     }},
@@ -3530,11 +3741,11 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-    ["dbdance10"] = {"divined@fndances@new", "dbdance10", "Electro Swing", animationOptions =
+        ["dbdance10"] = {"divined@fndances@new", "dbdance10", "Electro Swing", animationOptions =
     {
         emoteLoop = true,
     }},
-    ["dbdance11"] = {"divined@fndances@new", "dbdance11", "Electro Shuffle", animationOptions =
+        ["dbdance11"] = {"divined@fndances@new", "dbdance11", "Electro Shuffle", animationOptions =
     {
         emoteLoop = true,
     }},
@@ -3658,7 +3869,7 @@ cfg.custom = {
     {
         emoteLoop = true,
     }},
-    ["drdance1"] = {"divined@randomdances@new", "drdance1", "Gymnastics Dance", animationOptions =
+        ["drdance1"] = {"divined@randomdances@new", "drdance1", "Gymnastics Dance", animationOptions =
     {
         emoteLoop = true,
     }},
@@ -4041,6 +4252,463 @@ cfg.custom = {
     {
         emoteLoop = true
     }},
+    ["followa"] = {"dollie_mods@follow_me_001", "follow_me_001", "Follow A (Front)", animationOptions =
+    {
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["followb"] = {"dollie_mods@follow_me_002", "follow_me_002", "Follow B (Back)", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["csdog2"] = {"misssnowie@little_doggy_lying_down", "base", "Small Dog Carried", animationOptions =
+    {
+        emoteMoving = false,
+        emoteLoop = true
+    }},
+    ["csdog3"] = {"hooman@hugging_little_doggy", "base", "Carry Small Dog 2", animationOptions =
+    {
+        emoteMoving = true,
+        emoteLoop = true
+    }},
+    ["csdog4"] = {"little_doggy@hugging_hooman", "base", "Small Dog Carried 2", animationOptions =
+    {
+        emoteMoving = false,
+        emoteLoop = true
+    }},
+    ["hhands"] = {"misssnowie@hearthands", "base", "Heart Hands", animationOptions =
+    {
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["selfiecrouch"] = {"crouching@taking_selfie", "base", "Selfie Crouching", animationOptions =
+    {
+        prop = "prop_phone_ing",
+        propBone = 18905,
+        propPlacement = {0.1580,0.0180,0.0300,-150.4798,-67.8240,-46.0417},
+        emoteLoop = true,
+        emoteMoving = false,
+        ptfxAsset = "scr_tn_meet",
+        ptfxName = "scr_tn_meet_phone_camera_flash",
+        ptfxPlacement = {-0.015,0.0,0.041,0.0,0.0,0.0,1.0},
+        ptfxInfo = "Press ~y~G~w~ to flash camera.",
+        ptfxWait = 200
+    }},
+    ["surfboard"] = {"beachanims@molly", "beachanim_surf_clip", "Surf Board", animationOptions =
+    {
+        prop = "prop_surf_board_01",
+        propBone = 28252,
+        propPlacement = {0.1020,-0.1460,-0.1160,-85.5416,176.1446,-2.1500},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["stealtv"] = {"beachanims@molly", "beachanim_surf_clip", "Steal TV", animationOptions =
+    {
+        prop = "xs_prop_arena_screen_tv_01",
+        propBone = 28252,
+        propPlacement = {0.2600,0.1100,-0.1400,96.1620,168.9069,84.2402},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["beachring"] = {"beachanims@free", "beachanim_clip", "Beach Floatie Thingy", animationOptions =
+    {
+        prop = "prop_beach_ring_01",
+        propBone = 0,
+        propPlacement = {0.0,0.0,0.0100,-12.0,0.0,-2.0},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["sitchairf"] = {"mouse@femalearmchair", "female_armchair_clip_01", "Sit Chair - Armchair", animationOptions =
+    {
+        prop = "p_armchair_01_s",
+        propBone = 11816,
+        propPlacement = {0.5320,-0.3310,0.2000,-90.0000,-180.0000,-40.9999},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf2"] = { "mouse@female_sitting_folded", "female_sitting_folded_clip", "Sit Chair - Arms Folded", animationOptions =
+    {
+        prop = "ba_prop_battle_club_chair_03",
+        propBone = 0,
+        propPlacement = {0.0,0.0,0.0,0.0,0.0,-170.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf3"] = {"mouse@female_sitting_forward", "female_sitting_forward_clip", "Sit Chair - Leaning Forward", animationOptions =
+    {
+        prop = "ba_prop_battle_club_chair_03",
+        propBone = 0,
+        propPlacement = {0.0,0.0,0.0,0.0,0.0,-170.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf4"] = {"mouse@female_smart_sitting", "female_smart_sitting_clip", "Sit Chair - Smart", animationOptions =
+    {
+        prop = "ba_prop_battle_club_chair_03",
+        propBone = 0,
+        propPlacement = {0.0,0.0,0.0,0.0,0.0,-170.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf5"] = {"mouse@female_smart_sitting_crossed", "female_smart_sitting_crossed_clip", "Sit Chair - Legs Crossed", animationOptions =
+    {
+        prop = "ba_prop_battle_club_chair_03",
+        propBone = 0,
+        propPlacement = {0.0,0.0,0.0,0.0,0.0,-170.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf6"] = {"mouse@female_sitting_laptop", "female_sitting_laptop_clip", "Sit Chair - Laptop", animationOptions =
+    {
+        prop = "ba_prop_club_laptop_dj_02",
+        propBone = 57005,
+        propPlacement = {0.0860,-0.1370,-0.1750,-79.9999,-90.0000,0.0000},
+        secondProp = "ba_prop_battle_club_chair_02",
+        secondPropBone = 0,
+        secondPropPlacement = {-0.0400,-0.1900,0.0000,-180.0000,-180.0000,9.0999},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf7"] = {"mouse@female_sitting_tablet", "female_sitting_tablet_clip", "Sit Chair - Tablet", animationOptions =
+    {
+        prop = "hei_prop_dlc_tablet",
+        propBone = 28422,
+        propPlacement = {0.0870,0.1030,-0.1240,144.3540,157.8527,-4.6318},
+        secondProp = "ba_prop_battle_club_chair_02",
+        secondPropBone = 0,
+        secondPropPlacement = {0.0100,-0.0800,0.0200,150.0000,-180.0000,10.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["sitchairf8"] = {"mouse@female_sitting_tablet", "female_sitting_tablet_clip", "Sit Chair - Book", animationOptions =
+    {
+        prop = "v_ilev_mp_bedsidebook",
+        propBone = 28422,
+        propPlacement = {0.1300,0.1100,-0.1200,120.3356,-15.9891,26.1497},
+        secondProp = "ba_prop_battle_club_chair_02",
+        secondPropBone = 0,
+        secondPropPlacement = {0.0100,-0.0800,0.0200,150.0000,-180.0000,10.0000},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["selfiecrouch2"] = {"eagle@girlphonepose13", "girl", "Selfie Crouching 2", animationOptions =
+    {
+        prop = "prop_phone_ing",
+        propBone = 60309,
+        propPlacement = {0.0670,0.0300,0.0300,-90.0000,0.0000,-25.9000},
+        emoteLoop = true,
+        emoteMoving = false,
+        ptfxAsset = "scr_tn_meet",
+        ptfxName = "scr_tn_meet_phone_camera_flash",
+        ptfxPlacement = {-0.015,0.0,0.041,0.0,0.0,0.0,1.0},
+        ptfxInfo = "Press ~y~G~w~ to flash camera.",
+        ptfxWait = 200
+    }},
+    ["dancepride"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride A", animationOptions =
+    {
+        prop = "lilprideflag1",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag1",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["danceprideb"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride B - LGBTQIA", animationOptions =
+    {
+        prop = "lilprideflag2",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag2",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["dancepridec"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride C - Bisexual", animationOptions =
+    {
+        prop = "lilprideflag3",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag3",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["danceprided"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride D - Pansexual", animationOptions =
+    {
+        prop = "lilprideflag5",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag5",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["dancepridee"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride E - Transexual", animationOptions =
+    {
+        prop = "lilprideflag6",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag6",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797
+        },
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["dancepridef"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride F - Non Binary", animationOptions =
+    {
+        prop = "lilprideflag7",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag7",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["danceprideg"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride G - Asexual", animationOptions =
+    {
+        prop = "lilprideflag8",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag8",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["danceprideh"] = {"anim@amb@nightclub@lazlow@hi_railing@", "ambclub_09_mi_hi_bellydancer_laz", "Dance Pride H - Straight Ally", animationOptions =
+    {
+        prop = "lilprideflag9",
+        propBone = 18905,
+        propPlacement = {0.0900,0.0000,0.0300,-39.911,93.9166,-5.8062},
+        secondProp = "lilprideflag9",
+        secondPropBone = 57005,
+        secondPropPlacement = {0.0900,-0.0200,-0.0300,-90.2454,5.7068,-28.7797},
+        emoteLoop = true,
+        emoteMoving = false
+    }},
+    ["pflag"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag - Rainbow", animationOptions =
+    {
+        prop = "prideflag1",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag2"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 2 - LGBTQ", animationOptions =
+    {
+        prop = "prideflag2",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag3"] = { "rcmnigel1d", "base_club_shoulder", "Pride Flag 3 - Bisexual ", animationOptions =
+    {
+        prop = "prideflag3",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag4"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 4 - Lesbian ", animationOptions =
+    {
+        prop = "prideflag4",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag5"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 5 - Pansexual ", animationOptions =
+    {
+        prop = "prideflag5",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag6"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 6 - Transexual ", animationOptions =
+    {
+        prop = "prideflag6",
+        propBone = 18905,
+        propPlacement = { 0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag7"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 7 - Non Binary ", animationOptions =
+    {
+        prop = "prideflag7",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag8"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 8 - Asexual ", animationOptions =
+    {
+        prop = "prideflag8",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["pflag9"] = {"rcmnigel1d", "base_club_shoulder", "Pride Flag 9 - Straight Ally ", animationOptions =
+    {
+        prop = "prideflag9",
+        propBone = 18905,
+        propPlacement = {0.0800,-0.2090,0.0900,-82.6677,-141.2988,12.3308},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["kiss2"] = {"hs3_ext-20","csb_georginacheng_dual-20", "Kiss 2", animationOptions =
+    {
+        emoteMoving = false,
+        emoteDuration = 10000,
+        syncOffsetFront = 0.08
+    }},
+    ["kiss3"] = {"hs3_ext-19", "cs_lestercrest_3_dual-19", "Kiss 3", animationOptions =
+    {
+        emoteMoving = false,
+        emoteDuration = 10000,
+        syncOffsetFront = 0.08
+    }},
+    ["kiss4"] = {"hs3_ext-19", "csb_georginacheng_dual-19", "Kiss 4", animationOptions =
+    {
+        emoteMoving = false,
+        emoteDuration = 10000,
+        syncOffsetFront = 0.08
+    }},
+    ["boombox2"] = {"molly@boombox1", "boombox1_clip", "Boombox 2", animationOptions =
+    {
+        prop = "prop_cs_sol_glasses",
+        propBone = 31086,
+        propPlacement = {0.0440,0.0740,0.0000,-160.9843,-88.7288,-0.6197},
+        secondProp = "prop_ghettoblast_02",
+        secondPropBone = 10706,
+        secondPropPlacement = {-0.2310,-0.0770,0.2410,-179.7256,176.7406,23.0190},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["airportbag"] = {"anim@heists@narcotics@trash", "idle", "Airport Bag", animationOptions =
+    {
+        prop = "prop_suitcase_01c",
+        propBone = 28422,
+        propPlacement = {0.1100,-0.2100,-0.4300,-11.8999,0.0,30.0000},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["cashcase"] = {"move_weapon@jerrycan@generic", "idle", "Cash Briefcase", animationOptions =
+    {
+        prop = "bkr_prop_biker_case_shut",
+        propBone = 28422,
+        propPlacement = {0.1000, 0.0100, 0.0040, 0.0, 0.0, -90.00},
+        emoteLoop = true,
+        emoteMoving = true
+    } },
+    ["cashcase2"] = {"anim@heists@box_carry@", "idle", "Cash Briefcase 2", animationOptions =
+    {
+        prop = "prop_cash_case_01",
+        propBone = 28422,
+        propPlacement = {-0.0050, -0.1870, -0.1400, 0.0, 0.0, 0.0},
+        emoteLoop = true,
+        emoteMoving = true
+    } },
+    ["cashcase3"] = {"anim@heists@box_carry@", "idle", "Cash Briefcase 3", animationOptions =
+    {
+        prop = "prop_cash_case_02",
+        propBone = 28422,
+        propPlacement = {0.0050, -0.1170, -0.1400, 14.000, 0.0, 0.0},
+        emoteLoop = true,
+        emoteMoving = true
+    } },
+    ["cashcase4"] = {"anim@heists@box_carry@", "idle", "Cash Briefcase 4 - Diamonds", animationOptions =
+    {
+        prop = "ch_prop_ch_security_case_01a",
+        propBone = 28422,
+        propPlacement = {0.0, -0.0900, -0.1800, 14.4000, 0.0, 0.0},
+        emoteLoop = true,
+        emoteMoving = true
+    } },
+    ["guitarcarry"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Case Carry", animationOptions =
+    {
+        prop = "sf_prop_sf_guitar_case_01a",
+        propBone = 28422,
+        propPlacement = {0.2800, -0.2000, -0.0600, 0.0, 0.0, 15.0000},
+        emoteLoop = true,
+        emoteMoving = true
+    } },
+    ["guitarcarry2"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Accoustic", animationOptions =
+    {
+        prop = "prop_acc_guitar_01",
+        propBone = 28422,
+        propPlacement = {0.1500, -0.1400, -0.0200, -101.5083, 5.7251, 29.4987},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarcarry3"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Electric ", animationOptions =
+    {
+        prop = "prop_el_guitar_01",
+        propBone = 28422,
+        propPlacement = {0.1100, -0.1200, -0.0500, -80.0000, 0.0, 21.9999},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarcarry4"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Electric 2 ", animationOptions =
+    {
+        prop = "prop_el_guitar_02",
+        propBone = 28422,
+        propPlacement = {0.1100, -0.1200, -0.0500, -80.0000, 0.0, 21.9999},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarcarry5"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Electric 3 ", animationOptions =
+    {
+        prop = "prop_el_guitar_03",
+        propBone = 28422,
+        propPlacement = {0.1100, -0.1200, -0.0500, -80.0000, 0.0, 21.9999},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarcarry6"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Electric 4 ", animationOptions =
+    {
+        prop = "vw_prop_casino_art_guitar_01a",
+        propBone = 28422,
+        propPlacement = {0.1100, -0.1200, -0.0500, -80.0000, 0.0, 21.9999},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarcarry7"] = {"move_weapon@jerrycan@generic", "idle", "Guitar Carry Electric 5 ", animationOptions =
+    {
+        prop = "sf_prop_sf_el_guitar_02a",
+        propBone = 28422,
+        propPlacement = {0.1100, -0.1200, -0.0500, -80.0000, 0.0, 21.9999},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guncase"] = {"move_weapon@jerrycan@generic", "idle", "Guncase", animationOptions =
+    {
+        prop = "prop_gun_case_01",
+        propBone = 57005,
+        propPlacement = {0.10, 0.02, -0.02, 40.0, 145.0, 115.0},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["dispenser"] = {"mini@sprunk", "plyr_buy_drink_pt1", "Dispenser", animationOptions =
+    {
+         emoteLoop = false
+    }},
+    ["protest2"] = {"rcmnigel1d", "base_club_shoulder", "Protest 2 - Pride ", animationOptions = {
+        prop = "pride_sign_01",
+        propBone = 57005,
+        propPlacement = {0.1820, 0.2400, 0.0600, -69.3774235, 5.9142048, -13.9572354},
+        emoteLoop = true,
+        emoteMoving = true
+    }}
 }
 
 return cfg
