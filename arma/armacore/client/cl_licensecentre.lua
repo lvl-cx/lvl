@@ -127,15 +127,18 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    blip = AddBlipForCoord(licensecentre.location)
-    SetBlipSprite(blip, 457)
-    SetBlipScale(blip, 0.6)
-    SetBlipDisplay(blip, 2)
-    SetBlipColour(blip, 2)
-    SetBlipAsShortRange(blip, true)
-    BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString('Job Centre')
-    EndTextCommandSetBlipName(blip)
-  end)
-
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+		local H = function(I)
+        end
+        local J = function(I)
+        end
+        local K = function(I)
+        end
+        local L = function(I)
+        end
+        for M, N in pairs(a) do
+            tARMA.addBlip(licensecentre.location.x, licensecentre.location.y, licensecentre.location.z, 457, 2, "Job Centre", 0.6, true)
+        end
+	end
+end)
