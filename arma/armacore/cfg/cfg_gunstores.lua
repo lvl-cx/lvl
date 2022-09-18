@@ -87,7 +87,7 @@ cfg.GunStores={
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
     },
     ["SmallArmsDealer"]={
-        ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1129.3187255859,-2005.0549316406,34.512053710937)},110,1,"Small Arms Dealer",{""},true},
+        ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1242.7232666016,-426.84201049805,67.913963317871)},110,1,"Small Arms Dealer",{""},true},
         ["WEAPON_BERETTA"]={"Berreta M9 Pistol",40000,0,"N/A","w_pi_beretta"},
         ["WEAPON_FNX"]={"FNX Pistol",50000,"N/A","w_pi_fnx"},
         ["WEAPON_TX22"]={"TX22 Pistol",60000,0,"N/A","w_pi_tx22"},
