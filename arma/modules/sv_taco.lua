@@ -20,11 +20,13 @@ RegisterNetEvent('ARMA:payTacoSeller')
 AddEventHandler('ARMA:payTacoSeller', function(id)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.tryFullPayment(user_id,15000) then
-        ARMA.giveInventoryItem(user_id, 'taco', 1)
-        ARMA.giveBankMoney(id, 15000)
-        TriggerClientEvent("arma:PlaySound", source, "money")
-    else
-        ARMAclient.notify(source, {'~r~You do not have enough money.'})
+    if tacoDrivers[id] then
+        if ARMA.tryFullPayment(user_id,15000) then
+            ARMA.giveInventoryItem(user_id, 'taco', 1)
+            ARMA.giveBankMoney(id, 15000)
+            TriggerClientEvent("arma:PlaySound", source, "money")
+        else
+            ARMAclient.notify(source, {'~r~You do not have enough money.'})
+        end
     end
 end)
