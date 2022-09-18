@@ -67,6 +67,7 @@ local allowedEntities = {
     [`prop_ld_suitcase_01`] = true,
     [`prop_boombox_01`] = true,
     [`v_ret_ml_beerdus`] = true,
+    [`v_ret_ml_beeram`] = true,
     [`prop_police_id_board`] = true,
     [`p_amb_coffeecup_01`] = true,
     [`prop_security_case_01`] = true,
@@ -85,6 +86,7 @@ local allowedEntities = {
     [`prop_drink_champ`] = true,
     [`prop_acc_guitar_01`] = true,
     [`prop_el_guitar_01`] = true,
+    [`prop_el_guitar_02`] = true,
     [`prop_el_guitar_03`] = true,
     [`prop_cigar_02`] = true,
     [`prop_novel_01`] = true,
@@ -164,6 +166,41 @@ local allowedEntities = {
     [`xm_prop_body_bag`] = true,
     [`prop_lifepak`] = true,
     [`prop_clamp`] = true,
+    [`prop_surf_board_01`] = true,
+    [`xs_prop_arena_screen_tv_01`] = true,
+    [`prop_beach_ring_01`] = true,
+    [`p_armchair_01_s`] = true,
+    [`ba_prop_battle_club_chair_03`] = true,
+    [`ba_prop_club_laptop_dj_02`] = true,
+    [`hei_prop_dlc_tablet`] = true,
+    [`v_ilev_mp_bedsidebook`] = true,
+    [`lilprideflag1`] = true,
+    [`lilprideflag2`] = true,
+    [`lilprideflag3`] = true,
+    [`lilprideflag5`] = true,
+    [`lilprideflag6`] = true,
+    [`lilprideflag7`] = true,
+    [`lilprideflag8`] = true,
+    [`lilprideflag9`] = true,
+    [`prideflag1`] = true,
+    [`prideflag2`] = true,
+    [`prideflag3`] = true,
+    [`prideflag4`] = true,
+    [`prideflag6`] = true,
+    [`prideflag7`] = true,
+    [`prideflag8`] = true,
+    [`prideflag9`] = true,
+    [`prop_cs_sol_glasses`] = true,
+    [`prop_suitcase_01c`] = true,
+    [`bkr_prop_biker_case_shut`] = true,
+    [`prop_cash_case_01`] = true,
+    [`prop_cash_case_02`] = true,
+    [`ch_prop_ch_security_case_01a`] = true,
+    [`sf_prop_sf_guitar_case_01a`] = true,
+    [`vw_prop_casino_art_guitar_01a`] = true,
+    [`sf_prop_sf_el_guitar_02a`] = true,
+    [`prop_gun_case_01`] = true,
+    [`pride_sign_01`] = true,
 }
 
 local otherVehicles = {
@@ -171,6 +208,7 @@ local otherVehicles = {
     [`bmx`] = true,
     [`taxi`] = true,
     [`police2`] = true,
+    [`taco`] = true,
 }
 
 
@@ -438,6 +476,8 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
             end
             gettingScreenshot = true
+            -- this screenshot shit needs redoing with the new stuff video trigger cba rn
+            -- takeClientVideoAndUpload etc
             exports["ac-screenshots"]:requestClientScreenshotUploadToDiscord(player,{
                 username = "ARMA Logs",
                 avatar_url = image,
