@@ -1,28 +1,6 @@
 -- [CFG]
-licensecentre = {}
-licensecentre.location = vector3(-547.30133056641,-200.14054870605,47.414928436279)
-licensecentre.marker = vector3(-547.30133056641,-200.14054870605,47.414928436279-0.98)
+licensecentre = module("armacore/cfg/cfg_licensecentre")
 
-licensecentre.dlicenses = {
-    {name = "Weed License", group = "Weed", price = 200000},
-    {name = "Gang License", group = "Gang", price = 500000},
-    {name = "Cocaine License", group = "Cocaine", price = 500000},
-    {name = "Heroin License", group = "Heroin", price = 10000000},
-    {name = "LSD License", group = "LSD", price = 50000000},
-    {name = "Rebel License", group = "Rebel", price = 30000000},
-    {name = "Advanced Rebel License", group = "AdvancedRebel",price = 15000000},
-}
-
-licensecentre.licenses = {
-    {name = "Scrap Job License", group = "Scrap", price = 100000},
-    {name = "Gold License", group = "Gold", price = 1000000},
-    {name = "Diamond License", group = "Diamond", price = 5000000},
-    {name = "DJ License", group = "DJ", price = 50000000},
-    {name = "Pilot License", group = "PilotLicense", price = 1500000},
-    {name = "Long Range Emergency Blips", group = "polblips", price = 5000000},
-    --{name = "Highrollers License", group = "highroller", price = 10000000},
-
-}
 
 RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~b~" .. "Job Centre", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "groups"))
 RMenu.Add("LicenseCentre", "dlicenses", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
@@ -73,31 +51,19 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LicenseCentre", "confirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
-            if cGroup == 'Diamond' then 
-                RageUI.Separator("Diamond License Price: £5,000,000", function() end)
-                RageUI.Separator("Per Piece: £10,000", function() end)
-                RageUI.Separator("1 x 200KG Run: £500,000", function() end)
-                RageUI.Separator("1 x 300KG Run: £750,000", function() end)
-            elseif cGroup == 'Gold' then 
-                RageUI.Separator("Gold License Price: £1,000,000", function() end)
-                RageUI.Separator("Per Piece: £2,500", function() end)
-                RageUI.Separator("1 x 200KG Run: £125,000", function() end)
-                RageUI.Separator("1 x 300KG Run: £187,500", function() end)
-            elseif cGroup == 'Scrap' then 
-                RageUI.Separator("Scrap License Price: £100,000", function() end)
-                RageUI.Separator("Per Piece: £250", function() end)
-                RageUI.Separator("1 x 200KG Run: £12,500", function() end)
-                RageUI.Separator("1 x 300KG Run: £18,750", function() end)
-            elseif cGroup == 'PilotLicense' then 
-                RageUI.Separator("Pilot License Price: £1,500,000", function() end)
-                RageUI.Separator("~g~Required to access Aircraft garages.", function() end)
-            elseif cGroup == 'DJ' then 
-                RageUI.Separator("DJ License Price: £50,000,000", function() end)
-                RageUI.Separator("~r~Abuse of this license will result in it being revoked.", function() end)
-            elseif cGroup == 'polblips' then 
-                RageUI.Separator("Long Range Emergency Blips Price: £5,000,000", function() end)
-                RageUI.Separator("~g~View fellow members of emergency", function() end)
-                RageUI.Separator("~g~factions all over the map.", function() end)
+            for k,v in pairs(licensecentre.licenses) do
+                if v.group == cGroup then
+                    RageUI.Separator(v.name.." Price: £"..getMoneyStringFormatted(v.price))
+                    if v.type == 'grind' then
+                        RageUI.Separator("Per Piece: £"..getMoneyStringFormatted(v.pieceprice))
+                        RageUI.Separator("1 x 200KG Run: £"..getMoneyStringFormatted(v.pieceprice*50))
+                        RageUI.Separator("1 x 300KG Run: £"..getMoneyStringFormatted(v.pieceprice*75))
+                    else
+                        for a,b in pairs(v.info) do
+                            RageUI.Separator(b)
+                        end
+                    end
+                end
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -113,38 +79,19 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("LicenseCentre", "dconfirm")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             RMenu:Get("LicenseCentre", "confirm"):SetSubtitle("Are you sure?")
-            if cGroup == 'LSD' then 
-                RageUI.Separator("LSD License Price: £50,000,000", function() end)
-                RageUI.Separator("Per Piece: £40,000", function() end)
-                RageUI.Separator("1 x 200KG Run: £2,000,000", function() end)
-                RageUI.Separator("1 x 300KG Run: £3,000,000", function() end)
-            elseif cGroup == 'Heroin' then 
-                RageUI.Separator("Heroin License Price: £10,000,000", function() end)
-                RageUI.Separator("Per Piece: £20,000", function() end)
-                RageUI.Separator("1 x 200KG Run: £1,000,000", function() end)
-                RageUI.Separator("1 x 300KG Run: £1,500,000", function() end)
-            elseif cGroup == 'Weed' then 
-                RageUI.Separator("Weed License Price: £200,000", function() end)
-                RageUI.Separator("Per Piece: £500", function() end)
-                RageUI.Separator("1 x 200KG Run: £25,000", function() end)
-                RageUI.Separator("1 x 300KG Run: £37,500", function() end)
-            elseif cGroup == 'Cocaine' then 
-                RageUI.Separator("Cocaine License Price: £500,000", function() end)
-                RageUI.Separator("Per Piece: £1,250", function() end)
-                RageUI.Separator("1 x 200KG Run: £62,500", function() end)
-                RageUI.Separator("1 x 300KG Run: £93,750", function() end)
-            elseif cGroup == 'Gang' then 
-                RageUI.Separator("Gang License Price: £500,000", function() end)
-                RageUI.Separator("Access to Large Arms", function() end)
-                RageUI.Separator("Access to create gang using F5", function() end)
-                RageUI.Separator("Access to take turfs & change commision", function() end)
-            elseif cGroup == 'Rebel' then 
-                RageUI.Separator("Rebel License Price: £30,000,000", function() end)
-                RageUI.Separator("Access to Rebel Gunstore", function() end)
-            elseif cGroup == 'AdvancedRebel' then 
-                RageUI.Separator("Advanced Rebel License Price: £15,000,000", function() end)
-                RageUI.Separator("Access to Advanced Rebel Gunstore", function() end)
-        
+            for k,v in pairs(licensecentre.dlicenses) do
+                if v.group == cGroup then
+                    RageUI.Separator(v.name.." Price: £"..getMoneyStringFormatted(v.price))
+                    if v.type == 'grind' then
+                        RageUI.Separator("Per Piece: £"..getMoneyStringFormatted(v.pieceprice))
+                        RageUI.Separator("1 x 200KG Run: £"..getMoneyStringFormatted(v.pieceprice*50))
+                        RageUI.Separator("1 x 300KG Run: £"..getMoneyStringFormatted(v.pieceprice*75))
+                    else
+                        for a,b in pairs(v.info) do
+                            RageUI.Separator(b)
+                        end
+                    end
+                end
             end
             RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                 if Selected then
@@ -161,7 +108,7 @@ Citizen.CreateThread(function()
     while true do
             local v1 = licensecentre.location
             if isInArea(v1, 500.0) then 
-                DrawMarker(27, licensecentre.marker, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 255, 255, 250, 0, 0, 2, true, 0, 0, false)
+                DrawMarker(27, v1.x,v1.y,v1.z-0.98, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 2.5, 255, 255, 255, 250, 0, 0, 2, true, 0, 0, false)
             end
             if isInArea(v1, 0.8) then 
                 alert('Press ~INPUT_VEH_HORN~ to access Job Centre')
