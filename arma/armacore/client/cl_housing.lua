@@ -28,16 +28,20 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
             if owned ~= true then
-                RageUI.Button("~g~Buy Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                RageUI.Button("Buy Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMAHousing:Buy", currentHome)
                     end
                 end)
             end
-
-            RageUI.Button("~r~Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+            RageUI.Button("Sell Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                 if Selected then
                     TriggerServerEvent("ARMAHousing:Sell", currentHome)
+                end
+            end)
+            RageUI.Button("Rent Home", nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    TriggerServerEvent("ARMAHousing:Rent", currentHome)
                 end
             end)
         end, function()
