@@ -1,5 +1,3 @@
--- -- a basic garage implementation
--- -- vehicle db
 local lang = ARMA.lang
 local cfg = module("arma-vehicles", "garages")
 local cfg_inventory = module("cfg/inventory")
