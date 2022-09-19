@@ -67,7 +67,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
-        elseif a == 'nhs' then
+        elseif cfg.selectors[a].type == 'nhs' then
             if ARMA.hasGroup(user_id, b) then
                 ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
@@ -76,7 +76,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
-        elseif a == 'lfb' then
+        elseif cfg.selectors[a].type == 'lfb' then
             if ARMA.hasGroup(user_id, b) then
                 ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
@@ -85,7 +85,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
-        elseif a == 'hmp' then
+        elseif cfg.selectors[a].type == 'hmp' then
             if ARMA.hasGroup(user_id, b) then
                 ARMA.removeAllJobs(user_id)
                 ARMA.addUserGroup(user_id,b..' Clocked')
