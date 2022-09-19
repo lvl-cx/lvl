@@ -128,58 +128,56 @@ local ah = 0
 local ai = 0.0
 local function aj(E)
     DeleteVehicle(GetVehiclePedIsIn(tARMA.getPlayerPed(), false))
-    CreateThread(
-        function()
-            local ak = GetHashKey(E)
-            RequestModel(ak)
-            local al = 0
-            while not HasModelLoaded(ak) and al < 200 do
-                drawNativeText("~r~Downloading vehicle model")
-                Wait(0)
-                al = al + 1
-            end
-            if HasModelLoaded(ak) then
-                local am = CreateVehicle(ak,selectedGarageVector.x,selectedGarageVector.y,selectedGarageVector.z,ai,false,false)
-                SetEntityAsMissionEntity(am)
-                FreezeEntityPosition(am, true)
-                SetEntityInvincible(am, true)
-                SetVehicleDoorsLocked(am, 4)
-                SetModelAsNoLongerNeeded(ak)
-                if ah ~= 0 then
-                    DestroyCam(ah, 0)
-                    ah = 0
-                end
-                SetEntityAlpha(tARMA.getPlayerPed(), 0)
-                FreezeEntityPosition(tARMA.getPlayerPed(), true)
-                SetEntityCollision(tARMA.getPlayerPed(), false, false)
-                SetEntityCollision(am, false, false)
-                local an = GetEntityCoords(tARMA.getPlayerPed())
-                local ao = GetEntityRotation(tARMA.getPlayerPed())
-                local ap = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
-                local aq = vector3(an.x, an.y, an.z + 2.0) - GetEntityForwardVector(tARMA.getPlayerPed()) * 4.0
-                SetCamActive(ap, true)
-                RenderScriptCams(true, true, 500, 1, 0)
-                SetCamCoord(ap, aq)
-                SetCamRot(ap, -20.0, ao.y, ao.z)
-                ah = ap
-                Citizen.CreateThread(
-                    function()
-                        while DoesEntityExist(am) do
-                            Citizen.Wait(25)
-                            ai = (ai + 1) % 360
-                            SetEntityHeading(am, ai)
-                        end
-                    end
-                )
-                t = false
-                n = true
-                k = am
-            else
-                tARMA.notify("~r~Failed to load vehicle.")
-                return -1
-            end
+    CreateThread(function()
+        local ak = GetHashKey(E)
+        RequestModel(ak)
+        local al = 0
+        while not HasModelLoaded(ak) and al < 200 do
+            drawNativeText("~r~Downloading vehicle model")
+            Wait(0)
+            al = al + 1
         end
-    )
+        if HasModelLoaded(ak) then
+            local am = CreateVehicle(ak,selectedGarageVector.x,selectedGarageVector.y,selectedGarageVector.z,ai,false,false)
+            SetEntityAsMissionEntity(am)
+            FreezeEntityPosition(am, true)
+            SetEntityInvincible(am, true)
+            SetVehicleDoorsLocked(am, 4)
+            SetModelAsNoLongerNeeded(ak)
+            if ah ~= 0 then
+                DestroyCam(ah, 0)
+                ah = 0
+            end
+            SetEntityAlpha(tARMA.getPlayerPed(), 0)
+            FreezeEntityPosition(tARMA.getPlayerPed(), true)
+            SetEntityCollision(tARMA.getPlayerPed(), false, false)
+            SetEntityCollision(am, false, false)
+            local an = GetEntityCoords(tARMA.getPlayerPed())
+            local ao = GetEntityRotation(tARMA.getPlayerPed())
+            local ap = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
+            local aq = vector3(an.x, an.y, an.z + 2.0) - GetEntityForwardVector(tARMA.getPlayerPed()) * 4.0
+            SetCamActive(ap, true)
+            RenderScriptCams(true, true, 500, 1, 0)
+            SetCamCoord(ap, aq)
+            SetCamRot(ap, -20.0, ao.y, ao.z)
+            ah = ap
+            Citizen.CreateThread(
+                function()
+                    while DoesEntityExist(am) do
+                        Citizen.Wait(25)
+                        ai = (ai + 1) % 360
+                        SetEntityHeading(am, ai)
+                    end
+                end
+            )
+            t = false
+            n = true
+            k = am
+        else
+            tARMA.notify("~r~Failed to load vehicle.")
+            return -1
+        end
+    end)
 end
 local function ar(as)
     local at = AddBlipForEntity(as)
