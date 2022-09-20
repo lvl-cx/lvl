@@ -22,12 +22,3 @@ AddEventHandler("ARMA:placeHeadBag",function()
         closeGui()
     end 
 end)
-
-RegisterCommand('headbag', function()
-    Q=Q+1
-    if Q%2~=0 then 
-        openGui()
-    else 
-        closeGui()
-    end 
-end)
