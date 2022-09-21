@@ -53,15 +53,16 @@ AddEventHandler("Blackjack:requestSitAtBlackjackTable", function(chairId)
                 return
             end
         end
-        if chairId > 7 and ARMA.hasGroup({user_id,"highroller"}) then
-            blackjackTables[chairId] = source
-            TriggerClientEvent("Blackjack:sendBlackjackTableData",-1,blackjackTables)
-            TriggerClientEvent("Blackjack:sitAtBlackjackTable",source,chairId)
-            return
-        end
-        if chairId > 7 and not ARMA.hasGroup({user_id,"highroller"}) then
-            ARMAclient.notify(source,{'~r~You need to be a highroller to sit at this table.'})
-            return
+        if chairId > 7 then
+	    if ARMA.hasGroup({user_id,"highroller"}) then
+            	blackjackTables[chairId] = source
+            	TriggerClientEvent("Blackjack:sendBlackjackTableData",-1,blackjackTables)
+		TriggerClientEvent("Blackjack:sitAtBlackjackTable",source,chairId)
+            	return
+	    else
+		ARMAclient.notify(source,{'~r~You need to be a highroller to sit at this table.'})
+            	return
+	    end
         end
         if chairId <= 7 then
             blackjackTables[chairId] = source
