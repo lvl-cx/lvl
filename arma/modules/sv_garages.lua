@@ -5,7 +5,7 @@ local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")
 MySQL.createCommand("ARMA/remove_vehicle","DELETE FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
-MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate, fuel_level FROM arma_user_vehicles WHERE user_id = @user_id")
+MySQL.createCommand("ARMA/get_vehicles", "SELECT vehicle, rentedtime, vehicle_plate, fuel_level, impounded FROM arma_user_vehicles WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/get_rented_vehicles_in", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE user_id = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_rented_vehicles_out", "SELECT vehicle, rentedtime, user_id FROM arma_user_vehicles WHERE rentedid = @user_id AND rented = 1")
 MySQL.createCommand("ARMA/get_vehicle","SELECT vehicle FROM arma_user_vehicles WHERE user_id = @user_id AND vehicle = @vehicle")
@@ -571,7 +571,7 @@ AddEventHandler("ARMA:getGarageFolders",function()
                     end
                     if hasPerm then
                         for c,d in pairs(b) do
-                            if c == spawncode then
+                            if c == spawncode and not v.impounded then
                                 table.insert(garageFolders, {display = a})
                                 for e,f in pairs (garageFolders) do
                                     if f.display == a then
