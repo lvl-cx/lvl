@@ -35,15 +35,24 @@ RegisterServerEvent("ARMA:valetSpawnVehicle")
 AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
     local source = source
     local user_id = ARMA.getUserId(source)
-    MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
-        if result ~= nil then 
-            for k,v in pairs(result) do
-                if v.vehicle == spawncode then
-                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
-                    return
-                end
+    ARMAclient.isPlusClub(source,{},function(plusclub)
+        ARMAclient.isPlatClub(source,{},function(platclub)
+            if plusclub or platclub then
+                MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
+                    if result ~= nil then 
+                        for k,v in pairs(result) do
+                            if v.vehicle == spawncode then
+                                TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
+                                return
+                            end
+                        end
+                    end
+                end)
+            else
+                ARMAclient.notify(source, {"~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature."})
+                ARMAclient.notify(source, {"~y~Available @ store.armarp.gg"})
             end
-        end
+        end)
     end)
 end)
 
@@ -536,6 +545,44 @@ AddEventHandler("ARMA:refreshGaragePermissions",function()
     TriggerClientEvent("ARMA:recieveRefreshedGaragePermissions",source,garageTable)
 end)
 
+
+RegisterNetEvent("ARMA:getGarageFolders")
+AddEventHandler("ARMA:getGarageFolders",function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local garageFolders = {}
+    MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
+        if result ~= nil then 
+            for k,v in pairs(result) do
+                local spawncode = v.vehicle 
+                for a,b in pairs(vehicle_groups) do
+                    local hasPerm = true
+                    if next(b._config.permissions) then
+                        if not ARMA.hasPermission(user_id, b._config.permissions[1]) then
+                            hasPerm = false
+                        end
+                    end
+                    if hasPerm then
+                        for c,d in pairs(b) do
+                            if c == spawncode then
+                                table.insert(garageFolders, {display = a})
+                                for e,f in pairs (garageFolders) do
+                                    if f.display == a then
+                                        if f.vehicles == nil then
+                                            f.vehicles = {}
+                                        end
+                                        table.insert(f.vehicles, {display = d[1], spawncode = spawncode})
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            TriggerClientEvent('ARMA:setVehicleFolders', source, garageFolders)
+        end
+    end)
+end)
 
 Citizen.CreateThread(function()
     Wait(1500)
