@@ -229,12 +229,14 @@ AddEventHandler("ARMA:onClientSpawn",function(D, E)
         local d = function(e)
             insideDiamondCasino = true
             tARMA.setCanAnim(false)
+            tARMA.overrideTime(12, 0, 0)
             TriggerEvent("ARMA:enteredDiamondCasino")
             TriggerServerEvent('ARMA:getChips')
         end
         local f = function(e)
             insideDiamondCasino = false
             tARMA.setCanAnim(true)
+            tARMA.cancelOverrideTimeWeather()
             TriggerEvent("ARMA:exitedDiamondCasino")
         end
         local g = function(e)
