@@ -9,6 +9,7 @@ AddEventHandler('update:bank', function()
     local user_id = ARMA.getUserId({source})
     local bank = ARMA.getBankMoney({user_id})
     TriggerClientEvent('bank:setDisplayBankMoney', source, bank)
+    TriggerClientEvent('ARMA:initMoney', source, bank)
 end)
 
 RegisterServerEvent('update:cash')
