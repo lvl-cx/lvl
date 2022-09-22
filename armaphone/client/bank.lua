@@ -7,7 +7,7 @@ function setBankBalance (value)
 end
 
 RegisterNetEvent("ARMA:initMoney")
-AddEventHandler("ARMA:initMoney", function(cashMoney,bankMoney)
+AddEventHandler("ARMA:initMoney", function(bankMoney)
     setBankBalance(bankMoney)
 end)
 
