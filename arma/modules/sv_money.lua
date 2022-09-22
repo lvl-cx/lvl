@@ -221,3 +221,22 @@ AddEventHandler("ARMA:takeAmount", function(amount)
       return
     end
 end)
+
+RegisterServerEvent("ARMA:bankTransfer")
+AddEventHandler("ARMA:bankTransfer", function(id, amount)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local id = tonumber(id)
+    local amount = tonumber(amount)
+    if ARMA.getUserSource(id) then
+      if ARMA.tryFullPayment(user_id,amount) then
+        ARMAclient.notify(source,{'~g~Transfered £'..getMoneyStringFormatted(amount)..' to ID: '..id})
+        ARMAclient.notify(ARMA.getUserSource(id),{'~g~Received £'..getMoneyStringFormatted(amount)..' from ID: '..user_id})
+        ARMA.giveBankMoney(id, amount)
+      else
+        ARMAclient.notify(source,{'~r~You do not have enough money.'})
+      end
+    else
+      ARMAclient.notify(source,{'~r~Player is not online'})
+    end
+end)
