@@ -5,7 +5,6 @@ function loadAnimDict(dict)
 	end
 end
 
--- Drag Hot Key
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
@@ -16,53 +15,49 @@ Citizen.CreateThread(function()
 				if targetSrc then
                     TriggerServerEvent('ARMA:dragPlayer')
 				end
-			end
+			end 
             Wait(1000)
 		end
 	    if IsControlPressed(1, 19) and IsDisabledControlJustPressed(1,185) then -- LEFTALT + F
 			TriggerServerEvent('ARMA:ejectFromVehicle')
             Wait(1000)
 		end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) then -- LEFTALT + G
-			local c=GetSelectedPedWeapon(tARMA.getPlayerPed())
-			if c~=`WEAPON_SNOWBALL` then
-				TriggerServerEvent("ARMA:Knockout")
-			end
+		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= 'WEAPON_SNOWBALL' then -- LEFTALT + G
+			TriggerServerEvent("ARMA:Knockout")
 			Wait(1000)
 	    end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,8) and (tARMA.getUserId() == 1 or tARMA.getUserId() == 2) then -- LEFTALT + S
+		if IsControlPressed(1, 19) and IsControlJustPressed(1,8) and (tARMA.isDev()) then -- LEFTALT + S
 			Wait(1000)
 			local ad = "melee@unarmed@streamed_variations"
 			local anim = "plyr_takedown_front_slap"
-			local player = tARMA.getPlayerPed()
+			local ped = tARMA.getPlayerPed()
 
-			if ( DoesEntityExist( player ) and not IsEntityDead( player )) then
-				loadAnimDict( ad )
-				if ( IsEntityPlayingAnim( player, ad, anim, 3 ) ) then 
-					TaskPlayAnim( player, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0 )
-					ClearPedSecondaryTask(player)
+			if (DoesEntityExist(ped) and not IsEntityDead(ped)) then
+				loadAnimDict(ad)
+				if ( IsEntityPlayingAnim(ped, ad, anim, 3)) then 
+					TaskPlayAnim(ped, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0)
+					ClearPedSecondaryTask(ped)
 				else
-					TaskPlayAnim( player, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0 )
+					TaskPlayAnim(ped, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0)
 				end       
 			end
-			local localCoords = GetEntityCoords(tARMA.getPlayerPed())
 			TriggerServerEvent("ARMA:KnockoutNoAnim")
             Wait(1000)
 	    end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,74) and (tARMA.getUserId() == 1 or tARMA.getUserId() == 2) then -- LEFTALT + H
+		if IsControlPressed(1, 19) and IsControlJustPressed(1,74) and (tARMA.isDev()) then -- LEFTALT + H
 			local ad = "melee@unarmed@streamed_variations"
 			local anim = "plyr_takedown_front_headbutt"
-			local player = tARMA.getPlayerPed()
+			local ped = tARMA.getPlayerPed()
 
-			if ( DoesEntityExist( player ) and not IsEntityDead( player )) then
-				loadAnimDict( ad )
-				if ( IsEntityPlayingAnim( player, ad, anim, 3 ) ) then 
-					TaskPlayAnim( player, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0 )
-					ClearPedSecondaryTask(player)
+			if (DoesEntityExist(ped) and not IsEntityDead(ped)) then
+				loadAnimDict(ad)
+				if ( IsEntityPlayingAnim(ped, ad, anim, 3)) then 
+					TaskPlayAnim(ped, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0)
+					ClearPedSecondaryTask(ped)
 				else
-					TaskPlayAnim( player, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0 )
+					TaskPlayAnim(ped, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0)
 				end       
-			end			
+			end
 			TriggerServerEvent("ARMA:KnockoutNoAnim")
             Wait(1000)
 		end
@@ -73,10 +68,8 @@ Citizen.CreateThread(function()
 		end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,29) then -- LEFTALT + B
 			if not IsPedInAnyVehicle(tARMA.getPlayerPed(),false) then
-
 				local closestPlayer = tARMA.GetClosestPlayer(4)
 				local doesTargetHaveHandsUp = IsEntityPlayingAnim(GetPlayerPed(closestPlayer), 'missminuteman_1ig_2', 'handsup_enter', 3)
-
 				if doesTargetHaveHandsUp then
 					TriggerServerEvent("ARMA:requestPlaceBagOnHead") -- need to do inventory checks and shit
 				else
