@@ -1,8 +1,5 @@
-local isInMenu = false
 local currentPlate = nil
-
 local carstable = {}
-
 local location = vector3(-532.84381103516,-192.99229431152,38.222408294678)
 local m = module("arma-vehicles", "garages")
 m=m.garages
@@ -45,36 +42,26 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-
-Citizen.CreateThread(function()
-    local blip = AddBlipForCoord(location)
-	SetBlipSprite(blip, 521)
-	SetBlipScale(blip, 0.7)
-	SetBlipColour(blip, 2)
-	SetBlipAsShortRange(blip, true)
-	BeginTextCommandSetBlipName("STRING")
-	AddTextComponentString("Plate Shop")
-	EndTextCommandSetBlipName(blip)
-    while true do
-        Citizen.Wait(0)
-        if isInArea(location, 100.0) then 
-            DrawMarker(20, location, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 0, 255, 60, false, true, 2, true)
+AddEventHandler("ARMA:onClientSpawn",function(D, E)
+    if E then
+		local H = function(I)
+            TriggerServerEvent('ARMA:getCars')
+            RageUI.Visible(RMenu:Get("plateshop", "main"), true)
         end
-        if isInArea(location, 1.4) and isInMenu == false then 
-            alert('Press ~INPUT_VEH_HORN~ to Change your number plate')
-            if IsControlJustPressed(0, 51) then 
-                TriggerServerEvent('ARMA:getCars')
-                RageUI.Visible(RMenu:Get("plateshop", "main"), true)
-                isInMenu = true
-            end
-        end
-        if isInArea(location, 1.4) == false and isInMenu then
+        local J = function(I)
             RageUI.Visible(RMenu:Get("plateshop", "main"), false)
             RageUI.Visible(RMenu:Get("plateshop", "sub"), false)
-            isInMenu = false
         end
-    end
+        local K = function(I)
+        end
+        local L = function(I)
+        end
+        tARMA.addBlip(location.x, location.y, location.z, 521, 2, "Plate Shop", 0.7, true)
+        tARMA.createArea("platechanger", location, 1.5, 6, H, J, K, {})
+        tARMA.addMarker(location.x, location.y, location.z-0.98,1.0,1.0,1.0,138,43,226,70,50,27)
+	end
 end)
+
 
 RegisterNetEvent("ARMA:RecieveNumberPlate")
 AddEventHandler("ARMA:RecieveNumberPlate", function(numplate)
