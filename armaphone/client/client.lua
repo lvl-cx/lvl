@@ -51,6 +51,7 @@ RegisterCommand("openphone", function()
   if takePhoto ~= true then
       TogglePhone()
   end
+  TriggerServerEvent('ARMA:getGarageFolders')
 end)
 
 RegisterKeyMapping('openphone', 'Open Phone', 'keyboard', 'k')
@@ -752,19 +753,6 @@ RegisterNUICallback("valet_spawn", function(data)
   end
 end)
 
--- RegisterCommand("setfolders", function()
---     SendNUIMessage({
---         event = "SetFolders",
---         folders = {
---             [1] = {display="NHS Vehicles", vehicles={
---                 {display= "Audi A4"}
---             }},
---             [2] = {display="MET Vehicles", vehicles={
---                 {display= "Audi A3"}
---             }}
---         }
---     })
-
 local json_data = [[{
     initiator: false,
     id: 5,
@@ -778,7 +766,3 @@ local json_data = [[{
     is_accepts: 0,
     hidden: 0
   }]]
-
--- RegisterCommand("simcall", function()
---     SendNUIMessage({event = 'waitingCall', infoCall = json.decode(json_data), initiator = false})
--- end)
