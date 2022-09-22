@@ -1,6 +1,4 @@
 local Housing = module("armacore/cfg/cfg_housing")
-
-local inHome = false
 local isInMenu = false
 local isInLeaveMenu = false
 local isInWardrobeMenu = false
@@ -151,11 +149,11 @@ Citizen.CreateThread(function()
 
                 --Chest
 
-                if inHome then
+                if tARMA.isInHome() then
                     DrawMarker(9, v.chest_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.8, 0.8, 0.8, 224, 224, 244, 1.0, false, false, 2, true, "dp_clothing", "bag", false)
                 end
 
-                if isInArea(v.chest_point, 0.8) and inHome then
+                if isInArea(v.chest_point, 0.8) and tARMA.isInHome() then
                     alert("~y~Press ~INPUT_VEH_HORN~ To Open House Chest!")
                     if IsControlJustPressed(0, 51) then
                         TriggerServerEvent("ARMAHousing:OpenChest", currentHome)
@@ -164,36 +162,36 @@ Citizen.CreateThread(function()
 
                 --Wardrobe
 
-                if inHome then
+                if tARMA.isInHome() then
                     DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 0, 255, 60, false, true, 2, false, "clothing", "clothing", false)
                 end
 
-                if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and inHome then
+                if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and tARMA.isInHome() then
                     TriggerServerEvent("ARMAHousing:LoadWardrobe")
                     currentHome = k
                     RageUI.Visible(RMenu:Get("ARMAHousing", "wardrobe"), true)
                     isInWardrobeMenu = true
                 end
 
-                if isInArea(v.wardrobe_point, 0.8) == false and isInWardrobeMenu and currentHome == k and inHome then
+                if isInArea(v.wardrobe_point, 0.8) == false and isInWardrobeMenu and currentHome == k and tARMA.isInHome() then
                     RageUI.Visible(RMenu:Get("ARMAHousing", "wardrobe"), false)
                     isInWardrobeMenu = false
                 end
 
                 --Leave Home
 
-                if inHome then
+                if tARMA.isInHome() then
                     DrawMarker(20, v.leave_point, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 255, 25, 100, false, true, 2, false)
                 end
 
-                if isInArea(v.leave_point, 0.8) and isInLeaveMenu == false and inHome then
+                if isInArea(v.leave_point, 0.8) and isInLeaveMenu == false and tARMA.isInHome() then
                     currentHome = k
                     RMenu:Get("ARMAHousing", "leave"):SetSubtitle("~b~" .. currentHome)
                     RageUI.Visible(RMenu:Get("ARMAHousing", "leave"), true)
                     isInLeaveMenu = true
                 end
 
-                if isInArea(v.leave_point, 0.8) == false and isInLeaveMenu and currentHome == k and inHome then
+                if isInArea(v.leave_point, 0.8) == false and isInLeaveMenu and currentHome == k and tARMA.isInHome() then
                     RageUI.Visible(RMenu:Get("ARMAHousing", "leave"), false)
                     isInLeaveMenu = false
                    
@@ -207,19 +205,14 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-     if inHome then
-         NetworkConcealPlayer(GetPlayerPed(-1), true, false)
+    if tARMA.isInHome() then
+        NetworkConcealPlayer(GetPlayerPed(-1), true, false)
     else 
-         NetworkConcealPlayer(GetPlayerPed(-1), false, false)
-      end
+        NetworkConcealPlayer(GetPlayerPed(-1), false, false)
+    end
    end
 end)
 
-
-RegisterNetEvent("ARMAHousing:UpdateInHome")
-AddEventHandler("ARMAHousing:UpdateInHome", function(inTheHome)
-    inHome = inTheHome
-end)
 
 RegisterNetEvent("ARMAHousing:UpdateWardrobe")
 AddEventHandler("ARMAHousing:UpdateWardrobe", function(newWardrobe)

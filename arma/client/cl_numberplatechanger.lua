@@ -54,8 +54,6 @@ AddEventHandler("ARMA:onClientSpawn",function(D, E)
         end
         local K = function(I)
         end
-        local L = function(I)
-        end
         tARMA.addBlip(location.x, location.y, location.z, 521, 2, "Plate Shop", 0.7, true)
         tARMA.createArea("platechanger", location, 1.5, 6, H, J, K, {})
         tARMA.addMarker(location.x, location.y, location.z-0.98,1.0,1.0,1.0,138,43,226,70,50,27)
@@ -71,21 +69,7 @@ AddEventHandler("ARMA:RecieveNumberPlate", function(numplate)
     TriggerServerEvent('ARMA:getCars')
 end)
 
-function isInArea(v, dis) 
-    if #(GetEntityCoords(PlayerPedId()) - v) <= dis then  
-        return true
-    else 
-        return false
-    end
-end
-
 RegisterNetEvent("ARMA:carsTable")
 AddEventHandler("ARMA:carsTable",function(cars)
     carstable = cars
 end)
-
-function alert(msg) 
-    SetTextComponentFormat("STRING")
-    AddTextComponentString(msg)
-    DisplayHelpTextFromStringLabel(0,0,1,-1)
-end
