@@ -198,7 +198,7 @@ RageUI.CreateWhile(1.0, true, function()
                             TriggerEvent("ARMAHousing:openOutfitMenu")
                         else 
                             tARMA.notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
-                            tARMA.notify("~y~Available @ store.armarp.gg")
+                            tARMA.notify("~y~Available @ store.armarp.co.uk")
                         end 
                     end 
                 end)

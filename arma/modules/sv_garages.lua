@@ -50,7 +50,7 @@ AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
                 end)
             else
                 ARMAclient.notify(source, {"~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature."})
-                ARMAclient.notify(source, {"~y~Available @ store.armarp.gg"})
+                ARMAclient.notify(source, {"~y~Available @ store.armarp.co.uk"})
             end
         end)
     end)
