@@ -31,6 +31,7 @@ AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle)
     end)
 end)
 
+valetCooldown = {}
 RegisterServerEvent("ARMA:valetSpawnVehicle")
 AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
     local source = source
@@ -38,11 +39,17 @@ AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
     ARMAclient.isPlusClub(source,{},function(plusclub)
         ARMAclient.isPlatClub(source,{},function(platclub)
             if plusclub or platclub then
+                if valetCooldown[source] and not (os.time() > valetCooldown[source]) then
+                    return ARMAclient.notify(source,{"~r~Please wait before using this again."})
+                else
+                    valetCooldown[source] = nil
+                end
                 MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
                     if result ~= nil then 
                         for k,v in pairs(result) do
                             if v.vehicle == spawncode then
                                 TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, true, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
+                                valetCooldown[source] = os.time() + 60
                                 return
                             end
                         end
