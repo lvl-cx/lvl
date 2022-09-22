@@ -11,14 +11,10 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local data = ARMA.getUserDataTable(user_id)
     local tmpdata = ARMA.getUserTmpTable(user_id)
     local playername = GetPlayerName(player)
-
-
     if first_spawn then -- first spawn
-        -- cascade load customization then weapons
         if data.customization == nil then
             data.customization = cfg.default_customization
         end
-        
         if data.position == nil and cfg.spawn_enabled then
             local x = cfg.spawn_position[1] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
             local y = cfg.spawn_position[2] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
@@ -29,7 +25,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 z = z
             }
         end
-
         if data.customization ~= nil then
             ARMAclient.setCustomization(source, {data.customization},
                 function() -- delayed weapons/health, because model respawn
@@ -53,49 +48,49 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             ARMAclient.spawnAnim(source, {data.customization, data.position, data.health})
             ARMAclient.setUserID(source, {user_id})
 
-            if ARMA.hasGroup(user_id, 'dev') then
+            if ARMA.hasGroup(user_id, 'Developer') then
                 ARMAclient.setDev(source, {})
             end
             if ARMA.hasGroup(user_id, 'cardev') then
                 ARMAclient.setCarDev(source, {})
             end
---[[             if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+            if ARMA.hasPermission(user_id, 'police.onduty.permission') then
                 ARMAclient.setPolice(source, {true})
             end
-            if ARMA.hasPermission(user_id, 'nhs.menu') then
+            if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
                 ARMAclient.setNHS(source, {true})
-            end ]]
+            end
+            if ARMA.hasGroup(user_id, 'Taco Seller') then
+                TriggerClientEvent('ARMA:toggleTacoJob', source, true)
+            end
                 
             local adminlevel = 0
-            if ARMA.hasGroup(user_id,"dev") then
+            if ARMA.hasGroup(user_id,"Developer") then
                 adminlevel = 12
-            elseif ARMA.hasGroup(user_id,"founder") then
+            elseif ARMA.hasGroup(user_id,"Founder") then
                 adminlevel = 11
-            elseif ARMA.hasGroup(user_id,"operationsmanager") then
-                adminlevel = 10
-            elseif ARMA.hasGroup(user_id,"staffmanager") then    
+            elseif ARMA.hasGroup(user_id,"Staff Manager") then    
                 adminlevel = 9
-            elseif ARMA.hasGroup(user_id,"commanager") then
+            elseif ARMA.hasGroup(user_id,"Community Manager") then
                 adminlevel = 8
-            elseif ARMA.hasGroup(user_id,"headadmin") then
+            elseif ARMA.hasGroup(user_id,"Head Admin") then
                 adminlevel = 7
-            elseif ARMA.hasGroup(user_id,"senioradmin") then
+            elseif ARMA.hasGroup(user_id,"Senior Admin") then
                 adminlevel = 6
-            elseif ARMA.hasGroup(user_id,"administrator") then
+            elseif ARMA.hasGroup(user_id,"Admin") then
                 adminlevel = 5
-            elseif ARMA.hasGroup(user_id,"srmoderator") then
+            elseif ARMA.hasGroup(user_id,"Senior Mod") then
                 adminlevel = 4
-            elseif ARMA.hasGroup(user_id,"moderator") then
+            elseif ARMA.hasGroup(user_id,"Moderator") then
                 adminlevel = 3
-            elseif ARMA.hasGroup(user_id,"supportteam") then
+            elseif ARMA.hasGroup(user_id,"Support Team") then
                 adminlevel = 2
-            elseif ARMA.hasGroup(user_id,"trialstaff") then
+            elseif ARMA.hasGroup(user_id,"Trial Staff") then
                 adminlevel = 1
             end
             ARMAclient.setStaffLevel(source, {adminlevel})
 
             TriggerClientEvent('ARMA:sendGarageSettings', source)
-            TriggerClientEvent('ARMA:sendSettings', source)
             players = ARMA.getUsers({})
             for k,v in pairs(players) do
                 baseplayers[v] = ARMA.getUserId(v)
