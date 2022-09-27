@@ -23,8 +23,13 @@ AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle)
         if result ~= nil then 
             for k,v in pairs(result) do
                 if v.vehicle == vehicle then
-                    TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
-                    return
+                    if v.impounded then
+                        ARMAclient.notify(source, {'~r~This vehicle is currently impounded.'})
+                        return
+                    else
+                        TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, GetEntityCoords(GetPlayerPed(source)), v.vehicle_plate, v.fuel_level)
+                        return
+                    end
                 end
             end
         end

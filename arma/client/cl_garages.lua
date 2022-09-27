@@ -479,119 +479,108 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            if not tARMA.isVehicleImpounded(e) then
-                RageUI.ButtonWithStyle('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then 
-                        RageUI.ActuallyCloseAll()
-                        for F, G in pairs(m) do
-                            if not DoesEntityExist(G) then
-                                table.remove(m, F)
-                            end
+            RageUI.ButtonWithStyle('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                if Selected then 
+                    RageUI.ActuallyCloseAll()
+                    for F, G in pairs(m) do
+                        if not DoesEntityExist(G) then
+                            table.remove(m, F)
                         end
-                        if #m <= 5 then
-                            DeleteVehicle(k)
-                            k = 0
-                            l = 0
-                            n = false
-                            DestroyCam(ah, 0)
-                            RenderScriptCams(0, 0, 1, 1, 1)
-                            ah = 0
-                            SetFocusEntity(GetPlayerPed(PlayerId()))
-                            SetEntityAlpha(tARMA.getPlayerPed(), 255)
-                            FreezeEntityPosition(tARMA.getPlayerPed(), false)
-                            SetEntityCollision(tARMA.getPlayerPed(), true, true)
-                            local ay = globalVehicleOwnership[e]
-                            if ay == nil or not DoesEntityExist(ay[2]) then
-                                TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
-                            else
-                                tARMA.notify("~r~Vehicle is already out!")
-                            end
+                    end
+                    if #m <= 5 then
+                        DeleteVehicle(k)
+                        k = 0
+                        l = 0
+                        n = false
+                        DestroyCam(ah, 0)
+                        RenderScriptCams(0, 0, 1, 1, 1)
+                        ah = 0
+                        SetFocusEntity(GetPlayerPed(PlayerId()))
+                        SetEntityAlpha(tARMA.getPlayerPed(), 255)
+                        FreezeEntityPosition(tARMA.getPlayerPed(), false)
+                        SetEntityCollision(tARMA.getPlayerPed(), true, true)
+                        local ay = globalVehicleOwnership[e]
+                        if ay == nil or not DoesEntityExist(ay[2]) then
+                            TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
                         else
-                            tARMA.notify("~r~You may only take out a maximum of 5 vehicles at a time.")
+                            tARMA.notify("~r~Vehicle is already out!")
+                        end
+                    else
+                        tARMA.notify("~r~You may only take out a maximum of 5 vehicles at a time.")
+                    end
+                end
+            end)
+            if not RentedVeh then
+                RageUI.ButtonWithStyle('Crush Vehicle', 'This will ~r~DELETE ~w~this vehicle from your garage.', {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
+                    if Selected then
+                        AddTextEntry("FMMC_MPM_NC", "Type 'CONFIRM' to crush vehicle")
+                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                        while (UpdateOnscreenKeyboard() == 0) do
+                            DisableAllControlActions(0)
+                            Wait(0)
+                        end
+                        if (GetOnscreenKeyboardResult()) then
+                            local result = GetOnscreenKeyboardResult()
+                            if result then 
+                                result = result
+                                if string.upper(result) == 'CONFIRM' then
+                                    TriggerServerEvent('ARMA:ScrapVehicle', e) 
+                                    Table_Type = nil
+                                    RageUI.ActuallyCloseAll()
+                                    RageUI.Visible(RMenu:Get('ARMAGarages', 'main'), true)  
+                                end
+                            end
                         end
                     end
                 end)
-                if not RentedVeh then
-                    RageUI.ButtonWithStyle('Crush Vehicle', 'This will ~r~DELETE ~w~this vehicle from your garage.', {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
-                        if Selected then
-                            AddTextEntry("FMMC_MPM_NC", "Type 'CONFIRM' to crush vehicle")
-                            DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                            while (UpdateOnscreenKeyboard() == 0) do
-                                DisableAllControlActions(0)
-                                Wait(0)
-                            end
-                            if (GetOnscreenKeyboardResult()) then
-                                local result = GetOnscreenKeyboardResult()
-                                if result then 
-                                    result = result
-                                    if string.upper(result) == 'CONFIRM' then
-                                        TriggerServerEvent('ARMA:ScrapVehicle', e) 
-                                        Table_Type = nil
-                                        RageUI.ActuallyCloseAll()
-                                        RageUI.Visible(RMenu:Get('ARMAGarages', 'main'), true)  
-                                    end
-                                end
-                            end
-                        end
-                    end)
-                    RageUI.ButtonWithStyle('Rent Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeRented(e), function(Hovered, Active, Selected)
-                        if Selected and canVehicleBeSold(e) then
-                            TriggerServerEvent('ARMA:RentVehicle', e) 
-                        end
-                    end)
-                    RageUI.ButtonWithStyle('Sell Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
-                        if Selected and canVehicleBeSold(e) then 
-                            TriggerServerEvent('ARMA:SellVehicle', e)
-                        end
-                    end)
-                    RageUI.ButtonWithStyle('Add to Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
-                            if folderName ~= nil then
-                                if folders[folderName] ~= nil then
-                                    if not table.find(folders[folderName], e) then
-                                        table.insert(folders[folderName], e)
-                                        tARMA.notify("~g~"..f.." was added to "..folderName)
-                                        TriggerServerEvent("ARMA:updateFolders", folders)
-                                    else
-                                        tARMA.notify("~r~This Car is already in "..folderName)
-                                    end
+                RageUI.ButtonWithStyle('Rent Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeRented(e), function(Hovered, Active, Selected)
+                    if Selected and canVehicleBeSold(e) then
+                        TriggerServerEvent('ARMA:RentVehicle', e) 
+                    end
+                end)
+                RageUI.ButtonWithStyle('Sell Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
+                    if Selected and canVehicleBeSold(e) then 
+                        TriggerServerEvent('ARMA:SellVehicle', e)
+                    end
+                end)
+                RageUI.ButtonWithStyle('Add to Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
+                        if folderName ~= nil then
+                            if folders[folderName] ~= nil then
+                                if not table.find(folders[folderName], e) then
+                                    table.insert(folders[folderName], e)
+                                    tARMA.notify("~g~"..f.." was added to "..folderName)
+                                    TriggerServerEvent("ARMA:updateFolders", folders)
                                 else
-                                    tARMA.notify("~r~Folder "..folderName.." does not exist.")
+                                    tARMA.notify("~r~This Car is already in "..folderName)
                                 end
+                            else
+                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
                             end
                         end
-                    end)
-                    RageUI.ButtonWithStyle('Remove from Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
-                            if folderName ~= nil then
-                                if folders[folderName] ~= nil then
-                                    if table.find(folders[folderName], e) then
-                                        for i = 1, #folders[folderName] do
-                                            if folders[folderName][i] == e then
-                                                table.remove(folders[folderName], i)
-                                                TriggerServerEvent("ARMA:updateFolders", folders)
-                                                tARMA.notify("~g~"..f.." was removed from "..folderName)
-                                            end
+                    end
+                end)
+                RageUI.ButtonWithStyle('Remove from Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
+                        if folderName ~= nil then
+                            if folders[folderName] ~= nil then
+                                if table.find(folders[folderName], e) then
+                                    for i = 1, #folders[folderName] do
+                                        if folders[folderName][i] == e then
+                                            table.remove(folders[folderName], i)
+                                            TriggerServerEvent("ARMA:updateFolders", folders)
+                                            tARMA.notify("~g~"..f.." was removed from "..folderName)
                                         end
-                                    else
-                                        tARMA.notify("~r~"..f.." is not in "..folderName)
                                     end
                                 else
-                                    tARMA.notify("~r~Folder "..folderName.." does not exist.")
+                                    tARMA.notify("~r~"..f.." is not in "..folderName)
                                 end
+                            else
+                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
                             end
                         end
-                    end)
-                end
-            else
-                DeleteVehicle(k)
-                RageUI.Separator('~y~You must visit the Impound to retrieve this vehicle.')
-                RageUI.ButtonWithStyle('Set Waypoint to Impound', 'Set directions to get vehicle back, cost ~g~£10,000.', {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
-                    if Selected then
-                        SetNewWaypoint(383.41934204102,-1616.7523193359)
-                        RageUI.ActuallyCloseAll()
                     end
                 end)
             end
