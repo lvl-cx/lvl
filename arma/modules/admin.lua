@@ -624,50 +624,76 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
 end)
 
 local bans = {
-    {id = "rdm", name = "RDM", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "vdm", name = "VDM", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "massrdm", name = "Mass RDM", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "massvdm", name = "Mass VDM", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "metagaming", name = "Metagaming", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "powergaming", name = "Powergaming", durations = {24, 48, 72, -1},  bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "combatlogging", name = "Combat Logging", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "combatstoring", name = "Combat Storing", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "badrp", name = "Bad-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "failrp", name = "Fail-RP", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "invalidinitiation", name = "Invalid-Initiation", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "nlr", name = "NLR", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "trolling", name = "Trolling", durations = {48, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 168 Hours\n3rd offense: Permanent", itemchecked = false},
-    {id = "exploiting", name = "Exploiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "copbaiting", name = "NLR", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "gtadriving", name = "Cop Baiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "breakingchar", name = "GTA Driving", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "offensivelang", name = "Offensive Language", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "toxicity", name = "Toxicity", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "racism", name = "Racism", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "whitelistabuse", name = "Whitelist Abuse", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
-    {id = "toev", name = "Theft Of An Emergancy Vehicle", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false,},
-    {id = "oogt", name = "OOGT", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "scamming", name = "Scamming", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "cheating", name = "Cheating", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "banevading", name = "Ban Evading", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "homophobia", name = "Homophobia", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "doxing", name = "Doxing", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "pii", name = "Personal Identification Information", durations = {-1, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
-    {id = "externalmods", name = "External Modifications", durations = {168, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "cheataffiliation", name = "Affiliation With Cheats", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "withholdingcheats", name = "Withholding/Storing FiveM Cheats", durations = {-1, -1, -1, -1}, bandescription = "1st offense: Permanent\n2nd offense: N/A\n3rd offense: N/A", itemchecked = false},
-    {id = "nrti", name = "No Reason To Initiate", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "spitereporting", name = "Spite Reporting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "wastingadmintime", name = "Wasting Admin Time", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "maliciousactivity", name = "Malicious Activity", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
-    {id = "terroristrp", name = "Terrorist RP", durations = {168, -1, -1, -1}, bandescription = "1st offense: 168 Hours\n2nd offense: Permanent\n3rd offense: N/A", itemchecked = false},
-    {id = "impersonationofwhitelistedfaction", name = "Impersonation Of A Whitelisted Faction", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
-    {id = "copbaiting", name = "Cop Baiting", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
-    {id = "gangingimpersonation", name = "Gang Impersonation", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
-    {id = "gangalliance", name = "Gang Alliance", durations = {48, 72, 168, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
-    {id = "staffdiscreqtion", name = "Staff Discretion", durations = {-1, -1, -1, -1}, bandescription = "1st offense: 48 Hours\n2nd offense: 72 Hours\n3rd offense: 168 Hours", itemchecked = false},
-    {id = "ftvl", name = "Failure To Value Life", durations = {24, 48, 72, -1}, bandescription = "1st offense: 24 Hours\n2nd offense: 48 Hours\n3rd offense: 72 Hours", itemchecked = false},
+    {id = "trolling",name = "1.0 Trolling",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "trollingminor",name = "1.0 Trolling (Minor)",durations = {2,12,24},bandescription = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",itemchecked = false},
+    {id = "metagaming",name = "1.1 Metagaming",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "powergaming",name = "1.2 Power Gaming ",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "failrp",name = "1.3 Fail RP",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "rdm", name = "1.4 RDM",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr", itemchecked = false},
+    {id = "massrdm",name = "1.4.1 Mass RDM",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "nrti",name = "1.5 No Reason to Initiate (NRTI) ",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "vdm", name = "1.6 VDM",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr", itemchecked = false},
+    {id = "massvdm",name = "1.6.1 Mass VDM",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "offlanguageminor",name = "1.7 Offensive Language/Toxicity (Minor)",durations = {2,24,72},bandescription = "1st Offense: 2hr\n2nd Offense: 24hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "offlanguagestandard",name = "1.7 Offensive Language/Toxicity (Standard)",durations = {48,72,168},bandescription = "1st Offense: 48hr\n2nd Offense: 72hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "offlanguagesevere",name = "1.7 Offensive Language/Toxicity (Severe)",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "breakrp",name = "1.8 Breaking Character",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "combatlog",name = "1.9 Combat logging",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "combatstore",name = "1.10 Combat storing",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "exploitingstandard",name = "1.11 Exploiting (Standard)",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "exploitingsevere",name = "1.11 Exploiting (Severe)",durations = {168,-1,-1},bandescription = "1st Offense: 168hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false},
+    {id = "oogt",name = "1.12 Out of game transactions (OOGT)",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "spitereport",name = "1.13 Spite Reporting",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "scamming",name = "1.14 Scamming",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "loans",name = "1.15 Loans",durations = {48,168,-1},bandescription = "1st Offense: 48hr\n2nd Offense: 168hr\n3rd Offense: Permanent",itemchecked = false},
+    {id = "wastingadmintime",name = "1.16 Wasting Admin Time",durations = {2,12,24},bandescription = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",itemchecked = false},
+    {id = "ftvl",name = "2.1 Value of Life",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "sexualrp",name = "2.2 Sexual RP",durations = {168,-1,-1},bandescription = "1st Offense: 168hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false},
+    {id = "terrorrp",name = "2.3 Terrorist RP",durations = {168,-1,-1},bandescription = "1st Offense: 168hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false},
+    {id = "impwhitelisted",name = "2.4 Impersonation of Whitelisted Factions",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "gtadriving",name = "2.5 GTA Online Driving",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "nlr", name = "2.6 NLR",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr", itemchecked = false},
+    {id = "badrp",name = "2.7 Bad RP",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "kidnapping",name = "2.8 Kidnapping",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "stealingems",name = "3.0 Theft of Emergency Vehicles",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "whitelistabusestandard",name = "3.1 Whitelist Abuse",durations = {24,72,168},bandescription = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "whitelistabusesevere",name = "3.1 Whitelist Abuse",durations = {168,-1,-1},bandescription = "1st Offense: 168hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false},
+    {id = "copbaiting",name = "3.2 Cop Baiting",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "pdkidnapping",name = "3.3 PD Kidnapping",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "unrealisticrevival",name = "3.4 Unrealistic Revival",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "interjectingrp",name = "Interjection of RP",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "combatrev",name = "3.5 Combat Reviving",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "gangcap",name = "3.6 Gang Cap",durations = {24,72,168},bandescription = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "maxgang",name = "3.7 Max Gang Numbers",durations = {24,72,168},bandescription = "1st Offense: 24hr\n2nd Offense: 72hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "gangalliance",name = "3.8 Gang Alliance",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "impgang",name = "3.10 Impersonation of Gangs",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "gzstealing",name = "4.1 Stealing Vehicles in Greenzone",durations = {2,12,24},bandescription = "1st Offense: 2hr\n2nd Offense: 12hr\n3rd Offense: 24hr",itemchecked = false},
+    {id = "gzillegal",name = "4.2 Selling Illegal Items in Greenzone",durations = {12,24,48},bandescription = "1st Offense: 12hr\n2nd Offense: 24hr\n3rd Offense: 48hr",itemchecked = false},
+    {id = "gzretretreating",name = "4.3 Greenzone Retreating ",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "rzhostage",name = "4.5 Taking Hostage into Redzone",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "rzretreating",name = "4.6 Redzone Retreating",durations = {24,48,72},bandescription = "1st Offense: 24hr\n2nd Offense: 48hr\n3rd Offense: 72hr",itemchecked = false},
+    {id = "advert",name = "1.1 Advertising",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "bullying",name = "1.2 Bullying",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "impersonationrule",name = "1.3 Impersonation",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "language",name = "1.4 Language",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "discrim",name = "1.5 Discrimination ",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "attacks",name = "1.6 Malicious Attacks ",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false    },
+    {id = "PIIstandard",name = "1.7 PII (Personally Identifiable Information)(Standard)",durations = {168,-1,-1},bandescription = "1st Offense: 168hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false},
+    {id = "PIIsevere",name = "1.7 PII (Personally Identifiable Information)(Severe)",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "chargeback",name = "1.8 Chargeback",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "discretion",name = "1.9 Staff Discretion",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false    },
+    {id = "cheating",name = "1.10 Cheating",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "banevading",name = "1.11 Ban Evading",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "fivemcheats",name = "1.12 Withholding/Storing FiveM Cheats",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "altaccount",name = "1.13 Multi-Accounting",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "association",name = "1.14 Association with External Modifications",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "pov",name = "1.15 Failure to provide POV ",durations = {-1,-1,-1},bandescription = "1st Offense: 2hr\n2nd Offense: Permanent\n3rd Offense: N/A",itemchecked = false    },
+    {id = "withholdinginfostandard",name = "1.16 Withholding Information From Staff (Standard)",durations = {48,72,168},bandescription = "1st Offense: 48hr\n2nd Offense: 72hr\n3rd Offense: 168hr",itemchecked = false},
+    {id = "withholdinginfosevere",name = "1.16 Withholding Information From Staff (Severe)",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false},
+    {id = "blackmail",name = "1.17 Blackmailing",durations = {-1,-1,-1},bandescription = "1st Offense: Permanent\n2nd Offense: N/A\n3rd Offense: N/A",itemchecked = false}
 }
+    
+   
 
 local PlayerOffenses = {}
 local PlayerBanCachedDuration = {}
@@ -692,7 +718,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                         if b.id == k then
                             PlayerOffenses[PlayerID][k] = PlayerOffenses[PlayerID][k] + 1
                             if PlayerOffenses[PlayerID][k] > 3 then
-                                bans[a].durations[PlayerOffenses[PlayerID][k]] = -1
+                                bans[a].durations[PlayerOffenses[PlayerID][k]] = bans[a].durations[PlayerOffenses[PlayerID][3]]
                             end
                             PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
@@ -701,7 +727,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                                 points = 10
                             end
                             table.insert(PlayerCacheBanMessage, bans[a].name)
-                            if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 or PlayerOffenses[PlayerID][k] > 3 then
+                            if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 then
                                 PlayerBanCachedDuration[PlayerID] = -1
                                 PermOffense = true
                             end
@@ -2193,7 +2219,9 @@ AddEventHandler('ARMA:zapPlayer', function(A)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasGroup(source, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
-        TriggerClientEvent("ARMA:useTheForceSync", -1, GetEntityCoords(GetPlayerPed(A)))
+        for k,v in pairs(ARMA.getUsers()) do
+            TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))
+        end
     end
 end)
 
