@@ -939,7 +939,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if Duration == -1 then
                             U=true
                         end
-                        RageUI.Separator("~w~Total Length: "..(U and "Permanent" or Duration.." hrs").." ~y~|~w~ Total Points: "..(Duration/24 >= 1 and Duration/24 or 10))
+                        RageUI.Separator("~w~Total Length: "..(U and "Permanent" or Duration.." hrs").." ~y~|~w~ Total Points: "..(Duration/24 >= 1 and math.floor(Duration/24) or 10))
                         RageUI.ButtonWithStyle("Cancel", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                             if Selected then
                                 selectedbans = {}

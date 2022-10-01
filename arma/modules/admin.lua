@@ -745,7 +745,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                     PlayerBanCachedDuration[PlayerID] = -1
                 end
                 Wait(1500)
-                TriggerClientEvent("ARMA:RecieveBanPlayerData", source, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, points)
+                TriggerClientEvent("ARMA:RecieveBanPlayerData", source, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, math.floor(points))
             end
         end)
     end

@@ -301,7 +301,7 @@ window.addEventListener("message", function (event) {
             newWarningHtml += `<th scope="row">${warning.warning_id}</th>\n`
             newWarningHtml += `<td class="text-center">${warning.warning_date}</td>\n`
             newWarningHtml += `<td class="text-center">${warning.duration}</td>\n`
-            newWarningHtml += `<td class="text-center">${warning.duration/24}</td>\n`
+            newWarningHtml += `<td class="text-center">${Math.floor(warning.duration/24)}</td>\n`
             newWarningHtml += `<td class="text-center">${warning.reason}</td>\n`
             newWarningHtml += `</tr>\n`
             warningsHtml += `${newWarningHtml}\n`
