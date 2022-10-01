@@ -479,6 +479,7 @@ cfg.groups = {
 	"police.armoury",
 	"police.maxarmour",
 	"police.loadshop2",
+	"police.announce",
   },
 
   ["Commissioner"] = {
@@ -491,6 +492,7 @@ cfg.groups = {
 	"police.armoury",
 	"police.maxarmour",
 	"police.loadshop2",
+	"police.announce",
   },
 
   ["Deputy Commissioner"] = {
@@ -503,6 +505,7 @@ cfg.groups = {
 	"police.armoury",
 	"police.maxarmour",
 	"police.loadshop2",
+	"police.announce",
   },
 
   ["Assistant Commissioner"] = {
@@ -515,6 +518,7 @@ cfg.groups = {
 	"police.armoury",
 	"police.maxarmour",
 	"police.loadshop2",
+	"police.announce",
   },
 
   ["Deputy Assistant Commissioner"] = {
@@ -527,6 +531,7 @@ cfg.groups = {
 	"police.armoury",
 	"police.maxarmour",
 	"police.loadshop2",
+	"police.announce",
   },
 
   ["Commander"] = {
