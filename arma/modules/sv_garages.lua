@@ -109,6 +109,9 @@ Citizen.CreateThread(function()
             for i,v in pairs(pvehicles) do 
                if os.time() > tonumber(v.rentedtime) then
                   MySQL.execute('ARMA/rentedupdate', {id = v.rentedid, rented = 0, rentedid = "", rentedunix = "", user_id = v.user_id, veh = v.vehicle})
+                  if ARMA.getUserSource(v.rentedid) ~= nil then
+                    ARMAclient.notify(ARMA.getUserSource(v.rentedid), {"~r~Your rented vehicle has been returned."})
+                  end
                end
             end
         end)
