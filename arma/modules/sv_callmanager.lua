@@ -53,7 +53,7 @@ RegisterCommand("calladmin", function(source)
                 TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
             end
             ARMAclient.notify(user_source,{"~b~Your request has been sent."})
-            ARMAclient.notify(user_source,{"~y~If you are reporting a player you can also create a report at www.armarp.gg/forums"})
+            ARMAclient.notify(user_source,{"~y~If you are reporting a player you can also create a report at www.armarp.co.uk/forums"})
         else
             ARMAclient.notify(user_source,{"~r~Please enter a valid reason."})
         end
@@ -127,7 +127,8 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name, GetEntityCoords(GetPlayerPed(admin_source)))
                                 ARMA.giveBankMoney(user_id, 10000)
                                 ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
-                                ARMAclient.notify(v.tempID,{"~g~Your ticket has been taken!"})
+                                ARMAclient.notify(v.tempID,{"~g~An admin has taken your ticket."})
+                                TriggerClientEvent('ARMA:ticketAccepted', v.tempID, GetPlayerName(admin_source))
                                 ARMAclient.teleport(admin_source, {table.unpack(coords)})
                                 tickets[ticketID] = nil
                                 TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
