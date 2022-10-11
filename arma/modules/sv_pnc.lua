@@ -40,7 +40,11 @@ AddEventHandler('ARMA:searchPerson', function(firstname, lastname)
                     end
                     table.insert(returnedUsers, {user_id = user_id, firstname = firstname, lastname = lastname, age = age, phone = phone, licence = licence, points = points, vehicles = actualVehicles, playerhome = actualHouses, warrants = {}, warning_markers = {}})
                 end
-                TriggerClientEvent('ARMA:sendSearcheduser', source, returnedUsers)
+                if next(returnedUsers) then
+                    TriggerClientEvent('ARMA:sendSearcheduser', source, returnedUsers)
+                else
+                    TriggerClientEvent('ARMA:noPersonsFound', source)
+                end
             end
         end)
     end
@@ -52,13 +56,17 @@ AddEventHandler('ARMA:finePlayer', function(id, charges, amount, notes)
     local user_id = ARMA.getUserId(source)
     local amount = tonumber(amount)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-       ARMA.tryBankPayment(id, amount)
-       ARMA.giveBankMoney(user_id, amount*0.1)
-       ARMAclient.notify(ARMA.getUserSource(id), {'~r~You have been fined £'..getMoneyStringFormatted(amount)..'.'})
-       ARMAclient.notify(source, {'~g~You have received £'..getMoneyStringFormatted(math.floor(amount*0.1))..' for fining '..GetPlayerName(ARMA.getUserSource(id))..'.'})
-       TriggerEvent('ARMA:addToCommunityPot', tonumber(amount))
-       -- add webhook for pd cord
-       -- do notes later
+        if ARMA.tryBankPayment(id, amount) then
+            ARMA.giveBankMoney(user_id, amount*0.1)
+            ARMAclient.notify(ARMA.getUserSource(id), {'~r~You have been fined £'..getMoneyStringFormatted(amount)..'.'})
+            ARMAclient.notify(source, {'~g~You have received £'..getMoneyStringFormatted(math.floor(amount*0.1))..' for fining '..GetPlayerName(ARMA.getUserSource(id))..'.'})
+            TriggerEvent('ARMA:addToCommunityPot', tonumber(amount))
+            TriggerClientEvent('ARMA:verifyFineSent', true)
+            -- add webhook for pd cord
+            -- do notes later
+        else
+            TriggerClientEvent('ARMA:verifyFineSent', false, 'The player does not have enough money.')
+        end
     end
 end)
 
