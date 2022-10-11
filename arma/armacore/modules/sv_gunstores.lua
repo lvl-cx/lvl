@@ -1,10 +1,35 @@
 local cfg = module("armacore/cfg/cfg_gunstores")
 local organheist = module('cfg/cfg_organheist')
 
+MySQL.createCommand("ARMA/get_weapons", "SELECT weapon_info FROM arma_weapon_whitelists WHERE user_id = @user_id")
+MySQL.createCommand("ARMA/set_weapons", "UPDATE arma_weapon_whitelists SET weapon_info = @weapon_info WHERE AND user_id = @user_id")
+
+
+local whitelistedGuns = {
+    [1] = {
+        ["policeLargeArms"]={
+            ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50"},
+        }
+    }
+}
+
 RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
-    TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, cfg.GunStores)
+    local user_id = ARMA.getUserId(source)
+    MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists) -- need to make the table above so it'll go into sql when a gun whitelist is bought
+        for k,v in pairs(weaponWhitelists) do                                       -- pull sql when player requests gun shop data, then insert the whitelisted guns into
+            if weaponWhitelists[k]['weapon_info'] ~= '' then                        -- the gunstore table and pass that to the player, just gotta do perm id checks
+                data = json.decode(weaponWhitelists[k]['weapon_info'])
+                for a,b in pairs(cfg.Gunstores) do
+                    if a == data[k] then
+                        table.insert(cfg.Gunstores[a], data)
+                    end
+                end
+            end
+        end
+        TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, cfg.GunStores)
+    end)
 end)
 
 RegisterNetEvent("ARMA:buyWeapon")
