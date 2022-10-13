@@ -169,6 +169,7 @@ end)
 
 RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
     c = I
+    TriggerEvent('ARMA:nhsBlipComa', true)
     if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
         bleedoutDuration = 50000
     elseif #c >= 1 and #c <= 3 and not globalNHSOnDuty then
@@ -287,6 +288,7 @@ function tARMA.reviveComa()
     tARMA.setRagdoll(false)
     tARMA.stopScreenEffect(cfg.coma_effect)
     SetEntityHealth(PlayerPedId(), 200) 
+    TriggerEvent('ARMA:nhsBlipComa', false)
 end
 
 Citizen.CreateThread(function() -- disable health regen, conflicts with coma system
@@ -415,7 +417,6 @@ RegisterNetEvent("ARMA:OpenSpawnMenu",function(O)
     FreezeEntityPosition(G, true)
     SetEntityCoordsNoOffset(G, P.x, P.y, -100.0, false, false, false)
     SetEntityVisible(G, false, 0)
-    --TriggerEvent("CMG:removeBackpack2")
     N = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA",675.57568359375,1107.1724853516,375.29666137695,0.0,0.0,0.0,65.0,0,2)
     SetCamActive(N, true)
     RenderScriptCams(true, true, 0, true, false)
