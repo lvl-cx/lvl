@@ -1,6 +1,7 @@
 local a=false
 local b={}
 local c={}
+local currentComa = false
 local function d()
     for e,f in pairs(b)do 
         if DoesBlipExist(f)then 
@@ -60,6 +61,12 @@ local function m(n,o,k)
     SetBlipAlpha(l,255)
     SetBlipColour(l,k)
 end
+
+RegisterNetEvent("ARMA:nhsBlipComa",function(coma)
+    a=coma
+    currentComa = coma
+end)
+
 RegisterCommand("blipson",function()
     if tARMA.globalOnPoliceDuty() or tARMA.globalNHSOnDuty() then 
         tARMA.notify('~g~Emergency blips enabled.')
@@ -98,14 +105,20 @@ Citizen.CreateThread(function()
                         local r=tARMA.getPermIdFromTemp(q)
                         local s=tARMA.getJobType(r)
                         if s~=""then 
-                            if s=="metpd"then 
-                                h(i,j,3,q)
-                            elseif s=="hmp"then 
-                                h(i,j,29,q)
-                            elseif s=="lfb"then
-                                h(i,j,1,q)
-                            elseif s=="nhs"then 
-                                h(i,j,2,q)
+                            if not currentComa then
+                                if s=="metpd"then 
+                                    h(i,j,3,q)
+                                elseif s=="hmp"then 
+                                    h(i,j,29,q)
+                                elseif s=="lfb"then
+                                    h(i,j,1,q)
+                                elseif s=="nhs"then 
+                                    h(i,j,2,q)
+                                end
+                            else
+                                if s=="nhs"then 
+                                    h(i,j,2,q)
+                                end
                             end
                         elseif b[tostring(q)]~= nil then
                             d2(tostring(q))
