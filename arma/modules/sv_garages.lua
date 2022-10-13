@@ -410,7 +410,7 @@ AddEventHandler('ARMA:FetchRented', function()
                             datetime = minutesLeft .. " mins" 
                         else
                             hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                            datetime = hoursLeft .. " hrs" 
+                            datetime = hoursLeft .. " hours" 
                         end
                         rentedin.vehicles[a] = {z[1], datetime, veh.user_id, a}
                     end
@@ -442,7 +442,7 @@ AddEventHandler('ARMA:FetchRented', function()
                                 datetime = minutesLeft .. " mins" 
                             else
                                 hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                                datetime = hoursLeft .. " hrs" 
+                                datetime = hoursLeft .. " hours" 
                             end
                             rentedout.vehicles[a] = {z[1], datetime, veh.user_id, a}
                         end
