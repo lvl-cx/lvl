@@ -63,6 +63,7 @@ AddEventHandler('ARMA:releaseImpoundedVehicle', function(spawncode)
                                 for k,v in pairs(result) do
                                     if v.vehicle == spawncode then
                                         TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, vector3(impoundcfg.positions[randomSpawn].x, impoundcfg.positions[randomSpawn].y, impoundcfg.positions[randomSpawn].z), v.vehicle_plate, v.fuel_level)
+                                        TriggerEvent('ARMA:addToCommunityPot', 10000)
                                         return
                                     end
                                 end
