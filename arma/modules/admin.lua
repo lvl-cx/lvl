@@ -1985,7 +1985,7 @@ AddEventHandler("ARMA:checkBan",function(permid)
                                 datetime = minutesLeft .. " mins" 
                             else
                                 hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                                datetime = hoursLeft .. " hrs" 
+                                datetime = hoursLeft .. " hours" 
                             end
                         else
                             datetime = "Permanent"
@@ -2033,19 +2033,6 @@ AddEventHandler('ARMA:noClip', function()
     end
 end)
 
-RegisterNetEvent("ARMA:dealershipBucket")
-AddEventHandler("ARMA:dealershipBucket",function(bool)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if bool then
-        SetPlayerRoutingBucket(source, 33) 
-        return
-    end
-    if not bool then
-        SetPlayerRoutingBucket(source,0)
-        return
-    end
-end)
 
 RegisterServerEvent('ARMA:CopyToClipBoard')
 AddEventHandler('ARMA:CopyToClipBoard', function(id)
@@ -2066,70 +2053,6 @@ AddEventHandler('ARMA:checkBlips', function(status)
         ARMAclient.staffBlips(source,{status})
     end
 end)
-
-local function ch_list(player,choice)
-    local user_id = ARMA.getUserId(player)
-    if user_id ~= nil and ARMA.hasPermission(user_id,"admin.tickets") then
-        if player_lists[player] then -- hide
-            player_lists[player] = nil
-            ARMAclient.removeDiv(player,{"user_list"})
-        else -- show
-            local content = ""
-            local count = 0
-            for k,v in pairs(ARMA.rusers) do
-                count = count+1
-                local source = ARMA.getUserSource(k)
-                ARMA.getUserIdentity(k, function(identity)
-                    if source ~= nil then
-                        content = content.."<br />"..k.." => <span class=\"pseudo\">"..ARMA.getPlayerName(source).."</span> <span class=\"endpoint\">"..'REDACATED'.."</span>"
-                        if identity then
-                            content = content.." <span class=\"name\">"..htmlEntities.encode(identity.firstname).." "..htmlEntities.encode(identity.name).."</span> <span class=\"reg\">"..identity.registration.."</span> <span class=\"phone\">"..identity.phone.."</span>"
-                        end
-                    end
-                    
-                    -- check end
-                    count = count-1
-                    if count == 0 then
-                        player_lists[player] = true
-                        local css = [[
-                        .div_user_list{ 
-                            margin: auto; 
-                            padding: 8px; 
-                            width: 650px; 
-                            margin-top: 80px; 
-                            background: black; 
-                            color: white; 
-                            font-weight: bold; 
-                            font-size: 1.1em;
-                        } 
-                        
-                        .div_user_list .pseudo{ 
-                            color: rgb(0,255,125);
-                        }
-                        
-                        .div_user_list .endpoint{ 
-                            color: rgb(255,0,0);
-                        }
-                        
-                        .div_user_list .name{ 
-                            color: #309eff;
-                        }
-                        
-                        .div_user_list .reg{ 
-                            color: rgb(0,0,0);
-                        }
-                        
-                        .div_user_list .phone{ 
-                            color: rgb(211, 0, 255);
-                        }
-                        ]]
-                        ARMAclient.setDiv(player,{"user_list", css, content})
-                    end
-                end)
-            end
-        end
-    end
-end
 
 RegisterServerEvent("ARMA:GetPlayerData")
 AddEventHandler("ARMA:GetPlayerData",function()
