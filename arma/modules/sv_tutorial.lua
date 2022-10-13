@@ -1,12 +1,12 @@
-local TutorialBuckets = 10
+local tutorialBucket = 10
 RegisterNetEvent('ARMA:checkTutorial')
 AddEventHandler('ARMA:checkTutorial', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if not ARMA.hasGroup(user_id, 'TutorialDone') then
-        TutorialBuckets = TutorialBuckets + 1
+        tutorialBucket = tutorialBucket + 1
         TriggerClientEvent('ARMA:startTutorial', source)
-        SetPlayerRoutingBucket(source, TutorialBuckets)
+        SetPlayerRoutingBucket(source, tutorialBucket)
     end
 end)
 
