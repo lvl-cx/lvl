@@ -6,7 +6,7 @@ AddEventHandler("ARMA:getUserinformation",function(id)
         MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
             if #rows > 0 then
                 local chips = rows[1].chips
-                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), ARMA.getBankMoney(id), ARMA.getMoney(id), chips)
+                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), math.floor(ARMA.getBankMoney(id)), math.floor(ARMA.getMoney(id)), chips)
             end
         end)
     end
@@ -29,7 +29,7 @@ AddEventHandler("ARMA:ManagePlayerBank",function(id, amount, cashtype)
         MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
             if #rows > 0 then
                 local chips = rows[1].chips
-                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), ARMA.getBankMoney(id), ARMA.getMoney(id), chips)
+                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), math.floor(ARMA.getBankMoney(id)), math.floor(ARMA.getMoney(id)), chips)
             end
         end)
     end
@@ -52,7 +52,7 @@ AddEventHandler("ARMA:ManagePlayerCash",function(id, amount, cashtype)
         MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
             if #rows > 0 then
                 local chips = rows[1].chips
-                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), ARMA.getBankMoney(id), ARMA.getMoney(id), chips)
+                TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), math.floor(ARMA.getBankMoney(id)), math.floor(ARMA.getMoney(id)), chips)
             end
         end)
     end
@@ -71,7 +71,7 @@ AddEventHandler("ARMA:ManagePlayerChips",function(id, amount, cashtype)
             MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
                 if #rows > 0 then
                     local chips = rows[1].chips
-                    TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), ARMA.getBankMoney(id), ARMA.getMoney(id), (chips+amount))
+                    TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), math.floor(ARMA.getBankMoney(id)), math.floor(ARMA.getMoney(id)), chips)
                 end
             end)
         elseif cashtype == 'Decrease' then
@@ -80,7 +80,7 @@ AddEventHandler("ARMA:ManagePlayerChips",function(id, amount, cashtype)
             MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
                 if #rows > 0 then
                     local chips = rows[1].chips
-                    TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), ARMA.getBankMoney(id), ARMA.getMoney(id), (chips-amount))
+                    TriggerClientEvent('ARMA:receivedUserInformation', source, ARMA.getUserSource(id), GetPlayerName(ARMA.getUserSource(id)), math.floor(ARMA.getBankMoney(id)), math.floor(ARMA.getMoney(id)), chips)
                 end
             end)
         end
