@@ -835,7 +835,8 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                 for k,v in pairs(a) do
                     if v.UserID == PlayerID then
                         if v.points > 10 then
-                            ARMA.banConsole(PlayerID,"perm","Excessive F10")
+                            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = 10}, function() end)
+                            ARMA.banConsole(PlayerID,2160,"You have reached 10 points and have received a 3 month ban.")
                         end
                     end
                 end
