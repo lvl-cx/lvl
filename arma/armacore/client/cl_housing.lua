@@ -95,6 +95,7 @@ RageUI.CreateWhile(1.0, true, function()
                             SetTimeout(50, function()
                                 SetPedArmour(PlayerPedId(), savedArmour)
                                 TriggerServerEvent('ARMA:changeHairStyle')
+                                TriggerServerEvent('ARMA:changeTattoos')
                             end)
                         end
                     end
