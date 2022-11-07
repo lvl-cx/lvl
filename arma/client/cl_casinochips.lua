@@ -61,6 +61,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end 
                 end 
             end)
+            RageUI.ButtonWithStyle("Buy all chips","",{RightLabel="→→→"},true,function(n,o,p)
+                if p then 
+                    TriggerServerEvent("ARMA:buyChips")
+                end 
+            end)
             RageUI.ButtonWithStyle("Sell chips","",{RightLabel="→→→"},true,function(n,o,p)
                 if p then 
                     local q=getCasinoChips()
@@ -74,6 +79,11 @@ RageUI.CreateWhile(1.0, true, function()
                     else 
                         tARMA.notify("~r~Invalid amount.")
                     end 
+                end 
+            end)
+            RageUI.ButtonWithStyle("Sell all chips","",{RightLabel="→→→"},true,function(n,o,p)
+                if p then 
+                    TriggerServerEvent("ARMA:sellChips")
                 end 
             end)
         end)
@@ -186,8 +196,7 @@ function getCasinoChips()
 end
 RegisterNetEvent("ARMA:setDisplayChips")
 AddEventHandler("ARMA:setDisplayChips",function(x)
-    local y=tostring(x)
-    d=getMoneyStringFormatted(y)
+    d=getMoneyStringFormatted(tostring(x))
 end)
 
 RegisterNetEvent("ARMA:chipsUpdated",function()

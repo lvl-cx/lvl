@@ -43,6 +43,7 @@ RegisterNetEvent("ARMA:buyChips")
 AddEventHandler("ARMA:buyChips", function(amount)
     local source = source
     local user_id = ARMA.getUserId(source)
+    if not amount then amount = ARMA.getMoney(user_id) end
     if ARMA.tryPayment(user_id, amount) then
         MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
         TriggerClientEvent('ARMA:chipsUpdated', source)
@@ -59,6 +60,7 @@ AddEventHandler("ARMA:sellChips", function(amount)
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
             local chips = rows[1].chips
+            if not amount then amount = chips end
             if amount > chips then
                 ARMAclient.notify(source,{"~r~You don't have enough chips."})
             else
