@@ -2167,3 +2167,44 @@ RegisterCommand("cleararea", function(source, args) -- these events are gonna be
         TriggerClientEvent('ARMA:clearBrokenVehicles', source)
     end 
 end)
+
+RegisterNetEvent("ARMA:devOutfitSave")
+AddEventHandler("ARMA:devOutfitSave", function(outfitName)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMA.getUData(user_id, "ARMA:dev:outfits", function(data)
+        local sets = json.decode(data)
+        if sets == nil then sets = {} end
+        ARMAclient.getCustomization(source,{},function(custom)
+            sets[outfitName] = custom
+            ARMA.setUData(user_id,"ARMA:dev:outfits",json.encode(sets))
+            ARMAclient.notify(source,{"~g~Saved outfit."})
+            TriggerClientEvent("ARMA:getDevOutfits", source, sets)
+        end)
+    end)
+end)
+
+RegisterNetEvent("ARMA:devOutfitDelete")
+AddEventHandler("ARMA:devOutfitDelete", function(outfitName)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMA.getUData(user_id, "ARMA:dev:outfits", function(data)
+        local sets = json.decode(data)
+        if sets == nil then sets = {} end
+        sets[outfitName] = nil
+        ARMA.setUData(user_id,"ARMA:dev:outfits",json.encode(sets))
+        ARMAclient.notify(source,{"~r~Remove outfit."})
+        TriggerClientEvent("ARMA:getDevOutfits", source, sets)
+    end)
+end)
+
+RegisterNetEvent("ARMA:devOutfitLoad")
+AddEventHandler("ARMA:devOutfitLoad", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMA.getUData(user_id, "ARMA:dev:outfits", function(data)
+        local sets = json.decode(data)
+        if sets == nil then sets = {} end
+        TriggerClientEvent("ARMA:getDevOutfits", source, sets)
+    end)
+end)
