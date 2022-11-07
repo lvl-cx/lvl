@@ -1344,7 +1344,6 @@ end)
 
 RegisterNetEvent("ARMA:getDevOutfits")
 AddEventHandler("ARMA:getDevOutfits",function(outfits)
-    print(outfits)
     savedOutfits = outfits
 end)
 
