@@ -15,7 +15,7 @@ AddEventHandler("ARMA:placeHeadBag",function()
     if Q%2~=0 then 
         local R=tARMA.getPlayerPed()
         P=CreateObject(`prop_money_bag_01`,0,0,0,true,true,true)
-        AttachEntityToEntity(bag,R,GetPedBoneIndex(R,12844),0.2,0.04,0,0,270.0,60.0,true,true,false,true,1,true)
+        AttachEntityToEntity(P,R,GetPedBoneIndex(R,12844),0.2,0.04,0,0,270.0,60.0,true,true,false,true,1,true)
         openGui()
     else 
         DeleteEntity(P)
