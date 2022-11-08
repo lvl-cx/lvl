@@ -1161,7 +1161,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbanmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
-                RageUI.Separator("~r~ Ban Info ", function() end)
+                RageUI.Separator("~r~Ban Info ", function() end)
                 RageUI.Separator("Ban ID: " .. SelectedPlayer[1], function() end)
                 RageUI.Separator("Perm ID: " .. SelectedPlayer[2], function() end)
                 RageUI.Separator("Username: " .. SelectedPlayer[3], function() end)

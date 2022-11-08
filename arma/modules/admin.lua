@@ -2193,7 +2193,7 @@ AddEventHandler("ARMA:devOutfitDelete", function(outfitName)
         if sets == nil then sets = {} end
         sets[outfitName] = nil
         ARMA.setUData(user_id,"ARMA:dev:outfits",json.encode(sets))
-        ARMAclient.notify(source,{"~r~Remove outfit."})
+        ARMAclient.notify(source,{"~r~Removed outfit."})
         TriggerClientEvent("ARMA:getDevOutfits", source, sets)
     end)
 end)

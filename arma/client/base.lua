@@ -156,9 +156,11 @@ function tARMA.getNearestPlayer(radius)
 end
 
 function tARMA.notify(msg)
-  SetNotificationTextEntry("STRING")
-  AddTextComponentString(msg)
-  DrawNotification(true, false)
+  if not hideHud then
+    SetNotificationTextEntry("STRING")
+    AddTextComponentString(msg)
+    DrawNotification(true, false)
+  end
 end
 
 
@@ -951,13 +953,16 @@ CreateThread(function()
     end
 end)
 
+hideHud = false
 RegisterCommand('showui', function()
+  hideHud = false
   TriggerEvent('ARMAHUD:show')
   TriggerEvent('ARMACHAT:show')
 end)
 
 RegisterCommand('hideui', function()
   tARMA.notify("~g~/showui to re-enable UI")
+  hideHud = true
   TriggerEvent('ARMAHUD:hide')
   TriggerEvent('ARMACHAT:hide')
 end)
