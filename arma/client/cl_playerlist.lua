@@ -38,13 +38,21 @@ RegisterNetEvent("ARMA:playerListMetaUpdate",function(t)
     SendNUIMessage({appendToFooterPlayerList = '<span class="foot">  |  Number of players ' ..tostring(v) .. "/" .. tostring(x).."</span>"})
 end)
 
+function getLength(tbl)
+    local getN = 0
+    for n in pairs(tbl) do 
+      getN = getN + 1 
+    end
+    return getN
+  end
+
 function sendFullPlayerListData()
-    local H = #sortedPlayersStaff
-    local I = #sortedPlayersPolice
-    local J = #sortedPlayersNHS
-    local K = #sortedPlayersLFB
-    local L = #sortedPlayersHMP
-    local M = #sortedPlayersCivillians
+    local H = getLength(sortedPlayersStaff)
+    local I = getLength(sortedPlayersPolice)
+    local J = getLength(sortedPlayersNHS)
+    local K = getLength(sortedPlayersLFB)
+    local L = getLength(sortedPlayersHMP)
+    local M = getLength(sortedPlayersCivillians)
     SendNUIMessage({wipePlayerList = true})
     SendNUIMessage({clearServerMetaData = true})
     SendNUIMessage({setServerMetaData = '<img src="playerlist_images/arma.png" align="top" width="20px",height="20px"><span class="staff">' ..tostring(H) .. "</span>"})
@@ -54,7 +62,7 @@ function sendFullPlayerListData()
     SendNUIMessage({setServerMetaData = '<img src="playerlist_images/hmp.png" align="top"  width="24",height="24"><span class="hmp">' ..tostring(L) .. "</span>"})
     SendNUIMessage({setServerMetaData = '<img src="playerlist_images/danny.png" align="top" width="20",height="20"><span class="aa">' ..tostring(M) .. "</span>"})
     SendNUIMessage({wipeFooterPlayerList = true})
-    SendNUIMessage({appendToFooterPlayerList = '<span class="foot">Server #' .. tostring(y) .. " | </span>"})
+    SendNUIMessage({appendToFooterPlayerList = '<span class="foot">Server #1 | </span>'})
     SendNUIMessage({appendToFooterPlayerList = '<span class="foot" style="color: rgb(0, 255, 20);">Server uptime ' ..tostring(u) .. "</span>"})
     SendNUIMessage({appendToFooterPlayerList = '<span class="foot">  |  Number of players ' ..tostring(v) .. "/" .. tostring(x).."</span>"})
     if H >= 1 then
