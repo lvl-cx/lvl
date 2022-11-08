@@ -201,6 +201,7 @@ local allowedEntities = {
     [`sf_prop_sf_el_guitar_02a`] = true,
     [`prop_gun_case_01`] = true,
     [`pride_sign_01`] = true,
+    [`prop_money_bag_01`] = true,
 }
 
 local otherVehicles = {
