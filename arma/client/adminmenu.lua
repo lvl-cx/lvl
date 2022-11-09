@@ -32,7 +32,7 @@ local a10
 local acbannedplayers = 0
 local acbannedplayerstable = {}
 local actypes = {}
-local devOutfit = nil
+local currentOutfit = nil
 local savedOutfits = {}
 
 admincfg = {}
@@ -66,8 +66,8 @@ RMenu.Add("adminmenu", "closeplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu
 RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
-RMenu.Add("adminmenu", "devoutfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devfunctions"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
-RMenu.Add("adminmenu", "managedevoutfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "devoutfits"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
+RMenu.Add("adminmenu", "outfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Outfits Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
+RMenu.Add("adminmenu", "manageoutfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "outfits"), "", menuColour..'Manage Outfits',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "checkban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Check Ban',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -434,6 +434,10 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
+            if tARMA.isDev() then
+                RageUI.ButtonWithStyle("Outfit Management", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                end, RMenu:Get('adminmenu', 'outfits'))
+            end
         end)
     end
 end)
@@ -591,21 +595,19 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-                RageUI.ButtonWithStyle("Outfit Management", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                end, RMenu:Get('adminmenu', 'devoutfits'))
             end        
         end)
     end
-    if RageUI.Visible(RMenu:Get('adminmenu', 'devoutfits')) then
+    if RageUI.Visible(RMenu:Get('adminmenu', 'outfits')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() or GlobalAdminLevel >= 10 then
                 if next(savedOutfits) then
                     for a,b in pairs(savedOutfits) do 
                         RageUI.ButtonWithStyle(a, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                             if Selected then
-                                devOutfit = a
+                                currentOutfit = a
                             end
-                        end, RMenu:Get('adminmenu', 'managedevoutfits'))
+                        end, RMenu:Get('adminmenu', 'manageoutfits'))
                     end
                 else
                     RageUI.Separator("No Outfits Saved")
@@ -620,13 +622,13 @@ RageUI.CreateWhile(1.0, true, function()
             end        
         end)
     end
-    if RageUI.Visible(RMenu:Get('adminmenu', 'managedevoutfits')) then
+    if RageUI.Visible(RMenu:Get('adminmenu', 'manageoutfits')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() or GlobalAdminLevel >= 10 then
                 RageUI.ButtonWithStyle('Equip Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         for a,b in pairs(savedOutfits) do 
-                            if a == devOutfit then
+                            if a == currentOutfit then
                                 tARMA.setCustomization(b)
                                 SetTimeout(50, function()
                                     TriggerServerEvent('ARMA:changeHairStyle')
@@ -638,9 +640,9 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
                 RageUI.ButtonWithStyle('Delete Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:devOutfitDelete',devOutfit)
+                        TriggerServerEvent('ARMA:devOutfitDelete',currentOutfit)
                     end
-                end, RMenu:Get('adminmenu', 'devoutfits'))
+                end, RMenu:Get('adminmenu', 'outfits'))
             end        
         end)
     end
