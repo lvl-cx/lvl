@@ -18,6 +18,33 @@ AddEventHandler('ARMA:sendOnlineStaff', function(staff)
 end)
 
 function staffMenuDisplay()
+    if showStaffMenu then 
+        DrawRect(0.501,0.532,0.375,0.225,0,0,0,150)
+        DrawRect(0.501,0.396,0.375,0.046,18,82,228,255)
+        DrawAdvancedText(0.591,0.399,0.005,0.0028,0.51,title,255,255,255,255,7,0)
+        DrawAdvancedText(0.585,0.475,0.005,0.0028,0.4,"There is currently ~g~"..#currentStaff.." ~w~staff online",255,255,255,255,7,0)
+        DrawAdvancedText(0.590,0.534,0.005,0.0028,0.4,"View Online Staff",255,255,255,255,7,0)
+        --[[ if CursorInArea(0.3333,0.3973,0.4981,0.5537)then 
+            DrawRect(0.501,0.527,0.085,0.056,a,b,c,150)
+            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
+                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
+                showStaffMenu=false
+                showFundsGangUI=true 
+            end 
+        else 
+            DrawRect(0.501,0.527,0.085,0.056,0,0,0,150)
+        end ]]
+        if CursorInArea(0.4244,0.4903,0.4981,0.5537)then 
+            DrawRect(0.495,0.527,0.105,0.056,a,b,c,150)
+            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
+                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
+                showStaffMenu=false
+                showStaffMembers=true 
+            end 
+        else 
+            DrawRect(0.495,0.527,0.105,0.056,0,0,0,150)
+        end
+    end 
     if showStaffMembers then 
         DrawRect(0.501,0.525,0.421,0.387,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
@@ -68,7 +95,7 @@ function staffMenuDisplay()
                         tARMA.notify("~r~You don't have permission to slap players!")
                     end 
                 else 
-                    tARMA.notify("~r~No gang member selected")
+                    tARMA.notify("~r~No staff member selected")
                 end 
             end 
         else 
@@ -85,7 +112,7 @@ function staffMenuDisplay()
                         tARMA.notify("~r~You don't have permission to manage groups!")
                     end 
                 else 
-                    tARMA.notify("~r~No gang member selected")
+                    tARMA.notify("~r~No staff member selected")
                 end 
             end 
         else 
@@ -96,15 +123,8 @@ function staffMenuDisplay()
             if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
                 if selectedMember~=nil then 
-                    if gangPermission>=3 then 
-                        if YesNoConfirm()then 
-                            TriggerServerEvent("ARMA:kickMemberFromGang",gangID,selectedMember)
-                        end 
-                    else 
-                        tARMA.notify("~r~You don't have permission to kick!")
-                    end 
                 else 
-                    tARMA.notify("~r~No gang member selected")
+                    tARMA.notify("~r~No staff member selected")
                 end 
             end 
         else 
@@ -114,15 +134,9 @@ function staffMenuDisplay()
             DrawRect(0.651,0.569,0.065,0.056,a,b,c,150)
             if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
                 PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                local s=GetPlayerPermID()
-                if s~=nil then 
-                    if gangPermission>=2 then 
-                        TriggerServerEvent("ARMA:InviteUserToGang",gangID,s)
-                    else 
-                        tARMA.notify("~r~You don't have permission to invite players")
-                    end 
+                if selectedMember~=nil then 
                 else 
-                    tARMA.notify("No player name entered")
+                    tARMA.notify("~r~No staff member selected")
                 end 
             end 
         else 
@@ -165,33 +179,6 @@ function staffMenuDisplay()
             DrawRect(0.681,0.689,0.045,0.036,0,0,0,150)
         end 
     end
-    if showStaffMenu then 
-        DrawRect(0.501,0.532,0.375,0.225,0,0,0,150)
-        DrawRect(0.501,0.396,0.375,0.046,18,82,228,255)
-        DrawAdvancedText(0.591,0.399,0.005,0.0028,0.51,title,255,255,255,255,7,0)
-        DrawAdvancedText(0.585,0.475,0.005,0.0028,0.4,"Online Staff "..#currentStaff,255,255,255,255,7,0)
-        DrawAdvancedText(0.590,0.534,0.005,0.0028,0.4,"View Online Staff",255,255,255,255,7,0)
-        --[[ if CursorInArea(0.3333,0.3973,0.4981,0.5537)then 
-            DrawRect(0.501,0.527,0.085,0.056,a,b,c,150)
-            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
-                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                showStaffMenu=false
-                showFundsGangUI=true 
-            end 
-        else 
-            DrawRect(0.501,0.527,0.085,0.056,0,0,0,150)
-        end ]]
-        if CursorInArea(0.4244,0.4903,0.4981,0.5537)then 
-            DrawRect(0.495,0.527,0.105,0.056,a,b,c,150)
-            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
-                PlaySound(-1,"SELECT","HUD_FRONTEND_DEFAULT_SOUNDSET",0,0,1)
-                showStaffMenu=false
-                showStaffMembers=true 
-            end 
-        else 
-            DrawRect(0.495,0.527,0.105,0.056,0,0,0,150)
-        end
-    end 
 end
 createThreadOnTick(staffMenuDisplay)
 Citizen.CreateThread(function()
