@@ -129,7 +129,7 @@ end)
 function func_drawStreetNamesGameUi(t)
     HideHudComponentThisFrame(3)
     HideHudComponentThisFrame(4)
-    if n then
+    if n and not hideHud then
         a(0.515, 1.25, 1.0, 1.0, 0.4, tostring(GetStreetNameFromHashKey(o)) .. " ~w~| ~b~" .. q, 255, 255, 255, 255)
     end
 end

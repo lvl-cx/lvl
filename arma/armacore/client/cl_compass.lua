@@ -136,7 +136,7 @@ RegisterCommand("compass",function()
 end)
 
 local function func_compass() 
-	if showCompass then
+	if showCompass and not hideHud then
 
 		local pxDegree = CompassConfig.compass.width / CompassConfig.compass.fov
 		local playerHeadingDegrees = 0
