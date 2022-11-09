@@ -102,7 +102,7 @@ AddEventHandler("ARMA:depositGangBalance", function(amount)
                         ARMAclient.notify(source,{"~r~Not enough cash."})
                     else
                         ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))-tonumber(amount))
-                        ARMAclient.notify(source,{"~g~Deposited £"..amount})
+                        ARMAclient.notify(source,{"~g~Deposited £"..getMoneyStringFormatted(amount)})
                         local newamount = tonumber(amount)+tonumber(funds)
                         local tax = tonumber(amount)*0.01
                         local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
@@ -146,7 +146,7 @@ AddEventHandler("ARMA:depositAllGangBalance", function()
                         return
                     end
                     ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))-tonumber(amount))
-                    ARMAclient.notify(source,{"~g~Deposited £"..amount})
+                    ARMAclient.notify(source,{"~g~Deposited £"..getMoneyStringFormatted(amount)})
                     local newamount = tonumber(amount)+tonumber(funds)
                     local tax = tonumber(amount)*0.01
                     local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
@@ -191,7 +191,7 @@ AddEventHandler("ARMA:withdrawGangBalance", function(amount)
                         ARMAclient.notify(source,{"~r~Invalid Amount."})
                     else
                         ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
-                        ARMAclient.notify(source,{"~g~Withdrew £"..amount})
+                        ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
                         local newamount = tonumber(funds)-tonumber(amount)
                         local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
                         local embed = {
@@ -233,7 +233,7 @@ AddEventHandler("ARMA:withdrawAllGangBalance", function()
                         ARMAclient.notify(source,{"~r~Invalid Amount."})
                     else
                         ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
-                        ARMAclient.notify(source,{"~g~Withdrew £"..amount})
+                        ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
                         local newamount = tonumber(funds)-tonumber(amount)
                         local webhook = 'https://discord.com/api/webhooks/989910907515707473/ovLreFaoPqACXjV1PIC53ol2O87WTWUXaNgIDSiEOdycie6JmDzH-Ji3jsKQshRzspzb'
                         local embed = {
