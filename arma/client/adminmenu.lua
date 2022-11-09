@@ -436,6 +436,9 @@ RageUI.CreateWhile(1.0, true, function()
             end
             if tARMA.isDev() then
                 RageUI.ButtonWithStyle("Outfit Management", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent('ARMA:devOutfitLoad')
+                    end
                 end, RMenu:Get('adminmenu', 'outfits'))
             end
         end)
@@ -1367,13 +1370,6 @@ RegisterCommand('openadminmenu',function()
     TriggerServerEvent("ARMA:GetNearbyPlayerData")
     TriggerServerEvent("ARMA:getAdminLevel")
     GlobalAdminLevel = tARMA.getStaffLevel()
-end)
-
-RegisterCommand('devmenu',function()
-    if tARMA.isDev() then
-        RageUI.Visible(RMenu:Get("adminmenu", "devfunctions"), not RageUI.Visible(RMenu:Get("adminmenu", "devfunctions")))
-        TriggerServerEvent('ARMA:devOutfitLoad')
-    end
 end)
 
 RegisterCommand('anticheat',function()
