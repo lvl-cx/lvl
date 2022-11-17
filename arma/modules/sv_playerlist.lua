@@ -133,7 +133,8 @@ AddEventHandler('ARMA:getPlayerListData', function()
     local lfb = {}
     local civillians = {}
     for k,v in pairs(ARMA.getUsers()) do
-        local hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0
+        local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
+        local hours = math.ceil(minutesPlayed/60)
         if ARMA.hasPermission(k, 'admin.tickets') then
             staff[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'staff'), hours = hours}
         end
