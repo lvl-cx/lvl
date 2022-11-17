@@ -82,7 +82,7 @@ AddEventHandler("ARMA:onClientSpawn",function(q, r)
                 end
                 if IsControlJustPressed(0, 47) then
                     local z = GetVehiclePedIsIn(PlayerPedId(), true)
-                    tvRP.notify("~y~Boat anchor set to " .. tostring(not x))
+                    tARMA.notify("~y~Boat anchor set to " .. tostring(not x))
                     SetBoatAnchor(z, not x)
                     x = not x
                 end
