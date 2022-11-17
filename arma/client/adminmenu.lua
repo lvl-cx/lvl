@@ -1378,6 +1378,13 @@ RegisterCommand('anticheat',function()
     end
 end)
 
+
+RegisterCommand('devmenu',function()
+    if tARMA.isDev() then
+        RageUI.Visible(RMenu:Get("adminmenu", "devfunctions"), not RageUI.Visible(RMenu:Get("adminmenu", "devfunctions")))
+    end
+end)
+
 function DrawHelpMsg(msg)
     SetTextComponentFormat("STRING")
     AddTextComponentString(msg)
