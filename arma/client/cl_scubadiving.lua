@@ -261,7 +261,7 @@ RegisterNetEvent("ARMA:createScubaJob",function(J, K)
     tARMA.removeBlip(N)
     RemoveBlip(L)
 end)
-RegisterNetEvent("Lunar:ScubaBoatDestroyed",function(S)
+RegisterNetEvent("ARMA:ScubaBoatDestroyed",function(S)
     if e and S == c then
         i = true
     end
