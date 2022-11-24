@@ -1365,11 +1365,14 @@ function Draw2DText(x, y, text, scale)
     DrawText(x, y)
 end
 
-RegisterCommand('openadminmenu',function()
-    TriggerServerEvent('ARMA:GetPlayerData')
-    TriggerServerEvent("ARMA:GetNearbyPlayerData")
-    TriggerServerEvent("ARMA:getAdminLevel")
-    GlobalAdminLevel = tARMA.getStaffLevel()
+RegisterNetEvent('ARMA:OpenAdminMenu')
+AddEventHandler('ARMA:OpenAdminMenu', function(admin)
+    if admin then
+        TriggerServerEvent('ARMA:GetPlayerData')
+        TriggerServerEvent("ARMA:GetNearbyPlayerData")
+        TriggerServerEvent("ARMA:getAdminLevel")
+        GlobalAdminLevel = tARMA.getStaffLevel()
+    end
 end)
 
 RegisterCommand('anticheat',function()

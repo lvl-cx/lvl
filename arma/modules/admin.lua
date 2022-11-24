@@ -5,8 +5,12 @@ RegisterServerEvent('ARMA:OpenSettings')
 AddEventHandler('ARMA:OpenSettings', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if user_id ~= nil and not ARMA.hasPermission(user_id, "admin.tickets") then
-        TriggerClientEvent("ARMA:OpenSettingsMenu", source, false)
+    if user_id ~= nil then
+        if ARMA.hasPermission(user_id, "admin.tickets") then
+            TriggerClientEvent("ARMA:OpenAdminMenu", source, true)
+        else
+            TriggerClientEvent("ARMA:OpenSettingsMenu", source, false)
+        end
     end
 end)
 
