@@ -1,3 +1,12 @@
+local rewards = {
+    10,
+    25,
+    50,
+    100,
+    250,
+    500,
+}
+
 RegisterServerEvent('ARMA:hoursReward')
 AddEventHandler('ARMA:hoursReward', function(reward)
     local source = source
@@ -21,5 +30,5 @@ AddEventHandler('ARMA:getHoursReward', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
-    TriggerClientEvent('ARMA:sendHoursReward', source, hours)
+    TriggerClientEvent('ARMA:sendHoursReward', source, hours, rewards)
 end)

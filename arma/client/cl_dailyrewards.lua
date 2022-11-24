@@ -1,4 +1,5 @@
 currentHours = 0
+local dailyRewards = {}
 
 RMenu.Add('DailyRewards', 'main', RageUI.CreateMenu("","~b~Rewards",10,50, "banners", "rewards"))
 
@@ -8,47 +9,22 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator('~g~You can claim multiple rewards')
             RageUI.Separator('~g~by simply playing the server.')
             RageUI.Separator('~g~Your current hours: ~b~'..currentHours)
-            RageUI.ButtonWithStyle("~g~10 Hours","~y~You will receive £100,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 10)
-                end
-            end) 
-            RageUI.ButtonWithStyle("~g~25 Hours","~y~You will receive £250,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 25)
-                end
-            end) 
-            RageUI.ButtonWithStyle("~g~50 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 50)
-                end
-            end) 
-            RageUI.ButtonWithStyle("~g~100 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 100)
-                end
-            end) 
-            RageUI.ButtonWithStyle("~g~250 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 250)
-                end
-            end)  
-            RageUI.ButtonWithStyle("~g~500 Hours","~y~You will receive £500,000.",{RightLabel = "→→→"},true,function(Hovered, Active, Selected) 
-                if Selected then
-                    TriggerServerEvent('ARMA:hoursReward', 500)
-                end
-            end) 
+            for k,v in pairs(dailyRewards) do
+                RageUI.ButtonWithStyle("~g~"..k.." Hours", "~y~You will receive £"..getMoneyStringFormatted(k*10000), {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
+                    if Selected then
+                        TriggerServerEvent('ARMA:hoursReward', k)
+                    end
+                end) 
+            end
         end)
     end
 end)
 
 RegisterNetEvent('ARMA:sendHoursReward')
-AddEventHandler('ARMA:sendHoursReward', function(hours)
+AddEventHandler('ARMA:sendHoursReward', function(hours, rewards)
     currentHours = hours
+    dailyRewards = rewards
 end)
-
-
-
 
 RegisterCommand('rewards', function()
     TriggerServerEvent('ARMA:getHoursReward')
