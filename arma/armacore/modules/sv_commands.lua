@@ -36,35 +36,47 @@ RegisterCommand("p", function(source,args, rawCommand)
         return 
     end
     local msg = rawCommand:sub(2)
-    local playerName =  "^7[Police Chat] " .. GetPlayerName(source)..": "
+    local playerName =  "^5[Police Chat] " .. GetPlayerName(source)..": "
     local players = GetPlayers()
     for i,v in pairs(ARMA.getUsersByPermission('police.onduty.permission')) do 
         name = GetPlayerName(v)
         user_id = ARMA.getUserId(v)   
-        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "police")
+        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "ooc")
     end
 end)
 
---[[ RegisterCommand("f", function(source,args, rawCommand)
+RegisterCommand("g", function(source,args, rawCommand)
     user_id = ARMA.getUserId(source)   
-    if not ARMA.hasPermission(user_id, "police.onduty.permission") and not ARMA.hasPermission(user_id, "prisonguard.onduty.permission") then
-        local playerName = "Server "
-        local msg = "Access denied."
-        TriggerClientEvent('chatMessage', source, "^7Alert: " , { 128, 128, 128 }, msg, "alert")
-        return 
-    end
+    local peoplesids = {}
+    local gangmembers = {}
     local msg = rawCommand:sub(2)
-    local playerName =  "^7[Faction Chat] " .. GetPlayerName(source)..": "
-    local players = GetPlayers()
-    for i,v in pairs(players) do 
-        name = GetPlayerName(v)
-        user_id = ARMA.getUserId(v)   
-        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "faction")
-    end
-end) ]]
-
-
-
+    local playerName =  "^2[Gang Chat] " .. GetPlayerName(source)..": "
+    exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+        for K,V in pairs(gotGangs) do
+            local array = json.decode(V.gangmembers)
+            for I,L in pairs(array) do
+                if tostring(user_id) == I then
+                    isingang = true
+                    for U,D in pairs(array) do
+                        peoplesids[tostring(U)] = tostring(D.gangPermission)
+                    end
+                    exports['ghmattimysql']:execute('SELECT * FROM arma_users', function(gotUser)
+                        for J,G in pairs(gotUser) do
+                            if peoplesids[tostring(G.id)] ~= nil then
+                                local player = ARMA.getUserSource(tonumber(G.id))
+                                if player ~= nil then
+                                    print(player, playerName, msg)
+                                    TriggerClientEvent('chatMessage', player, playerName , { 128, 128, 128 }, msg, "ooc")
+                                end
+                            end
+                        end
+                    end)
+                    break
+                end
+            end
+        end
+    end)
+end)
 
 
 
