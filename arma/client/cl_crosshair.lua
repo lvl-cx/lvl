@@ -16,7 +16,6 @@ RageUI.CreateWhile(1.0, true, function()
                 saveCrosshair()
             end)
             if a.options.enabled==1 then 
-                RageUI.Separator("~b~Crosshair Options")
                 RageUI.List("Center Dot",{"Enabled","Disabled"},a.options.centerDotEnabled,nil,{},true,function(c,d,e,f)
                     if d and a.options.centerDotEnabled~=f then 
                         a.options.centerDotEnabled=f
@@ -50,10 +49,13 @@ RageUI.CreateWhile(1.0, true, function()
                         saveCrosshair()
                     end 
                 end)
-                RageUI.SliderProgress("Red ["..a.options.colour.red.."]",a.options.colour.red,255,"Press ~b~ENTER~w~ to enter RGB Red value",{ProgressBackgroundColor={R=186,G=58,B=48,A=255},ProgressColor={R=212,G=66,B=55,A=255}},true,function(c,e,d,f)
+                RageUI.SliderProgress("Red ["..a.options.colour.red.."]",a.options.colour.red,255,"Press ~b~SPACE~w~ to enter RGB Red value",{ProgressBackgroundColor={R=186,G=58,B=48,A=255},ProgressColor={R=212,G=66,B=55,A=255}},true,function(c,e,d,f)
                     if e then 
                         if IsControlJustPressed(0,22)then 
-                            a.options.colour.red=getInput("Enter Red Value (0-255)",a.options.colour.red)
+                            local r = getInput("Enter Green Value (0-255)",a.options.colour.red)
+                            if r ~= nil then 
+                                a.options.colour.red = r
+                            end
                             saveCrosshair()
                         else 
                             if f~=a.options.colour.red then 
@@ -63,10 +65,13 @@ RageUI.CreateWhile(1.0, true, function()
                         end 
                     end 
                 end)
-                RageUI.SliderProgress("Green ["..a.options.colour.green.."]",a.options.colour.green,255,"Press ~b~ENTER~w~ to enter RGB Green value",{ProgressBackgroundColor={R=48,G=186,B=108,A=255},ProgressColor={R=64,G=230,B=136,A=255}},true,function(c,e,d,f)
+                RageUI.SliderProgress("Green ["..a.options.colour.green.."]",a.options.colour.green,255,"Press ~b~SPACE~w~ to enter RGB Green value",{ProgressBackgroundColor={R=48,G=186,B=108,A=255},ProgressColor={R=64,G=230,B=136,A=255}},true,function(c,e,d,f)
                     if e then 
                         if IsControlJustPressed(0,22)then 
-                            a.options.colour.green=getInput("Enter Green Value (0-255)",a.options.colour.green)
+                            local g = getInput("Enter Green Value (0-255)",a.options.colour.green)
+                            if g ~= nil then 
+                                a.options.colour.green = g
+                            end
                             saveCrosshair()
                         else 
                             if f~=a.options.colour.green then 
@@ -76,10 +81,13 @@ RageUI.CreateWhile(1.0, true, function()
                         end 
                     end 
                 end)
-                RageUI.SliderProgress("Blue ["..a.options.colour.blue.."]",a.options.colour.blue,255,"Press ~b~ENTER~w~ to enter RGB Blue value",{ProgressBackgroundColor={R=48,G=69,B=186,A=255},ProgressColor={R=59,G=86,B=237,A=255}},true,function(c,e,d,f)
+                RageUI.SliderProgress("Blue ["..a.options.colour.blue.."]",a.options.colour.blue,255,"Press ~b~SPACE~w~ to enter RGB Blue value",{ProgressBackgroundColor={R=48,G=69,B=186,A=255},ProgressColor={R=59,G=86,B=237,A=255}},true,function(c,e,d,f)
                     if e then 
                         if IsControlJustPressed(0,22)then 
-                            a.options.colour.blue=getInput("Enter Blue Value (0-255)",a.options.colour.blue)
+                            local b = getInput("Enter Green Value (0-255)",a.options.colour.blue)
+                            if b ~= nil then 
+                                a.options.colour.blue = b
+                            end
                             saveCrosshair()
                         else 
                             if f~=a.options.colour.blue then a.options.colour.blue=f
@@ -137,11 +145,13 @@ function getInput(k,l)
     if GetOnscreenKeyboardResult()then 
         local m=GetOnscreenKeyboardResult()
         local n=tonumber(m)
-        if m~=nil and m~=""and type(n)=="number"and n<=255 and n>=1 then 
-            return n 
-        else 
-            return l 
-        end 
+        if m then
+            if m~=nil and m~=""and type(n)=="number"and n<=255 and n>=1 then 
+                return n 
+            else 
+                return l 
+            end 
+        end
     end 
 end
 function doesWeaponHaveScope()
