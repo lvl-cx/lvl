@@ -165,16 +165,9 @@ function tARMA.staffMode(status)
             end
             tARMA.setRedzoneTimerDisabled(true)
             a = tARMA.getCustomization()
-            local z
             if tARMA.getModelGender()=="male"then 
                 tARMA.loadCustomisationPreset("StaffMale")
-                local ped=PlayerPedId()
-                SetPedComponentVariation(ped, 3, 0, 0 , 0) -- Torso
-                SetPedComponentVariation(ped, 4, 152, 2, 0) -- Pants
-                SetPedComponentVariation(ped, 6, 141, 0 , 0) -- Shoes
-                SetPedComponentVariation(ped, 8, 15, 0, 0) -- UnderShirt
-                SetPedComponentVariation(ped, 11, 442, 0, 0) -- Jacket
-            else z="mp_f_freemode_01"
+            else
                 tARMA.loadCustomisationPreset("StaffFemale")
             end 
         else
