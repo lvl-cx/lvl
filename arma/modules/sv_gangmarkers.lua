@@ -17,7 +17,9 @@ AddEventHandler("ARMA:sendGangMarker", function(coords)
                         for J,G in pairs(gotUser) do
                             if peoplesids[tostring(G.id)] ~= nil then
                                 local player = ARMA.getUserSource(tonumber(G.id))
-                                TriggerClientEvent('ARMA:drawGangMarker', player, coords)
+                                if player ~= nil then
+                                    TriggerClientEvent('ARMA:drawGangMarker', player, coords)
+                                end
                             end
                         end
                     end)
