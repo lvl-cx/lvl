@@ -29,6 +29,7 @@ end
 
 local blip = nil
 local markerActive = false
+local markersEnabled = true
 local config = {
     markerShowDistance = 100.0, -- markers start showing over 100m
     markerDeleteDistance = 5.0, -- marker will delete when distance is under 5m
@@ -51,45 +52,47 @@ end
 
 RegisterNetEvent("ARMA:drawGangMarker")
 AddEventHandler("ARMA:drawGangMarker",function(coords)
-    if markerActive == true then 
-        markerActive = false 
-        Wait(0)
-    end
-
-    local dist = #(GetEntityCoords(PlayerPedId()) - coords)
-    if dist < config.markerDeleteDistance then -- check if the marker is too close, then delete
-        return
-    end
-
-    RemoveBlip(blip)
-    blip = AddBlipForCoord(coords) SetBlipSprite(blip, 148) SetBlipScale(blip, 0.25) SetBlipColour(blip, 1) 
-    PlaySoundFrontend(-1, "10_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", true) -- beep sound
-    markerActive = true
-    local now = GetGameTimer()
-
-    while (GetGameTimer() - now < config.showTime) and (markerActive == true) do 
-        Wait(0)
-        dist = #(GetEntityCoords(PlayerPedId()) - coords) -- distance from marker
-        if dist < config.markerDeleteDistance then  -- if you walk too close to the marker it goes 
-            markerActive = false  
-        end 
-        if dist > config.markerShowDistance then 
-            DrawMarker(1, coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 100.0, config.r, config.g, config.b, 75, false, true, 2, nil, nil, false)
-        else
-            UI.DrawSprite3d({
-                pos = coords + vector3(0.0, 0.0, dist/100), -- place the sprite slightly above the distance text
-                textureDict = 'markers',
-                textureName = 'genericBlip',
-                width = 0.06,
-                height = 0.1,
-                r = config.r,
-                g = config.g,
-                b = config.b,
-                a = 255
-            })
+    if markersEnabled then
+        if markerActive == true then 
+            markerActive = false 
+            Wait(0)
         end
-        UI.DrawText3D(coords, tostring(math.floor(dist))..'m')
+
+        local dist = #(GetEntityCoords(PlayerPedId()) - coords)
+        if dist < config.markerDeleteDistance then -- check if the marker is too close, then delete
+            return
+        end
+
         RemoveBlip(blip)
+        blip = AddBlipForCoord(coords) SetBlipSprite(blip, 148) SetBlipScale(blip, 0.25) SetBlipColour(blip, 1) 
+        PlaySoundFrontend(-1, "10_SEC_WARNING", "HUD_MINI_GAME_SOUNDSET", true) -- beep sound
+        markerActive = true
+        local now = GetGameTimer()
+
+        while (GetGameTimer() - now < config.showTime) and (markerActive == true) do 
+            Wait(0)
+            dist = #(GetEntityCoords(PlayerPedId()) - coords) -- distance from marker
+            if dist < config.markerDeleteDistance then  -- if you walk too close to the marker it goes 
+                markerActive = false  
+            end 
+            if dist > config.markerShowDistance then 
+                DrawMarker(1, coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 100.0, config.r, config.g, config.b, 75, false, true, 2, nil, nil, false)
+            else
+                UI.DrawSprite3d({
+                    pos = coords + vector3(0.0, 0.0, dist/100), -- place the sprite slightly above the distance text
+                    textureDict = 'markers',
+                    textureName = 'genericBlip',
+                    width = 0.06,
+                    height = 0.1,
+                    r = config.r,
+                    g = config.g,
+                    b = config.b,
+                    a = 255
+                })
+            end
+            UI.DrawText3D(coords, tostring(math.floor(dist))..'m')
+            RemoveBlip(blip)
+        end
     end
 end)
 
@@ -144,8 +147,8 @@ function UI.DrawSprite3d(data)
     ClearDrawOrigin()
 end
 
-RegisterKeyMapping("marker", "Gang Marker", "MOUSE_BUTTON", "MOUSE_MIDDLE")
-RegisterCommand('marker', createMarker)
+RegisterKeyMapping("drawmarker", "Gang Marker", "MOUSE_BUTTON", "MOUSE_MIDDLE")
+RegisterCommand('drawmarker', createMarker)
 
 RMenu.Add('markercolour','main',RageUI.CreateMenu("Marker Colour","~b~ARMA Marker Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","crosshair"))
 RageUI.CreateWhile(1.0, true, function()
@@ -202,6 +205,11 @@ RegisterCommand("markercolour",function(h,i,j)
     RageUI.Visible(RMenu:Get('markercolour','main'),true)
 end)
 
+RegisterCommand("markers",function()
+    markersEnabled = not markersEnabled
+    SetResourceKvpInt('ARMA_markers_enabled', markersEnabled)
+end)
+
 function getInput(k,l)
     AddTextEntry('FMMC_MPM_NA',k)
     DisplayOnscreenKeyboard(1,"FMMC_MPM_NA",k,"","","","",3)
@@ -239,4 +247,9 @@ Citizen.CreateThread(function()
     config.r = GetResourceKvpInt("ARMA_markercolour_r") or 255
     config.g = GetResourceKvpInt("ARMA_markercolour_g") or 0
     config.b = GetResourceKvpInt("ARMA_markercolour_b") or 150
+    if GetResourceKvpInt("ARMA_markers_enabled") == 0 then
+        markersEnabled = false
+    else
+        markersEnabled = true
+    end
 end)
