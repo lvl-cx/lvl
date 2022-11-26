@@ -687,10 +687,11 @@ function closeToBarclays()
     local v=GetEntityCoords(GetPlayerPed(PlayerId()),false)
     local w=#(v-vector3(151.7451171875,-1036.7829589844,29.338624954224))
     local x=#(v-vector3(4478.2436523438,-4464.0170898438,4.2557549476624))
-    if w<10.0 or x<10.0 then 
+    local z =#(v-vector3(-104.27473449707,6469.9150390625,31.626708984375))
+    if w<10.0 or x<10.0 or z<10.0 then 
         return true 
     else 
-        tARMA.notify("~r~You must be near Legion or Cayo Perico Bank to access gang funds.")
+        tARMA.notify("~r~You must be near Barclays to access gang funds.")
         return false 
     end 
 end
