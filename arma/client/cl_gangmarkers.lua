@@ -33,7 +33,10 @@ local config = {
     markerShowDistance = 100.0, -- markers start showing over 100m
     markerDeleteDistance = 5.0, -- marker will delete when distance is under 5m
     showTime = 10000, -- 10 seconds default
-    r, g, b = 255, 0, 150, -- color of the marker
+    -- marker default colours
+    r = 255,
+    g = 0,
+    b = 150,
 }
 
 local function createMarker()
@@ -86,6 +89,7 @@ AddEventHandler("ARMA:drawGangMarker",function(coords)
             })
         end
         UI.DrawText3D(coords, tostring(math.floor(dist))..'m')
+        RemoveBlip(blip)
     end
 end)
 
@@ -147,36 +151,45 @@ RMenu.Add('markercolour','main',RageUI.CreateMenu("Marker Colour","~b~ARMA Marke
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('markercolour', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.SliderProgress("Red ["..config.r.."]",config.r,255,"Press ~b~ENTER~w~ to enter RGB Red value",{ProgressBackgroundColor={R=186,G=58,B=48,A=255},ProgressColor={R=212,G=66,B=55,A=255}},true,function(c,e,d,f)
+            RageUI.SliderProgress("Red ["..config.r.."]",config.r,255,"Press ~b~SPACE~w~ to enter RGB Red value",{ProgressBackgroundColor={R=186,G=58,B=48,A=255},ProgressColor={R=212,G=66,B=55,A=255}},true,function(c,e,d,f)
                 if e then 
                     if IsControlJustPressed(0,22)then 
-                        config.r=getInput("Enter Red Value (0-255)",config.r)
+                        local r = getInput("Enter Red Value (0-255)",config.r)
+                        if r ~= nil then 
+                            saveMarkerColour("r",r)
+                        end
                     else 
                         if f~=config.r then 
-                            config.r=f
+                            saveMarkerColour("r",f)
                         end 
                     end 
                 end 
             end)
-            RageUI.SliderProgress("Green ["..config.g.."]",config.g,255,"Press ~b~ENTER~w~ to enter RGB Green value",{ProgressBackgroundColor={R=48,G=186,B=108,A=255},ProgressColor={R=64,G=230,B=136,A=255}},true,function(c,e,d,f)
+            RageUI.SliderProgress("Green ["..config.g.."]",config.g,255,"Press ~b~SPACE~w~ to enter RGB Green value",{ProgressBackgroundColor={R=48,G=186,B=108,A=255},ProgressColor={R=64,G=230,B=136,A=255}},true,function(c,e,d,f)
                 if e then 
                     if IsControlJustPressed(0,22)then 
-                        config.g=getInput("Enter Green Value (0-255)",config.g)
+                        local g = getInput("Enter Green Value (0-255)",config.g)
+                        if g ~= nil then 
+                            saveMarkerColour("g",g)
+                        end
                     else 
                         if f~=config.g then 
-                            config.g=f
+                            saveMarkerColour("g",f)
                         end 
                     end 
                 end 
             end)
-            RageUI.SliderProgress("Blue ["..config.b.."]",config.b,255,"Press ~b~ENTER~w~ to enter RGB Blue value",{ProgressBackgroundColor={R=48,G=69,B=186,A=255},ProgressColor={R=59,G=86,B=237,A=255}},true,function(c,e,d,f)
+            RageUI.SliderProgress("Blue ["..config.b.."]",config.b,255,"Press ~b~SPACE~w~ to enter RGB Blue value",{ProgressBackgroundColor={R=48,G=69,B=186,A=255},ProgressColor={R=59,G=86,B=237,A=255}},true,function(c,e,d,f)
                 if e then 
                     if IsControlJustPressed(0,22) then 
-                        config.b=getInput("Enter Blue Value (0-255)",config.b)
+                        local b = getInput("Enter Blue Value (0-255)",config.b)
+                        if b ~= nil then 
+                            saveMarkerColour("b",b)
+                        end
                     else 
                         if f~=config.b then 
-                            config.b=f 
-                        end 
+                            saveMarkerColour("b",f)
+                        end
                     end 
                 end 
             end)
@@ -199,10 +212,31 @@ function getInput(k,l)
     if GetOnscreenKeyboardResult()then 
         local m=GetOnscreenKeyboardResult()
         local n=tonumber(m)
-        if m~=nil and m~=""and type(n)=="number"and n<=255 and n>=1 then 
-            return n 
-        else 
-            return l 
-        end 
+        if m then
+            if m~=nil and m~=""and type(n)=="number"and n<=255 and n>=0 then 
+                return n 
+            else 
+                return l 
+            end 
+        end
     end 
 end
+
+function saveMarkerColour(set, value)
+    if set == "r" then
+        config.r = value
+        SetResourceKvpInt('ARMA_markercolour_r', tonumber(value))
+    elseif set == "g" then
+        config.g = value
+        SetResourceKvpInt('ARMA_markercolour_g', tonumber(value))
+    elseif set == "b" then
+        config.b = value
+        SetResourceKvpInt('ARMA_markercolour_b', tonumber(value))
+    end
+end
+
+Citizen.CreateThread(function()
+    config.r = GetResourceKvpInt("ARMA_markercolour_r") or 255
+    config.g = GetResourceKvpInt("ARMA_markercolour_g") or 0
+    config.b = GetResourceKvpInt("ARMA_markercolour_b") or 150
+end)
