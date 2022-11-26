@@ -89,7 +89,6 @@ RageUI.CreateWhile(1.0, true, function()
                         RageUI.ButtonWithStyle("ID: "..p[3].." - Started: "..p[5].."","Name: "..p[4].." Distance Away: "..distance.." metres",{RightLabel="→→→"},true,function(k,l,m)
                             if m then 
                                 TriggerServerEvent("ARMA:adminStopSong",p[1])
-                                table.remove(i,o)
                             end 
                         end)
                     end 
@@ -121,6 +120,7 @@ AddEventHandler("ARMA:playDjSong",function(s,coords,t,u)
 end)
 RegisterNetEvent("ARMA:requestCurrentProgress")
 AddEventHandler("ARMA:requestCurrentProgress",function(s,coords)
+    SendNUIMessage({type='requestProgress'})
     if not g then 
         if specificSongPlaying(coords)then 
             d=s
