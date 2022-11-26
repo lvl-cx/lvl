@@ -325,7 +325,7 @@ Citizen.CreateThread(function()
             L.user_id = tARMA.getUserId(tARMA.getPedServerId(PedKiller))
             L.weapon = tostring(R)
             L.ready = true
-            if not g and in_coma and IsEntityPlayingAnim(playerPed,comaAnim.dict,comaAnim.anim,3)then
+            if not g and in_coma and IsEntityPlayingAnim(PlayerPedId(),comaAnim.dict,comaAnim.anim,3)then
                 TriggerServerEvent("ARMA:onPlayerKilled", "finished off", tARMA.getPedServerId(PedKiller), s)
             else
                 TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), R, a6, distance)
