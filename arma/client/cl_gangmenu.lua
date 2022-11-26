@@ -427,6 +427,7 @@ function func_drawGangUI()
         DrawAdvancedText(0.7,0.532,0.005,0.0028,0.46,"and withdraw from the gang funds.",255,255,255,255,6,0)
         DrawAdvancedText(0.451,0.516,0.005,0.0028,0.4,"Leave Gang",255,255,255,255,6,0)
         DrawAdvancedText(0.554,0.515,0.005,0.0028,0.4,"Disband Gang",255,255,255,255,4,0)
+        DrawAdvancedText(0.554,0.641,0.005,0.0028,0.4,"Marker Colour",255,255,255,255,4,0) -- text for marker colour
         DrawAdvancedText(0.775,0.693,0.005,0.0028,0.4,"Back",255,255,255,255,4,0)
         if CursorInArea(0.3187,0.3937,0.4712,0.5462)then 
             DrawRect(0.357,0.51,0.075,0.076,a,b,c,150)
@@ -466,6 +467,25 @@ function func_drawGangUI()
         else 
             DrawRect(0.681,0.689,0.045,0.036,0,0,0,150)
         end 
+        -- get the correct area for clicking the marker colour button
+        if CursorInArea(0.4197,0.4932,0.5981,0.673)then 
+            DrawRect(0.457,0.636,0.075,0.076,a,b,c,150)
+            if IsControlJustPressed(1,329)or IsDisabledControlJustPressed(1,329)then 
+                showSettingsGangUI=false
+                showTurfsGangUI=false
+                showFundsGangUI=false
+                showLogsGangUI=false
+                showMembersGangUI=false
+                showNoGangUI=false
+                showGangUI=false
+                setCursor(0)
+                inGUIARMA=false
+                selectedMember=nil 
+                ExecuteCommand('markercolour')
+            end 
+        else 
+            DrawRect(0.457,0.636,0.075,0.076,0,0,0,150)
+        end
     end
     if showTurfsGangUI then 
         DrawRect(0.501,0.450,0.421,0.300,0,0,0,150)
