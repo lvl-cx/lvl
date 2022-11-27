@@ -311,7 +311,7 @@ RegisterCommand('cuff', function(source, args)
           ARMAclient.isHandcuffed(nplayer,{},function(handcuffed)
             if handcuffed then
               TriggerClientEvent('ARMA:uncuffAnim', source, nplayer, false)
-              TriggerClientEvent('ARMA:unHandcuff', nplayer, false)
+              TriggerClientEvent('ARMA:unHandcuff', source, false)
             else
               TriggerClientEvent('ARMA:arrestCriminal', nplayer, source)
               TriggerClientEvent('ARMA:arrestFromPolice', source)
@@ -335,7 +335,7 @@ RegisterCommand('frontcuff', function(source, args)
         ARMAclient.isHandcuffed(nplayer,{},function(handcuffed)
           if handcuffed then
             TriggerClientEvent('ARMA:uncuffAnim', source, nplayer, true)
-            TriggerClientEvent('ARMA:unHandcuff', nplayer, true)
+            TriggerClientEvent('ARMA:unHandcuff', source, true)
           else
             TriggerClientEvent('ARMA:arrestCriminal', nplayer, source)
             TriggerClientEvent('ARMA:arrestFromPolice', source)

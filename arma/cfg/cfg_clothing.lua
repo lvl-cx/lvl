@@ -17,7 +17,7 @@ cfg.presets = {
              [0] = {22, 0, 1} --Christmas Hat
         }
     },
-    ["StaffFemale"] = { -- need a female staff fit added
+    ["StaffFemale"] = {
         model = `mp_f_freemode_01`,
         components = {
             -- [1] = {60, 0, 2}, --Halloween Pumpkin
