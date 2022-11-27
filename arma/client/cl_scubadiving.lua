@@ -45,23 +45,15 @@ end)
 RageUI.CreateWhile(1.0,true,function()
     if RageUI.Visible(RMenu:Get("scubadiving", "main")) then
         RageUI.DrawContent({header=true,glare=false,instructionalButton=true},function()
-            RageUI.Button("Request Job",nil,{RightLabel = "→→→"},true,function(u, v, w)
-                if u then
-                end
-                if v then
-                end
-                if w then
-                    if not e then
+            if not e then
+                RageUI.Button("Request Job",nil,{RightLabel = "→→→"},true,function(u, v, w)
+                    if w then
                         TriggerServerEvent("ARMA:requestScubaJob")
                     end
-                end
-            end)
+                end)
+            end
             if d ~= 0 then
                 RageUI.Button("Claim Reward",nil,{RightLabel = "→→→"},true,function(u, v, w)
-                    if u then
-                    end
-                    if v then
-                    end
                     if w then
                         TriggerServerEvent("ARMA:claimScubaReward", c)
                         d = 0
