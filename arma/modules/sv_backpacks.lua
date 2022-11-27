@@ -4,7 +4,7 @@ local function buyBackpack(source,prop0,prop1,prop2,backpackname,price,size,back
     local user_id = ARMA.getUserId(source)
     for a,b in pairs(cfg.stores[backpackstorename]) do
         if a == backpackname then
-            if ARMA.tryBankPayment(user_id, b[4]) then
+            if ARMA.tryPayment(user_id, b[4]) then
                 ARMA.updateInvCap(user_id, (30+b[5]))
                 TriggerClientEvent('ARMA:boughtBackpack', source, prop0, prop1, prop2, size, backpackname)
                 ARMAclient.notify(source, {"~g~" .. backpackname .. " Purchased"})
