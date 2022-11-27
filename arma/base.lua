@@ -332,7 +332,7 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_community_pot (
     arma VARCHAR(65) NOT NULL,
     value INT(11) NOT NULL,
-    PRIMARY KEY (a)
+    PRIMARY KEY (arma)
     );
     ]])
     MySQL.SingleQuery([[
