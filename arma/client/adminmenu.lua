@@ -1284,17 +1284,22 @@ end)
 
 
 frozen = false
-RegisterNetEvent('ARMA:Freeze')
-AddEventHandler('ARMA:Freeze', function(isFrozen)
-    frozen = isFrozen
-    if frozen then
-        FreezeEntityPosition(PlayerPedId(-1), true)
-        while frozen==true do
-            Citizen.Wait(0)
-            SetCurrentPedWeapon(PlayerPedId(),`WEAPON_UNARMED`,true)
+RegisterNetEvent("ARMA:Freeze",function()
+    local Q = tARMA.getPlayerPed()
+    if IsPedSittingInAnyVehicle(Q) then
+        local ak = GetVehiclePedIsIn(Q, false)
+        TaskLeaveVehicle(Q, ak, 4160)
+    end
+    if not frozen then
+        FreezeEntityPosition(Q, true)
+        frozen = true
+        while frozen do
+            tARMA.setWeapon(Q, "WEAPON_UNARMED", true)
+            Wait(0)
         end
     else
-        FreezeEntityPosition(PlayerPedId(-1), false)
+        FreezeEntityPosition(Q, false)
+        frozen = false
     end
 end)
 
