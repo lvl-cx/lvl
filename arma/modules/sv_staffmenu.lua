@@ -1,81 +1,81 @@
 
-local staffGroups = {
-    ['Founder'] = true,
-    --['Developer'] = true,
-    ['Staff Manager'] = true,
-    ['Community Manager'] = true,
-    ['Head Admin'] = true,
-    ['Senior Admin'] = true,
-    ['Admin'] = true,
-    ['Senior Moderator'] = true,
-    ['Moderator'] = true,
-    ['Support Team'] = true,
-    ['Trial Staff'] = true,
-}
+-- local staffGroups = {
+--     ['Founder'] = true,
+--     --['Developer'] = true,
+--     ['Staff Manager'] = true,
+--     ['Community Manager'] = true,
+--     ['Head Admin'] = true,
+--     ['Senior Admin'] = true,
+--     ['Admin'] = true,
+--     ['Senior Moderator'] = true,
+--     ['Moderator'] = true,
+--     ['Support Team'] = true,
+--     ['Trial Staff'] = true,
+-- }
 
-local function getGroupInGroups(id, type)
-    for k,v in pairs(ARMA.getUserGroups(id)) do
-        if staffGroups[k] then 
-            return k
-        end 
-    end
-end
+-- local function getGroupInGroups(id, type)
+--     for k,v in pairs(ARMA.getUserGroups(id)) do
+--         if staffGroups[k] then 
+--             return k
+--         end 
+--     end
+-- end
 
-RegisterNetEvent('ARMA:getOnlineStaff')
-AddEventHandler('ARMA:getOnlineStaff', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.tickets') then
-        local staffTable = {}
-        for k,v in pairs(ARMA.getUsers()) do
-            local staffLevel = ARMAclient.getStaffLevel(v)
-            table.insert(staffTable, {
-                id = k, 
-                tempid = v,
-                name = GetPlayerName(v), 
-                --level = 'Staff Level: '..ARMAclient.getStaffLevel(v,{}, function(staffLevel) end), 
-                staffRank = getGroupInGroups(k, 'staff'), 
-                hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0, 
-                ping = GetPlayerPing(v), 
-                location = GetEntityCoords(GetPlayerPed(v)),
-                bucket = GetPlayerRoutingBucket(v),
-            })
-        end
-        TriggerClientEvent('ARMA:sendOnlineStaff', source, staffTable)
-    end
-end)
+-- RegisterNetEvent('ARMA:getOnlineStaff')
+-- AddEventHandler('ARMA:getOnlineStaff', function()
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+--     if ARMA.hasPermission(user_id, 'admin.tickets') then
+--         local staffTable = {}
+--         for k,v in pairs(ARMA.getUsers()) do
+--             local staffLevel = ARMAclient.getStaffLevel(v)
+--             table.insert(staffTable, {
+--                 id = k, 
+--                 tempid = v,
+--                 name = GetPlayerName(v), 
+--                 --level = 'Staff Level: '..ARMAclient.getStaffLevel(v,{}, function(staffLevel) end), 
+--                 staffRank = getGroupInGroups(k, 'staff'), 
+--                 hours = math.ceil(ARMA.getUserDataTable(k).PlayerTime/60) or 0, 
+--                 ping = GetPlayerPing(v), 
+--                 location = GetEntityCoords(GetPlayerPed(v)),
+--                 bucket = GetPlayerRoutingBucket(v),
+--             })
+--         end
+--         TriggerClientEvent('ARMA:sendOnlineStaff', source, staffTable)
+--     end
+-- end)
 
-RegisterNetEvent('ARMA:Teleport2')
-AddEventHandler('ARMA:Teleport2', function(a)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.tp2player') then
-       SetEntityCoords(GetPlayerPed(source), GetEntityCoords(GetPlayerPed(target)))
-    end
-end)
+-- RegisterNetEvent('ARMA:Teleport2')
+-- AddEventHandler('ARMA:Teleport2', function(a)
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+--     if ARMA.hasPermission(user_id, 'admin.tp2player') then
+--        SetEntityCoords(GetPlayerPed(source), GetEntityCoords(GetPlayerPed(target)))
+--     end
+-- end)
 
-RegisterNetEvent('ARMA:groupManagement')
-AddEventHandler('ARMA:groupManagement', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'group.remove') then
-        ARMA.prompt(source,"Add/Remove:","",function(source,choice) 
-            if choice~=nil then 
-                if string.lower(choice) == 'add' then
-                    ARMA.prompt(source, "Group","",function(source,group) 
-                        ARMA.addUserGroup(1, group)
-                        print('Added group: '..group)
-                    end)
-                elseif string.lower(choice) == 'remove' then
-                    ARMA.prompt(source, "Group","",function(source,group) 
-                        ARMA.removeUserGroup(1, group)
-                        print('Removed group: '..group)
-                    end)
-                else
-                    ARMAclient.notify(source, {"~r~Invalid Option"})
-                end
-            end
-        end)
-    end
-end)
+-- RegisterNetEvent('ARMA:groupManagement')
+-- AddEventHandler('ARMA:groupManagement', function()
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+--     if ARMA.hasPermission(user_id, 'group.remove') then
+--         ARMA.prompt(source,"Add/Remove:","",function(source,choice) 
+--             if choice~=nil then 
+--                 if string.lower(choice) == 'add' then
+--                     ARMA.prompt(source, "Group","",function(source,group) 
+--                         ARMA.addUserGroup(1, group)
+--                         print('Added group: '..group)
+--                     end)
+--                 elseif string.lower(choice) == 'remove' then
+--                     ARMA.prompt(source, "Group","",function(source,group) 
+--                         ARMA.removeUserGroup(1, group)
+--                         print('Removed group: '..group)
+--                     end)
+--                 else
+--                     ARMAclient.notify(source, {"~r~Invalid Option"})
+--                 end
+--             end
+--         end)
+--     end
+-- end)
 
