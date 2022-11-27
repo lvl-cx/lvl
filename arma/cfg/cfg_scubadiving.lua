@@ -1,5 +1,7 @@
 local cfg = {}
 
+-- 3836.7431640625,3672.8798828125,-22.289041519165 (h tunnel)
+
 cfg.locations = {
     {
         name = "Heroin Tunnel",
@@ -46,6 +48,54 @@ cfg.locations = {
                 objectModel = `ba_prop_battle_crate_m_bones`,
                 objectPosition = vector3(4048.725, 4028.445, -23.68146),
                 objectRotation = 348.69931030273,
+            },
+        }
+    },
+    {
+        name = "Boat Crash",
+        position = vector3(3148.1945800781,-410.68237304688,0.55738359689713),
+        blipId = 308,
+        blipColour = 0,
+        dinghySpawnPositions = {
+            vector3(1538.7004394531,-3421.6411132813,1.3161823749542),
+            vector3(1470.7769775391,-3310.1687011719,1.5306334495544),
+            vector3(1472.1015625,-3249.5734863281,1.53884851932526),
+            vector3(1501.5749511719,-3244.3562011719,1.5176248550415),
+            vector3(1583.3776855469,-3240.3781738281,1.2071734815836),
+            vector3(1580.5513916016,-3212.4206542969,1.14681793749332),
+            vector3(1574.1225585938,-3159.5563964844,1.7404614686966),
+        },
+        dinghySpawnHeading = 270.0,
+        rewardObjects = {
+            {
+                objectModel = `ex_prop_crate_clothing_sc`,
+                objectPosition = vector3(3123.189, -216.6044, -26.0675),
+                objectRotation = 0.0,
+            },
+            {
+                objectModel = `ex_prop_crate_oegg`,
+                objectPosition = vector3(3156.793, -311.0932, -28.94106),
+                objectRotation = 0.0,
+            },
+            {
+                objectModel = `sm_prop_smug_crate_l_bones`,
+                objectPosition = vector3(3199.266, -378.1059, -34.97596),
+                objectRotation = 51.398975372314,
+            },
+            {
+                objectModel = `prop_air_cargo_04a`,
+                objectPosition = vector3(3220.976, -432.7551, -41.5532),
+                objectRotation = 0.0,
+            },
+            {
+                objectModel = `prop_cash_crate_01`,
+                objectPosition = vector3(3120.559, -343.6702, -25.6883),
+                objectRotation = 6.0999722480774,
+            },
+            {
+                objectModel = `prop_mb_crate_01a`,
+                objectPosition = vector3(3297.567, -405.8094, -124.4407),
+                objectRotation = 356.7998046875,
             },
         }
     },
