@@ -5,8 +5,8 @@ RMenu.Add("emotesmenu","danceemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu"
 RMenu.Add("emotesmenu","customemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Custom Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","propemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Prop Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","sharedemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Shared Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
-RMenu.Add("emotesmenu","walkingstyles",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Walking Styles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
-RMenu.Add("emotesmenu","moods",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Moods",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","walkingstyles",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Walking Styles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","moods",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Moods",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 local b = false
 local c = ""
 local d = {}
