@@ -80,6 +80,7 @@ Citizen.CreateThread(function() -- coma thread
             pbCounter = 100
             local plyCoords = GetEntityCoords(PlayerPedId(),true)
             tARMA.ejectVehicle()
+            TriggerEvent('ARMA:removeBackpack')
             TriggerServerEvent("ARMA:getNumOfNHSOnline")
             TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
             in_coma = true
