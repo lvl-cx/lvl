@@ -14,6 +14,7 @@ MySQL.createCommand("ARMA/check_rented","SELECT * FROM arma_user_vehicles WHERE 
 MySQL.createCommand("ARMA/sell_vehicle_player","UPDATE arma_user_vehicles SET user_id = @user_id, vehicle_plate = @registration WHERE user_id = @oldUser AND vehicle = @vehicle")
 MySQL.createCommand("ARMA/rentedupdate", "UPDATE arma_user_vehicles SET user_id = @id, rented = @rented, rentedid = @rentedid, rentedtime = @rentedunix WHERE user_id = @user_id AND vehicle = @veh")
 MySQL.createCommand("ARMA/fetch_rented_vehs", "SELECT * FROM arma_user_vehicles WHERE rented = 1")
+MySQL.createCommand("ARMA/get_vehicle_count","SELECT vehicle FROM arma_user_vehicles WHERE vehicle = @vehicle")
 
 RegisterServerEvent("ARMA:spawnPersonalVehicle")
 AddEventHandler('ARMA:spawnPersonalVehicle', function(vehicle)
@@ -68,7 +69,17 @@ AddEventHandler('ARMA:valetSpawnVehicle', function(spawncode)
     end)
 end)
 
-
+RegisterServerEvent("ARMA:getVehicleRarity")
+AddEventHandler('ARMA:getVehicleRarity', function(spawncode)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    MySQL.query("ARMA/get_vehicle_count", {vehicle = spawncode}, function(result)
+        if result ~= nil then 
+            print(source, spawncode, #result)
+            TriggerClientEvent('ARMA:setVehicleRarity', source, spawncode, #result)
+        end
+    end)
+end)
 
 RegisterServerEvent("ARMA:updateFuel")
 AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)

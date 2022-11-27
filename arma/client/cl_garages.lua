@@ -17,11 +17,13 @@ local vehname = nil
 local folders = {}
 local SelectedfolderName = nil
 local c = {}
+local f = ""
 local q = {}
 local m = {}
 local g = ""
 local n = false
 local k = 0
+local x = {}
 globalVehicleModelHashMapping = {}
 globalVehicleOwnership = {}
 globalOwnedPlayerVehicles = {}
@@ -371,7 +373,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'settings')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Checkbox('Display Custom Folders in Owned Vehicles', nil, displayCustomFoldersinOwned, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
+            RageUI.Checkbox('Show Custom Folders In Garage Menu', "~y~This removes the [Custom Folders] menu item, and puts custom folders in the root garages menu.", displayCustomFoldersinOwned, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
                 if Selected then
                     displayCustomFoldersinOwned = not displayCustomFoldersinOwned
                     if displayCustomFoldersinOwned then
@@ -387,15 +389,17 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
             RentedVeh = false
-            RageUI.ButtonWithStyle("[Custom Folders]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                if Selected then 
-                    for i,v in pairs(VehiclesFetchedTable) do 
-                        if garage_type == i then 
-                            selected_category = v.vehicles
+            if not displayCustomFoldersinOwned then
+                RageUI.ButtonWithStyle("[Custom Folders]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        for i,v in pairs(VehiclesFetchedTable) do 
+                            if garage_type == i then 
+                                selected_category = v.vehicles
+                            end
                         end
                     end
-                end
-            end, RMenu:Get("ARMAGarages", "customfolders"))
+                end, RMenu:Get("ARMAGarages", "customfolders"))
+            end
             if displayCustomFoldersinOwned then
                 for h,b in pairs(folders) do
                     RageUI.ButtonWithStyle(h , nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -467,6 +471,7 @@ RageUI.CreateWhile(1.0, true, function()
                                     if aQ then
                                         e = E
                                         f = aT
+                                        TriggerServerEvent("ARMA:getVehicleRarity", E)
                                         RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. aT)
                                     end
                                 end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
@@ -479,7 +484,11 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.ButtonWithStyle('Spawn Vehicle', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            local a_ = f
+            if x[e] then
+                a_ = a_ .. " | " .. "Rarity (1:" .. tostring(x[e]) .. ")"
+            end
+            RageUI.ButtonWithStyle('Spawn Vehicle', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then 
                     RageUI.ActuallyCloseAll()
                     for F, G in pairs(m) do
@@ -643,6 +652,7 @@ RageUI.CreateWhile(1.0, true, function()
                                         if Selected then
                                             e = v[i]
                                             f = d[1]
+                                            TriggerServerEvent("ARMA:getVehicleRarity", e)
                                         end
                                         if Active then 
                                             Hovered_Vehicles = v[i]
@@ -830,6 +840,10 @@ end)
 
 RegisterNetEvent("ARMA:recieveRefreshedGaragePermissions",function(z)
     c = z
+end)
+
+RegisterNetEvent("ARMA:setVehicleRarity",function(F, G)
+    x[F] = G
 end)
 
 function tARMA.getVehicleIdFromHash(bQ)
