@@ -230,8 +230,10 @@ AddEventHandler("ARMA:bankTransfer", function(id, amount)
     local amount = tonumber(amount)
     if ARMA.getUserSource(id) then
       if ARMA.tryFullPayment(user_id,amount) then
-        ARMAclient.notify(source,{'~g~Transfered £'..getMoneyStringFormatted(amount)..' to ID: '..id})
+        ARMAclient.notify(source,{'~g~Transferred £'..getMoneyStringFormatted(amount)..' to ID: '..id})
         ARMAclient.notify(ARMA.getUserSource(id),{'~g~Received £'..getMoneyStringFormatted(amount)..' from ID: '..user_id})
+        TriggerClientEvent("arma:PlaySound", source, "apple")
+        TriggerClientEvent("arma:PlaySound", ARMA.getUserSource(id), "apple")
         ARMA.giveBankMoney(id, amount)
       else
         ARMAclient.notify(source,{'~r~You do not have enough money.'})
