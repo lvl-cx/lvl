@@ -627,6 +627,7 @@ AddEventHandler("ARMA:getGarageFolders",function()
     local source = source
     local user_id = ARMA.getUserId(source)
     local garageFolders = {}
+    local addedFolders = {}
     MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(result)
         if result ~= nil then 
             for k,v in pairs(result) do
@@ -641,7 +642,10 @@ AddEventHandler("ARMA:getGarageFolders",function()
                     if hasPerm then
                         for c,d in pairs(b) do
                             if c == spawncode and not v.impounded then
-                                table.insert(garageFolders, {display = a})
+                                if not addedFolders[a] then
+                                    table.insert(garageFolders, {display = a})
+                                    addedFolders[a] = true
+                                end
                                 for e,f in pairs (garageFolders) do
                                     if f.display == a then
                                         if f.vehicles == nil then

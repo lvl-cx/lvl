@@ -1227,7 +1227,7 @@ Citizen.CreateThread(function()
             local cz = DecorGetBool(aA, "biometricLock")
             if cz then
                 local cA = DecorGetInt(aA, "vRP_owner")
-                if tARMA.getUserId() ~= cA then
+                if tARMA.getUserId() ~= cA and not tARMA.isDev() then
                     DisableControlAction(0, 32, true)
                     DisableControlAction(0, 33, true)
                     DisableControlAction(0, 34, true)
