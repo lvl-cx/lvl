@@ -12,6 +12,7 @@ const audio = [
     { name: "plopsound", file: "plopsound.ogg", volume: 0.25 },
     { name: "apple", file: "apple.ogg", volume: 0.20 },
     { name: "handcuff", file: "handcuff.ogg", volume: 0.20 },
+    { name: "playHandcuff", file: "handcuff.ogg", volume: 0.3},
     { name: "money", file: "money.ogg", volume: 0.20 },
     { name: "dead", file: "dead.ogg", volume: 0.20 },
     { name: "casino_win", file: "casino_win.ogg", volume: 0.40 },
