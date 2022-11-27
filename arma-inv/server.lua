@@ -124,21 +124,25 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
             if itemId == "offwhitebag" then
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 45})
+                TriggerClientEvent('ARMA:boughtBackpack', source, 5, 92, 0,40000,15, 'Off White Bag (+15kg)')
             elseif itemId == "guccibag" then 
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 50})
+                TriggerClientEvent('ARMA:boughtBackpack', source, 5, 94, 0,60000,20, 'Gucci Bag (+20kg)')
             elseif itemId == "nikebag" then 
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 60})
             elseif itemId == "huntingbackpack" then 
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 65})
+                TriggerClientEvent('ARMA:boughtBackpack', source, 5, 91, 0,100000,35, 'Hunting Backpack (+35kg)')
             elseif itemId == "greenhikingbackpack" then 
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 70})
             elseif itemId == "rebelbackpack" then 
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 100})
+                TriggerClientEvent('ARMA:boughtBackpack', source, 5, 90, 0,250000,70, 'Rebel Backpack (+70kg)')
             end
             TriggerEvent('ARMA:RefreshInventory', source)
         else

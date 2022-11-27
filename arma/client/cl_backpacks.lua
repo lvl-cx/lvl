@@ -12,7 +12,6 @@ RegisterNetEvent("ARMA:boughtBackpack",function(prop0, prop1, prop2, size, backp
     currentBackpack = backpackname
     b = {prop0, prop1, prop2}
     SetPedComponentVariation(tARMA.getPlayerPed(), prop0, prop1, prop2, 2)
-    tARMA.notify("~g~" .. backpackname .. " Purchased")
     d = nil
     Wait(250)
     EnableAllControlActions(1)
