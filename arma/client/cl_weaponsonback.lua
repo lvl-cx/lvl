@@ -83,9 +83,9 @@ Citizen.CreateThread(function()
 						end
 					end
 				end
-				if not onPlayer and weaponHash ~= GetSelectedPedWeapon(GetPlayerPed(-1)) then
+				if not onPlayer and weaponHash ~= GetSelectedPedWeapon(GetPlayerPed(-1)) and not isInGreenzone then
 					SetGear(a.weapons[i].name)
-				elseif onPlayer and weaponHash == GetSelectedPedWeapon(GetPlayerPed(-1)) then
+				elseif (onPlayer and weaponHash == GetSelectedPedWeapon(GetPlayerPed(-1))) or isInGreenzone then
 					RemoveGear(a.weapons[i].name)
 				end
 			else
