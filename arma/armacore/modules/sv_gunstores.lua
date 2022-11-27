@@ -36,20 +36,6 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
     end)
 end)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 RegisterNetEvent("ARMA:buyWeapon")
 AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, purchasetype, vipstore)
     local source = source
@@ -92,6 +78,15 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                     if hasPerm then
                         if c == spawncode then
                             if price == d[2] and name == d[1] then
+                                if purchasetype == 'armour' and string.find(spawncode, "fillUp") then
+                                    price = (100 - GetPedArmour(GetPlayerPed(source))) * 1000
+                                    if ARMA.tryPayment(user_id,price) then
+                                        ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                        TriggerClientEvent("arma:PlaySound", source, 1)
+                                        ARMAclient.setArmour(source, {100, true})
+                                        return
+                                    end
+                                end
                                 if ARMA.tryPayment(user_id,price) then
                                     if purchasetype == 'weapon' then
                                         ARMAclient.hasWeapon(source, {spawncode}, function(hasWeapon)
@@ -113,7 +108,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         else
                                             ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                             TriggerClientEvent("arma:PlaySound", source, 1)
-                                            SetPedArmour(GetPlayerPed(source), (math.floor(price/1000)))
+                                            ARMAclient.setArmour(source, {price/1000, true})
                                         end
                                     elseif purchasetype == 'ammo' then
                                         if price > 0 then
@@ -147,5 +142,3 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
         end
     end
 end)
-
---TriggerServerEvent("ARMA:buyWeapon",d.model,d.price,d.name,d.weaponShop,"armour")
