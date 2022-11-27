@@ -23,7 +23,7 @@ function tARMA.isPlatClub()
     end 
 end
 
-RegisterCommand("vipclub",function()
+RegisterCommand("armaclub",function()
     TriggerServerEvent('ARMA:getPlayerSubscription')
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu'),not RageUI.Visible(RMenu:Get('vipclubmenu','mainmenu')))
