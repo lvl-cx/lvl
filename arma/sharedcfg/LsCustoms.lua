@@ -1,8 +1,3 @@
---[[
-ARMA Los Santos Customs V1.2
-Credits - MythicalBro and マーモット#2533 for the ARMA version and some bug fixes
-]]
-
 local colors = {
 	{name = "Black", colorindex = 0},{name = "Carbon Black", colorindex = 147},
 	{name = "Graphite", colorindex = 1},{name = "Anhracite Black", colorindex = 11},
@@ -72,13 +67,24 @@ local mattecolors = {
 	{name = "Desert Tan", colorindex = 154}
 }
 
-
-
 LSC_Config = {}
 LSC_Config.prices = {}
 
 --------Prices---------
 LSC_Config.prices = {
+
+	remoteDashcams = {
+		{name = "None", mod = 0, price = 0},
+		{name = "Remote Dashcam", mod = 1, price = 2000000}
+	},
+	remoteVehicleBlips = {
+		{name = "None", mod = 0, price = 0},
+		{name = "Remote Vehicle Blip", mod = 1, price = 5000000}
+	},
+	securityBiometricLock = {
+		{name = "None", mod = 0, price = 0},
+		{name = "Security Biometric Lock", mod = 1, price = 10000000}
+	},
 
 ------Window tint------
 	windowtint = {

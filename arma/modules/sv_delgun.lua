@@ -1,4 +1,4 @@
-local netObjects = {}
+netObjects = {}
 
 RegisterServerEvent("ARMA:spawnVehicleCallback")
 AddEventHandler('ARMA:spawnVehicleCallback', function(a, b)

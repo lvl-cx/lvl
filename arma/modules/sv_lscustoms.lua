@@ -50,7 +50,7 @@ AddEventHandler("LSC:finished", function(veh)
 	local source = source
 	local user_id = ARMA.getUserId(source)
 	if user_id then
-		MySQL.execute("ARMAls/update_vehicle_modifications", {user_id = user_id, vehicle = veh.spawncode, modifications = json.encode({color = veh.color, extraColor = veh.extracolor, neon = veh.neon, neonColor = veh.neoncolor, xenonColor = veh.xenoncolor, smokeColor = veh.smokecolor, wheelType = veh.wheeltype, bulletProofTyres = veh.bulletProofTyres, windowTint = veh.windowtint, plateIndex = veh.plateindex, mods = veh.mods})})
+		MySQL.execute("ARMAls/update_vehicle_modifications", {user_id = user_id, vehicle = veh.spawncode, modifications = json.encode({color = veh.color, extraColor = veh.extracolor, neon = veh.neon, neonColor = veh.neoncolor, xenonColor = veh.xenoncolor, smokeColor = veh.smokecolor, wheelType = veh.wheeltype, bulletProofTyres = veh.bulletProofTyres, windowTint = veh.windowtint, plateIndex = veh.plateindex, mods = veh.mods, biometric = veh.securityBiometricLock, remoteblips = veh.remoteVehicleBlips, dashcam = veh.remoteDashcams})})
 	end
 end)
 

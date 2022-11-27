@@ -92,18 +92,6 @@ local function GetVehicleMods1()
 
 end
 
-RegisterCommand('lstest2', function(source, args, RawCommand)
-    local player = GetPlayerPed(-1)
-	local veh = GetVehiclePedIsIn(player,false)
-    SetVehicleModKit(veh, 0)
-    Wait(1)
-    SetVehicleMod(veh, 0, 1) -- Engine
-end)
-
-
-RegisterCommand('lstest', function(source, args, RawCommand)
-    GetVehicleMods1()	
-end)
 --Setup main menu
 local LSCMenu = Menu.new("Los Santos Customs","CATEGORIES", 0.16,0.13,0.24,0.36,0,{255,255,255,255})
 LSCMenu.config.pcontrol = false
@@ -247,6 +235,9 @@ local function DriveInGarage()
 		myveh.smokecolor = table.pack(GetVehicleTyreSmokeColor(veh))
 		myveh.plateindex = GetVehicleNumberPlateTextIndex(veh)
 		myveh.mods = {}
+		myveh.remoteDashcams = DecorGetBool(veh, "dashcam")
+		myveh.remoteVehicleBlips = DecorGetBool(veh, "vehicleblip")
+		myveh.securityBiometricLock = DecorGetBool(veh, "biometricLock")
 		for i = 0, 48 do
 			myveh.mods[i] = {mod = nil}
 		end
@@ -525,6 +516,21 @@ local function DriveInGarage()
 			for n, tint in pairs(LSC_Config.prices.windowtint) do
 				btn = m:addPurchase(tint.name,tint.price)btn.tint = tint.tint
 			end
+		
+		m = LSCMenu.categories:addSubMenu("REMOTE DASHCAMS", "Remote Dashcams", "A remote dashcam for your vehicle.",true)
+		for n, mod in pairs(LSC_Config.prices.remoteDashcams) do
+			local btn = m:addPurchase(mod.name,mod.price)btn.mod = mod.mod
+		end
+
+		m = LSCMenu.categories:addSubMenu("VEHICLE BLIPS", "Vehicle Blips", "A way to always keep track of your vehicle.",true)
+		for n, mod in pairs(LSC_Config.prices.remoteVehicleBlips) do
+			local btn = m:addPurchase(mod.name,mod.price)btn.mod = mod.mod
+		end
+
+		m = LSCMenu.categories:addSubMenu("BIOMETRIC LOCK", "Biometric Lock", "A way to completely secure your vehicle.",true)
+		for n, mod in pairs(LSC_Config.prices.securityBiometricLock) do
+			local btn = m:addPurchase(mod.name,mod.price)btn.mod = mod.mod
+		end
 
 		Citizen.CreateThread(function()
 			--NetworkSetEntityVisibleToNetwork(entity, toggle)
@@ -863,7 +869,6 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 
 
 	mname = m.name:lower()
-
 	if button.name:lower() == mname then
 		return
 	end
@@ -957,6 +962,18 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 			myveh.windowtint = button.tint
 			SetVehicleWindowTint(veh, button.tint)
 		end
+	elseif mname == "remote dashcams" then
+		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
+			myveh.remoteDashcams = button.mod
+		end
+	elseif mname == "vehicle blips" then
+		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
+			myveh.remoteVehicleBlips = button.mod
+		end
+	elseif mname == "biometric lock" then
+		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
+			myveh.securityBiometricLock = button.mod
+		end
 	elseif mname == "sport" or mname == "muscle" or mname == "lowrider" or mname == "back wheel" or mname == "front wheel" or mname == "highend" or mname == "suv" or mname == "offroad" or mname == "tuner" then
 		if button.purchased or CanPurchase(price, canpurchase) then
 			myveh.wheeltype = button.wtype
@@ -1036,6 +1053,11 @@ AddEventHandler("LSC:applyModifications", function(vehicle, modifications)
 		SetVehicleTyresCanBurst(vehicle, modifications.bulletProofTyres)
 		SetVehicleWindowTint(vehicle, modifications.windowTint)
 		SetVehicleNumberPlateTextIndex(vehicle, modifications.plateIndex)
+		setVehicleIdBiometricLock(vehicle, modifications.biometric)
+		DecorRegister("dashcam", 2)
+		DecorSetBool(vehicle, "dashcam", modifications.dashcam)
+		DecorRegister("vehicleblip", 2)
+		DecorSetBool(vehicle, "vehicleblip", modifications.remoteblips)
 		for k, v in pairs(modifications.mods) do
 			k = tonumber(k)
 			if k == 18 or k == 22 then
@@ -1300,6 +1322,42 @@ function CheckPurchases(m)
 		for i,b in pairs(m.buttons) do
 			if myveh.windowtint ~= nil then
 				if myveh.windowtint == b.tint then
+					purchased = true
+					b.sprite = "garage"
+				else
+					purchased = false
+					b.sprite = nil
+				end
+			end
+		end
+	elseif name == "remote dashcams" then
+		for i,b in pairs(m.buttons) do
+			if myveh.remoteDashcams ~= nil then
+				if myveh.remoteDashcams == b.mod then
+					purchased = true
+					b.sprite = "garage"
+				else
+					purchased = false
+					b.sprite = nil
+				end
+			end
+		end
+	elseif name == "vehicle blips" then
+		for i,b in pairs(m.buttons) do
+			if myveh.remoteVehicleBlips ~= nil then
+				if myveh.remoteVehicleBlips == b.mod then
+					purchased = true
+					b.sprite = "garage"
+				else
+					purchased = false
+					b.sprite = nil
+				end
+			end
+		end
+	elseif name == "biometric lock" then
+		for i,b in pairs(m.buttons) do
+			if myveh.securityBiometricLock ~= nil then
+				if myveh.securityBiometricLock == b.mod then
 					purchased = true
 					b.sprite = "garage"
 				else
