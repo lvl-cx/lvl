@@ -520,6 +520,16 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end)
             if not RentedVeh then
+                RageUI.ButtonWithStyle('Sell Vehicle to Player', a_, {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
+                    if Selected and canVehicleBeSold(e) then 
+                        TriggerServerEvent('ARMA:SellVehicle', e)
+                    end
+                end)
+                RageUI.ButtonWithStyle('Rent Vehicle to Player', a_, {RightLabel = "→→→"}, canVehicleBeRented(e), function(Hovered, Active, Selected)
+                    if Selected and canVehicleBeSold(e) then
+                        TriggerServerEvent('ARMA:RentVehicle', e) 
+                    end
+                end)
                 RageUI.ButtonWithStyle('Crush Vehicle', 'This will ~r~DELETE ~w~this vehicle from your garage.', {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
                     if Selected then
                         AddTextEntry("FMMC_MPM_NC", "Type 'CONFIRM' to crush vehicle")
@@ -542,17 +552,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
-                RageUI.ButtonWithStyle('Rent Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeRented(e), function(Hovered, Active, Selected)
-                    if Selected and canVehicleBeSold(e) then
-                        TriggerServerEvent('ARMA:RentVehicle', e) 
-                    end
-                end)
-                RageUI.ButtonWithStyle('Sell Vehicle to Player', nil, {RightLabel = "→→→"}, canVehicleBeSold(e), function(Hovered, Active, Selected)
-                    if Selected and canVehicleBeSold(e) then 
-                        TriggerServerEvent('ARMA:SellVehicle', e)
-                    end
-                end)
-                RageUI.ButtonWithStyle('Add to Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle('Add to Custom Folder', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
                         if folderName ~= nil then
@@ -570,7 +570,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
-                RageUI.ButtonWithStyle('Remove from Custom Folder', nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle('Remove from Custom Folder', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         local folderName = tARMA.KeyboardInput("Enter Folder Name", "", 25)
                         if folderName ~= nil then
@@ -590,6 +590,16 @@ RageUI.CreateWhile(1.0, true, function()
                                 tARMA.notify("~r~Folder "..folderName.." does not exist.")
                             end
                         end
+                    end
+                end)
+                RageUI.ButtonWithStyle('View Remote Dashcam', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        TriggerServerEvent("ARMA:viewRemoteDashcam", e)
+                    end
+                end)
+                RageUI.ButtonWithStyle('Display Vehicle Blip', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then 
+                        TriggerServerEvent("ARMA:displayVehicleBlip", e)
                     end
                 end)
             end
@@ -1146,3 +1156,104 @@ end
 AddEventHandler("ARMA:johnnyCantMakeIt",function()
     SendNUIMessage({transactionType = "MPCT_ALAA_0" .. math.random(1, 5)})
 end)
+
+local cs = 0
+local function ct()
+    RenderScriptCams(false, false, 0, false, false)
+    DestroyCam(cs, false)
+    cs = 0
+    DoScreenFadeIn(0)
+    ClearFocus()
+end
+RegisterNetEvent("ARMA:viewRemoteDashcam",function(a9, bV)
+    if cs ~= 0 then
+        DestroyCam(cs, false)
+        return
+    end
+    DoScreenFadeOut(0)
+    cs = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+    SetCamActive(cs, true)
+    SetCamCoord(cs, a9.x, a9.y, a9.z)
+    RenderScriptCams(true, false, 0, true, true)
+    SetFocusPosAndVel(a9.x, a9.y, a9.z, 0.0, 0.0, 0.0)
+    RageUI.ActuallyCloseAll()
+    local cu = GetGameTimer()
+    while not NetworkDoesEntityExistWithNetworkId(bV) do
+        if GetGameTimer() - cu > 5000 then
+            ct()
+            notify("~r~Can not view dashcam of vehicle.")
+            return
+        end
+        Citizen.Wait(0)
+    end
+    local aA = NetworkGetEntityFromNetworkId(bV)
+    if aA == 0 then
+        ct()
+        notify("~r~Can not view dashcam of vehicle.")
+        return
+    end
+    DoScreenFadeIn(0)
+    notify("~g~Viewing your vehicle dashcam.")
+    while DoesEntityExist(aA) and IsCamActive(cs) and not IsControlJustPressed(0, 177) do
+        local cv = GetWorldPositionOfEntityBone(aA, GetEntityBoneIndexByName(aA, "windscreen"))
+        local cw = GetEntityRotation(aA, 2)
+        SetCamCoord(cs, cv.x, cv.y, cv.z)
+        SetFocusPosAndVel(cv.x, cv.y, cv.z, 0.0, 0.0, 0.0)
+        SetCamRot(cs, cw.x, cw.y, cw.z, 2)
+        Citizen.Wait(0)
+    end
+    notify("~r~Stopped viewing your vehicle dashcam.")
+    RenderScriptCams(false, false, 0, false, false)
+    DestroyCam(cs)
+    cs = 0
+end)
+local cx = 0
+RegisterNetEvent("ARMA:displayVehicleBlip",function(a9)
+    if cx ~= 0 then
+        RemoveBlip(cx)
+    end
+    if a9 then
+        cx = AddBlipForCoord(a9.x, a9.y, a9.z)
+        SetBlipSprite(cx, 56)
+        SetBlipScale(cx, 1.0)
+        SetBlipColour(cx, 2)
+    end
+end)
+Citizen.CreateThread(function()
+    DecorRegister("biometricLock", 2)
+    while true do
+        local aA, cy = tARMA.getPlayerVehicle()
+        if aA ~= 0 and cy then
+            local cz = DecorGetBool(aA, "biometricLock")
+            if cz then
+                local cA = DecorGetInt(aA, "vRP_owner")
+                if tARMA.getUserId() ~= cA then
+                    DisableControlAction(0, 32, true)
+                    DisableControlAction(0, 33, true)
+                    DisableControlAction(0, 34, true)
+                    DisableControlAction(0, 35, true)
+                    DisableControlAction(0, 71, true)
+                    DisableControlAction(0, 72, true)
+                    DisableControlAction(0, 87, true)
+                    DisableControlAction(0, 88, true)
+                    DisableControlAction(0, 129, true)
+                    DisableControlAction(0, 130, true)
+                    DisableControlAction(0, 107, true)
+                    DisableControlAction(0, 108, true)
+                    DisableControlAction(0, 109, true)
+                    DisableControlAction(0, 110, true)
+                    DisableControlAction(0, 111, true)
+                    DisableControlAction(0, 112, true)
+                    drawNativeText("This vehicle is locked biometrically to the owner.")
+                end
+            end
+        end
+        Citizen.Wait(0)
+    end
+end)
+
+function setVehicleIdBiometricLock(bj, cB)
+    if cB then
+        DecorSetBool(bj, "biometricLock", true)
+    end
+end

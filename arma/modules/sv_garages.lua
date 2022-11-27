@@ -84,16 +84,52 @@ RegisterServerEvent("ARMA:displayVehicleBlip")
 AddEventHandler('ARMA:displayVehicleBlip', function(spawncode)
     local source = source
     local user_id = ARMA.getUserId(source)
-    -- do some check for if the player has bought display blip for this specific vehicle
-    ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
-        local position = {}
-        position.x, position.y, position.z = x,y,z
-        if next(position) then
-            TriggerClientEvent('ARMA:displayVehicleBlip', source, position)
+    MySQL.query("ARMAls/get_vehicle_modifications", {user_id = user_id, vehicle = spawncode}, function(rows, affected) 
+        if rows ~= nil then 
+            if #rows > 0 then
+                ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
+                    local mods = json.decode(rows[1].modifications) or {}
+                    if mods['remoteblips'] == 1 then
+                        local position = {}
+                        position.x, position.y, position.z = x,y,z
+                        if next(position) then
+                            TriggerClientEvent('ARMA:displayVehicleBlip', source, position)
+                            ARMAclient.notify(source, {"~g~Vehicle blip enabled."})
+                            return
+                        end
+                    end
+                    ARMAclient.notify(source, {"~r~You have not purchased remote blips for this vehicle."})
+                end)
+            end
         end
     end)
 end)
 
+RegisterServerEvent("ARMA:viewRemoteDashcam")
+AddEventHandler('ARMA:viewRemoteDashcam', function(spawncode)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    MySQL.query("ARMAls/get_vehicle_modifications", {user_id = user_id, vehicle = spawncode}, function(rows, affected) 
+        if rows ~= nil then 
+            if #rows > 0 then
+                ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
+                    local mods = json.decode(rows[1].modifications) or {}
+                    if mods['dashcam'] == 1 then
+                        if next(table.pack(x,y,z)) then
+                            for k,v in pairs(netObjects) do
+                                if math.floor(vector3(x,y,z)) == math.floor(GetEntityCoords(NetworkGetEntityFromNetworkId(k))) then
+                                    TriggerClientEvent('ARMA:viewRemoteDashcam', source, table.pack(x,y,z), k)
+                                    return
+                                end
+                            end
+                        end
+                    end
+                    ARMAclient.notify(source, {"~r~You have not purchased remote dashcam for this vehicle."})
+                end)
+            end
+        end
+    end)
+end)
 
 RegisterServerEvent("ARMA:updateFuel")
 AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)
