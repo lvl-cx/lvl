@@ -79,7 +79,7 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                     if (subtype == 'Plus' and sellerplushours >= tonumber(hours)) or (subtype == 'Platinum' and sellerplathours >= tonumber(hours)) then
                                         ARMA.prompt(player,"Price £: ","",function(player, amount) --ask for price
                                             if tonumber(amount) and tonumber(amount) > 0 then
-                                                ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " of "..subtype.." subscription for £"..amount, 30, function(target,ok) --request player if they want to buy sub
+                                                ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " of "..subtype.." subscription for £"..getMoneyStringFormatted(amount), 30, function(target,ok) --request player if they want to buy sub
                                                     if ok then --bought
                                                         MySQL.query("subscription/get_subscription", {user_id = ARMA.getUserId(target)}, function(rows, affected)
                                                             if subtype == "Plus" then
