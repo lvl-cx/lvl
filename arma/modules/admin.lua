@@ -2172,6 +2172,17 @@ RegisterCommand("cleararea", function(source, args) -- these events are gonna be
     end 
 end)
 
+Citizen.CreateThread(function()
+	while true do
+        local deleteTime = 600000
+        TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "^3Vehicle cleanup in " .. math.floor((deleteTime/1000/60)) .. " minutes.", "alert")
+        Citizen.Wait(deleteTime)
+        TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "^3Vehicle cleanup completed.", "alert")
+        TriggerClientEvent('ARMA:clearVehicles', -1)
+        TriggerClientEvent('ARMA:clearBrokenVehicles', -1)
+	end
+end)
+
 RegisterNetEvent("ARMA:devOutfitSave")
 AddEventHandler("ARMA:devOutfitSave", function(outfitName)
     local source = source
