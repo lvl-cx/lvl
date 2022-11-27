@@ -75,11 +75,25 @@ AddEventHandler('ARMA:getVehicleRarity', function(spawncode)
     local user_id = ARMA.getUserId(source)
     MySQL.query("ARMA/get_vehicle_count", {vehicle = spawncode}, function(result)
         if result ~= nil then 
-            print(source, spawncode, #result)
             TriggerClientEvent('ARMA:setVehicleRarity', source, spawncode, #result)
         end
     end)
 end)
+
+RegisterServerEvent("ARMA:displayVehicleBlip")
+AddEventHandler('ARMA:displayVehicleBlip', function(spawncode)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    -- do some check for if the player has bought display blip for this specific vehicle
+    ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
+        local position = {}
+        position.x, position.y, position.z = x,y,z
+        if next(position) then
+            TriggerClientEvent('ARMA:displayVehicleBlip', source, position)
+        end
+    end)
+end)
+
 
 RegisterServerEvent("ARMA:updateFuel")
 AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)
