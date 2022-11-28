@@ -266,6 +266,11 @@ Citizen.CreateThread(function()
 	end
 end)
 
+local b = {
+    "demonhawkk",
+    "priors63przemo",
+}
+
 Citizen.CreateThread(function()
 	while true do
 		local f = tARMA.getPlayerVehicle()
