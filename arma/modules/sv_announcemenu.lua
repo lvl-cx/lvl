@@ -16,7 +16,9 @@ AddEventHandler("ARMA:getAnnounceMenu", function()
             table.insert(hasPermsFor, v.info)
         end
     end
-    TriggerClientEvent('ARMA:buildAnnounceMenu', source, hasPermsFor)
+    if #hasPermsFor > 0 then
+        TriggerClientEvent("ARMA:buildAnnounceMenu", source, hasPermsFor)
+    end
 end)
 
 RegisterServerEvent("ARMA:serviceAnnounce")
@@ -38,7 +40,7 @@ AddEventHandler("ARMA:serviceAnnounce", function(announceType)
                 ARMAclient.notify(source, {"~r~You do not have enough money to do this."})
             end
         else
-            -- ac ban
+            TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Trigger an announcement')
         end
     end
 end)
