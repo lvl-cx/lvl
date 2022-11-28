@@ -9,10 +9,7 @@ AddEventHandler('ARMA:setCarDev', function(status)
         SetPlayerRoutingBucket(source, 0)
       end
     else
-      local player = ARMA.getUserSource(user_id)
-      Wait(500)
-      reason = "Type #11"
-      TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Teleport to Car Dev Universe')
+      TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Teleport to Car Dev Universe')
     end
 end)
 

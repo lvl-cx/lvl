@@ -51,7 +51,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
     local source = source
     local user_id = ARMA.getUserId(source)
     if #(GetEntityCoords(GetPlayerPed(source)) - cfg.selectors[a].position) > 20 then
-        -- ac ban they're triggering job selections
+        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Triggering job selections from too far away')
         return
     end
     if b == "Unemployed" then
