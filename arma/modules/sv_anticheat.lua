@@ -22,6 +22,7 @@ local actypes = {
     {type = 10, desc = 'Health Modifier'},
     {type = 11, desc = 'Server Trigger'},
     {type = 12, desc = 'Vehicle Parachute'},
+    {type = 13, desc = 'Night Vision'},
 }
 
 local allowedEntities = {
@@ -444,6 +445,15 @@ AddEventHandler("ARMA:acType12", function(extra)
 	local name = GetPlayerName(source)
     Wait(500)
     TriggerEvent("ARMA:acBan", user_id, 12, name, player, extra)
+end)
+
+RegisterServerEvent("ARMA:acType12")
+AddEventHandler("ARMA:acType12", function()
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 13, name, player)
 end)
 
 

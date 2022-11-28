@@ -173,6 +173,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
 Citizen.CreateThread(
     function()
         while true do
@@ -275,6 +276,42 @@ Citizen.CreateThread(function()
 			end
 		end
 		Wait(1000)
+	end
+end)
+
+local h = false
+Citizen.CreateThread(function()
+	Wait(15000)
+	while true do
+		local i = tARMA.getPlayerPed()
+		local j = tARMA.getPlayerId()
+		local k = tARMA.getPlayerVehicle()
+		if k == 0 then
+			SetWeaponDamageModifier("WEAPON_RUN_OVER_BY_CAR", 0.0)
+			SetWeaponDamageModifier("WEAPON_RAMMED_BY_CAR", 0.0)
+			SetWeaponDamageModifier("VEHICLE_WEAPON_ROTORS", 0.0)
+			SetWeaponDamageModifier("WEAPON_UNARMED", 0.5)
+			SetWeaponDamageModifier("WEAPON_SNOWBALL", 0.0)
+			local l = GetSelectedPedWeapon(i)
+			if l == "WEAPON_SNOWBALL" then
+				SetPlayerWeaponDamageModifier(j, 0.0)
+			else
+				SetPlayerWeaponDamageModifier(j, 1.0)
+				SetWeaponDamageModifier(l, 1.0)
+			end
+			-- if not h and GetUsingseethrough() and not tARMA.isPlayerInPoliceHeli() and not tARMA.isPlayerInDrone() and not tARMA.isPlayerUsingRobot() and not tARMA.isUsingPoliceRobot() then
+			-- 	TriggerServerEvent("ARMA:acType13")
+			-- 	h = true
+			-- end
+		end
+		SetPedInfiniteAmmoClip(i, false)
+		SetEntityInvincible(k, false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_SNACK", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_STANDARD", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_WEAPON_PISTOL", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_AMMO_BULLET_MP", false)
+		SetPlayerHealthRechargeMultiplier(j, 0.0)
+		Wait(0)
 	end
 end)
 
