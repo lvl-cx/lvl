@@ -1,5 +1,6 @@
 local a = {}
 local Weapons = {}
+local diagonalWeapons = false
 a.weapons = {     
 	--?Melee's
 	{name = 'WEAPON_BROOM', bone = 24818, x=-0.60,y=-0.15,z=0.13, xRot=50.0,yRot=90.0, zRot=2.0, category = 'melee', model = `w_me_broom`},
@@ -150,12 +151,20 @@ function SetGear(weapon)
 	 
 	for i=1, #a.weapons, 1 do
 		if a.weapons[i].name == weapon then
+			if diagonalWeapons and vector3(a.weapons[i].x, a.weapons[i].y, a.weapons[i].z) == vector3(-0.12, -0.12, -0.13) then
+				boneX = 0.0
+				boneY = -0.2
+				boneZ = 0.0
+				boneXRot = 0.0
+				boneYRot = 45.0
+			else
+				boneX    = a.weapons[i].x
+				boneY    = a.weapons[i].y
+				boneZ    = a.weapons[i].z
+				boneXRot = a.weapons[i].xRot
+				boneYRot = a.weapons[i].yRot
+			end
 			bone     = a.weapons[i].bone
-			boneX    = a.weapons[i].x
-			boneY    = a.weapons[i].y
-			boneZ    = a.weapons[i].z
-			boneXRot = a.weapons[i].xRot
-			boneYRot = a.weapons[i].yRot
 			boneZRot = a.weapons[i].zRot
 			model    = a.weapons[i].model
 			break
@@ -170,51 +179,7 @@ function SetGear(weapon)
 		table.insert(Weapons,{weapon = weapon, obj = obj})
 	end)
 end
- 
- -- Add all the weapons in the Player's loadout
-function SetGears()
-	local bone       = nil
-	local boneX      = 0.0
-	local boneY      = 0.0
-	local boneZ      = 0.0
-	local boneXRot   = 0.0
-	local boneYRot   = 0.0
-	local boneZRot   = 0.0
-	local playerPed  = GetPlayerPed(-1)
-	local model      = nil
-	local weapon 	 = nil
-	
-	 
-	for j=1, #a.weapons, 1 do	 
-		bone     = a.weapons[j].bone
-		boneX    = a.weapons[j].x
-		boneY    = a.weapons[j].y
-		boneZ    = a.weapons[j].z
-		boneXRot = a.weapons[j].xRot
-		boneYRot = a.weapons[j].yRot
-		boneZRot = a.weapons[j].zRot
-		model    = a.weapons[j].model
-		weapon   = a.weapons[j].name 
-		break
-	end
- 
-	local _wait = true
- 
-	SpawnObject(model, {x = x, y = y, z = z}, function(obj)
-		 
-		local playerPed = GetPlayerPed(-1)
-		local boneIndex = GetPedBoneIndex(playerPed, bone)
-		local bonePos 	= GetWorldPositionOfEntityBone(playerPed, boneIndex)
 
-		AttachEntityToEntity(obj, playerPed, boneIndex, boneX, boneY, boneZ, boneXRot, boneYRot, boneZRot, false, false, false, false, 2, true)						
-
-		table.insert(Weapons,{weapon = weapon, obj = obj})
-
-		_wait = false
- 
-	end)
- 
-	while _wait do
-		Wait(0)
-	end
-end
+RegisterNetEvent("ARMA:setDiagonalWeapons",function(a)
+	diagonalWeapons = a
+end)

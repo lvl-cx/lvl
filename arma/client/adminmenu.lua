@@ -1443,31 +1443,6 @@ AddEventHandler("ARMA:EntityWipe", function(id)
     end)
 end)
 
-Citizen.CreateThread(function()
-    local diagkvp=GetResourceKvpString("ARMA_diagonalweapons")or"false"
-    if diagkvp=="false"then 
-        a=false
-        TriggerEvent("ARMA:setVerticalWeapons")
-    else 
-        a=true
-        TriggerEvent("ARMA:setDiagonalWeapons")
-    end
-    local hitsoundskvp=GetResourceKvpString("ARMA_hitmarkersounds")or"false"
-    if hitsoundskvp=="false"then 
-        b=false
-        TriggerEvent("hs:triggerSounds", false)
-    else 
-        b=true
-        TriggerEvent("hs:triggerSounds", true)
-    end 
-end)
-function tARMA.setDiagonalWeaponSetting(f)
-    SetResourceKvp("ARMA_diagonalweapons",tostring(f))
-end
-function tARMA.setHitMarkerSetting(f)
-    SetResourceKvp("ARMA_hitmarkersounds",tostring(f))
-end
-
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)
     SetTextProportional(0)
