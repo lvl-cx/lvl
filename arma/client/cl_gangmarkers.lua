@@ -41,12 +41,14 @@ local config = {
 }
 
 local function createMarker()
-    local _, coords, entity = RayCastGamePlayCamera(1000.0)
+    if markersEnabled then
+        local _, coords, entity = RayCastGamePlayCamera(1000.0)
 
-    if coords == vector3(0.0, 0.0, 0.0) then -- sometimes this happens
-        return 
+        if coords == vector3(0.0, 0.0, 0.0) then -- sometimes this happens
+            return 
+        end
+        TriggerServerEvent('ARMA:sendGangMarker', coords)
     end
-    TriggerServerEvent('ARMA:sendGangMarker', coords)
 end
 
 
