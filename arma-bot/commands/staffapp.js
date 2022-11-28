@@ -6,7 +6,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     message.delete()
     let embed = {
         "title": "ARMA Staff Applications",
-        "description": `https://forms.gle/drBi5JhPtiQ64gGJ6`,
+        "description": `https://forms.gle/Ai9Lm3jKJgw8HzKR9`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
