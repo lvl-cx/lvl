@@ -795,18 +795,6 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-                RageUI.ButtonWithStyle("Spectate Player [Anti-ESP]", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
-                            inRedZone = false
-                            TriggerServerEvent("ARMA:spectatePlayerEsp", SelectedPlayer[3])
-                            inSpectatorAdminMode = true
-                            RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
-                        else
-                            tARMA.notify("~r~You cannot spectate yourself.")
-                        end
-                    end
-                end, RMenu:Get('adminmenu', 'submenu'))
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
