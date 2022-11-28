@@ -190,7 +190,7 @@ client.on('message', (message) => {
         cmd = client.commands.get(command);
     }
     if (cmd) {
-        if (message.channel.name.includes('bot') || cmd.conf.name == 'embed' || cmd.conf.name == 'rulechange' || cmd.conf.name == 'auction' || cmd.conf.name == 'verify' || cmd.conf.name == 'vote') {
+        //if (message.channel.name.includes('bot') || cmd.conf.name == 'embed' || cmd.conf.name == 'rulechange' || cmd.conf.name == 'auction' || cmd.conf.name == 'verify' || cmd.conf.name == 'vote') {
             if (permissions < cmd.conf.perm) return;
             try {
                 cmd.runcmd(exports, client, message, params, permissions);
@@ -202,7 +202,7 @@ client.on('message', (message) => {
                 }
                 message.channel.send({ embed })
             }
-        }
+        //}
     }
 });
 
