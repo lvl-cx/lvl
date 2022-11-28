@@ -162,7 +162,7 @@ AddEventHandler("ARMA:getNewIdentity", function()
             ARMA.prompt(source, 'Age:', '', function(source,age)
               if age == '' then return end
               age = parseInt(age)
-              if age >= 16 and age <= 150 then
+              if age >= 18 and age <= 150 then
                 TriggerClientEvent('ARMA:gotNewIdentity', source, firstname, lastname, age)
               else
                 ARMAclient.notify(source, {'~r~Invalid age'})
