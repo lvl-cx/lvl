@@ -125,19 +125,6 @@ if (settingsjson.settings.StatusEnabled) {
 }
 
 
-
-/*
-    WAIT BEFORE YOU REMOVE THE CREDITS THINK ABOUT ALL THE HARDWORK THAT HAS GONE INTO THIS! 
-
-    DEVELOPERS EVERY DAY HAVE THEIR WORK STOLEN OR CLAIMED BY OTHERS.
-
-    IT'S TIME FOR CHANGE. PEOPLE WILL JUST STOP RELEASING THINGS IF YOU STEAL THEIR WORK. 
-
-    - JamesUK#6793
-
-*/
-
-
 client.commands = new Discord.Collection();
 
 const init = async() => {

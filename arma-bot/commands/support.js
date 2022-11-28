@@ -3,7 +3,6 @@ const resourcePath = global.GetResourcePath ?
 const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
-    message.delete()
     let embed = {
         "title": "ARMA Support Tickets",
         "description": `https://discord.gg/ETXu6EM6rN`,

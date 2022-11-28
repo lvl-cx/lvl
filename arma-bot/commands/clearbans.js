@@ -3,7 +3,6 @@ const resourcePath = global.GetResourcePath ?
 const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
-    message.delete()
     fivemexports.ghmattimysql.execute("SELECT * FROM arma_users WHERE banned = 1", (result) => {
         if (result) {
             for (i = 0; i < result.length; i++) { 

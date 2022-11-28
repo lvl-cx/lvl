@@ -3,7 +3,6 @@ const resourcePath = global.GetResourcePath ?
 const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
-    message.delete()
     if (message.mentions.members.first()) {
         let user = message.mentions.members.first()
         fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_ids` WHERE identifier = ?", ["discord:" + user.id], (result) => {

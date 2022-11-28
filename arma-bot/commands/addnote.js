@@ -7,7 +7,6 @@ let adminname
 let text
 
 exports.runcmd = (fivemexports, client, message, params) => {
-    message.delete()
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'addnote [permid] [text]')
     }
