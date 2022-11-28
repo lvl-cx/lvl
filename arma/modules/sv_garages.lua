@@ -88,17 +88,21 @@ AddEventHandler('ARMA:displayVehicleBlip', function(spawncode)
         if rows ~= nil then 
             if #rows > 0 then
                 ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
-                    local mods = json.decode(rows[1].modifications) or {}
-                    if mods['remoteblips'] == 1 then
-                        local position = {}
-                        position.x, position.y, position.z = x,y,z
-                        if next(position) then
-                            TriggerClientEvent('ARMA:displayVehicleBlip', source, position)
-                            ARMAclient.notify(source, {"~g~Vehicle blip enabled."})
-                            return
+                    if vector3(x,y,z) ~= vector3(0,0,0) then
+                        local mods = json.decode(rows[1].modifications) or {}
+                        if mods['remoteblips'] == 1 then
+                            local position = {}
+                            position.x, position.y, position.z = x,y,z
+                            if next(position) then
+                                TriggerClientEvent('ARMA:displayVehicleBlip', source, position)
+                                ARMAclient.notify(source, {"~g~Vehicle blip enabled."})
+                                return
+                            end
                         end
+                        ARMAclient.notify(source, {"~r~This vehicle does not have a remote vehicle blip installed."})
+                    else
+                        ARMAclient.notify(source, {"~r~Can not locate vehicle with the plate "..rows[1].vehicle_plate.." in this city."})
                     end
-                    ARMAclient.notify(source, {"~r~You have not purchased remote blips for this vehicle."})
                 end)
             end
         end
@@ -113,18 +117,22 @@ AddEventHandler('ARMA:viewRemoteDashcam', function(spawncode)
         if rows ~= nil then 
             if #rows > 0 then
                 ARMAclient.getOwnedVehiclePosition(source, {spawncode}, function(x,y,z)
-                    local mods = json.decode(rows[1].modifications) or {}
-                    if mods['dashcam'] == 1 then
-                        if next(table.pack(x,y,z)) then
-                            for k,v in pairs(netObjects) do
-                                if math.floor(vector3(x,y,z)) == math.floor(GetEntityCoords(NetworkGetEntityFromNetworkId(k))) then
-                                    TriggerClientEvent('ARMA:viewRemoteDashcam', source, table.pack(x,y,z), k)
-                                    return
+                    if vector3(x,y,z) ~= vector3(0,0,0) then
+                        local mods = json.decode(rows[1].modifications) or {}
+                        if mods['dashcam'] == 1 then
+                            if next(table.pack(x,y,z)) then
+                                for k,v in pairs(netObjects) do
+                                    if math.floor(vector3(x,y,z)) == math.floor(GetEntityCoords(NetworkGetEntityFromNetworkId(k))) then
+                                        TriggerClientEvent('ARMA:viewRemoteDashcam', source, table.pack(x,y,z), k)
+                                        return
+                                    end
                                 end
                             end
                         end
+                        ARMAclient.notify(source, {"~r~This vehicle does not have a remote dashcam installed."})
+                    else
+                        ARMAclient.notify(source, {"~r~Can not locate vehicle with the plate "..rows[1].vehicle_plate.." in this city."})
                     end
-                    ARMAclient.notify(source, {"~r~You have not purchased remote dashcam for this vehicle."})
                 end)
             end
         end
@@ -410,6 +418,8 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                                             ARMAclient.notify(target,{"~r~You have refused to rent "..GetPlayerName(player).."'s car."})
                                                                         end
                                                                     end)
+                                                                else
+                                                                    ARMAclient.notify(player, {'~r~Rent offer cancelled!'})
                                                                 end
                                                             end)
                                                         end
@@ -510,7 +520,6 @@ AddEventHandler('ARMA:FetchRented', function()
                     end
                 end
             end
-            print(json.encode(rentedin), json.encode(rentedout))
             TriggerClientEvent('ARMA:ReturnedRentedCars', source, rentedin, rentedout)
         end)
     end)
