@@ -82,12 +82,12 @@ if (settingsjson.settings.StatusEnabled) {
                     },                    
                     {
                         "name": "👮🏻 MET PD Online:",
-                        "value": `${onlineStaff}`,
+                        "value": `${onlinePD}`,
                         "inline": true
                     },                      
                     {
                         "name": "🚑 NHS Online:",
-                        "value": `${onlineStaff}`,
+                        "value": `${onlineNHS}`,
                         "inline": true
                     },                      
                     {
