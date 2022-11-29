@@ -491,7 +491,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 desc = v.desc
             end
         end
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, "https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm")
         Wait(20000)
         TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
         ARMA.banConsole(user_id,"perm","Cheating "..reason)
