@@ -40,7 +40,7 @@ cfg.spawnLocations = {
         name = "Rebel Diner",
         coords = vector3(1688.0181884766,6420.9545898438,32.465755462646),
         permission = {"rebellicense.whitelisted"},
-        image = "https://cdn.cmg.city/content/fivem/houses/rebeldiner.png",
+        image = "https://i.imgur.com/LpRQBLr.png",
         price = 0
     },
     ["St Thomas Hospital"] = {
