@@ -85,9 +85,12 @@ AddEventHandler("ARMA:receivedAccountInfo", function(gpu,cpu,userAgent)
 end)
 
 RegisterServerEvent("ARMA:GetGroups")
-AddEventHandler("ARMA:GetGroups",function(temp, perm)
-    local user_groups = ARMA.getUserGroups(perm)
-    TriggerClientEvent("ARMA:GotGroups", source, user_groups)
+AddEventHandler("ARMA:GetGroups",function(perm)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
+        TriggerClientEvent("ARMA:GotGroups", source, ARMA.getUserGroups(perm))
+    end
 end)
 
 RegisterServerEvent("ARMA:CheckPov")
@@ -125,16 +128,6 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
         TriggerClientEvent("ARMA:spectate",source,playerssource,1000)
-    end
-end)
-
-RegisterServerEvent("ARMA:spectatePlayerEsp")
-AddEventHandler("ARMA:spectatePlayerEsp", function(id)
-    local playerssource = ARMA.getUserSource(id)
-    local source = source
-    if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
-        TriggerClientEvent("ARMA:spectate",source,playerssource)
-        TriggerClientEvent("ARMA:partTwo", playerssource,source)
     end
 end)
 
