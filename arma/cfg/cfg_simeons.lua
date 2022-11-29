@@ -5,6 +5,12 @@ cfg.simeonsCategories = {
         --["_config"] = {permissionTable}
         --[veh_id] = {name,price}
     --}}
+    ["Beta Cars (Free)"] = {
+        ["_config"] = {permissionTable={}},
+        ["ventsraid"] = {"Off-Road Venatus",0},
+        ["m2varis"] = {"BMW M2 Varis",0},
+        ["fordconnect"] = {"Ford Connect(300kg)",0},
+    },
     ["Compacts"] = {
         ["_config"] = {permissionTable={}},
         ["blista"] = {"Dinka Blista",2000},
@@ -442,6 +448,7 @@ cfg.simeonsInstances = {
         markerColourTable={0,200,0},
         permissionsTable={},
         categorys={
+            "Beta Cars (Free)",
             "AA Mechanics",
             "Compacts",
             "Coupes",

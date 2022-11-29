@@ -71,13 +71,6 @@ AddEventHandler('ARMA:TrashItem', function(itemId, itemLoc)
     end
 end)
 
-RegisterServerEvent("ORP:flashLights")
-AddEventHandler("ORP:flashLights", function(nearestVeh)
-    local nearestVeh = nearestVeh
-    TriggerClientEvent("ORP:flashCarLightsAlarm", -1, nearestVeh)
-
-end) 
-
 RegisterNetEvent('ARMA:FetchTrunkInventory')
 AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
     local source = source

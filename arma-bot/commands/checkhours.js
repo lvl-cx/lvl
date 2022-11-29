@@ -3,7 +3,6 @@ const resourcePath = global.GetResourcePath ?
 const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
-    message.delete()
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'ch [permid]')
     }

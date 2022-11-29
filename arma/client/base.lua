@@ -889,7 +889,7 @@ end
 function tARMA.getStaffLevel()
   return stafflevel
 end
-function tARMA.isstaffedOn()
+function tARMA.isStaffedOn()
   return staffMode
 end
 function tARMA.isNoclipping()

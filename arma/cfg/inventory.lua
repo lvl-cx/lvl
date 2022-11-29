@@ -5,8 +5,6 @@ local cfg = {}
 cfg.default_vehicle_chest_weight = 30
 
 cfg.vehicle_chest_weights = {
-    ["canamassault"] = 400,
-    ["hycadem8"] = 400,
     ["300kg"] = 200,
     ["m977hl"] = 200,
     ["m9395"] = 200,
@@ -18,6 +16,7 @@ cfg.vehicle_chest_weights = {
     ["m977l"] = 200,
     ["m977t"] = 200,
     ["Brickade"] = 100,
+    ["fordconnect"] = 300,
 }
 
 return cfg

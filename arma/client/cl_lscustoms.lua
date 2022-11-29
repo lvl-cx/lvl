@@ -682,27 +682,17 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(0)
-		--If you are not already in garage
 		if inside == false then
 			local ped = LocalPed()
-			--Well... yes... we actually need a car to do something
 			if IsPedSittingInAnyVehicle(ped) then
 				local veh = GetVehiclePedIsUsing(ped)
-				--If the vehicle exist, player is in driver seat and if this vehicle is a car or bike then we are good to go
 				if DoesEntityExist(veh) and GetPedInVehicleSeat(veh, -1) == ped and (IsThisModelACar(GetEntityModel(veh)) or IsThisModelAHeli(GetEntityModel(veh)) or IsThisModelABike(GetEntityModel(veh)))  then
-					--So lets go through every garage
 					for i,pos in ipairs(garages) do
-						--Lets take the outside coords of garage
 						outside = pos.drivein	
-						--Old enter:If vehicle is close enough, then text will be displayed - Press ENTER to enter garage
 						if LSC_Config.oldenter then			
-							--So, if vehicle is close enough then we can continue
 							if #(vec3(outside.x,outside.y,outside.z) - GetEntityCoords(ped)) <= f(5) then
-								--Lets check if our vehicle is not in the model black list, and if it is not then we can go further
 								if not tableContains(LSC_Config.ModelBlacklist,GetDisplayNameFromVehicleModel(GetEntityModel(veh)):lower()) then
-									--If the garage is locked
 									if pos.locked then
-										--If the config lock system is not enabled then we can go traight in garage, but if it is enabled then not
 										if not LSC_Config.lock then
 											if IsControlJustPressed(1,201) then
 												inside = true
@@ -730,13 +720,9 @@ Citizen.CreateThread(function()
 								end
 							end
 						else
-							--So, if vehicle is close enough and it's facing the garage then we can continue
 							if math.abs(GetEntityHeading(veh)-outside.heading) <= 90 and IsVehicleStopped(veh) and GetDistanceBetweenCoords(outside.x,outside.y,outside.z,GetEntityCoords(ped)) <= f(5) then
-								--Lets check if our vehicle is not in the model black list, and if it is not then we can go further
 								if not tableContains(LSC_Config.ModelBlacklist,GetDisplayNameFromVehicleModel(GetEntityModel(veh)):lower()) then
-									--If the garage is locked
 									if pos.locked then
-										--If the config lock system is not enabled then we can go traight in garage, but if it is enabled then not
 										if not LSC_Config.lock then
 											inside = true
 											currentpos = pos
@@ -1588,3 +1574,7 @@ Citizen.CreateThread(function()
 		end
 	end
 end)
+
+function tARMA.isInsideLsCustoms()
+    return inside
+end

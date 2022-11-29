@@ -266,6 +266,10 @@ function tARMA.setHitMarkerSetting(i)
     SetResourceKvp("arma_hitmarkersounds", tostring(i))
 end
 
+function tARMA.setDiagonalWeaponSetting(f)
+    SetResourceKvp("ARMA_diagonalweapons",tostring(f))
+end
+
 Citizen.CreateThread(function()
     local f = GetResourceKvpString("arma_diagonalweapons") or "false"
     if f == "false" then
@@ -299,7 +303,7 @@ RageUI.CreateWhile(1.0, true, function()
                     ExecuteCommand("compass")
                 end
             end)
---[[             local function _()
+            local function _()
                 b = true
                 TriggerEvent("ARMA:setDiagonalWeapons", b)
                 tARMA.setDiagonalWeaponSetting(b)
@@ -310,7 +314,7 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.setDiagonalWeaponSetting(b)
             end
             RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,_,a0) ]]
+            end,_,a0)
             RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
             local function _()

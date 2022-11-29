@@ -35,18 +35,20 @@ local config = {
     markerDeleteDistance = 5.0, -- marker will delete when distance is under 5m
     showTime = 10000, -- 10 seconds default
     -- marker default colours
-    r = 255,
-    g = 0,
-    b = 150,
+    r = 0,
+    g = 255,
+    b = 0,
 }
 
 local function createMarker()
-    local _, coords, entity = RayCastGamePlayCamera(1000.0)
+    if markersEnabled then
+        local _, coords, entity = RayCastGamePlayCamera(1000.0)
 
-    if coords == vector3(0.0, 0.0, 0.0) then -- sometimes this happens
-        return 
+        if coords == vector3(0.0, 0.0, 0.0) then -- sometimes this happens
+            return 
+        end
+        TriggerServerEvent('ARMA:sendGangMarker', coords)
     end
-    TriggerServerEvent('ARMA:sendGangMarker', coords)
 end
 
 
@@ -244,9 +246,9 @@ function saveMarkerColour(set, value)
 end
 
 Citizen.CreateThread(function()
-    config.r = GetResourceKvpInt("ARMA_markercolour_r") or 255
-    config.g = GetResourceKvpInt("ARMA_markercolour_g") or 0
-    config.b = GetResourceKvpInt("ARMA_markercolour_b") or 150
+    config.r = GetResourceKvpInt("ARMA_markercolour_r") or 0
+    config.g = GetResourceKvpInt("ARMA_markercolour_g") or 255
+    config.b = GetResourceKvpInt("ARMA_markercolour_b") or 0
     if GetResourceKvpInt("ARMA_markers_enabled") == 0 then
         markersEnabled = false
     else

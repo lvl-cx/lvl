@@ -63,17 +63,18 @@ const audio = [
     { name: "testPassedGoodbye", file: "testPassedGoodbye.ogg", volume: 0.80},
     { name: "turningRightJunction", file: "turningRightJunction.ogg", volume: 0.80},
     { name:"unlimitedpower", file:"unlimitedpower.ogg", volume: 0.60},
-    { name:"wrathofgod", file:"wrathofgod.webm", volume: 0.60},
-    {name:"MPCT_AKAA_01", file:"MPCT_AKAA_01.webm", volume: 0.3}, //Johnny on the spot!
-    {name:"MPCT_AKAA_02", file:"MPCT_AKAA_02.webm", volume: 0.3},
-    {name:"MPCT_AKAA_03", file:"MPCT_AKAA_03.webm", volume: 0.3},
-    {name:"MPCT_AKAA_04", file:"MPCT_AKAA_04.webm", volume: 0.3},
-    {name:"MPCT_AKAA_05", file:"MPCT_AKAA_05.webm", volume: 0.3},
-    {name:"MPCT_ALAA_01", file:"MPCT_ALAA_01.webm", volume: 0.3}, //Cant bring car
-    {name:"MPCT_ALAA_02", file:"MPCT_ALAA_02.webm", volume: 0.3},
-    {name:"MPCT_ALAA_03", file:"MPCT_ALAA_03.webm", volume: 0.3},
-    {name:"MPCT_ALAA_04", file:"MPCT_ALAA_04.webm", volume: 0.3},
-    {name:"MPCT_ALAA_05", file:"MPCT_ALAA_05.webm", volume: 0.3},
+    { name:"wrathofgod", file: "wrathofgod.webm", volume: 0.60},
+    { name:"MPCT_AKAA_01", file: "MPCT_AKAA_01.webm", volume: 0.3}, //Johnny on the spot!
+    { name:"MPCT_AKAA_02", file: "MPCT_AKAA_02.webm", volume: 0.3},
+    { name:"MPCT_AKAA_03", file: "MPCT_AKAA_03.webm", volume: 0.3},
+    { name:"MPCT_AKAA_04", file: "MPCT_AKAA_04.webm", volume: 0.3},
+    { name:"MPCT_AKAA_05", file: "MPCT_AKAA_05.webm", volume: 0.3},
+    { name:"MPCT_ALAA_01", file: "MPCT_ALAA_01.webm", volume: 0.3}, //Cant bring car
+    { name:"MPCT_ALAA_02", file: "MPCT_ALAA_02.webm", volume: 0.3},
+    { name:"MPCT_ALAA_03", file: "MPCT_ALAA_03.webm", volume: 0.3},
+    { name:"MPCT_ALAA_04", file: "MPCT_ALAA_04.webm", volume: 0.3},
+    { name:"MPCT_ALAA_05", file: "MPCT_ALAA_05.webm", volume: 0.3},
+    { name:"shave", file: "shave.webm", volume: 0.3},
 ]
 
 var audioPlayer = null;

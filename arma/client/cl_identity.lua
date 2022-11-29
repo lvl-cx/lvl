@@ -72,6 +72,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.ButtonWithStyle("Yes","",{RightLabel="→→→"},true,function(j,k,l)
                 if l then 
                     TriggerServerEvent("ARMA:ChangeIdentity", newfirstname, newlastname, tonumber(newage))
+                    RageUI.ActuallyCloseAll()
                 end 
             end,RMenu:Get("identity","confirm"))
             RageUI.ButtonWithStyle("No","",{RightLabel="→→→"},true,function(j,k,l)

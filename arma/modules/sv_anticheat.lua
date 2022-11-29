@@ -3,8 +3,6 @@ m=m.garages
 local f = module("cfg/weapons")
 f=f.weapons
 
-local gettingScreenshot = false
-
 local cheatingCrashes = { -- Place all known cheating crashes here, they will be logged
     --'Exiting' (Example)
     'Game crashed: GTA5_b2189.exe!rage::grcTextureFactoryDX11::PopRenderTarget (0xfd)',
@@ -23,6 +21,8 @@ local actypes = {
     {type = 9, desc = 'Armour Modifier'},
     {type = 10, desc = 'Health Modifier'},
     {type = 11, desc = 'Server Trigger'},
+    {type = 12, desc = 'Vehicle Parachute'},
+    {type = 13, desc = 'Night Vision'},
 }
 
 local allowedEntities = {
@@ -389,10 +389,8 @@ AddEventHandler("ARMA:acType6", function()
     local user_id = ARMA.getUserId(source)
 	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
-    if type6enabled then
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 6, name, player)
-    end
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 6, name, player)
 end)
 
 RegisterServerEvent("ARMA:acType7")
@@ -440,6 +438,24 @@ AddEventHandler("ARMA:acType11", function(extra)
     TriggerEvent("ARMA:acBan", user_id, 11, name, player, extra)
 end)
 
+RegisterServerEvent("ARMA:acType12")
+AddEventHandler("ARMA:acType12", function(extra)
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 12, name, player, extra)
+end)
+
+RegisterServerEvent("ARMA:acType12")
+AddEventHandler("ARMA:acType12", function()
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 13, name, player)
+end)
+
 
 ---------- Server Events
 
@@ -469,52 +485,17 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local reason = ''
     if extra == nil then extra = 'None' end
     if source == '' then
-        if not gettingScreenshot then
-            for k,v in pairs(actypes) do
-                if bantype == v.type then
-                    reason = 'Type #'..bantype
-                    desc = v.desc
-                end
+        for k,v in pairs(actypes) do
+            if bantype == v.type then
+                reason = 'Type #'..bantype
+                desc = v.desc
             end
-            gettingScreenshot = true
-            -- this screenshot shit needs redoing with the new stuff video trigger cba rn
-            -- takeClientVideoAndUpload etc
-            exports["ac-screenshots"]:requestClientScreenshotUploadToDiscord(player,{
-                username = "ARMA Logs",
-                avatar_url = image,
-                embeds = {
-                    {
-                        ["color"] = 16448403,
-                        ["title"] = "Anticheat Ban (Screenshot Above)",
-                        ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",                        ["footer"] = {
-                            ["text"] = "ARMA - "..os.date("%c"),
-                            ["icon_url"] = "",
-                        }
-                    }
-                }
-            },30000,
-            function(error)
-                if error then
-                    print("^1ERROR: " .. error)
-                    local embed = {
-                        {
-                            ["color"] = 16448403,
-                            ["title"] = "Anticheat Ban (Screenshot Failed)",
-                            ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",
-                            ["footer"] = {
-                                ["text"] = "ARMA - "..os.date("%c"),
-                                ["icon_url"] = "",
-                            }
-                        }
-                    }
-                    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA Logs", embeds = embed, avatar_url = image}), { ['Content-Type'] = 'application/json' })
-                end
-                gettingScreenshot = false
-                TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-                ARMA.banConsole(user_id,"perm","Cheating "..reason)
-                exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
-            end)
         end
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        Wait(20000)
+        TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
+        ARMA.banConsole(user_id,"perm","Cheating "..reason)
+        exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
     end
 end)
 

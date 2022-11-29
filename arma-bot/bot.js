@@ -82,12 +82,12 @@ if (settingsjson.settings.StatusEnabled) {
                     },                    
                     {
                         "name": "👮🏻 MET PD Online:",
-                        "value": `${onlineStaff}`,
+                        "value": `${onlinePD}`,
                         "inline": true
                     },                      
                     {
                         "name": "🚑 NHS Online:",
-                        "value": `${onlineStaff}`,
+                        "value": `${onlineNHS}`,
                         "inline": true
                     },                      
                     {
@@ -123,19 +123,6 @@ if (settingsjson.settings.StatusEnabled) {
         })
     }, 15000);
 }
-
-
-
-/*
-    WAIT BEFORE YOU REMOVE THE CREDITS THINK ABOUT ALL THE HARDWORK THAT HAS GONE INTO THIS! 
-
-    DEVELOPERS EVERY DAY HAVE THEIR WORK STOLEN OR CLAIMED BY OTHERS.
-
-    IT'S TIME FOR CHANGE. PEOPLE WILL JUST STOP RELEASING THINGS IF YOU STEAL THEIR WORK. 
-
-    - JamesUK#6793
-
-*/
 
 
 client.commands = new Discord.Collection();
@@ -203,7 +190,7 @@ client.on('message', (message) => {
         cmd = client.commands.get(command);
     }
     if (cmd) {
-        if (message.channel.name.includes('bot') || cmd.conf.name == 'embed' || cmd.conf.name == 'rulechange' || cmd.conf.name == 'auction' || cmd.conf.name == 'verify' || cmd.conf.name == 'vote') {
+        //if (message.channel.name.includes('bot') || cmd.conf.name == 'embed' || cmd.conf.name == 'rulechange' || cmd.conf.name == 'auction' || cmd.conf.name == 'verify' || cmd.conf.name == 'vote') {
             if (permissions < cmd.conf.perm) return;
             try {
                 cmd.runcmd(exports, client, message, params, permissions);
@@ -215,7 +202,7 @@ client.on('message', (message) => {
                 }
                 message.channel.send({ embed })
             }
-        }
+        //}
     }
 });
 

@@ -8,7 +8,6 @@ local playersNearby = {}
 local playersNearbyDistance = 250
 local searchPlayerGroups = {}
 local selectedGroup
-local Groups = {}
 local povlist = ''
 local SelectedPerm = nil
 local SelectedName = nil
@@ -84,7 +83,7 @@ RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmen
 RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu ~w~- ~o~[Tab] to search groups',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "addgroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "removegroup", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "groups"), "", menuColour..'Admin Groups Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu:Get('adminmenu', 'main')
@@ -796,18 +795,6 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-                RageUI.ButtonWithStyle("Spectate Player [Anti-ESP]", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
-                            inRedZone = false
-                            TriggerServerEvent("ARMA:spectatePlayerEsp", SelectedPlayer[3])
-                            inSpectatorAdminMode = true
-                            RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
-                        else
-                            tARMA.notify("~r~You cannot spectate yourself.")
-                        end
-                    end
-                end, RMenu:Get('adminmenu', 'submenu'))
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -901,7 +888,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end,RMenu:Get('adminmenu','submenu'))
                 RageUI.ButtonWithStyle("See Groups", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[2], SelectedPlayer[3])
+                        TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[3])
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
@@ -1284,17 +1271,22 @@ end)
 
 
 frozen = false
-RegisterNetEvent('ARMA:Freeze')
-AddEventHandler('ARMA:Freeze', function(isFrozen)
-    frozen = isFrozen
-    if frozen then
-        FreezeEntityPosition(PlayerPedId(-1), true)
-        while frozen==true do
-            Citizen.Wait(0)
-            SetCurrentPedWeapon(PlayerPedId(),`WEAPON_UNARMED`,true)
+RegisterNetEvent("ARMA:Freeze",function()
+    local Q = tARMA.getPlayerPed()
+    if IsPedSittingInAnyVehicle(Q) then
+        local ak = GetVehiclePedIsIn(Q, false)
+        TaskLeaveVehicle(Q, ak, 4160)
+    end
+    if not frozen then
+        FreezeEntityPosition(Q, true)
+        frozen = true
+        while frozen do
+            tARMA.setWeapon(Q, "WEAPON_UNARMED", true)
+            Wait(0)
         end
     else
-        FreezeEntityPosition(PlayerPedId(-1), false)
+        FreezeEntityPosition(Q, false)
+        frozen = false
     end
 end)
 
@@ -1437,31 +1429,6 @@ AddEventHandler("ARMA:EntityWipe", function(id)
         end
     end)
 end)
-
-Citizen.CreateThread(function()
-    local diagkvp=GetResourceKvpString("ARMA_diagonalweapons")or"false"
-    if diagkvp=="false"then 
-        a=false
-        TriggerEvent("ARMA:setVerticalWeapons")
-    else 
-        a=true
-        TriggerEvent("ARMA:setDiagonalWeapons")
-    end
-    local hitsoundskvp=GetResourceKvpString("ARMA_hitmarkersounds")or"false"
-    if hitsoundskvp=="false"then 
-        b=false
-        TriggerEvent("hs:triggerSounds", false)
-    else 
-        b=true
-        TriggerEvent("hs:triggerSounds", true)
-    end 
-end)
-function tARMA.setDiagonalWeaponSetting(f)
-    SetResourceKvp("ARMA_diagonalweapons",tostring(f))
-end
-function tARMA.setHitMarkerSetting(f)
-    SetResourceKvp("ARMA_hitmarkersounds",tostring(f))
-end
 
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)

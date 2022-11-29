@@ -265,9 +265,11 @@ end)
 
 
 function drawNativeText(V)
-    BeginTextCommandPrint("STRING")
-    AddTextComponentSubstringPlayerName(V)
-    EndTextCommandPrint(100, 1)
+    if not hideHud then
+        BeginTextCommandPrint("STRING")
+        AddTextComponentSubstringPlayerName(V)
+        EndTextCommandPrint(100, 1)
+    end
 end
 
 

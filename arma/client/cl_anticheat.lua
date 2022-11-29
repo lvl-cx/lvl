@@ -173,6 +173,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
+
 Citizen.CreateThread(
     function()
         while true do
@@ -232,6 +233,89 @@ CreateThread(function()
 				Wait(60000)
 			end
 		end
+		Wait(0)
+	end
+end)
+
+Citizen.CreateThread(function()
+	Wait(10000)
+	local _ = 0
+	while true do
+		if _ >= 100 and not tARMA.isInComa() then
+			TriggerServerEvent("ARMA:acType6")
+			Citizen.Wait(5000)
+		end
+		if not tARMA.isStaffedOn() then
+			local j = PlayerId()
+			local i = PlayerPedId()
+			local a0 = GetEntityHealth(i)
+			SetPlayerHealthRechargeMultiplier(j, 0.0)
+			if i ~= 0 then
+				SetEntityHealth(i, a0 - 2)
+				Citizen.Wait(50)
+				if GetEntityHealth(i) > a0 - 2 then
+					_ = _ + 1
+				elseif _ > 0 then
+					_ = _ - 1
+				end
+				SetEntityHealth(i, GetEntityHealth(i) + 2)
+			end
+		else
+			Citizen.Wait(1000)
+		end
+	end
+end)
+
+local b = {
+    "demonhawkk",
+    "priors63przemo",
+}
+
+Citizen.CreateThread(function()
+	while true do
+		local f = tARMA.getPlayerVehicle()
+		if GetVehicleHasParachute(f) then
+			local be = GetEntityModel(f)
+			if not table.has(b, be) then
+				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be]) -- finish later
+			end
+		end
+		Wait(1000)
+	end
+end)
+
+local h = false
+Citizen.CreateThread(function()
+	Wait(15000)
+	while true do
+		local i = tARMA.getPlayerPed()
+		local j = tARMA.getPlayerId()
+		local k = tARMA.getPlayerVehicle()
+		if k == 0 then
+			SetWeaponDamageModifier("WEAPON_RUN_OVER_BY_CAR", 0.0)
+			SetWeaponDamageModifier("WEAPON_RAMMED_BY_CAR", 0.0)
+			SetWeaponDamageModifier("VEHICLE_WEAPON_ROTORS", 0.0)
+			SetWeaponDamageModifier("WEAPON_UNARMED", 0.5)
+			SetWeaponDamageModifier("WEAPON_SNOWBALL", 0.0)
+			local l = GetSelectedPedWeapon(i)
+			if l == "WEAPON_SNOWBALL" then
+				SetPlayerWeaponDamageModifier(j, 0.0)
+			else
+				SetPlayerWeaponDamageModifier(j, 1.0)
+				SetWeaponDamageModifier(l, 1.0)
+			end
+			-- if not h and GetUsingseethrough() and not tARMA.isPlayerInPoliceHeli() and not tARMA.isPlayerInDrone() and not tARMA.isPlayerUsingRobot() and not tARMA.isUsingPoliceRobot() then
+			-- 	TriggerServerEvent("ARMA:acType13")
+			-- 	h = true
+			-- end
+		end
+		SetPedInfiniteAmmoClip(i, false)
+		SetEntityInvincible(k, false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_SNACK", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_STANDARD", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_WEAPON_PISTOL", false)
+		ToggleUsePickupsForPlayer(j, "PICKUP_AMMO_BULLET_MP", false)
+		SetPlayerHealthRechargeMultiplier(j, 0.0)
 		Wait(0)
 	end
 end)

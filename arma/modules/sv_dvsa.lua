@@ -168,7 +168,7 @@ AddEventHandler("ARMA:beginTest", function()
     if data.licence == "active" then
         TriggerClientEvent('ARMA:beginTestClient', source,true,math.random(1,3))
     else
-        --ac ban
+        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Trigger Driving Test with a non-active licence.')
     end
 end)
 
@@ -180,7 +180,7 @@ AddEventHandler("ARMA:surrenderLicence", function()
     local data = exports['ghmattimysql']:executeSync("SELECT * FROM arma_dvsa WHERE user_id = @user_id", {user_id = user_id})[1]
     if data.licence == "banned" then
         ARMAclient.notify(source,{'~r~You are already banned from driving.'})
-        --ac ban
+        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to surrender licence when already banned.')
         return
     end
     if data.licence == "active" or data.licence == "full" then
