@@ -2823,140 +2823,6 @@ RegisterCommand("rope",function(f,g)
     Wait(5000)
 end,false)
 
-local crutchObject
-RegisterCommand("crutch",function(f,g)
-    local crutchModel = `v_med_crutch01`
-    if not HasModelLoaded(crutchModel) then
-		RequestModel(crutchModel)
-		while not HasModelLoaded(crutchModel) do
-			Citizen.Wait(10)
-		end
-	end
-    local clipSet = "move_lester_CaneUp"
-    local playerPed = PlayerPedId()
-    if DoesEntityExist(playerPed)and canAnim()and not IsEntityDead(playerPed)and d()then
-        if IsEntityAttachedToEntity(crutchObject, playerPed) then
-            if DoesEntityExist(crutchObject) then
-                DetachEntity(crutchObject, true, true)
-                DeleteEntity(crutchObject)
-            end
-            ResetPedMovementClipset(playerPed)
-        else
-            crutchObject = CreateObject(crutchModel, GetEntityCoords(playerPed), true, false, false)
-            AttachEntityToEntity(crutchObject, playerPed, 70, 1.18, -0.36, -0.20, -20.0, -87.0, -20.0, true, true, false, true, 1, true)
-            RequestClipSet(clipSet)
-            while not HasClipSetLoaded(clipSet) do
-                Citizen.Wait(10)
-            end
-            SetPedMovementClipset(playerPed, clipSet, 1.0)
-            RemoveClipSet(clipSet)
-        end
-    end
-end,false)
---[[ RegisterCommand("laydown",function(f,g)
-    local i="anim@gangops@morgue@table@"
-    local j="body_search"
-    local k=PlayerPedId()
-    if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
-        loadAnimDict(i)
-        if IsEntityPlayingAnim(k,i,j,3)then 
-            TaskPlayAnim(k,i,"exit",3.0,1.0,-1,01,0,0,0,0)
-            ClearPedSecondaryTask(k)
-        else 
-            TaskPlayAnim(k,i,j,3.0,1.0,200000,1,0,0,0,0)
-        end 
-    end
-end,false) ]]
-RegisterCommand("guardwait",function(f,g)
-    local i="missbigscore2aig_1"
-    local j="wait_gate_a"
-    local I = "missbigscore1guard_wait_rifle"
-    local J="wait_c"
-    local k=PlayerPedId()
-    if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
-        loadAnimDict(i)
-        if IsEntityPlayingAnim(k,i,j,3)then 
-            TaskPlayAnim(k,i,"exit",3.0,1.0,-1,01,0,0,0,0)
-            ClearPedSecondaryTask(k)
-        else
-            TaskPlayAnim(k,I,J,3.0,1.0,200000,1,0,0,0,0)
-            TaskPlayAnim(k,i,j,3.0,1.0,200000,1,0,0,0,0)
-        end 
-    end
-end,false)
-RegisterCommand("scared",function(f,g)
-    local i="anim@heists@ornate_bank@hostages@cashier_b@"
-    local j="flinch_loop_underfire"
-    local k=PlayerPedId()
-    if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
-        loadAnimDict(i)
-        if IsEntityPlayingAnim(k,i,j,3)then 
-            TaskPlayAnim(k,i,"exit",3.0,1.0,-1,01,0,0,0,0)
-            ClearPedSecondaryTask(k)
-        else
-            TaskPlayAnim(k,i,j,3.0,1.0,200000,1,0,0,0,0)
-        end 
-    end
-end,false)
-
-local holdingSign = false
-local signModel = "prop_cs_protest_sign_01"
-local sign_net = nil
-RegisterCommand("blmsign",function(source, args)
-	ClearPedBloodDamage(PlayerPedId())
-	local ad1 = "amb@code_human_wander_drinking@beer@male@base"
-	local ad1a = "static"
-	local player = PlayerPedId()
-	local plyCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()), 0.0, 0.0, -5.0)
-	local sign = CreateObject(GetHashKey(signModel), plyCoords.x, plyCoords.y, plyCoords.z, 1, 1, 1)
-	local netid = ObjToNet(sign)
-
-
-	if (DoesEntityExist(player) and not IsEntityDead(player)) then
-		loadAnimDict(ad1)
-		RequestModel(GetHashKey(signModel))
-		if holdingSign then
-			Wait(100)
-			ClearPedSecondaryTask(PlayerPedId())
-			DetachEntity(NetToObj(sign_net), 1, 1)
-			DeleteEntity(NetToObj(sign_net))
-			sign_net = nil
-			holdingSign = false
-        else
-			holdingSign = true
-			TaskPlayAnim(player, ad1, ad1a, 8.0, 1.0, -1, 49, 0, 0, 0, 0)
-            Wait(500)
-			SetNetworkIdExistsOnAllMachines(netid, true)
-            SetNetworkIdCanMigrate(netid, false)
-			AttachEntityToEntity(sign,GetPlayerPed(PlayerId()),GetPedBoneIndex(GetPlayerPed(PlayerId()), 28422),0.0,0.0,0.3,0.0,5.0,180.0,1,1,0,1,0,1)
-			Wait(120)
-			sign_net = netid
-		end
-	end
-end, false)
-
-
-RegisterCommand("cigar", function(c, d)
-	local k = "prop_cigar_02"
-	local l = tARMA.getPlayerPed()
-	local e = "mp_player_int_uppersmoke"
-	local f = tARMA.getPlayerPed()
-	loadAnimDict(e)
-	if DoesEntityExist(l) and (not IsEntityDead(l)) then
-		if IsCigar then
-			Wait(500)
-			DeleteObject(cigar)
-			IsCigar = false
-		else
-			IsCigar = true
-			Wait(500)
-			local h, i, j = table.unpack(GetEntityCoords(l))
-			cigar = CreateObject(GetHashKey(k), h, i, j + 0, true, true, true)
-			AttachEntityToEntity(cigar, l, GetPedBoneIndex(l, 47419), 0, -0, 0, 0, 0, -0, true, true, false, true, 1, true)
-			TaskPlayAnim(f, e, "mp_player_int_smoke", 0, 0, -1, 49, 0, 0, 0, 0)
-		end
-	end
-end, false)
 Citizen.CreateThread(function()
     while true do 
         if a then 
@@ -2968,3 +2834,107 @@ end)
 exports("canAnim",function()
     return tARMA.canAnim()
 end)
+
+
+local ah = false
+RegisterNetEvent("CMG:startShavingPlayer",function(ai)
+	local aj = GetPlayerFromServerId(ai)
+	if aj == -1 then
+		return
+	end
+	local ak = GetPlayerPed(aj)
+	if ak == 0 then
+		return
+	end
+	tARMA.loadAnimDict("misshair_shop@hair_dressers")
+	tARMA.setCanAnim(false)
+	local e = PlayerPedId()
+	local al = GetOffsetFromEntityInWorldCoords(ak, -0.3, -0.2, 0.0)
+	local am = GetEntityHeading(ak)
+	SetEntityCoords(e, al.x, al.y, al.z - 1.0, true, false, false)
+	SetEntityHeading(e, am)
+	SetEntityNoCollisionEntity(e, ak, false)
+	SetEntityNoCollisionEntity(ak, e, false)
+	tARMA.loadModel("prop_clippers_01")
+	local an = CreateObject("prop_clippers_01", al.x, al.y, al.z + 2.0, true, true, false)
+	AttachEntityToEntity(an,e,GetPedBoneIndex(e, 6286),0.08,0.0,-0.025,0.0,180.0,-90.0,false,false,false,false,0,true)
+	TaskPlayAnim(e, "misshair_shop@hair_dressers", "keeper_hair_cut_a", 8.0, 8.0, -1, 1, 1.0, false, false, false)
+	local ao = math.floor(GetAnimDuration("misshair_shop@hair_dressers", "keeper_hair_cut_a") * 1000)
+	Citizen.Wait(ao)
+	TaskPlayAnim(e, "misshair_shop@hair_dressers", "keeper_hair_cut_b", 8.0, 8.0, -1, 1, 1.0, false, false, false)
+	local ap = math.floor(GetAnimDuration("misshair_shop@hair_dressers", "keeper_hair_cut_b") * 1000)
+	Citizen.Wait(ap)
+	ClearPedTasks(e)
+	SetEntityNoCollisionEntity(e, ak, true)
+	SetEntityNoCollisionEntity(ak, e, true)
+	DeleteEntity(an)
+	tARMA.setCanAnim(true)
+	RemoveAnimDict("misshair_shop@hair_dressers")
+	SetModelAsNoLongerNeeded("prop_clippers_01")
+end)
+
+RegisterNetEvent("CMG:startBeingShaved",function(aq)
+	local ar = GetPlayerFromServerId(aq)
+	if ar == -1 then
+		return
+	end
+	local as = GetPlayerPed(ar)
+	if as == 0 then
+		return
+	end
+	tARMA.setCanAnim(false)
+	i = false
+	local e = PlayerPedId()
+	FreezeEntityPosition(e, true)
+	local at = GetGameTimer()
+	while GetGameTimer() - at < 15500 do
+		if not IsEntityPlayingAnim(e, "random@arrests@busted", "idle_a", 3) then
+			TaskPlayAnim(e, "random@arrests@busted", "idle_a", 8.0, 1.0, -1, 9, 0, false, false, false)
+		end
+		Citizen.Wait(0)
+	end
+	SetPedComponentVariation(e, 2, 0, 0, 0)
+	FreezeEntityPosition(e, false)
+	i = true
+	tARMA.setCanAnim(true)
+	ah = true
+	Citizen.Wait(1800000)
+	ah = false
+end)
+
+RegisterNetEvent("CMG:playDelayedShave",function(au)
+	local av = GetPlayerFromServerId(au)
+	if av == -1 then
+		return
+	end
+	local ab = GetPlayerPed(av)
+	if ab == 0 then
+		return
+	end
+	local aw = tARMA.getPlayerCoords()
+	local ax = GetEntityCoords(ab, true)
+	if #(aw - ax) < 15.0 then
+		SendNUIMessage({transactionType = "shave"})
+	end
+end)
+
+RegisterNetEvent("CMG:setAsShaved",function(ay)
+	ah = true
+	Citizen.Wait(ay)
+	ah = false
+end)
+
+RegisterCommand("shave",function()
+	ah = not ah
+	if ah then
+		SendNUIMessage({transactionType = "shave"})
+		SetPedComponentVariation(PlayerPedId(), 2, 0, 0, 0)
+	end
+end)
+
+local function az(aA)
+    if ah and GetPedDrawableVariation(aA.playerPed, 2) ~= 0 then
+        SetPedComponentVariation(aA.playerPed, 2, 0, 0, 0)
+    end
+end
+tARMA.createThreadOnTick(az)
