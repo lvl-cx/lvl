@@ -15,7 +15,8 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.ButtonWithStyle("Spin the wheel of ARMA (50,000 Chips)","",{RightLabel = "→→→"},true,function(e, f, g)
                 if g then
-                    TriggerServerEvent("ARMA:requestSpinLuckyWheel")
+                    tARMA.notify({"~r~The wheel needs a maintenance repair."})
+                    --TriggerServerEvent("ARMA:requestSpinLuckyWheel")
                 end
             end)
         end)
