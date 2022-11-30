@@ -29,7 +29,7 @@ AddEventHandler("ARMA:alertNoProps", function(a,b,c,d,e)
 			},
 			{
 				["name"] = "Prop Information",
-				["value"] = a,b,c,d,e
+				["value"] = a,b,c,d,e,
 				["inline"] = true
 			},
 		}
