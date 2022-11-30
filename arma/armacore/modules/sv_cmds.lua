@@ -10,7 +10,7 @@ RegisterCommand("anon", function(source, args, raw)
 	local name = GetPlayerName(source)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
-	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
+	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 1
 	local command = {
 		{
 			["color"] = "16448403",
@@ -65,7 +65,7 @@ RegisterCommand("ooc", function(source, args, raw)
 	local name = GetPlayerName(source)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
-	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
+	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 1
 	lastmsg = message
 	local command = {
 		{
@@ -174,7 +174,7 @@ RegisterCommand("/", function(source, args, raw)
 	local name = GetPlayerName(source)
     local message = table.concat(args, " ")
 	local user_id = ARMA.getUserId(source)
-	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0
+	local hours = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 1
 	lastmsg = message
 	local command = {
 		{
