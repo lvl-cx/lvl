@@ -9,7 +9,6 @@ dependency "arma_mysql"
 ui_page "ui/index.html"
 
 shared_scripts {
-  "cfg/cfg_crypto.lua",
   "sharedcfg/*",
   "armacore/cfg/cfg_*.lua",
   --"cfg/cfg_*.lua",
@@ -57,32 +56,6 @@ files{
   "ui/pnc/components/*.js",
   "ui/pnc/components/*.html",
   "ui/playerlist_images/*.png",
-
-  'audio/sfx/resident/explosions.awc',
-  'audio/sfx/resident/vehicles.awc',
-  'audio/sfx/resident/weapons.awc',
-  'audio/sfx/weapons_player/lmg_combat.awc',
-  'audio/sfx/weapons_player/lmg_mg_player.awc',
-  'audio/sfx/weapons_player/mgn_sml_am83_vera.awc',
-  'audio/sfx/weapons_player/mgn_sml_am83_verb.awc',
-  'audio/sfx/weapons_player/mgn_sml_sc__l.awc',
-  'audio/sfx/weapons_player/ptl_50cal.awc',
-  'audio/sfx/weapons_player/ptl_combat.awc',
-  'audio/sfx/weapons_player/ptl_pistol.awc',
-  'audio/sfx/weapons_player/ptl_px4.awc',
-  'audio/sfx/weapons_player/ptl_rubber.awc',
-  'audio/sfx/weapons_player/sht_bullpup.awc',
-  'audio/sfx/weapons_player/sht_pump.awc',
-  'audio/sfx/weapons_player/smg_micro.awc',
-  'audio/sfx/weapons_player/smg_smg.awc',
-  'audio/sfx/weapons_player/snp_heavy.awc',
-  'audio/sfx/weapons_player/snp_rifle.awc',
-  'audio/sfx/weapons_player/spl_grenade_player.awc',
-  'audio/sfx/weapons_player/spl_minigun_player.awc',
-  'audio/sfx/weapons_player/spl_prog_ar_player.awc',
-  'audio/sfx/weapons_player/spl_railgun.awc',
-  'audio/sfx/weapons_player/spl_rpg_player.awc',
-  'audio/sfx/weapons_player/spl_tank_player.awc',
 }
 
 
@@ -129,8 +102,8 @@ client_scripts{
   "armacore/client/cl_*.lua",
   "armacore/cfg/cfg_*.lua",
   "cfg/client.lua",
-  -- "hotkeys/hotkeys.lua"
 }
+
 -- server scripts
 server_scripts{ 
   "lib/utils.lua",
@@ -143,20 +116,11 @@ server_scripts{
   "modules/map.lua",
   "modules/money.lua",
   "modules/inventory.lua",
-  "modules/identity.lua",
 
-  -- basic implementations
-  "modules/basic_atm.lua",
-  "modules/basic_garage.lua",
-  "modules/basic_items.lua",
-  "modules/basic_skinshop.lua",
-  "modules/LsCustoms.lua",
   "modules/server_commands.lua",
-  "modules/warningsystem.lua",
   "modules/sv_*.lua",
   "servercfg/*.lua",
   "armacore/modules/sv_*.lua",
-  -- "modules/hotkeys.lua"
 }
 
 data_file 'AUDIO_WAVEPACK' 'audio/sfx/resident'
