@@ -218,6 +218,7 @@ AddEventHandler("ARMA:takeAmount", function(amount)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.tryFullPayment(user_id,amount) then
+      ARMAclient.notify(source,{'~g~Paid £'..getMoneyStringFormatted(amount)..'.'})
       return
     end
 end)

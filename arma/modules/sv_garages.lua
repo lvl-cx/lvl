@@ -601,7 +601,7 @@ AddEventHandler("ARMA:PayVehicleTax", function()
         local bank = ARMA.getBankMoney(user_id)
         local payment = bank / 10000
         if ARMA.tryBankPayment(user_id, payment) then
-            ARMAclient.notify(source,{"~g~Paid £"..math.floor(payment).." vehicle tax."})
+            ARMAclient.notify(source,{"~g~Paid £"..getMoneyStringFormatted(math.floor(payment)).." vehicle tax."})
             TriggerEvent('ARMA:addToCommunityPot', math.floor(payment))
         else
             ARMAclient.notify(source,{"~r~Its fine... Tax payers will pay your vehicle tax instead."})
