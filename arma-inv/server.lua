@@ -111,7 +111,7 @@ RegisterNetEvent('ARMA:UseItem')
 AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     local source = source
     local user_id = ARMA.getUserId({source}) 
-    if not itemId then    ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
+    if not itemId then ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if itemLoc == "Plr" then
         if ARMA.getInventoryMaxWeight({user_id}) == 30 then
             if itemId == "offwhitebag" then
@@ -136,6 +136,8 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 100})
                 TriggerClientEvent('ARMA:boughtBackpack', source, 5, 90, 0,250000,70, 'Rebel Backpack (+70kg)')
+            elseif itemId == "shaver" then 
+                ARMA.ShaveHead({source})
             end
             TriggerEvent('ARMA:RefreshInventory', source)
         else
