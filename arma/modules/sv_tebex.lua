@@ -38,8 +38,8 @@ end
 function moneybag(_, arg)
     user_id = tonumber(arg[1])
     usource = ARMA.getUserSource(user_id)
-    print(GetPlayerName(usource)..'['..user_id..'] has bought a '..tostring(arg[2])..' Money Bag')
-    ARMAclient.notify(usource, {"~g~You have purchased " .. tostring(arg[2]) .. " Money! ❤️"})
+    print(GetPlayerName(usource)..'['..user_id..'] has bought a '..getMoneyStringFormatted(arg[2])..' Money Bag')
+    ARMAclient.notify(usource, {"~g~You have purchased " .. getMoneyStringFormatted(arg[2]) .. " Money! ❤️"})
     ARMA.giveBankMoney(user_id, tonumber(arg[2]))
 end
 
