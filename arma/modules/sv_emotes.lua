@@ -41,7 +41,7 @@ end)
 function ARMA.ShaveHead(source)
     local source = source
     local user_id = ARMA.getUserId(source)
-    ARMAclient.getNearestPlayer(player,{4},function(nplayer)
+    ARMAclient.getNearestPlayer(source,{4},function(nplayer)
         if nplayer then
             ARMAclient.globalSurrenderring(nplayer,{},function(surrendering)
                 if surrendering then
