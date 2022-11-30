@@ -417,11 +417,6 @@ AddEventHandler("ARMAHousing:LoadWardrobe", function()
         end
 
         TriggerClientEvent("ARMAHousing:UpdateWardrobe", player, sets) --update wardrobe for client
-        if ARMA.hasGroup(user_id, 'VIP') then
-            TriggerClientEvent("clothingMenu:UpdateWardrobe", player, sets) --update wardrobe for client
-        else
-            TriggerClientEvent('clothingMenu:closeWardrobe', player)
-        end
     end)
 end)
 
@@ -432,11 +427,11 @@ AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
     for k, v in pairs(cfghomes.homes) do
         local x,y,z = table.unpack(v.entry_point)
         getUserByAddress(k,1,function(owner)
-            if owner == nil then -- check if house is avaliable to be bought aka no owner of home
-                ARMAclient.addBlip(source,{x,y,z,374,2,k}) -- add blip, 374,2 green house symbol
+            if owner == nil then
+                ARMAclient.addBlip(source,{x,y,z,374,2,k,0.8,true}) -- remove the 0.8 and true to display on full map instead of minimap
             end
-            if owner == user_id then -- check if owner is user
-                ARMAclient.addBlip(source,{x,y,z,374,1,k}) -- add blip for owner of home, 374,2 green house symbol
+            if owner == user_id then
+                ARMAclient.addBlip(source,{x,y,z,374,1,k}) -- remove the 0.8 and true to display on full map instead of minimap
             end
         end)
     end
