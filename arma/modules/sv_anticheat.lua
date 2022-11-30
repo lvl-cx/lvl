@@ -3,6 +3,8 @@ m=m.garages
 local f = module("cfg/weapons")
 f=f.weapons
 
+local gettingVideo
+
 local cheatingCrashes = { -- Place all known cheating crashes here, they will be logged
     --'Exiting' (Example)
     'Game crashed: GTA5_b2189.exe!rage::grcTextureFactoryDX11::PopRenderTarget (0xfd)',
@@ -213,12 +215,14 @@ local otherVehicles = {
 }
 
 
+local crashWebhook = "https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGF"
+local cheatingWebhook = "https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm"
 
 AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
     if user_id ~= nil then
         for k,v in pairs(cheatingCrashes) do
             if v == reason then
-                PerformHttpRequest('https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGFc', function(err, text, headers) 
+                PerformHttpRequest(crashWebhook, function(err, text, headers) 
                 end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
                     {
                         ["color"] = 16448403,
@@ -447,8 +451,8 @@ AddEventHandler("ARMA:acType12", function(extra)
     TriggerEvent("ARMA:acBan", user_id, 12, name, player, extra)
 end)
 
-RegisterServerEvent("ARMA:acType12")
-AddEventHandler("ARMA:acType12", function()
+RegisterServerEvent("ARMA:acType13")
+AddEventHandler("ARMA:acType13", function()
     local user_id = ARMA.getUserId(source)
 	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
@@ -485,17 +489,33 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local reason = ''
     if extra == nil then extra = 'None' end
     if source == '' then
-        for k,v in pairs(actypes) do
-            if bantype == v.type then
-                reason = 'Type #'..bantype
-                desc = v.desc
+        if not gettingVideo then
+            for k,v in pairs(actypes) do
+                if bantype == v.type then
+                    reason = 'Type #'..bantype
+                    desc = v.desc
+                end
             end
+            gettingVideo = true
+            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, webhook)
+            Wait(15000)
+            gettingVideo = false
+            PerformHttpRequest(cheatingWebhook, function(err, text, headers) 
+            end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
+                {
+                    ["color"] = 16448403,
+                    ["title"] = "Anticheat Ban",
+                    ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",                        
+                    ["footer"] = {
+                        ["text"] = "ARMA - "..os.date("%c"),
+                        ["icon_url"] = "",
+                    }
+            }
+            }}), { ["Content-Type"] = "application/json" })
+            TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
+            ARMA.banConsole(user_id,"perm","Cheating "..reason)
+            exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
         end
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, "https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm")
-        Wait(20000)
-        TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-        ARMA.banConsole(user_id,"perm","Cheating "..reason)
-        exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
     end
 end)
 
@@ -506,7 +526,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
     local playerName = GetPlayerName(source)
     if ARMA.hasGroup(user_id, 'dev') then
         ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
-        PerformHttpRequest(webhook, function(err, text, headers) 
+        PerformHttpRequest(cheatingWebhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
             {
                 ["color"] = 16448403,

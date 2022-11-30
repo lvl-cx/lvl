@@ -274,9 +274,13 @@ local b = {
 Citizen.CreateThread(function()
 	while true do
 		local f = tARMA.getPlayerVehicle()
+		local c = {}
+		for k,v in pairs(b) do
+			table.insert(c, GetHashKey(v))
+		end
 		if GetVehicleHasParachute(f) then
 			local be = GetEntityModel(f)
-			if not table.has(b, be) then
+			if not table.has(c, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be]) -- finish later
 			end
 		end
