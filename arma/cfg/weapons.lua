@@ -17,7 +17,7 @@ cfg.weapons = {
         class = "Melee",
         ammo = "",
         policeWeapon = false,
-        model = "w_pi_stungun",
+        model = "",
         showonback = false,
         weight = 2.5,
     },
@@ -559,14 +559,13 @@ cfg.weapons = {
         showonback = true,
         weight = 10,
     },
-    ["WEAPON_MSR2"] = {
-        name = "MSR",
+    ["WEAPON_AX50"] = {
+        name = "AX-50",
         class = "Heavy",
         ammo = "Police Issued .308 Sniper Rounds",
         policeWeapon = true,
-        model = "w_sr_msr2",
+        model = "w_sr_ax50",
         showonback = true,
-        weight = 10,
     },
     ["WEAPON_REMINGTON700"] = {
         name = "Remington700",
