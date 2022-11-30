@@ -2837,7 +2837,7 @@ end)
 
 
 local ah = false
-RegisterNetEvent("CMG:startShavingPlayer",function(ai)
+RegisterNetEvent("ARMA:startShavingPlayer",function(ai)
 	local aj = GetPlayerFromServerId(ai)
 	if aj == -1 then
 		return
@@ -2873,7 +2873,7 @@ RegisterNetEvent("CMG:startShavingPlayer",function(ai)
 	SetModelAsNoLongerNeeded("prop_clippers_01")
 end)
 
-RegisterNetEvent("CMG:startBeingShaved",function(aq)
+RegisterNetEvent("ARMA:startBeingShaved",function(aq)
 	local ar = GetPlayerFromServerId(aq)
 	if ar == -1 then
 		return
@@ -2902,7 +2902,7 @@ RegisterNetEvent("CMG:startBeingShaved",function(aq)
 	ah = false
 end)
 
-RegisterNetEvent("CMG:playDelayedShave",function(au)
+RegisterNetEvent("ARMA:playDelayedShave",function(au)
 	local av = GetPlayerFromServerId(au)
 	if av == -1 then
 		return
@@ -2918,18 +2918,10 @@ RegisterNetEvent("CMG:playDelayedShave",function(au)
 	end
 end)
 
-RegisterNetEvent("CMG:setAsShaved",function(ay)
+RegisterNetEvent("ARMA:setAsShaved",function(ay)
 	ah = true
 	Citizen.Wait(ay)
 	ah = false
-end)
-
-RegisterCommand("shave",function()
-	ah = not ah
-	if ah then
-		SendNUIMessage({transactionType = "shave"})
-		SetPedComponentVariation(PlayerPedId(), 2, 0, 0, 0)
-	end
 end)
 
 local function az(aA)
