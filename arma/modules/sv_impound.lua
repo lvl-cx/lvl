@@ -64,6 +64,7 @@ AddEventHandler('ARMA:releaseImpoundedVehicle', function(spawncode)
                                     if v.vehicle == spawncode then
                                         TriggerClientEvent('ARMA:spawnPersonalVehicle', source, v.vehicle, user_id, false, vector3(impoundcfg.positions[randomSpawn].x, impoundcfg.positions[randomSpawn].y, impoundcfg.positions[randomSpawn].z), v.vehicle_plate, v.fuel_level)
                                         TriggerEvent('ARMA:addToCommunityPot', 10000)
+                                        ARMAclient.notifyPicture(source, {"polnotification","notification","Your vehicle has been released from the impound at the cost of ~g~£10,000~w~."})
                                         return
                                     end
                                 end
@@ -73,7 +74,7 @@ AddEventHandler('ARMA:releaseImpoundedVehicle', function(spawncode)
                         ARMAclient.notify(source, {'~r~You do not have enough money to retrieve your vehicle from the impound.'})
                     end
                 else
-                    ARMAclient.notify(source, {'~r~You must wait '..math.floor( (tonumber(impoundedvehicles[k]['impound_time'])+600 - os.time())/60)..' minutes before retrieving your vehicle from the impound.'})
+                    ARMAclient.notifyPicture(source, {"polnotification","notification","This vehicle cannot be unimpounded for another ~r~"..math.floor( (tonumber(impoundedvehicles[k]['impound_time'])+600 - os.time())/60).."minutes ~w~."})
                 end
             end
         end
