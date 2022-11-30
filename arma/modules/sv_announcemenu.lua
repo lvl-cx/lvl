@@ -26,21 +26,23 @@ AddEventHandler("ARMA:serviceAnnounce", function(announceType)
     local source = source
     local user_id = ARMA.getUserId(source)
     for k,v in pairs(announceTables) do
-        if v.info.name == announceType and (ARMA.hasPermission(user_id, v.permission) or ARMA.hasGroup(user_id, 'Founder')) then
-            if ARMA.tryFullPayment(user_id, v.info.price) then
-                ARMA.prompt(source,"Input text to announce","",function(source,data) 
-                    ARMAclient.announce(-1, {v.image, data})
-                    if v.info.price > 0 then
-                        ARMAclient.notify(source, {"~g~Purchased a "..v.info.name.." for £"..v.info.price.." with content ~b~"..data})
-                    else
-                        ARMAclient.notify(source, {"~g~Sending a "..v.info.name.." with content ~b~"..data})
-                    end
-                end)
+        if v.info.name == announceType then
+            if ARMA.hasPermission(user_id, v.permission) or ARMA.hasGroup(user_id, 'Founder') then
+                if ARMA.tryFullPayment(user_id, v.info.price) then
+                    ARMA.prompt(source,"Input text to announce","",function(source,data) 
+                        ARMAclient.announce(-1, {v.image, data})
+                        if v.info.price > 0 then
+                            ARMAclient.notify(source, {"~g~Purchased a "..v.info.name.." for £"..v.info.price.." with content ~b~"..data})
+                        else
+                            ARMAclient.notify(source, {"~g~Sending a "..v.info.name.." with content ~b~"..data})
+                        end
+                    end)
+                else
+                    ARMAclient.notify(source, {"~r~You do not have enough money to do this."})
+                end
             else
-                ARMAclient.notify(source, {"~r~You do not have enough money to do this."})
+                TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Trigger an announcement')
             end
-        else
-            TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Trigger an announcement')
         end
     end
 end)
