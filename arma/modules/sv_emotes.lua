@@ -10,3 +10,53 @@ AddEventHandler('ARMA:receiveSharedEmoteRequest', function(i, a)
     TriggerClientEvent('ARMA:receiveSharedEmoteRequestSource', i)
     TriggerClientEvent('ARMA:receiveSharedEmoteRequest', source, a)
 end)
+
+local shavedPlayers = {}
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(60000)
+        for k,v in pairs(shavedPlayers) do
+            if shavedPlayers[k] then
+                if shavedPlayers[k].cooldown > 0 then
+                    shavedPlayers[k].cooldown = shavedPlayers[k].cooldown - 1
+                else
+                    table.remove(shavedPlayers, k)
+                end
+            end
+        end
+    end
+end)
+
+AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
+    SetTimeout(1000, function() 
+        local source = source
+        local user_id = ARMA.getUserId(source)
+        if first_spawn and shavedPlayers[user_id] then
+            TriggerClientEvent('ARMA:setAsShaved', source, (shavedPlayers[k].cooldown*60*1000))
+        end
+    end)
+end)
+
+function ARMA.ShaveHead(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMAclient.getNearestPlayer(player,{4},function(nplayer)
+        if nplayer then
+            ARMAclient.globalSurrenderring(nplayer,{},function(surrendering)
+                if surrendering then
+                    TriggerClientEvent('ARMA:startShavingPlayer', source, nplayer)
+                    TriggerClientEvent('ARMA:startBeingShaved', nplayer, source)
+                    TriggerClientEvent('ARMA:playDelayedShave', -1, source)
+                    shavedPlayers[ARMA.getUserId(nplayer)] = {
+                        cooldown = 30,
+                    }
+                else
+                    ARMAclient.notify(source,{'~r~This player is not on their knees.'})
+                end
+            end)
+        else
+            ARMAclient.notify(source, {"~r~No one nearby."})
+        end
+    end)
+end
