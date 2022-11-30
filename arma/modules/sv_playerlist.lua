@@ -135,7 +135,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
     for k,v in pairs(ARMA.getUsers()) do
         local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
         local hours = math.ceil(minutesPlayed/60)
-        if hours = 0 then
+        if hours == 0 then
             hours = 1
         end
         if ARMA.hasPermission(k, 'admin.tickets') then
