@@ -1047,11 +1047,11 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'notesub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if noteslist == nil then
-                RageUI.Separator("~b~Player notes: Loading...")
+                RageUI.Separator("~o~Player notes: Loading...")
             elseif #noteslist == 0 then
-                RageUI.Separator("~b~There are no player notes to display.")
+                RageUI.Separator("~o~There are no player notes to display.")
             else
-                RageUI.Separator("~b~Player notes:")
+                RageUI.Separator("~o~Player notes:")
                 for K = 1, #noteslist do
                     RageUI.Separator("~o~ID: " .. noteslist[K].note_id .. " " .. noteslist[K].text .. " (" .. noteslist[K].admin_id .. ")")
                 end
