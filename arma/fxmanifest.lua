@@ -116,7 +116,7 @@ server_scripts{
   "modules/map.lua",
   "modules/money.lua",
   "modules/inventory.lua",
-
+  "modules/basic_items.lua",
   "modules/server_commands.lua",
   "modules/sv_*.lua",
   "servercfg/*.lua",
