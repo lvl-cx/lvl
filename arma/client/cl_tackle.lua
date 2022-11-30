@@ -139,7 +139,7 @@ function func_tackleManagement()
     if h then
         SetPedToRagdoll(tARMA.getPlayerPed(), 1000, 1000, 0, 0, 0, 0)
     end
-    if tARMA.globalOnPoliceDuty() or tARMA.globalOnPrisonDuty() then
+    if tARMA.globalOnPoliceDuty() or tARMA.globalOnPrisonDuty() or tARMA.isStaffedOn() then
         if IsControlPressed(0, a["LEFTSHIFT"]) and IsControlPressed(0, a["G"]) then
             if not b and GetGameTimer() - g > 10 * 1000 then
                 local x = n()

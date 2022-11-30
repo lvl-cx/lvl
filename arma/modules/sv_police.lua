@@ -516,7 +516,7 @@ AddEventHandler('ARMA:gunshotTest', function(playersrc)
     local user_id = ARMA.getUserId(source)
     if user_id ~= nil and ARMA.hasPermission(user_id, "police.onduty.permission") then
       if playersrc ~= nil then
-        ARMAclient.hasRecentlyShotGun(playersrc,{}, function(shotagun)  -- check handcuffed
+        ARMAclient.hasRecentlyShotGun(playersrc,{}, function(shotagun)
           if shotagun then
             ARMAclient.notify(source, {"~r~Player has recently shot a gun."})
           else
@@ -531,7 +531,7 @@ RegisterServerEvent('ARMA:tryTackle')
 AddEventHandler('ARMA:tryTackle', function(id)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') or ARMA.hasPermission(user_id, 'admin.tickets') then
         TriggerClientEvent('ARMA:playTackle', source)
         TriggerClientEvent('ARMA:getTackled', id, source)
     end
