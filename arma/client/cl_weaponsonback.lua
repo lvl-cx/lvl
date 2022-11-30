@@ -1,60 +1,21 @@
-local a = {}
 local Weapons = {}
 local diagonalWeapons = false
-a.weapons = {     
-	--?Melee's
-	{name = 'WEAPON_BROOM', bone = 24818, x=-0.60,y=-0.15,z=0.13, xRot=50.0,yRot=90.0, zRot=2.0, category = 'melee', model = `w_me_broom`},
-	{name = 'WEAPON_SLEDGEHAMMER', bone = 24818, x=-0.35,y=-0.10,z=0.13, xRot=190.0,yRot=180.0, zRot=105.0, category = 'melee', model = `w_me_sledgehammer`},
-	{name = 'WEAPON_TRAFFICSIGN', bone = 24818, x=-0.45,y=-0.10,z=0.13, xRot=190.0,yRot=180.0, zRot=105.0, category = 'melee', model = `w_me_trafficsign`},
-	{name = 'WEAPON_SHOVEL', bone = 24818, x=0.32,y=-0.10,z=0.10, xRot=5.0,yRot=200.0, zRot=80.0, category = 'melee', model = `w_me_shovel`},
-	{name = 'WEAPON_GUITAR', bone = 24818, x=0.32,y=-0.15,z=0.13, xRot=0.0,yRot=-90.0, zRot=0.0, category = 'melee', model = `w_me_guitar`},
-	{name = 'WEAPON_DILDO', bone = 58271, x=-0.01,y=0.1,z=-0.07, xRot=-35,yRot=0.10, zRot=-100.0, category = 'melee', model = `w_me_dildo`},
-	{name = 'WEAPON_CRICKETBAT', bone = 24818, x=0.32,y=-0.15,z=0.13, xRot=55.0,yRot=-90.0, zRot=0.0, category = 'melee', model = `w_me_cricketbat`},
-	{name = 'WEAPON_FIREAXE', bone = 24818, x=0.32,y=-0.15,z=0.13, xRot=0.0,yRot=-90.0, zRot=0.0, category = 'melee', model = `w_me_fireaxe`},
-
-
-    -- --?PD SMGs/Rifles
-	{name = 'WEAPON_PDM4A1', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_m4a1`},
-	{name = 'WEAPON_AR15', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_ar15`},
-	{name = 'WEAPON_MP5', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'smg', model = `w_sb_mp5`},
-	{name = 'WEAPON_SIGMCX', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_sigmcx`},
-	{name = 'WEAPON_G36', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_g36`},
-    {name = 'WEAPON_SPAR17', bone = 24818, x=0.00,y=0.19,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_spar17`},
-	{name = 'WEAPON_STING', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'smg', model = `w_sb_sting`},
-	{name = 'WEAPON_MK18SOG', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_mk18sog`},
-	{name = 'WEAPON_PDTX15', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_tx15dml`},
-	{name = 'WEAPON_NIGHTSTICK', bone = 51826, x=-0.1,y=0.1,z=0.07, xRot=180.0,yRot=140.0, zRot=90.0, category = 'melee', model = `w_me_nightstick`},
-
-    -- --?CIV SMGs/Rifles/Shotguns
-	{name = 'WEAPON_EF88', bone = 24818, x=0.05,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'assault', model = `w_ar_ef88`},
-	{name = 'WEAPON_SPAR16', bone = 24818, x=-0.02,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'assault', model = `w_ar_spar16`},
-	{name = 'WEAPON_SPAZ12', bone = 24818, x=0.1,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'shotgun', model = `w_ar_spaz12`},
-	{name = 'WEAPON_RPK16', bone = 24818, x=-0.05,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'heavy', model = `w_mg_rpk16`},
-
-    -- --?Mosin/spec snipers
-	{name = 'WEAPON_MOSIN', bone = 24818, x=-0.12,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'assault', model = `w_ar_mosin`},
-	{name = 'WEAPON_MANDO', bone = 24818, x=0.3,y=0.22,z=-0.2, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_mando`},
-	{name = 'WEAPON_DILDET', bone = 24818, x=-0.35,y=-0.12,z=-0.13, xRot=100.0,yRot=100.0, zRot=5.0, category = 'assault', model = `w_ar_dildet`},
-}
-
+local a=module("cfg/cfg_weaponsonback")
 local b=module("cfg/weapons")
 Citizen.CreateThread(function()
     for c,d in pairs(b.weapons)do 
-        for i=1, #a.weapons, 1 do
-            if not a.weapons[i].name == d.hash then 
-                if d.class=="SMG"then 
-                    table.insert(a.weapons, {bone=58271,x=-0.01,y=0.1,z=-0.07,xRot=-55.0,yRot=0.10, zRot=0.0,category ='smg',model=GetHashKey(d.model)})
-                elseif d.class=="AR"or d.class=="Heavy" or d.class=="LMG"then 
-                    table.insert(a.weapons, {bone=24818,x=-0.12,y=-0.12,z=-0.13,xRot=100.0,yRot=-3.0,zRot=5.0,category='assault',model=GetHashKey(d.model)})
-                elseif d.class=="Melee"then 
-                    table.insert(a.weapons, {bone=24818,x=0.32,y=-0.15,z=0.13,xRot=0.0,yRot=-90.0,zRot=0.0,category='melee',model=GetHashKey(d.model)})
-                elseif d.class=="Shotgun"then 
-                    table.insert(a.weapons, {bone=24818,x=-0.12,y=-0.12,z=-0.13,xRot=100.0,yRot=-3.0,zRot=5.0,category='shotgun',model=GetHashKey(d.model)})
-                end 
-            end 
+		if not a.weapons[d.hash] then
+			if d.class=="SMG"then 
+				table.insert(a.weapons, {name=c,bone=58271,x=-0.01,y=0.1,z=-0.07,xRot=-55.0,yRot=0.10, zRot=0.0,category ='smg',class=d.class,model=GetHashKey(d.model)})
+			elseif d.class=="AR"or d.class=="Heavy" or d.class=="LMG"then 
+				table.insert(a.weapons, {name=c,bone=24818,x=-0.12,y=-0.12,z=-0.13,xRot=100.0,yRot=-3.0,zRot=5.0,category='assault',class=d.class,model=GetHashKey(d.model)})
+			elseif d.class=="Melee"then 
+				table.insert(a.weapons, {name=c,bone=24818,x=0.32,y=-0.15,z=0.13,xRot=0.0,yRot=-90.0,zRot=0.0,category='melee',class=d.class,model=GetHashKey(d.model)})
+			elseif d.class=="Shotgun"then 
+				table.insert(a.weapons, {name=c,bone=24818,x=-0.12,y=-0.12,z=-0.13,xRot=100.0,yRot=-3.0,zRot=5.0,category='shotgun',class=d.class,model=GetHashKey(d.model)})
+			end 
 		end
-		Wait(250)
-    end 
+	end
 end)
   
 function dump(o)
@@ -74,7 +35,7 @@ Citizen.CreateThread(function()
 	while true do
 		for i=1, #a.weapons, 1 do
 			local weaponHash = GetHashKey(a.weapons[i].name)
-			if HasPedGotWeapon(GetPlayerPed(-1), weaponHash, false) then
+			if HasPedGotWeapon(PlayerPedId(), weaponHash, false) then
 				local onPlayer = false
 				for k, entity in pairs(Weapons) do
 					if entity then
@@ -84,9 +45,10 @@ Citizen.CreateThread(function()
 						end
 					end
 				end
-				if not onPlayer and weaponHash ~= GetSelectedPedWeapon(GetPlayerPed(-1)) and not isInGreenzone then
+				local policeInVehicleWithSniper = globalOnPoliceDuty and tARMA.getPlayerVehicle() ~= 0 and a.weapons[i].class == 'Heavy'
+				if not onPlayer and weaponHash ~= GetSelectedPedWeapon(PlayerPedId()) and not isInGreenzone and not policeInVehicleWithSniper then
 					SetGear(a.weapons[i].name)
-				elseif (onPlayer and weaponHash == GetSelectedPedWeapon(GetPlayerPed(-1))) or isInGreenzone then
+				elseif (onPlayer and weaponHash == GetSelectedPedWeapon(PlayerPedId())) or isInGreenzone or policeInVehicleWithSniper then
 					RemoveGear(a.weapons[i].name)
 				end
 			else
@@ -108,14 +70,6 @@ function RemoveGear(weapon)
 		end
 	end
 	Weapons = _Weapons
-end
-
- -- Remove all weapons that are on the ped
-function RemoveGears()
-	for i, entity in pairs(Weapons) do
-		DeleteWeapon(entity.obj)
-	end
-	Weapons = {}
 end
 
 function SpawnObject(model, coords, cb)
@@ -146,7 +100,7 @@ function SetGear(weapon)
 	local boneXRot   = 0.0
 	local boneYRot   = 0.0
 	local boneZRot   = 0.0
-	local playerPed  = GetPlayerPed(-1)
+	local playerPed  = PlayerPedId()
 	local model      = nil
 	 
 	for i=1, #a.weapons, 1 do
@@ -172,7 +126,7 @@ function SetGear(weapon)
 	end
  
 	SpawnObject(model, {x = x, y = y, z = z}, function(obj)
-		local playerPed = GetPlayerPed(-1)
+		local playerPed = PlayerPedId()
 		local boneIndex = GetPedBoneIndex(playerPed, bone)
 		local bonePos 	= GetWorldPositionOfEntityBone(playerPed, boneIndex)
 		AttachEntityToEntity(obj, playerPed, boneIndex, boneX, boneY, boneZ, boneXRot, boneYRot, boneZRot, false, false, false, false, 2, true)
