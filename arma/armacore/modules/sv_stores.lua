@@ -10,7 +10,7 @@ AddEventHandler("ARMA:BuyStoreItem", function(item, amount)
             if ARMA.getInventoryWeight(user_id) <= 25 then
                 if ARMA.tryPayment(user_id,v.price*amount) then
                     ARMA.giveInventoryItem(user_id, item, amount, false)
-                    ARMAclient.notify(source, {"~g~Paid ".. '£' ..tostring(v.price*amount)})
+                    ARMAclient.notify(source, {"~g~Paid ".. '£' ..getMoneyStringFormatted(v.price*amount)..'.'})
                     TriggerClientEvent("ARMA:PlaySound", source, 1)
                 else
                     ARMAclient.notify(source, {"~r~Not enough money."})

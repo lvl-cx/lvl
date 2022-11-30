@@ -2,59 +2,10 @@
 local items = {}
 local a = module("cfg/weapons")
 
-items["medkit"] = {"Medical Kit","Used to reanimate unconscious people.",nil,0.5}
-items["dirty_money"] = {"Dirty money","Illegally earned money.",nil,0}
-items["parcels"] = {"Parcels","Parcels to deliver",nil,0.10}
 items["repairkit"] = {"Repair Kit","Used to repair vehicles.",nil,0.5}
 items["headbag"] = {"Head Bag","Used to cover someone's head.",nil,0.5}
+items["shaver"] = {"Shaver","Used to shave someone's head.",nil,0.5}
 
-
--- money
-items["money"] = {"Money","Packed money.",function(args)
-  local choices = {}
-  local idname = args[1]
-
-  choices["Unpack"] = {function(player,choice,mod)
-    local user_id = ARMA.getUserId(player)
-    if user_id ~= nil then
-      local amount = ARMA.getInventoryItemAmount(user_id, idname)
-      ARMA.prompt(player, "How much to unpack ? (max "..amount..")", "", function(player,ramount)
-        ramount = parseInt(ramount)
-        if ARMA.tryGetInventoryItem(user_id, idname, ramount, true) then -- unpack the money
-          ARMA.giveMoney(user_id, ramount)
-          ARMA.closeMenu(player)
-        end
-      end)
-    end
-  end}
-
-  return choices
-end,0}
-
--- money binder
-items["money_binder"] = {"Money binder","Used to bind £1000 of money.",function(args)
-  local choices = {}
-  local idname = args[1]
-
-  choices["Bind money"] = {function(player,choice,mod) -- bind the money
-    local user_id = ARMA.getUserId(player)
-    if user_id ~= nil then
-      local money = ARMA.getMoney(user_id)
-      if money >= 1000 then
-        if ARMA.tryGetInventoryItem(user_id, idname, 1, true) and ARMA.tryPayment(user_id,1000) then
-          ARMA.giveInventoryItem(user_id, "money", 1000, true)
-          ARMA.closeMenu(player)
-        end
-      else
-        ARMAclient.notify(player,{ARMA.lang.money.not_enough()})
-      end
-    end
-  end}
-
-  return choices
-end,0}
-
--- parametric weapon items
 -- give "wbody|WEAPON_PISTOL" and "wammo|WEAPON_PISTOL" to have pistol body and pistol bullets
 
 local get_wname = function(weapon_id)
@@ -94,7 +45,7 @@ local wbody_choices = function(args)
 end
 
 local wbody_weight = function(args)
-  return 0.75
+  return 5.00
 end
 
 items["wbody"] = {wbody_name,wbody_desc,wbody_choices,wbody_weight}
