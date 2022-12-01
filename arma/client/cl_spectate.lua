@@ -1,138 +1,168 @@
 local a = false
-TargetSpectate = nil
-local b = 0
-local c = 90
-local d = -3.5
-local e = nil
-local f = 25
-function polar3DToWorld3D(g, d, b, c)
-    local h = b * math.pi / 180.0
-    local i = c * math.pi / 180.0
-    local j = {
-        x = g.x + d * math.sin(i) * math.cos(h),
-        y = g.y - d * math.sin(i) * math.sin(h),
-        z = g.z - d * math.cos(i)
-    }
-    return j
+local b = nil
+local c = 0
+local d = 90
+local e = -3.5
+local f = nil
+local function g(h, e, c, d)
+    local i = math.rad(c)
+    local j = math.rad(d)
+    return vector3(h.x + e * math.sin(j) * math.cos(i), h.y - e * math.sin(j) * math.sin(i), h.z - e * math.cos(j))
 end
-function spectate(k)
-    local l = tARMA.getPlayerPed()
-    SetEntityCollision(l, false, false)
-    SetEntityVisible(l, false)
-    if not DoesCamExist(e) then
-        e = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+RegisterNetEvent("ARMA:spectatePlayer",function(k, l)
+    local m = PlayerPedId()
+    FreezeEntityPosition(m, true)
+    SetEntityCollision(m, false, false)
+    SetEntityVisible(m, false, 0)
+    SetEntityInvincible(m, true)
+    local n = math.random(7500, 8900)
+    local o = math.random(7500, 8900)
+    local p = math.random(1, 2) == 2
+    if p then
+        n = -n
+        o = -o
     end
-    SetCamActive(e, true)
+    SetEntityCoordsNoOffset(m, n + 0.0, o + 0.0, 1000.0, false, false, false)
+    f = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", l.x, l.y, l.z, 0.0, 0.0, 0.0, GetGameplayCamFov(), false, 2)
+    SetCamActive(f, true)
     RenderScriptCams(true, false, 0, true, true)
+    b = k
+    while true do
+        if not b then
+            return
+        end
+        SetFocusPosAndVel(l.x, l.y, l.z, 0.0, 0.0, 0.0)
+        LockMinimapPosition(l.x, l.y)
+        SetPlayerBlipPositionThisFrame(l.x, l.y)
+        if GetPlayerFromServerId(k) ~= -1 then
+            break
+        end
+        Citizen.Wait(0)
+    end
     a = true
-    TargetSpectate = k
-end
-function resetNormalCamera()
+end)
+RegisterNetEvent("ARMA:stopSpectatePlayer",function()
     a = false
-    TargetSpectate = nil
-    local l = tARMA.getPlayerPed()
-    SetCamActive(e, false)
-    RenderScriptCams(false, false, 0, true, true)
-    SetEntityCollision(l, true, true)
-    SetEntityVisible(l, true)
-    FreezeEntityPosition(l, false)
+    ClearFocus()
+    b = nil
+    UnlockMinimapPosition()
+    SetCamActive(f, false)
+    RenderScriptCams(false, false, 0, false, false)
+    DestroyCam(f, false)
+    local m = PlayerPedId()
+    SetEntityInvincible(m, false)
+    SetEntityVisible(m, true, 0)
+    SetEntityCollision(m, true, true)
+    FreezeEntityPosition(m, false)
+end)
+
+function draw2dText(q, r, s, t, u, v, w, x, y, z, A)
+SetTextFont(0)
+SetTextProportional(0)
+SetTextScale(u, u)
+SetTextColour(w, x, y, z)
+SetTextDropshadow(0, 0, 0, 0, 255)
+SetTextEdge(1, 0, 0, 0, 255)
+SetTextDropShadow()
+if A then
+    SetTextOutline()
 end
-RegisterNetEvent("ARMA:spectate",function(k, m, n)
-    if m then
-        f = m
-    end
-    local l = tARMA.getPlayerPed()
-    if k == -1 then
-        resetNormalCamera()
-    else
-        FreezeEntityPosition(l, true)
-        spectate(k)
-    end
-end)
-RegisterNetEvent("ARMA:partTwo",function(o)
-    if GetPlayerFromServerId(o) ~= -1 then
-        NetworkConcealPlayer(GetPlayerFromServerId(o), true, 0)
-    end
-end)
-RegisterNetEvent("ARMA:partThree",function(o)
-    if GetPlayerFromServerId(o) ~= -1 then
-        NetworkConcealPlayer(GetPlayerFromServerId(o), false, 0)
-    end
-end)
-function draw2dText(p, q, r, s, t, u, v, w, x, y, z)
-    SetTextFont(0)
-    SetTextProportional(0)
-    SetTextScale(t, t)
-    SetTextColour(v, w, x, y)
-    SetTextDropshadow(0, 0, 0, 0, 255)
-    SetTextEdge(1, 0, 0, 0, 255)
-    SetTextDropShadow()
-    if z then
-        SetTextOutline()
-    end
-    BeginTextCommandDisplayText("STRING")
-    AddTextComponentSubstringPlayerName(u)
-    EndTextCommandDisplayText(p - r / 2, q - s / 2 + 0.005)
+BeginTextCommandDisplayText("STRING")
+AddTextComponentSubstringPlayerName(v)
+EndTextCommandDisplayText(q - s / 2, r - t / 2 + 0.005)
 end
+
 Citizen.CreateThread(function()
     while true do
         Wait(0)
         if a then
-            local A = GetPlayerFromServerId(TargetSpectate)
-            if A ~= -1 then
-                local l = tARMA.getPlayerPed()
-                local B=GetPlayerPed(A)
-                local C=GetEntityCoords(B)
-                local D=GetEntityHealth(B)
-                local E=GetEntityMaxHealth(B)
-                local F=GetSelectedPedWeapon(B)
-                local G=GetPedArmour(B)
-                local H=GetAmmoInPedWeapon(B,F)
-                draw2dText(0.76,1.415+(GetVehiclePedIsIn(B, false)~=0 and 0 or 0.025),1.0,1.0,0.4,"Health: "..D.."/"..E,51,153,255,200)
-                draw2dText(0.76,1.39+(GetVehiclePedIsIn(B, false)~=0 and 0 or 0.025),1.0,1.0,0.4,"Armor: "..G,51,153,255,200)
-                local I=tostring(WeaponNames[F])
-                draw2dText(0.76,1.365+(GetVehiclePedIsIn(B, false)~=0 and 0 or 0.025),1.0,1.0,0.4,"Weapon: "..(I or"N/A"),51,153,255,200)
-                draw2dText(0.76,1.340+(GetVehiclePedIsIn(B, false)~=0 and 0 or 0.025),1.0,1.0,0.4,"Ammo: "..(H or"N/A"),51,153,255,200)
-                if GetVehiclePedIsIn(B, false)~=0 then
-                    draw2dText(0.76,1.465,1.0,1.0,0.4,"Vehicle Health: "..GetEntityHealth(GetVehiclePedIsIn(B,false)),51,153,255,200)
-                    draw2dText(0.76,1.44,1.0,1.0,0.4,"Vehicle Speed: ".. math.ceil(GetEntitySpeed( GetVehiclePedIsIn(B, false))*2.2369),51,153,255,200)
+            local B = GetPlayerFromServerId(b)
+            if B ~= -1 then
+                local m = tARMA.getPlayerPed()
+                local C = GetPlayerPed(B)
+                if C ~= 0 then
+                    local D = GetEntityCoords(C)
+                    local E = GetEntityHealth(C)
+                    local F = GetEntityMaxHealth(C)
+                    local G = GetSelectedPedWeapon(C)
+                    local H = GetPedArmour(C)
+                    local I = GetAmmoInPedWeapon(C, G)
+                    draw2dText(0.76, 1.44, 1.0, 1.0, 0.4, "Health: " .. E .. "/" .. F, 51, 153, 255, 200)
+                    draw2dText(0.76, 1.415, 1.0, 1.0, 0.4, "Armor: " .. H, 51, 153, 255, 200)
+                    draw2dText(0.76,1.39,1.0,1.0,0.4,"Vehicle Health: " .. GetEntityHealth(GetVehiclePedIsIn(C, false)),51,153,255,200)
+                    local J = tostring(WeaponNames[G])
+                    draw2dText(0.76, 1.365, 1.0, 1.0, 0.4, "Weapon: " .. (J or "N/A"), 51, 153, 255, 200)
+                    draw2dText(0.76, 1.340, 1.0, 1.0, 0.4, "Ammo: " .. (I or "N/A"), 51, 153, 255, 200)
+                    local K = GetActivePlayers()
+                    for L, M in pairs(K) do
+                        local N = GetPlayerPed(M)
+                        SetEntityNoCollisionEntity(m, N, true)
+                    end
+                    DisableControlAction(2, 15, true)
+                    DisableControlAction(2, 17, true)
+                    if IsControlPressed(2, 241) then
+                        e = e + 0.5
+                    end
+                    DisableControlAction(2, 14, true)
+                    DisableControlAction(2, 16, true)
+                    if IsControlPressed(2, 242) then
+                        e = e - 0.5
+                    end
+                    if e > -1 then
+                        e = -1
+                    end
+                    local O = GetDisabledControlNormal(0, 1)
+                    local P = GetDisabledControlNormal(0, 2)
+                    c = c + O * 10
+                    if c >= 360 then
+                        c = 0
+                    end
+                    d = d + P * 10
+                    if d >= 360 then
+                        d = 0
+                    end
+                    local Q = g(D, e, c, d)
+                    SetCamCoord(f, Q.x, Q.y, Q.z)
+                    PointCamAtEntity(f, C, 0.0, 0.0, 0.0, false)
+                    SetFocusPosAndVel(D.x, D.y, D.z, 0.0, 0.0, 0.0)
+                    LockMinimapPosition(D.x, D.y)
+                    SetPlayerBlipPositionThisFrame(D.x, D.y)
                 end
-                HideHudComponentThisFrame(19)
-                HideHudComponentThisFrame(20)
-                local J=GetActivePlayers()
-                for K,L in pairs(J)do 
-                    local M=GetPlayerPed(L)
-                    SetEntityNoCollisionEntity(l,M,true)
-                end
-                if IsControlPressed(2,241)then 
-                    d=d+0.5 
-                end
-                if IsControlPressed(2,242)then 
-                    d=d-0.5 
-                end
-                if d>-1 then 
-                    d=-1 
-                end
-                local N=GetDisabledControlNormal(0,1)
-                local O=GetDisabledControlNormal(0,2)
-                b=b+N*10
-                if b>=360 then 
-                    b=0 
-                end
-                c=c+O*10
-                if c>=360 then 
-                    c=0 
-                end
-                local P=polar3DToWorld3D(C,d,b,c)
-                SetCamCoord(e,P.x,P.y,P.z)
-                PointCamAtEntity(e,B)
-                SetEntityCoordsNoOffset(l,C.x,C.y,C.z-f)
             else
                 tARMA.notify("~r~Couldn't spectate, person not in your zone")
             end
         end
     end
 end)
+local R = {}
+AddStateBagChangeHandler("conceal",nil,function(S, T, U)
+    local V = tonumber(stringsplit(S, ":")[2])
+    if U then
+        R[V] = true
+    else
+        local W = GetPlayerFromServerId(V)
+        if W ~= -1 and W ~= PlayerId() then
+            NetworkConcealPlayer(W, false, false)
+        end
+        R[V] = nil
+    end
+end)
+RegisterNetEvent("onPlayerDropped",function(V)
+    R[V] = nil
+end)
+
+local function X()
+    for V in pairs(R) do
+        local W = GetPlayerFromServerId(V)
+        if W ~= -1 and W ~= PlayerId() then
+            NetworkConcealPlayer(W, true, true)
+        end
+    end
+end
+tARMA.createThreadOnTick(X)
+function tARMA.isInSpectate()
+    return a
+end
 
 function tARMA.getIsStaff(j)
     currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')

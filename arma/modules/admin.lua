@@ -115,19 +115,24 @@ AddEventHandler("wk:fixVehicle",function()
     end
 end)
 
-
-RegisterServerEvent("ARMA:stopSpectatePlayer")
-AddEventHandler("ARMA:stopSpectatePlayer", function()
-    local source = source
-    TriggerClientEvent("ARMA:spectate", source,-1)
-    TriggerClientEvent("ARMA:partThree",-1,source)
-end)
+local spectatingPositions = {}
 RegisterServerEvent("ARMA:spectatePlayer")
 AddEventHandler("ARMA:spectatePlayer", function(id)
     local playerssource = ARMA.getUserSource(id)
     local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "admin.spectate") then
+        spectatingPositions[user_id] = GetEntityCoords(GetPlayerPed(source))
+        TriggerClientEvent("ARMA:spectatePlayer",source,playerssource,GetEntityCoords(GetPlayerPed(playerssource)))
+    end
+end)
+
+RegisterServerEvent("ARMA:stopSpectatePlayer")
+AddEventHandler("ARMA:stopSpectatePlayer", function()
+    local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
-        TriggerClientEvent("ARMA:spectate",source,playerssource,1000)
+        TriggerClientEvent("ARMA:stopSpectatePlayer",source)
+        SetEntityCoords(GetPlayerPed(source),spectatingPositions[ARMA.getUserId(source)])
     end
 end)
 
