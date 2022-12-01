@@ -23,7 +23,6 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("GroupMenu", "sell")) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if SelectedGroup == 'Heroin' then 
-                -- [Illegal Licenses]
                 RageUI.Separator("License Name: " .. SelectedName, function() end)
                 RageUI.Separator("Price of License: " .. '£10,000,000', function() end)
                 RageUI.Separator("License Type: " .. 'Illegal License', function() end)
