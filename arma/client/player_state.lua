@@ -15,14 +15,14 @@ Citizen.CreateThread(function()
     Citizen.Wait(500)
     if IsPlayerPlaying(PlayerId()) and state_ready then
       local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
-      if not tARMA.isInHome() then
+      if not tARMA.isInHome() and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then
         ARMAserver.updatePos({x,y,z})
       end
       ARMAserver.updateHealth({tARMA.getHealth()})
       ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
       ARMAserver.updateWeapons({tARMA.getWeapons()})
-      if not customizationSaveDisabled then
-        ARMAserver.updateCustomization({tARMA.getCustomization()})
+      if not customizationSaveDisabled and not tARMA.isStaffedOn() and not spawning then
+        tARMA.updateCustomization(true)
       end
     end
   end
@@ -41,6 +41,7 @@ function tARMA.spawnAnim(a, b, c)
     TriggerServerEvent('ARMA:changeHairstyle')
     TriggerServerEvent('ARMA:changeTattoos')
     local g = b
+    tARMA.checkCustomization()
     RequestCollisionAtCoord(g.x, g.y, g.z)
     SetEntityCoordsNoOffset(PlayerPedId(), g.x, g.y, g.z, true, false, false)
     SetEntityVisible(PlayerPedId(), false, false)
@@ -78,7 +79,6 @@ function tARMA.spawnAnim(a, b, c)
       Citizen.Wait(2000)
     end
     ExecuteCommand("showui")
-    tARMA.setCustomization(a, true, true)
   end
   spawning = false
 end

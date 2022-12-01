@@ -26,25 +26,22 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             }
         end
         if data.customization ~= nil then
-            ARMAclient.setCustomization(source, {data.customization},
-                function() -- delayed weapons/health, because model respawn
-                    if data.weapons ~= nil then -- load saved weapons
-                        ARMAclient.giveWeapons(source, {data.weapons, true})
-
-                        if data.health ~= nil then -- set health
-                            ARMAclient.setHealth(source, {data.health})
-                            SetTimeout(5000, function() -- check coma, kill if in coma
-                                ARMAclient.isInComa(player, {}, function(in_coma)
-                                    ARMAclient.killComa(player, {})
-                                end)
+            ARMAclient.setCustomization(source, {data.customization},function() -- delayed weapons/health, because model respawn
+                if data.weapons ~= nil then -- load saved weapons
+                    ARMAclient.giveWeapons(source, {data.weapons, true})
+                    if data.health ~= nil then -- set health
+                        ARMAclient.setHealth(source, {data.health})
+                        SetTimeout(5000, function() -- check coma, kill if in coma
+                            ARMAclient.isInComa(player, {}, function(in_coma)
+                                ARMAclient.killComa(player, {})
                             end)
-                        end
-                        
-                        if data.armour ~= nil then
-                            ARMAclient.setArmour(source, {data.armour})
-                        end
+                        end)
                     end
-                end)
+                    if data.armour ~= nil then
+                        ARMAclient.setArmour(source, {data.armour})
+                    end
+                end
+            end)
             ARMAclient.spawnAnim(source, {data.customization, data.position, data.health})
             ARMAclient.setUserID(source, {user_id})
 
