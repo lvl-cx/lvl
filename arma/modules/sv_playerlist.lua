@@ -122,6 +122,26 @@ local function getGroupInGroups(id, type)
     end
 end
 
+local uptime = 0
+local function playerListMetaUpdates()
+    local uptimemessage = ''
+    if uptime < 60 then
+        uptimemessage = math.floor(uptime) .. ' seconds'
+    elseif uptime >= 60 and uptime < 3600 then
+        uptimemessage = math.floor(uptime/60) .. ' minutes and ' .. math.floor(uptime%60) .. ' seconds'
+    elseif uptime >= 3600 then
+        uptimemessage = math.floor(uptime/3600) .. ' hours and ' .. math.floor((uptime%3600)/60) .. ' minutes and ' .. math.floor(uptime%60) .. ' seconds'
+    end
+    return {uptimemessage, #GetPlayers(), 32}
+end
+
+Citizen.CreateThread(function()
+    while true do
+        uptime = uptime + 1
+        Citizen.Wait(1000)
+    end
+end)
+
 RegisterNetEvent('ARMA:getPlayerListData')
 AddEventHandler('ARMA:getPlayerListData', function()
     local source = source
@@ -155,30 +175,10 @@ AddEventHandler('ARMA:getPlayerListData', function()
         end
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
+    TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
 end)
 
 
-
-
-local uptime = 0
-local function playerListMetaUpdates()
-    local uptimemessage = ''
-    if uptime < 60 then
-        uptimemessage = math.floor(uptime) .. ' seconds'
-    elseif uptime >= 60 and uptime < 3600 then
-        uptimemessage = math.floor(uptime/60) .. ' minutes and ' .. math.floor(uptime%60) .. ' seconds'
-    elseif uptime >= 3600 then
-        uptimemessage = math.floor(uptime/3600) .. ' hours and ' .. math.floor((uptime%3600)/60) .. ' minutes and ' .. math.floor(uptime%60) .. ' seconds'
-    end
-    return {uptimemessage, #GetPlayers(), 32}
-end
-Citizen.CreateThread(function()
-    while true do
-        TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
-        uptime = uptime + 1
-        Citizen.Wait(1000)
-    end
-end)
 
 -- Pay checks
 
