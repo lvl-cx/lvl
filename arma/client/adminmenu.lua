@@ -785,10 +785,14 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
-                            inRedZone = false
-                            TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
-                            inSpectatorAdminMode = true
-                            RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
+                            if not tARMA.isInSpectate() then
+                                inRedZone = false
+                                TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
+                                inSpectatorAdminMode = true
+                                RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
+                            else
+                                tARMA.notify("~r~You are already spectating a player.")
+                            end
                         else
                             tARMA.notify("~r~You cannot spectate yourself.")
                         end

@@ -122,7 +122,8 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.spectate") then
-        spectatingPositions[user_id] = GetEntityCoords(GetPlayerPed(source))
+        spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
+        SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
         TriggerClientEvent("ARMA:spectatePlayer",source,playerssource,GetEntityCoords(GetPlayerPed(playerssource)))
     end
 end)
@@ -132,7 +133,14 @@ AddEventHandler("ARMA:stopSpectatePlayer", function()
     local source = source
     if ARMA.hasPermission(ARMA.getUserId(source), "admin.spectate") then
         TriggerClientEvent("ARMA:stopSpectatePlayer",source)
-        SetEntityCoords(GetPlayerPed(source),spectatingPositions[ARMA.getUserId(source)])
+        for k,v in pairs(spectatingPositions) do
+            if k == ARMA.getUserId(source) then
+                TriggerClientEvent("ARMA:stopSpectatePlayer",source,v.coords,v.bucket)
+                SetEntityCoords(GetPlayerPed(source),v.coords)
+                SetPlayerRoutingBucket(source,v.bucket)
+                spectatingPositions[k] = nil
+            end
+        end
     end
 end)
 
@@ -829,7 +837,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                     }
                 }
                 PerformHttpRequest('webhook', function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
-                ARMAclient.notify(source, {"Banned ID: "..PlayerID})
+                --ARMAclient.notify(source, {"Banned ID: "..PlayerID})
                 ARMA.ban(source,PlayerID,banDuration,BanMessage)
                 f10Ban(PlayerID, AdminName, BanMessage, Duration)
                 exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
@@ -1678,8 +1686,21 @@ AddEventHandler('ARMA:BringPlayer', function(id)
     end
 end)
 
-playersSpectating = {}
-playersToSpectate = {}
+RegisterServerEvent("ARMA:Teleport")
+AddEventHandler("ARMA:Teleport",function(id, coords)
+    local admin = source
+    local admin_id = ARMA.getUserId(admin)
+    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
+        local ped = GetPlayerPed(source)
+        local ped2 = GetPlayerPed(id)
+        SetEntityCoords(ped2, coords)
+    else
+        local player = ARMA.getUserSource(admin_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport to Someone')
+    end
+end)
 
 RegisterNetEvent('ARMA:GetCoords')
 AddEventHandler('ARMA:GetCoords', function()
