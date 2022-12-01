@@ -16,7 +16,8 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
     if not WasEventCanceled() then
         for word in pairs(blockedWords) do
             if(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(message:lower(), "-", ""), ",", ""), "%.", ""), " ", ""), "*", ""), "+", ""):find(blockedWords[word])) then
-                TriggerClientEvent('chatMessage', source, '',  { 255, 255, 255 }, "That word is not allowed.", "alert")
+                --TriggerClientEvent('chatMessage', source, '',  { 255, 255, 255 }, "That word is not allowed.", "alert")
+                TriggerClientEvent('ARMA:chatFilterScaleform', source, 10, 'That word is not allowed.')
                 CancelEvent()
                 return
             end
