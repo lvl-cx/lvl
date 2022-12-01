@@ -14,16 +14,18 @@ AddEventHandler("ARMA:onClientSpawn",function(b, c)
         local g = function(e)
             print(GetGameTimer(), cd)
             print(GetGameTimer() - cd)
-            if IsControlJustPressed(1, 38) and GetGameTimer() - cd > 60000 then
-                local h = tARMA.loadModel(a[e.skateparkId].carID)
-                local i = CreateVehicle(h,a[e.skateparkId].position.x,a[e.skateparkId].position.y,a[e.skateparkId].position.z + 0.5,0.0,true,false)
-                SetVehicleOnGroundProperly(i)
-                SetEntityInvincible(i, false)
-                SetPedIntoVehicle(tARMA.getPlayerPed(), i, -1)
-                SetModelAsNoLongerNeeded(h)
-                cd = GetGameTimer()
-            else
-                tARMA.notify('~r~Please wait before spawning another BMX.')
+            if IsControlJustPressed(1, 38)  then
+                if GetGameTimer() - cd > 60000 then
+                    local h = tARMA.loadModel(a[e.skateparkId].carID)
+                    local i = CreateVehicle(h,a[e.skateparkId].position.x,a[e.skateparkId].position.y,a[e.skateparkId].position.z + 0.5,0.0,true,false)
+                    SetVehicleOnGroundProperly(i)
+                    SetEntityInvincible(i, false)
+                    SetPedIntoVehicle(tARMA.getPlayerPed(), i, -1)
+                    SetModelAsNoLongerNeeded(h)
+                    cd = GetGameTimer()
+                else
+                    tARMA.notify('~r~Please wait before spawning another BMX.')
+                end
             end
         end
         for j, k in pairs(a) do
