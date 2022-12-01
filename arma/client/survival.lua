@@ -448,6 +448,9 @@ AddEventHandler("ARMA:respawnButtonClicked",function(S, Z)
     end
     local U = T.spawnLocations[S].coords
     TriggerEvent("arma:PlaySound", "gtaloadin")
+    if tARMA.isHandcuffed() then
+        TriggerEvent("ARMA:toggleHandcuffs", false)
+    end
     SetEntityCoords(PlayerPedId(), U)
     SetEntityVisible(PlayerPedId(), true, 0)
     SetPlayerControl(PlayerId(), true, 0)
