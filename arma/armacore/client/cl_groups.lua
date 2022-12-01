@@ -187,13 +187,6 @@ Citizen.CreateThread(function()
     end
 end)
 
-Citizen.CreateThread(function()
-    while true do 
-        TriggerServerEvent('GroupMenu:Groups')
-        Citizen.Wait(1000)
-    end
-end)
-
 RegisterNetEvent('GroupMenu:ReturnGroups')
 AddEventHandler('GroupMenu:ReturnGroups', function(groups)
     Groups = groups
