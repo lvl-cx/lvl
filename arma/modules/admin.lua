@@ -2201,3 +2201,9 @@ AddEventHandler("ARMA:devOutfitLoad", function()
         TriggerClientEvent("ARMA:getDevOutfits", source, sets)
     end)
 end)
+
+RegisterCommand("getbucket", function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMAclient.notify(source, {'~g~You are currently in Bucket: '..GetPlayerRoutingBucket(source)})
+end)
