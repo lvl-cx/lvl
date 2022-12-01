@@ -1855,26 +1855,6 @@ AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeA
     end
 end)
 
-
-RegisterServerEvent("ARMA:Teleport")
-AddEventHandler("ARMA:Teleport",function(id, coords)
-    local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
-        local ped = GetPlayerPed(source)
-        local ped2 = GetPlayerPed(id)
-        SetEntityCoords(ped2, coords)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport to Someone')
-    end
-end)
-
-
-
-
 RegisterNetEvent('ARMA:AddCar')
 AddEventHandler('ARMA:AddCar', function()
     local admin = source
