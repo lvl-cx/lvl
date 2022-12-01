@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
                 if shavedPlayers[k].cooldown > 0 then
                     shavedPlayers[k].cooldown = shavedPlayers[k].cooldown - 1
                 else
-                    table.remove(shavedPlayers, k)
+                    shavedPlayers[k] = nil
                 end
             end
         end
