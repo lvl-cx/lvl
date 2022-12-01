@@ -15,7 +15,7 @@ Citizen.CreateThread(function()
 		local Ped = GetPlayerPed(-1)
 		local PedCar = GetVehiclePedIsIn(Ped, false)
 		if PedCar ~= 0 and not hideHud then
-			if PedCar and GetPedInVehicleSeat(PedCar, -1) == Ped then
+			if PedCar and (GetPedInVehicleSeat(PedCar, -1) == Ped or GetPedInVehicleSeat(PedCar, 0) == Ped) and GetVehicleClass(PedCar) ~= 14 then
 				carSpeed = math.ceil(GetEntitySpeed(PedCar)*2.2369)
 				
 				SendNUIMessage({
@@ -55,8 +55,6 @@ Citizen.CreateThread(function()
 		if(IsPedInAnyVehicle(Ped)) then
 			local PedCar = GetVehiclePedIsIn(Ped, false)
 			if PedCar and GetPedInVehicleSeat(PedCar, -1) == Ped then
-
-
 				SendNUIMessage({
 					showfuel = true,
 					fuel = GetFuel(PedCar)
