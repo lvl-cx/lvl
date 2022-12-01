@@ -5,17 +5,19 @@ function tARMA.MoneyDrop()
     local source = source
     Wait(100) -- wait delay for death.
     local user_id = ARMA.getUserId(source)
-    local model = GetHashKey('prop_poly_bag_money')
-    local name1 = GetPlayerName(source)
-    local moneydrop = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
-    local moneydropnetid = NetworkGetNetworkIdFromEntity(moneydrop)
-    MoneydropEntities[moneydropnetid] = {moneydrop, moneydrop, false, source}
-    MoneydropEntities[moneydropnetid].Money = {}
-    local ndata = ARMA.getUserDataTable(user_id)
     local money = ARMA.getMoney(user_id)
-    local stored_inventory = nil;
-    if ARMA.tryPayment(user_id,money) then
-        MoneydropEntities[moneydropnetid].Money = money
+    if money > 0 then
+        local model = GetHashKey('prop_poly_bag_money')
+        local name1 = GetPlayerName(source)
+        local moneydrop = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
+        local moneydropnetid = NetworkGetNetworkIdFromEntity(moneydrop)
+        MoneydropEntities[moneydropnetid] = {moneydrop, moneydrop, false, source}
+        MoneydropEntities[moneydropnetid].Money = {}
+        local ndata = ARMA.getUserDataTable(user_id)
+        local stored_inventory = nil;
+        if ARMA.tryPayment(user_id,money) then
+            MoneydropEntities[moneydropnetid].Money = money
+        end
     end
 end
 
