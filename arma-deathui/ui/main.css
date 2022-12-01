@@ -403,6 +403,16 @@ div.death-screen-black-bar{
     position: absolute;
 }
 
+div.death-screen-snow{
+    width: 100%;
+    height: 100%;
+    /* uncomment background for xmas death screen */
+    background-image: url(snow.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+}
+
 div.killed-by-text h1 {
     font-size: 65px;
     margin: 0;
