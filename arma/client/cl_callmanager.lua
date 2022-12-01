@@ -255,25 +255,3 @@ Citizen.CreateThread(function()
         Wait(60000)
     end
 end)
-
-RegisterNetEvent('ARMA:ticketAccepted')
-AddEventHandler('ARMA:ticketAccepted', function(name)
-    Citizen.CreateThread(function()
-        scaleform=RequestScaleformMovie('MIDSIZED_MESSAGE')
-        while not HasScaleformMovieLoaded(scaleform)do 
-            Wait(0)
-        end
-        PushScaleformMovieFunction(scaleform,"SHOW_SHARD_MIDSIZED_MESSAGE")
-        PushScaleformMovieFunctionParameterString("ticket accepted")
-        PushScaleformMovieFunctionParameterString("Your admin ticket has been accepted by "..name)
-        EndScaleformMovieMethod()
-        local drawing = true
-        Citizen.SetTimeout((10 * 1000),function() drawing = false end)
-        while drawing do
-            Citizen.Wait(0)
-            DrawScaleformMovieFullscreen(scaleform,93,187,99,10)
-        end
-        SetScaleformMovieAsNoLongerNeeded(scaleform)
-    end)
-    -- scaleform bs
-end)

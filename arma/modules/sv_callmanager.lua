@@ -128,7 +128,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 ARMA.giveBankMoney(user_id, 10000)
                                 ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~An admin has taken your ticket."})
-                                TriggerClientEvent('ARMA:ticketAccepted', v.tempID, GetPlayerName(admin_source))
+                                TriggerClientEvent('ARMA:smallAnnouncement', v.tempID, 'ticket accepted', "Your admin ticket has been accepted by "..GetPlayerName(admin_source), 33, 10000)
                                 ARMAclient.teleport(admin_source, {table.unpack(coords)})
                                 tickets[ticketID] = nil
                                 TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
