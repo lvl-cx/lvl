@@ -2,7 +2,7 @@ ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 
 local user_id = 0
 local foundMatch = false
-local tARMA.isInSpectate = false
+local inSpectatorAdminMode = false
 local players = {}
 local playersNearby = {}
 local playersNearbyDistance = 250
@@ -345,11 +345,10 @@ RageUI.CreateWhile(1.0, true, function()
                 end)
             end
             if GlobalAdminLevel >= 5 then                   
-                RageUI.List("Teleport to ",q,s,"",{},true,function(x, y, z, N)
+                RageUI.List("Teleport",q,s,"",{},true,function(x, y, z, N)
                     s = N
                     if z then
-                        local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent("ARMA:Teleport", uid, vector3(r[s]))
+                        tARMA.teleport2(vector3(r[s]), true)
                     end
                 end,
                 function()end)
@@ -788,7 +787,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
                             inRedZone = false
                             TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
-                            tARMA.isInSpectate = true
+                            inSpectatorAdminMode = true
                             RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
                         else
                             tARMA.notify("~r~You cannot spectate yourself.")
@@ -1447,9 +1446,9 @@ function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
 end
 
 function func_checkSpectatorMode()
-    if tARMA.isInSpectate then
+    if inSpectatorAdminMode then
         if IsControlJustPressed(0, 51) then
-            tARMA.isInSpectate = false
+            inSpectatorAdminMode = false
             TriggerServerEvent("ARMA:stopSpectatePlayer")
         end
     end
