@@ -122,6 +122,3 @@ server_scripts{
   "servercfg/*.lua",
   "armacore/modules/sv_*.lua",
 }
-
-data_file 'AUDIO_WAVEPACK' 'audio/sfx/resident'
-data_file 'AUDIO_WAVEPACK' 'audio/sfx/weapons_player'

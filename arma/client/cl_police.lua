@@ -487,7 +487,9 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 RegisterCommand("isu",function(R, S)
-    RageUI.Visible(RMenu:Get("incidentsupportunit", "main"), true)
+    if tARMA.globalOnPoliceDuty() or tARMA.globalOnPrisonDuty() or tARMA.globalNHSOnDuty() then
+        RageUI.Visible(RMenu:Get("incidentsupportunit", "main"), true)
+    end
 end)
 CreateThread(function()
     while true do
