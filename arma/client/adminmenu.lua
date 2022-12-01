@@ -2,7 +2,7 @@ ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 
 local user_id = 0
 local foundMatch = false
-local inSpectatorAdminMode = false
+local tARMA.isInSpectate = false
 local players = {}
 local playersNearby = {}
 local playersNearbyDistance = 250
@@ -788,7 +788,7 @@ RageUI.CreateWhile(1.0, true, function()
                         if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
                             inRedZone = false
                             TriggerServerEvent("ARMA:spectatePlayer", SelectedPlayer[3])
-                            inSpectatorAdminMode = true
+                            tARMA.isInSpectate = true
                             RageUI.Text({message = string.format("~r~Press [E] to stop spectating.")})
                         else
                             tARMA.notify("~r~You cannot spectate yourself.")
@@ -1447,9 +1447,9 @@ function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
 end
 
 function func_checkSpectatorMode()
-    if inSpectatorAdminMode then
+    if tARMA.isInSpectate then
         if IsControlJustPressed(0, 51) then
-            inSpectatorAdminMode = false
+            tARMA.isInSpectate = false
             TriggerServerEvent("ARMA:stopSpectatePlayer")
         end
     end

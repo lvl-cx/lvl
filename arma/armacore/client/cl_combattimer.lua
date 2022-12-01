@@ -61,7 +61,7 @@ Citizen.CreateThread(function()
                         if b==0 then 
                             n=true 
                         else 
-                            if tARMA.isStaffedOn() or inSpectatorAdminMode or tARMA.isNoclipping() then
+                            if tARMA.isStaffedOn() or tARMA.isInSpectate or tARMA.isNoclipping() then
                                 b = 0
                                 n=true
                             else
