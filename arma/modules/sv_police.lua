@@ -467,7 +467,7 @@ RegisterServerEvent("ARMA:Knockout")
 AddEventHandler('ARMA:Knockout', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
+    ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
             TriggerClientEvent('ARMA:knockOut', nplayer)
@@ -483,7 +483,7 @@ AddEventHandler('ARMA:KnockoutNoAnim', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasGroup(user_id, 'Founder') then
-      ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
+      ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
           local nuser_id = ARMA.getUserId(nplayer)
           if nuser_id ~= nil then
               TriggerClientEvent('ARMA:knockOut', nplayer)
