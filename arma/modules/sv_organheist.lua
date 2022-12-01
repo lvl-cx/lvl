@@ -24,6 +24,7 @@ AddEventHandler("ARMA:joinOrganHeist",function()
                 TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[math.random(2)], timeTillOrgan, 'civ', 2)
                 ARMAclient.giveWeapons(source, {{['WEAPON_M1911'] = {ammo = 250}}, false})
             end
+            SetPlayerRoutingBucket(source, 15)
         else
             ARMAclient.notify(source, {'~r~The organ heist has already started.'})
         end
