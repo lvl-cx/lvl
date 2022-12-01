@@ -524,7 +524,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
     local source = source
     local user_id = ARMA.getUserId(source)
     local playerName = GetPlayerName(source)
-    if ARMA.hasGroup(user_id, 'dev') then
+    if ARMA.hasGroup(user_id, 'Developer') then
         ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
         PerformHttpRequest(cheatingWebhook, function(err, text, headers) 
         end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
@@ -554,7 +554,7 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
-    if ARMA.hasGroup(user_id, 'dev') then
+    if ARMA.hasGroup(user_id, 'Developer') then
         ARMA.prompt(source,"Spawncode:","",function(source,spawncode)
             if spawncode ~= '' then
                 model = GetHashKey(spawncode)
