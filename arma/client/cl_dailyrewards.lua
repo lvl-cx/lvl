@@ -1,7 +1,7 @@
 currentHours = 0
 local dailyRewards = {}
 
-RMenu.Add('DailyRewards', 'main', RageUI.CreateMenu("","~b~Rewards",10,50, "banners", "rewards"))
+RMenu.Add('DailyRewards', 'main', RageUI.CreateMenu("","~b~Rewards",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "rewards"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('DailyRewards', 'main')) then
