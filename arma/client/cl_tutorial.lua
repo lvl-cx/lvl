@@ -343,6 +343,7 @@ function beginTutorial()
         Wait(100)
     end
     DeleteCheckpoint(cc9)
+    DeleteVehicle(GetVehiclePedIsIn(tARMA.getPlayerPed(), false))
     cc10 = CreateCheckpoint(45,-542.36938476563,-207.75384521484,36.649753570557,-542.36938476563,-207.75384521484,36.649753570557,2.0,1,167,204,100,0)
     d = "Aite got some ballas to kill see you around"
     H = 20
