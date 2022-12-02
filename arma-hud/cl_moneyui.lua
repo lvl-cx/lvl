@@ -99,6 +99,8 @@ end)
 
 Citizen.CreateThread(function()
     while true do
+        local topLeftAnchor = getMinimapAnchor()
+        updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor[1]+topLeftAnchor[3],topLeftAnchor[2])
         NetworkSetTalkerProximity(prox)
         NetworkSetVoiceActive(true)
         HideHudComponentThisFrame(9)
@@ -112,7 +114,7 @@ Citizen.CreateThread(function()
                 talking = false
             })
         end
-		Wait(60)
+		Wait(0)
     end
 end)
 
