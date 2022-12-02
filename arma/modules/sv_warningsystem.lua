@@ -40,7 +40,7 @@ end)
 
 function f10Kick(target_id,adminName,warningReason)
 	warning = "Kick"
-	exports['ghmattimysql']:execute("INSERT INTO arma_warnings (`user_id`, `warning_type`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, @admin, @warning_date,@reason);", {user_id = target_id, warning_type = "Kick", admin = adminName, warning_date = os.date("%Y/%m/%d"), reason = warningReason}, function() end)
+	--exports['ghmattimysql']:execute("INSERT INTO arma_warnings (`user_id`, `warning_type`, `admin`, `warning_date`, `reason`) VALUES (@user_id, @warning_type, @admin, @warning_date,@reason);", {user_id = target_id, warning_type = "Kick", admin = adminName, warning_date = os.date("%Y/%m/%d"), reason = warningReason}, function() end)
 end
 
 function f10Ban(target_id,adminName,warningReason,warning_duration)
