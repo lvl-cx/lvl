@@ -170,6 +170,7 @@ function tARMA.staffMode(status)
             else
                 tARMA.loadCustomisationPreset("StaffFemale")
             end 
+            SetPedComponentVariation(PlayerPedId(), 11, 200, tARMA.getStaffLevel(), 0)
         else
             tARMA.setRedzoneTimerDisabled(false)
             SetEntityInvincible(PlayerPedId(),false)
@@ -182,6 +183,7 @@ function tARMA.staffMode(status)
             SetEntityCanBeDamaged(PlayerPedId(),true)
             SetEntityHealth(PlayerPedId(),200)
             tARMA.setCustomization(a)
+
             tARMA.notify('~g~Staff Powerz Deactivated.')
         end 
     end
