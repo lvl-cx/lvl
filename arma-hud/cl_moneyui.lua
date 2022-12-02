@@ -107,6 +107,10 @@ Citizen.CreateThread(function()
             SendNUIMessage({
                 talking = true
             })
+        else
+            SendNUIMessage({
+                talking = false
+            })
         end
 		Wait(60)
     end
