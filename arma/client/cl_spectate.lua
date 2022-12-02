@@ -164,7 +164,7 @@ function tARMA.isInSpectate()
     return a
 end
 
-function tARMA.getIsStaff(j)
+function tARMA.clientGetPlayerIsStaff(j)
     currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')
     if currentStaff then
         for a,b in pairs(currentStaff) do

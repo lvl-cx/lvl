@@ -880,7 +880,7 @@ function tARMA.getUserId(Z)
     return user_id
   end
 end
-function tARMA.getPermIdFromTemp(tempid)
+function tARMA.clientGetUserIdFromSource(tempid)
   return baseplayers[tempid]
 end
 function tARMA.setStaffLevel(a)

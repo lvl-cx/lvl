@@ -121,7 +121,7 @@ local function n()
     for q, r in ipairs(GetActivePlayers()) do
         if r ~= PlayerId() then
             local s = GetPlayerServerId(r)
-            local t = tARMA.getPermIdFromTemp(s)
+            local t = tARMA.clientGetUserIdFromSource(s)
             local u = tARMA.getJobType(t)
             if u ~= "metpd" and u ~= "hmp" then
                 local v = GetEntityCoords(GetPlayerPed(r), true)

@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
         for f, g in ipairs(GetActivePlayers()) do
             local k = GetPlayerPed(g)
             local l = GetPlayerServerId(g)
-            if k ~= e and (IsEntityVisible(k) or not tARMA.getIsStaff(tARMA.getPermIdFromTemp(l))) then
+            if k ~= e and (IsEntityVisible(k) or not tARMA.clientGetPlayerIsStaff(tARMA.clientGetUserIdFromSource(l))) then
                 local m = GetEntityCoords(k)
                 b[g] = #(j - m)
             end
