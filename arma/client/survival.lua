@@ -169,7 +169,6 @@ end)
 
 RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
     c = I
-    TriggerEvent('ARMA:nhsBlipComa', true)
     if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
         bleedoutDuration = 50000
     elseif #c >= 1 and #c <= 3 and not globalNHSOnDuty then
@@ -258,6 +257,7 @@ function tARMA.RevivePlayer()
     end)
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
     calledNHS = false
+    TriggerEvent('ARMA:Revive')
 end
 
 AddEventHandler("ARMA:countdownEnded",function()
@@ -299,7 +299,6 @@ function tARMA.reviveComa()
     tARMA.setRagdoll(false)
     tARMA.stopScreenEffect(cfg.coma_effect)
     SetEntityHealth(PlayerPedId(), 200) 
-    TriggerEvent('ARMA:nhsBlipComa', false)
 end
 
 Citizen.CreateThread(function() -- disable health regen, conflicts with coma system

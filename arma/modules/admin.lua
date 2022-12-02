@@ -2049,15 +2049,6 @@ AddEventHandler('ARMA:CopyToClipBoard', function(id)
     end
 end)
 
-RegisterServerEvent('ARMA:checkBlips')
-AddEventHandler('ARMA:checkBlips', function(status)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.staffblips') then
-        ARMAclient.staffBlips(source,{status})
-    end
-end)
-
 RegisterServerEvent("ARMA:GetPlayerData")
 AddEventHandler("ARMA:GetPlayerData",function()
     local source = source
