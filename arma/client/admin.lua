@@ -367,3 +367,53 @@ function GetVehicleInDirection( entFrom, coordFrom, coordTo )
     end 
 end
 
+function tARMA.staffBlips(P)
+    if tARMA.getStaffLevel() >= 6 then
+        d = P
+        if d then
+            tARMA.notify("~g~Blips enabled")
+        else
+            tARMA.notify("~r~Blips disabled")
+            for Q, R in ipairs(GetActivePlayers()) do
+                local S = GetPlayerPed(R)
+                if GetPlayerPed(R) ~= tARMA.getPlayerPed() then
+                    S = GetPlayerPed(R)
+                    blip = GetBlipFromEntity(S)
+                    RemoveBlip(blip)
+                end
+            end
+        end
+    end
+end
+
+Citizen.CreateThread(function()
+    while true do
+        if d then
+            for Q, R in ipairs(GetActivePlayers()) do
+                local I = GetPlayerPed(R)
+                if I ~= GetPlayerPed(-1) then
+                    local blip = GetBlipFromEntity(I)
+                    local T = GetPlayerServerId(R)
+                    local U = tARMA.clientGetUserIdFromSource(T)
+                    if not DoesBlipExist(blip) then
+                        blip = AddBlipForEntity(I)
+                        SetBlipSprite(blip, 1)
+                        ShowHeadingIndicatorOnBlip(blip, true)
+                        local V = GetVehiclePedIsIn(I, false)
+                        SetBlipSprite(blip, 1)
+                        ShowHeadingIndicatorOnBlip(blip, true)
+                        SetBlipRotation(blip, math.ceil(GetEntityHeading(V)))
+                        SetBlipNameToPlayerName(blip, R)
+                        SetBlipScale(blip, 0.85)
+                        SetBlipAlpha(blip, 255)
+                    end
+                end
+            end
+        end
+        Wait(1000)
+    end
+end)
+
+function tARMA.hasStaffBlips()
+    return d
+end

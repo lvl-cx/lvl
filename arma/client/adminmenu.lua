@@ -391,7 +391,7 @@ RageUI.CreateWhile(1.0, true, function()
                             if T ~= -1 and M ~= 0 then
                                 local U = GetEntityCoords(M, true)
                                 if #(D - U) < 50.0 then
-                                    local V = tARMA.getPermIdFromTemp(T)
+                                    local V = tARMA.clientGetUserIdFromSource(T)
                                     if V > 0 then
                                         TriggerServerEvent('ARMA:RevivePlayer', GetPlayerServerId(PlayerId()), V, true)
                                     end
@@ -410,7 +410,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
                 RageUI.ButtonWithStyle("Toggle Blips", P, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:checkBlips', not tARMA.hasStaffBlips())
+                        tARMA.staffBlips(not tARMA.hasStaffBlips())
                     end
                 end)
                 RageUI.ButtonWithStyle("RP Zones","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
