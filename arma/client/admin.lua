@@ -157,38 +157,38 @@ local isInTicket = false
 local a = {}
 function tARMA.staffMode(status)
     if tARMA.getStaffLevel()>0 then
-        staffMode=status
-        if staffMode then 
-            tARMA.notify('~g~Staff Powerz Activated.')
-            if GetEntityHealth(GetPlayerPed(-1))<=102 then 
-                tARMA.RevivePlayer()
-            end
-            tARMA.setRedzoneTimerDisabled(true)
-            a = tARMA.getCustomization()
-            if tARMA.getModelGender()=="male"then 
-                tARMA.loadCustomisationPreset("StaffMale")
+        if staffMode ~= status then
+            staffMode=status
+            if staffMode then 
+                tARMA.notify('~g~Staff Powerz Activated.')
+                if GetEntityHealth(PlayerPedId())<=102 then 
+                    tARMA.RevivePlayer()
+                end
+                tARMA.setRedzoneTimerDisabled(true)
+                a = tARMA.getCustomization()
+                if tARMA.getModelGender()=="male"then 
+                    tARMA.loadCustomisationPreset("StaffMale")
+                else
+                    tARMA.loadCustomisationPreset("StaffFemale")
+                end 
+                SetPedComponentVariation(PlayerPedId(), 11, 200, tARMA.getStaffLevel(), 0)
             else
-                tARMA.loadCustomisationPreset("StaffFemale")
+                tARMA.setRedzoneTimerDisabled(false)
+                SetEntityInvincible(PlayerPedId(),false)
+                SetPlayerInvincible(PlayerId(),false)
+                SetPedCanRagdoll(PlayerPedId(),true)
+                ClearPedBloodDamage(PlayerPedId())
+                ResetPedVisibleDamage(PlayerPedId())
+                ClearPedLastWeaponDamage(PlayerPedId())
+                SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
+                SetEntityCanBeDamaged(PlayerPedId(),true)
+                SetEntityHealth(PlayerPedId(),200)
+                tARMA.setCustomization(a)
+                tARMA.notify('~g~Staff Powerz Deactivated.')
             end 
-            SetPedComponentVariation(PlayerPedId(), 11, 200, tARMA.getStaffLevel(), 0)
-        else
-            tARMA.setRedzoneTimerDisabled(false)
-            SetEntityInvincible(PlayerPedId(),false)
-            SetPlayerInvincible(PlayerId(),false)
-            SetPedCanRagdoll(PlayerPedId(),true)
-            ClearPedBloodDamage(PlayerPedId())
-            ResetPedVisibleDamage(PlayerPedId())
-            ClearPedLastWeaponDamage(PlayerPedId())
-            SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
-            SetEntityCanBeDamaged(PlayerPedId(),true)
-            SetEntityHealth(PlayerPedId(),200)
-            tARMA.setCustomization(a)
-
-            tARMA.notify('~g~Staff Powerz Deactivated.')
-        end 
+        end
     end
 end
-
 
 function loadModel(r)
   local s
@@ -393,7 +393,7 @@ Citizen.CreateThread(function()
         if d then
             for Q, R in ipairs(GetActivePlayers()) do
                 local I = GetPlayerPed(R)
-                if I ~= GetPlayerPed(-1) then
+                if I ~= PlayerPedId() then
                     local blip = GetBlipFromEntity(I)
                     local T = GetPlayerServerId(R)
                     local U = tARMA.clientGetUserIdFromSource(T)

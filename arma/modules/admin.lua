@@ -2082,7 +2082,7 @@ RegisterCommand("staffon", function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {true, false})
+        ARMAclient.staffMode(source, {true})
     end
 end)
 
@@ -2090,7 +2090,7 @@ RegisterCommand("staffoff", function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
-        ARMAclient.staffMode(source, {false, false})
+        ARMAclient.staffMode(source, {false})
     end
 end)
 
