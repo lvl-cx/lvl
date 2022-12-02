@@ -405,9 +405,10 @@ AddEventHandler('ARMA:dragPlayer', function(playersrc)
             ARMAclient.isHandcuffed(playersrc,{},function(handcuffed)
                 if handcuffed then
                     if draggingPlayers[user_id] then
-                      TriggerClientEvent("ARMA:drag", source, playersrc)
+                      TriggerClientEvent("ARMA:undrag", playersrc, source)
+                      draggingPlayers[user_id] = nil
                     else
-                      TriggerClientEvent("ARMA:undrag", source, playersrc)
+                      TriggerClientEvent("ARMA:drag", playersrc, source)
                       draggingPlayers[user_id] = playersrc
                     end
                 else
