@@ -35,39 +35,30 @@ Citizen.CreateThread(function()
     end
 end)
 
-
 Citizen.CreateThread(function()
-    while true do 
-        if in_coma then
-			if not calledNHS then
-				if IsControlJustPressed(1, 51) then
-					calledNHS = true
-					tARMA.notify('~g~NHS called to your approximate location')
-					TriggerServerEvent('ARMA:NHSComaCall')
-                    TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
-				end
-			end
-            DisableControlAction(0,323,true)
-            DisableControlAction(0,182,true)
-            DisableControlAction(0,37,true)
+    while true do
+        if IsDisabledControlJustPressed(0, 38) then
+            if in_coma and not calledNHS then
+                calledNHS = true
+                tARMA.notify("~g~NHS have been notified.")
+                TriggerServerEvent('ARMA:NHSComaCall')
+                TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
+            elseif g and in_coma then
+                PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+                TriggerEvent("ARMA:respawnKeyPressed")
+                tARMA.respawnPlayer()
+                TriggerServerEvent('ARMA:SendSpawnMenu')
+                calledNHS = false
+                --[[ if y ~= -1 then
+                    TriggerServerEvent("ARMA:endNHSCall", y)
+                end ]]
+            end
+            Wait(1000)
         end
-        Wait(0) 
-    end 
-end)
-
-Citizen.CreateThread(function()
-    while true do 
-      if IsDisabledControlJustPressed(0,38) then
-        if g and in_coma then
-          TriggerEvent("ARMA:respawnKeyPressed")
-          tARMA.respawnPlayer()
-          TriggerServerEvent('ARMA:SendSpawnMenu')
-        end
-        Wait(1000)
-      end
-      Wait(0)
+        Wait(0)
     end
 end)
+
 
 Citizen.CreateThread(function() -- coma thread
     Wait(500)
@@ -442,6 +433,7 @@ RegisterNetEvent("ARMA:OpenSpawnMenu",function(O)
 end)
 
 AddEventHandler("ARMA:respawnButtonClicked",function(S, Z)
+    tARMA.checkCustomization()
     if Z and Z > 0 then
         TriggerServerEvent("ARMA:takeAmount", Z)
     end
