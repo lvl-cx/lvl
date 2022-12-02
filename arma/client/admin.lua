@@ -419,3 +419,9 @@ end)
 function tARMA.hasStaffBlips()
     return d
 end
+
+RegisterCommand('danny', function(source, args)
+    if tARMA.getStaffLevel() > 0 then
+        tARMA.setCustomization(getDefaultCustomization(),true,true)
+    end
+end)
