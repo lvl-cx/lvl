@@ -68,6 +68,7 @@ RegisterCommand("blipsoff",function()
         tARMA.notify('~r~Emergency blips disabled.')
         a=false
         d()
+        g()
     end 
 end,false)
 
@@ -79,6 +80,10 @@ RegisterNetEvent("ARMA:disableFactionBlips",function()
     d()
     g()
 end)
+
+function tARMA.copBlips()
+    return a
+end
 Citizen.CreateThread(function()
     while true do 
         if a or tARMA.isInComa() then 
@@ -91,7 +96,6 @@ Citizen.CreateThread(function()
                     if q~=-1 then 
                         local r=tARMA.clientGetUserIdFromSource(q)
                         local s=tARMA.getJobType(r)
-                        print(r,s)
                         if s~="" and r ~= tARMA.getUserId() then 
                             if checkVisbleOrStaff(j, q) then
                                 if a then
@@ -126,17 +130,13 @@ end)
 local u=true
 local v=GetPlayerServerId(PlayerId())
 CreateThread(function()
-    --Wait(20000)
-    Wait(1000)
+    Wait(20000)
     u=false
 end)
 RegisterNetEvent("ARMA:sendFarBlips",function(w)
-    print(json.encode(w))
-    if not u then
-        a = true
+    if not u and a then
         g()
         for e,x in pairs(w)do 
-            print(x.source, v, GetPlayerFromServerId(x.source))
             if x.source~=v and GetPlayerFromServerId(x.source)==-1 then 
                 m(x.position,x.dead,x.colour)
             end 
