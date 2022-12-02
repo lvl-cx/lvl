@@ -73,6 +73,7 @@ end)
 
 RegisterNetEvent('ARMA:FetchTrunkInventory')
 AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
+    print(spawnCode)
     local source = source
     local user_id = ARMA.getUserId({source})
     if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
@@ -86,6 +87,7 @@ AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
         end
         local maxVehKg = Inventory.vehicle_chest_weights[spawnCode] or Inventory.default_vehicle_chest_weight
         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
+        TriggerEvent('ARMA:RefreshInventory', source)
     end})
 end)
 

@@ -20,13 +20,14 @@ RegisterCommand('inventory', function()
             SetNuiFocusKeepInput(true)
             SendNUIMessage({action = 'InventoryDisplay', showInv = true})
             local VehInRadius, VehType, NVeh = tARMA.getNearestOwnedVehicle({3.5})
+            VehTypeA = VehType
+            VehTypeC = NVeh
             if VehInRadius and IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then 
                 BootCar = GetEntityCoords(PlayerPedId())
                 tARMA.vc_openDoor({VehType, 5})
                 inventoryType = 'CarBoot'
                 TriggerServerEvent('ARMA:FetchTrunkInventory', VehType)
             end
-
         else
             inventoryOpen = false;
             SetNuiFocus(false, false)
