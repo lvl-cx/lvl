@@ -42,11 +42,11 @@ function ARMA.ShaveHead(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.getInventoryItemAmount(user_id, 'shaver') >= 1 then
-        ARMA.tryGetInventoryItem(user_id, 'shaver', 1)
         ARMAclient.getNearestPlayer(source,{4},function(nplayer)
             if nplayer then
                 ARMAclient.globalSurrenderring(nplayer,{},function(surrendering)
                     if surrendering then
+                        ARMA.tryGetInventoryItem(user_id, 'shaver', 1)
                         TriggerClientEvent('ARMA:startShavingPlayer', source, nplayer)
                         TriggerClientEvent('ARMA:startBeingShaved', nplayer, source)
                         TriggerClientEvent('ARMA:playDelayedShave', -1, source)
