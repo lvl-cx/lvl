@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
 			if closestPlayer then
 				targetSrc = GetPlayerServerId(closestPlayer)
 				if targetSrc then
-                    TriggerServerEvent('ARMA:dragPlayer')
+                    TriggerServerEvent('ARMA:dragPlayer', targetSrc)
 				end
 			end 
             Wait(1000)
