@@ -14,7 +14,7 @@ $(document).ready(function(){
 	// Click
     if (event.data.type == "updateMaxVal") {
       $('input.' + event.data.classname).prop('max',event.data.maxVal);
-        console.log("setting div with name " + event.data.classname + " the max value of "+event.data.maxVal)
+        //console.log("setting div with name " + event.data.classname + " the max value of "+event.data.maxVal)
 	  $('div[name=' + event.data.classname + ']').attr('data-legend', '/'+event.data.maxVal);
     }
   });
@@ -189,7 +189,7 @@ function leftWristComponent() {
 }
 
 function leftWristTexture() {
-    console.log("leftWrist() says textureID is " + $('.leftWristTexture .active').attr('data')),
+    //console.log("leftWrist() says textureID is " + $('.leftWristTexture .active').attr('data')),
     $.post('http://arma-barbers/updateLeftWristTexture', JSON.stringify({
         componentID: $('.montre .active').attr('data'),
         textureID:  $('.leftWristTexture .active').attr('data'),
@@ -203,7 +203,7 @@ function rightWristComponent() {
 }
 
 function rightWristTexture() {
-    console.log("rightWrist() says textureID is " + $('.rightWristTexture .active').attr('data')),
+    //console.log("rightWrist() says textureID is " + $('.rightWristTexture .active').attr('data')),
     $.post('http://arma-barbers/updateRightWristTexture', JSON.stringify({
         componentID: $('.montre-right .active').attr('data'),
         textureID:  $('.rightWristTexture .active').attr('data'),
