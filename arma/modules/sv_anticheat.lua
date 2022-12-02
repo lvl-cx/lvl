@@ -478,7 +478,7 @@ RegisterServerEvent("ARMA:getAnticheatData")
 AddEventHandler("ARMA:getAnticheatData",function()
     local source = source
     user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'dev') then
+    if ARMA.hasGroup(user_id, 'Developer') then
         local bannedplayerstable = {}
         exports['ghmattimysql']:execute("SELECT * FROM `arma_anticheat`", {}, function(result)
             if result ~= nil then
