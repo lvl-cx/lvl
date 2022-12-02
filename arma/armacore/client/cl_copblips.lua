@@ -1,7 +1,6 @@
 local a=false
 local b={}
 local c={}
-local currentComa = false
 local function d()
     for e,f in pairs(b)do 
         if DoesBlipExist(f)then 
@@ -9,15 +8,6 @@ local function d()
         end 
     end
     b={}
-end
-local function d2(A)
-    for e,f in pairs(b)do
-        if e == A then
-            if DoesBlipExist(f)then 
-                RemoveBlip(f)
-            end
-        end
-    end
 end
 local function g()
     for e,f in pairs(c)do 
@@ -27,10 +17,10 @@ local function g()
     end
     c={}
 end
-local function h(i,j,k,q)
+local function h(i,j,k)
     if not DoesBlipExist(i)then 
         local l=AddBlipForEntity(j)
-        b[tostring(q)]=l
+        table.insert(b, l)
         SetBlipSprite(l,1)
         SetBlipScale(i,0.85)
         SetBlipAlpha(i,255)
@@ -39,16 +29,20 @@ local function h(i,j,k,q)
     else 
         if GetEntityHealth(j)>102 then 
             SetBlipSprite(i,1)
-            ShowHeadingIndicatorOnBlip(i,true)
         else 
             SetBlipSprite(i,274)
-            ShowHeadingIndicatorOnBlip(i,false)
         end
         SetBlipScale(i,0.85)
         SetBlipAlpha(i,255)
         SetBlipColour(i,k)
+        ShowHeadingIndicatorOnBlip(i,true)
     end 
 end
+
+local function checkVisbleOrStaff(n, o)
+    return IsEntityVisible(n) or not tARMA.clientGetPlayerIsStaff(o)
+end
+
 local function m(n,o,k)
     local l=AddBlipForCoord(n.x,n.y,n.z)
     table.insert(c,l)
@@ -62,11 +56,6 @@ local function m(n,o,k)
     SetBlipColour(l,k)
 end
 
-RegisterNetEvent("ARMA:nhsBlipComa",function(coma)
-    a=coma
-    currentComa = coma
-end)
-
 RegisterCommand("blipson",function()
     if tARMA.globalOnPoliceDuty() or tARMA.globalNHSOnDuty() then 
         tARMA.notify('~g~Emergency blips enabled.')
@@ -79,7 +68,6 @@ RegisterCommand("blipsoff",function()
         tARMA.notify('~r~Emergency blips disabled.')
         a=false
         d()
-        g()
     end 
 end,false)
 
@@ -91,10 +79,9 @@ RegisterNetEvent("ARMA:disableFactionBlips",function()
     d()
     g()
 end)
-
 Citizen.CreateThread(function()
     while true do 
-        if a then 
+        if a or tARMA.isInComa() then 
             local p=tARMA.getPlayerPed()
             for e,f in ipairs(GetActivePlayers())do
                 local j=GetPlayerPed(f)
@@ -102,26 +89,32 @@ Citizen.CreateThread(function()
                     local i=GetBlipFromEntity(j)
                     local q=GetPlayerServerId(f)
                     if q~=-1 then 
-                        local r=tARMA.getPermIdFromTemp(q)
+                        local r=tARMA.clientGetUserIdFromSource(q)
                         local s=tARMA.getJobType(r)
-                        if s~=""then 
-                            if not currentComa then
-                                if s=="metpd"then 
-                                    h(i,j,3,q)
-                                elseif s=="hmp"then 
-                                    h(i,j,29,q)
-                                elseif s=="lfb"then
-                                    h(i,j,1,q)
-                                elseif s=="nhs"then 
-                                    h(i,j,2,q)
+                        print(r,s)
+                        if s~="" and r ~= tARMA.getUserId() then 
+                            if checkVisbleOrStaff(j, q) then
+                                if a then
+                                    if s=="metpd"then 
+                                        h(i,j,3)
+                                    elseif s=="hmp"then 
+                                        h(i,j,29)
+                                    elseif s=="lfb"then
+                                        h(i,j,1)
+                                    elseif s=="nhs"then 
+                                        h(i,j,2)
+                                    end
+                                elseif tARMA.isInComa() then
+                                    if s=="nhs"then 
+                                        h(i,j,2)
+                                    end
                                 end
                             else
-                                if s=="nhs"then 
-                                    h(i,j,2,q)
+                                local w = GetBlipFromEntity(j)
+                                if w ~= 0 then
+                                    RemoveBlip(w)
                                 end
                             end
-                        elseif b[tostring(q)]~= nil then
-                            d2(tostring(q))
                         end 
                     end 
                 end 
@@ -133,18 +126,27 @@ end)
 local u=true
 local v=GetPlayerServerId(PlayerId())
 CreateThread(function()
-    Wait(20000)
+    --Wait(20000)
+    Wait(1000)
     u=false
 end)
 RegisterNetEvent("ARMA:sendFarBlips",function(w)
+    print(json.encode(w))
     if not u then
+        a = true
         g()
-        if a then
-            for e,x in pairs(w)do 
-                if x.source~=v and GetPlayerFromServerId(x.source)==-1 then 
-                    m(x.position,x.dead,x.colour)
-                end 
+        for e,x in pairs(w)do 
+            print(x.source, v, GetPlayerFromServerId(x.source))
+            if x.source~=v and GetPlayerFromServerId(x.source)==-1 then 
+                m(x.position,x.dead,x.colour)
             end 
-        end
+        end 
     end 
+end)
+
+RegisterNetEvent("ARMA:Revive",function()
+    if not a then
+        Citizen.Wait(1000)
+        d()
+    end
 end)

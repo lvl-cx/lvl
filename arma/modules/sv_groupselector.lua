@@ -100,5 +100,6 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             ARMAclient.notify(source, {"~g~Employed as "..b.."."})
             TriggerClientEvent('ARMA:jobInstructions',source,b)
         end
+        ARMA.updateCurrentPlayerInfo()
     end
 end)
