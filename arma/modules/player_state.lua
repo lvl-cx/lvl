@@ -133,11 +133,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             }
             ARMAclient.teleport(source, {x, y, z})
         end
-
-        -- load character customization
-        if data.customization ~= nil then
-            ARMAclient.setCustomization(source, {data.customization})
-        end
     end
     Debug.pend()
 end)
