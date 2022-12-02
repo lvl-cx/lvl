@@ -102,24 +102,19 @@ local function AddMod(mod,parent,header,name,info,stock)
 	SetVehicleModKit(veh,0)	
 	if (GetNumVehicleMods(veh,mod) ~= nil and GetNumVehicleMods(veh,mod) > 0) or mod == 18 or mod == 22 then
 		local m = parent:addSubMenu(header, name, info,true)
-		if stock then
-			local btn = m:addPurchase("Stock")
-			btn.modtype = mod
-			btn.mod = -1
-		end
 		if LSC_Config.prices.mods[mod].startprice then
 			local price = LSC_Config.prices.mods[mod].startprice
-			for i = 0,   tonumber(GetNumVehicleMods(veh,mod)) -1 do
-				local lbl = GetModTextLabel(veh,mod,i)
-				-- if lbl ~= nil then
-					local mname = tostring(GetLabelText(lbl))
-					if mname ~= "NULL" then
-						local btn = m:addPurchase(mname,price)
-						btn.modtype = mod
-						btn.mod = i
-						price = price + LSC_Config.prices.mods[mod].increaseby
-					-- end
+			for i = -1, GetNumVehicleMods(veh,mod) -1 do
+				local a2 = "Stock"
+				if i >= 0 then
+					local lbl = GetModTextLabel(veh,mod,i)
+					local a4 = GetLabelText(lbl)
+					a2 = a4 ~= "NULL" and a4 or "N/A"
 				end
+				local btn = m:addPurchase(a2,price)
+				btn.modtype = mod
+				btn.mod = i
+				price = price + LSC_Config.prices.mods[mod].increaseby
 			end		
 		else
 			for n, v in pairs(LSC_Config.prices.mods[mod]) do
