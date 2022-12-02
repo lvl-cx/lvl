@@ -2219,3 +2219,12 @@ RegisterCommand("getbucket", function(source)
     local user_id = ARMA.getUserId(source)
     ARMAclient.notify(source, {'~g~You are currently in Bucket: '..GetPlayerRoutingBucket(source)})
 end)
+
+RegisterCommand("setbucket", function(source, args) -- these events are gonna be used for vehicle cleanup in future also
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.managecommunitypot') then
+        SetPlayerRoutingBucket(source, tonumber(args[1]))
+        ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
+    end 
+end)
