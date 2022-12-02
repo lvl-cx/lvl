@@ -38,6 +38,7 @@ function ARMA.setMoney(user_id,value)
   local source = ARMA.getUserSource(user_id)
   if source ~= nil then
     ARMAclient.setDivContent(source,{"money",lang.money.display({Comma(ARMA.getMoney(user_id))})})
+    TriggerClientEvent('ARMA:initMoney', source, ARMA.getMoney(user_id), ARMA.getBankMoney(user_id))
   end
 end
 
@@ -88,6 +89,7 @@ function ARMA.setBankMoney(user_id,value)
   local source = ARMA.getUserSource(user_id)
   if source ~= nil then
     ARMAclient.setDivContent(source,{"bmoney",lang.money.bdisplay({Comma(ARMA.getBankMoney(user_id))})})
+    TriggerClientEvent('ARMA:initMoney', source, ARMA.getMoney(user_id), ARMA.getBankMoney(user_id))
   end
 end
 

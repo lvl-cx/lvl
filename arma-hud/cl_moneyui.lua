@@ -23,6 +23,8 @@ function setProximity(vprox)
     end
 end
 
+TriggerServerEvent('ARMA:requestPlayerBankBalance')
+
 function getMoneyStringFormatted(cashString)
 	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
 	int = int:reverse():gsub("(%d%d%d)", "%1,")
@@ -71,36 +73,28 @@ function getMinimapAnchor()
     return { w * 2 * minimapTopX, (h * minimapTopY)+((width*0.61)*h), width * w}
 end
 
-RegisterNetEvent("cash:setDisplayMoney")
-AddEventHandler("cash:setDisplayMoney",function(value)
+RegisterNetEvent("ARMA:setDisplayMoney")
+AddEventHandler("ARMA:setDisplayMoney",function(value)
 	local moneyString = tostring(math.floor(value))
 	moneyDisplay = getMoneyStringFormatted(moneyString)
 end)
 
-RegisterNetEvent("bank:setDisplayBankMoney")
-AddEventHandler("bank:setDisplayBankMoney",function(value)
+RegisterNetEvent("ARMA:setDisplayBankMoney")
+AddEventHandler("ARMA:setDisplayBankMoney",function(value)
 	local moneyString = tostring(math.floor(value))
 	bankMoneyDisplay = getMoneyStringFormatted(moneyString)
 end)
 
-Citizen.CreateThread(function()
-    while true do
-        if showHud then
-            TriggerServerEvent('update:bank')
-            TriggerServerEvent('update:cash')
-        end
-        Citizen.Wait(500)
-    end
-end)
+RegisterNetEvent("ARMA:initMoney")
+AddEventHandler("ARMA:initMoney",function(cash,bank)
+	local cashString = tostring(math.floor(cash))
+    moneyDisplay = getMoneyStringFormatted(cashString)
 
-Citizen.CreateThread(function()
-    while true do
-        if showHud then
-            local topLeftAnchor = getMinimapAnchor()
-            updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor[1]+topLeftAnchor[3],topLeftAnchor[2])
-        end
-        Citizen.Wait(500)
-    end
+    local moneyString = tostring(math.floor(bank))
+    bankMoneyDisplay = getMoneyStringFormatted(moneyString)
+
+    local topLeftAnchor = getMinimapAnchor()
+    updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor[1]+topLeftAnchor[3],topLeftAnchor[2])
 end)
 
 Citizen.CreateThread(function()
