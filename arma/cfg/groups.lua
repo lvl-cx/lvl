@@ -761,7 +761,7 @@ cfg.groups = {
   ["500hrs"] = {},
 
   ["Gang"] = {
-    "gang.whitelist",
+    "gang.whitelisted",
   },
   ["highroller"] = {
     "casino.highrollers",
