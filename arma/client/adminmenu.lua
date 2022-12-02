@@ -344,7 +344,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
-            if GlobalAdminLevel >= 5 then                   
+            if GlobalAdminLevel >= 4 then                   
                 RageUI.List("Teleport",q,s,"",{},true,function(x, y, z, N)
                     s = N
                     if z then
