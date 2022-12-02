@@ -152,7 +152,7 @@ end
 RegisterKeyMapping("drawmarker", "Gang Marker", "MOUSE_BUTTON", "MOUSE_MIDDLE")
 RegisterCommand('drawmarker', createMarker)
 
-RMenu.Add('markercolour','main',RageUI.CreateMenu("Marker Colour","~b~ARMA Marker Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","crosshair"))
+RMenu.Add('markercolour','main',RageUI.CreateMenu("Marker Colour","~b~ARMA Marker Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","gangmarker"))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('markercolour', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()

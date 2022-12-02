@@ -29,11 +29,11 @@ globalVehicleOwnership = {}
 globalOwnedPlayerVehicles = {}
 
 local vehicleCannotBeSold = {
-    ["demonhawkk"] = true,
+    --["demonhawkk"] = true,
 }
 
 local vehicleCannotBeRented = {
-    ["demonhawkk"] = true,
+    --["demonhawkk"] = true,
 }
 
 RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~Arma Garages",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "garage"))
