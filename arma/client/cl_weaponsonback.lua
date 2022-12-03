@@ -137,3 +137,10 @@ end
 RegisterNetEvent("ARMA:setDiagonalWeapons",function(a)
 	diagonalWeapons = a
 end)
+
+function tARMA.RemoveGears()
+	for i, entity in pairs(Weapons) do
+		DeleteWeapon(entity.obj)
+	end
+	Weapons = {}
+end
