@@ -1,4 +1,70 @@
-local a={}
+local a = {}
+Citizen.CreateThread(function()
+    print("[ARMA] Loading cached user data.")
+    a = json.decode(GetResourceKvpString("ARMA_userdata") or "{}")
+    if type(a) ~= "table" then
+        a = {}
+        print("[ARMA] Loading cached user data - failed to load setting to default.")
+    else
+        print("[ARMA] Loading cached user data - loaded.")
+    end
+end)
+function tARMA.updateCustomization(b)
+    local c = tARMA.getCustomization()
+    if c.modelhash ~= 0 and IsModelValid(c.modelhash) then
+        a.customisation = c
+        if b then
+            SetResourceKvp("ARMA_userdata", json.encode(a))
+        end
+    end
+end
+local d = vector3(0.0, 0.0, 0.0)
+function tARMA.updatePos(b)
+    local e = GetEntityCoords(PlayerPedId())
+    if e.z > -150.0 and #(e - d) > 15.0 then
+        a.position = e
+        if b then
+            SetResourceKvp("ARMA_userdata", json.encode(a))
+        end
+    end
+end
+function tARMA.updateHealth(b)
+    a.health = GetEntityHealth(PlayerPedId())
+    if b then
+        SetResourceKvp("ARMA_userdata", json.encode(a))
+    end
+end
+Citizen.CreateThread(function()
+    Wait(30000)
+    while true do
+        Wait(5000)
+        --if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInPaintball() and not tARMA.isInSpectate() then
+        if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then
+            tARMA.updatePos()
+        end
+        --if not globalInPrison and not tARMA.isStaffedOn() and not tARMA.isPlayerInAnimalForm() and not tARMA.isInPaintball()
+        if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning then
+            tARMA.updateCustomization()
+        end
+        tARMA.updateHealth()
+        SetResourceKvp("ARMA_userdata", json.encode(a))
+    end
+end)
+local f
+local g
+local function h()
+    local c = a.customisation
+    if c == nil or c.modelhash == 0 or not IsModelValid(c.modelhash) then
+        tARMA.setCustomization(getDefaultCustomization(), true, true)
+    else
+        tARMA.setCustomization(c, true, true)
+    end
+end
+
+function tARMA.checkCustomization()
+    h()
+end
+
 function getDefaultCustomization()
     local s = {}
     s = {}
@@ -22,50 +88,8 @@ function getDefaultCustomization()
     s[15] = {0, 2}
     return s
 end
-
-Citizen.CreateThread(function()
-    print("[ARMA] Loading cached user data.")
-    a=json.decode(GetResourceKvpString("ARMA_userdata")or"{}")
-    if type(a)~="table"then 
-        a={}
-        print("[ARMA] Loading cached user data - failed to load setting to default.")
-    else 
-        print("[ARMA] Loading cached user data - loaded.")
-    end 
-end)
-function tARMA.updateCustomization(b)
-    local c = tARMA.getCustomization()
-    if c.modelhash ~= 0 and IsModelValid(c.modelhash) then
-        a.customisation=c
-        if b then 
-            SetResourceKvp("ARMA_userdata",json.encode(a))
-        end 
+AddEventHandler("ARMA:playGTAIntro",function()
+    if not tARMA.isDevMode() then
+        SendNUIMessage({transactionType = "gtaloadin"})
     end
-end
-function tARMA.updatePos(b)
-    a.position=GetEntityCoords(PlayerPedId())
-    if b then 
-        SetResourceKvp("ARMA_userdata",json.encode(a))
-    end 
-end
-function tARMA.updateHealth(b)
-    a.health=GetEntityHealth(PlayerPedId())
-    if b then 
-        SetResourceKvp("ARMA_userdata",json.encode(a))
-    end 
-end
-function tARMA.updateArmour(b)
-    a.armour=GetPedArmour(PlayerPedId())
-    if b then 
-        SetResourceKvp("ARMA_userdata",json.encode(a))
-    end 
-end
-local c
-local d
-function tARMA.checkCustomization()
-    if a.customisation==nil then 
-        tARMA.setCustomization(getDefaultCustomization(),true,true)
-    else 
-        tARMA.setCustomization(a.customisation,true,true)
-    end 
-end
+end)
