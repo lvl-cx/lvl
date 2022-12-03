@@ -142,6 +142,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
           }
           PerformHttpRequest(killlogs, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = embed}), { ['Content-Type'] = 'application/json' })
     end
+    TriggerClientEvent('ARMA:deathSound', -1, GetEntityCoords(GetPlayerPed(source)))
 end)
 
 AddEventHandler('weaponDamageEvent', function(sender, ev)
