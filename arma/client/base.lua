@@ -764,6 +764,10 @@ function tARMA.announceClient(d)
     end 
 end
 
+AddEventHandler("playerSpawned",function()
+  TriggerServerEvent("ARMAcli:playerSpawned")
+end)
+
 -- voice proximity computation
 Citizen.CreateThread(function()
   while true do

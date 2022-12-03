@@ -49,9 +49,6 @@ Citizen.CreateThread(function()
                 tARMA.respawnPlayer()
                 TriggerServerEvent('ARMA:SendSpawnMenu')
                 calledNHS = false
-                --[[ if y ~= -1 then
-                    TriggerServerEvent("ARMA:endNHSCall", y)
-                end ]]
             end
             Wait(1000)
         end
@@ -60,7 +57,7 @@ Citizen.CreateThread(function()
 end)
 
 
-Citizen.CreateThread(function() -- coma thread
+Citizen.CreateThread(function()
     Wait(500)
     exports.spawnmanager:setAutoSpawn(false)
     while true do
@@ -77,6 +74,7 @@ Citizen.CreateThread(function() -- coma thread
             local x,y,z = table.unpack(plyCoords)
             ARMAserver.updatePos({x,y,z})
             ARMAserver.updateHealth({0})
+            tARMA.updateHealth(true)
             Wait(250)
         end
 
@@ -195,6 +193,7 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
             M = true
         end
         g = false
+        tARMA.RemoveGears()
         TriggerEvent("ARMA:SHOW_DEATH_SCREEN", f, L.name or "N/A", L.user_id or "N/A", L.weapon or "N/A", M)
     end)
     while i <= 10 and i >= 0 do
@@ -259,6 +258,7 @@ function tARMA.respawnPlayer()
     DoScreenFadeOut(1000)
     exports.spawnmanager:spawnPlayer()
     g = false 
+    e = 0
     TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
     calledNHS = false
     tARMA.reviveComa()
@@ -271,7 +271,6 @@ function tARMA.respawnPlayer()
     DeleteEntity(L)
     ClearPedTasksImmediately(L)
     RemoveAllPedWeapons(L)
-    e = 0
 end
 
 
@@ -304,7 +303,6 @@ Citizen.CreateThread(function()
         Citizen.Wait(0)
         if IsEntityDead(PlayerPedId()) and not g then
             Citizen.Wait(500)
-            TriggerEvent("arma:PlaySound", tARMA.getDeathSound())
             local PedKiller = GetPedSourceOfDeath(PlayerPedId())
             Q=GetPedCauseOfDeath(PlayerPedId())
             local R=WeaponNames[Q]

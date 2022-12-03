@@ -422,7 +422,7 @@ end
 
 RegisterCommand('danny', function(source, args)
     if tARMA.getStaffLevel() > 0 and not tARMA.isStaffedOn() then
-        tARMA.setCustomization(getDefaultCustomization(),true,true)
+        tARMA.setCustomization(getDefaultCustomization())
     end
 end)
 
