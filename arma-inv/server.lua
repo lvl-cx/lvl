@@ -73,7 +73,6 @@ end)
 
 RegisterNetEvent('ARMA:FetchTrunkInventory')
 AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
-    print(spawnCode)
     local source = source
     local user_id = ARMA.getUserId({source})
     if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
