@@ -398,6 +398,7 @@ cfg.groups = {
 		"admin.unban",
 		"admin.kick",
 		"admin.revive",
+		"admin.slap",
 		"admin.tp2player",
 		"admin.summon",
 		"admin.freeze",
