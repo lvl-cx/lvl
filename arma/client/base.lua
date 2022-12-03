@@ -16,7 +16,7 @@ Proxy.addInterface("ARMA",tARMA)
 
 function tARMA.isDevMode()
   if #GetActivePlayers() == 1 then
-      return true
+      return false --true
   else
       return false
   end
@@ -764,18 +764,6 @@ function tARMA.announceClient(d)
     end 
 end
 
-AddEventHandler("playerSpawned",function()
-  TriggerServerEvent("ARMAcli:playerSpawned")
-end)
-
-AddEventHandler("onPlayerDied",function(player,reason)
-  TriggerServerEvent("ARMAcli:playerDied")
-end)
-
-AddEventHandler("onPlayerKilled",function(player,killer,reason)
-  TriggerServerEvent("ARMAcli:playerDied")
-end)
-
 -- voice proximity computation
 Citizen.CreateThread(function()
   while true do
@@ -802,7 +790,7 @@ TriggerServerEvent('ARMA:CheckID')
 
 RegisterNetEvent('ARMA:CheckIdRegister')
 AddEventHandler('ARMA:CheckIdRegister', function()
-    TriggerEvent('playerSpawned', GetEntityCoords(PlayerPedId()))
+    TriggerEvent('playerSpawned')
 end)
 
 local baseplayers = {}
@@ -898,7 +886,7 @@ end
 function tARMA.setInHome(aretheyinthehome)
   inHome = aretheyinthehome
 end
-function tARMA.isInHome()
+function tARMA.isInHouse()
   return inHome
 end
 function tARMA.disableCustomizationSave(yesno)
