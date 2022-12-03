@@ -425,3 +425,12 @@ RegisterCommand('danny', function(source, args)
         tARMA.setCustomization(getDefaultCustomization(),true,true)
     end
 end)
+
+globalIgnoreDeathSound = false
+RegisterNetEvent("ARMA:deathSound",function(E)
+    local F = GetEntityCoords(tARMA.getPlayerPed())
+    local G = #(F - E)
+    if not globalIgnoreDeathSound and G <= 15 then
+        SendNUIMessage({transactionType = tARMA.getDeathSound()})
+    end
+end)
