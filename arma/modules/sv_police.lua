@@ -291,6 +291,7 @@ end)
 
 RegisterCommand('storeallweapons', function(source)
   choice_store_weapons(source)
+  ARMAclient.RemoveGears(source, {})
 end)
 
 
