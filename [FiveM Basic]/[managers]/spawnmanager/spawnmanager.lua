@@ -104,28 +104,13 @@ function addSpawnPoint(spawn)
     if not tonumber(spawn.model) then
         model = GetHashKey(spawn.model)
     end
-
-    -- is the model actually a model?
     if not IsModelInCdimage(model) then
         error("invalid spawn model")
     end
-
-    -- is is even a ped?
-    -- not in V?
-    --[[if not IsThisModelAPed(model) then
-        error("this model ain't a ped!")
-    end]]
-
-    -- overwrite the model in case we hashed it
     spawn.model = model
-
-    -- add an index
     spawn.idx = spawnNum
     spawnNum = spawnNum + 1
-
-    -- all OK, add the spawn entry to the list
     table.insert(spawnPoints, spawn)
-
     return spawn.idx
 end
 
@@ -200,30 +185,19 @@ function loadScene(x, y, z)
     end
 end
 
--- to prevent trying to spawn multiple times
 local spawnLock = false
-
--- spawns the current player at a certain spawn point index (or a random one, for that matter)
 function spawnPlayer(spawnIdx, cb)
     if spawnLock then
         return
     end
-
     spawnLock = true
-
     Citizen.CreateThread(function()
-        -- if the spawn isn't set, select a random one
         if not spawnIdx then
             spawnIdx = GetRandomIntInRange(1, #spawnPoints + 1)
         end
-
-        -- get the spawn from the array
         local spawn
-
         if type(spawnIdx) == 'table' then
             spawn = spawnIdx
-
-            -- prevent errors when passing spawn table
             spawn.x = spawn.x + 0.00
             spawn.y = spawn.y + 0.00
             spawn.z = spawn.z + 0.00
@@ -232,7 +206,6 @@ function spawnPlayer(spawnIdx, cb)
         else
             spawn = spawnPoints[spawnIdx]
         end
-
         if not spawn.skipFade then
             DoScreenFadeOut(500)
 
@@ -240,49 +213,18 @@ function spawnPlayer(spawnIdx, cb)
                 Citizen.Wait(0)
             end
         end
-
-        -- validate the index
         if not spawn then
             Citizen.Trace("tried to spawn at an invalid spawn index\n")
-
             spawnLock = false
-
             return
         end
-
-        -- freeze the local player
         freezePlayer(PlayerId(), true)
-
-
-
-        -- preload collisions for the spawnpoint
         RequestCollisionAtCoord(spawn.x, spawn.y, spawn.z)
-
-        -- spawn the player
         local ped = PlayerPedId()
-
-        -- V requires setting coords as well
         SetEntityCoordsNoOffset(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
-
         NetworkResurrectLocalPlayer(spawn.x, spawn.y, spawn.z, spawn.heading, true, true, false)
-
-        -- gamelogic-style cleanup stuff
         ClearPedTasksImmediately(ped)
-        --SetEntityHealth(ped, 300) -- TODO: allow configuration of this?
-       -- RemoveAllPedWeapons(ped) -- TODO: make configurable (V behavior?)
         ClearPlayerWantedLevel(PlayerId())
-
-        -- why is this even a flag?
-        --SetCharWillFlyThroughWindscreen(ped, false)
-
-        -- set primary camera heading
-        --SetGameCamHeading(spawn.heading)
-        --CamRestoreJumpcut(GetGameCam())
-
-        -- load the scene; streaming expects us to do it
-        --ForceLoadingScreen(true)
-        --loadScene(spawn.x, spawn.y, spawn.z)
-        --ForceLoadingScreen(false)
 
         local time = GetGameTimer()
 
