@@ -1,4 +1,4 @@
-Citizen.CreateThread(function()   -- No-Clip Thread this then goes to the server side and Bans.
+Citizen.CreateThread(function() 
     Wait(1000)
     local oldPos = GetEntityCoords(PlayerPedId())
     while true do
@@ -25,8 +25,6 @@ AddEventHandler("playerSpawned", function()
 end)
 
 
-
-
 Citizen.CreateThread(function()
     while true do
         speedWarnings = 0
@@ -38,7 +36,7 @@ end)
 WeaponBL={
 	"WEAPON_BAT",
 	"WEAPON_MACHETE",
-	"WEAPON_SWITCHBLADE",
+	--"WEAPON_SWITCHBLADE",
 	"WEAPON_POOLCUE",
 	"WEAPON_DAGGER",
 	"WEAPON_CROWBAR",
@@ -50,7 +48,7 @@ WeaponBL={
 	"WEAPON_HATCHET", 
 	"WEAPON_PROXMINE", 
 	"WEAPON_BZGAS", 
-	"WEAPON_SMOKEGRENADE", 
+	--"WEAPON_SMOKEGRENADE", 
 	"WEAPON_MOLOTOV", 
 	"WEAPON_FIREEXTINGUISHER", 
 	"WEAPON_HAZARDCAN", 
@@ -127,7 +125,7 @@ WeaponBL={
 }
 
 Citizen.CreateThread(function()
-		while true do
+	while true do
 		Citizen.Wait(500)
 		for _,theWeapon in ipairs(WeaponBL) do
 			Wait(1)
@@ -136,9 +134,9 @@ Citizen.CreateThread(function()
 				TriggerServerEvent("ARMA:acType2", theWeapon)
 			end
 		end
-		end
-	end)
--- Weapon
+	end
+end)
+
 
 Citizen.CreateThread(function()
 	while true do
@@ -158,7 +156,6 @@ Citizen.CreateThread(function()
 			{txd = "MM", txt = "menu_bg", name="MetrixFallout"},
 			{txd = "wm", txt = "wm2", name="WM Menu"}
 		}
-		
 		for i, data in pairs(DetectableTextures) do
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
@@ -174,52 +171,50 @@ Citizen.CreateThread(function()
 end)
 
 
-Citizen.CreateThread(
-    function()
-        while true do
-            Citizen.Wait(1000)
-            local i = PlayerId()
-            local j = GetVehiclePedIsIn(i)
-            local y = GetPlayerWeaponDamageModifier(i)
-            local z = GetPlayerWeaponDefenseModifier(i)
-            local A = GetPlayerWeaponDefenseModifier_2(i)
-            local B = GetPlayerVehicleDamageModifier(i)
-            local C = GetPlayerVehicleDefenseModifier(i)
-            local D = GetPlayerMeleeWeaponDefenseModifier(i)
-            if j ~= 0 then
-                local E = GetVehicleTopSpeedModifier(j)
-                if E > 1.0 then
-                    TriggerServerEvent("ARMA:acType8", "GetVehicleTopSpeedModifier "..D)
-                end
-            end
-            local F = GetWeaponDamageModifier(GetCurrentPedWeapon(i))
-            local G = GetPlayerMeleeWeaponDamageModifier()
-            if y > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDamageModifier "..y)
-            end
-            if z > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier "..z)
-            end
-            if A > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier_2 "..A)
-            end
-            if B > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "PlayerVehicleDamageModifier "..B)
-            end
-            if C > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "PlayerVehicleDefenseModifier "..C)
-            end
-            if F > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..D)
-            end
-            if G > 1.0 then
-                TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..D)
-            end
-            RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
-            RemoveAllPickupsOfType("PICKUP_HEALTH_STANDARD")
-        end
-    end
-)
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(1000)
+		local i = PlayerId()
+		local j = GetVehiclePedIsIn(i)
+		local y = GetPlayerWeaponDamageModifier(i)
+		local z = GetPlayerWeaponDefenseModifier(i)
+		local A = GetPlayerWeaponDefenseModifier_2(i)
+		local B = GetPlayerVehicleDamageModifier(i)
+		local C = GetPlayerVehicleDefenseModifier(i)
+		local D = GetPlayerMeleeWeaponDefenseModifier(i)
+		if j ~= 0 then
+			local E = GetVehicleTopSpeedModifier(j)
+			if E > 1.0 then
+				TriggerServerEvent("ARMA:acType8", "GetVehicleTopSpeedModifier "..D)
+			end
+		end
+		local F = GetWeaponDamageModifier(GetCurrentPedWeapon(i))
+		local G = GetPlayerMeleeWeaponDamageModifier()
+		if y > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDamageModifier "..y)
+		end
+		if z > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier "..z)
+		end
+		if A > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier_2 "..A)
+		end
+		if B > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDamageModifier "..B)
+		end
+		if C > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDefenseModifier "..C)
+		end
+		if F > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..D)
+		end
+		if G > 1.0 then
+			TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..D)
+		end
+		RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
+		RemoveAllPickupsOfType("PICKUP_HEALTH_STANDARD")
+	end
+end)
 
 local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
 CreateThread(function()
