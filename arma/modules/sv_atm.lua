@@ -198,10 +198,3 @@ local function build_client_atms(source)
         end
     end
 end
-
-AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
-    if first_spawn then
-     --   build_client_atms(source)
-     -- Old atms now deprecated.
-    end
-end)
