@@ -1,5 +1,6 @@
 local a=module("arma-vehicles","cfg_vehiclemaxspeeds")
 isInGreenzone=false
+local cityCap = true
 local b=false
 local c=false
 local d=false
@@ -179,7 +180,7 @@ l(function()
                     if Speed~=nil then
                         SetEntityMaxSpeed(C,Speed.vehicles.speed/2.236936)
                     else
-                        if not inCityZone then 
+                        if not inCityZone or not cityCap then 
                             if a.vehicleMaxSpeeds[I]~=nil then 
                                 SetEntityMaxSpeed(C,a.maxSpeeds[a.vehicleMaxSpeeds[I]])
                             else 
@@ -250,4 +251,11 @@ l(function()
         end
         m(0)
     end 
+end)
+
+RegisterCommand('togglecitycap', function()
+    if tARMA.getUserId() == 1 then
+        cityCap = not cityCap
+        tARMA.notify('City Cap: '..(cityCap and "~g~Enabled" or "~r~Disabled"))
+    end
 end)
