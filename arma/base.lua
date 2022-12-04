@@ -1119,3 +1119,11 @@ exports("getServerStatus", function(params, cb)
         cb("✅ Online")
     end
 end)
+
+exports("getConnected", function(params, cb)
+    if ARMA.getUserSource(params[1]) then
+        cb('connected')
+    else
+        cb('not connected')
+    end
+end)
