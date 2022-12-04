@@ -616,7 +616,11 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle('Save Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         tARMA.clientPrompt("Outfit Name:","",function(outfitName)
-                            TriggerServerEvent('ARMA:devOutfitSave',outfitName)
+                            if outfitName ~= "" then
+                                TriggerServerEvent('ARMA:devOutfitSave',outfitName)
+                            else
+                                tARMA.notify("~r~Invalid Outfit Name")
+                            end
                         end)
                     end
                 end)
