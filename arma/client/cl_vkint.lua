@@ -11,7 +11,7 @@ local a = {
         id = 59,
         position = vector3(470.19061279296, -984.85455322266, 30.689586639404),
         name = "PD Main Floor",
-        destination = {69, 68, 72},
+        destination = {68, 72},
         permission = "police"
     },
     [68] = {
