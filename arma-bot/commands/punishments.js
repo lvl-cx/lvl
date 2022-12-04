@@ -12,7 +12,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     let embed = {
         "title": "Punishment Statistics",
         "description": `Currently Banned:\n - Anticheat Banned: **${totalACBans.length}** \n - Total Banned: **${bannedPlayers.length}**\n\nF10 Related: \n - Total Bans:** ${totalBans.length}**\n - Total Kicks:** ${totalKicks.length}**\n - Total Punishments:** ${totalBans.length+totalKicks.length}**\n\nAdmin: <@${message.author.id}>`,
-        "color": 16711680,
+        "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
         },
