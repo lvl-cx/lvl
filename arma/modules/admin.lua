@@ -769,12 +769,14 @@ AddEventHandler("playerJoining", function()
     exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
 end)
 
-RegisterCommand('removepoints', function() -- proof of concept for removing points each month
-    if os.date('%d') == '01' then
-        print('first of month')
-    else
-        print(os.date('%d'))
-        print('not first of month')
+RegisterCommand('removepoints', function(source, args) -- proof of concept for removing points each month
+    local source = source
+    if ARMA.getUserId(source) == 1 then
+        --if os.date('%d') == '01' then
+            removePoints = tonumber(args[1])
+            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET points = CASE WHEN ((points-@removepoints)>0) THEN (points-@removepoints) ELSE 0 END WHERE points > 0", {removepoints = removePoints}, function() end)
+            ARMAclient.notify(source, {'~g~Removed '..removePoints..' points from all users.'})
+        --end
     end
 end)
 
@@ -2227,4 +2229,12 @@ RegisterCommand("setbucket", function(source, args) -- these events are gonna be
         SetPlayerRoutingBucket(source, tonumber(args[1]))
         ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
     end 
+end)
+
+local staffWhitelist = true
+AddEventHandler("playerJoining", function()
+    local user_id = ARMA.getUserId(source)
+    if not ARMA.hasPermission(user_id, 'admin.tickets') and staffWhitelist then
+        DropPlayer(ARMA.getUserSource(user_id), '~r~Server is currently whitelisted to staff only.')
+    end
 end)
