@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(500)
     if IsPlayerPlaying(PlayerId()) and state_ready then
       local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
-      if not tARMA.isInHouse() and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then
+      if not tARMA.isInHouse() and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() and not inOrganHeist then
         ARMAserver.updatePos({x,y,z})
       end
       ARMAserver.updateHealth({tARMA.getHealth()})

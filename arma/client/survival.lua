@@ -249,8 +249,7 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(O)
     elseif O >= 1 and not globalNHSOnDuty then
         bleedoutDuration = 290000
     else
-        --bleedoutDuration = 50000
-        bleedoutDuration = 20000
+        bleedoutDuration = 50000
     end
     d = bleedoutDuration + 10000
     e = d / 1000
