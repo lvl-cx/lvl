@@ -204,7 +204,7 @@ client.on('message', (message) => {
                         .addField('Command Used:', `${cmd.conf.name}`)
                         .addField('Parameters:', `${params}`)
                         .addField('Admin:', `${message.author.username} - <@${message.author.id}>`)
-                        .setColor('#16448403')
+                        .setColor('16448403')
                         .setFooter('Rebel Deathmatch')
                         .setTimestamp();
                         hook.send(embed);
