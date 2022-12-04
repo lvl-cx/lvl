@@ -1,31 +1,35 @@
-local comaAnim = {}
-local in_coma = false
-local calledNHS = false
 spawning = true
-
-local e = 0
-local f = 300
-local g = false
-local i = 100
-local n = 102
-
-WeaponNames={}
-local o=module("cfg/weapons")
-local T=module("armacore/cfg/cfg_respawn")
-local p={}
-local q={}
+local a = {}
+local b = false
+local c = 100000
+local d = 0
+local e = 300
+local f = false
+local g = ""
+local h = 100
+local i = false
+local j
+local k = GetGameTimer()
+local l = 0
+local m = 102
+local n = 0
+WeaponNames = {}
+local o = module("cfg/weapons")
+local p = module("armacore/cfg/cfg_respawn")
+local q = {}
+local r = {}
 Citizen.CreateThread(function()
-    q=o.nativeWeaponModelsToNames
-    for r,s in pairs(o.weapons)do 
-        q[r]=s.name 
+    r = o.nativeWeaponModelsToNames
+    for s, t in pairs(o.weapons) do
+        r[s] = t.name
     end
-    for r,t in pairs(q)do 
-        WeaponNames[GetHashKey(r)]=t
-        p[GetHashKey(r)]=r 
-    end 
+    for s, u in pairs(r) do
+        WeaponNames[GetHashKey(s)] = u
+        q[GetHashKey(s)] = s
+    end
     local v = module("armacore/cfg/cfg_housing")
     for w, x in pairs(v.homes) do
-        T.spawnLocations[w] = {
+        p.spawnLocations[w] = {
             name = w,
             coords = vector3(x.entry_point[1], x.entry_point[2], x.entry_point[3]),
             permission = {},
@@ -35,20 +39,38 @@ Citizen.CreateThread(function()
     end
 end)
 
+local y = -1
+RegisterNetEvent("ARMA:setNHSCallerId",function(z)
+    y = z
+end)
+
+AddEventHandler("ARMA:countdownEnded",function()
+    f = true
+end)
+
 Citizen.CreateThread(function()
     while true do
         if IsDisabledControlJustPressed(0, 38) then
-            if in_coma and not calledNHS then
-                calledNHS = true
-                tARMA.notify("~g~NHS have been notified.")
-                TriggerServerEvent('ARMA:NHSComaCall')
-                TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
-            elseif g and in_coma then
+            if b and not i then
+                local A = GetEntityCoords(GetPlayerPed(-1))
+                --if not tARMA.isInPaintball() and not globalInBoxingZone and not tARMA.isPlayerInRedZone() and not tARMA.isPlayerInTurf() then
+                if not tARMA.isPlayerInRedZone() and not tARMA.isPlayerInTurf() then
+                    PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
+                    tARMA.notify("~g~NHS have been notified.")
+                    TriggerServerEvent('ARMA:NHSComaCall')
+                    TriggerEvent("ARMA:DEATH_SCREEN_NHS_CALLED")
+                end
+                i = true
+            elseif f and b then
                 PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
-                TriggerEvent("ARMA:respawnKeyPressed")
+                TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
                 tARMA.respawnPlayer()
+                i = false
+                if y ~= -1 then
+                    TriggerServerEvent("ARMA:endNHSCall", y)
+                end
+                TriggerEvent("ARMA:respawnKeyPressed")
                 TriggerServerEvent('ARMA:SendSpawnMenu')
-                calledNHS = false
             end
             Wait(1000)
         end
@@ -56,124 +78,188 @@ Citizen.CreateThread(function()
     end
 end)
 
-
+local function C()
+    local D = tARMA.getPlayerCoords()
+    for E, F in pairs(GetGamePool("CPed")) do
+        if IsEntityDead(F) and not IsPedAPlayer(F) and #(GetEntityCoords(F, true) - D) < 25.0 then
+            local G = GetEntityModel(F)
+            if G == "mp_m_freemode_01" or G == "mp_f_freemode_01" then
+                DeleteEntity(F)
+            end
+        end
+    end
+end
 Citizen.CreateThread(function()
     Wait(500)
     exports.spawnmanager:setAutoSpawn(false)
     while true do
         Wait(0)
-        local ped = PlayerPedId()
-        local health = GetEntityHealth(ped)
-        if IsEntityDead(PlayerPedId()) and not in_coma and not changingPed and not spawning then --Wait for death check
-            local plyCoords = GetEntityCoords(PlayerPedId(),true)
+        local F = GetPlayerPed(-1)
+        local H = GetEntityHealth(F)
+        if IsEntityDead(GetPlayerPed(-1)) and not b then
+            pbCounter = 100
+            local I = GetEntityCoords(GetPlayerPed(-1), true)
+            if currentBackpack then
+                TriggerEvent('ARMA:removeBackpack')
+            end
+            TriggerServerEvent("ARMA:forceStoreWeapons", false, true, true)
             tARMA.ejectVehicle()
-            TriggerEvent('ARMA:removeBackpack')
+            b = true
+            j = I
             TriggerServerEvent("ARMA:getNumOfNHSOnline")
-            TriggerServerEvent("Server:SoundToCoords", plyCoords.x, plyCoords.y, plyCoords.z, 60.0, "Untitled", 0.4);
-            in_coma = true
-            local x,y,z = table.unpack(plyCoords)
+            local x,y,z = table.unpack(I)
             ARMAserver.updatePos({x,y,z})
             ARMAserver.updateHealth({0})
-            tARMA.updateHealth(true)
             Wait(250)
         end
-
-        if i <= 0  then --Been 10 seconds, proceed to play anim check 
-            i = 100 
-            local entityDead = GetEntityHealth(PlayerPedId())
-            while entityDead <= 100 do
+        if h <= 0 then
+            h = 100
+            local J = GetEntityHealth(GetPlayerPed(-1))
+            while J <= 100 do
                 Wait(0)
-                local x,y,z = table.unpack(tARMA.getPosition())
-                NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(PlayerPedId()), true, true, false)
-                entityDead = GetEntityHealth(PlayerPedId())
+                local K = tARMA.getPosition()
+                local L = PlayerPedId()
+                NetworkResurrectLocalPlayer(K.x, K.y, K.z, GetEntityHeading(GetPlayerPed(-1)), true, true)
+                DeleteEntity(L)
+                J = GetEntityHealth(GetPlayerPed(-1))
             end
-            SetEntityHealth(PlayerPedId(), 102)
-            SetEntityInvincible(PlayerPedId(),true)
-            comaAnim = getRandomComaAnimation()
-            tARMA.loadAnimDict(comaAnim.dict)
-            TaskPlayAnim(PlayerPedId(), comaAnim.dict, comaAnim.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0 )
-            RemoveAnimDict(comaAnim.dict)
+            SetEntityHealth(GetPlayerPed(-1), 102)
+            SetEntityInvincible(GetPlayerPed(-1), true)
+            a = getRandomComaAnimation()
+            tARMA.loadAnimDict(a.dict)
+            TaskPlayAnim(GetPlayerPed(-1), a.dict, a.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0)
+            RemoveAnimDict(a.dict)
+            C()
         end
-        if health > n and in_coma then
-            if IsEntityDead(PlayerPedId()) then
-                local F = tARMA.getPosition()
-                NetworkResurrectLocalPlayer(F.x, F.y, F.z, GetEntityHeading(PlayerPedId()), true, true)
+        if H > m and b then
+            if IsEntityDead(GetPlayerPed(-1)) then
+                local K = tARMA.getPosition()
+                local L = PlayerPedId()
+                NetworkResurrectLocalPlayer(K.x, K.y, K.z, GetEntityHeading(GetPlayerPed(-1)), true, true)
+                DeleteEntity(L)
                 Wait(0)
             end
             TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
-            d = 100000
-            e = 0
-            g = false
+            c = 100000
+            d = 0
+            pbCounter = 100
+            f = false
+            g = ""
             tARMA.disableComa()
-            i = 100
-            SetEntityInvincible(PlayerPedId(), false)
-            ClearPedSecondaryTask(PlayerPedId())
-            Citizen.CreateThread(function()
-                Wait(500)
-                ClearPedSecondaryTask(PlayerPedId())
-                ClearPedTasks(PlayerPedId())
-            end)
+            h = 100
+            SetEntityInvincible(GetPlayerPed(-1), false)
+            ClearPedSecondaryTask(GetPlayerPed(-1))
+            Citizen.CreateThread(
+                function()
+                    Wait(500)
+                    ClearPedSecondaryTask(GetPlayerPed(-1))
+                    ClearPedTasks(GetPlayerPed(-1))
+                end
+            )
         end
-        local C = GetEntityHealth(PlayerPedId())
-        if C <= n and not in_coma then
-            SetEntityHealth(PlayerPedId(), 0)
+        local H = GetEntityHealth(GetPlayerPed(-1))
+        if H <= m and not b then
+            SetEntityHealth(GetPlayerPed(-1), 0)
         end
-
     end
 end)
 
 Citizen.CreateThread(function()
     while true do
-        if in_coma then
-            local playerPed = PlayerPedId()
-            if not IsEntityDead(playerPed) then
-                if comaAnim.dict == nil then
-                    comaAnim = getRandomComaAnimation()
+        if b then
+            local L = PlayerPedId()
+            if not IsEntityDead(L) then
+                if a.dict == nil then
+                    a = getRandomComaAnimation()
                 end
-                if not IsEntityPlayingAnim(playerPed,comaAnim.dict,comaAnim.anim,3)  then
-                    if comaAnim.dict ~= nil then
-                        tARMA.loadAnimDict(comaAnim.dict)
-                        TaskPlayAnim(playerPed, comaAnim.dict, comaAnim.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0)
-                        RemoveAnimDict(comaAnim.dict)
+                if not IsEntityPlayingAnim(L, a.dict, a.anim, 3) then --and not tARMA.isUsingStretcher() then
+                    if a.dict ~= nil then
+                        tARMA.loadAnimDict(a.dict)
+                        TaskPlayAnim(L, a.dict, a.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0)
+                        RemoveAnimDict(a.dict)
                     end
                 end
             end
-            if GetEntityHealth(playerPed) > 102 then 
+            if GetEntityHealth(L) > m then
                 tARMA.disableComa()
-                if IsEntityDead(playerPed) then
-                    local x,y,z = table.unpack(tARMA.getPosition())
-                    NetworkResurrectLocalPlayer(x, y, z, GetEntityHeading(PlayerPedId()),true, true, false)
+                if IsEntityDead(L) then
+                    local K = tARMA.getPosition()
+                    local M = PlayerPedId()
+                    NetworkResurrectLocalPlayer(K.x, K.y, K.z, GetEntityHeading(GetPlayerPed(-1)), true, true)
+                    DeleteEntity(M)
                     Wait(0)
                 end
+                c = 100000
+                d = 0
+                pbCounter = 100
+                g = ""
                 tARMA.disableComa()
-                i = 100 
-                e = 0
-                SetEntityInvincible(playerPed,false)
-                ClearPedSecondaryTask(playerPed) 
+                h = 100
+                SetEntityInvincible(L, false)
+                ClearPedSecondaryTask(L)
             end
         end
         Wait(0)
     end
 end)
 
-RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
-    c = I
+function tARMA.RevivePlayer()
+    local F = GetPlayerPed(-1)
+    if IsEntityDead(F) then
+        local K = tARMA.getPosition()
+        local L = PlayerPedId()
+        NetworkResurrectLocalPlayer(K.x, K.y, K.z, GetEntityHeading(GetPlayerPed(-1)), true, true)
+        DeleteEntity(L)
+        Citizen.Wait(0)
+    end
+    local N = PlayerId()
+    SetPlayerControl(N, true, false)
+    if not IsEntityVisible(F) then
+        SetEntityVisible(F, true)
+    end
+    if not IsPedInAnyVehicle(F) then
+        SetEntityCollision(F, true)
+    end
+    FreezeEntityPosition(F, false)
+    SetPlayerInvincible(N, false)
+    SetEntityHealth(F, 200)
+    tARMA.disableComa()
+    h = 100
+    local F = GetPlayerPed(-1)
+    SetEntityInvincible(F, false)
+    ClearPedSecondaryTask(GetPlayerPed(-1))
+    Citizen.CreateThread(
+        function()
+            Wait(500)
+            ClearPedSecondaryTask(GetPlayerPed(-1))
+            ClearPedTasks(GetPlayerPed(-1))
+        end
+    )
+    TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
+    if y ~= -1 then
+        TriggerServerEvent("ARMA:endNHSCall", y)
+    end
+end
+
+RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(O)
     if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
         bleedoutDuration = 50000
-    elseif #c >= 1 and #c <= 3 and not globalNHSOnDuty then
+    elseif O >= 1 and O <= 3 and not globalNHSOnDuty then
         bleedoutDuration = 170000
-    elseif #c >= 1 and not globalNHSOnDuty then
+    elseif O >= 1 and not globalNHSOnDuty then
         bleedoutDuration = 290000
     else
-        bleedoutDuration = 50000
+        --bleedoutDuration = 50000
+        bleedoutDuration = 20000
     end
-    e = bleedoutDuration + 10000
-    f = e / 1000
-    i = 10
-    l = GetGameTimer()
-    local J = false
+    d = bleedoutDuration + 10000
+    e = d / 1000
+    h = 10
+    k = GetGameTimer()
+    l = d
+    local P = false
     if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
-        J = true
+        P = true
     else
         TriggerEvent('ARMA:IsInMoneyComa', true)
         ExecuteCommand('storeallweapons')
@@ -183,24 +269,23 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
         ARMAserver.MoneyDrop()
     end
     CreateThread(function()
-        local K = GetGameTimer()
+        local Q = GetGameTimer()
         while tARMA.getKillerInfo().ready == nil do
             Wait(0)
         end
-        local L = tARMA.getKillerInfo()
-        local M = false
-        if L.name == nil then
-            M = true
+        local R = tARMA.getKillerInfo()
+        local S = false
+        if R.name == nil then
+            S = true
         end
-        g = false
-        tARMA.RemoveGears()
-        TriggerEvent("ARMA:SHOW_DEATH_SCREEN", f, L.name or "N/A", L.user_id or "N/A", L.weapon or "N/A", M)
+        f = false
+        TriggerEvent("ARMA:SHOW_DEATH_SCREEN", e, R.name or "N/A", R.user_id or "N/A", R.weapon or "N/A", S)
     end)
-    while i <= 10 and i >= 0 do
+    while h <= 10 and h >= 0 do
         Wait(1000)
-        i = i - 1
+        h = h - 1
     end
-    if J then
+    if P then
         TriggerEvent('ARMA:IsInMoneyComa', true)
         ExecuteCommand('storeallweapons')
         if not tARMA.globalOnPoliceDuty() then
@@ -210,58 +295,67 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(I)
     end
 end)
 
-local L = {}
-function tARMA.getKillerInfo()
-    return L
-end
-
-
-function tARMA.RevivePlayer()
-    local x=PlayerPedId()
-    if IsEntityDead(x)then 
-        local x,y,z=table.unpack(tARMA.getPosition())
-        NetworkResurrectLocalPlayer(x,y,z,GetEntityHeading(PlayerPedId()),true,true,false)
-        Citizen.Wait(0)
+local T = 0
+RegisterNetEvent("ARMA:OpenSpawnMenu",function(U)
+    DoScreenFadeIn(1000)
+    TriggerScreenblurFadeIn(100.0)
+    ExecuteCommand("hideui")
+    SetPlayerControl(PlayerId(), false, 0)
+    local L = PlayerPedId()
+    local V = tARMA.getPlayerCoords()
+    FreezeEntityPosition(L, true)
+    SetEntityCoordsNoOffset(L, V.x, V.y, -100.0, false, false, false)
+    SetEntityVisible(L, false, 0)
+    TriggerEvent('ARMA:removeBackpack')
+    T = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA",675.57568359375,1107.1724853516,375.29666137695,0.0,0.0,0.0,65.0,0,2)
+    SetCamActive(T, true)
+    RenderScriptCams(true, true, 0, true, false)
+    SetCamParams(T, -1024.6506347656, -2712.0234375, 79.889106750488, 0.0, 0.0, 0.0, 65.0, 250000, 0, 0, 2)
+    local W = {}
+    for E, w in pairs(U) do
+        if p.spawnLocations[w] then
+            table.insert(W, p.spawnLocations[w])
+        end
     end
-    local D=PlayerId()
-    SetPlayerControl(D,true,false)
-    if not IsEntityVisible(x)then 
-        SetEntityVisible(x,true)
-    end
-    if not IsPedInAnyVehicle(x)then 
-        SetEntityCollision(x,true)
-    end
-    FreezeEntityPosition(x,false)
-    SetPlayerInvincible(D,false)
-    SetEntityHealth(x,200)
-    tARMA.disableComa()
-    i=100
-    g=false
-    local x=PlayerPedId()
-    SetEntityInvincible(x,false)
-    ClearPedSecondaryTask(PlayerPedId())
-    Citizen.CreateThread(function()
-        Wait(500)
-        ClearPedSecondaryTask(PlayerPedId())
-        ClearPedTasks(PlayerPedId())
-    end)
-    TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
-    calledNHS = false
-    TriggerEvent('ARMA:Revive')
-end
+    TriggerEvent("ARMADEATHUI:openSpawnMenu", W)
+end)
 
-AddEventHandler("ARMA:countdownEnded",function()
-    g = true
+AddEventHandler("ARMA:respawnButtonClicked",function(X, Y)
+    if Y and Y > 0 then
+        TriggerServerEvent("ARMA:takeAmount", Y)
+    end
+    local Z = p.spawnLocations[X].coords
+    TriggerEvent("ARMA:playGTAIntro")
+    if tARMA.isHandcuffed() then
+        TriggerEvent("ARMA:toggleHandcuffs", false)
+    end
+    SetEntityCoords(PlayerPedId(), Z)
+    SetEntityVisible(PlayerPedId(), true, 0)
+    SetPlayerControl(PlayerId(), true, 0)
+    SetFocusPosAndVel(Z.x, Z.y, Z.z + 1000)
+    DestroyCam(T)
+    local _ = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", Z.x, Z.y, Z.z + 1000.0, 0.0, 0.0, 0.0, 65.0, 0, 2)
+    SetCamActive(_, true)
+    RenderScriptCams(true, true, 0, true, false)
+    SetCamParams(_, Z.x, Z.y, Z.z, 0.0, 0.0, 0.0, 65.0, 5000, 0, 0, 2)
+    Wait(2500)
+    ClearFocus()
+    Wait(2000)
+    FreezeEntityPosition(PlayerPedId(), false)
+    DestroyCam(_)
+    RenderScriptCams(false, true, 2000, false, false)
+    TriggerScreenblurFadeOut(2000.0)
+    ExecuteCommand("showui")
+    ClearFocus()
 end)
 
 function tARMA.respawnPlayer()
     DoScreenFadeOut(1000)
-    exports.spawnmanager:spawnPlayer()
-    g = false 
-    e = 0
-    TriggerEvent("ARMA:CLOSE_DEATH_SCREEN")
-    calledNHS = false
-    tARMA.reviveComa()
+    c = 100000
+    d = 0
+    pbCounter = 100
+    f = false
+    g = ""
     SetEntityInvincible(PlayerPedId(), false)
     Wait(1000)
     local L = PlayerPedId()
@@ -273,189 +367,156 @@ function tARMA.respawnPlayer()
     RemoveAllPedWeapons(L)
 end
 
-
 function tARMA.disableComa()
-    in_coma = false
-    calledNHS = false
+    b = false
+    i = false
 end
 
 function tARMA.isInComa()
-    return in_coma
+    return b
 end
 
-function tARMA.reviveComa()
-    local ped = PlayerPedId()
-    SetEntityInvincible(ped,false)
-    tARMA.setRagdoll(false)
-    tARMA.stopScreenEffect(cfg.coma_effect)
-    SetEntityHealth(PlayerPedId(), 200) 
+local a0 = false
+function tARMA.isTazed(a1)
+    return a0 or IsPedBeingStunned(PlayerPedId(), 0) or tARMA.isPedBeingTackled() or
+        isInGreenzone and not globalOnPoliceDuty and not a1
 end
-
-Citizen.CreateThread(function() -- disable health regen, conflicts with coma system
-    while true do
-        SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-        Wait(0)
-    end
+function tARMA.isTazedByRevive()
+    return a0
+end
+RegisterNetEvent("TriggerTazer",function()
+    a0 = true
+    tARMA.setCanAnim(false)
+    local L = PlayerPedId()
+    tARMA.loadClipSet("move_m@drunk@verydrunk")
+    SetPedMinGroundTimeForStungun(L, 15000)
+    SetPedMovementClipset(L, "move_m@drunk@verydrunk", 1.0)
+    RemoveClipSet("move_m@drunk@verydrunk")
+    SetTimecycleModifier("spectator5")
+    SetPedIsDrunk(L, true)
+    Wait(15000)
+    a0 = false
+    tARMA.setCanAnim(true)
+    SetPedMotionBlur(L, true)
+    Wait(60000)
+    ClearTimecycleModifier()
+    ResetScenarioTypesEnabled()
+    ResetPedMovementClipset(L, 0)
+    SetPedIsDrunk(L, false)
+    SetPedMotionBlur(L, false)
 end)
-
+function getRandomComaAnimation()
+    local a2 = {
+        {"combat@damage@writheidle_a", "writhe_idle_a"},
+        {"combat@damage@writheidle_a", "writhe_idle_b"},
+        {"combat@damage@writheidle_a", "writhe_idle_c"},
+        {"combat@damage@writheidle_b", "writhe_idle_d"},
+        {"combat@damage@writheidle_b", "writhe_idle_e"},
+        {"combat@damage@writheidle_b", "writhe_idle_f"},
+        {"combat@damage@writheidle_c", "writhe_idle_g"},
+        {"combat@damage@rb_writhe", "rb_writhe_loop"},
+        {"combat@damage@writhe", "writhe_loop"}
+    }
+    local a3 = {}
+    local a4, a5 = table.unpack(a2[math.random(1, #a2)])
+    a3["dict"] = a4
+    a3["anim"] = a5
+    return a3
+end
+local R = {}
+function tARMA.getKillerInfo()
+    return R
+end
 Citizen.CreateThread(function()
+    Wait(10000)
+    local a6, a7, a8, a9, s
     while true do
         Citizen.Wait(0)
-        if IsEntityDead(PlayerPedId()) and not g then
+        if IsEntityDead(PlayerPedId()) then
             Citizen.Wait(500)
-            local PedKiller = GetPedSourceOfDeath(PlayerPedId())
-            Q=GetPedCauseOfDeath(PlayerPedId())
-            local R=WeaponNames[Q]
-            if IsEntityAPed(PedKiller) and IsPedAPlayer(PedKiller) then
-                Killer = NetworkGetPlayerIndexFromPed(PedKiller)
-            elseif IsEntityAVehicle(PedKiller) and IsEntityAPed(GetPedInVehicleSeat(PedKiller, -1)) and IsPedAPlayer(GetPedInVehicleSeat(PedKiller, -1)) then
-                Killer = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(PedKiller, -1))
+            local aa = GetPedSourceOfDeath(PlayerPedId())
+            a8 = GetPedCauseOfDeath(PlayerPedId())
+            a9 = WeaponNames[a8]
+            s = q[a8]
+            if IsEntityAPed(aa) and IsPedAPlayer(aa) then
+                a7 = NetworkGetPlayerIndexFromPed(aa)
+            elseif
+                IsEntityAVehicle(aa) and IsEntityAPed(GetPedInVehicleSeat(aa, -1)) and
+                    IsPedAPlayer(GetPedInVehicleSeat(aa, -1))
+                then
+                a7 = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(aa, -1))
             end
-            local distance = 0
-            local a6 = false
-            local az = tARMA.getPedServerId(PedKiller)
-            if (Killer == PlayerId()) or (Killer == nil) then
-                a6 = true
+            local ab = tARMA.getPedServerId(aa)
+            -- if inOrganHeist then
+            --     TriggerServerEvent("ARMA:diedInOrganHeist", ab)
+            --     tARMA.setDeathInOrganHeist()
+            -- end
+            local ac = false
+            local ad = 0
+            if a7 == PlayerId() or a7 == nil then
+                ac = true
             else
-                L.name = GetPlayerName(Killer)
-                distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(PedKiller))
+                local ae = GetPlayerName(a7)
+                R.name = ae
+                ad = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(aa))
             end
-            L.source = az
-            L.user_id = tARMA.getUserId(tARMA.getPedServerId(PedKiller))
-            L.weapon = tostring(R)
-            L.ready = true
-            if not g and in_coma and IsEntityPlayingAnim(PlayerPedId(),comaAnim.dict,comaAnim.anim,3) then
-                TriggerServerEvent("ARMA:onPlayerKilled", "finished off", tARMA.getPedServerId(PedKiller), R)
-            else
-                TriggerServerEvent("ARMA:onPlayerKilled", "killed", tARMA.getPedServerId(PedKiller), R, a6, distance)
+            R.source = ab
+            R.user_id = tARMA.getUserId(ab)
+            R.weapon = tostring(a9)
+            R.ready = true
+            if GetGameTimer() < k + 10000 then
+                local ab = tARMA.getPedServerId(aa)
+                TriggerServerEvent("ARMA:onPlayerKilled", "killed", ab, a9, ac, ad)
+                n = 0
+            elseif GetGameTimer() < k + l then
+                local ab = tARMA.getPedServerId(aa)
+                l = 0
+                TriggerServerEvent("ARMA:onPlayerKilled", "finished off", ab, a9)
+                n = 0
             end
-            Killer = nil
-            PedKiller = nil
-            R = nil
-            Q = nil
+            a7 = nil
+            a6 = nil
+            a8 = nil
+            a9 = nil
         end
         while IsEntityDead(PlayerPedId()) do
             Citizen.Wait(0)
         end
-        L = {}
+        R = {}
     end
 end)
 
-
-function tARMA.varyHealth(X)
-    local x=PlayerPedId()
-    local Y=math.floor(GetEntityHealth(x)+X)SetEntityHealth(x,Y)
+function tARMA.varyHealth(ag)
+    local F = PlayerPedId()
+    local ah = math.floor(GetEntityHealth(F) + ag)
+    SetEntityHealth(F, ah)
 end
 function tARMA.getHealth()
     return GetEntityHealth(PlayerPedId())
 end
-function tARMA.setHealth(y)
-    local Y=math.floor(y)
-    SetEntityHealth(PlayerPedId(),Y)
+function tARMA.setHealth(H)
+    local ah = math.floor(H)
+    SetEntityHealth(PlayerPedId(), ah)
 end
-function tARMA.setFriendlyFire(Z)
-    NetworkSetFriendlyFireOption(Z)
-    SetCanAttackFriendly(PlayerPedId(),Z,Z)
+function tARMA.setFriendlyFire(ai)
+    NetworkSetFriendlyFireOption(ai)
+    SetCanAttackFriendly(GetPlayerPed(-1), ai, ai)
 end
+function tARMA.setPolice(ai)
+    local N = PlayerId()
+    SetPoliceIgnorePlayer(N, not ai)
+    SetDispatchCopsForPlayer(N, ai)
+end
+AddEventHandler("ARMA:onClientSpawn",function(aj, ak)
+    if ak then
+        tARMA.setPolice(false)
+        tARMA.setFriendlyFire(true)
+    end
+end)
 
 Citizen.CreateThread(function()
-    if true then 
-        tARMA.setFriendlyFire(true)
-    end 
-end)
-
-function getRandomComaAnimation()
--- --death emotes
-    randomComaAnimations = {
-        {"combat@damage@writheidle_a","writhe_idle_a"},
-        {"combat@damage@writheidle_a","writhe_idle_b"},
-        {"combat@damage@writheidle_a","writhe_idle_c"},
-        {"combat@damage@writheidle_b","writhe_idle_d"},
-        {"combat@damage@writheidle_b","writhe_idle_e"},
-        {"combat@damage@writheidle_b","writhe_idle_f"},
-        {"combat@damage@writheidle_c","writhe_idle_g"},
-        {"combat@damage@rb_writhe","rb_writhe_loop"},
-        {"combat@damage@writhe","writhe_loop"},
-    }
-
-
-    comaAnimation = {}
-    
-    math.randomseed(GetGameTimer())
-    num = math.random(1,#randomComaAnimations)
-    num = math.random(1,#randomComaAnimations)
-    num = math.random(1,#randomComaAnimations)
-    
-    dict,anim = table.unpack(randomComaAnimations[num])
-    comaAnimation["dict"] = dict
-    comaAnimation["anim"] = anim
-    return comaAnimation
-end
-
-function DrawAdvancedTextOutline(x,y ,w,h,sc, text, r,g,b,a,font,jus)
-    SetTextFont(font)
-    SetTextProportional(0)
-    SetTextScale(sc, sc)
-	N_0x4e096588b13ffeca(jus)
-    SetTextColour(r, g, b, a)
-
-    SetTextEdge(1, 0, 0, 0, 255)
-
-    SetTextEntry("STRING")
-    AddTextComponentString(text)
-	DrawText(x - 0.1+w, y - 0.02+h)
-end
-
-local N = 0
-RegisterNetEvent("ARMA:OpenSpawnMenu",function(O)
-    DoScreenFadeIn(1000)
-    TriggerScreenblurFadeIn(100.0)
-    ExecuteCommand("hideui")
-    SetPlayerControl(PlayerId(), false, 0)
-    local G = PlayerPedId()
-    local P = tARMA.getPlayerCoords()
-    FreezeEntityPosition(G, true)
-    SetEntityCoordsNoOffset(G, P.x, P.y, -100.0, false, false, false)
-    SetEntityVisible(G, false, 0)
-    N = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA",675.57568359375,1107.1724853516,375.29666137695,0.0,0.0,0.0,65.0,0,2)
-    SetCamActive(N, true)
-    RenderScriptCams(true, true, 0, true, false)
-    SetCamParams(N, -1024.6506347656, -2712.0234375, 79.889106750488, 0.0, 0.0, 0.0, 65.0, 250000, 0, 0, 2)
-    local QQ = {}
-    for I, w in pairs(O) do
-        if T.spawnLocations[w] then
-            table.insert(QQ, T.spawnLocations[w])
-        end
+    while true do
+        SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
+        Wait(0)
     end
-    TriggerEvent("ARMADEATHUI:openSpawnMenu", QQ)
-end)
-
-AddEventHandler("ARMA:respawnButtonClicked",function(S, Z)
-    tARMA.checkCustomization()
-    if Z and Z > 0 then
-        TriggerServerEvent("ARMA:takeAmount", Z)
-    end
-    local U = T.spawnLocations[S].coords
-    TriggerEvent("arma:PlaySound", "gtaloadin")
-    if tARMA.isHandcuffed() then
-        TriggerEvent("ARMA:toggleHandcuffs", false)
-    end
-    SetEntityCoords(PlayerPedId(), U)
-    SetEntityVisible(PlayerPedId(), true, 0)
-    SetPlayerControl(PlayerId(), true, 0)
-    SetFocusPosAndVel(U.x, U.y, U.z + 1000)
-    DestroyCam(N)
-    local V = CreateCameraWithParams("DEFAULT_SCRIPTED_CAMERA", U.x, U.y, U.z + 1000.0, 0.0, 0.0, 0.0, 65.0, 0, 2)
-    SetCamActive(V, true)
-    RenderScriptCams(true, true, 0, true, false)
-    SetCamParams(V, U.x, U.y, U.z, 0.0, 0.0, 0.0, 65.0, 5000, 0, 0, 2)
-    Wait(2500)
-    ClearFocus()
-    Wait(2000)
-    FreezeEntityPosition(PlayerPedId(), false)
-    DestroyCam(V)
-    RenderScriptCams(false, true, 2000, false, false)
-    TriggerScreenblurFadeOut(2000.0)
-    ExecuteCommand("showui")
-    ClearFocus()
 end)
