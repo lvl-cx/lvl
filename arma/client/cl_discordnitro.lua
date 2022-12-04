@@ -1,6 +1,6 @@
 local a = GetGameTimer()
 RegisterNetEvent("ARMA:spawnNitroBMX",function()
-    if not tARMA.isInComa() and not tARMA.isHandcuffed() and not insideDiamondCasino and not isPlayerNearPrison() then
+    if not tARMA.isInComa() and not tARMA.isHandcuffed() and not insideDiamondCasino then --and not isPlayerNearPrison() then
         if GetTimeDifference(GetGameTimer(), a) > 10000 then
             a = GetGameTimer()
             tARMA.notify("~g~Crafting a BMX")
