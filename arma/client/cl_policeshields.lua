@@ -47,12 +47,7 @@ local b = {
 }
 local c = {
     "WEAPON_STUNGUN",
-    "WEAPON_GLOCKCMG",
-    "WEAPON_SIGSAUERM17",
-    "WEAPON_MANDAPISTOL",
-    "WEAPON_MK23SOCOM",
-    "WEAPON_PDGLOCK20VA5",
-    "WEAPON_JACKPISTOL50"
+    "WEAPON_PDGLOCK",
 }
 Citizen.CreateThread(function()
     TriggerEvent("chat:addSuggestion", "/shield", "Use a police shield")
