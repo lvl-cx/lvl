@@ -10,6 +10,7 @@ AddEventHandler("CarryPeople:sync", function(targetSrc)
     local targetCoords = GetEntityCoords(targetPed)
     if #(sourceCoords - targetCoords) <= 3.0 then 
         TriggerClientEvent("CarryPeople:syncTarget", targetSrc, source)
+        TriggerClientEvent("ARMAEXTRAS:StartCarry", source)
         carrying[source] = targetSrc
         carried[targetSrc] = source
     end

@@ -28,7 +28,7 @@ RegisterCommand("carry",function(f, g)
             if GetEntityHealth(tARMA.getPlayerPed()) > 102 then
                 local h = GetEntityCoords(tARMA.getPlayerPed())
                 distanceToCasino = #(h - d)
-                if not carry.InProgress and distanceToCasino > 200 then
+                if not carry.InProgress and (distanceToCasino > 200 or tARMA.isStaffedOn()) then
                     local i = tARMA.getPlayerPed()
                     local j = GetClosestPlayer(3)
                     if j ~= -1 then
@@ -37,7 +37,7 @@ RegisterCommand("carry",function(f, g)
                             if not tARMA.isStaffedOn() and not globalLFBOnDuty then
                                 TriggerServerEvent("ARMA:CarryRequest", target)
                             else
-                                TriggerServerEvent("CarryPeople:sync", GetPlayerServerId(tARMA.getPlayerId()), target)
+                                TriggerServerEvent("CarryPeople:sync", target)
                             end
                         else
                             drawNativeNotification("Cannot carry dead people!")
@@ -60,28 +60,6 @@ RegisterCommand("carry",function(f, g)
         else
             tARMA.notify("~r~You cannot carry in the prison.")
         end
-    end
-end,false)
-
-RegisterCommand("carry",function(source, args)
-    if not carry.InProgress and not IsPedInAnyVehicle(PlayerPedId(), true) and not globalPlayerInPrisonZone then
-        local closestPlayer = GetClosestPlayer(3)
-        if closestPlayer then
-            local targetSrc = GetPlayerServerId(closestPlayer)
-            if targetSrc ~= -1 then
-                TriggerServerEvent("ARMA:CarryRequest", targetSrc, staffMode)
-            else
-                drawNativeNotification("~r~No one nearby to carry!")
-            end
-        else
-            drawNativeNotification("~r~No one nearby to carry!")
-        end
-    else
-        carry.InProgress = false
-        ClearPedSecondaryTask(PlayerPedId())
-        DetachEntity(PlayerPedId(), true, false)
-        TriggerServerEvent("CarryPeople:stop",carry.targetSrc)
-        carry.targetSrc = 0
     end
 end,false)
 
