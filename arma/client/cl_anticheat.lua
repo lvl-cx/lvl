@@ -9,7 +9,7 @@ end
 Citizen.CreateThread(function()
 	while true do
 		Citizen.Wait(500)
-		if CMG.isPlayerInBankHeistSetup and not CMG.isPlayerInBankHeistSetup() then
+		--if tARMA.isPlayerInBankHeistSetup and not tARMA.isPlayerInBankHeistSetup() then
 			c(function(f)
 				if DecorGetInt(f, "ARMAACVeh") ~= 955 then
 					if NetworkHasControlOfEntity(f) then
@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
 					end
 				end
 			end)
-		end
+		--end
 	end
 end)
 

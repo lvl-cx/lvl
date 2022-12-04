@@ -323,9 +323,6 @@ local function randIntKey(length,type)
     return pw
 end
 
---Generate unique key of type alphabet/numerical/alphanumeric
---Key is a string used to categorize/define uuids for different code.
---returns string.
 function tARMA.generateUUID(key,length,type)
     if UUIDs[key] == nil then
         UUIDs[key] = {}
@@ -341,7 +338,6 @@ function tARMA.generateUUID(key,length,type)
         end
     end
     UUIDs[key][uuid] = true
-    --print("generated UUIDs["..key.."]["..uuid.."] = true")
     return uuid
 end
 
@@ -349,6 +345,7 @@ function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
   local a0=tARMA.loadModel(W)
   local a1=CreateVehicle(a0,v,w,H,X,Z,_)
   SetEntityAsMissionEntity(a1)
+  DecorSetInt(a1, "ARMAACVeh", 955)
   SetModelAsNoLongerNeeded(a0)
   if Y then 
       TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
