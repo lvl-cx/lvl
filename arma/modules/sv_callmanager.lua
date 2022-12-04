@@ -126,8 +126,14 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             ARMAclient.getPosition(v.tempID, {}, function(coords)
                                 ARMAclient.staffMode(admin_source, {true})
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name, GetEntityCoords(GetPlayerPed(admin_source)))
-                                ARMA.giveBankMoney(user_id, 10000)
-                                ARMAclient.notify(admin_source,{"~g~£10,000 earned for being cute. ❤️"})
+                                local ticketPay = 0
+                                if os.date('%A') == 'Saturday' or 'Sunday' then
+                                    ticketPay = 20000
+                                else
+                                    ticketPay = 10000
+                                end
+                                ARMA.giveBankMoney(user_id, ticketPay)
+                                ARMAclient.notify(admin_source,{"~g~£"..getMoneyStringFormatted(ticketPay).." earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~An admin has taken your ticket."})
                                 TriggerClientEvent('ARMA:smallAnnouncement', v.tempID, 'ticket accepted', "Your admin ticket has been accepted by "..GetPlayerName(admin_source), 33, 10000)
                                 ARMAclient.teleport(admin_source, {table.unpack(coords)})
