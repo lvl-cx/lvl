@@ -21,7 +21,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
                         },
                         "timestamp": new Date()
                     }
-                    message.channel.send({ embed })
+                    message.channel.send({ embed }, delete_after=10)
                     try {
                         let role = message.guild.roles.find(r => r.name === '| Verified')
                         message.member.addRole(role)
@@ -32,11 +32,11 @@ exports.runcmd = async(fivemexports, client, message, params) => {
             });
            }
            else{
-            return message.reply('This code has already been used!')
+            return message.reply('This code has already been used!', delete_after=10)
            }
         }
         else {
-            message.reply('Invalid code!')
+            message.reply('Invalid code!', delete_after=10)
         }
     })
 }
