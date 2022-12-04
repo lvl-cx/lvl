@@ -26,12 +26,12 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             }
         end
         if data.customization ~= nil then
-            ARMAclient.setCustomization(source, {data.customization},function() -- delayed weapons/health, because model respawn
-                if data.weapons ~= nil then -- load saved weapons
+            ARMAclient.setCustomization(source, {},function()
+                if data.weapons ~= nil then
                     ARMAclient.giveWeapons(source, {data.weapons, true})
-                    if data.health ~= nil then -- set health
+                    if data.health ~= nil then
                         ARMAclient.setHealth(source, {data.health})
-                        SetTimeout(5000, function() -- check coma, kill if in coma
+                        SetTimeout(5000, function()
                             ARMAclient.isInComa(player, {}, function(in_coma)
                                 ARMAclient.killComa(player, {})
                             end)

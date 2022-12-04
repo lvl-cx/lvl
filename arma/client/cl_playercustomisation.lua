@@ -35,7 +35,6 @@ function tARMA.getCustomization()
     return i
 end
 function tARMA.setCustomization(i, k, l)
-    print('setting customization')
     if i then
       changingPed = true
         local h = PlayerPedId()
