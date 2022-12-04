@@ -18,7 +18,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     else if (params[0] == 'management') {
         let embed = {
             "title": "ARMA Bot Commands",
-            "description": `**Management Commands:** \n${process.env.PREFIX}addcar [permid] \n${process.env.PREFIX}delcar [permid] \n${process.env.PREFIX}vote [text]`,
+            "description": `**Management Commands:** \n${process.env.PREFIX}addcar [permid] \n${process.env.PREFIX}delcar [permid] \n${process.env.PREFIX}vote [text] \n${process.env.PREFIX}profile [text]`,
             "color": settingsjson.settings.botColour,
             "footer": {
                 "text": ""

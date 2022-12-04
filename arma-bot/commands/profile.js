@@ -116,5 +116,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "profile",
-    perm: 6
+    perm: 5
 }
