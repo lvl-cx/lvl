@@ -375,7 +375,7 @@ RegisterNetEvent("ARMA:flashWarrantCard",function()
         Wait(0)
     end
     FreezeEntityPosition(Q)
-    AttachEntityToEntity(Q,A,GetPedBoneIndex(A, 58866),0.03,-0.05,-0.044,0.0,90.0,25.0,true,true,false,true,1,true    )
+    AttachEntityToEntity(Q,A,GetPedBoneIndex(A, 58866),0.03,-0.05,-0.044,0.0,90.0,25.0,true,true,false,true,1,true)
     Wait(3000)
     DeleteObject(Q)
 end)
@@ -396,13 +396,13 @@ RageUI.CreateWhile(1.0, true, function()
                 for k = 1, 12 do
                     if DoesExtraExist(V, k) then
                         if IsVehicleExtraTurnedOn(V, k) then
-                            RageUI.Button("Disable Extra " .. k,nil,{RightLabel = tostring(k)},function(D, E, F)
+                            RageUI.Button("Disable Extra " .. k,nil,{RightLabel = tostring(k)},true,function(D, E, F)
                                 if F then
                                     SetVehicleExtra(V, k, true)
                                 end
                             end)
                         else
-                            RageUI.Button("Enable Extra " .. k,nil,{RightLabel = tostring(k)},function(D, E, F)
+                            RageUI.Button("Enable Extra " .. k,nil,{RightLabel = tostring(k)},true,function(D, E, F)
                                 if F then
                                     SetVehicleExtra(V, k, false)
                                 end
