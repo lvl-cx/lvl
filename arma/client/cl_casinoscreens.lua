@@ -28,6 +28,45 @@ function CreateNamedRenderTargetForModel(m, n)
     end
     return o
 end
+local p = false
+function jimmy()
+    if p then
+        return
+    end
+    p = true
+    print("jimmy tv lego!")
+    local n = "des_tvsmash_start"
+    local q = vector3(-810.59, 170.46, 77.25)
+    local r = GetClosestObjectOfType(q.x, q.y, q.z, 0.05, n, 0, 0, 0)
+    local o = CreateNamedRenderTargetForModel("tvscreen", n)
+    txd = CreateRuntimeTxd("meows")
+    k = CreateDui(c, g, h)
+    dui = GetDuiHandle(k)
+    tx = CreateRuntimeTextureFromDuiHandle(txd, "woof", dui)
+    local s = vector3(-808.93231201172, 170.99266052246, 76.74536895752)
+    notify("Go to ~p~Jimmy's room~w~ in Michael's house to stop the music.")
+    SetNewWaypoint(s.x, s.y)
+    while true do
+        if #(tARMA.getPlayerCoords() - s) < 4.0 then
+            drawNativeNotification("Press ~INPUT_PICKUP~ to turn the TV off")
+            if IsControlJustPressed(0, 38) then
+                DestroyDui(k)
+                p = false
+                return
+            end
+        end
+        SetTextRenderId(o)
+        SetScriptGfxDrawOrder(4)
+        SetScriptGfxDrawBehindPausemenu(1)
+        DrawSprite("meows", "woof", 0.5, 0.5, 1.0, 1.0, 0.0, 255, 255, 255, 255)
+        SetTextRenderId(GetDefaultScriptRendertargetRenderId())
+        SetScriptGfxDrawBehindPausemenu(0)
+        Citizen.Wait(0)
+    end
+end
+RegisterCommand("jimmy",function()
+    jimmy()
+end)
 local r = {}
 r.VideoType = "CASINO_DIA_PL"
 local s = nil

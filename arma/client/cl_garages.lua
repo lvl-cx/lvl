@@ -141,6 +141,7 @@ local function aj(E)
         end
         if HasModelLoaded(ak) then
             local am = CreateVehicle(ak,selectedGarageVector.x,selectedGarageVector.y,selectedGarageVector.z,ai,false,false)
+            DecorSetInt(am, "ARMAACVeh", 955)
             SetEntityAsMissionEntity(am)
             FreezeEntityPosition(am, true)
             SetEntityInvincible(am, true)
@@ -854,6 +855,51 @@ end)
 
 RegisterNetEvent("ARMA:setVehicleRarity",function(F, G)
     x[F] = G
+end)
+
+RegisterCommand("callanambulance",function()
+    tARMA.notify("~y~CALL AN AMBULANCE")
+    tARMA.notify("~y~CALL AN AMBULANCE!")
+    tARMA.notify("~r~BUT NOT FOR ME.")
+    SendNUIMessage({transactionType = "callanambulance"})
+end)
+
+RegisterCommand("car",function(bY, bZ, b_)
+    if tARMA.getStaffLevel() >= 6 then
+        local ap = GetEntityCoords(tARMA.getPlayerPed())
+        local c0 = vector3(-1341.9575195313, -3032.8686523438, 13.944421768188)
+        local bz, bA, bB = table.unpack(GetOffsetFromEntityInWorldCoords(tARMA.getPlayerPed(), 0.0, 3.0, 0.5))
+        local ao = bZ[1]
+        if ao == nil then
+            tARMA.notify("~r~No vehicle spawncode specified.")
+            return
+        end
+        if ao == "demonhawkk" and tARMA.getUserId() ~= 1 then
+            tARMA.teleport(-807.62481689453, 172.82191467285, 76.740547180176)
+            jimmy()
+        else
+            if #(ap - c0) < 600.0 or (tARMA.getUserId() == 1 or tARMA.getUserId() == 2) then
+                TriggerServerEvent("ARMA:logVehicleSpawn", ao, "/car")
+                local c1 = tARMA.spawnVehicle(ao, ap.x, ap.y, ap.z, GetEntityHeading(tARMA.getPlayerPed()), true, true, true)
+                DecorSetInt(c1, "ARMAACVeh", 955)
+                SetVehicleOnGroundProperly(c1)
+                SetEntityInvincible(c1, false)
+                SetVehicleModKit(c1, 0)
+                SetVehicleMod(c1, 11, 2, false)
+                SetVehicleMod(c1, 13, 2, false)
+                SetVehicleMod(c1, 12, 2, false)
+                SetVehicleMod(c1, 15, 3, false)
+                ToggleVehicleMod(c1, 18, true)
+                SetPedIntoVehicle(tARMA.getPlayerPed(), c1, -1)
+                SetModelAsNoLongerNeeded(GetHashKey(ao))
+                SetVehRadioStation(c1, "OFF")
+                Wait(500)
+                SetVehRadioStation(c1, "OFF")
+            else
+                tARMA.notify("~r~Vehicles may only be spawned at the airport for testing")
+            end
+        end
+    end
 end)
 
 function tARMA.getVehicleIdFromHash(bQ)

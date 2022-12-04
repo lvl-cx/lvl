@@ -1,3 +1,29 @@
+DecorRegister("ARMAACVeh", 3)
+
+local function c(d, ...)
+    for e, f in pairs(GetGamePool("CVehicle")) do
+        d(f, ...)
+        Wait(0)
+    end
+end
+Citizen.CreateThread(function()
+	while true do
+		Citizen.Wait(500)
+		if CMG.isPlayerInBankHeistSetup and not CMG.isPlayerInBankHeistSetup() then
+			c(function(f)
+				if DecorGetInt(f, "ARMAACVeh") ~= 955 then
+					if NetworkHasControlOfEntity(f) then
+						local g = GetEntityModel(f)
+						if not IsThisModelATrain(g) then
+							DeleteEntity(f)
+						end
+					end
+				end
+			end)
+		end
+	end
+end)
+
 Citizen.CreateThread(function() 
     Wait(1000)
     local oldPos = GetEntityCoords(PlayerPedId())

@@ -25,6 +25,7 @@
 --     SetEntityVisible(d, false, 0)
 --     local g = tARMA.loadModel("xm_prop_body_bag")
 --     local h = CreateObject(g, e.x, e.y, e.z, true, true, true)
+--     DecorSetInt(h, "ARMAACVeh", 955)
 --     PlaceObjectOnGroundProperly(h)
 --     SetModelAsNoLongerNeeded(g)
 --     local b = ObjToNet(h)

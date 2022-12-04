@@ -1,11 +1,9 @@
-local m = module("arma-vehicles", "garages")
-m=m.garages
 local f = module("cfg/weapons")
 f=f.weapons
 
-local gettingVideo
+local gettingVideo = false
 
-local cheatingCrashes = { -- Place all known cheating crashes here, they will be logged
+local cheatingCrashes = {
     --'Exiting' (Example)
     'Game crashed: GTA5_b2189.exe!rage::grcTextureFactoryDX11::PopRenderTarget (0xfd)',
     'Game crashed: GTA5_b2189.exe!sub_141377114 (0x2e)',
@@ -239,29 +237,7 @@ AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
     end
 end)
 
-AddEventHandler('entityCreating', function(entity)
-    local model = GetEntityModel(entity)
-    allowSpawn = false
-    for k,v in pairs(m) do
-        for a,l in pairs(v) do
-            if model == GetHashKey(a) or allowedEntities[model] or otherVehicles[(GetEntityModel(entity))] then
-                allowSpawn = true
-            end
-        end
-    end
-    for c,d in pairs(f) do
-        if model == GetHashKey(d.model) then
-            allowSpawn = true
-        end
-    end
-    if not allowSpawn then
-        --CancelEvent()
-    end
-end)
 
--- We are not Banning for " entityCreating " as it can cause false Bans.
-
--- 
 -- Type #1 [Noclip]
 -- Type #2 [Spawning Weapons]
 -- Type #3 [Explosion Event]
@@ -274,7 +250,7 @@ end)
 -- Type #10 [Health Modifier]
 -- Type #11 [Server Triggers]
 
--- No-Clip Handler
+
 RegisterServerEvent("ARMA:acType1")
 AddEventHandler("ARMA:acType1", function()
     local user_id = ARMA.getUserId(source)
@@ -326,7 +302,7 @@ AddEventHandler('explosionEvent', function(source, ev)
     end
 end)
 
-local BlacklistedEvents = { -- Place any events that you do not want running
+local BlacklistedEvents = {
     "esx:getSharedObject",
     "bank:transfer",
     "esx_ambulancejob:revive",
@@ -348,14 +324,14 @@ local BlacklistedEvents = { -- Place any events that you do not want running
 }
 
 for i, eventName in ipairs(BlacklistedEvents) do
-RegisterNetEvent(eventName)
-AddEventHandler(eventName, function()
-    local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
-    local name = GetPlayerName(source)
-    Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 4, name, player)
-end)
+    RegisterNetEvent(eventName)
+    AddEventHandler(eventName, function()
+        local user_id = ARMA.getUserId(source)
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", user_id, 4, name, player)
+    end)
 end
 
 AddEventHandler('removeWeaponEvent', function(pedid, weaponType)
@@ -470,10 +446,7 @@ AddEventHandler("ARMA:acType14", function()
 end)
 
 
----------- Server Events
 
-
--- Returns table of ac banned players to anticheat menuu
 RegisterServerEvent("ARMA:getAnticheatData")
 AddEventHandler("ARMA:getAnticheatData",function()
     local source = source
@@ -491,7 +464,7 @@ AddEventHandler("ARMA:getAnticheatData",function()
     end
 end)
 
--- Anticheat Ban/Unban Functions
+
 RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
@@ -557,7 +530,6 @@ AddEventHandler("ARMA:acUnban",function(permid)
 end)
 
 
--- Allows the addition / removal of vehicles to the anticheat whitelist temporarily
 RegisterServerEvent("ARMA:editACVehicleWhitelist")
 AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
     local user_id = ARMA.getUserId(source)
@@ -594,8 +566,6 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
     end
 end)
 
-
------ Creates anticheat tables in database
 
 Citizen.CreateThread(function()
     Wait(2500)

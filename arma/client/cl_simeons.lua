@@ -45,6 +45,7 @@ local function s(t, u, v, w)
     end
     if HasModelLoaded(x) then
         local z = CreateVehicle(x, u, v, w, GetEntityHeading(tARMA.getPlayerPed()), false, false)
+        DecorSetInt(z, "ARMAACVeh", 955)
         SetEntityAsMissionEntity(z)
         FreezeEntityPosition(z, true)
         SetEntityInvincible(z, true)
@@ -197,6 +198,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 testDriveCar = CreateVehicle(hash,-914.83026123046,-3287.1538085938,13.521618843078,60.962993621826,false,false)
                                 testDriveSeconds = 60
                                 local S = GetEntityCoords(tARMA.getPlayerPed())
+                                DecorSetInt(testDriveCar, "ARMAACVeh", 955)
                                 SetModelAsNoLongerNeeded(hash)
                                 TaskWarpPedIntoVehicle(tARMA.getPlayerPed(), testDriveCar, -1)
                                 setVehicleFuel(testDriveCar, 100)

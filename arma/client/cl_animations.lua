@@ -228,6 +228,7 @@ RegisterCommand("umbrella",function(f,g)
         else 
             local r,s,t=table.unpack(GetEntityCoords(k))
             prop=CreateObject(GetHashKey(prop_name),r,s,t+0.2,true,true,true)
+			DecorSetInt(prop, "ARMAACVeh", 955)
             AttachEntityToEntity(prop,k,GetPedBoneIndex(k,57005),0.15,0.005,-0.02,80.0,-20.0,175.0,true,true,false,true,1,true)
             TaskPlayAnim(k,i,"base",8.0,1.0,-1,49,0,0,0,0)
             Wait(500)

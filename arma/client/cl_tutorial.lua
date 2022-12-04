@@ -305,24 +305,31 @@ function beginTutorial()
     local J = math.random(1, 7)
     if J == 1 then
         tempTaxi = CreateVehicle(I, 95.41603088379, -1727.3582763672, 28.85818862915, 50, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,95.41603088379,-1727.3582763672,28.85818862915,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 2 then
         tempTaxi = CreateVehicle(I, 94.067138671875, -1740.6694335938, 29.305875778198, 320, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,94.067138671875,-1740.6694335938,28.305875778198,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 3 then
         tempTaxi = CreateVehicle(I, 96.752075195312, -1745.4302978516, 29.315612792968, 320, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,96.752075195312,-1745.4302978516,28.315612792968,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 4 then
         tempTaxi = CreateVehicle(I, 103.90421295166, -1751.818359375, 29.321237564086, 320, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,103.90421295166,-1751.818359375,28.321237564086,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 5 then
         tempTaxi = CreateVehicle(I, 108.07794952392, -1756.5098876954, 29.360332489014, 320, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,108.07794952392,-1756.5098876954,28.360332489014,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 6 then
         tempTaxi = CreateVehicle(I, 111.3772354126, -1740.8269042968, 28.854513168334, 50, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,111.3772354126,-1740.8269042968,28.854513168334,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     elseif J == 7 then
         tempTaxi = CreateVehicle(I, 97.749137878418, -1728.8994140625, 28.873386383056, 50, 1, 0)
+        DecorSetInt(tempTaxi,"ARMAACVeh",955)
         cc7 = CreateCheckpoint(1,97.749137878418,-1728.8994140625,28.873386383056,-515.47406005859,-264.78549194336,34.403575897217,2.0,1,167,204,100,0)
     end
     SetModelAsNoLongerNeeded(I)
