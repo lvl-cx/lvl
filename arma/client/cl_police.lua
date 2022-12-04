@@ -627,3 +627,61 @@ end
 AddEventHandler("ARMA:onClientSpawn",function()
     aj = 0
 end)
+
+RMenu.Add("trainingWorlds","mainmenu",RageUI.CreateMenu("Training Worlds", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+local ap = {}
+local aq = false
+RegisterNetEvent("ARMA:trainingWorldOpen",function(ar)
+    aq = ar
+    RageUI.Visible(RMenu:Get("trainingWorlds", "mainmenu"), true)
+end)
+RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('trainingWorlds', 'mainmenu')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            local as = false
+            for x, at in pairs(ap) do
+                local au = string.format("Created by %s (%s) - Bucket %s", at.ownerName, at.ownerUserId, at.bucket)
+                local av = at.bucket == tARMA.getPlayerBucket()
+                local aw = av and {RightLabel = "(Joined)"} or {}
+                RageUI.ButtonWithStyle(at.name,au,aw,true,function(J, K, L)
+                    if K and aq then
+                        drawNativeNotification("Press ~INPUT_FRONTEND_DELETE~ to delete this world")
+                        if IsControlJustPressed(0, 214) then
+                            TriggerServerEvent("ARMA:trainingWorldRemove", x)
+                        end
+                    end
+                    if L then
+                        TriggerServerEvent("ARMA:trainingWorldJoin", x)
+                    end
+                end)
+                if av then
+                    as = av
+                end
+            end
+            if as then
+                RageUI.ButtonWithStyle("~r~Leave Training World",nil,{},true,function(J, K, L)
+                    if L then
+                        TriggerServerEvent("ARMA:trainingWorldLeave")
+                    end
+                end)
+            end
+            if aq then
+                RageUI.ButtonWithStyle("~b~Create Training World",nil,{},true,function(J, K, L)
+                    if L then
+                        TriggerServerEvent("ARMA:trainingWorldCreate")
+                    end
+                end)
+            end
+        end)
+    end
+end)
+
+RegisterNetEvent("ARMA:trainingWorldSend",function(x, ax)
+    ap[x] = ax
+end)
+RegisterNetEvent("ARMA:trainingWorldSendAll",function(ax)
+    ap = ax
+end)
+RegisterNetEvent("ARMA:trainingWorldRemove",function(x)
+    ap[x] = nil
+end)
