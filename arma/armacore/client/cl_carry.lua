@@ -17,9 +17,54 @@ local carry = {
     }
 }
 
+local d = vector3(1117.671, 218.7382, -49.4)
+distanceToCasino = 1000
+
+RegisterCommand("carry",function(f, g)
+    if IsPedInAnyVehicle(PlayerPedId(), true) then
+        drawNativeNotification("You cannot carry someone whilst you are in a vehicle!")
+    else
+        if not globalPlayerInPrisonZone or tARMA.isStaffedOn() then
+            if GetEntityHealth(tARMA.getPlayerPed()) > 102 then
+                local h = GetEntityCoords(tARMA.getPlayerPed())
+                distanceToCasino = #(h - d)
+                if not carry.InProgress and distanceToCasino > 200 then
+                    local i = tARMA.getPlayerPed()
+                    local j = GetClosestPlayer(3)
+                    if j ~= -1 then
+                        target = GetPlayerServerId(j)
+                        if GetEntityHealth(GetPlayerPed(j)) ~= 0 then
+                            if not tARMA.isStaffedOn() and not globalLFBOnDuty then
+                                TriggerServerEvent("ARMA:CarryRequest", target)
+                            else
+                                TriggerServerEvent("CarryPeople:sync", GetPlayerServerId(tARMA.getPlayerId()), target)
+                            end
+                        else
+                            drawNativeNotification("Cannot carry dead people!")
+                        end
+                    else
+                        drawNativeNotification("No one nearby to carry!")
+                    end
+                else
+                    local k = tARMA.getPlayerPed()
+                    carry.InProgress = false
+                    ClearPedSecondaryTask(k)
+                    DetachEntity(k, true, false)
+                    local j = GetClosestPlayer(3)
+                    target = GetPlayerServerId(j)
+                    if target ~= 0 then
+                        TriggerServerEvent("CarryPeople:stop", target)
+                    end
+                end
+            end
+        else
+            tARMA.notify("~r~You cannot carry in the prison.")
+        end
+    end
+end,false)
 
 RegisterCommand("carry",function(source, args)
-    if not carry.InProgress then
+    if not carry.InProgress and not IsPedInAnyVehicle(PlayerPedId(), true) and not globalPlayerInPrisonZone then
         local closestPlayer = GetClosestPlayer(3)
         if closestPlayer then
             local targetSrc = GetPlayerServerId(closestPlayer)
