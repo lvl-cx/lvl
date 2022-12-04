@@ -270,6 +270,7 @@ RageUI.CreateWhile(1.0, true, function()
                             tARMA.clientPrompt("Perm ID:","",function(a)
                                 banningPermID = a
                                 banningName = 'ID: ' .. banningPermID
+                                o = nil
                             end)
                         end
                     end
@@ -715,6 +716,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         banningPermID = SelectedPlayer[3]
                         banningName = SelectedPlayer[1]
+                        o = nil
                     end
                 end, RMenu:Get('adminmenu', 'banselection'))
             end
@@ -743,13 +745,13 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if GlobalAdminLevel > 0 then
-                RageUI.Button("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local newSource = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:TeleportToPlayer', newSource, SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-                RageUI.Button("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Teleport Player to Me", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:BringPlayer', SelectedPlayer[2])
                     end
@@ -829,6 +831,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.ButtonWithStyle("See Groups", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:GetGroups", SelectedPlayer[3])
+                        tt=''
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
@@ -858,9 +861,6 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'banselection')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel >= 2 then
-                RageUI.BackspaceMenuCallback(function()
-                    o = nil
-                end)
                 if IsControlJustPressed(0, 37) then
                     tARMA.clientPrompt("Search for: ","",function(O)
                         if O ~= "" then
@@ -1156,9 +1156,6 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel > 7 then
-                RageUI.BackspaceMenuCallback(function()
-                    tt=''
-                end)
                 if IsControlJustPressed(0, 37) then
                     tARMA.clientPrompt("Search for: ","",function(S)
                         tt=string.lower(S)
