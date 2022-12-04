@@ -170,11 +170,11 @@ $(document).ready(function(){
                     title: 'Jail',
                     icon : '#jail'
                 },
-                {
-                    id   : 'requesttransport',
-                    title: 'Transport',
-                    icon : '#putInVehicle'
-                },
+                // {
+                //     id   : 'requesttransport',
+                //     title: 'Transport',
+                //     icon : '#putInVehicle'
+                // },
                 {
                     id   : 'seizeweapons',
                     title: 'Seize Weapons',
