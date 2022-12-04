@@ -502,14 +502,11 @@ function tARMA.setFriendlyFire(ai)
     NetworkSetFriendlyFireOption(ai)
     SetCanAttackFriendly(GetPlayerPed(-1), ai, ai)
 end
-function tARMA.setPolice(ai)
-    local N = PlayerId()
-    SetPoliceIgnorePlayer(N, not ai)
-    SetDispatchCopsForPlayer(N, ai)
-end
 AddEventHandler("ARMA:onClientSpawn",function(aj, ak)
     if ak then
-        tARMA.setPolice(false)
+        local N = PlayerId()
+        SetPoliceIgnorePlayer(N, true)
+        SetDispatchCopsForPlayer(N, false)
         tARMA.setFriendlyFire(true)
     end
 end)
