@@ -118,11 +118,14 @@ Citizen.CreateThread(function()
 end)
 
 function tARMA.checkCustomization()
+  print('checking customization')
     local c = userdata.customisation
     if c == nil or c.modelhash == 0 or not IsModelValid(c.modelhash) then
-        tARMA.setCustomization(getDefaultCustomization())
+      print('default')
+        tARMA.setCustomization(getDefaultCustomization(), true, true)
     else
-        tARMA.setCustomization(c)
+      print('custom')
+        tARMA.setCustomization(c, true, true)
     end
 end
 
