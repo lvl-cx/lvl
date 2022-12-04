@@ -49,6 +49,11 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                     withinRadius = true
                 end
             end
+            if vipstore then
+                if #(GetEntityCoords(GetPlayerPed(source)) - cfg.GunStores["VIP"]['_config'][1][1] ) < 10 then
+                    withinRadius = true
+                end
+            end
             for c,d in pairs(organheist.locations) do
                 for e,f in pairs(d.gunStores) do
                     for g,h in pairs(f) do
@@ -78,12 +83,17 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                     if hasPerm then
                         if c == spawncode then
                             if price == d[2] and name == d[1] then
-                                if purchasetype == 'armour' and string.find(spawncode, "fillUp") then
-                                    price = (100 - GetPedArmour(GetPlayerPed(source))) * 1000
-                                    if ARMA.tryPayment(user_id,price) then
-                                        ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
-                                        TriggerClientEvent("arma:PlaySound", source, 1)
-                                        ARMAclient.setArmour(source, {100, true})
+                                if purchasetype == 'armour' then
+                                    if string.find(spawncode, "fillUp") then
+                                        price = (100 - GetPedArmour(GetPlayerPed(source))) * 1000
+                                        if ARMA.tryPayment(user_id,price) then
+                                            ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                            TriggerClientEvent("arma:PlaySound", source, 1)
+                                            ARMAclient.setArmour(source, {100, true})
+                                            return
+                                        end
+                                    elseif GetPedArmour(GetPlayerPed(source)) >= (price/1000) then
+                                        ARMAclient.notify(source, {'~r~You already have '..GetPedArmour(GetPlayerPed(source))..'% armour.'})
                                         return
                                     end
                                 end
@@ -103,13 +113,9 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                             end
                                         end)
                                     elseif purchasetype == 'armour' then
-                                        if GetPedArmour(GetPlayerPed(source)) > (price/1000) then
-                                            ARMAclient.notify(source, {'~r~You already have '..GetPedArmour(GetPlayerPed(source))..'% armour.'})
-                                        else
-                                            ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
-                                            TriggerClientEvent("arma:PlaySound", source, 1)
-                                            ARMAclient.setArmour(source, {price/1000, true})
-                                        end
+                                        ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                        TriggerClientEvent("arma:PlaySound", source, 1)
+                                        ARMAclient.setArmour(source, {price/1000, true})
                                     elseif purchasetype == 'ammo' then
                                         if price > 0 then
                                             ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})

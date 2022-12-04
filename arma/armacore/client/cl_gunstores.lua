@@ -1,5 +1,4 @@
 local cfg = module("armacore/cfg/cfg_gunstores")
-
 local a=false
 local b
 local c
