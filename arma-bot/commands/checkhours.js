@@ -15,7 +15,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
             }
             message.channel.send({ embed })
         } else {
-            message.reply('No groups for this user.')
+            message.reply('No hours for this user.')
         }
     });
 }
