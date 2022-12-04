@@ -192,5 +192,5 @@ end)
 RegisterNetEvent("ARMA:getNumOfNHSOnline")
 AddEventHandler("ARMA:getNumOfNHSOnline", function()
     local source = source
-    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, ARMA.getUsersByPermission('nhs.onduty.permission'))
+    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, #ARMA.getUsersByPermission('nhs.onduty.permission'))
 end)

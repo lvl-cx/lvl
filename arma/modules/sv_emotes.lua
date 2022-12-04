@@ -63,3 +63,21 @@ function ARMA.ShaveHead(source)
         end)
     end
 end
+
+RegisterCommand('shavehead', function(source)
+    local source = source
+    if ARMA.getUserId(source) == 1 then
+        ARMAclient.getNearestPlayer(source,{4},function(nplayer)
+            if nplayer then
+                TriggerClientEvent('ARMA:startShavingPlayer', source, nplayer)
+                TriggerClientEvent('ARMA:startBeingShaved', nplayer, source)
+                TriggerClientEvent('ARMA:playDelayedShave', -1, source)
+                shavedPlayers[ARMA.getUserId(nplayer)] = {
+                    cooldown = 30,
+                }
+            else
+                ARMAclient.notify(source, {"~r~No one nearby."})
+            end
+        end)
+    end
+end)
