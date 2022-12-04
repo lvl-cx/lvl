@@ -14,4 +14,5 @@ exports.settings = {
     minBid: 100000, // Minimum bid amount, 
     prevBid: 0,
     carReportWebhook: "https://discord.com/api/webhooks/980284381761515583/2XrEHiKzr1oynLfgvejGwizRRGXHttDoqOoowGD7baexwVvbGh9EvM6QcGgi099R0_l8",
+    botLogWebhook: "https://discord.com/api/webhooks/1048855441309974618/vjaF1ZWBI79CcNhmYIfdYDlg623YWzKlzm7ywWovAxXBlpPOV6f5DPzV5lrogUrSnx9c",
 }

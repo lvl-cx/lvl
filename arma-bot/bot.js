@@ -194,6 +194,22 @@ client.on('message', (message) => {
             if (permissions < cmd.conf.perm) return;
             try {
                 cmd.runcmd(exports, client, message, params, permissions);
+                if (cmd.conf.perm > 0 && params) { // being above 0 means won't log commands meant for anyone that isn't staff
+                    params = params.join('\n ');
+                    if (params != '') {
+                        let { Webhook, MessageBuilder } = require('discord-webhook-node');
+                        let hook = new Webhook(settingsjson.settings.botLogWebhook);
+                        let embed = new MessageBuilder()
+                        .setTitle('Bot Command Log')
+                        .addField('Command Used:', `${cmd.conf.name}`)
+                        .addField('Parameters:', `${params}`)
+                        .addField('Admin:', `${message.author.username} - <@${message.author.id}>`)
+                        .setColor('#ffcece')
+                        .setFooter('Rebel Deathmatch')
+                        .setTimestamp();
+                        hook.send(embed);
+                    }
+                }
             } catch (err) {
                 let embed = {
                     "title": "Error Occured!",
