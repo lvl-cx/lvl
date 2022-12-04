@@ -1,6 +1,3 @@
-
-
-
 fx_version 'bodacious'
 games { 'gta5', 'rdr3' }
 
@@ -19,5 +16,3 @@ server_exports {
   'getUserRoles',
   'getUserData',
 }
-
-client_script "@Badger-Anticheat/acloader.lua"
