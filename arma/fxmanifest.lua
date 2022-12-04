@@ -20,7 +20,6 @@ shared_scripts {
 files{
   "cfg/client.lua",
   "cfg/cfg_*.lua",
-  "cfg/atms.lua",
   "cfg/weapons.lua",
   "cfg/skinshops.lua",
   "cfg/blips_markers.lua",

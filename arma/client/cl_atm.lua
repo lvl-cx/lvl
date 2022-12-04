@@ -1,4 +1,4 @@
-local cfg = module("cfg/atms")
+local cfg = module("cfg/cfg_atms")
 RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'atm'))
 
 RageUI.CreateWhile(1.0, true, function()

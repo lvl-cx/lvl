@@ -1,6 +1,6 @@
 -- a basic ATM implementation
 local lang = ARMA.lang
-local cfg = module("cfg/atms")
+local cfg = module("cfg/cfg_atms")
 local atms = cfg.atms
 local onesync = GetConvar('onesync', nil)
 local function play_atm_enter(player)
