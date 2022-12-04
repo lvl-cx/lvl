@@ -124,6 +124,7 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     if ARMA.hasPermission(user_id, "admin.spectate") then
         spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
         SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
+        TriggerClientEvent('ARMA:setBucket', playersource, GetPlayerRoutingBucket(playerssource))
         TriggerClientEvent("ARMA:spectatePlayer",source,playerssource,GetEntityCoords(GetPlayerPed(playerssource)))
     end
 end)
@@ -138,6 +139,7 @@ AddEventHandler("ARMA:stopSpectatePlayer", function()
                 TriggerClientEvent("ARMA:stopSpectatePlayer",source,v.coords,v.bucket)
                 SetEntityCoords(GetPlayerPed(source),v.coords)
                 SetPlayerRoutingBucket(source,v.bucket)
+                TriggerClientEvent('ARMA:setBucket', source, v.bucket)
                 spectatingPositions[k] = nil
             end
         end
@@ -1647,6 +1649,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
         local playerbucket = GetPlayerRoutingBucket(newtarget)
         if adminbucket ~= playerbucket then
             SetPlayerRoutingBucket(source, playerbucket)
+            TriggerClientEvent('ARMA:setBucket', source, playerbucket)
             ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
         end
         ARMAclient.teleport(source, coords)
@@ -1675,6 +1678,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
             local playerbucket = GetPlayerRoutingBucket(id)
             if adminbucket ~= playerbucket then
                 SetPlayerRoutingBucket(id, adminbucket)
+                TriggerClientEvent('ARMA:setBucket', id, adminbucket)
                 ARMAclient.notify(source, {'~g~Player was in another bucket, they have been set into your bucket.'})
             end
         else 
@@ -2227,6 +2231,7 @@ RegisterCommand("setbucket", function(source, args) -- these events are gonna be
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.managecommunitypot') then
         SetPlayerRoutingBucket(source, tonumber(args[1]))
+        TriggerClientEvent('ARMA:setBucket', source, tonumber(args[1]))
         ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
     end 
 end)

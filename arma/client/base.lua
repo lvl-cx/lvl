@@ -890,7 +890,13 @@ end
 function tARMA.disableCustomizationSave(yesno)
   customizationSaveDisabled = yesno
 end
-
+local ac = 0
+function tARMA.getPlayerBucket()
+    return ac
+end
+RegisterNetEvent("ARMA:setBucket",function(ad)
+    ac = ad
+end)
 function tARMA.getRageUIMenuWidth()
   local w, h = GetActiveScreenResolution()
 

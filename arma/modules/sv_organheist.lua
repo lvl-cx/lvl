@@ -25,6 +25,7 @@ AddEventHandler("ARMA:joinOrganHeist",function()
                 ARMAclient.giveWeapons(source, {{['WEAPON_M1911'] = {ammo = 250}}, false})
             end
             SetPlayerRoutingBucket(source, 15)
+            TriggerClientEvent('ARMA:setBucket', source, 15)
         else
             ARMAclient.notify(source, {'~r~The organ heist has already started.'})
         end

@@ -56,6 +56,7 @@ function leaveHome(user_id, home, number, cbr)
     local task = Task(cbr)
     local player = ARMA.getUserSource(user_id)
     SetPlayerRoutingBucket(player, 0) 
+    TriggerClientEvent('ARMA:setBucket', player, 0)
     for k, v in pairs(cfghomes.homes) do
         if k == home then
             local x,y,z = table.unpack(v.entry_point)
@@ -74,6 +75,7 @@ function accessHome(user_id, home, number, cbr)
         count = count+1
         if k == home then
             SetPlayerRoutingBucket(player, count)
+            TriggerClientEvent('ARMA:setBucket', player, count)
             local x,y,z = table.unpack(v.leave_point)
             ARMAclient.teleport(player, {x,y,z})
             ARMAclient.setInHome(player, {true})
@@ -81,8 +83,6 @@ function accessHome(user_id, home, number, cbr)
         end
     end
 end
-
---Main Events
 
 RegisterNetEvent("ARMAHousing:Buy")
 AddEventHandler("ARMAHousing:Buy", function(house)

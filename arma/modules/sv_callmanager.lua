@@ -120,6 +120,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             if adminbucket ~= playerbucket then
                                 SetPlayerRoutingBucket(admin_source, playerbucket)
+                                TriggerClientEvent('ARMA:setBucket', admin_source, playerbucket)
                                 ARMAclient.notify(admin_source, {'~g~Player was in another bucket, you have been set into their bucket.'})
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(coords)
