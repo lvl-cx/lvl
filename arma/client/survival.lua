@@ -365,6 +365,7 @@ function tARMA.respawnPlayer()
     DeleteEntity(L)
     ClearPedTasksImmediately(L)
     RemoveAllPedWeapons(L)
+    TriggerServerEvent('ARMA:playerRespawned')
 end
 
 function tARMA.disableComa()

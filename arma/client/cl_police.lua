@@ -173,7 +173,6 @@ Citizen.CreateThread(function()
 end)
 
 RMenu.Add("policehandbook","main",RageUI.CreateMenu("Police Handbook", "~b~Officer Handbook", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('policehandbook', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -491,6 +490,7 @@ RegisterCommand("isu",function(R, S)
         RageUI.Visible(RMenu:Get("incidentsupportunit", "main"), true)
     end
 end)
+
 CreateThread(function()
     while true do
         if W.active and W.flashing then
@@ -623,3 +623,7 @@ tARMA.createThreadOnTick(af)
 function tARMA.hasRecentlyShotGun()
     return ae ~= 0 and GetGameTimer() - ae < 600000
 end
+
+AddEventHandler("ARMA:onClientSpawn",function()
+    aj = 0
+end)

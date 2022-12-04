@@ -1110,6 +1110,13 @@ AddEventHandler("ARMAcli:playerSpawned", function()
     Debug.pend()
 end)
 
+RegisterServerEvent("ARMA:playerRespawned")
+AddEventHandler("ARMA:playerRespawned", function()
+    local source = source
+    TriggerClientEvent('ARMA:onClientSpawn', source)
+end)
+
+
 exports("getServerStatus", function(params, cb)
     if ARMAConfig.Status == 'Development' then
         cb("🔒 Development")
