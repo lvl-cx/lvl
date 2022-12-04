@@ -13,7 +13,6 @@ cfg.GunStores={
         ["WEAPON_PDM4A1"]={"M4A1",0,0,"N/A","w_ar_m4a1"},
         ["WEAPON_STING"]={"Sting 9mm",0,0,"N/A","w_sb_sting"},
         ["WEAPON_STAC"]={"Stac 33",0,0,"N/A","w_sr_stac"},
-        ["WEAPON_LR300"]={"LR300",0,0,"N/A","w_ar_lr300"}, -- this is a test
     },
     ["policeSmallArms"]={
         ["_config"]={{vector3(461.53082275391,-979.35876464844,29.689668655396),vector3(1842.9096679688,3690.7692871094,33.267082214355),vector3(-448.93994140625,6015.4150390625,31.716398239136),vector3(-1104.5264892578,-821.70153808594,13.282785415649)},110,5,"MET Police Small Arms",{"police.onduty.permission"},false,true},
