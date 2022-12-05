@@ -244,7 +244,7 @@ local choice_store_weapons = function(player, choice)
               for k,v in pairs(weapons) do
                 if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' then
                   ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                  if v.ammo > 0 then
+                  if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
                     for i,c in pairs(a.weapons) do
                       if i == k then
                         ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)

@@ -232,15 +232,15 @@ AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                  if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' then
-                    if v.ammo > 0 then
-                      for i,c in pairs(a.weapons) do
-                        if i == k then
-                          ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                        end   
-                      end
+                    if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' then
+                        if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
+                            for i,c in pairs(a.weapons) do
+                                if i == k then
+                                    ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                                end   
+                            end
+                        end
                     end
-                  end
                 end
                 ARMAclient.notify(player,{"~g~Weapons Stored"})
                 SetTimeout(3000,function()
