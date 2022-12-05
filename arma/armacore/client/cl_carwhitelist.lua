@@ -21,11 +21,10 @@ local function k()
     local m = tARMA.getUserId()
     if j ~= 0 and l and not tARMA.isDev(m) then
         local e = GetEntityModel(j)
-        local n = h[e]
-        for k,v in pairs(h)
-            if GetHashKey(v) == e then
+        for k,v in pairs(h) do
+            if GetHashKey(k) == e then
                 local o = false
-                for f, p in pairs(n) do
+                for f, p in pairs(v) do
                     if p == m then
                         o = true
                         break
