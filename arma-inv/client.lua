@@ -39,6 +39,7 @@ RegisterCommand('inventory', function()
                 BootCar = nil;
                 VehTypeC = nil;
                 VehTypeA = nil;
+                TriggerEvent('ARMA:clCloseTrunk')
             end
             if IsLootBagOpening then
                 if debug then 
