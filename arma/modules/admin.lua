@@ -2235,11 +2235,3 @@ RegisterCommand("setbucket", function(source, args) -- these events are gonna be
         ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
     end 
 end)
-
-
-local staffWhitelist = true
-AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
-    if not ARMA.hasPermission(user_id, 'admin.tickets') and staffWhitelist then
-        DropPlayer(ARMA.getUserSource(user_id), '~r~Server is currently whitelisted to staff only.')
-    end
-end)

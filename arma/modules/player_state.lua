@@ -4,6 +4,8 @@ local lang = ARMA.lang
 
 baseplayers = {}
 
+local staffWhitelist = true
+
 -- client -> server events
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     Debug.pbegin("playerSpawned_player_state")
@@ -11,6 +13,9 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local data = ARMA.getUserDataTable(user_id)
     local tmpdata = ARMA.getUserTmpTable(user_id)
     local playername = GetPlayerName(player)
+    if not ARMA.hasPermission(user_id, 'admin.tickets') and staffWhitelist then
+        DropPlayer(ARMA.getUserSource(user_id), 'Server is currently whitelisted to staff only.')
+    end
     if first_spawn then -- first spawn
         if data.customization == nil then
             data.customization = cfg.default_customization
