@@ -114,7 +114,7 @@ if (settingsjson.settings.StatusEnabled) {
                 },
                 "timestamp": new Date()
             }
-            //msg.edit({ embed: status }) // uncomment when not using testing bot
+            msg.edit({ embed: status }) // uncomment when not using testing bot
         }).catch(err => {
             channelid.send('Status Page JamesUK#6793 Starting..').then(id => {
                 settingsjsons.messageid = id.id
