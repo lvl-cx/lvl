@@ -6,7 +6,7 @@
 -- ['WORLD_HUMAN_HAMMERING'] = true, (hammering obviously)
 -- ['WORLD_HUMAN_WELDING'] = true, (diamond location)
 
--- if diamond or trigger ARMA:playGrindingPickaxe client event
+-- if diamond or some other grinding shit trigger ARMA:playGrindingPickaxe client event
 
 local grindingData = {
     ['copper'] = {license = 'Gold', scenario = '', hasFX = false, firstItem = '', secondItem = ''},
@@ -19,6 +19,7 @@ local grindingData = {
     ['heroin'] = {license = 'Heroin', scenario = '', hasFX = false, firstItem = '', secondItem = ''},
     ['lsd'] = {license = 'LSD', scenario = '', hasFX = false, firstItem = '', secondItem = '', thirdItem = ''},
 }
+
 RegisterNetEvent('ARMA:requestGrinding')
 AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
     local source = source
