@@ -113,11 +113,12 @@ RegisterCommand("return", function(source)
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         if savedPositions[user_id] then
             SetPlayerRoutingBucket(source, savedPositions[user_id].bucket)
-            ARMAclient.teleport(source, {savedPositions[user_id].coords})
+            ARMAclient.teleport(source, {table.unpack(savedPositions[user_id].coords)})
             ARMAclient.notify(source, {'~g~Returned to position.'})
         else
             ARMAclient.notify(source, {"~r~Unable to find last location."})
         end
+        TriggerClientEvent('ARMA:sendTicketInfo', source)
         ARMAclient.staffMode(source, {false})
     end
 end)
@@ -135,6 +136,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                         if user_id ~= v.permID then
                             local adminbucket = GetPlayerRoutingBucket(admin_source)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
+                            savedPositions[user_id] = {bucket = adminbucket, coords = GetEntityCoords(GetPlayerPed(admin_source))}
                             if adminbucket ~= playerbucket then
                                 SetPlayerRoutingBucket(admin_source, playerbucket)
                                 TriggerClientEvent('ARMA:setBucket', admin_source, playerbucket)
@@ -142,10 +144,9 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(coords)
                                 ARMAclient.staffMode(admin_source, {true})
-                                savedPositions[user_id] = {bucket = GetPlayerRoutingBucket(admin_source), coords = GetEntityCoords(GetPlayerPed(admin_source))}
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
                                 local ticketPay = 0
-                                if os.date('%A') == 'Saturday' or 'Sunday' then
+                                if os.date('%A') == 'Saturday' or os.date('%A') == 'Sunday' then
                                     ticketPay = 20000
                                 else
                                     ticketPay = 10000
