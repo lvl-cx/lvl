@@ -22,16 +22,19 @@ local function k()
     if j ~= 0 and l and not tARMA.isDev(m) then
         local e = GetEntityModel(j)
         local n = h[e]
-        if n then
-            local o = false
-            for f, p in pairs(n) do
-                if p == m then
-                    o = true
-                    break
+        for k,v in pairs(h)
+            if GetHashKey(v) == e then
+                local o = false
+                for f, p in pairs(n) do
+                    if p == m then
+                        o = true
+                        break
+                    end
                 end
-            end
-            if not o then
-                i(j)
+                if not o then
+                    i(j)
+                end
+                return
             end
         end
     end
