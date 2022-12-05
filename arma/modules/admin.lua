@@ -957,87 +957,6 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
     end   
 end)
 
-RegisterServerEvent('ARMA:noF10Kick')
-AddEventHandler('ARMA:noF10Kick', function()
-    local admin_id = ARMA.getUserId(source)
-    playerName = GetPlayerName(source)
-    if ARMA.hasPermission(admin_id, 'admin.kick') then
-        ARMA.prompt(source,"Perm ID:","",function(source,permid) 
-            if permid == '' then return end
-            permid = parseInt(permid)
-            ARMA.prompt(source,"Reason:","",function(source,reason) 
-                if reason == '' then return end
-                local reason = reason
-                ARMAclient.notify(source,{'~g~Kicked ID: ' .. permid})
-                local command = {
-                    {
-                        ["color"] = "16448403",
-                        ["title"] = "ARMA Kick Logs",
-                        ["description"] = "",
-                        ["text"] = "ARMA Server #1",
-                        ["fields"] = {
-                            {
-                                ["name"] = "Admin Name",
-                                ["value"] = GetPlayerName(source),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Admin TempID",
-                                ["value"] = source,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Admin PermID",
-                                ["value"] = admin_id,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player Name",
-                                ["value"] = GetPlayerName(ARMA.getUserSource(permid)),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player TempID",
-                                ["value"] = ARMA.getUserSource(permid),
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player PermID",
-                                ["value"] = permid,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Player Hours",
-                                ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Kick Reason(s)",
-                                ["value"] = reason,
-                                ["inline"] = true
-                            },
-                            {
-                                ["name"] = "Kick Type",
-                                ["value"] = "No F10",
-                                ["inline"] = true
-                            }
-                        }
-                    }
-                }
-                local webhook = "https://discord.com/api/webhooks/991476558818725960/wGi0MrLFj19RE_aG3QQkv4rCdywxs4EIunYJ_zmBey2sA0Rpus6Oe6vQBmakFrzIXh9h"
-                PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-                DropPlayer(ARMA.getUserSource(permid), reason)
-            end)
-        end)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to No F10 Kick Someone')
-    end
-end)
-
-
 RegisterServerEvent('ARMA:KickPlayer')
 AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
     local source = source
@@ -1094,22 +1013,16 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
                             ["inline"] = true
                         },
                         {
-                            ["name"] = "Kick Reason(s)",
+                            ["name"] = "Kick Reason",
                             ["value"] = Reason,
                             ["inline"] = true
                         },
-                        {
-                            ["name"] = "Kick Type",
-                            ["value"] = "F10",
-                            ["inline"] = true
-                        }
                     }
                 }
             }
             local webhook = "https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
             ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
-            f10Kick(target_permid, adminName, Reason)
             ARMAclient.notify(admin, {'~g~Kicked Player.'})
         end)
     else
