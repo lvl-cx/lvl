@@ -124,5 +124,22 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
     end)
 end)
 
+RegisterServerEvent("ARMA:syncWheelchairPosition")
+AddEventHandler('ARMA:syncWheelchairPosition', function(netid, coords, heading)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    entity = NetworkGetEntityFromNetworkId(netid)
+    SetEntityCoords(entity, coords.x, coords.y, coords.z)
+    SetEntityHeading(entity, heading)
+end)
+
+RegisterServerEvent("ARMA:wheelchairAttachPlayer")
+AddEventHandler('ARMA:wheelchairAttachPlayer', function(entity)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    TriggerClientEvent('ARMA:wheelchairAttachPlayer', -1, entity, source)
+end)
+
+
 
 
