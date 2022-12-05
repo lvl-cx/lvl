@@ -80,7 +80,8 @@ RMenu.Add("adminmenu", "searchname", RageUI.CreateSubMenu(RMenu:Get("adminmenu",
 RMenu.Add("adminmenu", "searchtempid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchpermid", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "searchhistory", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "searchoptions"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
-RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Ban Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "notespreviewban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "banselection", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "notespreviewban"), "", menuColour..'Ban Menu ~w~- ~o~[Tab] to search bans',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "generatedban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "banselection"), "", menuColour..'Ban Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "notesub", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "players"), "", menuColour..'Player Notes',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "groups", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "submenu"), "", menuColour..'Admin Groups Menu ~w~- ~o~[Tab] to search groups',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -710,8 +711,9 @@ RageUI.CreateWhile(1.0, true, function()
                         banningPermID = SelectedPlayer[3]
                         banningName = SelectedPlayer[1]
                         o = nil
+                        TriggerServerEvent('ARMA:getNotes', uid, SelectedPlayer[3])
                     end
-                end, RMenu:Get('adminmenu', 'banselection'))
+                end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
             if GlobalAdminLevel >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -851,6 +853,24 @@ end)
 
 
 RageUI.CreateWhile(1.0, true, function()
+    if RageUI.Visible(RMenu:Get('adminmenu', 'notespreviewban')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if GlobalAdminLevel >= 2 then
+                if noteslist == nil then
+                    RageUI.Separator("~o~Player notes: Loading...")
+                elseif #noteslist == 0 then
+                    RageUI.Separator("~o~There are no player notes to display.")
+                else
+                    RageUI.Separator("~o~Player notes:")
+                    for K = 1, #noteslist do
+                        RageUI.Separator("~o~ID: " .. noteslist[K].note_id .. " " .. noteslist[K].text .. " (" .. noteslist[K].admin_id .. ")")
+                    end
+                end
+                RageUI.ButtonWithStyle("Continue to Ban", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                end, RMenu:Get('adminmenu', 'banselection'))
+            end
+        end)
+    end
     if RageUI.Visible(RMenu:Get('adminmenu', 'banselection')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if GlobalAdminLevel >= 2 then
@@ -1013,11 +1033,6 @@ RegisterNetEvent("ARMA:sendNotes",function(a7)
     else
         noteslist = a7
     end
-end)
-
-RegisterNetEvent('ARMA:sendNotes')
-AddEventHandler('ARMA:sendNotes', function(text)
-    notes = text
 end)
 
 RegisterNetEvent("ARMA:updateNotes",function(admin, player)

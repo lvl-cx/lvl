@@ -235,6 +235,8 @@ RegisterNetEvent('ARMA:sendTicketInfo')
 AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
     if permid ~= nil and name ~= nil then
         isInTicket = true
+    else
+        isInTicket = false
     end
     while isInTicket do
         Wait(0)
