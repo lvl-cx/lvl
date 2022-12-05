@@ -124,8 +124,8 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     if ARMA.hasPermission(user_id, "admin.spectate") then
         spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
         SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
-        TriggerClientEvent('ARMA:setBucket', playersource, GetPlayerRoutingBucket(playerssource))
-        TriggerClientEvent("ARMA:spectatePlayer",source,playerssource,GetEntityCoords(GetPlayerPed(playerssource)))
+        TriggerClientEvent('ARMA:setBucket', source, GetPlayerRoutingBucket(playerssource))
+        TriggerClientEvent("ARMA:spectatePlayer",source, playerssource, GetEntityCoords(GetPlayerPed(playerssource)))
     end
 end)
 
