@@ -104,7 +104,7 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
     local source = source
     local user_id = ARMA.getUserId(source)
     local cprChance = math.random(1,8)
-    ARMAclient.getNearestPlayer(player, {10}, function(nplayer)
+    ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
             ARMAclient.isInComa(nplayer, {}, function(in_coma)
