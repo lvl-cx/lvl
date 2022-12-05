@@ -43,16 +43,10 @@ end
 local p
 local q
 local function r(s, t, u, v, w, x)
-    print('got to r')
-    print(s, t, u, v, w, x)
     local y = tARMA.getPlayerPed()
-    print('ped '..y)
     local z = GetEntityHeading(y)
-    print('heading '..z)
     local A = GetEntityCoords(PlayerPedId()) + GetEntityForwardVector(PlayerPedId()) * (3.0 + h[d.seperation] * (x - 1))
-    print('coords '..A)
     local B = tARMA.loadModel(s)
-    print('loaded model '..s)
     local C = CreateObject(B, A.x, A.y, A.z, w, false)
     if t then
         FreezeEntityPosition(C, true)
@@ -68,18 +62,15 @@ local function r(s, t, u, v, w, x)
     end
     SetModelAsNoLongerNeeded(B)
     table.insert(b, C)
-    print('got to end of r')
     return C
 end
 local function E()
-    print('got to E')
     for F, s in pairs(d.previewObjects) do
         DeleteEntity(s)
     end
     d.previewObjects = {}
 end
 local function G()
-    print('got to G')
     E()
     local H = k[d.object]
     local I = g[d.amount]

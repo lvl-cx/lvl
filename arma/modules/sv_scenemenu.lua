@@ -5,7 +5,7 @@ RegisterNetEvent("ARMA:placeSpike")
 AddEventHandler("ARMA:placeSpike", function(heading, coords)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
         TriggerClientEvent('ARMA:addSpike', -1, coords, heading)
     end
 end)
@@ -14,7 +14,7 @@ RegisterNetEvent("ARMA:removeSpike")
 AddEventHandler("ARMA:removeSpike", function(entity)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
         TriggerClientEvent('ARMA:deleteSpike', -1, entity)
         TriggerClientEvent("ARMA:deletePropClient", -1, entity)
     end
