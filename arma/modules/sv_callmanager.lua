@@ -106,6 +106,23 @@ RegisterCommand("111", function(source)
     end)
 end)
 
+local savedPositions = {}
+RegisterCommand("return", function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
+        if savedPositions[user_id] then
+            SetPlayerRoutingBucket(source, savedPositions[user_id].bucket)
+            ARMAclient.teleport(source, {savedPositions[user_id].coords})
+            ARMAclient.notify(source, {'~g~Returned to position.'})
+        else
+            ARMAclient.notify(source, {"~r~Unable to find last location."})
+        end
+        ARMAclient.staffMode(source, {false})
+    end
+end)
+
+
 RegisterNetEvent("ARMA:TakeTicket")
 AddEventHandler("ARMA:TakeTicket", function(ticketID)
     local user_id = ARMA.getUserId(source)
@@ -125,7 +142,8 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(coords)
                                 ARMAclient.staffMode(admin_source, {true})
-                                TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name, GetEntityCoords(GetPlayerPed(admin_source)))
+                                savedInfo[user_id] = {bucket = GetPlayerRoutingBucket(admin_source), coords = GetEntityCoords(GetPlayerPed(admin_source))}
+                                TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
                                 local ticketPay = 0
                                 if os.date('%A') == 'Saturday' or 'Sunday' then
                                     ticketPay = 20000
