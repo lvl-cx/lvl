@@ -210,3 +210,27 @@ AddEventHandler("ARMA:fuelAllVehicles", function()
         end
     end)
 end)
+
+RegisterCommand('redeem', function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    exports["discordroles"]:isRolePresent(source, {'975543463808487465'}, function(hasRole, roles)
+        if (not roles) then 
+            ARMAclient.notify(source,{"~r~It seems you don't have discord running or installed try restart fivem if this issue persists /calladmin."})
+        end
+        if hasRole then
+            MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+                if #rows > 0 then
+                    local redeemed = rows[1].redeemed
+                    if not redeemed then
+                        exports["ghmattimysql"]:execute("UPDATE arma_subscriptions SET redeemed = 1 WHERE user_id = @user_id", {user_id = user_id}, function() end)
+                        ARMAclient.notify(source, {'~g~You have redeemed 1 week of Platinum subscription.'})
+                        MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = rows[1].plathours + 168})
+                    else
+                        ARMAclient.notify(source, {'~r~You have already redeemed your subscription.'})
+                    end
+                end
+            end)
+        end
+    end)
+end)
