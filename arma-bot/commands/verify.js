@@ -5,7 +5,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = async(fivemexports, client, message, params) => {
     message.delete()
     if (!params[0] && !parseInt(params[0])) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'verify [code]')
+        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'verify [code]', delete_after=10)
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_verification` WHERE code = ?", [params[0]], (code) => {
         if (code.length > 0) {

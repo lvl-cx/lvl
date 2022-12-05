@@ -6,6 +6,7 @@ const resourcePath = global.GetResourcePath ?
 require('dotenv').config({ path: path.join(resourcePath, './.env') })
 const fs = require('fs');
 const settingsjson = require(resourcePath + '/settings.js')
+var statusLeaderboard = require(resourcePath + '/statusleaderboard.json');
 
 client.path = resourcePath
 client.ip = settingsjson.settings.ip
@@ -113,7 +114,7 @@ if (settingsjson.settings.StatusEnabled) {
                 },
                 "timestamp": new Date()
             }
-            msg.edit({ embed: status })
+            //msg.edit({ embed: status }) // uncomment when not using testing bot
         }).catch(err => {
             channelid.send('Status Page JamesUK#6793 Starting..').then(id => {
                 settingsjsons.messageid = id.id
@@ -135,10 +136,36 @@ const init = async() => {
             let command = require(`${resourcePath}/commands/${f}`);
             client.commands.set(command.conf.name, command);
         });
+        if (!statusLeaderboard['leaderboard']) {
+            statusLeaderboard['leaderboard'] = {}
+        }
+        else {
+            statusLeaderboard['leaderboard'] = statusLeaderboard['leaderboard']
+        }
     });
 }
 
+setInterval(function(){
+    promotionDetection();
+  }, 60*1000); // 60 * 1000 milsec
 
+function promotionDetection(){
+  client.users.forEach(user =>{ //iterate over each user
+    if(user.presence.status == "online" || user.presence.status == 'dnd' || user.presence.status == 'idle' && !user.bot){ //check if user is online and is not a bot
+        if(!statusLeaderboard['leaderboard'][user.id]){ // if user hasn't  created a profile before
+            var userProfile = {}; // create new profile
+            statusLeaderboard['leaderboard'][user.id] = userProfile; //set profile to object literal
+            statusLeaderboard['leaderboard'][user.id] = 0; //set minutes to 0
+        }
+        if(Object.entries(user.presence.activities).length > 0 && typeof(user.presence.activities[0].state) === 'string' && user.presence.activities[0].state.includes('discord.gg/armarp') ){ //check if they have a status
+            statusLeaderboard['leaderboard'][user.id] += 1;
+            //console.log(`Added 1 minute to ${user.id}'s profile`)
+            fs.writeFileSync(`${resourcePath}/statusleaderboard.json`, JSON.stringify(statusLeaderboard), function(err) {});
+        }
+    }
+  })
+  //console.log(userProfiles); //visually see it for debugging purposes
+}
 
 client.getPerms = function(msg) {
 
@@ -179,6 +206,21 @@ client.getPerms = function(msg) {
 }
 
 client.on('message', (message) => {
+    if (!message.author.bot){
+        if (message.channel.name.includes('auction-')){
+            if (message.channel.name == '│auction-room'){
+                return
+            }
+            else{
+                if (!message.content.includes(`${process.env.PREFIX}bid`)){
+                    if (!message.content.includes(`${process.env.PREFIX}auction`) && !message.content.includes(`${process.env.PREFIX}houseauction`) && !message.content.includes(`${process.env.PREFIX}embed`)){
+                        message.delete()
+                        return
+                    }
+                }
+            }
+        }
+    }
     let client = message.client;
     if (message.author.bot) return;
     if (!message.content.startsWith(process.env.PREFIX)) return;
@@ -213,7 +255,7 @@ client.on('message', (message) => {
             } catch (err) {
                 let embed = {
                     "title": "Error Occured!",
-                    "description": "\nAn error occured. Contact JamesUK#6793 in ARMA with the code:\n\n```" + err.message + "\n```",
+                    "description": "\nAn error occured. Contact <@609044650019258407> about the issue:\n\n```" + err.message + "\n```",
                     "color": 13632027
                 }
                 message.channel.send({ embed })
