@@ -21,7 +21,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
                         },
                         "timestamp": new Date()
                     }
-                    message.channel.send({ embed }, delete_after=10)
+                    message.channel.send({ embed })
                     try {
                         let role = message.guild.roles.find(r => r.name === '| Verified')
                         message.member.addRole(role)
