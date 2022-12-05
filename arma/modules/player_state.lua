@@ -4,7 +4,7 @@ local lang = ARMA.lang
 
 baseplayers = {}
 
-local staffWhitelist = true
+local staffWhitelist = false
 
 -- client -> server events
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
