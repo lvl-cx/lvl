@@ -142,7 +142,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(coords)
                                 ARMAclient.staffMode(admin_source, {true})
-                                savedInfo[user_id] = {bucket = GetPlayerRoutingBucket(admin_source), coords = GetEntityCoords(GetPlayerPed(admin_source))}
+                                savedPositions[user_id] = {bucket = GetPlayerRoutingBucket(admin_source), coords = GetEntityCoords(GetPlayerPed(admin_source))}
                                 TriggerClientEvent('ARMA:sendTicketInfo', admin_source, v.permID, v.name)
                                 local ticketPay = 0
                                 if os.date('%A') == 'Saturday' or 'Sunday' then
