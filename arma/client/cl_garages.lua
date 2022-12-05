@@ -823,6 +823,18 @@ function sortAlphabetically(bU)
     bU = b9
     return bU
 end
+AddEventHandler("ARMA:searchClient",function(c9)
+    local y = tonumber(DecorGetInt(c9, "vRP_owner"))
+    print("searching user_id", y, type(y))
+    if y > 0 then
+        tARMA.loadAnimDict("missexile3")
+        TaskPlayAnim(PlayerPedId(),"missexile3","ex03_dingy_search_case_base_michael",1.0,8.0,12000,1,1.0,false,false,false)
+        RemoveAnimDict("missexile3")
+        TriggerServerEvent("ARMA:searchVehicle", VehToNet(c9), y)
+    else
+        tARMA.notify("~r~Vehicle is not owned by anyone")
+    end
+end)
 
 function canVehicleBeSold(car)
     return not vehicleCannotBeSold[string.lower(car)]

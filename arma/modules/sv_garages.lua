@@ -673,6 +673,54 @@ AddEventHandler("ARMA:getGarageFolders",function()
     end)
 end)
 
+local cfg_weapons = module("cfg/weapons")
+local bullets = {
+    ['9mm Bullets'] = true,
+    ['7.62mm Bullets'] = true,
+    ['.357 Bullets'] = true,
+    ['12 Gauge Bullets'] = true,
+    ['.308 Sniper Round'] = true,
+}
+
+RegisterServerEvent("ARMA:searchVehicle")
+AddEventHandler('ARMA:searchVehicle', function(entity, permid)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+        ARMAclient.getNetworkedVehicleInfos(ARMA.getUserSource(permid), {entity}, function(owner, spawncode)
+            if spawncode and owner == permid then
+                local vehformat = 'chest:u1veh_'..spawncode..'|'..permid
+                ARMA.getSData(vehformat, function(cdata)
+                    cdata = json.decode(cdata)
+                    for a,b in pairs(cdata) do
+                        if string.find(a, 'wbody|') then
+                            c = a:gsub('wbody|', '')
+                            cdata[c] = b
+                            cdata[a] = nil
+                        end
+                    end
+                    for k,v in pairs(cfg_weapons.weapons) do
+                        if cdata[k] ~= nil then
+                            if not v.policeWeapon then
+                                ARMAclient.notify(source, {'~r~Seized '..cdata[k].amount..'x '..v.name..'.'})
+                                cdata[k] = nil
+                            end
+                        end
+                    end
+                    for c,d in pairs(cdata) do
+                        if bullets[c] then
+                            ARMAclient.notify(source, {'~r~Seized '..d.amount..'x '..c..'.'})
+                            cdata[c] = nil
+                        end
+                    end
+                    ARMA.setSData(vehformat, json.encode(cdata))
+                end)
+            end
+        end)
+    end
+end)
+
+
 Citizen.CreateThread(function()
     Wait(1500)
     exports['ghmattimysql']:execute([[
