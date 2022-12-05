@@ -694,29 +694,33 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            for i,v in pairs(RentedVehiclesOut.vehicles) do
-                RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        RentedVehicle = i
-                    end
-                end, RMenu:Get("ARMAGarages", "rented_vehicles_out_information"))
+            if next(RentedVehiclesOut) then
+                for i,v in pairs(RentedVehiclesOut.vehicles) do
+                    RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                        if Selected then
+                            RentedVehicle = i
+                        end
+                    end, RMenu:Get("ARMAGarages", "rented_vehicles_out_information"))
+                end
             end
         end)
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'rented_vehicles_out_information')) then 
         RageUI.DrawContent({header = true, glare = false, instructionalButton = true}, function()
-            for i,v in pairs(RentedVehiclesOut.vehicles) do
-                if RentedVehicle == i then
-                    RageUI.Separator("~g~Rent Info")
-                    RageUI.Separator("Vehicle: " .. v[1])
-                    RageUI.Separator("Spawncode: " .. i)
-                    RageUI.Separator("Time Left: " .. v[2])
-                    RageUI.Separator("Rented To ID: " .. v[3])
-                    RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            TriggerServerEvent("ARMA:CancelRent", i, v[1], 'owner')
-                        end
-                    end)
+            if next(RentedVehiclesOut) then
+                for i,v in pairs(RentedVehiclesOut.vehicles) do
+                    if RentedVehicle == i then
+                        RageUI.Separator("~g~Rent Info")
+                        RageUI.Separator("Vehicle: " .. v[1])
+                        RageUI.Separator("Spawncode: " .. i)
+                        RageUI.Separator("Time Left: " .. v[2])
+                        RageUI.Separator("Rented To ID: " .. v[3])
+                        RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
+                            if Selected then 
+                                TriggerServerEvent("ARMA:CancelRent", i, v[1], 'owner')
+                            end
+                        end)
+                    end
                 end
             end
         end)
@@ -725,12 +729,14 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            for i,v in pairs(RentedVehiclesIn.vehicles) do
-                RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        RentedVehicle = i
-                    end
-                end, RMenu:Get("ARMAGarages", "rented_vehicles_information"))
+            if next(RentedVehiclesOut) then
+                for i,v in pairs(RentedVehiclesIn.vehicles) do
+                    RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                        if Selected then
+                            RentedVehicle = i
+                        end
+                    end, RMenu:Get("ARMAGarages", "rented_vehicles_information"))
+                end
             end
         end)
     end
@@ -738,18 +744,20 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            for i,v in pairs(RentedVehiclesIn.vehicles) do
-                if RentedVehicle == i then
-                    RageUI.Separator("~g~Rent Info")
-                    RageUI.Separator("Vehicle: " .. v[1])
-                    RageUI.Separator("Spawncode: " .. i)
-                    RageUI.Separator("Time Left: " .. v[2])
-                    RageUI.Separator("Rented To ID: " .. v[3])
-                    RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            TriggerServerEvent("ARMA:CancelRent", i, v[1], 'renter')
-                        end
-                    end)
+            if next(RentedVehiclesOut) then
+                for i,v in pairs(RentedVehiclesIn.vehicles) do
+                    if RentedVehicle == i then
+                        RageUI.Separator("~g~Rent Info")
+                        RageUI.Separator("Vehicle: " .. v[1])
+                        RageUI.Separator("Spawncode: " .. i)
+                        RageUI.Separator("Time Left: " .. v[2])
+                        RageUI.Separator("Rented To ID: " .. v[3])
+                        RageUI.ButtonWithStyle('Request Rent Cancellation', "~y~This will cancel the rent of " ..v[1], {}, true, function(Hovered, Active, Selected)
+                            if Selected then 
+                                TriggerServerEvent("ARMA:CancelRent", i, v[1], 'renter')
+                            end
+                        end)
+                    end
                 end
             end
         end)

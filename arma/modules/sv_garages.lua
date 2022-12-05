@@ -406,7 +406,7 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                                                     MySQL.execute("ARMA/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
                                                                                 end)
                                                                                 ARMA.giveBankMoney(playerID, amount)
-                                                                                ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
+                                                                                ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to ".. GetPlayerName(target).." for £"..amount..' for: ' ..rent.. 'hours'})
                                                                                 ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..amount.."!" .. ' | for: ' .. rent .. 'hours'})
                                                                                 TriggerClientEvent('ARMA:CloseGarage', player)
                                                                             else
