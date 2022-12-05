@@ -63,7 +63,9 @@ AddEventHandler("crateDrop", function(c)
                         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
                         TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
                         tARMA.notify("~g~Looting Crate Drop...")
-                        exports.rprogress:Start("", 15000)
+                        CreateThread(function()
+                            tARMA.startCircularProgressBar("",15000,nil,function()end)
+                        end)
                         ClearPedTasksImmediately(PlayerPedId())
                         if IsPedInAnyVehicle(GetPlayerPed(-1), false) == false then
                             if IsPedDeadOrDying(PlayerPedId(), true) == false then
