@@ -255,6 +255,7 @@ local choice_store_weapons = function(player, choice)
               end
               ARMAclient.notify(player,{"~g~Weapons Stored"})
               TriggerEvent('ARMA:RefreshInventory', source)
+              ARMAclient.RemoveGears(source, {})
               SetTimeout(3000,function()
                     isStoring[player] = nil 
               end)
@@ -291,7 +292,6 @@ end)
 
 RegisterCommand('storeallweapons', function(source)
   choice_store_weapons(source)
-  ARMAclient.RemoveGears(source, {})
 end)
 
 
@@ -537,4 +537,76 @@ AddEventHandler('ARMA:tryTackle', function(id)
         TriggerClientEvent('ARMA:playTackle', source)
         TriggerClientEvent('ARMA:getTackled', id, source)
     end
+end)
+
+RegisterCommand('drone', function(source, args)
+  local source = source
+  local user_id = ARMA.getUserId(source)
+  if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
+      TriggerClientEvent('toggleDrone', source)
+  end
+end)
+
+RegisterServerEvent('ARMA:playTaserSound')
+AddEventHandler('ARMA:playTaserSound', function(coords, sound)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+        TriggerClientEvent('playTaserSoundClient', -1, coords, sound)
+    end
+end)
+
+RegisterServerEvent('ARMA:reactivatePed')
+AddEventHandler('ARMA:reactivatePed', function(id)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+      TriggerClientEvent('ARMA:receiveActivation', id)
+    end
+end)
+
+RegisterServerEvent('ARMA:arcTaser')
+AddEventHandler('ARMA:arcTaser', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+      ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
+        local nuser_id = ARMA.getUserId(nplayer)
+        if nuser_id ~= nil then
+            TriggerClientEvent('ARMA:receiveBarbs', nplayer)
+        end
+      end)
+    end
+end)
+
+RegisterServerEvent('ARMA:barbsNoLongerServer')
+AddEventHandler('ARMA:barbsNoLongerServer', function(id)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+      TriggerClientEvent('ARMA:barbsNoLonger', id)
+    end
+end)
+
+RegisterServerEvent('ARMA:barbsRippedOutServer')
+AddEventHandler('ARMA:barbsRippedOutServer', function(id)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    TriggerClientEvent('ARMA:barbsRippedOut', id)
+end)
+
+RegisterCommand('rt', function(source, args)
+  local source = source
+  local user_id = ARMA.getUserId(source)
+  if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+      TriggerClientEvent('ARMA:reloadTaser', source)
+  end
+end)
+
+RegisterCommand('trafficmenu', function(source, args)
+  local source = source
+  local user_id = ARMA.getUserId(source)
+  if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
+      TriggerClientEvent('ARMA:toggleTrafficMenu', source)
+  end
 end)
