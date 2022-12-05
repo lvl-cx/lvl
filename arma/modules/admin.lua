@@ -177,7 +177,7 @@ AddEventHandler("ARMA:Giveweapon",function()
                 },
                 {
                   ["name"] = "Player Hours",
-                  ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                  ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                   ["inline"] = true
                 },
                 {
@@ -247,7 +247,7 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
                         },
                         {
                           ["name"] = "Player Hours",
-                          ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                          ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                           ["inline"] = true
                         },
                         {
@@ -460,7 +460,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -554,7 +554,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -613,7 +613,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -1009,7 +1009,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
                         },
                         {
                             ["name"] = "Player Hours",
-                            ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -1566,6 +1566,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
             ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
         end
         ARMAclient.teleport(source, coords)
+        TriggerClientEvent('ARMA:smallAnnouncement', newtarget, 'Alert', "An admin has teleported to you", 33, 10000)
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
@@ -1653,7 +1654,7 @@ AddEventHandler('ARMA:GetCoords', function()
                             },
                             {
                                 ["name"] = "Player Hours",
-                                ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                                ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                                 ["inline"] = true
                             },
                             {
@@ -1755,7 +1756,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
                     },
                     {
                         ["name"] = "Player Hours",
-                        ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                        ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                         ["inline"] = true
                     },
                     {
@@ -1854,7 +1855,7 @@ AddEventHandler('ARMA:AddCar', function()
                                 },
                                 {
                                   ["name"] = "Player Hours",
-                                  ["value"] = "do math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0",
+                                  ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                                   ["inline"] = true
                                 },
                                 {
