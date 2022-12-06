@@ -1579,8 +1579,17 @@ function unpreviewFromCamera()
     ClearFocus()
 end
 Citizen.CreateThread(function()
+    DecorRegister("cinematicMode", 2)
     while true do
         local ag = PlayerPedId()
+        if B then
+            if z == nil and not globalHideUi then
+                drawNativeText("~r~CINEMATIC MODE ENABLED")
+            end
+            if not DecorExistOn(ag, "cinematicMode") then
+                DecorSetBool(ag, "cinematicMode", true)
+            end
+        end
         if (o or p) and noclipActive and tARMA.getPlayerVehicle() ~= 0 then
             tARMA.notify("~r~You may not noclip when in a vehicle.")
             tARMA.toggleNoclip()
@@ -1645,6 +1654,7 @@ Citizen.CreateThread(function()
 end)
 function renderCinematicScene(P)
     Citizen.CreateThread(function()
+        clearNativeText()
         if s then
             DestroyCam(s, 0)
             RenderScriptCams(0, 0, 1, 1, 1)
@@ -1715,6 +1725,19 @@ Citizen.CreateThread(function()
         if al ~= 0 and al == ak and am then
             SetVehicleEngineOn(al, false, true, true)
             ak = -1
+        end
+        local an = GetEntityAttachedTo(PlayerPedId())
+        if an ~= 0 and IsEntityAPed(an) and IsPedAPlayer(an) and not IsEntityVisible(an) then
+            local ao = NetworkGetPlayerIndexFromPed(an)
+            if ao ~= -1 then
+                local ap = GetPlayerServerId(ao)
+                if ap > 0 then
+                    if not CMG.clientGetPlayerIsStaff(ap) then
+                        SetEntityVisible(PlayerPedId(), true, true)
+                        DetachEntity(PlayerPedId(), true, true)
+                    end
+                end
+            end
         end
         Citizen.Wait(1000)
     end
