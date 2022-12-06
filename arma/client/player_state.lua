@@ -2,15 +2,16 @@
 local state_ready = false
 
 AddEventHandler("playerSpawned",function() -- delay state recording
+  state_ready = false
   Citizen.CreateThread(function()
-    Citizen.Wait(2000)
+    Citizen.Wait(30000)
     state_ready = true
   end)
 end)
 
 Citizen.CreateThread(function()
   while true do
-    Citizen.Wait(500)
+    Citizen.Wait(3000)
     if IsPlayerPlaying(PlayerId()) and state_ready then
       local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
       if not tARMA.isInHouse() and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() and not inOrganHeist then
