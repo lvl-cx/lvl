@@ -37,7 +37,7 @@ RegisterCommand("carry",function(f, g)
                             if not tARMA.isStaffedOn() and not globalLFBOnDuty then
                                 TriggerServerEvent("ARMA:CarryRequest", target)
                             else
-                                TriggerServerEvent("CarryPeople:sync", target)
+                                TriggerServerEvent("CarryPeople:sync", GetPlayerServerId(PlayerId()), target)
                             end
                         else
                             drawNativeNotification("Cannot carry dead people!")
@@ -103,7 +103,6 @@ AddEventHandler("ARMAEXTRAS:StartCarry", function(targetSrc)
     local targetSrc = targetSrc
     carry.InProgress = true
     carry.targetSrc = targetSrc
-    TriggerServerEvent("CarryPeople:sync",targetSrc)
     ensureAnimDict(carry.personCarrying.animDict)
     carry.type = "carrying"
 end)

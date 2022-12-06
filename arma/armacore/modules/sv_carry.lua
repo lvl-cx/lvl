@@ -2,17 +2,16 @@ carrying = {}
 carried = {}
 
 RegisterServerEvent("CarryPeople:sync")
-AddEventHandler("CarryPeople:sync", function(targetSrc)
-    local targetSrc = targetSrc
-    local sourcePed = GetPlayerPed(source)
+AddEventHandler("CarryPeople:sync", function(senderSrc, targetSrc)
+    local sourcePed = GetPlayerPed(senderSrc)
     local sourceCoords = GetEntityCoords(sourcePed)
     local targetPed = GetPlayerPed(targetSrc)
     local targetCoords = GetEntityCoords(targetPed)
     if #(sourceCoords - targetCoords) <= 3.0 then 
-        TriggerClientEvent("CarryPeople:syncTarget", targetSrc, source)
-        TriggerClientEvent("ARMAEXTRAS:StartCarry", source)
-        carrying[source] = targetSrc
-        carried[targetSrc] = source
+        TriggerClientEvent("CarryPeople:syncTarget", targetSrc, senderSrc)
+        TriggerClientEvent("ARMAEXTRAS:StartCarry", senderSrc)
+        carrying[senderSrc] = targetSrc
+        carried[targetSrc] = senderSrc
     end
 end)
 
@@ -51,7 +50,8 @@ AddEventHandler("ARMAEXTRAS:CarryAccepted", function(senderSrc)
     local targetSrcName = GetPlayerName(targetSrc)
     ARMAclient.notify(targetSrc,{"~g~Carry request accepted."})
     ARMAclient.notify(senderSrc,{"~g~Your carry request to "..targetSrcName.." has been accepted."})
-    TriggerClientEvent("ARMAEXTRAS:StartCarry", senderSrc, targetSrc)
+    TriggerEvent('CarryPeople:sync', senderSrc, targetSrc)
+    TriggerClientEvent("ARMAEXTRAS:StartCarry", senderSrc)
 end)
 
 RegisterServerEvent("ARMAEXTRAS:CarryDeclined")
