@@ -51,7 +51,7 @@ function tARMA.getWeapons()
             else 
                 h.ammo=0 
             end
-            h.attachments=tARMA.getAllWeaponAttachments(b)
+            --h.attachments=tARMA.getAllWeaponAttachments(b)
             d[b]=h 
         end 
     end
