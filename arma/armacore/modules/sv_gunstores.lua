@@ -98,13 +98,20 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         ARMAclient.notify(source, {'~r~You already have '..GetPedArmour(GetPlayerPed(source))..'% armour.'})
                                         return
                                     end
-                                end
-                                if ARMA.tryPayment(user_id,price) then
-                                    if purchasetype == 'weapon' then
-                                        ARMAclient.hasWeapon(source, {spawncode}, function(hasWeapon)
-                                            if hasWeapon then
-                                                ARMAclient.notify(source, {'~r~Please store this weapon before purchasing another.'})
-                                            else
+                                    if ARMA.tryPayment(user_id,price) then
+                                        ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                        TriggerClientEvent("arma:PlaySound", source, 1)
+                                        ARMAclient.setArmour(source, {price/1000, true})
+                                    else
+                                        ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
+                                        TriggerClientEvent("arma:PlaySound", source, 2)
+                                    end
+                                elseif purchasetype == 'weapon' then
+                                    ARMAclient.hasWeapon(source, {spawncode}, function(hasWeapon)
+                                        if hasWeapon then
+                                            ARMAclient.notify(source, {'~r~Please store this weapon before purchasing another.'})
+                                        else
+                                            if ARMA.tryPayment(user_id,price) then
                                                 if price > 0 then
                                                     ARMAclient.notify(source, {'~g~You bought a '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                                 else
@@ -112,13 +119,14 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                                 end
                                                 TriggerClientEvent("arma:PlaySound", source, 1)
                                                 GiveWeaponToPed(source, spawncode, 250, false, false)
+                                            else
+                                                ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
+                                                TriggerClientEvent("arma:PlaySound", source, 2)
                                             end
-                                        end)
-                                    elseif purchasetype == 'armour' then
-                                        ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
-                                        TriggerClientEvent("arma:PlaySound", source, 1)
-                                        ARMAclient.setArmour(source, {price/1000, true})
-                                    elseif purchasetype == 'ammo' then
+                                        end
+                                    end)
+                                elseif purchasetype == 'ammo' then
+                                    if ARMA.tryPayment(user_id,price) then
                                         if price > 0 then
                                             ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})
                                         else
@@ -126,10 +134,10 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         end
                                         TriggerClientEvent("arma:PlaySound", source, 1)
                                         SetPedAmmo(GetPlayerPed(source), spawncode, 250)
+                                    else
+                                        ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
+                                        TriggerClientEvent("arma:PlaySound", source, 2)
                                     end
-                                else
-                                    ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
-                                    TriggerClientEvent("arma:PlaySound", source, 2)
                                 end
                             else
                                 local player = ARMA.getUserSource(user_id)
