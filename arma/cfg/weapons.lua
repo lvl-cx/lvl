@@ -95,7 +95,7 @@ cfg.weapons = {
     },
     ["WEAPON_STAFFGUN"] = {
         name = "Delgun",
-        class = "Melee",
+        class = "Pistol",
         ammo = "",
         policeWeapon = true,
         model = "w_pi_staffgun",
@@ -158,7 +158,7 @@ cfg.weapons = {
     },
     ["WEAPON_CLEAVER"] = {
         name = "Cleaver",
-        class = "Pistol",
+        class = "Melee",
         ammo = "",
         policeWeapon = false,
         model = "w_me_cleaver",
