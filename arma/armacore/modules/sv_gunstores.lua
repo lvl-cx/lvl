@@ -38,6 +38,7 @@ end)
 
 RegisterNetEvent("ARMA:buyWeapon")
 AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, purchasetype, vipstore)
+    --print(spawncode, price, name, weaponshop, purchasetype, vipstore)
     local source = source
     local user_id = ARMA.getUserId(source)
     local hasPerm = false
@@ -67,7 +68,8 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                 local player = ARMA.getUserSource(user_id)
                 local name = GetPlayerName(source)
                 Wait(500)
-                TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun outside of store radius')
+                print('banned')
+                --TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun outside of store radius')
             end
             if json.encode(v[5]) ~= '[""]' then
                 for a,b in pairs(v[5]) do

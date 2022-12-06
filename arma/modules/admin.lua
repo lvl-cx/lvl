@@ -1566,7 +1566,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
             ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
         end
         ARMAclient.teleport(source, coords)
-        TriggerClientEvent('ARMA:smallAnnouncement', newtarget, 'Alert', "An admin has teleported to you", 33, 10000)
+        ARMAclient.notify(newtarget, {'~g~An admin has teleported to you.'})
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
