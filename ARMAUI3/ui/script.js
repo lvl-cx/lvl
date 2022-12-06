@@ -21,7 +21,7 @@ $(document).ready(function(){
 
   // Form update
   $('input').change(function(){
-    $.post('http://arma-barbers/updateSkin', JSON.stringify({
+    $.post('http://armaui3/updateSkin', JSON.stringify({
       value: false,
       // Face
       dad: $('input[name=pere]:checked', '#formSkinCreator').val(),
@@ -59,7 +59,7 @@ $(document).ready(function(){
   });
   $('.arrow').on('click', function(e){
     e.preventDefault();
-    $.post('http://arma-barbers/updateSkin', JSON.stringify({
+    $.post('http://armaui3/updateSkin', JSON.stringify({
       value: false,
       // Face
       dad: $('input[name=pere]:checked', '#formSkinCreator').val(),
@@ -99,7 +99,7 @@ $(document).ready(function(){
   // Form submited
   $('.yes').on('click', function(e){
     e.preventDefault();
-    $.post('http://arma-barbers/updateSkin', JSON.stringify({
+    $.post('http://armaui3/updateSkin', JSON.stringify({
       value: true,
       // Face
       dad: $('input[name=pere]:checked', '#formSkinCreator').val(),
@@ -138,22 +138,22 @@ $(document).ready(function(){
   // Rotate player
   $(document).keypress(function(e) {
     if(e.which == 113){ // A pressed
-      $.post('http://arma-barbers/rotaterightheading', JSON.stringify({
+      $.post('http://armaui3/rotaterightheading', JSON.stringify({
         value: 10
       }));
     }
     if(e.which == 101){ // E pressed
-      $.post('http://arma-barbers/rotateleftheading', JSON.stringify({
+      $.post('http://armaui3/rotateleftheading', JSON.stringify({
         value: 10
       }));
     }
     if(e.which == 119 ){ // W pressed
-      $.post('http://arma-barbers/zoomin', JSON.stringify({
+      $.post('http://armaui3/zoomin', JSON.stringify({
         value: 10
       }));
     }
     if(e.which == 115){ // S pressed
-      $.post('http://arma-barbers/zoomout', JSON.stringify({
+      $.post('http://armaui3/zoomout', JSON.stringify({
         value: 10
       }));
     }
@@ -162,7 +162,7 @@ $(document).ready(function(){
   // Zoom out camera for clothes
   $('#tabs label').on('click', function(e){
     //e.preventDefault();
-    $.post('http://arma-barbers/zoom', JSON.stringify({
+    $.post('http://armaui3/zoom', JSON.stringify({
       zoom: $(this).attr('data-link')
     }));
   });
@@ -173,7 +173,7 @@ $(document).ready(function(){
     e.preventDefault();
     xTriggered++;
     if(e.which == 13){
-      $.post('http://arma-barbers/test', JSON.stringify({
+      $.post('http://armaui3/test', JSON.stringify({
         value: xTriggered
       }));
     }
@@ -183,28 +183,28 @@ $(document).ready(function(){
 
 
 function leftWristComponent() {
-    $.post('http://arma-barbers/updateLeftWristComponent', JSON.stringify({
+    $.post('http://armaui3/updateLeftWristComponent', JSON.stringify({
         componentID: $('.montre .active').attr('data'),
     }));
 }
 
 function leftWristTexture() {
     //console.log("leftWrist() says textureID is " + $('.leftWristTexture .active').attr('data')),
-    $.post('http://arma-barbers/updateLeftWristTexture', JSON.stringify({
+    $.post('http://armaui3/updateLeftWristTexture', JSON.stringify({
         componentID: $('.montre .active').attr('data'),
         textureID:  $('.leftWristTexture .active').attr('data'),
     }));
 }
 
 function rightWristComponent() {
-    $.post('http://arma-barbers/updateRightWristComponent', JSON.stringify({
+    $.post('http://armaui3/updateRightWristComponent', JSON.stringify({
         componentID: $('.montre-right .active').attr('data'),
     }));
 }
 
 function rightWristTexture() {
     //console.log("rightWrist() says textureID is " + $('.rightWristTexture .active').attr('data')),
-    $.post('http://arma-barbers/updateRightWristTexture', JSON.stringify({
+    $.post('http://armaui3/updateRightWristTexture', JSON.stringify({
         componentID: $('.montre-right .active').attr('data'),
         textureID:  $('.rightWristTexture .active').attr('data'),
     }));
