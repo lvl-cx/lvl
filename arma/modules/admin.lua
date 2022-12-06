@@ -2055,7 +2055,7 @@ RegisterNetEvent('ARMA:zapPlayer')
 AddEventHandler('ARMA:zapPlayer', function(A)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(source, 'Founder') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         for k,v in pairs(ARMA.getUsers()) do
             TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))
@@ -2067,7 +2067,7 @@ RegisterNetEvent('ARMA:theForceSync')
 AddEventHandler('ARMA:theForceSync', function(A, q, r, s)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(source, 'Founder') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceSync", A, q, r, s)
         TriggerClientEvent("ARMA:useTheForceTarget", A)
     end
