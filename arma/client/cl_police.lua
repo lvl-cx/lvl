@@ -171,6 +171,9 @@ Citizen.CreateThread(function()
         Wait(0)
     end
 end)
+function tARMA.isBeingDragged()
+    return d
+end
 
 RMenu.Add("policehandbook","main",RageUI.CreateMenu("Police Handbook", "~b~Officer Handbook", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RageUI.CreateWhile(1.0, true, function()

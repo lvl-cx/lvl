@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
 
         local dist = #(oldPos-newPos)
         oldPos = newPos
-        if dist > 6 and not IsPedFalling(playerPed) and not IsPedInParachuteFreeFall(playerPed) and not IsPedRagdoll(playerPed) and not tARMA.isPlayerHidingInBoot() then
+        if dist > 6 and not IsPedFalling(playerPed) and not IsPedInParachuteFreeFall(playerPed) and not IsPedRagdoll(playerPed) and not tARMA.isPlayerHidingInBoot() and not tARMA.isBeingDragged() then
             if not IsPedInAnyVehicle(playerPed, 1) then
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 18 then
