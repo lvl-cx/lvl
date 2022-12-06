@@ -1,8 +1,3 @@
---------------------------------------------
---Created by Robbster, do not redistribute--
---------------------------------------------
---If you're snooping here, before you ask why some function names are horrible things like func_368, its so I could keep track of where I was at in the decompiled scripts :P
-
 local closeToCasino = false
 local closestChair = -1
 local closestChairDist = 1000 
@@ -191,7 +186,6 @@ function resetDealerIdle(dealerPed)
         while not HasAnimDictLoaded(dealerAnimDict) do
             Wait(0)
         end
-        --print("playing idle animation: " .. tostring(genderAnimString .. "idle"))
         TaskPlayAnim(dealerPed, dealerAnimDict, genderAnimString .. "idle", 1000.0, -2.0, -1, 2, 1148846080, 0) --anim_name is idle or female_idle depending on gender
         PlayFacialAnim(dealerPed, "idle_facial", dealerAnimDict)
         TaskPlayAnim(GetPlayerPed(-1),"anim_casino_b@amb@casino@games@shared@player@", "idle_cardgames", 1.0, 1.0, -1, 0)
@@ -264,7 +258,6 @@ Citizen.CreateThread(function()
                 end
             end
             if IsControlJustPressed(0, 201) then --Submit bet [Enter]
-                --print("submitting bet")
                 if tonumber(currentBetAmount) >= 0 then
                     TriggerServerEvent("Blackjack:setBlackjackBet",globalGameId,currentBetAmount,closestChair)
                     closestDealerPed = getClosestDealer()
@@ -842,11 +835,6 @@ function startDealing(dealerPed,gameId,cardData,chairId,cardIndex,gotCurrentHand
     N_0x469f2ecdec046337(1)
     StartAudioScene("DLC_VW_Casino_Cards_Focus_Hand") --need to stream this
     ensureCardModelsLoaded() --request all 52 card models
-    --AUDIO::_0xF8AD2EED7C47E8FE(iVar1, false, 1); call sound on dealer
-    ----------------THIS CREATES A CARD AT THE MACHINE WHERE THE CARD COMES OUT OF-----------------------
-    --print("dealerPed: " .. tostring(dealerPed))
-    --print("DoesEntityExist(dealerPed): " .. tostring(DoesEntityExist(dealerPed)))
-    --print("NetworkHasControlOfEntity(dealerPed): " .. tostring(NetworkHasControlOfEntity(dealerPed)))
     local gender = getDealerGenderFromPed(dealerPed)
     if DoesEntityExist(dealerPed) then
         --print("startDealing() - entityExists")
@@ -1156,16 +1144,6 @@ AddEventHandler("Blackjack:chipsCleanupNoAnim",function(chairId,tableId)
 end)
 
 function betChipsForNextHand(chipsAmount,chipsProp,something,chairID,someBool,zOffset)
-    -- Local_198.f_538[func_379(iVar2, iVar9, 0)] = OBJECT::CREATE_OBJECT_NO_OFFSET(func_375(iVar14, bVar4), OBJECT::_GET_OBJECT_OFFSET_FROM_COORDS(func_70(iVar2), vVar8.z, func_374(iVar14, 0, iVar9, bVar4)), 0, false, 1);
-    -- ENTITY::SET_ENTITY_COORDS_NO_OFFSET(Local_198.f_538[func_379(iVar2, iVar9, 0)], 
-    --^-> OBJECT::_GET_OBJECT_OFFSET_FROM_COORDS(func_70(iVar2), vVar8.z, func_374(iVar14, 0, iVar9, bVar4)), 0, 0, 1);
-    -- ENTITY::SET_ENTITY_ROTATION(Local_198.f_538[func_379(iVar2, iVar9, 0)], vVar8 + func_373(iVar14, 0, iVar9, bVar4), 2, 1);
-    -- if (!MISC::IS_STRING_NULL_OR_EMPTY(func_372(iVar14)))
-    -- {
-    --     AUDIO::PLAY_SOUND_FROM_ENTITY(-1, func_372(iVar14), Local_198.f_538[func_379(iVar2, iVar9, 0)], "dlc_vw_table_games_sounds", 0, 0);
-    -- }
-    --print("betChipsForNextHand",chairID)
-    --print("betChipsForNextHand_local",getLocalChairIndexFromGlobalChairId(chairID))
     RequestModel(chipsProp)
     while not HasModelLoaded(chipsProp) do  
         Wait(0)
@@ -1188,17 +1166,6 @@ function betChipsForNextHand(chipsAmount,chipsProp,something,chairID,someBool,zO
     local chipOffsetRotation = blackjack_func_373(chipsAmount,0,getLocalChairIndexFromGlobalChairId(chairID),someBool)
     SetEntityRotation(chipsObj,vVar8 + chipOffsetRotation, 2, 1)
 
-    --print("betChips DEBUG")
-    --print("==============")
-    --print("zOffset: " .. tostring(zOffset))
-    --print("vVar8: " .. tostring(vVar8))
-    --print("tablePosX: " .. tostring(tablePosX))
-    --print("tablePosY: " .. tostring(tablePosY))
-    --print("tablePosZ: " .. tostring(tablePosZ))
-    --print("chipsVector: " .. tostring(chipsVector))
-    --print("chipsOffset: " .. tostring(chipsOffset))
-    --print("chipsObj: " .. tostring(chipsObj))
-    --print("chipOffsetRotation: " .. tostring(chipOffsetRotation))
 end 
 
 function getDealerGenderFromPed(dealerPed)
@@ -1212,7 +1179,6 @@ function getDealerGenderFromPed(dealerPed)
 end
 
 function getNewCardFromMachine(nextCard,chairId,gameId)
-    print("getNewCardFromMachine:",chairId)
     RequestModel(nextCard)
     while not HasModelLoaded(nextCard) do  
         Wait(0)
@@ -1243,16 +1209,6 @@ function getNewCardFromMachine(nextCard,chairId,gameId)
     SetModelAsNoLongerNeeded(nextCardHash)
     local cardObjectOffsetRotation = blackjack_func_398(blackjack_func_368(chairId))
     SetEntityCoordsNoOffset(nextCardObj, cardObjectOffset.x, cardObjectOffset.y, cardObjectOffset.z, 0, 0, 1)
-    --vVar8 =  vector3(0.0, 0.0, getTableHeading(blackjack_func_368(chairId)))
-    
-    --if chairId > 99 then 
-    --    cardObjectOffsetRotation = vVar8 + func_376(iVar5, iVar9, 0, false)
-    --else 
-    --    cardObjectOffsetRotation = blackjack_func_398(blackjack_func_368(chairId))
-    --end
-    --print("cardObjectOffsetRotation.x: " .. tostring(cardObjectOffsetRotation.x))
-    --print("cardObjectOffsetRotation.y: " .. tostring(cardObjectOffsetRotation.y))
-    --print("cardObjectOffsetRotation.z: " .. tostring(cardObjectOffsetRotation.z))
     SetEntityRotation(nextCardObj, cardObjectOffsetRotation.x, cardObjectOffsetRotation.y, cardObjectOffsetRotation.z, 2, 1)
     --FreezeEntityPosition(nextCardObj, true)
     return nextCardObj
@@ -1407,7 +1363,6 @@ end
 
 function blackjack_func_399(iParam0) --iParam0 is table ID?
     local vVar0 = vector3(0.526, 0.571, 0.963)
-    print("func_399 iParam0",iParam0)
     local x,y,z = getTableCoords(iParam0)
     return GetObjectOffsetFromCoords(x, y, z, getTableHeading(iParam0), vVar0.x, vVar0.y, vVar0.z)
 end
@@ -1814,14 +1769,7 @@ end
 
 
 function blackjack_func_377(iParam0, iParam1, bParam2) --iVar5, iVar9, 0
-    --print("blackjack_func_377")
-    --print("iParam0: " .. tostring(iParam0))
-    --print("iParam1: " .. tostring(iParam1))
-    --print("bParam2: " .. tostring(bParam2))
     if bParam2 == 0 then 
-        --print("first check [OK]")
-        --print("iParam1: " .. tostring(iParam1))
-        --print("iParam0: " .. tostring(iParam0))
 		if iParam1 == 0 then
             if iParam0 == 0 then
                 return 0.5737, 0.2376, 0.948025
@@ -2179,12 +2127,6 @@ function getChipFromAmount(amount)
 end 
 
 function blackjack_func_374(betAmount, iParam1, chairId, bParam3) --returns vector3
-    --betAmount, 0, chairID, someBool
-    --print("blackjack_func_374 params:")
-    --print("betAmount: " .. tostring(betAmount))
-    --print("iParam1: " .. tostring(iParam1))
-    --print("chairId: " .. tostring(chairId))
-    --print("bParam3: " .. tostring(bParam3))
     fVar0 = 0.0
     vVar1 = vector3(0,0,0)
     if not bParam3 then 
@@ -2488,10 +2430,6 @@ function blackjack_func_374(betAmount, iParam1, chairId, bParam3) --returns vect
             end 
         end
     end 
-    -- print(vVar1) 
-    -- print(vVar1.z) 
-    -- print(fVar0) 
-    --vVar1.z = fVar0
     vVar1 = vVar1 + vector3(0.0,0.0,fVar0)
     return vVar1
 end 

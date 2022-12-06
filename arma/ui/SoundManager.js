@@ -75,6 +75,7 @@ const audio = [
     { name:"MPCT_ALAA_04", file: "MPCT_ALAA_04.webm", volume: 0.3},
     { name:"MPCT_ALAA_05", file: "MPCT_ALAA_05.webm", volume: 0.3},
     { name:"shave", file: "shave.webm", volume: 0.3},
+    {name:"callanambulance", file:"callanambulance.webm", volume: 1.00},
 ]
 
 var audioPlayer = null;
