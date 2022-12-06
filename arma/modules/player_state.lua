@@ -237,7 +237,7 @@ AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
             isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
                 for k,v in pairs(weapons) do
-                    if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_FLAREGUN' then
+                    if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_FLAREGUN' and k~= 'WEAPON_SMOKEGRENADE' and k~= 'WEAPON_FLASHBANG' then
                         if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
                             for i,c in pairs(a.weapons) do
                                 if i == k then

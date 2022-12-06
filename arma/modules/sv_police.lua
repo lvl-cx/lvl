@@ -242,7 +242,7 @@ local choice_store_weapons = function(player, choice)
           if ARMA.getInventoryWeight(user_id) <= 25 then
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
               for k,v in pairs(weapons) do
-                if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_FLAREGUN' then
+                if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_FLAREGUN' and k~= 'WEAPON_SMOKEGRENADE' and k~= 'WEAPON_FLASHBANG' then
                   ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                   if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
                     for i,c in pairs(a.weapons) do
