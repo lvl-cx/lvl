@@ -1118,13 +1118,18 @@ end)
 
 
 exports("getServerStatus", function(params, cb)
-    if ARMAConfig.Status == 'Development' then
-        cb("🔒 Development")
-    elseif ARMAConfig.Status == 'Whitelisted' then
-        cb("🛑 Whitelisted")
-    elseif ARMAConfig.Status == 'Online' then
-        cb("✅ Online")
+    if staffWhitelist then
+        cb("🔒 Development (Whitelisted)")
+    else
+        cb("🔒 Development (Open Beta)")
     end
+    -- if ARMAConfig.Status == 'Development' then
+    --     cb("🔒 Development")
+    -- elseif ARMAConfig.Status == 'Whitelisted' then
+    --     cb("🛑 Whitelisted")
+    -- elseif ARMAConfig.Status == 'Online' then
+    --     cb("✅ Online")
+    -- end
 end)
 
 exports("getConnected", function(params, cb)
