@@ -15,8 +15,8 @@ Proxy.addInterface("ARMA",tARMA)
 -- functions
 
 function tARMA.isDevMode()
-  if #GetActivePlayers() == 1 then
-      return false --true
+  if tARMA.isDev() then
+      return true
   else
       return false
   end
