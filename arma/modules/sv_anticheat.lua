@@ -212,32 +212,6 @@ local otherVehicles = {
     [`taco`] = true,
 }
 
-
-local crashWebhook = "https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGF"
-local cheatingWebhook = "https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm"
-
-AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
-    if user_id ~= nil then
-        for k,v in pairs(cheatingCrashes) do
-            if v == reason then
-                PerformHttpRequest(crashWebhook, function(err, text, headers) 
-                end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
-                    {
-                        ["color"] = 16448403,
-                        ["title"] = "Cheating Crash Error",
-                        ["description"] = "> Name: **"..GetPlayerName(source).."**\n> Perm ID: **"..user_id.."**\n> Temp ID: **"..source.."**\n> Reason: **" .. reason .. "**\n\n*These can sometimes be false positives, if a person flags 2 or more times they are most likely cheating*",
-                        ["footer"] = {
-                            ["text"] = "ARMA - "..os.date("%c"),
-                            ["icon_url"] = "",
-                        }
-                }
-                }}), { ["Content-Type"] = "application/json" })
-            end
-        end
-    end
-end)
-
-
 -- Type #1 [Noclip]
 -- Type #2 [Spawning Weapons]
 -- Type #3 [Explosion Event]
@@ -483,18 +457,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
             TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, webhook)
             Wait(15000)
             gettingVideo = false
-            PerformHttpRequest(cheatingWebhook, function(err, text, headers) 
-            end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
-                {
-                    ["color"] = 16448403,
-                    ["title"] = "Anticheat Ban",
-                    ["description"] = "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**",                        
-                    ["footer"] = {
-                        ["text"] = "ARMA - "..os.date("%c"),
-                        ["icon_url"] = "",
-                    }
-            }
-            }}), { ["Content-Type"] = "application/json" })
+            tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
             TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
             ARMA.banConsole(user_id,"perm","Cheating "..reason)
             exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
@@ -509,18 +472,7 @@ AddEventHandler("ARMA:acUnban",function(permid)
     local playerName = GetPlayerName(source)
     if ARMA.hasGroup(user_id, 'Developer') then
         ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
-        PerformHttpRequest(cheatingWebhook, function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Logs", avatar_url = image, embeds = {
-            {
-                ["color"] = 16448403,
-                ["title"] = "Anticheat Unban",
-                ["description"] = "> Admin Name: **"..playerName.."**\n> Admin Perm ID: **"..user_id.."**\n> Players Perm ID: **"..permid.."**",
-                ["footer"] = {
-                    ["text"] = "ARMA - "..os.date("%c"),
-                    ["icon_url"] = "",
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
+        tARMA.sendWebhook('anticheat', 'Anticheat Unban', "> Admin Name: **"..playerName.."**\n> Admin Perm ID: **"..user_id.."**\n> Players Perm ID: **"..permid.."**")
         ARMA.setBanned(permid,false)
     else
         local player = ARMA.getUserSource(user_id)
@@ -564,6 +516,16 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Edit AC Vehicle Whitelist')
+    end
+end)
+
+AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
+    if user_id ~= nil then
+        for k,v in pairs(cheatingCrashes) do
+            if v == reason then
+                tARMA.sendWebhook('crash-error', 'Cheating Crash Error', "> Name: **"..GetPlayerName(source).."**\n> Perm ID: **"..user_id.."**\n> Temp ID: **"..source.."**\n> Reason: **" .. reason .. "**\n\n*These can sometimes be false positives, if a person flags 2 or more times they are most likely cheating*")
+            end
+        end
     end
 end)
 
