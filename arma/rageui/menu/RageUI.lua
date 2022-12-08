@@ -356,6 +356,20 @@ function RageUI.IsVisible(Menu, Items, Panels)
     end
 end
 
+function RageUI.IsAnyMenuOfTypeVisible(type)
+    local visible = false
+    if RMenu:GetType(type) then
+        local menuTypes = RMenu:GetType(type)
+        for _, menuType in pairs(menuTypes) do
+            if menuType.Menu and menuType.Menu.Open then
+                visible = true
+                break
+            end
+        end
+    end
+    return visible
+end
+
 function RageUI.CloseAll()
     menuOpen = false
     RageUI.CurrentMenu = nil

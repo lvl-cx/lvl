@@ -44,6 +44,16 @@ function RMenu:Get(Type, Name)
     end
 end
 
+---GetType
+---@param Type string
+---@return table
+---@public
+function RMenu:GetType(Type)
+    if self[Type] ~= nil then
+        return self[Type]
+    end
+end
+
 ---Settings
 ---@param Type string
 ---@param Name string
