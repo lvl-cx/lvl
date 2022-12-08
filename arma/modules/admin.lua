@@ -2066,8 +2066,7 @@ end)
 RegisterNetEvent('ARMA:theForceSync')
 AddEventHandler('ARMA:theForceSync', function(A, q, r, s)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'Founder') then
+    if ARMA.getUserId(source) == 1 then
         TriggerClientEvent("ARMA:useTheForceSync", A, q, r, s)
         TriggerClientEvent("ARMA:useTheForceTarget", A)
     end
@@ -2077,8 +2076,8 @@ RegisterCommand("cleararea", function(source, args) -- these events are gonna be
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.noclip') then
-        TriggerClientEvent('ARMA:clearVehicles', source)
-        TriggerClientEvent('ARMA:clearBrokenVehicles', source)
+        TriggerClientEvent('ARMA:clearVehicles', -1)
+        TriggerClientEvent('ARMA:clearBrokenVehicles', -1)
     end 
 end)
 
@@ -2140,7 +2139,7 @@ RegisterCommand("getbucket", function(source)
     ARMAclient.notify(source, {'~g~You are currently in Bucket: '..GetPlayerRoutingBucket(source)})
 end)
 
-RegisterCommand("setbucket", function(source, args) -- these events are gonna be used for vehicle cleanup in future also
+RegisterCommand("setbucket", function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.managecommunitypot') then
