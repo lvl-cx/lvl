@@ -65,7 +65,6 @@ RegisterCommand("g", function(source,args, rawCommand)
                             if peoplesids[tostring(G.id)] ~= nil then
                                 local player = ARMA.getUserSource(tonumber(G.id))
                                 if player ~= nil then
-                                    print(player, playerName, msg)
                                     TriggerClientEvent('chatMessage', player, playerName , { 128, 128, 128 }, msg, "ooc")
                                 end
                             end
