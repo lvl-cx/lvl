@@ -2,6 +2,8 @@ RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", "~b~Settings Menu", 
 RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Crosshair Settings',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "killeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Kill Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "bloodeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Blood Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+
 
 
 local a = module("cfg/cfg_settings")
@@ -238,6 +240,11 @@ local function S()
     local T = json.encode(Q)
     SetResourceKvp("arma_kill_effects", T)
 end
+local W = {head = 1, body = 1, arms = 1, legs = 1}
+local function X()
+    local Y = json.encode(W)
+    SetResourceKvp("arma_blood_effects", Y)
+end
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
     local G = GetResourceKvpString("arma_graphic_presets")
@@ -260,12 +267,23 @@ Citizen.CreateThread(function()
             end
         end
     end
+    local Y = GetResourceKvpString("arma_blood_effects")
+    if Y and Y ~= "" then
+        local Z = json.decode(Y)
+        for _, H in pairs(Z) do
+            if W[_] then
+                W[_] = H
+            end
+        end
+    end
 end)
 
 function tARMA.setHitMarkerSetting(i)
     SetResourceKvp("arma_hitmarkersounds", tostring(i))
 end
-
+function tARMA.setCODHitMarkerSetting(i)
+    SetResourceKvp("arma_codhitmarkersounds", tostring(i))
+end
 function tARMA.setDiagonalWeaponSetting(f)
     SetResourceKvp("ARMA_diagonalweapons",tostring(f))
 end
@@ -282,10 +300,10 @@ Citizen.CreateThread(function()
     local h = GetResourceKvpString("arma_hitmarkersounds") or "false"
     if h == "false" then
         d = false
-        TriggerEvent("ARMA:hsSounds", d)
+        TriggerEvent("ARMA:hsSoundsOff")
     else
         d = true
-        TriggerEvent("ARMA:hsSounds", d)
+        TriggerEvent("ARMA:hsSoundsOn")
     end
 end)
 
@@ -297,12 +315,6 @@ RageUI.CreateWhile(1.0, true, function()
                 end
                 n = Z
             end,function()end,nil)
-            RageUI.Checkbox("Toggle Compass", nil, compasschecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
-                if Selected then
-                    compasschecked = not compasschecked
-                    ExecuteCommand("compass")
-                end
-            end)
             local function _()
                 b = true
                 TriggerEvent("ARMA:setDiagonalWeapons", b)
@@ -315,22 +327,30 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,_,a0)
-            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
             local function _()
                 d = true
-                TriggerEvent("ARMA:hsSounds", d)
+                TriggerEvent("ARMA:hsSoundsOn")
                 tARMA.setHitMarkerSetting(d)
                 tARMA.notify("~y~Experimental Headshot sounds now set to " .. tostring(d))
             end
             local function a0()
                 d = false
-                TriggerEvent("ARMA:hsSounds", d)
+                TriggerEvent("ARMA:hsSoundsOff")
                 tARMA.setHitMarkerSetting(d)
                 tARMA.notify("~y~Experimental Headshot sounds now set to " .. tostring(d))
             end
             RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,_,a0)
+            RageUI.ButtonWithStyle("Store Inventory","View your store inventory here.",{RightLabel = "→→→"},true,function()
+            end,RMenu:Get("store", "mainmenu"))
+            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
+            end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
+            RageUI.Checkbox("Toggle Compass", nil, compasschecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
+                if Selected then
+                    compasschecked = not compasschecked
+                    ExecuteCommand("compass")
+                end
+            end)
             local function _()
                 ExecuteCommand("hideui")
                 hideUI = true
@@ -367,6 +387,8 @@ RageUI.CreateWhile(1.0, true, function()
             end,RMenu:Get("SettingsMenu", "graphicpresets"))
             RageUI.ButtonWithStyle("Kill Effects","Toggle effects that occur on killing a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "killeffects"))
+            RageUI.ButtonWithStyle("Blood Effects","Toggle effects that occur when damaging a player.",{RightLabel = "→→→"},true,function()
+            end,RMenu:Get("SettingsMenu", "bloodeffects"))
        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'graphicpresets')) then
@@ -384,7 +406,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
        end)
     end
-    
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'killeffects')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.Checkbox("Create Lightning","",Q.lightning,{},function(W, Y, X, a1)
@@ -517,6 +538,64 @@ RageUI.CreateWhile(1.0, true, function()
             DrawAdvancedTextNoOutline(0.59, 0.9, 0.005, 0.0028, 1.5, "PREVIEW", 255, 0, 0, 255, 2, 0)
        end)
     end
+    if RageUI.Visible(RMenu:Get('SettingsMenu', 'bloodeffects')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.List("~y~Head",P,W.head,"Effect that displays when you hit the head.",{},true,function(a0, a1, a2, a3)
+                if W.head ~= a3 then
+                    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~Available @ store.armarp.co.uk")
+                    end
+                    W.head = a3
+                    X()
+                end
+                if a2 then
+                    tARMA.addBloodEffect("head", 0x796E, PlayerPedId())
+                end
+            end)
+            RageUI.List("~y~Body",P,W.body,"Effect that displays when you hit the body.",{},true,function(a0, a1, a2, a3)
+                if W.body ~= a3 then
+                    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~Available @ store.armarp.co.uk")
+                    end
+                    W.body = a3
+                    X()
+                end
+                if a2 then
+                    tARMA.addBloodEffect("body", 0x0, PlayerPedId())
+                end
+            end)
+            RageUI.List("~y~Arms",P,W.arms,"Effect that displays when you hit the arms.",{},true,function(a0, a1, a2, a3)
+                if W.arms ~= a3 then
+                    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~Available @ store.armarp.co.uk")
+                    end
+                    W.arms = a3
+                    X()
+                end
+                if a2 then
+                    tARMA.addBloodEffect("arms", 0xBB0, PlayerPedId())
+                    tARMA.addBloodEffect("arms", 0x58B7, PlayerPedId())
+                end
+            end)
+            RageUI.List("~y~Legs",P,W.legs,"Effect that displays when you hit the legs.",{},true,function(a0, a1, a2, a3)
+                if W.legs ~= a3 then
+                    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~Available @ store.armarp.co.uk")
+                    end
+                    W.legs = a3
+                    X()
+                end
+                if a2 then
+                    tARMA.addBloodEffect("legs", 0x3FCF, PlayerPedId())
+                    tARMA.addBloodEffect("legs", 0xB3FE, PlayerPedId())
+                end
+            end)
+       end)
+    end
 end)
 
 
@@ -618,7 +697,109 @@ function tARMA.addKillEffect(ap, aq)
         end)
     end
 end
+function tARMA.addBloodEffect(aw, ax, ag)
+    local ay = W[aw]
+    if ay > 1 then
+        local as = Q[ay]
+        tARMA.loadPtfx(as[1])
+        UseParticleFxAsset(as[1])
+        StartParticleFxNonLoopedOnPedBone(as[2], ag, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ax, as[3], false, false, false)
+        RemoveNamedPtfxAsset(as[1])
+    end
+end
 RegisterNetEvent("ARMA:onPlayerKilledPed")
 AddEventHandler("ARMA:onPlayerKilledPed",function(ar)
     tARMA.addKillEffect(ar, false)
+end)
+
+local aA = {
+    [0x0] = "body",
+    [0x2E28] = "body",
+    [0xE39F] = "legs",
+    [0xF9BB] = "legs",
+    [0x3779] = "legs",
+    [0x83C] = "legs",
+    [0xCA72] = "legs",
+    [0x9000] = "legs",
+    [0xCC4D] = "legs",
+    [0x512D] = "legs",
+    [0xE0FD] = "body",
+    [0x5C01] = "body",
+    [0x60F0] = "body",
+    [0x60F1] = "body",
+    [0x60F2] = "body",
+    [0xFCD9] = "body",
+    [0xB1C5] = "arms",
+    [0xEEEB] = "arms",
+    [0x49D9] = "arms",
+    [0x67F2] = "arms",
+    [0xFF9] = "arms",
+    [0xFFA] = "arms",
+    [0x67F3] = "arms",
+    [0x1049] = "arms",
+    [0x104A] = "arms",
+    [0x67F4] = "arms",
+    [0x1059] = "arms",
+    [0x105A] = "arms",
+    [0x67F5] = "arms",
+    [0x1029] = "arms",
+    [0x102A] = "arms",
+    [0x67F6] = "arms",
+    [0x1039] = "arms",
+    [0x103A] = "arms",
+    [0x29D2] = "arms",
+    [0x9D4D] = "arms",
+    [0x6E5C] = "arms",
+    [0xDEAD] = "arms",
+    [0xE5F2] = "arms",
+    [0xFA10] = "arms",
+    [0xFA11] = "arms",
+    [0xE5F3] = "arms",
+    [0xFA60] = "arms",
+    [0xFA61] = "arms",
+    [0xE5F4] = "arms",
+    [0xFA70] = "arms",
+    [0xFA71] = "arms",
+    [0xE5F5] = "arms",
+    [0xFA40] = "arms",
+    [0xFA41] = "arms",
+    [0xE5F6] = "arms",
+    [0xFA50] = "arms",
+    [0xFA51] = "arms",
+    [0x9995] = "head",
+    [0x796E] = "head",
+    [0x5FD4] = "head",
+    [0xD003] = "body",
+    [0x45FC] = "body",
+    [0x1D6B] = "legs",
+    [0xB23F] = "legs"
+}
+AddEventHandler("ARMA:onPlayerDamagePed",function(az)
+    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+        return
+    end
+    local aB, ax = GetPedLastDamageBone(az, 0)
+    if aB then
+        local aC = GetPedBoneIndex(az, ax)
+        local aD = GetWorldPositionOfEntityBone(az, aC)
+        local aE = aA[ax]
+        if not aE then
+            local aF = GetWorldPositionOfEntityBone(az, GetPedBoneIndex(az, 0x9995))
+            local aG = GetWorldPositionOfEntityBone(az, GetPedBoneIndex(az, 0x2E28))
+            if aD.z >= aF.z - 0.01 then
+                aE = "head"
+            elseif aD.z < aG.z then
+                aE = "legs"
+            else
+                local aH = GetEntityCoords(az, true)
+                local aI = #(aH.xy - aD.xy)
+                if aI > 0.075 then
+                    aE = "arms"
+                else
+                    aE = "body"
+                end
+            end
+        end
+        tARMA.addBloodEffect(aE, ax, az)
+    end
 end)
