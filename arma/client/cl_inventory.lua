@@ -1,4 +1,4 @@
--- me do this later it give me headache
+-- new inventory system (do later)
 
 -- drawInventoryUI = false
 -- local a = false
@@ -15,7 +15,8 @@
 -- local l = 0
 -- Citizen.CreateThread(function()
 --     while true do
---         if IsControlJustPressed(0, 182) then
+--         --if IsControlJustPressed(0, 182) then
+--         if IsControlJustPressed(0, 47) then
 --             if IsUsingKeyboard(2) and not tARMA.isInComa() and not tARMA.isHandcuffed() then
 --                 if not i then
 --                     drawInventoryUI = not drawInventoryUI
@@ -51,6 +52,7 @@
 --     return e - m
 -- end
 -- RegisterNetEvent("ARMA:sendInventoryData",function(p, q)
+--     print(json.encode(p), q)
 --     ARMAPrimaryItems = p
 --     d = q
 -- end)
@@ -430,11 +432,19 @@
 --             local D = 0.026
 --             local E = 0
 --             local F = 0
---             local G = sortAlphabetically(ARMAPrimaryItems)
+--             print(json.encode(ARMAPrimaryItems))
+--             --local G = sortAlphabetically(ARMAPrimaryItems)
+--             local G = ARMAPrimaryItems
+--             print(json.encode(G))
 --             for H, I in pairs(G) do
+--                 print(json.encode(I))
 --                 local v = I.title
---                 local w = I["value"]
---                 local J, K, m = table.unpack(w)
+--                 --print(v)
+--                 --local w = I["value"]
+--                 local w = I.value
+--                 --print(json.encode(w))
+--                 --print(json.encode(I))
+--                 local J, K, m = table.unpack(w) -- J = name, K = weight, m = amount
 --                 F = F + K * m
 --                 DrawAdvancedText(0.404, 0.360 + E * D, 0.005, 0.0028, 0.366, J, 255, 255, 255, 255, 4, 0)
 --                 DrawAdvancedText(0.521,0.360 + E * D,0.005,0.0028,0.366,tostring(m * K) .. "kg",255,255,255,255,4,0)
@@ -494,8 +504,7 @@
 -- end
 
 
---[[ tARMA.cachedItemTokens = {}
-RegisterNetEvent("ARMA:sendItemTokens",function(S)
-    tARMA.cachedItemTokens = S
-end)
- ]]
+-- tARMA.cachedItemTokens = {}
+-- RegisterNetEvent("ARMA:sendItemTokens",function(S)
+--     tARMA.cachedItemTokens = S
+-- end)
