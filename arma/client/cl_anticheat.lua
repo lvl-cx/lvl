@@ -295,6 +295,7 @@ end)
 local b = {
     "demonhawkk",
     "priors63przemo",
+	"RSQR8",
 }
 
 Citizen.CreateThread(function()
@@ -307,7 +308,7 @@ Citizen.CreateThread(function()
 		if GetVehicleHasParachute(f) then
 			local be = GetEntityModel(f)
 			if not table.has(c, be) then
-				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be]) -- finish later
+				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
 			end
 		end
 		Wait(1000)
