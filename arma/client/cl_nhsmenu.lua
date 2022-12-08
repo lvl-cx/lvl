@@ -399,7 +399,6 @@ local B = {
     ["WEAPON_FIREEXTINGUISHER"] = true,
     ["GADGET_PARACHUTE"] = true,
     ["WEAPON_STAFFGUN"] = true,
-    ["WEAPON_FIREAXECMG"] = true
 }
 local function C()
     if globalNHSOnDuty or globalLFBOnDuty then
