@@ -693,7 +693,7 @@ RageUI.CreateWhile(1.0, true, function()
             if GlobalAdminLevel > 1 then
                 RageUI.ButtonWithStyle("Player Notes", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:getNotes', uid, SelectedPlayer[3])
+                        TriggerServerEvent('ARMA:getNotes', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'notesub'))
             end              
@@ -711,7 +711,7 @@ RageUI.CreateWhile(1.0, true, function()
                         banningPermID = SelectedPlayer[3]
                         banningName = SelectedPlayer[1]
                         o = nil
-                        TriggerServerEvent('ARMA:getNotes', uid, SelectedPlayer[3])
+                        TriggerServerEvent('ARMA:getNotes', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
@@ -862,8 +862,8 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("~o~There are no player notes to display.")
                 else
                     RageUI.Separator("~o~Player notes:")
-                    for K = 1, #noteslist do
-                        RageUI.Separator("~o~ID: " .. noteslist[K].note_id .. " " .. noteslist[K].text .. " (" .. noteslist[K].admin_id .. ")")
+                    for _ = 1, #noteslist do
+                        RageUI.Separator("~o~ID: " .. noteslist[_].id .. " " .. noteslist[_].note .. " (" .. noteslist[_].author .. ")")
                     end
                 end
                 RageUI.ButtonWithStyle("Continue to Ban", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
@@ -1005,20 +1005,58 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~o~There are no player notes to display.")
             else
                 RageUI.Separator("~o~Player notes:")
-                for K = 1, #noteslist do
-                    RageUI.Separator("~o~ID: " .. noteslist[K].note_id .. " " .. noteslist[K].text .. " (" .. noteslist[K].admin_id .. ")")
+                for _ = 1, #noteslist do
+                    RageUI.Separator("~o~ID: " .. noteslist[_].id .. " " .. noteslist[_].note .. " (" .. noteslist[_].author .. ")")
                 end
             end
             if GlobalAdminLevel > 1 then
-                RageUI.ButtonWithStyle("Add To Notes:", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Add To Notes:", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent('ARMA:addNote', uid, SelectedPlayer[2])
+                        tARMA.clientPrompt("Add To Notes: ","",function(a7)
+                            if a7 ~= "" then
+                                if #noteslist ~= 0 then
+                                    noteslist[#noteslist + 1] = {id = #noteslist + 1, note = a7, author = tARMA.getUserId()}
+                                else
+                                    noteslist = {{id = 1, note = a7, author = tARMA.getUserId()}}
+                                end
+                                TriggerServerEvent("ARMA:updatePlayerNotes", SelectedPlayer[3], noteslist)
+                            end
+                        end)
                     end
                 end)
                 RageUI.ButtonWithStyle("Remove Note", nil, { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
-                        local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:removeNote', uid, SelectedPlayer[2])
+                        tARMA.clientPrompt("Type the ID of the note","",function(a7)
+                            if a7 ~= "" then
+                                a7 = tonumber(a7)
+                                local a8 = {}
+                                local a9 = false
+                                for _ = 1, #noteslist do
+                                    if noteslist[_].id == a7 then
+                                        for aa = 1, #noteslist do
+                                            if aa ~= _ then
+                                                a8[#a8 + 1] = {
+                                                    id = #a8 + 1,
+                                                    note = noteslist[aa].note,
+                                                    author = noteslist[aa].author
+                                                }
+                                            end
+                                        end
+                                        a9 = true
+                                        break
+                                    end
+                                end
+                                if a9 == true then
+                                    if #a8 == 0 then
+                                        a8 = nil
+                                        noteslist = {}
+                                    else
+                                        noteslist = a8
+                                    end
+                                    TriggerServerEvent("ARMA:updatePlayerNotes", SelectedPlayer[3], a8)
+                                end
+                            end
+                        end)
                     end
                 end)
             end
@@ -1033,10 +1071,6 @@ RegisterNetEvent("ARMA:sendNotes",function(a7)
     else
         noteslist = a7
     end
-end)
-
-RegisterNetEvent("ARMA:updateNotes",function(admin, player)
-    TriggerServerEvent('ARMA:getNotes', admin, player)
 end)
 
 RageUI.CreateWhile(1.0, true, function()

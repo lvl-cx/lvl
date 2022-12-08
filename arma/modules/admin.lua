@@ -769,6 +769,7 @@ AddEventHandler("playerJoining", function()
         defaultBans[v.id] = 0
     end
     exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_bans_offenses(UserID,Rules) VALUES(@UserID, @Rules)", {UserID = user_id, Rules = json.encode(defaultBans)})
+    exports["ghmattimysql"]:executeSync("INSERT IGNORE INTO arma_user_notes(user_id) VALUES(@user_id)", {user_id = user_id})
 end)
 
 RegisterCommand('removepoints', function(source, args) -- proof of concept for removing points each month
@@ -1145,166 +1146,31 @@ end)
 
 
 RegisterServerEvent("ARMA:getNotes")
-AddEventHandler("ARMA:getNotes",function(admin, player)
+AddEventHandler("ARMA:getNotes",function(player)
     local source = source
     local admin_id = ARMA.getUserId(source)
     if ARMA.hasPermission(admin_id, 'admin.spectate') then
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
             if result ~= nil then
-                TriggerClientEvent('ARMA:sendNotes', source, json.encode(result))
+                TriggerClientEvent('ARMA:sendNotes', source, result[1].info)
             end
         end)
     end
 end)
 
-RegisterServerEvent("ARMA:addNote")
-AddEventHandler("ARMA:addNote",function(admin, player)
+RegisterServerEvent("ARMA:updatePlayerNotes")
+AddEventHandler("ARMA:updatePlayerNotes",function(player, notes)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    local adminName = GetPlayerName(source)
-    local playerName = GetPlayerName(player)
-    local playerperm = ARMA.getUserId(player)
     if ARMA.hasPermission(admin_id, 'admin.spectate') then
-        ARMA.prompt(source,"Reason:","",function(source,text) 
-            if text == '' then return end
-            exports['ghmattimysql']:execute("INSERT INTO arma_user_notes (`user_id`, `text`, `admin_name`, `admin_id`) VALUES (@user_id, @text, @admin_name, @admin_id);", {user_id = playerperm, text = text, admin_name = adminName, admin_id = admin_id}, function() end) 
-            TriggerClientEvent(source, {'~g~You have added a note to '..playerName..'('..playerperm..') with the reason '..text})
-            TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
-            local command = {
-                {
-                    ["color"] = "16448403",
-                    ["title"] = "ARMA Note Logs",
-                    ["description"] = "",
-                    ["text"] = "ARMA Server #1",
-                    ["fields"] = {
-                        {
-                            ["name"] = "Admin Name",
-                            ["value"] = GetPlayerName(source),
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin TempID",
-                            ["value"] = source,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin PermID",
-                            ["value"] = admin_id,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player Name",
-                            ["value"] = playerName,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player TempID",
-                            ["value"] = player,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player PermID",
-                            ["value"] = playerperm,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Note Message",
-                            ["value"] = text,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Note Type",
-                            ["value"] = "Add",
-                            ["inline"] = true
-                        }
-                    }
-                }
-            }
-            local webhook = "https://discord.com/api/webhooks/991456823884398623/EqKL4NW4qvjjWQ46_exR-2l51CrkviiTqK959DoSJmbvfQGBdbFdYmodMoWLemwBpH_c"
-            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+        exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
+            if result ~= nil then
+                exports['ghmattimysql']:execute("UPDATE arma_user_notes SET info = @info WHERE user_id = @user_id", {user_id = player, info = json.encode(notes)})
+                ARMAclient.notify(source, {'~g~Notes updated.'})
+            end
         end)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Add Note')
     end
 end)
-
-RegisterServerEvent("ARMA:removeNote")
-AddEventHandler("ARMA:removeNote",function(admin, player)
-    local source = source
-    local admin_id = ARMA.getUserId(source)
-    local playerName = GetPlayerName(player)
-    local playerperm = ARMA.getUserId(player)
-    if ARMA.hasPermission(admin_id, 'admin.spectate') then
-        ARMA.prompt(source,"Note ID:","",function(source,noteid) 
-            if noteid == '' then return end
-            exports['ghmattimysql']:execute("DELETE FROM arma_user_notes WHERE note_id = @noteid", {noteid = noteid}, function() end)
-            ARMAclient.notify(admin, {'~g~You have removed note #'..noteid..' from '..playerName..'('..playerperm..')'})
-            TriggerClientEvent('ARMA:updateNotes', -1, admin, playerperm)
-            local command = {
-                {
-                    ["color"] = "16448403",
-                    ["title"] = "ARMA Note Logs",
-                    ["description"] = "",
-                    ["text"] = "ARMA Server #1",
-                    ["fields"] = {
-                        {
-                            ["name"] = "Admin Name",
-                            ["value"] = GetPlayerName(source),
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin TempID",
-                            ["value"] = source,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Admin PermID",
-                            ["value"] = admin_id,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player Name",
-                            ["value"] = playerName,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player TempID",
-                            ["value"] = player,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player PermID",
-                            ["value"] = playerperm,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Note ID",
-                            ["value"] = noteid,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Note Type",
-                            ["value"] = "Remove",
-                            ["inline"] = true
-                        }
-                    }
-                }
-            }
-            local webhook = "https://discord.com/api/webhooks/991456823884398623/EqKL4NW4qvjjWQ46_exR-2l51CrkviiTqK959DoSJmbvfQGBdbFdYmodMoWLemwBpH_c"
-            PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-        end)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Remove Note')
-    end
-end)
-
-
 
 RegisterServerEvent('ARMA:SlapPlayer')
 AddEventHandler('ARMA:SlapPlayer', function(admin, target)

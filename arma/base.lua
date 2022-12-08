@@ -178,7 +178,7 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_gangs (
-    gangname VARCHAR(3000) NULL DEFAULT NULL,
+    gangname VARCHAR(200) NULL DEFAULT NULL,
     gangmembers VARCHAR(3000) NULL DEFAULT NULL,
     funds BIGINT NULL DEFAULT NULL,
     logs VARCHAR(3000) NULL DEFAULT NULL
@@ -186,12 +186,9 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_user_notes (
-    note_id INT AUTO_INCREMENT,
     user_id INT,
-    text VARCHAR(250),
-    admin_name VARCHAR(250),
-    admin_id INT,
-    PRIMARY KEY (note_id)
+    info VARCHAR(500) NULL DEFAULT NULL,
+    PRIMARY KEY (user_id)
     )
     ]])
     MySQL.SingleQuery([[
