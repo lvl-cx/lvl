@@ -13,12 +13,6 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(3000)
     if IsPlayerPlaying(PlayerId()) and state_ready then
-      local x,y,z = table.unpack(GetEntityCoords(PlayerPedId(),true))
-      if not tARMA.isInHouse() and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() and not inOrganHeist then
-        ARMAserver.updatePos({x,y,z})
-      end
-      ARMAserver.updateHealth({tARMA.getHealth()})
-      ARMAserver.updateArmour({GetPedArmour(PlayerPedId())})
       ARMAserver.updateWeapons({tARMA.getWeapons()})
     end
   end
@@ -31,13 +25,106 @@ Citizen.CreateThread(function()
   end
 end)
 
-function tARMA.spawnAnim(a, b, c)
-  if a ~= nil and b ~= nil then
+local userdata = {}
+Citizen.CreateThread(function()
+    print("[ARMA] Loading cached user data.")
+    userdata = json.decode(GetResourceKvpString("arma_userdata") or "{}")
+    if type(userdata) ~= "table" then
+      userdata = {}
+        print("[ARMA] Loading cached user data - failed to load setting to default.")
+    else
+        print("[ARMA] Loading cached user data - loaded.")
+    end
+end)
+function tARMA.updateCustomization(b)
+    local c = tARMA.getCustomization()
+    if c.modelhash ~= 0 and IsModelValid(c.modelhash) then
+      userdata.customisation = c
+      if b then
+        SetResourceKvp("arma_userdata", json.encode(userdata))
+      end
+    end
+end
+function tARMA.updateHealth(b)
+  userdata.health = GetEntityHealth(PlayerPedId())
+  if b then
+      SetResourceKvp("arma_userdata", json.encode(userdata))
+  end
+end
+function tARMA.updateArmour(b)
+  userdata.armour = GetPedArmour(PlayerPedId())
+  if b then
+      SetResourceKvp("arma_userdata", json.encode(userdata))
+  end
+end
+local d = vector3(0.0, 0.0, 0.0)
+function tARMA.updatePos(b)
+    local e = GetEntityCoords(PlayerPedId())
+    if e.z > -150.0 and #(e - d) > 15.0 then
+        userdata.position = e
+        if b then
+            SetResourceKvp("arma_userdata", json.encode(userdata))
+        end
+    end
+end
+Citizen.CreateThread(function()
+    Wait(30000)
+    while true do
+        Wait(5000)
+        if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then -- and not tARMA.isInPaintball()
+          tARMA.updatePos()
+        end
+        if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning then
+            tARMA.updateCustomization()
+        end
+        tARMA.updateHealth()
+        tARMA.updateArmour()
+        SetResourceKvp("arma_userdata", json.encode(userdata))
+    end
+end)
+
+function tARMA.checkCustomization()
+    local c = userdata.customisation
+    if c == nil or c.modelhash == 0 or not IsModelValid(c.modelhash) then
+        print('default')
+        tARMA.setCustomization(getDefaultCustomization(), true, true)
+    else
+        print('custom')
+        tARMA.setCustomization(c, true, true)
+    end
+end
+
+function getDefaultCustomization()
+  local s = {}
+  s = {}
+  s.model = "mp_m_freemode_01"
+  for t = 0, 19 do
+      s[t] = {0, 0}
+  end
+  s[0] = {0, 0}
+  s[1] = {0, 0}
+  s[2] = {47, 0}
+  s[3] = {5, 0}
+  s[4] = {4, 0}
+  s[5] = {0, 0}
+  s[6] = {7, 0}
+  s[7] = {51, 0}
+  s[8] = {0, 240}
+  s[9] = {0, 1}
+  s[10] = {0, 0}
+  s[11] = {5, 0}
+  s[12] = {4, 0}
+  s[15] = {0, 2}
+  return s
+end
+
+function tARMA.spawnAnim(a)
+  if a ~= nil then
     DoScreenFadeOut(250)
     ExecuteCommand("hideui")
     TriggerServerEvent('ARMA:changeHairstyle')
     TriggerServerEvent('ARMA:changeTattoos')
-    local g = b
+    local g = userdata.position or vector3(178.5132598877, -1007.5575561523, 29.329647064209)
     Wait(500)
     TriggerScreenblurFadeIn(100.0)
     RequestCollisionAtCoord(g.x, g.y, g.z)
@@ -74,8 +161,10 @@ function tARMA.spawnAnim(a, b, c)
     else
       TriggerScreenblurFadeOut(500.0)
     end
-    print("[ARMA] cachedUserData.health", c)
-    SetEntityHealth(PlayerPedId(), c or 200)
+    print("[ARMA] cachedUserData.health", userdata.health)
+    print("[ARMA] cachedUserData.armour", userdata.armour)
+    SetEntityHealth(PlayerPedId(), userdata.health or 200)
+    tARMA.setArmour(userdata.armour)
     SetEntityVisible(PlayerPedId(), true, false)
     FreezeEntityPosition(PlayerPedId(), false)
     if not tARMA.isDevMode() then
@@ -86,73 +175,7 @@ function tARMA.spawnAnim(a, b, c)
   spawning = false
 end
 
-local userdata = {}
-Citizen.CreateThread(function()
-    print("[ARMA] Loading cached user data.")
-    userdata = json.decode(GetResourceKvpString("arma_userdata") or "{}")
-    if type(userdata) ~= "table" then
-      userdata = {}
-        print("[ARMA] Loading cached user data - failed to load setting to default.")
-    else
-        print("[ARMA] Loading cached user data - loaded.")
-    end
-end)
-function tARMA.updateCustomization(b)
-    local c = tARMA.getCustomization()
-    if c.modelhash ~= 0 and IsModelValid(c.modelhash) then
-      userdata.customisation = c
-      if b then
-        SetResourceKvp("arma_userdata", json.encode(userdata))
-      end
-    end
-end
-Citizen.CreateThread(function()
-    Wait(30000)
-    while true do
-        Wait(5000)
-        --if not globalInPrison and not tARMA.isStaffedOn() and not tARMA.isPlayerInAnimalForm() and not tARMA.isInPaintball()
-        if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning then
-            tARMA.updateCustomization(true)
-        end
-        SetResourceKvp("arma_userdata", json.encode(userdata))
-    end
-end)
 
-function tARMA.checkCustomization()
-  print('checking customization')
-    local c = userdata.customisation
-    if c == nil or c.modelhash == 0 or not IsModelValid(c.modelhash) then
-      print('default')
-        tARMA.setCustomization(getDefaultCustomization(), true, true)
-    else
-      print('custom')
-        tARMA.setCustomization(c, true, true)
-    end
-end
-
-function getDefaultCustomization()
-  local s = {}
-  s = {}
-  s.model = "mp_m_freemode_01"
-  for t = 0, 19 do
-      s[t] = {0, 0}
-  end
-  s[0] = {0, 0}
-  s[1] = {0, 0}
-  s[2] = {47, 0}
-  s[3] = {5, 0}
-  s[4] = {4, 0}
-  s[5] = {0, 0}
-  s[6] = {7, 0}
-  s[7] = {51, 0}
-  s[8] = {0, 240}
-  s[9] = {0, 1}
-  s[10] = {0, 0}
-  s[11] = {5, 0}
-  s[12] = {4, 0}
-  s[15] = {0, 2}
-  return s
-end
 AddEventHandler("ARMA:playGTAIntro",function()
   if not tARMA.isDevMode() then
       SendNUIMessage({transactionType = "gtaloadin"})

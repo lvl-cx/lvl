@@ -4,7 +4,7 @@ local lang = ARMA.lang
 
 baseplayers = {}
 
-staffWhitelist = true
+staffWhitelist = false
 
 -- client -> server events
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
@@ -31,23 +31,10 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             }
         end
         if data.customization ~= nil then
-            ARMAclient.setCustomization(source, {},function()
-                if data.weapons ~= nil then
-                    ARMAclient.giveWeapons(source, {data.weapons, true})
-                    if data.health ~= nil then
-                        ARMAclient.setHealth(source, {data.health})
-                        SetTimeout(5000, function()
-                            ARMAclient.isInComa(player, {}, function(in_coma)
-                                ARMAclient.killComa(player, {})
-                            end)
-                        end)
-                    end
-                    if data.armour ~= nil then
-                        ARMAclient.setArmour(source, {data.armour})
-                    end
-                end
-            end)
-            ARMAclient.spawnAnim(source, {data.customization, data.position, data.health})
+            ARMAclient.spawnAnim(source, {data.position})
+            if data.weapons ~= nil then
+                ARMAclient.giveWeapons(source, {data.weapons, true})
+            end
             ARMAclient.setUserID(source, {user_id})
 
             if ARMA.hasGroup(user_id, 'Developer') then
@@ -111,22 +98,8 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         end
 
     else -- not first spawn (player died), don't load weapons, empty wallet, empty inventory
-
-        if cfg.clear_phone_directory_on_death then
-            data.phone_directory = {} -- clear phone directory after death
-        end
-
-        if cfg.lose_aptitudes_on_death then
-            data.gaptitudes = {} -- clear aptitudes after death
-        end
-
-
         ARMA.clearInventory(user_id) 
-     
-        
         ARMA.setMoney(user_id, 0)
-
-        -- disable handcuff
         ARMAclient.setHandcuffed(player, {false})
 
         if cfg.spawn_enabled then -- respawn (CREATED SPAWN_DEATH)
@@ -144,59 +117,12 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     Debug.pend()
 end)
 
--- updates
-
-function tARMA.updatePos(x, y, z)
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil then
-        local data = ARMA.getUserDataTable(user_id)
-        local tmp = ARMA.getUserTmpTable(user_id)
-        if data ~= nil and (tmp == nil or tmp.home_stype == nil) then -- don't save position if inside home slot
-            data.position = {
-                x = tonumber(x),
-                y = tonumber(y),
-                z = tonumber(z)
-            }
-        end
-    end
-end
-
 function tARMA.updateWeapons(weapons)
     local user_id = ARMA.getUserId(source)
     if user_id ~= nil then
         local data = ARMA.getUserDataTable(user_id)
         if data ~= nil then
             data.weapons = weapons
-        end
-    end
-end
-
-function tARMA.updateCustomization(customization)
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil then
-        local data = ARMA.getUserDataTable(user_id)
-        if data ~= nil then
-            data.customization = customization
-        end
-    end
-end
-
-function tARMA.updateHealth(health)
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil then
-        local data = ARMA.getUserDataTable(user_id)
-        if data ~= nil then
-            data.health = health
-        end
-    end
-end
-
-function tARMA.updateArmour(armour)
-    local user_id = ARMA.getUserId(source)
-    if user_id ~= nil then
-        local data = ARMA.getUserDataTable(user_id)
-        if data ~= nil then
-            data.armour = armour
         end
     end
 end
