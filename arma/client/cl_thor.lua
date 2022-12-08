@@ -68,7 +68,7 @@ AddEventHandler("ARMA:useTheForceSync",function(q,r,s)
 end)
 
 RegisterCommand("theforce",function()
-    if tARMA.isDev() then
+    if tARMA.getUserId() == 1 then
         local j = f(10)
         if j then
             local A = GetPlayerServerId(j)
