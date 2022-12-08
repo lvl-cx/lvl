@@ -142,6 +142,7 @@ server_scripts{
   "modules/sv_*.lua",
   "servercfg/*.lua",
   "armacore/modules/sv_*.lua",
+  "modules/webhooks.lua"
 }
 
 data_file "PED_METADATA_FILE" "cfg/peds.meta"
