@@ -9,11 +9,6 @@ selectedGangInvite=nil
 selectedMember=nil
 gangID=nil
 local showLogsGangUI = false
-local lsdturf = 0
-local herointurf = 0
-local cocaineturf = 0 
-local weedturf = 0
-local globalturf = 0
 gangPermission=0
 local a=18
 local b=82
@@ -488,13 +483,16 @@ function func_drawGangUI()
         end
     end
     if showTurfsGangUI then 
-        DrawRect(0.501,0.450,0.421,0.300,0,0,0,150)
+        DrawRect(0.501,0.533,0.421,0.497,0,0,0,150)
         DrawRect(0.501,0.308,0.421,0.047,18,82,228,248)
         DrawAdvancedText(0.591,0.312,0.005,0.0028,0.48,"ARMA Gang - Turfs",255,255,255,255,7,0)
-        DrawAdvancedText(0.399,0.38,0.005,0.0028,0.4,"Weed Turf - (Commission - "..weedturf.."%)",255,255,255,255,0,1)
-        DrawAdvancedText(0.399,0.44,0.005,0.0028,0.4,"Cocaine Turf - (Commission - "..cocaineturf.."%)",255,255,255,255,0,1)
-        DrawAdvancedText(0.399,0.50,0.005,0.0028,0.4,"Heroin Turf - (Commission - "..herointurf.."%)",255,255,255,255,0,1)
-        DrawAdvancedText(0.399,0.56,0.005,0.0028,0.4,"LSD Turf - (Commission - "..lsdturf.."%)",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.38,0.005,0.0028,0.4,"Weed Turf - (Owned by " .. turfData[1].gangOwner .. ") Commission - " .. globalWeedCommissionPercent .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.44,0.005,0.0028,0.4,"Cocaine Turf - (Owned by " ..turfData[2].gangOwner .. ") Commission - " .. globalCocaineCommissionPercent .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.50,0.005,0.0028,0.4,"Meth Turf - (Owned by " .. turfData[3].gangOwner .. ") Commission - " .. globalMethCommissionPercent .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.56,0.005,0.0028,0.4,"Heroin Turf - (Owned by " ..turfData[4].gangOwner .. ") Commission - " .. globalHeroinCommissionPercent .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.62,0.005,0.0028,0.4,"Large Arms - (Owned by " .. turfData[5].gangOwner .. ") Commission - " .. globalLargeArmsCommission .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.68,0.005,0.0028,0.4,"LSD North Turf - (Owned by " ..turfData[6].gangOwner .. ") Commission - " .. globalLSDNorthCommissionPercent .. "%",255,255,255,255,0,1)
+        DrawAdvancedText(0.399,0.74,0.005,0.0028,0.4,"LSD South Turf - (Owned by " ..turfData[7].gangOwner .. ") Commission - " .. globalLSDSouthCommissionPercent .. "%",255,255,255,255,0,1)
     end
     if showGangUI then 
         DrawRect(0.501,0.532,0.375,0.225,0,0,0,150)
@@ -653,31 +651,6 @@ function GetMoneyAmountText()
     end
     return nil 
 end
-
-RegisterNetEvent('LSDrecieveTurf')
-AddEventHandler('LSDrecieveTurf', function(lsd)
-    lsdturf = lsd
-end)
-  
-RegisterNetEvent('HeroinrecieveTurf')
-AddEventHandler('HeroinrecieveTurf', function(heroin)
-    herointurf = heroin 
-end)
-
-RegisterNetEvent('CocainerecieveTurf')
-AddEventHandler('CocainerecieveTurf', function(cocaine)
-    cocaineturf = cocaine
-end)
-
-RegisterNetEvent('WeedrecieveTurf')
-AddEventHandler('WeedrecieveTurf', function(weed)
-    weedturf = weed
-end)
-
-RegisterNetEvent('GlobalrecieveTurf')
-AddEventHandler('GlobalrecieveTurf', function(global2)
-    globalturf = global2
-end)
 
 RegisterNetEvent("ARMA:Notify",function(u)
     tARMA.notify(u)
