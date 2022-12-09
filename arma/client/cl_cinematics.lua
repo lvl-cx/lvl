@@ -1732,7 +1732,7 @@ Citizen.CreateThread(function()
             if ao ~= -1 then
                 local ap = GetPlayerServerId(ao)
                 if ap > 0 then
-                    if not CMG.clientGetPlayerIsStaff(ap) then
+                    if not tARMA.clientGetPlayerIsStaff(ap) then
                         SetEntityVisible(PlayerPedId(), true, true)
                         DetachEntity(PlayerPedId(), true, true)
                     end

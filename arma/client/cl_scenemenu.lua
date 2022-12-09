@@ -1,4 +1,4 @@
-RMenu.Add("armascenemenu","main",RageUI.CreateMenu("","~b~CMG Traffic Scene Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scenemenu"))
+RMenu.Add("armascenemenu","main",RageUI.CreateMenu("","~b~ARMA Traffic Scene Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scenemenu"))
 RMenu.Add("armascenemenu","objects",RageUI.CreateSubMenu(RMenu:Get("armascenemenu", "main"),"","~b~Spawn Objects",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scenemenu"))
 RMenu.Add("armascenemenu","speedZone",RageUI.CreateSubMenu(RMenu:Get("armascenemenu", "main"),"","~b~Set a speed zone",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scenemenu"))
 RMenu.Add("armascenemenu","spikes",RageUI.CreateSubMenu(RMenu:Get("armascenemenu", "main"),"","~b~Set a spike trap",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scenemenu"))

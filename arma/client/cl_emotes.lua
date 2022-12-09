@@ -163,7 +163,7 @@ local function a6(E)
     if tARMA.getPlayerCombatTimer() > 0 then
         return true
     end
-    local a9 = CMG.getPlayerVehicle()
+    local a9 = tARMA.getPlayerVehicle()
     if a9 ~= 0 and GetEntitySpeed(a9) > 1.0 then
         return true
     end

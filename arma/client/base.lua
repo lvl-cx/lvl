@@ -16,7 +16,7 @@ Proxy.addInterface("ARMA",tARMA)
 
 function tARMA.isDevMode()
   if tARMA.isDev() then
-      return true
+      return false
   else
       return false
   end

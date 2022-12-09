@@ -281,9 +281,9 @@ function showCoinflipMenu(W)
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("armacoinflip", "mainmenu"), W)
 end
-RMenu.Add("armacoinflip", "instructions", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "cmg_coinflip", "cmg_coinflip"))
-RMenu.Add("armacoinflip", "mainmenu", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "cmg_coinflip", "cmg_coinflip"))
-RMenu.Add("armacoinflip", "confirm", RageUI.CreateSubMenu(RMenu:Get("armacoinflip", "mainmenu"), "", "~b~COINFLIP", 0, 100, "cmg_coinflip", "cmg_coinflip"))
+RMenu.Add("armacoinflip", "instructions", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "banners", "coinflip"))
+RMenu.Add("armacoinflip", "mainmenu", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "banners", "coinflip"))
+RMenu.Add("armacoinflip", "confirm", RageUI.CreateSubMenu(RMenu:Get("armacoinflip", "mainmenu"), "", "~b~COINFLIP", 0, 100, "banners", "coinflip"))
 
 
 RageUI.CreateWhile(1.0, true, function()

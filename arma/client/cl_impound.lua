@@ -16,8 +16,8 @@ Citizen.CreateThread(function()
     end
     tARMA.createArea("vehicle_impound", a.ped.position, 3.0, 6, d, e, f, {})
 end)
-RMenu.Add("armaimpound","reasons",RageUI.CreateMenu("","~b~Impounding Vehicle...",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_jobselectorui","metpd"))
-RMenu.Add("armaimpound","main",RageUI.CreateMenu("","~b~Your Impounded Vehicles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_jobselectorui","metpd"))
+RMenu.Add("armaimpound","reasons",RageUI.CreateMenu("","~b~Impounding Vehicle...",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "impound"))
+RMenu.Add("armaimpound","main",RageUI.CreateMenu("","~b~Your Impounded Vehicles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "impound"))
 RMenu.Add("armaimpound", "vehicle_information", RageUI.CreateSubMenu(RMenu:Get("armaimpound", "main")))
 RMenu.Add("armaimpound", "pay_fine_confirmation", RageUI.CreateSubMenu(RMenu:Get("armaimpound", "vehicle_information")))
 local g = 0

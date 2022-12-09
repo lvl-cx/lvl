@@ -30,9 +30,6 @@ end)
 RegisterCommand("p", function(source,args, rawCommand)
     user_id = ARMA.getUserId(source)   
     if not ARMA.hasPermission(user_id, "police.onduty.permission") then
-        local playerName = "Server "
-        local msg = "Access denied."
-        TriggerClientEvent('chatMessage', source, "^7Alert: " , { 128, 128, 128 }, msg, "alert")
         return 
     end
     local msg = rawCommand:sub(2)

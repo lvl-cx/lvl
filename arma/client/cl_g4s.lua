@@ -55,10 +55,10 @@ local function D()
         j = true
     end
 end
-RMenu.Add("g4s","shiftHandler",RageUI.CreateMenu("","Security Company",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_g4sjob","cmg_g4sjob"))
+RMenu.Add("g4s","shiftHandler",RageUI.CreateMenu("","Security Company",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "g4s"))
 RMenu:Get("g4s", "shiftHandler"):SetSubtitle("Security Company")
 RMenu:Get("g4s", "shiftHandler").Closable = true
-RMenu.Add("g4s","main",RageUI.CreateMenu("","Security Company",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_g4sjob","cmg_g4sjob"))
+RMenu.Add("g4s","main",RageUI.CreateMenu("","Security Company",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "g4s"))
 RMenu:Get("g4s", "main"):SetSubtitle("Security Company")
 RMenu:Get("g4s", "main").Closable = true
 TriggerEvent("chat:addSuggestion", "/g4s", "Toggles your G4S menu.")

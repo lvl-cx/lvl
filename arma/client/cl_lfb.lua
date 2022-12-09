@@ -4,11 +4,11 @@
 -- RegisterKeyMapping("lfb_key", "LFB Menu", "keyboard", "U")
 -- TriggerEvent("chat:addSuggestion", "/lfb", "Access your LFB menu")
 -- local a = false
--- RMenu.Add("lfb","main",RageUI.CreateMenu("","Status: ~g~Available",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_lfbui","cmg_lfbui"))
+-- RMenu.Add("lfb","main",RageUI.CreateMenu("","Status: ~g~Available",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "lfb"))
 -- RMenu.Add("lfb","tools",RageUI.CreateSubMenu(RMenu:Get("lfb", "main"),"","LFB: ~b~Tools",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 -- RMenu.Add("lfb","water",RageUI.CreateSubMenu(RMenu:Get("lfb", "main"),"","LFB: ~b~Water",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 -- RMenu.Add("lfb","ba",RageUI.CreateSubMenu(RMenu:Get("lfb", "main"),"","LFB: ~b~BA",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
--- RMenu.Add("lfb","firemain",RageUI.CreateMenu("", "Manage Fires", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "cmg_lfbui", "cmg_lfbui"))
+-- RMenu.Add("lfb","firemain",RageUI.CreateMenu("", "Manage Fires", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "lfb"))
 -- RMenu.Add("lfb","fire",RageUI.CreateSubMenu(RMenu:Get("lfb", "firemain"),"","LFB: ~b~Start Fires",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 -- RMenu.Add("lfb","management",RageUI.CreateSubMenu(RMenu:Get("lfb", "firemain"),"","LFB: ~b~Manage Fires",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 -- RMenu.Add("lfb","settings",RageUI.CreateSubMenu(RMenu:Get("lfb", "firemain"),"","LFB: ~b~Settings",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
