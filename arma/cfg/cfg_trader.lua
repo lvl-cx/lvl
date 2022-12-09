@@ -1,5 +1,3 @@
---1220.6180419922,-2956.4887695313,5.8660659790039
-
 local cfg = {}
 
 cfg.trader = {
@@ -31,7 +29,7 @@ cfg.trader = {
 		},
 		dealerModel = "s_m_y_dealer_01",
 	},
---[[ 	{
+	{
         type = "Meth",
 		price=5000,
 		position=vector3(-551.37738037109,5330.9321289063,75.066551208496),
@@ -44,7 +42,7 @@ cfg.trader = {
 			b = 255,
 		},
 		dealerModel = "s_m_y_dealer_01",
-	}, ]]
+	},
 	{
         type = "Heroin",
 		price=10000,
@@ -59,7 +57,7 @@ cfg.trader = {
 		},
 		dealerModel = "s_m_y_dealer_01",
 	},
---[[     {
+    {
         type = "LSDNorth",
 		price=20000,
 		position=vector3(1319.5989990234,4314.3930664063,38.222110748291),
@@ -72,7 +70,7 @@ cfg.trader = {
 			b = 0,
 		},
 		dealerModel = "s_m_y_dealer_01",
-	}, ]]
+	},
     {
         type = "LSDSouth",
 		price=20000,
