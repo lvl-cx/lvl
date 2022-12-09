@@ -40,20 +40,24 @@ RegisterCommand("calladmin", function(source)
     end
     ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, reason)
         if reason ~= "" then
-            callID = callID + 1
-            tickets[callID] = {
-                name = GetPlayerName(user_source),
-                permID = user_id,
-                tempID = user_source,
-                reason = reason,
-                type = 'admin',
-                cooldown = 5,
-            }
-            for k, v in pairs(ARMA.getUsers({})) do
-                TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
+            if #reason >= 25 then
+                callID = callID + 1
+                tickets[callID] = {
+                    name = GetPlayerName(user_source),
+                    permID = user_id,
+                    tempID = user_source,
+                    reason = reason,
+                    type = 'admin',
+                    cooldown = 5,
+                }
+                for k, v in pairs(ARMA.getUsers({})) do
+                    TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
+                end
+                ARMAclient.notify(user_source,{"~b~Your request has been sent."})
+                ARMAclient.notify(user_source,{"~y~If you are reporting a player you can also create a report at www.armarp.co.uk/forums"})
+            else
+                ARMAclient.notify(user_source,{"~r~Please enter a minimum of 25 characters."})
             end
-            ARMAclient.notify(user_source,{"~b~Your request has been sent."})
-            ARMAclient.notify(user_source,{"~y~If you are reporting a player you can also create a report at www.armarp.co.uk/forums"})
         else
             ARMAclient.notify(user_source,{"~r~Please enter a valid reason."})
         end
