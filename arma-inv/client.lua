@@ -154,10 +154,14 @@ end)
 
 RegisterNUICallback('MoveBtn', function(data, cb)
     if not IsLootBagOpening then
-        if inventoryType == 'CarBoot' then
-            TriggerServerEvent('ARMA:MoveItem', data.invType, data.itemId, VehTypeA)
-        elseif inventoryType == "Housing" then
-            TriggerServerEvent('ARMA:MoveItem', data.invType, data.itemId, "home")
+        if tARMA.getPlayerCombatTimer()==0 then
+            if inventoryType == 'CarBoot' then
+                TriggerServerEvent('ARMA:MoveItem', data.invType, data.itemId, VehTypeA)
+            elseif inventoryType == "Housing" then
+                TriggerServerEvent('ARMA:MoveItem', data.invType, data.itemId, "home")
+            end
+        else
+            tARMA.notify({'~r~You cannot move items while in combat.'})
         end
     else 
         TriggerServerEvent('ARMA:MoveItem', 'LootBag', data.itemId, LootBagIDNew)
