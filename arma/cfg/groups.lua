@@ -810,7 +810,6 @@ cfg.groups = {
   ["Royal Mail Driver"] = {},
   ["Bus Driver"] = {},
   ["Deliveroo"] = {},
-  ["Fisherman"] = {},
   ["Scuba Diver"] = {},
   ["Pilot"] = {},
   ["G4S Driver"] = {},

@@ -13,8 +13,6 @@ RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting 
         pilotInstructions()
     elseif a == "G4S Driver" then
         G4SInstructions()
-    elseif a == "Fisherman" then
-        fishermanInstructions()
     elseif a == "Lorry Driver" then
         lorryInstructions()
     elseif a == "Taco Seller" then
@@ -65,11 +63,6 @@ function G4SInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
     initializeInstructionalJobScaleform("G4S","I have set a waypoint to the G4S depot where you'll start your first job.")
     SetNewWaypoint(-710.4659, 269.6835)
-end
-function fishermanInstructions()
-    PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-    initializeInstructionalJobScaleform("Fisherman","I have set a waypoint to the bait shop where you'll need to buy some bait. After that you can make your way to one of the fishing locations on the map!")
-    SetNewWaypoint(492.91830444336, -3384.94140625)
 end
 function lorryInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)

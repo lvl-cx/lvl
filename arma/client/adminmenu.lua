@@ -151,7 +151,6 @@ local groups = {
     ["Royal Mail Driver"] = "Royal Mail Driver",
     ["Bus Driver"] = "Bus Driver",
     ["Deliveroo"] = "Deliveroo",
-    ["Fisherman"] = "Fisherman",
     ["Scuba Diver"] = "Scuba Diver",
     ["Pilot"] = "Pilot",
     ["G4S Driver"] = "G4S Driver",

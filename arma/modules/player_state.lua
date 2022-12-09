@@ -4,7 +4,7 @@ local lang = ARMA.lang
 
 baseplayers = {}
 
-staffWhitelist = false
+staffWhitelist = true
 
 -- client -> server events
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
@@ -87,6 +87,27 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 baseplayers[v] = ARMA.getUserId(v)
             end
             ARMAclient.setBasePlayers(source, {baseplayers})
+            -- this is for the new inventory system
+           --[[  if data.inventory ~= nil then
+                MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+                    if #rows > 0 then
+                        local FormattedInventoryData = {}
+                        for i,v in pairs(data.inventory) do
+                            table.insert(FormattedInventoryData, {title = ARMA.getItemName(i), value = {i, ARMA.getItemWeight(i), v.amount}})
+                        end
+                        print(json.encode(FormattedInventoryData))
+                        local plushours = rows[1].plushours
+                        local plathours = rows[1].plathours
+                        if plathours > 0 then
+                            TriggerClientEvent('ARMA:sendInventoryData', source, FormattedInventoryData, 50)
+                        elseif plushours > 0 then
+                            TriggerClientEvent('ARMA:sendInventoryData', source, FormattedInventoryData, 40)
+                        else
+                            TriggerClientEvent('ARMA:sendInventoryData', source, FormattedInventoryData, 30)
+                        end
+                    end
+                end)
+            end ]]
         else
             if data.weapons ~= nil then -- load saved weapons
                 ARMAclient.giveWeapons(source, {data.weapons, true})
