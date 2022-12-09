@@ -214,7 +214,14 @@ local a = {
         name = "Integrity Lobby",
         destination = {131}
     }
+    [133] = {
+        id = 133,
+        position = vector3(152.98393249512,-1053.7336425781,29.220794677734),
+        name = "Legion Teleport (BETA only)",
+        destination = {74}
+    }
 }
+
 RMenu.Add("vkint","mainmenu",RageUI.CreateMenu("Teleporter", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 local b = nil
 local function c(d)
