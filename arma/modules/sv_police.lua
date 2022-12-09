@@ -610,3 +610,9 @@ RegisterCommand('trafficmenu', function(source, args)
       TriggerClientEvent('ARMA:toggleTrafficMenu', source)
   end
 end)
+
+RegisterServerEvent('ARMA:startThrowSmokeGrenade')
+AddEventHandler('ARMA:startThrowSmokeGrenade', function(name)
+    local source = source
+    TriggerClientEvent('ARMA:displaySmokeGrenade', -1, name, GetEntityCoords(GetPlayerPed(source)))
+end)
