@@ -562,14 +562,14 @@ local function ad()
     G()
     D()
     V()
-    if table.count(globalOwnedPlayerVehicles) == 0 or tARMA.isDevMode() then
+    if table.count(VehiclesFetchedTable) == 0 or tARMA.isDevMode() then
         if m > 20000 then
             a1()
         end
     else
         h = "Head to the marked garage to get a vehicle out"
     end
-    if table.count(globalOwnedPlayerVehicles) > 0 then
+    if table.count(VehiclesFetchedTable) > 0 then
         a3()
     end
     a4()

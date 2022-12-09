@@ -106,3 +106,9 @@ function initializeInstructionalJobScaleform(b, c)
         end
     end)
 end
+
+function subtitleText(E)
+    BeginTextCommandPrint("STRING")
+    AddTextComponentSubstringPlayerName(E)
+    EndTextCommandPrint(1000,1)
+end
