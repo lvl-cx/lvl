@@ -6,7 +6,7 @@ description 'This is a discord bot made by JamesUK#6793. Give credit where credi
 server_only 'yes'
 
 dependency 'yarn'
-dependency 'arma'
+--dependency 'arma'
 
 server_scripts {
     "@arma/lib/utils.lua",
