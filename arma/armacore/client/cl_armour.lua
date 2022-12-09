@@ -27,12 +27,14 @@ Citizen.CreateThread(function()
 end)
 local z=0
 function tARMA.setArmour(A,B)
-    local C=math.floor(A)
-    z=C
-    SetPedArmour(PlayerPedId(),C)
-    if B then 
-        PlaySoundFrontend(soundId,"Armour_On","DLC_GR_Steal_Miniguns_Sounds",true)
-    end 
+    if A ~= nil then
+        local C=math.floor(A)
+        z=C
+        SetPedArmour(PlayerPedId(),C)
+        if B then 
+            PlaySoundFrontend(soundId,"Armour_On","DLC_GR_Steal_Miniguns_Sounds",true)
+        end 
+    end
 end
 function tARMA.getArmour()
     return GetPedArmour(PlayerPedId())
