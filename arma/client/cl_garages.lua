@@ -26,7 +26,6 @@ local k = 0
 local x = {}
 globalVehicleModelHashMapping = {}
 globalVehicleOwnership = {}
-globalOwnedPlayerVehicles = {}
 
 local vehicleCannotBeSold = {
     --["demonhawkk"] = true,
