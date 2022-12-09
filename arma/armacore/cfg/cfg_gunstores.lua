@@ -51,7 +51,7 @@ cfg.GunStores={
         --["WEAPON_FIREAXE"]={"Fireaxe",0,0,"N/A","w_me_fireaxe"},
     },
     ["VIP"]={
-        ["_config"]={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{"vip.gunstore"},true},
+        ["_config"]={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{""},true}, -- need to add vip.gunstore back after beta
         -- ["WEAPON_FORRESTAX"]={"The Forrest Axe",10000,0,"N/A","w_me_forrestax"},
         -- ["WEAPON_SKULLCLUB"]={"Skull Club",25000,0,"N/A","w_me_skullclub"},
         -- ["WEAPON_SLEDGESHAMMER"]={"Sledges Hammer",30000,0,"N/A","w_me_sledgeshammer"},
