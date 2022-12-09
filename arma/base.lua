@@ -178,10 +178,11 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_gangs (
-    gangname VARCHAR(200) NULL DEFAULT NULL,
+    gangname VARCHAR(255) NULL DEFAULT NULL,
     gangmembers VARCHAR(3000) NULL DEFAULT NULL,
     funds BIGINT NULL DEFAULT NULL,
-    logs VARCHAR(3000) NULL DEFAULT NULL
+    logs VARCHAR(3000) NULL DEFAULT NULL,
+    PRIMARY KEY (gangname)
     )
     ]])
     MySQL.SingleQuery([[
