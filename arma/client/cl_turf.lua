@@ -13,7 +13,7 @@ local c = {}
 local d = {}
 local e = false
 local f = false
-local g = 3
+local g = 300
 local h = {
     {position = vector3(115.97058868408, -1953.0773925781, 20.7513256073), distance = 50.0},
     {position = vector3(133.54704284668, -1305.7708740234, 29.154886245728), distance = 50.0},
