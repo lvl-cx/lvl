@@ -45,7 +45,7 @@ local a = {
         id = 75,
         position = vector3(-2335.1215820313, 266.88153076172, 169.60194396973),
         name = "Kortz Center",
-        destination = {74}
+        destination = {74, 133}
     },
     [95] = {
         id = 95,
@@ -213,7 +213,7 @@ local a = {
         position = vector3(287.44244384766, -645.05639648438, 42.01859664917),
         name = "Integrity Lobby",
         destination = {131}
-    }
+    },
     [133] = {
         id = 133,
         position = vector3(152.98393249512,-1053.7336425781,29.220794677734),
