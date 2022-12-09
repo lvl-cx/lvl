@@ -40,7 +40,7 @@ admincfg.perm = "admin.tickets"
 admincfg.IgnoreButtonPerms = false
 admincfg.admins_cant_ban_admins = false
 
-local q = {"PD (Mission Row)", "PD (Sandy)", "PD (Paleto)", "City Hall", "Airport", "HMP", "Rebel Diner", "St Thomas"}
+local q = {"PD (Mission Row)", "PD (Sandy)", "PD (Paleto)", "City Hall", "Airport", "HMP", "Rebel Diner", "St Thomas", "Tutorial Spawn", "Simeons"}
 local r = {
     vector3(446.72503662109, -982.44342041016, 30.68931579589),
     vector3(1839.3137207031, 3671.0014648438, 34.310436248779),
@@ -49,7 +49,9 @@ local r = {
     vector3(-1142.0673828125, -2851.802734375, 13.94624710083),
     vector3(1848.2724609375, 2586.7385253906, 45.671997070313),
     vector3(1588.3441162109, 6439.3696289063, 25.123600006104),
-    vector3(283.37664794922, -579.45318603516, 43.219303131104)
+    vector3(283.37664794922, -579.45318603516, 43.219303131104),
+    vector3(-1035.9499511719,-2734.6240234375,13.756628036499),
+    vector3(-39.604099273682,-1111.8635253906,26.438835144043),
 }
 local s = 1
 
