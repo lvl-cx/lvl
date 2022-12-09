@@ -15,7 +15,7 @@ local m = 102
 local n = 0
 WeaponNames = {}
 local o = module("cfg/weapons")
-local p = module("armacore/cfg/cfg_respawn")
+local p = module("cfg/cfg_respawn")
 local q = {}
 local r = {}
 Citizen.CreateThread(function()
@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
         WeaponNames[GetHashKey(s)] = u
         q[GetHashKey(s)] = s
     end
-    local v = module("armacore/cfg/cfg_housing")
+    local v = module("cfg/cfg_housing")
     for w, x in pairs(v.homes) do
         p.spawnLocations[w] = {
             name = w,

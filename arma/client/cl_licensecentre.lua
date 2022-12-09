@@ -1,5 +1,5 @@
 -- [CFG]
-licensecentre = module("armacore/cfg/cfg_licensecentre")
+licensecentre = module("cfg/cfg_licensecentre")
 
 
 RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~b~" .. "Job Centre", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "groups"))

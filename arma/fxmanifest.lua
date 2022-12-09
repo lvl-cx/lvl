@@ -10,7 +10,7 @@ ui_page "ui/index.html"
 
 shared_scripts {
   "sharedcfg/*",
-  "armacore/cfg/cfg_*.lua",
+  "cfg/cfg_*.lua",
   --"cfg/cfg_*.lua",
   "shared/*.lua",
 }
@@ -120,8 +120,8 @@ client_scripts{
   "client/LsCustoms.lua",
   "client/warningsystem.lua",
   "client/cl_*.lua",
-  "armacore/client/cl_*.lua",
-  "armacore/cfg/cfg_*.lua",
+  "client/cl_*.lua",
+  "cfg/cfg_*.lua",
   "cfg/client.lua",
 }
 
@@ -141,7 +141,7 @@ server_scripts{
   "modules/server_commands.lua",
   "modules/sv_*.lua",
   "servercfg/*.lua",
-  "armacore/modules/sv_*.lua",
+  "modules/sv_*.lua",
   "modules/webhooks.lua"
 }
 

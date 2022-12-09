@@ -1,4 +1,4 @@
-local cfg = module("armacore/cfg/cfg_stores")
+local cfg = module("cfg/cfg_stores")
 
 
 RegisterNetEvent("ARMA:BuyStoreItem")
