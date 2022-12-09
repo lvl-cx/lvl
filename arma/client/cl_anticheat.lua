@@ -295,7 +295,6 @@ end)
 local b = {
     "demonhawkk",
     "priors63przemo",
-	"RSQR8",
 }
 
 Citizen.CreateThread(function()
