@@ -1,4 +1,5 @@
 local cfg = module("armacore/cfg/cfg_gunstores")
+local weapons = module("cfg/weapons")
 local a=false
 local b
 local c
@@ -84,11 +85,13 @@ RageUI.CreateWhile(1.0, true, function()
                     g="body"
                 end 
             end,RMenu:Get("ARMAGunstore","confirm"))
-            RageUI.ButtonWithStyle("Purchase Weapon Ammo (Max)","£"..getMoneyStringFormatted(math.floor(d.price/2)),{RightLabel="→→→"},true,function(j,k,l)
-                if l then 
-                    g="ammo"
-                end 
-            end,RMenu:Get("ARMAGunstore","confirm"))
+            if not weapons.weapons[d.model] or weapons.weapons[d.model].ammo ~= "modelammo" then 
+                RageUI.ButtonWithStyle("Purchase Weapon Ammo (Max)","£"..getMoneyStringFormatted(math.floor(d.price/2)),{RightLabel="→→→"},true,function(j,k,l)
+                    if l then 
+                        g="ammo"
+                    end 
+                end,RMenu:Get("ARMAGunstore","confirm"))
+            end
         end) 
     end
     if RageUI.Visible(RMenu:Get("ARMAGunstore", "confirm")) then
@@ -157,11 +160,6 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-Citizen.CreateThread(function()
-    if true then 
-        TriggerServerEvent("ARMA:requestNewGunshopData")
-    end 
-end)
 RegisterNetEvent("ARMA:refreshGunStorePermissions",function()
     TriggerServerEvent("ARMA:requestNewGunshopData")
 end)
@@ -175,7 +173,8 @@ AddEventHandler("ARMA:recalculateLargeArms",function(G)
         if m=="LargeArmsDealer"then 
             for r,H in pairs(n)do
                 if r ~="_config"then 
-                    local I=i[m][r][7]i[m][r][2]=I*(1+G/100)
+                    local I=i[m][r][6]
+                    i[m][r][2]=I*(1+G/100)
                 end     
             end 
         end 
@@ -221,6 +220,7 @@ Citizen.CreateThread(function()
                             end
                             DeleteEntity(O)
                         end
+                        SetModelAsNoLongerNeeded(N)
                     end 
                 end 
             end 
@@ -230,6 +230,7 @@ Citizen.CreateThread(function()
 end)
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
     if E then
+        TriggerServerEvent("ARMA:requestNewGunshopData")
         for m,n in pairs(i)do 
             local P,Q,R,S,u,T=table.unpack(n["_config"])
             for K,U in pairs(P)do 
