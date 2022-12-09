@@ -35,6 +35,7 @@ function ARMA.updateTraderInfo()
     ARMA.getCommission('Cocaine'),
     ARMA.getCommission('Meth'),
     ARMA.getCommission('Heroin'),
+    ARMA.getCommission('LargeArms'),
     ARMA.getCommission('LSDNorth'),
     ARMA.getCommission('LSDSouth'))
     TriggerClientEvent('ARMA:updateTraderPrices', -1, 
@@ -134,7 +135,7 @@ AddEventHandler('ARMA:sellWeed', function()
         ARMA.tryGetInventoryItem(user_id, 'Weed', 1, false)
         ARMAclient.notify(source, {'~g~Sold Weed for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Weed'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Weed'))
-        ARMA.turfSaleToGangFunds(defaultPrices['Weed']*commissions['Weed']/100, 'Weed')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Weed'), 'Weed')
     else
         ARMAclient.notify(source, {'~r~You do not have Weed.'})
     end
@@ -148,7 +149,7 @@ AddEventHandler('ARMA:sellCocaine', function()
         ARMA.tryGetInventoryItem(user_id, 'Cocaine', 1, false)
         ARMAclient.notify(source, {'~g~Sold Cocaine for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Cocaine'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Cocaine'))
-        ARMA.turfSaleToGangFunds(defaultPrices['Cocaine']*commissions['Cocaine']/100, 'Cocaine')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Cocaine'), 'Cocaine')
     else
         ARMAclient.notify(source, {'~r~You do not have Cocaine.'})
     end
@@ -162,7 +163,7 @@ AddEventHandler('ARMA:sellMeth', function()
         ARMA.tryGetInventoryItem(user_id, 'Meth', 1, false)
         ARMAclient.notify(source, {'~g~Sold Meth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Meth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Meth'))
-        ARMA.turfSaleToGangFunds(defaultPrices['Meth']*commissions['Meth']/100, 'Meth')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Meth'), 'Meth')
     else
         ARMAclient.notify(source, {'~r~You do not have Meth.'})
     end
@@ -176,7 +177,7 @@ AddEventHandler('ARMA:sellHeroin', function()
         ARMA.tryGetInventoryItem(user_id, 'Heroin', 1, false)
         ARMAclient.notify(source, {'~g~Sold Heroin for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Heroin'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Heroin'))
-        ARMA.turfSaleToGangFunds(defaultPrices['Heroin']*commissions['Heroin']/100, 'Heroin')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Heroin'), 'Heroin')
     else
         ARMAclient.notify(source, {'~r~You do not have Heroin.'})
     end
@@ -190,7 +191,7 @@ AddEventHandler('ARMA:sellLSDNorth', function()
         ARMA.tryGetInventoryItem(user_id, 'LSDNorth', 1, false)
         ARMAclient.notify(source, {'~g~Sold LSDNorth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDNorth'))
-        ARMA.turfSaleToGangFunds(defaultPrices['LSDNorth']*commissions['LSDNorth']/100, 'LSDNorth')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDNorth'), 'LSDNorth')
     else
         ARMAclient.notify(source, {'~r~You do not have LSD.'})
     end
@@ -204,7 +205,7 @@ AddEventHandler('ARMA:sellLSDSouth', function()
         ARMA.tryGetInventoryItem(user_id, 'LSDSouth', 1, false)
         ARMAclient.notify(source, {'~g~Sold LSDSouth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDSouth'))
-        ARMA.turfSaleToGangFunds(defaultPrices['LSDSouth']*commissions['LSDSouth']/100, 'LSDSouth')
+        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDSouth'), 'LSDSouth')
     else
         ARMAclient.notify(source, {'~r~You do not have LSD.'})
     end

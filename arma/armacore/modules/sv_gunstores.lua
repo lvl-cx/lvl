@@ -38,7 +38,6 @@ end)
 
 RegisterNetEvent("ARMA:buyWeapon")
 AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, purchasetype, vipstore)
-    --print(spawncode, price, name, weaponshop, purchasetype, vipstore)
     local source = source
     local user_id = ARMA.getUserId(source)
     local hasPerm = false
@@ -68,8 +67,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                 local player = ARMA.getUserSource(user_id)
                 local name = GetPlayerName(source)
                 Wait(500)
-                print('banned')
-                --TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun outside of store radius')
+                TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun outside of store radius')
             end
             if json.encode(v[5]) ~= '[""]' then
                 for a,b in pairs(v[5]) do
@@ -84,7 +82,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                 if c ~= '_config' then
                     if hasPerm then
                         if c == spawncode then
-                            if price == d[2] and name == d[1] then
+                            if name == d[1] then
                                 if purchasetype == 'armour' then
                                     if string.find(spawncode, "fillUp") then
                                         price = (100 - GetPedArmour(GetPlayerPed(source))) * 1000
@@ -102,6 +100,9 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                         TriggerClientEvent("arma:PlaySound", source, 1)
                                         ARMAclient.setArmour(source, {price/1000, true})
+                                        if weaponshop == 'LargeArmsDealer' then
+                                            ARMA.turfSaleToGangFunds(price, 'LargeArms')
+                                        end
                                     else
                                         ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
                                         TriggerClientEvent("arma:PlaySound", source, 2)
@@ -114,6 +115,9 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                             if ARMA.tryPayment(user_id,price) then
                                                 if price > 0 then
                                                     ARMAclient.notify(source, {'~g~You bought a '..name..' for £'..getMoneyStringFormatted(price)..'.'})
+                                                    if weaponshop == 'LargeArmsDealer' then
+                                                        ARMA.turfSaleToGangFunds(price, 'LargeArms')
+                                                    end
                                                 else
                                                     ARMAclient.notify(source, {'~g~'..name..' purchased.'})
                                                 end
@@ -129,6 +133,9 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                     if ARMA.tryPayment(user_id,price) then
                                         if price > 0 then
                                             ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})
+                                            if weaponshop == 'LargeArmsDealer' then
+                                                ARMA.turfSaleToGangFunds(price, 'LargeArms')
+                                            end
                                         else
                                             ARMAclient.notify(source, {'~g~250x Ammo purchased.'})
                                         end

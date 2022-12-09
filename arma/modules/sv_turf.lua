@@ -25,7 +25,7 @@ AddEventHandler('ARMA:refreshTurfOwnershipData', function()
 						TriggerClientEvent('ARMA:updateTurfOwner', source, a, b.gangOwner)
 					end
 					TriggerClientEvent('ARMA:gotTurfOwnershipData', source, data)
-					TriggerClientEvent('ARMA:updateTraderCommissions', source, ARMA.getTraderComissions())
+					ARMA.updateTraderInfo()
 				end
 			end
 		end
@@ -194,7 +194,7 @@ AddEventHandler('ARMA:setNewCocainePrice', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[2].gangOwner then
 						turfData[2].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
@@ -214,7 +214,7 @@ AddEventHandler('ARMA:setNewMethPrice', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[3].gangOwner then
 						turfData[3].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
@@ -234,7 +234,7 @@ AddEventHandler('ARMA:setNewHeroinPrice', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[4].gangOwner then
 						turfData[4].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
@@ -254,10 +254,11 @@ AddEventHandler('ARMA:setNewLargeArmsCommission', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[5].gangOwner then
 						turfData[5].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
+						TriggerClientEvent('ARMA:recalculateLargeArms', -1, price)
 						return
 					end
 				end
@@ -274,7 +275,7 @@ AddEventHandler('ARMA:setNewLSDNorthPrice', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[6].gangOwner then
 						turfData[6].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
@@ -294,7 +295,7 @@ AddEventHandler('ARMA:setNewLSDSouthPrice', function(price)
 		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
-					if tostring(user_id) == I and V.gangname then
+					if tostring(user_id) == I and V.gangname == turfData[7].gangOwner then
 						turfData[6].commission = price
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
@@ -312,6 +313,11 @@ function ARMA.turfSaleToGangFunds(amount, drugtype)
 			exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 				for a,b in pairs(gotGangs) do
 					if v.gangOwner == b.gangname then
+						if drugtype ~= 'LargeArms' then
+							amount = amount*(v.commission/100)/(1-v.commission/100)
+						else
+							amount = amount/(1+v.commission)
+						end
 						exports['ghmattimysql']:execute('UPDATE arma_gangs SET funds = funds+@funds WHERE gangname = @gangname', {funds = amount, gangname = b.gangname})
 					end
 				end
@@ -319,3 +325,14 @@ function ARMA.turfSaleToGangFunds(amount, drugtype)
 		end
 	end
 end
+
+RegisterCommand('largearms', function(source, args)
+	local source = source
+	local user_id = ARMA.getUserId(source)
+	if user_id == 1 then
+		turfData[5].commission = tonumber(args[1])
+		ARMA.updateTraderInfo()
+		TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
+		TriggerClientEvent('ARMA:recalculateLargeArms', -1, tonumber(args[1]))
+	end
+end)
