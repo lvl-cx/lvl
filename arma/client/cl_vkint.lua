@@ -218,6 +218,10 @@ local a = {
 RMenu.Add("vkint","mainmenu",RageUI.CreateMenu("Teleporter", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 local b = nil
 local function c(d)
+    if tARMA.getPlayerCombatTimer() > 0 then
+        tARMA.notify("~r~You can not teleport whilst you have a combat timer.")
+        return
+    end
     local e = tARMA.getPlayerPed()
     NetworkFadeOutEntity(e, true, false)
     DoScreenFadeOut(500)

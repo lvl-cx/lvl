@@ -21,7 +21,11 @@ RageUI.CreateWhile(1.0, true, function()
                 if h then 
                     RageUI.Button("Start Session", "Start a new DJ Session", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
-                            setupDj()
+                            if tARMA.getPlayerCombatTimer() == 0 and not tARMA.isPlayerInRedZone() and tARMA.getPlayerVehicle() == 0 then
+                                setupDj()
+                            else
+                                tARMA.notify('~r~You can not set up a DJ deck right now.')
+                            end
                         end 
                     end)
                 end 

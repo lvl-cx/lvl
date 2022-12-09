@@ -38,6 +38,9 @@ RegisterNetEvent("ARMA:toggleHandcuffs")
 AddEventHandler("ARMA:toggleHandcuffs",function(k)
     f=true
     a=not a
+    if a then
+        TriggerEvent("ARMA:startCombatTimer", false)
+    end
     b=k
     processCuffModel(not a)
     if k and a then 

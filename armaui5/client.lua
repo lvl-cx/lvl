@@ -150,6 +150,7 @@ Citizen.CreateThread(function()
                             local LootBagIDNew = ObjToNet(LootBagID)
                             local LootBagCoords = GetEntityCoords(LootBagID)
                             TriggerServerEvent('ARMA:LootBag', LootBagIDNew)
+                            TriggerEvent("ARMA:startCombatTimer", false)
                             Wait(1000)
                         end
                     elseif `prop_poly_bag_money` == entityModel then
@@ -158,6 +159,7 @@ Citizen.CreateThread(function()
                             local MoneydropID = GetClosestObjectOfType(GetEntityCoords(PlayerPedId()), 10.5, GetHashKey('prop_poly_bag_money'), false, false, false)
                             local MoneydropIDNew = ObjToNet(MoneydropID)
                             TriggerServerEvent('ARMA:Moneydrop', MoneydropIDNew)
+                            TriggerEvent("ARMA:startCombatTimer", false)
                             Wait(1000)
                         end
                     elseif `xs_prop_arena_crate_01a` == entityModel then -- add crate drop code
@@ -166,6 +168,7 @@ Citizen.CreateThread(function()
                             local id = DecorGetInt(Entity,"lootid")
                             TriggerEvent("ARMA:startCombatTimer")
                             TriggerServerEvent("ARMA:openCrate",id)
+                            TriggerEvent("ARMA:startCombatTimer", false)
                             Wait(1000)
                         end
                     end

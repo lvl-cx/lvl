@@ -131,6 +131,29 @@ Citizen.CreateThread(function()
 	end
 	tARMA.createArea("cityzone",vector3(-225.30703735352,-916.74755859375,31.216938018799),750.0,100,y,A,B,{})
 end)
+local function E()
+    local F = tARMA.getPlayerCoords()
+    local G = nil
+    for H = 1, 25 do
+        local I, J = GetNthClosestVehicleNode(F.x, F.y, F.z, H)
+        if I and #(j - J) > k then
+            G = J
+            break
+        end
+    end
+    if G then
+        local K, L = tARMA.getPlayerVehicle()
+        if K ~= 0 then
+            if L and GetScriptTaskStatus(PlayerPedId(), "SCRIPT_TASK_VEHICLE_DRIVE_TO_COORD") == 7 then
+                TaskVehicleDriveToCoord(PlayerPedId(), K, G.x, G.y, G.z, 30.0, 1.0, GetEntityModel(K), 16777216, 1.0, 1)
+            end
+        else
+            if GetScriptTaskStatus(PlayerPedId(), "SCRIPT_TASK_FOLLOW_NAVMESH_TO_COORD_ADVANCED") == 7 then
+                TaskFollowNavMeshToCoordAdvanced(PlayerPedId(), G.x, G.y, G.z, 8.0, -1, 2.5, 0, 0, 0.0, 100.0, 4000.0)
+            end
+        end
+    end
+end
 l(function()
     while true do 
         local r=PlayerPedId()
@@ -230,6 +253,10 @@ l(function()
                 DisableControlAction(0,24,true)
                 DisableControlAction(0,263,true)
                 DisableControlAction(0,140,true)
+                local U, V = tARMA.getPlayerCombatTimer()
+                if U > 0 and V then
+                    E()
+                end
             end
             if c then 
                 drawNativeText("You have entered a non-RP greenzone, you may talk out of character here")

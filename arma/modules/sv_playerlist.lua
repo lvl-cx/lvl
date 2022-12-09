@@ -72,7 +72,6 @@ local defaultGroups = {
     ["Royal Mail Driver"] = true,
     ["Bus Driver"] = true,
     ["Deliveroo"] = true,
-    ["Fisherman"] = true,
     ["Scuba Diver"] = true,
     ["Pilot"] = true,
     ["G4S Driver"] = true,

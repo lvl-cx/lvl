@@ -84,6 +84,7 @@ local g = 0
 local h = false
 RegisterNetEvent("ARMA:getTackled",function(k)
     c = true
+    TriggerEvent("ARMA:startCombatTimer", false)
     local l = tARMA.getPlayerPed()
     local m = GetPlayerPed(GetPlayerFromServerId(k))
     RequestAnimDict(d)

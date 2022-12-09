@@ -151,6 +151,7 @@ local function a0(E)
     end
     K(E)
 end
+local a7 = {2, 160, 161, 163, 167}
 local function a6(E)
     if not tARMA.canAnim() or tARMA.isHandcuffed() then
         return true
@@ -159,13 +160,25 @@ local function a6(E)
     if IsPedReloading(A) or IsPlayerFreeAiming(A) or GetEntityHealth(A) <= 102 then
         return true
     end
-    --[[ if isPlayerNearPrison() then -- add this func when hmp is sorted
+    if tARMA.getPlayerCombatTimer() > 0 then
+        return true
+    end
+    local a9 = CMG.getPlayerVehicle()
+    if a9 ~= 0 and GetEntitySpeed(a9) > 1.0 then
+        return true
+    end
+    for p, aa in pairs(a7) do
+        if GetIsTaskActive(A, aa) then
+            return true
+        end
+    end
+    if isPlayerNearPrison() then -- add this func when hmp is sorted
         if E and E.animationOptions and E.animationOptions.allowedPrison then
             return false
         else
             return true
         end
-    end ]]
+    end
     return false
 end
 local function a7(E)

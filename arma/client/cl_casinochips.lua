@@ -108,7 +108,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('casino_enter', 'casino')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.ButtonWithStyle("Enter Diamond Casino","",{RightLabel="→→→"},true,function(n,o,p)
-                if p then 
+                if p and tARMA.getPlayerCombatTimer() == 0 then 
                     TriggerServerEvent("ARMA:enterDiamondCasino")
                     tARMA.teleport(f.x,f.y,f.z)
                 end 
