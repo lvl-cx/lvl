@@ -1,4 +1,4 @@
-local cfg=module("cfg/cfg_respawn")
+local cfg=module("armacore/cfg/cfg_respawn")
 
 
 RegisterNetEvent("ARMA:SendSpawnMenu")

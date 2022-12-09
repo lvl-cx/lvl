@@ -1,5 +1,3 @@
-local cfg=module("cfg/cfg_housing")
-
 ownedGaffs = {}
 
 --SQL

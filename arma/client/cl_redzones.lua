@@ -149,12 +149,12 @@ function tARMA.isEmergencyService()
     return globalOnPoliceDuty or globalOnPrisonDuty or globalNHSOnDuty or globalLFBOnDuty
 end
 AddEventHandler("ARMA:startCombatTimer",function(h)
-    if not tARMA.isEmergencyService() and not tARMA.isInPaintball() then
+    if not tARMA.isEmergencyService() then --and not tARMA.isInPaintball() then
         tARMA.setPlayerCombatTimer(60, h)
     end
 end)
 local function y()
-    if not tARMA.isEmergencyService() and not tARMA.isInComa() and not tARMA.isInPaintball() then
+    if not tARMA.isEmergencyService() and not tARMA.isInComa() then --and not tARMA.isInPaintball() then
         local z = PlayerPedId()
         if HasEntityBeenDamagedByWeapon(z, 0, 2) then
             Citizen.CreateThread(function()
