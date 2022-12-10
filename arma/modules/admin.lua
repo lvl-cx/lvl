@@ -179,7 +179,7 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
             ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
                 ARMAclient.allowWeapon(permsource,{'WEAPON_'..string.upper(hash)})
                 GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
-                tARMA.sendWebhook('give-weapon',"ARMA Give Weapon Logs", "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..permid.."**\n> Weapon Given: **WEAPON_"..hash.."**")
+                tARMA.sendWebhook('give-weapon',"ARMA Give Weapon Logs", "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n>Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..permid.."**\n> Weapon Given: **WEAPON_"..hash.."**")
                 ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
             end)
         end)
@@ -547,7 +547,7 @@ AddEventHandler('ARMA:RemoveWarning', function(warningid)
                             exports['ghmattimysql']:execute("DELETE FROM arma_warnings WHERE warning_id = @warning_id", {warning_id = v.warning_id})
                             exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET points = CASE WHEN ((points-@removepoints)>0) THEN (points-@removepoints) ELSE 0 END WHERE UserID = @UserID", {UserID = v.user_id, removepoints = (v.duration/24)}, function() end)
                             ARMAclient.notify(source, {'~g~Removed F10 Warning #'..warningid..' ('..(v.duration/24)..' points) from ID: '..v.user_id})
-                            tARMA.sendWebhook('remove-warning', 'ARMA Remove Warning Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..admin.."**\n> Admin PermID: **"..admin_id.."**\n> Warning ID: **"..warningid.."**")
+                            tARMA.sendWebhook('remove-warning', 'ARMA Remove Warning Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Warning ID: **"..warningid.."**")
                         end
                     end
                 end
