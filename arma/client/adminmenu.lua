@@ -1448,28 +1448,14 @@ tARMA.createThreadOnTick(func_checkSpectatorMode)
 RegisterNetEvent("ARMA:takeClientScreenshotAndUpload",function(url)
     local url = url -- need a custom uploader whenever
     exports["screenshot-basic"]:requestScreenshotUpload(url,"files[]",function(ab)
-        TriggerServerEvent("ARMA:uploadImage", ab)
-    end)
-end)
-
-RegisterNetEvent("ARMA:takeCheaterScreenshotAndUpload",function(url)
-    local url = url -- need a custom uploader whenever
-    exports["screenshot-basic"]:requestScreenshotUpload(url,"files[]",function(ab)
-        TriggerServerEvent("ARMA:uploadCheaterImage", ab)
+        print(json.encode(ab))
     end)
 end)
 
 RegisterNetEvent("ARMA:takeClientVideoAndUpload",function(url)
     local url = url  -- need a custom uploader whenever
     exports["screenshot-basic"]:requestVideoUpload(url,"files[]",{headers = {}, isVideo = true, isManual = true, encoding = "mp4"},function(ac)
-        TriggerServerEvent("ARMA:uploadVideo", ac)
-    end)
-end)
-
-RegisterNetEvent("ARMA:takeCheaterVideoAndUpload",function(url)
-    local url = url -- need a custom uploader whenever
-    exports["screenshot-basic"]:requestVideoUpload(url,"files[]",function(ac, ad)
-        TriggerServerEvent("ARMA:uploadCheaterVideo", ac, ad)
+        print(json.encode(ac))
     end)
 end)
 

@@ -15,7 +15,7 @@ local actypes = {
     {type = 3, desc = 'Explosion Event'},
     {type = 4, desc = 'Blacklisted Event'},
     {type = 5, desc = 'Removal of Weapon(s)'},
-    {type = 6, desc = 'Godmode'},
+    {type = 6, desc = 'Semi Godmode'},
     {type = 7, desc = 'Mod Menu'},
     {type = 8, desc = 'Weapon Modifier'},
     {type = 9, desc = 'Armour Modifier'},
@@ -23,6 +23,8 @@ local actypes = {
     {type = 11, desc = 'Server Trigger'},
     {type = 12, desc = 'Vehicle Parachute'},
     {type = 13, desc = 'Night Vision'},
+    {type = 14, desc = 'Model Dimensions'},
+    {type = 15, desc = 'Godmoding'},
 }
 
 local allowedEntities = {
@@ -211,18 +213,6 @@ local otherVehicles = {
     [`police2`] = true,
     [`taco`] = true,
 }
-
--- Type #1 [Noclip]
--- Type #2 [Spawning Weapons]
--- Type #3 [Explosion Event]
--- Type #4 [Blacklisted Event]
--- Type #5 [Removing Weapons]
--- Type #6 [Godmode]
--- Type #7 [Mod Menu]
--- Type #8 [Weapon Modifiers]
--- Type #9 [Armour Modifier]
--- Type #10 [Health Modifier]
--- Type #11 [Server Triggers]
 
 
 RegisterServerEvent("ARMA:acType1")
@@ -420,6 +410,15 @@ AddEventHandler("ARMA:acType14", function()
     TriggerEvent("ARMA:acBan", user_id, 14, name, player)
 end)
 
+RegisterServerEvent("ARMA:acType15")
+AddEventHandler("ARMA:acType15", function()
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    Wait(500)
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
+end)
+
 
 
 RegisterServerEvent("ARMA:getAnticheatData")
@@ -455,7 +454,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
             end
             gettingVideo = true
             TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
-            Wait(15000)
+            Wait(30000)
             gettingVideo = false
             tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
             TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")

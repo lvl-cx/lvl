@@ -38,6 +38,7 @@ Citizen.CreateThread(function()
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 18 then
                     TriggerServerEvent("ARMA:acType1")
+					Wait(30000)
                     speedWarnings = 0
                 end
             end
@@ -159,10 +160,41 @@ Citizen.CreateThread(function()
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
 				RemoveAllPedWeapons(PlayerPedId(),false)
 				TriggerServerEvent("ARMA:acType2", theWeapon)
+				Wait(30000)
 			end
 		end
 	end
 end)
+
+Citizen.CreateThread(function()
+	Wait(10000)
+	local _ = 0
+	while true do
+		if _ >= 100 and not tARMA.isInComa() then
+			TriggerServerEvent("ARMA:acType6")
+			Wait(30000)
+		end
+		if not tARMA.isStaffedOn() then
+			local j = PlayerId()
+			local i = PlayerPedId()
+			local a0 = GetEntityHealth(i)
+			SetPlayerHealthRechargeMultiplier(j, 0.0)
+			if i ~= 0 then
+				SetEntityHealth(i, a0 - 2)
+				Citizen.Wait(50)
+				if GetEntityHealth(i) > a0 - 2 then
+					_ = _ + 1
+				elseif _ > 0 then
+					_ = _ - 1
+				end
+				SetEntityHealth(i, GetEntityHealth(i) + 2)
+			end
+		else
+			Citizen.Wait(1000)
+		end
+	end
+end)
+
 
 
 Citizen.CreateThread(function()
@@ -187,10 +219,12 @@ Citizen.CreateThread(function()
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
 					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
+					Wait(30000)
 				end
 			else 
 				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
 					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
+					Wait(30000)
 				end
 			end
 		end
@@ -219,24 +253,31 @@ Citizen.CreateThread(function()
 		local G = GetPlayerMeleeWeaponDamageModifier()
 		if y > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDamageModifier "..y)
+			Wait(30000)
 		end
 		if z > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier "..z)
+			Wait(30000)
 		end
 		if A > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier_2 "..A)
+			Wait(30000)
 		end
 		if B > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDamageModifier "..B)
+			Wait(30000)
 		end
 		if C > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDefenseModifier "..C)
+			Wait(30000)
 		end
 		if F > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..D)
+			Wait(30000)
 		end
 		if G > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..D)
+			Wait(30000)
 		end
 		RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
 		RemoveAllPickupsOfType("PICKUP_HEALTH_STANDARD")
@@ -264,34 +305,6 @@ CreateThread(function()
 	end
 end)
 
-Citizen.CreateThread(function()
-	Wait(10000)
-	local _ = 0
-	while true do
-		if _ >= 100 and not tARMA.isInComa() then
-			TriggerServerEvent("ARMA:acType6")
-			Citizen.Wait(5000)
-		end
-		if not tARMA.isStaffedOn() then
-			local j = PlayerId()
-			local i = PlayerPedId()
-			local a0 = GetEntityHealth(i)
-			SetPlayerHealthRechargeMultiplier(j, 0.0)
-			if i ~= 0 then
-				SetEntityHealth(i, a0 - 2)
-				Citizen.Wait(50)
-				if GetEntityHealth(i) > a0 - 2 then
-					_ = _ + 1
-				elseif _ > 0 then
-					_ = _ - 1
-				end
-				SetEntityHealth(i, GetEntityHealth(i) + 2)
-			end
-		else
-			Citizen.Wait(1000)
-		end
-	end
-end)
 
 local b = {
     "demonhawkk",
@@ -309,9 +322,9 @@ Citizen.CreateThread(function()
 			local be = GetEntityModel(f)
 			if not table.has(c, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
+				Wait(30000)
 			end
 		end
-		Wait(1000)
 	end
 end)
 
@@ -356,6 +369,17 @@ Citizen.CreateThread(function()
 	local min,max = GetModelDimensions(GetEntityModel(PlayerPedId()))
 	if min.y < -0.29 or max.z > 0.98 then
 		TriggerServerEvent("ARMA:acType14")
+	end
+end)
+
+Citizen.CreateThread(function()
+	Wait(10000)
+	while true do
+		if GetPlayerInvincible(PlayerId()) then
+			TriggerServerEvent("ARMA:acType15")
+			Citizen.Wait(60000)
+		end
+		Citizen.Wait(1000)
 	end
 end)
 

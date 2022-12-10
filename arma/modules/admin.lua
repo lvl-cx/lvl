@@ -844,7 +844,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, tARMA.getWebhook('screenshot'))
         local command = {
             {
                 ["color"] = "16448403",
@@ -870,8 +870,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+        PerformHttpRequest(tARMA.getWebhook('screenshot'), function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
@@ -887,7 +886,7 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY")
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, tARMA.getWebhook('video'))
         local command = {
             {
                 ["color"] = "16448403",
@@ -913,8 +912,7 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
                 }
             }
         }
-        local webhook = "https://discord.com/api/webhooks/1016442174344286280/iHTemVOLFACxsOAQAUVGfAvqZEhS1waE43C1g2olt-5DaEh2Z1gT_6ohGCcRrgMYMMoY"
-        PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
+        PerformHttpRequest(tARMA.getWebhook('video'), function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)

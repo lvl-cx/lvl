@@ -13,7 +13,7 @@ ARMAserver = Tunnel.getInterface("ARMA","ARMA")
 Proxy.addInterface("ARMA",tARMA)
 
 
--- anti cheat shite for giveweapontoped cancelling stuff
+-- ac shite
 
 allowedWeapons = {}
 weapons = module("cfg/weapons")
