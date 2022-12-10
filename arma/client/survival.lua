@@ -53,8 +53,7 @@ Citizen.CreateThread(function()
         if IsDisabledControlJustPressed(0, 38) then
             if b and not i then
                 local A = GetEntityCoords(GetPlayerPed(-1))
-                --if not tARMA.isInPaintball() and not globalInBoxingZone and not tARMA.isPlayerInRedZone() and not tARMA.isPlayerInTurf() then
-                if not tARMA.isPlayerInRedZone() and not tARMA.isPlayerInTurf() then
+                if not tARMA.isPlayerInRedZone() and not tARMA.isPlayerInTurf() then -- and not tARMA.isInPaintball() and not globalInBoxingZone then
                     PlaySoundFrontend(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
                     tARMA.notify("~g~NHS have been notified.")
                     TriggerServerEvent('ARMA:NHSComaCall')
@@ -110,6 +109,7 @@ Citizen.CreateThread(function()
             local x,y,z = table.unpack(I)
             ARMAserver.updatePos({x,y,z})
             ARMAserver.updateHealth({0})
+            tARMA.setArmour(0)
             Wait(250)
         end
         if h <= 0 then
