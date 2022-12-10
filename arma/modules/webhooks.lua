@@ -102,3 +102,9 @@ function tARMA.sendWebhook(webhook, name, message)
         }}), { ["Content-Type"] = "application/json" })
     end
 end
+
+function tARMA.getWebhook(webhook)
+    if webhooks[webhook] ~= nil then
+        return webhooks[webhook]
+    end
+end
