@@ -22,9 +22,11 @@ AddEventHandler("ARMA:ManagePlayerBank",function(id, amount, cashtype)
         if cashtype == 'Increase' then
             ARMA.giveBankMoney(id, amount)
             ARMAclient.notify(source, {'~g~Added £'..getMoneyStringFormatted(amount)..' to players Bank Balance.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **£"..amount.." Bank**\n> Type: **"..cashtype.."**")
         elseif cashtype == 'Decrease' then
             ARMA.tryBankPayment(id, amount)
             ARMAclient.notify(source, {'~r~Removed £'..getMoneyStringFormatted(amount)..' from players Bank Balance.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **£"..amount.." Bank**\n> Type: **"..cashtype.."**")
         end
         MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
             if #rows > 0 then
@@ -45,9 +47,11 @@ AddEventHandler("ARMA:ManagePlayerCash",function(id, amount, cashtype)
         if cashtype == 'Increase' then
             ARMA.giveMoney(id, amount)
             ARMAclient.notify(source, {'~g~Added £'..getMoneyStringFormatted(amount)..' to players Cash Balance.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **£"..amount.." Cash**\n> Type: **"..cashtype.."**")
         elseif cashtype == 'Decrease' then
             ARMA.tryPayment(id, amount)
             ARMAclient.notify(source, {'~r~Removed £'..getMoneyStringFormatted(amount)..' from players Cash Balance.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **£"..amount.." Cash**\n> Type: **"..cashtype.."**")
         end
         MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
             if #rows > 0 then
@@ -68,6 +72,7 @@ AddEventHandler("ARMA:ManagePlayerChips",function(id, amount, cashtype)
         if cashtype == 'Increase' then
             MySQL.execute("casinochips/add_chips", {user_id = id, amount = amount})
             ARMAclient.notify(source, {'~g~Added '..getMoneyStringFormatted(amount)..' to players Casino Chips.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **"..amount.." Chips**\n> Type: **"..cashtype.."**")
             MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
                 if #rows > 0 then
                     local chips = rows[1].chips
@@ -77,6 +82,7 @@ AddEventHandler("ARMA:ManagePlayerChips",function(id, amount, cashtype)
         elseif cashtype == 'Decrease' then
             MySQL.execute("casinochips/remove_chips", {user_id = id, amount = amount})
             ARMAclient.notify(source, {'~r~Removed '..getMoneyStringFormatted(amount)..' from players Casino Chips.'})
+            tARMA.sendWebhook('manage-balance',"ARMA Money Menu Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(userstemp).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..userstemp.."**\n> Amount: **"..amount.." Chips**\n> Type: **"..cashtype.."**")
             MySQL.query("casinochips/get_chips", {user_id = id}, function(rows, affected)
                 if #rows > 0 then
                     local chips = rows[1].chips
