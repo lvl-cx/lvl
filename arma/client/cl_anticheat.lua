@@ -322,9 +322,9 @@ Citizen.CreateThread(function()
 			local be = GetEntityModel(f)
 			if not table.has(c, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
-				Wait(30000)
 			end
 		end
+		Wait(1000)
 	end
 end)
 
@@ -375,7 +375,7 @@ end)
 Citizen.CreateThread(function()
 	Wait(10000)
 	while true do
-		if GetPlayerInvincible(PlayerId()) then
+		if GetPlayerInvincible(PlayerId()) and not isInGreenzone and not tARMA.isInsideLsCustoms() and not tARMA.isStaffedOn() then
 			TriggerServerEvent("ARMA:acType15")
 			Citizen.Wait(60000)
 		end
