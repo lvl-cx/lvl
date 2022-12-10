@@ -39,13 +39,13 @@ local a = {
         id = 74,
         position = vector3(-2173.7785644531, 5142.5498046875, 2.8199977874756),
         name = "VIP Island",
-        destination = {75}
+        destination = {75, 133}
     },
     [75] = {
         id = 75,
         position = vector3(-2335.1215820313, 266.88153076172, 169.60194396973),
         name = "Kortz Center",
-        destination = {74, 133}
+        destination = {74}
     },
     [95] = {
         id = 95,
