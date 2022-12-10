@@ -266,6 +266,10 @@ RageUI.CreateWhile(1.0, true, function()
                                 banningPermID = a
                                 banningName = 'ID: ' .. banningPermID
                                 o = nil
+                                selectedbans = {}
+                                for k, v in pairs(banreasons) do
+                                    v.itemchecked = false
+                                end
                             end)
                         end
                     end
@@ -713,6 +717,10 @@ RageUI.CreateWhile(1.0, true, function()
                         banningName = SelectedPlayer[1]
                         o = nil
                         TriggerServerEvent('ARMA:getNotes', SelectedPlayer[3])
+                        selectedbans = {}
+                        for k, v in pairs(banreasons) do
+                            v.itemchecked = false
+                        end
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
