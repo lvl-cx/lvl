@@ -24,6 +24,7 @@ RegisterCommand("a", function(source,args, rawCommand)
         name = GetPlayerName(v)
         user_id = ARMA.getUserId(v)   
         TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "ooc")
+        tARMA.sendWebhook('staff', "ARMA Chat Logs", "```"..msg.."```".."\n> Admin Name: **"..GetPlayerName(source).."**\n> Admin PermID: **"..user_id.."**\n> Player TempID: **"..source.."**")
     end
 end)
 
@@ -63,6 +64,7 @@ RegisterCommand("g", function(source,args, rawCommand)
                                 local player = ARMA.getUserSource(tonumber(G.id))
                                 if player ~= nil then
                                     TriggerClientEvent('chatMessage', player, playerName , { 128, 128, 128 }, msg, "ooc")
+                                    tARMA.sendWebhook('gang', "ARMA Chat Logs", "```"..msg.."```".."\n> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Player TempID: **"..source.."**")
                                 end
                             end
                         end
