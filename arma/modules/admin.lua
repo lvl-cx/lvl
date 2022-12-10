@@ -156,6 +156,7 @@ AddEventHandler("ARMA:Giveweapon",function()
     local userid = ARMA.getUserId(source)
     if ARMA.hasPermission(userid, "dev.menu") then
         ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
+        ARMAclient.allowWeapon(source,{'WEAPON_'..string.upper(hash)})
         GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
         local spawnweapon = {
             {
@@ -177,11 +178,6 @@ AddEventHandler("ARMA:Giveweapon",function()
                 {
                   ["name"] = "Player PermID",
                   ["value"] = user_id,
-                  ["inline"] = true
-                },
-                {
-                  ["name"] = "Player Hours",
-                  ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                   ["inline"] = true
                 },
                 {
@@ -211,6 +207,7 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
             local permid = tonumber(permid)
             local permsource = ARMA.getUserSource(permid)
             ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
+                ARMAclient.allowWeapon(permsource,{'WEAPON_'..string.upper(hash)})
                 GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
                 local giveweapon = {
                     {
@@ -247,11 +244,6 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
                         {
                           ["name"] = "Player PermID",
                           ["value"] = user_id,
-                          ["inline"] = true
-                        },
-                        {
-                          ["name"] = "Player Hours",
-                          ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                           ["inline"] = true
                         },
                         {
@@ -399,11 +391,6 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                             ["inline"] = true
                         },
                         {
-                            ["name"] = "Player Hours",
-                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60).." hours",
-                            ["inline"] = true
-                        },
-                        {
                             ["name"] = "Group",
                             ["value"] = selgroup,
                             ["inline"] = true
@@ -460,11 +447,6 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
                         {
                             ["name"] = "Player PermID",
                             ["value"] = perm,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player Hours",
-                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -557,11 +539,6 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                             ["inline"] = true
                         },
                         {
-                            ["name"] = "Player Hours",
-                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
-                            ["inline"] = true
-                        },
-                        {
                             ["name"] = "Group Removed",
                             ["value"] = selgroup,
                             ["inline"] = true
@@ -613,11 +590,6 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
                         {
                             ["name"] = "Player PermID",
                             ["value"] = perm,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player Hours",
-                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -895,11 +867,6 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
                         ["value"] = target_id,
                         ["inline"] = true
                     },
-                    {
-                        ["name"] = "Player Hours",
-                        ["value"] = math.ceil(ARMA.getUserDataTable(target_id).PlayerTime/60) or 0,
-                        ["inline"] = true
-                    },
                 }
             }
         }
@@ -941,11 +908,6 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
                     {
                         ["name"] = "Player PermID",
                         ["value"] = target_id,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Player Hours",
-                        ["value"] = math.ceil(ARMA.getUserDataTable(target_id).PlayerTime/60) or 0,
                         ["inline"] = true
                     },
                 }
@@ -1009,11 +971,6 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
                         {
                             ["name"] = "Player PermID",
                             ["value"] = target,
-                            ["inline"] = true
-                        },
-                        {
-                            ["name"] = "Player Hours",
-                            ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                             ["inline"] = true
                         },
                         {
@@ -1522,11 +1479,6 @@ AddEventHandler('ARMA:GetCoords', function()
                                 ["inline"] = true
                             },
                             {
-                                ["name"] = "Player Hours",
-                                ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
-                                ["inline"] = true
-                            },
-                            {
                                 ["name"] = "Coords",
                                 ["value"] = choice,
                                 ["inline"] = true
@@ -1624,11 +1576,6 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
                         ["inline"] = true
                     },
                     {
-                        ["name"] = "Player Hours",
-                        ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
-                        ["inline"] = true
-                    },
-                    {
                         ["name"] = "Teleport Type",
                         ["value"] = "Teleport to Admin Island",
                         ["inline"] = true
@@ -1720,11 +1667,6 @@ AddEventHandler('ARMA:AddCar', function()
                                 {
                                   ["name"] = "Player PermID",
                                   ["value"] = user_id,
-                                  ["inline"] = true
-                                },
-                                {
-                                  ["name"] = "Player Hours",
-                                  ["value"] = math.ceil(ARMA.getUserDataTable(user_id).PlayerTime/60) or 0,
                                   ["inline"] = true
                                 },
                                 {
