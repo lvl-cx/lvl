@@ -1050,17 +1050,7 @@ AddEventHandler("playerDropped",function(reason)
         ARMA.user_tmp_tables[user_id] = nil
         ARMA.user_sources[user_id] = nil
         print('[ARMA] Player Leaving Save:  Saved data for: ' .. GetPlayerName(source))
-        local disconnect = {
-            {
-                ["color"] = "16448403",
-                ["title"] = GetPlayerName(source).." PermID: "..user_id.." Temp ID: "..source.." disconnected",
-                ["description"] = reason, 
-                ["footer"] = {
-                    ["text"] = "ARMA | Server #1 | "..os.date("%A (%d/%m/%Y) at %X"),
-                },
-            }
-        }
-        PerformHttpRequest("https://discord.com/api/webhooks/991556666095050803/cGTvcrMqB4wmub370MCRQHwW74tzLIHsmgkqXyNBqLPExMWNnB7lTXFRrcDmSNUYhAWQ", function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = disconnect}), { ['Content-Type'] = 'application/json' })
+        tARMA.sendWebhook('leave', GetPlayerName(source).." PermID: "..user_id.." Temp ID: "..source.." disconnected", reason)
     else 
         print('[ARMA] SEVERE ERROR: Failed to save data for: ' .. GetPlayerName(source) .. ' Rollback expected!')
     end
@@ -1084,16 +1074,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         local tmp = ARMA.getUserTmpTable(user_id)
         tmp.spawns = tmp.spawns+1
         local first_spawn = (tmp.spawns == 1)
-        local command = {
-            {
-                ["color"] = "16448403",
-                ["title"] = GetPlayerName(source).." TempID: "..source.." PermID: "..user_id.." connected",
-                ["footer"] = {
-                    ["text"] = "ARMA | Server #1 | "..os.date("%A (%d/%m/%Y) at %X"),
-                }
-            }
-        }
-        PerformHttpRequest("https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2", function(err, text, headers) end, "POST", json.encode({username = "ARMA", embeds = command}), { ["Content-Type"] = "application/json" })
+        tARMA.sendWebhook('join', GetPlayerName(source).." TempID: "..source.." PermID: "..user_id.." connected", "")
         if first_spawn then
             for k,v in pairs(ARMA.user_sources) do
                 ARMAclient.addPlayer(source,{v})
