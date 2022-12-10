@@ -410,12 +410,19 @@ AddEventHandler("ARMA:acType14", function()
     TriggerEvent("ARMA:acBan", user_id, 14, name, player)
 end)
 
+local godmodeVid = false
 RegisterServerEvent("ARMA:acType15")
 AddEventHandler("ARMA:acType15", function()
     local user_id = ARMA.getUserId(source)
 	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
+    if not godmodeVid then
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
+        Wait(30000)
+        godmodeVid = true
+    end
+    godmodeVid = false
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
 end)
 
