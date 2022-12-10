@@ -38,6 +38,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
                     if ARMA.tryFullPayment(userid, v.price) then
                         ARMA.addUserGroup(userid,job)
                         ARMAclient.notify(source, {"~g~Purchased " .. name .. " for ".. '£' ..tostring(getMoneyStringFormatted(v.price)) .. " ❤️"})
+                        tARMA.sendWebhook('purchases',"ARMA License Centre Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**")
                         TriggerClientEvent("arma:PlaySound", source, 1)
                     else 
                         ARMAclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
@@ -190,6 +191,7 @@ AddEventHandler('ARMA:SellLicense', function(group)
                                             TriggerClientEvent("arma:PlaySound", source, 1)
                                             ARMAclient.notify(target, {'~g~Bought ' .. group .. ' License for £' .. price .. ' from ' .. GetPlayerName(source) .. ' [ID: ' .. user_id .. ']'})
                                             TriggerClientEvent("arma:PlaySound", target, 1)
+                                            tARMA.sendWebhook('sell-to-nearest-player',"ARMA License Sale Logs", "> Seller Name: **"..GetPlayerName(source).. "**\n> Seller ID: **"..user_id.."**\n> Buyer Name: **"..GetPlayerName(target).."**\n> Buyer ID: **"..userid.."**\n> License Sold: **"..group.."**\n> Price: **£"..price.."**")
                                         else
                                             ARMAclient.notify(source, {'~r~User does not have enough money.'})
                                             ARMAclient.notify(target, {'~r~You do not have enough money.'})
