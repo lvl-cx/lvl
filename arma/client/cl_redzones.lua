@@ -67,27 +67,11 @@ Citizen.CreateThread(function()
                         while i(r, k, true) do
                             r = GetEntityCoords(tARMA.getPlayerPed())
                             t = r
-                            if
-                                IsPedShooting(tARMA.getPlayerPed()) and
-                                    GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= "WEAPON_UNARMED"
-                                then
+                            if IsPedShooting(tARMA.getPlayerPed()) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= "WEAPON_UNARMED" then
                                 tARMA.setPlayerCombatTimer(60, true)
                             end
                             if b == 0 then
-                                DrawAdvancedText(
-                                    0.931,
-                                    0.914,
-                                    0.005,
-                                    0.0028,
-                                    0.49,
-                                    "Combat Timer ended, you may leave.",
-                                    255,
-                                    51,
-                                    51,
-                                    255,
-                                    7,
-                                    0
-                                )
+                                DrawAdvancedText(0.931,0.914,0.005,0.0028,0.49,"Combat Timer ended, you may leave.",255,51,51,255,7,0)
                             end
                             Wait(0)
                         end
@@ -97,16 +81,7 @@ Citizen.CreateThread(function()
                             local v = k.pos - GetEntityCoords(tARMA.getPlayerPed())
                             t = t + v * 0.01
                             if GetVehiclePedIsIn(tARMA.getPlayerPed(), false) == 0 then
-                                TaskGoStraightToCoord(
-                                    tARMA.getPlayerPed(),
-                                    t.x,
-                                    t.y,
-                                    t.z,
-                                    8.0,
-                                    1000,
-                                    GetEntityHeading(tARMA.getPlayerPed()),
-                                    0.0
-                                )
+                                TaskGoStraightToCoord(tARMA.getPlayerPed(),t.x,t.y,t.z,8.0,1000,GetEntityHeading(tARMA.getPlayerPed()),0.0)
                                 local w = GetSoundId()
                                 PlaySoundFrontend(w, "End_Zone_Flash", "DLC_BTL_RB_Remix_Sounds", true)
                                 ReleaseSoundId(w)
@@ -114,12 +89,9 @@ Citizen.CreateThread(function()
                             else
                                 SetEntityCoords(tARMA.getPlayerPed(), t.x, t.y, t.z)
                             end
-                            SetTimeout(
-                                1000,
-                                function()
-                                    ClearPedTasks(tARMA.getPlayerPed())
-                                end
-                            )
+                            SetTimeout(1000,function()
+                                ClearPedTasks(tARMA.getPlayerPed())
+                            end)
                         end
                         Wait(0)
                     end

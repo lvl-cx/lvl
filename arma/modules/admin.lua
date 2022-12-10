@@ -1402,7 +1402,7 @@ AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
             }
             local webhook = "https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN"
             PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({username = "ARMA", embeds = command}), { ['Content-Type'] = 'application/json' })
-            ARMAclient.notify(admin, {'~g~Unfrozed Player.'})
+            ARMAclient.notify(admin, {'~g~Unfrozen Player.'})
             ARMAclient.notify(newtarget, {'~g~You have been unfrozen.'})
             frozenplayers[user_id] = nil
         end
