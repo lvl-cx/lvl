@@ -245,7 +245,9 @@ AddEventHandler("ARMA:acType2", function(theweapon)
 	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 2, name, player, theweapon)
+    if theweapon ~= 'GADGET_PARACHUTE' then
+        TriggerEvent("ARMA:acBan", user_id, 2, name, player, theweapon)
+    end
 end)
 
 
