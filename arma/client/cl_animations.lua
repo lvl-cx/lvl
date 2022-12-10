@@ -238,12 +238,14 @@ end,false)
 RegisterCommand("bag",function(f,g)
     local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
+		tARMA.allowWeapon("0x88C78EB7")
         GiveWeaponToPed(k,0x88C78EB7,1,false,true)
     end 
 end,false)
 RegisterCommand("bag2",function(f,g)
     local k=PlayerPedId()
     if DoesEntityExist(k)and canAnim()and not IsEntityDead(k)and d()then 
+		tARMA.allowWeapon("0x01B79F17")
         GiveWeaponToPed(k,0x01B79F17,1,false,true)
     end 
 end,false)

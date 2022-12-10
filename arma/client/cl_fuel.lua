@@ -214,6 +214,7 @@ Citizen.CreateThread(function()
 						if not HasPedGotWeapon(s, 883325847) then
 							D(S.x, S.y, S.z + 1.2, a.translations.PurchaseJerryCan)
 							if IsControlJustReleased(0, 38) then
+								tARMA.allowWeapon("883325847")
 								GiveWeaponToPed(s, 883325847, 4500, false, true)
 								TriggerServerEvent("ARMA:takeAmount", a.jerryCanCost)
 								h = 50000

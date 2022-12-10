@@ -13,11 +13,12 @@ AddEventHandler('ARMA:MoneyNotInBag', function()
 end)
 
 AddEventHandler('ARMA:IsInMoneyComa', function(coma)
-    PlayerInMoneyComa = coma;
+    PlayerInMoneyComa = coma
     if coma then
-        MoneydropCoords = false;
-        NearMoneydrop = false; 
-        MoneydropID = nil;
+        MoneydropCoords = false
+        NearMoneydrop = false
+        MoneydropID = nil
+        tARMA.ClearWeapons()
     end
 end)
 
