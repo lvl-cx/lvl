@@ -26,6 +26,7 @@ local k = 0
 local x = {}
 globalVehicleModelHashMapping = {}
 globalVehicleOwnership = {}
+globalOwnedPlayerVehicles = {}
 
 local vehicleCannotBeSold = {
     --["demonhawkk"] = true,
@@ -763,6 +764,10 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
+RegisterNetEvent("ARMA:updateOwnedVehicles",function(J)
+    globalOwnedPlayerVehicles = {}
+    globalOwnedPlayerVehicles = J
+end)
 
 RegisterNetEvent('ARMA:ReturnFetchedCars')
 AddEventHandler('ARMA:ReturnFetchedCars', function(table, fuellevels)

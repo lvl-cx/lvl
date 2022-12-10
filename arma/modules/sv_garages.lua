@@ -627,6 +627,15 @@ AddEventHandler("ARMA:refreshGaragePermissions",function()
             end
         end
     end
+    local ownedVehicles = {}
+    if user_id then
+        MySQL.query("ARMA/get_vehicles", {user_id = user_id}, function(pvehicles, affected)
+            for k,v in pairs(pvehicles) do
+                table.insert(ownedVehicles, v.vehicle)
+            end
+            TriggerClientEvent('ARMA:updateOwnedVehicles', source, ownedVehicles)
+        end)
+    end
     TriggerClientEvent("ARMA:recieveRefreshedGaragePermissions",source,garageTable)
 end)
 
