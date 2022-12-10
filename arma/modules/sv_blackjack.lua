@@ -116,6 +116,7 @@ AddEventHandler("Blackjack:setBlackjackBet",function(gameId,betAmount,chairId)
                             TriggerClientEvent("Blackjack:successBlackjackBet",source)
                             TriggerClientEvent("Blackjack:syncChipsPropBlackjack",-1,betAmount,chairId)
                             TriggerClientEvent("blackjack:notify",source,"~g~Bet placed: " .. getMoneyStringFormatted(tostring(betAmount)) .. " chips.")
+                            tARMA.sendWebhook('blackjack-bet',"ARMA Blackjack Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**")
                         else 
                             TriggerClientEvent("blackjack:notify",source,"~r~Not enough chips!")
                         end
