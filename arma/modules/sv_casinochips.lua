@@ -49,6 +49,7 @@ AddEventHandler("ARMA:buyChips", function(amount)
     if ARMA.tryPayment(user_id, amount) then
         MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
         TriggerClientEvent('ARMA:chipsUpdated', source)
+        tARMA.sendWebhook('purchase-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..amount.."**")
     else
         ARMAclient.notify(source,{"~r~You don't have enough money."})
     end
@@ -68,6 +69,7 @@ AddEventHandler("ARMA:sellChips", function(amount)
             else
                 MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
                 TriggerClientEvent('ARMA:chipsUpdated', source)
+                tARMA.sendWebhook('sell-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..amount.."**")
                 ARMA.giveMoney(user_id, amount)
             end
         end
