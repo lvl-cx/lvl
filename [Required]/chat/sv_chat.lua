@@ -10,6 +10,7 @@ RegisterServerEvent('__cfx_internal:commandFallback')
 local blockedWords = {"nigger", "nigga", "wog", "coon", "paki"}
 
 AddEventHandler('_chat:messageEntered', function(author, color, message)
+    local source = source
     if not message or not author then
         return
     end
@@ -23,6 +24,7 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
             end
         end
         TriggerClientEvent('chatMessage', -1, "Twitter @"..author..":",  { 255, 255, 255 }, message)
+        tARMA.sendWebhook({'twitter', "ARMA Chat Logs", "```"..message.."```".."\n> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..ARMA.getUserId({source}).."**\n> Player TempID: **"..source.."**"})
     end
 
     print(author .. '^7: ' .. message .. '^7')
