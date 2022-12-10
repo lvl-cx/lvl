@@ -13,8 +13,10 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local data = ARMA.getUserDataTable(user_id)
     local tmpdata = ARMA.getUserTmpTable(user_id)
     local playername = GetPlayerName(player)
-    if not ARMA.hasPermission(user_id, 'admin.tickets') and staffWhitelist then
-        DropPlayer(ARMA.getUserSource(user_id), 'Server is currently whitelisted for development, check announcements in discord for alerts when the server is open for testing.')
+    if staffWhitelist then
+        if not ARMA.hasPermission(user_id, 'admin.tickets') then
+            DropPlayer(ARMA.getUserSource(user_id), 'Server is currently whitelisted for development, check announcements in discord for alerts when the server is open for testing.')
+        end
     end
     if first_spawn then -- first spawn
         if data.customization == nil then
