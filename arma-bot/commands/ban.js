@@ -14,10 +14,10 @@ exports.runcmd = (fivemexports, client, message, params) => {
                     adminname = result[0].username
                     const reason = params.slice(2).join(' ');
                     if (params[1] == "-1") {
-                        let newval = fivemexports.arma.armabot('banDiscord', [params[0], "perm", `${reason}`, `${adminname}[${adminpermid}] via Discord.`])
+                        let newval = fivemexports.arma.armabot('banDiscord', [params[0], "perm", `${reason}`, `${adminname} via Discord.`])
                     }
                     else {
-                        let newval = fivemexports.arma.armabot('banDiscord', [params[0], params[1], `${reason}`, `${adminname}[${adminpermid}] via Discord.`])
+                        let newval = fivemexports.arma.armabot('banDiscord', [params[0], params[1], `${reason}`, `${adminname} via Discord.`])
                     }
                         let embed = {
                             "title": "Banned User",

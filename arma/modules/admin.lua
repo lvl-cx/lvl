@@ -842,7 +842,6 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
                     }
                 }
                 PerformHttpRequest('webhook', function(err, text, headers) end, 'POST', json.encode({username = "Arma Logs", embeds = command}), { ['Content-Type'] = 'application/json' })
-                --ARMAclient.notify(source, {"Banned ID: "..PlayerID})
                 ARMA.ban(source,PlayerID,banDuration,BanMessage)
                 f10Ban(PlayerID, AdminName, BanMessage, Duration)
                 exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
