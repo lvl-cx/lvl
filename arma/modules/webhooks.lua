@@ -1,4 +1,7 @@
 local webhooks = {
+
+    -- logs done (general, chat, developer, adminmenu, casino, anticheat, licenses, weaponshops)
+    -- logs to do (inventory, civ, vehicles, mpd, nhs)
     -- general
     ['join'] = 'https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2',
     ['leave'] = 'https://discord.com/api/webhooks/991556666095050803/cGTvcrMqB4wmub370MCRQHwW74tzLIHsmgkqXyNBqLPExMWNnB7lTXFRrcDmSNUYhAWQ',
@@ -27,7 +30,6 @@ local webhooks = {
     ['add-car'] = 'https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes',
     ['manage-balance'] = 'https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9',
     -- admin menu
-    ['player-notes'] = 'https://discord.com/api/webhooks/991456823884398623/EqKL4NW4qvjjWQ46_exR-2l51CrkviiTqK959DoSJmbvfQGBdbFdYmodMoWLemwBpH_c',
     ['kick-player'] = 'https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe',
     ['ban-player'] = 'https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2',
     ['spectate'] = 'https://discord.com/api/webhooks/991475878863327352/2AoSwK-EhL6ob7iD5T2jFduqazrxg5RA5ixMpnCAdCuEjI6r1_rXIHqHhUg9S0jvHSY9',
@@ -36,18 +38,14 @@ local webhooks = {
     ['tp-to-player'] = 'https://discord.com/api/webhooks/991476057393872966/TQBcjsriIZJIxdd4BCzC5mbL4uAfW7UKxA1sYJ8iWaFBQxymAtpxWpYmV1M_MsT4CwFn',
     ['tp-to-admin-zone'] = 'https://discord.com/api/webhooks/991476114688057384/o_HHxUAEBITN7ao61sxtHReWuSb-MIiaDbbrNXVAZuxnDpztKmr-3cLxf8PthFOHVwj7',
     ['tp-back-from-admin-zone'] = 'https://discord.com/api/webhooks/991476152818483281/_hS3k7xRxfAB-C_c0vNPt6HpwezrIEeWFTXi_FktX82sBvPgsmOKx7vJOo6k4eR5mBrO',
-    ['tp-to-legion'] = 'https://discord.com/api/webhooks/991476182266695741/5GBbb5CIfk7Y0OgGh7DQZ6VvYxov5WWIzzCManNfMbY8RwfrfP_fEOYQdi3tcu1hvUDY',
     ['freeze'] = 'https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN',
     ['slap'] = 'https://discord.com/api/webhooks/991476247660073040/XNH5g7OwPFDoCA4D1wqNo_HWrZD5EWNbb6QoYc2ducFjV2cPkryg8ACyFOj_ItKSOdSC',
     ['force-clock-off'] = 'https://discord.com/api/webhooks/991476290496503818/vOqaK1KdoP1k3iK0aHRZlVBRBCXuOs4UOpK-sMcI7XTWnOFfT_7pnwhDoA_Bx-ccEub4',
     ['video'] = 'https://discord.com/api/webhooks/1051212433106161805/LRRvao6bFlSK5IwDAzWbo8v9R5UxEOQRN7Yryx0snckC9s4s6skF48SHDEorZD36lRAK',
     ['screenshot'] = 'https://discord.com/api/webhooks/991476361690628126/lTXMxhKvuhPic9Mc9aWM8eVBI5BZLJu_B3axgA80RtJp3LSCGqB6HqiScxiGq3mn_bum',
     ['group'] = 'https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB',
-    ['tp-to-coords'] = 'https://discord.com/api/webhooks/991476622295306410/ZHl2CO1GiytVu-oJfcnNEEiKTvSGR6Yt1u1Zkdm6EOdqmWECcoWt1OTb9edu1oWlVkQD',
-    ['tp-to-waypoint'] = 'https://discord.com/api/webhooks/991476693170659398/9-9T2TIHBP2hqvZOwq8FfLMQl0wI_PSP28WjTT9axmoMoXzxrvruTMaUHf0-DpG4ibVc',
     ['unban-player'] = 'https://discord.com/api/webhooks/991476724363706418/m2aEhULB5NWG0NzS5FgGscLSeJvMDApibQ7oMmBHPctTrlXxfLCodlvFByoTCJoAmzdZ',
     ['remove-warning'] = 'https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ',
-    ['noclip'] = 'https://discord.com/api/webhooks/1050351167034626119/Ii4eYrC_rw3RXc_YOHrcjacIq0mLgF7J00ScD1kMpMnLq4_NH8XXVd50hi29khIuI34r',
     -- vehicles
     ['spawn'] = 'https://discord.com/api/webhooks/1050351249440129056/DPnHZ_T-10ULTC24-EYc-jjvmBi0BKHELjFOnZ-z-HWhXyGkUViKagK_oo1vaZHoVsXd',
     ['crush'] = 'https://discord.com/api/webhooks/1050351302015729714/h-CcvORewDCPeEZ8ED-l9M-lmk9omTw9uKWdjfFeDSfeh09YvnSJxn4yPcN4pHGWLRGs',
@@ -70,7 +68,6 @@ local webhooks = {
     ['cpr'] = 'https://discord.com/api/webhooks/1050352244945592390/4JUf7XUfzvToblvGounvolDC1l_qre6U6BgUG7nyZPYEQs-7Ht0gZYzpBCyr6b5nAiAA',
     -- licenses
     ['purchases'] = 'https://discord.com/api/webhooks/1050352635095556157/0cQl-CYhatzE2v9VUx_yQKNY10cD8x-PV8oMkQJHcQizJneqeg5pdPsFlkErlV1nQ8Pc',
-    ['refund'] = 'https://discord.com/api/webhooks/1050352679710367844/l8kXJ0Z0xB0Jc5aY7_O-R0snTwipb6PMPP8L_YRR_yv9EKTAFmfEgqtiXkFhudVA0fkq',
     ['sell-to-nearest-player'] = 'https://discord.com/api/webhooks/1050352744160034817/blvujZVCfns9W1O5BYu-PYVSSu4G0F6sGArsdvn74FBPHL2jS5UFJ82qohX6p-0-cY7a',
     -- casino
     ['blackjack-bet'] = 'https://discord.com/api/webhooks/1050352894127390740/h29WYQilD31Ism7YcOUR827S4d3G_X6lbhXmws-HkyUxHEEy5AVl49EDO4roc-QTw99G',
@@ -84,7 +81,6 @@ local webhooks = {
     -- anticheat
     ['anticheat'] = 'https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm',
     ['crash-error'] = 'https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGFc',
-    ['noprops-detection'] = 'https://discord.com/api/webhooks/1047298764974588026/IZIqbvTBgtUOLaVikrnUH-4pwqt211SS29w6_XkVdf5kmWQnEd1t-u1qONTFKfwBWrtd',
 }
 
 function tARMA.sendWebhook(webhook, name, message)
