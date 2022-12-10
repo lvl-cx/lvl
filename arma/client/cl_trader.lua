@@ -150,7 +150,7 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
         end
         local t = function(s)
             RageUI.Visible(RMenu:Get("trader", "seller"), false)
-            RageUI.CloseAll()
+            RageUI.ActuallyCloseAll()
         end
         local u = function(s)
             if IsControlJustPressed(1, 38) then

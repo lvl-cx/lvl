@@ -136,7 +136,7 @@ function tARMA.spawnAnim(a)
     while (not HaveAllStreamingRequestsCompleted(PlayerPedId()) or GetNumberOfStreamingRequests() > 0) and
         GetGameTimer() - h < 10000 do
         Wait(0)
-        print("Waiting for streaming requests to complete!")
+        --print("Waiting for streaming requests to complete!")
     end
     NewLoadSceneStop()
     tARMA.checkCustomization()
