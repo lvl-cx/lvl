@@ -103,8 +103,8 @@ if (settingsjson.settings.StatusEnabled) {
                     }, */
                     {
                         "name": "💻 How do I connect?",
-                        //"value": '``F8 -> connect ARMA.city``',
-                        "value": "``Search 'ARMA' on FiveM Server List``",
+                        "value": '``F8 -> connect s1.armarp.co.uk``',
+                        //"value": "``Search 'ARMA' on FiveM Server List``",
                         "inline": true
                     }
                 ],
