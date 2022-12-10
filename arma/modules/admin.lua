@@ -122,10 +122,14 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.spectate") then
-        spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
-        SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
-        TriggerClientEvent('ARMA:setBucket', source, GetPlayerRoutingBucket(playerssource))
-        TriggerClientEvent("ARMA:spectatePlayer",source, playerssource, GetEntityCoords(GetPlayerPed(playerssource)))
+        if playersource ~= nil then
+            spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
+            SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
+            TriggerClientEvent('ARMA:setBucket', source, GetPlayerRoutingBucket(playerssource))
+            TriggerClientEvent("ARMA:spectatePlayer",source, playerssource, GetEntityCoords(GetPlayerPed(playerssource)))
+        else
+            ARMAclient.notify(source, {"~r~You can't spectate an offline player."})
+        end
     end
 end)
 
