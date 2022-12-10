@@ -131,13 +131,17 @@ end)
 RegisterNetEvent("Blackjack:hitBlackjack")
 AddEventHandler("Blackjack:hitBlackjack",function(gameId,nextCardCount)
     local source = source
-    blackjackGameData[gameId][source][2][nextCardCount] = true
+    if source ~= nil then 
+        blackjackGameData[gameId][source][2][nextCardCount] = true
+    end
 end)
 
 RegisterNetEvent("Blackjack:standBlackjack")
 AddEventHandler("Blackjack:standBlackjack",function(gameId,nextCardCount)
     local source = source
-    blackjackGameData[gameId][source][2][nextCardCount] = false
+    if source ~= nil then 
+        blackjackGameData[gameId][source][2][nextCardCount] = false
+    end
 end)
 
 for i=0,31,1 do
