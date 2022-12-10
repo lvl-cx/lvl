@@ -18,108 +18,43 @@ local removeMsg = "The airdrop has vanished..."
 local lootedMsg = "Someone looted the airdrop!"
 
 local avaliableItems = { --Where you put you weapons and how frequently you want them to spawn E.G M1911 with its ammo. and put that in there twice and akm once the m1911 will have more chance of spawning
-    {"wammo|WEAPON_m1911", "9 mm Bullets", 250, 0.01},
-    {"wbody|WEAPON_m1911", "Weapon_m1911 body", 1, 2.5},
-    {"wammo|WEAPON_ak74", "7.62 mm Bullets", 250, 0.01},
+    {"9mm Bullets", 250},
+    {"wbody|WEAPON_MOSIN", 1},
+    {"7.62mm Bullets", 250},
 }
-
-local currentLoot = {}
 
 RegisterServerEvent('openLootCrate', function(playerCoords, boxCoords)
     local source = source
     user_id = ARMA.getUserId(source)
     if #(playerCoords - boxCoords) < 2.0 then
         if not used then
-                used = true
-                lootrandom = math.random(1, 3)
-
-                if lootrandom == 1 then -- [Legendary]
-                    -- [Legendary]
-                    ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_MOSIN', 1, true)
-                    ARMA.giveInventoryItem({user_id, '7.62 Bullets', 250, true})
-
-                    ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_HK45', 1, true)
-                    ARMA.giveInventoryItem(user_id, '9mm Bullets', 250, true)
-                    ARMA.giveInventoryItem(user_id, "body_armor", 3, true)
-                    ARMAclient.notify(source,{'Received ~g~£200,000 Cash.'})
-                    ARMA.giveMoney(user_id,200000)
-
-                    TriggerClientEvent('chat:addMessage', -1, {
-                        template = ' Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^3Legendary]' .. '</div>',
-                        args = { playerName, msg }
-                    })
-                elseif lootrandom == 2 then 
-                    -- [Epic]
-                    TriggerClientEvent('chat:addMessage', -1, {
-                        template = ' Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^6Epic]' .. '</div>',
-                        args = { playerName, msg }
-                    })
-
-                elseif lootrandom == 3 then 
-                    -- [Uncommon]
-                    TriggerClientEvent('chat:addMessage', -1, {
-                        template = ' Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^5Uncommon]' .. '</div>',
-                        args = { playerName, msg }
-                    })
-                elseif lootrandom == 4 then 
-                    -- [Common]
-                    TriggerClientEvent('chat:addMessage', -1, {
-                        template = ' Supply Drops^7: ' .. 'The Drop has been Looted. [Rarity: ^9Common]' .. '</div>',
-                        args = { playerName, msg }
-                    })
+            used = true
+            lootrandom = math.random(1, 3)
+            while lootrandom > 0 do
+                for k,v in pairs(availableItems) do
+                    ARMA.giveInventoryItem(user_id, v[1], v[2], true)
                 end
-                
-          Citizen.Wait(300*1000)
-          TriggerClientEvent("removeCrate", -1)
+            end
+            ARMA.giveMoney(user_id,math.random(50000,150000))
+            TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "Crate drop has been looted.", "alert")
+            Citizen.Wait(300*1000)
+            TriggerClientEvent("removeCrate", -1)
         end
     end
 end)
 
-RegisterServerEvent('updateLoot', function(source, item, amount)
-    local i = currentLoot[item]
-    local j = i[2] - amount
-    if (j > 0) then
-        currentLoot[item] = {i[1], j, i[3]}
-    else
-        currentLoot[item] = nil
-    end
-
-    if #currentLoot == 0 then
-        if not used then
-            used = true
-            TriggerClientEvent('chatMessage', -1, "^1[ARMA]: ^0 ", {66, 72, 245}, lootedMsg, "alert")
-        end
-    end
-
-            TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, currentLoot, ARMA.computeItemsWeight({currentLoot}), 30)
-end) 
-
 Citizen.CreateThread(function()
-    while (true) do
-        Wait(1000 * 3600)
+    while true do
+        Wait(3600 * 1000)
 
-            local num = math.random(1, #Coords)
-            local coords = Coords[num]
+        local num = math.random(1, #Coords)
+        local coords = Coords[num]
 
-            for i = 1, amountOffItems do
-                local secondNum = math.random(1, #avaliableItems)
-                local k = avaliableItems[secondNum]
-                currentLoot[k[1]] = {k[2], k[3], k[4]}
-            end 
-
-            TriggerClientEvent('crateDrop', -1, coords)
-            TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, dropMsg, "alert")
-        end
-        -- Citizen.SetTimeout(stayTime * 1000, function()
-        --     TriggerClientEvent("removeCrate", -1)
-        --     TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0 ", {66, 72, 245}, removeMsg, "alert")
-        -- end)
-
-        -- Wait(stayTime * 1000 + 500)
+        TriggerClientEvent('crateDrop', -1, coords)
+        TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, dropMsg, "alert")
+        used = false
         Wait(1000 * 3600)
         TriggerClientEvent("removeCrate", -1)
         Wait(1000)
-  
+    end
 end)
-
-
