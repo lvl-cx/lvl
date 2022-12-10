@@ -223,6 +223,7 @@ Citizen.CreateThread(function()
     while true do 
         if tARMA.isPlatClub()then 
             if not HasPedGotWeapon(PlayerPedId(),`GADGET_PARACHUTE`,false) then 
+                tARMA.allowWeapon("GADGET_PARACHUTE")
                 GiveWeaponToPed(PlayerPedId(),`GADGET_PARACHUTE`)
                 SetPlayerHasReserveParachute(PlayerId())
             end 

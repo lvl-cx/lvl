@@ -764,7 +764,7 @@ cfg.groups = {
   ["Gang"] = {
     "gang.whitelisted",
   },
-  ["highroller"] = {
+  ["Highroller"] = {
     "casino.highrollers",
   },
 

@@ -11,6 +11,7 @@ RegisterCommand("piggy",function()
             if DoesEntityExist(e) then
                 SetBlockingOfNonTemporaryEvents(e, true)
                 SetPedMoveRateOverride(e, 38.0)
+		        tARMA.allowWeapon("WEAPON_ANIMAL")
                 GiveWeaponToPed(e, GetHashKey("WEAPON_ANIMAL"), 200, true, true)
                 local f = {0, 3, 5, 46}
                 for g, h in pairs(f) do
@@ -44,6 +45,7 @@ RegisterCommand("rat",function()
             if DoesEntityExist(e) then
                 SetBlockingOfNonTemporaryEvents(e, true)
                 SetPedMoveRateOverride(e, 38.0)
+		        tARMA.allowWeapon("WEAPON_ANIMAL")
                 GiveWeaponToPed(e, GetHashKey("WEAPON_ANIMAL"), 200, true, true)
                 local f = {0, 3, 5, 46}
                 for g, h in pairs(f) do

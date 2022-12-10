@@ -35,7 +35,6 @@ local wbody_choices = function(args)
         weapons[args[2]] = {ammo = 0}
         ARMAclient.giveWeapons(player, {weapons})
         SetPedAmmo(GetPlayerPed(player), args[2], 0)
-
         ARMA.closeMenu(player)
       end
     end

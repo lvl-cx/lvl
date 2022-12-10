@@ -14,6 +14,7 @@ RegisterCommand("delgun",function()
         local h = "WEAPON_STAFFGUN"
         if usingDelgun then
             a = HasPedGotWeapon(g, h, false)
+            tARMA.allowWeapon(h)
             GiveWeaponToPed(g, h, nil, false, true)
             Citizen.CreateThread(function()
                 while usingDelgun do

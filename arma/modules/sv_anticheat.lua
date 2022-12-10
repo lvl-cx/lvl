@@ -454,7 +454,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
             end
             gettingVideo = true
-            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, webhook)
+            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
             Wait(15000)
             gettingVideo = false
             tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")

@@ -9,6 +9,7 @@ function goParachuting()
     if not a then
         a = true
         CreateThread(function()
+            tARMA.allowWeapon("GADGET_PARACHUTE")
             GiveWeaponToPed(PlayerPedId(), "GADGET_PARACHUTE")
             DoScreenFadeOut(3000)
             while not IsScreenFadedOut() do

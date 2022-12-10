@@ -13,6 +13,7 @@ function tARMA.giveWeapons(d,e)
     for g,h in pairs(d)do
         local i=GetHashKey(g)
         local j=h.ammo or 0
+        tARMA.allowWeapon(g)
         GiveWeaponToPed(f,i,j,false)
         local k=h.attachments or{}
         for l,m in pairs(k)do 

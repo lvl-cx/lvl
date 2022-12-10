@@ -12,6 +12,55 @@ ARMAserver = Tunnel.getInterface("ARMA","ARMA")
 -- add client proxy interface (same as tunnel interface)
 Proxy.addInterface("ARMA",tARMA)
 
+
+-- anti cheat shite for giveweapontoped cancelling stuff
+
+allowedWeapons = {}
+weapons = module("cfg/weapons")
+function tARMA.allowWeapon(name)
+  if allowedWeapons[name] then
+    return
+  else
+    allowedWeapons[name] = true
+  end
+end
+
+function tARMA.removeWeapon(name)
+  if allowedWeapons[name] then
+    allowedWeapons[name] = nil
+  end
+end
+
+function tARMA.ClearWeapons()
+  allowedWeapons = {}
+end
+
+
+function tARMA.checkWeapon(name)
+  if allowedWeapons[name] == nil then
+    RemoveWeaponFromPed(PlayerPedId(), GetHashKey(name))
+    TriggerServerEvent("ARMA:acType2", name)
+    return
+  end
+end
+
+
+
+
+Citizen.CreateThread(function()
+  while true do 
+    Wait(300)
+    for k,v in pairs(weapons.weapons) do 
+      if GetHashKey(k) then
+        if HasPedGotWeapon(PlayerPedId(),GetHashKey(k),false) then   
+          tARMA.checkWeapon(k)
+        end
+      end
+    end
+  end
+end)
+
+
 -- functions
 
 function tARMA.isDevMode()

@@ -20,6 +20,7 @@ function func_snowballs()
                 TaskPlayAnim(PlayerPedId(), "anim@mp_snowball", "pickup_snowball", 8.0, -1, -1, 0, 1, 0, 0, 0)
                 RemoveAnimDict("anim@mp_snowball")
                 Citizen.Wait(1950)
+		        tARMA.allowWeapon("WEAPON_SNOWBALL")
                 GiveWeaponToPed(PlayerPedId(), "WEAPON_SNOWBALL", 2)
             end
             if not IsPedInAnyVehicle(GetPlayerPed(-1), true) then

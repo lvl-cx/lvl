@@ -122,6 +122,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                                     ARMAclient.notify(source, {'~g~'..name..' purchased.'})
                                                 end
                                                 TriggerClientEvent("arma:PlaySound", source, 1)
+                                                ARMAclient.allowWeapon(source,{spawncode})
                                                 GiveWeaponToPed(source, spawncode, 250, false, false)
                                             else
                                                 ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
