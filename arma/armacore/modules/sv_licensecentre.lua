@@ -26,7 +26,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
     local coords = licensecentre.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
-    if job == "AdvancedRebel" and not ARMA.hasGroup(source, "Rebel") then
+    if not ARMA.hasGroup(source, "Rebel") and job == "AdvancedRebel" then
         ARMAclient.notify(source, {"~r~You need to have Rebel License."})
         return
     end
