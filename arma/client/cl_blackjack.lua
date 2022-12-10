@@ -411,42 +411,18 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armablackjack', 'instructions')) then
         RageUI.DrawContent({ header = true, glare=  false, instructionalButton = true }, function()           
             RageUI.FakeButton("test", "The aim of Blackjack is to beat the Dealer's hand without going over 21. This game uses four 52           card decks, which are shuffled at the start of every hand.                                                                                    The dealer will stand on soft 17.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                if (Hovered) then
-
-                end
-                if (Active) then
-
-                end
-                if (Selected) then
-
-                end
             end, RMenu:Get('armablackjack', 'instructions'))            
         end, function()
-            ---Panels
         end)
     end
-
-end, 1)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armablackjack_high', 'instructions')) then
         RageUI.DrawContent({ header = true, glare=  false, instructionalButton = true }, function()           
             RageUI.FakeButton("test", "The aim of Blackjack is to beat the Dealer's hand without going over 21. This game uses four 52           card decks, which are shuffled at the start of every hand.                                                                                    The dealer will stand on soft 17.", { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
-                if (Hovered) then
-
-                end
-                if (Active) then
-
-                end
-                if (Selected) then
-
-                end
             end, RMenu:Get('armablackjack_high', 'instructions'))            
         end, function()
             ---Panels
         end)
     end
-
 end, 1)
 
 function showHowToBlackjack(flag)
@@ -465,17 +441,14 @@ Citizen.CreateThread(function()
                 DrawRect(0.933, 0.928, 0.105, 0.032, 0, 0, 0, 150) 
                 DrawAdvancedNativeText(0.991, 0.935, 0.005, 0.0028, 0.29, "BET:", 255, 255, 255, 255, 0, 0)
                 DrawAdvancedNativeText(1.041, 0.928, 0.005, 0.0028, 0.464, tostring(currentBetAmount), 255, 255, 255, 255, 0, 0)
-                --DrawTimerBar2("BET",tostring(currentBetAmount),1)
             end
         end
         if drawTimerBar then
             DrawRect(0.944, 0.886, 0.081, 0.032, 0, 0, 0, 150)
             DrawAdvancedNativeText(1.013, 0.892, 0.005, 0.0028, 0.29, "TIME:", 255, 255, 255, 255, 0, 0)
             if timeLeft < 10 then
-                --DrawTimerBar2("TIME","00:0" .. tostring(timeLeft),1)
                 DrawAdvancedNativeText(1.05, 0.885, 0.005, 0.0028, 0.464, "00:0" .. tostring(timeLeft), 255, 255, 255, 255, 0, 0)
             else
-                --DrawTimerBar2("TIME","00:" .. tostring(timeLeft),1)
                 DrawAdvancedNativeText(1.05, 0.885, 0.005, 0.0028, 0.464, "00:" .. tostring(timeLeft), 255, 255, 255, 255, 0, 0)
             end
         end
@@ -497,7 +470,6 @@ RegisterNetEvent("Blackjack:beginBetsBlackjack")
 AddEventHandler("Blackjack:beginBetsBlackjack",function(gameID,tableId)
     globalGameId = gameID
     blackjackInstructional = setupBlackjackInstructionalScaleform("instructional_buttons")
-    --print("made blackjackInstructional true cause its intro time bet")
     ClearHelp(true)
     drawNativeNotification("Place your bets")
     bettedThisRound = false
@@ -505,7 +477,6 @@ AddEventHandler("Blackjack:beginBetsBlackjack",function(gameID,tableId)
     drawCurrentHand = false
     standOrHitThisRound = false
     canExitBlackjack = true
-    --print("waitingForBetState = true from beginbets")
     waitingForBetState = true
     dealerPed = getDealerFromTableId(tableId)
     PlayAmbientSpeech1(dealerPed,"MINIGAME_DEALER_PLACE_BET","SPEECH_PARAMS_FORCE_NORMAL_CLEAR",1)
@@ -523,7 +494,6 @@ AddEventHandler("Blackjack:beginBetsBlackjack",function(gameID,tableId)
         timeLeft = 20
         drawTimerBar = false
         if not bettedThisRound then
-            --print("made blackjackInstructional nil cause you didnt bet")
             drawNativeNotification("No bet placed, round skipped")
         end
     end)
