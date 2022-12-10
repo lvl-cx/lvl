@@ -18,6 +18,7 @@ function formatMoney(number, decPlaces, decSep, thouSep) {
 
 var userConnected = ''
 var banned = false
+var discord = 'None'
 exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'groups [permid]')
@@ -32,80 +33,92 @@ exports.runcmd = (fivemexports, client, message, params) => {
                     fivemexports.ghmattimysql.execute("SELECT * FROM arma_user_moneys WHERE user_id = ?", [params[0]], (money) => {
                         fivemexports.ghmattimysql.execute("SELECT * FROM arma_casino_chips WHERE user_id = ?", [params[0]], (chips) => {
                             fivemexports.ghmattimysql.execute("SELECT * FROM `arma_users` WHERE id = ?", [params[0]], (users) => {
-                            hours = JSON.stringify(JSON.parse(userdata[0].dvalue).PlayerTime/60)
-                            obj = JSON.parse(userdata[0].dvalue).groups
-                            lastlogin = users[0].last_login.split(" ")
-                            time = lastlogin[0]
-                            date = lastlogin[1]
-                            if (users[0].banned == 1) {
-                                banned = 'Yes'
-                            }
-                            else {
-                                banned = 'No'
-                            }
-                            let embed = {
-                                "title": `**User Profile**`,
-                                "description": `Perm ID: ***${params[0]}***`,
-                                "color": settingsjson.settings.botColour,
-                                "fields": [
-                                    {
-                                        name: '**Last Known Username:**',
-                                        value: `${users[0].username}`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Balance:**',
-                                        value: `Wallet: ${(money[0].wallet).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nBank: ${(money[0].bank).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nChips: ${(chips[0].chips).toLocaleString('en-US')}`,
-                                        inline: true,
-                                    }, 
-                                    {
-                                        name: '**Connected:**',
-                                        value: `User is ${userConnected}.`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Last Logged In:**',
-                                        value: `${date} at ${time}`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Hours:**',
-                                        value: `User has a total of ${Math.round(hours)} hours.`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Notes:**',
-                                        value: `User has a total of ${notes.length} notes.`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Groups:**',
-                                        value: `${(JSON.stringify(Object.keys(obj)).replace(/"/g, '').replace('[', '').replace(']', '')).replace(/,/g, ', ')}`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Garage:**',
-                                        value: `User has a total of ${cars.length} vehicles in their garage.`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**F10:**',
-                                        value: `User has a total of ${warnings.length} warnings.`,
-                                        inline: true,
-                                    },
-                                    {
-                                        name: '**Banned:**',
-                                        value: `${banned}`,
-                                        inline: true,
-                                    }, 
-                                ],
-                                "footer": {
-                                    "text": ""
-                                },
-                                "timestamp": new Date()
-                            }
-                            message.channel.send({ embed })
-                        });
+                                fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_ids` WHERE user_id = ?", [params[0]], (userids) => {
+                                    for (i = 0; i < userids.length; i++) {
+                                        if (userids[i].identifier.includes('discord')) {
+                                            discord = `<@${userids[i].identifier.split(":")[1]}>`
+                                        }
+                                    }
+                                    hours = JSON.stringify(JSON.parse(userdata[0].dvalue).PlayerTime/60)
+                                    obj = JSON.parse(userdata[0].dvalue).groups
+                                    lastlogin = users[0].last_login.split(" ")
+                                    time = lastlogin[0]
+                                    date = lastlogin[1]
+                                    if (users[0].banned == 1) {
+                                        banned = 'Yes'
+                                    }
+                                    else {
+                                        banned = 'No'
+                                    }
+                                    let embed = {
+                                        "title": `**User Profile**`,
+                                        "description": `Perm ID: ***${params[0]}***`,
+                                        "color": settingsjson.settings.botColour,
+                                        "fields": [
+                                            {
+                                                name: '**Last Known Username:**',
+                                                value: `${users[0].username}`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Associated Discord:**',
+                                                value: `${discord}`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Balance:**',
+                                                value: `Wallet: ${(money[0].wallet).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nBank: ${(money[0].bank).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nChips: ${(chips[0].chips).toLocaleString('en-US')}`,
+                                                inline: true,
+                                            }, 
+                                            {
+                                                name: '**Connected:**',
+                                                value: `User is ${userConnected}.`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Last Logged In:**',
+                                                value: `${date} at ${time}`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Hours:**',
+                                                value: `User has a total of ${Math.round(hours)} hours.`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Notes:**',
+                                                value: `User has a total of ${JSON.parse(notes[0].info).length} notes.`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Groups:**',
+                                                value: `${(JSON.stringify(Object.keys(obj)).replace(/"/g, '').replace('[', '').replace(']', '')).replace(/,/g, ', ')}`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Garage:**',
+                                                value: `User has a total of ${cars.length} vehicles in their garage.`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**F10:**',
+                                                value: `User has a total of ${warnings.length} warnings.`,
+                                                inline: true,
+                                            },
+                                            {
+                                                name: '**Banned:**',
+                                                value: `${banned}`,
+                                                inline: true,
+                                            }, 
+                                        ],
+                                        "footer": {
+                                            "text": ""
+                                        },
+                                        "timestamp": new Date()
+                                    }
+                                    message.channel.send({ embed })
+                                });
+                            });
                         });
                     });
                 });
