@@ -6,7 +6,7 @@ AddEventHandler('ARMA:purchaseHighRollersMembership', function()
         if ARMA.tryFullPayment(user_id,10000000) then
             ARMA.addUserGroup(user_id, 'Highroller')
             ARMAclient.notify(source, {'~g~You have purchased the ~b~High Rollers ~g~membership.'})
-            tARMA.sendWebhook('purchase-highrollers',"ARMA Highrollers Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**")
+            tARMA.sendWebhook('purchase-highrollers',"ARMA Purchased Highrollers Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**")
         else
             ARMAclient.notify(source, {'~r~You do not have enough money to purchase this membership.'})
         end

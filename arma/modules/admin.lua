@@ -154,14 +154,14 @@ end)
 RegisterServerEvent("ARMA:Giveweapon")
 AddEventHandler("ARMA:Giveweapon",function()
     local source = source
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasPermission(userid, "dev.menu") then
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, "dev.menu") then
         ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
-        ARMAclient.allowWeapon(source,{'WEAPON_'..string.upper(hash)})
-        GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
-        tARMA.sendWebhook('spawn-weapon',"ARMA Spawn Weapon Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Weapon Spawned: **WEAPON_"..hash.."**")
-        ARMAclient.notify(source,{"~g~Successfully spawned ~b~"..hash})
-    end)
+            ARMAclient.allowWeapon(source,{'WEAPON_'..string.upper(hash)})
+            GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
+            ARMAclient.notify(source,{"~g~Successfully spawned ~b~"..hash})
+            tARMA.sendWebhook('spawn-weapon',"ARMA Spawn Weapon Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Weapon Spawned: **WEAPON_"..hash.."**")
+        end)
     end
 end)
 
@@ -196,7 +196,7 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
         ARMA.removeAllJobs(player_perm)
         ARMAclient.notify(source,{'~g~User clocked off'})
         ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
-        tARMA.sendWebhook('force-clock-off',"ARMA Faction Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n Players Name: **"..GetPlayerName(player_temp).."**\n> Players TempID: **"..player_temp.."**\n> Players PermID: **"..player_perm.."**")
+        tARMA.sendWebhook('force-clock-off',"ARMA Faction Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Players Name: **"..GetPlayerName(player_temp).."**\n> Players TempID: **"..player_temp.."**\n> Players PermID: **"..player_perm.."**")
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
@@ -244,7 +244,7 @@ AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
             ARMA.addUserGroup(perm, selgroup)
             local user_groups = ARMA.getUserGroups(perm)
             TriggerClientEvent("ARMA:GotGroups", source, user_groups)
-            tARMA.sendWebhook('group',"ARMA Group Logs", "> Admin Name: **"..playerName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..perm.."**\n> Group: **"..selgroup.."**\n> Type: **Added**")
+            tARMA.sendWebhook('group',"ARMA Group Logs", "> Admin Name: **"..playerName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..perm.."**\n> Group: **"..selgroup.."**\n> Type: **Added**")
         end
     end
 end)
@@ -287,7 +287,7 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
             ARMA.removeUserGroup(perm, selgroup)
             local user_groups = ARMA.getUserGroups(perm)
             TriggerClientEvent("ARMA:GotGroups", source, user_groups)
-            tARMA.sendWebhook('group',"ARMA Group Logs", "> Admin Name: **"..playerName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..perm.."**\n> Group: **"..selgroup.."**\n> Type: **Removed**")
+            tARMA.sendWebhook('group',"ARMA Group Logs", "> Admin Name: **"..playerName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..perm.."**\n> Group: **"..selgroup.."**\n> Type: **Removed**")
         end
     end
 end)
@@ -482,7 +482,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, tARMA.getWebhook('screenshot'))
+        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, ARMA.getWebhook('screenshot'))
         tARMA.sendWebhook('screenshot', 'ARMA Screenshot Logs', "> Players Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..target_id.."**")
     else
         local player = ARMA.getUserSource(admin_id)
@@ -499,8 +499,8 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, tARMA.getWebhook('video'))
-        tARMA.sendWebhook('video', 'ARMA Screenshot Logs', "> Players Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..target_id.."**")
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, ARMA.getWebhook('video'))
+        tARMA.sendWebhook('video', 'ARMA Video Logs', "> Players Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..target_id.."**")
     else
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)

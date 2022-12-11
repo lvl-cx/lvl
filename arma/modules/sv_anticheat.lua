@@ -420,7 +420,7 @@ AddEventHandler("ARMA:acType15", function()
 	local name = GetPlayerName(source)
     Wait(500)
     if not godmodeVid then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.sendWebhook('anticheat'))
         Wait(30000)
         godmodeVid = true
     end
@@ -462,7 +462,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
             end
             gettingVideo = true
-            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
+            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.sendWebhook('anticheat'))
             Wait(30000)
             gettingVideo = false
             tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")

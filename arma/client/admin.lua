@@ -401,12 +401,6 @@ function tARMA.hasStaffBlips()
     return d
 end
 
-RegisterCommand('danny', function(source, args)
-    if tARMA.getStaffLevel() > 0 and not tARMA.isStaffedOn() then
-        tARMA.setCustomization(getDefaultCustomization())
-    end
-end)
-
 globalIgnoreDeathSound = false
 RegisterNetEvent("ARMA:deathSound",function(E)
     local F = GetEntityCoords(tARMA.getPlayerPed())
