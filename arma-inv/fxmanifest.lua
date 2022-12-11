@@ -1,8 +1,9 @@
--- ARMA
-
 fx_version 'cerulean'
 games { 'gta5' }
 author 'JamesUK'
+
+ui_page 'nui/inventory.html'
+
 client_scripts {
     '@arma/client/Tunnel.lua',
     '@arma/client/Proxy.lua',
@@ -18,33 +19,3 @@ files {
     'nui/*',
     'nui/assets/*'
 }
-
-ui_page 'nui/inventory.html'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- UNLAWFUL USAGE WITHOUT PERMISSION IS AGAINST THE LAW. JAMESUK PRODUCTION
-
-client_script 'QUiFQVgzcRzV.lua'

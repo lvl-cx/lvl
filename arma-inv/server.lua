@@ -1,12 +1,11 @@
--- A JamesUK Production. Licensed users only. Use without authorisation is illegal, and a criminal offence under UK Law.
 local Tunnel = module("arma", "lib/Tunnel")
 local Proxy = module("arma", "lib/Proxy")
 local ARMA = Proxy.getInterface("ARMA")
-local ARMAclient = Tunnel.getInterface("ARMA","ARMA") -- server -> client tunnel
---local Inventory = module("arma-vehicles", "cfg/cfg_inventory") (move this to car repo)
+local ARMAclient = Tunnel.getInterface("ARMA","ARMA")
+
 local Inventory = module("arma", "cfg/inventory")
 local Housing = module("arma", "armacore/cfg/cfg_housing")
-local InventorySpamTrack = {} -- Stops inventory being spammed by users.
+local InventorySpamTrack = {}
 local LootBagEntities = {}
 local InventoryCoolDown = {}
 local a = module("cfg/weapons")
