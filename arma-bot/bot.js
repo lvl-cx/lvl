@@ -91,12 +91,12 @@ if (settingsjson.settings.StatusEnabled) {
                         "value": `${onlineNHS}`,
                         "inline": true
                     },                      
-                    {
+                    /* {
                         "name": "Server Status:",
                         "value": `${serverStatus}`,
                         "inline": true
-                    },
-/*                     {
+                    }, */
+                    /* {
                         "name": "🌎 Players Since Release:",
                         "value": `${playersSinceRelease}`,
                         "inline": true
@@ -232,9 +232,9 @@ client.on('message', (message) => {
         cmd = client.commands.get(command);
     }
     if (cmd) {
-        if (!message.channel.name.includes('bot') && cmd.conf.name === 'verify') {
+        if (!message.channel.name.includes('bot') && (cmd.conf.name === 'verify' || cmd.conf.name === 'leaderboard')) {
             message.delete()
-            message.reply('Please use the bot commands channel to verify.').then(msg => {
+            message.reply('Please use bot commands for this command.').then(msg => {
                 msg.delete(5000)
             })
         }
