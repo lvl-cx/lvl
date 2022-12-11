@@ -51,41 +51,51 @@ end
 function ch_give(idname, player, choice)
   local user_id = ARMA.getUserId(player)
   if user_id ~= nil then
-    -- get nearest player
-    ARMAclient.getNearestPlayer(player,{10},function(nplayer)
-      if nplayer ~= nil then
-        local nuser_id = ARMA.getUserId(nplayer)
-        if nuser_id ~= nil then
-          -- prompt number
-          TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
-          ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
-            local amount = parseInt(amount)
-            -- weight check
-            TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-            local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
-            if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
-              if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
-                ARMA.giveInventoryItem(nuser_id,idname,amount,true)
-                TriggerEvent('ARMA:RefreshInventory', player)
-                TriggerEvent('ARMA:RefreshInventory', nplayer)
-                ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
-                ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
-              else
-                TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-                ARMAclient.notify(player,{lang.common.invalid_value()})
-              end
+    ARMAclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
+      usrList = ""
+      for k, v in pairs(nplayers) do
+          usrList = usrList .. "[" .. k .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
+      end
+      if usrList ~= "" then
+          ARMA.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, nplayer) --ask for id
+            nplayer = nplayer
+            if nplayer ~= nil and nplayer ~= "" then
+              local nuser_id = ARMA.getUserId(nplayer)
+                if nuser_id ~= nil then
+                  -- prompt number
+                  TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
+                  ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
+                    local amount = parseInt(amount)
+                    -- weight check
+                    TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+                    local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
+                    if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
+                      if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
+                        ARMA.giveInventoryItem(nuser_id,idname,amount,true)
+                        TriggerEvent('ARMA:RefreshInventory', player)
+                        TriggerEvent('ARMA:RefreshInventory', nplayer)
+                        ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
+                        ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
+                      else
+                        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+                        ARMAclient.notify(player,{lang.common.invalid_value()})
+                      end
+                    else
+                        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+                      ARMAclient.notify(player,{lang.inventory.full()})
+                    end
+                  end)
+                else
+                    TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+                  ARMAclient.notify(player,{lang.common.no_player_near()})
+                end
             else
-                TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-              ARMAclient.notify(player,{lang.inventory.full()})
+              TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+              ARMAclient.notify(player,{lang.common.no_player_near()})
             end
           end)
-        else
-            TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-          ARMAclient.notify(player,{lang.common.no_player_near()})
-        end
       else
-        TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-        ARMAclient.notify(player,{lang.common.no_player_near()})
+        ARMAclient.notify(player,{"~r~No players nearby!"}) --no players nearby
       end
     end)
   end
