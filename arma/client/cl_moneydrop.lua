@@ -18,7 +18,6 @@ AddEventHandler('ARMA:IsInMoneyComa', function(coma)
         MoneydropCoords = false
         NearMoneydrop = false
         MoneydropID = nil
-        tARMA.ClearWeapons()
     end
 end)
 

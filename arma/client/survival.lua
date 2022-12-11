@@ -325,6 +325,7 @@ AddEventHandler("ARMA:respawnButtonClicked",function(X, Y)
     end
     local Z = p.spawnLocations[X].coords
     TriggerEvent("ARMA:playGTAIntro")
+    tARMA.ClearWeapons()
     if tARMA.isHandcuffed() then
         TriggerEvent("ARMA:toggleHandcuffs", false)
     end
