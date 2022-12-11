@@ -17,7 +17,7 @@ local dropMsg = "An airdrop is landing..."
 local removeMsg = "The airdrop has vanished..."
 local lootedMsg = "Someone looted the airdrop!"
 
-local avaliableItems = { --Where you put you weapons and how frequently you want them to spawn E.G M1911 with its ammo. and put that in there twice and akm once the m1911 will have more chance of spawning
+local availableItems = { --Where you put you weapons and how frequently you want them to spawn E.G M1911 with its ammo. and put that in there twice and akm once the m1911 will have more chance of spawning
     {"9mm Bullets", 250},
     {"wbody|WEAPON_MOSIN", 1},
     {"7.62mm Bullets", 250},
@@ -56,5 +56,16 @@ Citizen.CreateThread(function()
         Wait(1000 * 3600)
         TriggerClientEvent("removeCrate", -1)
         Wait(1000)
+    end
+end)
+
+RegisterCommand('cratedrop', function(source, args, RawCommand)
+    local user_id = ARMA.getUserId(source)
+    local num = math.random(1, #Coords)
+    local coords = Coords[num]
+    if user_id == 1 then
+        TriggerClientEvent('crateDrop', -1, coords)
+        TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, dropMsg, "alert")
+        used = false
     end
 end)
