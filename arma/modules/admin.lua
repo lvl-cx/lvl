@@ -482,7 +482,7 @@ AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, ARMA.getWebhook('screenshot'))
+        TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", target, tARMA.getWebhook('screenshot'))
         tARMA.sendWebhook('screenshot', 'ARMA Screenshot Logs', "> Players Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..target_id.."**")
     else
         local player = ARMA.getUserSource(admin_id)
@@ -499,7 +499,7 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.screenshot') then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, ARMA.getWebhook('video'))
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", target, tARMA.getWebhook('video'))
         tARMA.sendWebhook('video', 'ARMA Video Logs', "> Players Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..target_id.."**")
     else
         local player = ARMA.getUserSource(admin_id)
