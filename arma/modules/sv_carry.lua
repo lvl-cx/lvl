@@ -4,33 +4,33 @@ requests = {}
 
 RegisterCommand('carryaccept', function(source)
     if requests[source] then
-        TriggerClientEvent('CarryPeople:syncMe', source, 'nm', 'firemans_carry', 10000, 33)
-        local coords = table.unpack(GetEntityCoords(GetPlayerPed(requests[source])))
-        TriggerClientEvent('CarryPeople:syncTarget', requests[source], 'missfinale_c2mcs_1', 'fin_c2_mcs_1_camman', coords.y, coords.x, coords.z, 10000, GetEntityHeading(GetPlayerPed(requests[source])), 49)
+        TriggerClientEvent('CarryPeople:syncMe', requests[source], 'missfinale_c2mcs_1', 'fin_c2_mcs_1_camman', 0, 49)
+        TriggerClientEvent('CarryPeople:syncTarget', source, requests[source], 'nm', 'firemans_carry', 0.15, 0.27, 0.63, GetEntityHeading(GetPlayerPed(requests[source])), 10000, 33)
+        ARMAclient.notify(requests[source], {"~g~Request Accepted"})
         carrying[source] = requests[source]
         carried[requests[source]] = source
-        request[source] = nil
+        requests[source] = nil
     end
 end)
 
 RegisterCommand('carryrefuse', function(source)
     if requests[source] then
-        ARMAclient.notify(requests[source], "~r~Carry Request Refused")
+        ARMAclient.notify(requests[source], {"~r~Request Refused"})
         requests[source] = nil
     end
 end)
 
 RegisterServerEvent("CarryPeople:sync")
-AddEventHandler("CarryPeople:sync", function(senderSrc, targetSrc)
-    local sourcePed = GetPlayerPed(senderSrc)
+AddEventHandler("CarryPeople:sync", function(source, targetSrc)
+    local sourcePed = GetPlayerPed(source)
     local sourceCoords = GetEntityCoords(sourcePed)
     local targetPed = GetPlayerPed(targetSrc)
     local targetCoords = GetEntityCoords(targetPed)
     if #(sourceCoords - targetCoords) <= 3.0 then 
-        TriggerClientEvent("CarryPeople:syncTarget", targetSrc, senderSrc)
-        TriggerClientEvent('CarryPeople:syncMe', senderSrc, )
-        carrying[senderSrc] = targetSrc
-        carried[targetSrc] = senderSrc
+        TriggerClientEvent('CarryPeople:syncMe', source, 'missfinale_c2mcs_1', 'fin_c2_mcs_1_camman', 0, 49)
+        TriggerClientEvent('CarryPeople:syncTarget', targetSrc, source, 'nm', 'firemans_carry', 0.15, 0.27, 0.63, GetEntityHeading(sourcePed), 100000, 33)
+        carrying[source] = targetSrc
+        carried[targetSrc] = source
     end
 end)
 
@@ -38,6 +38,7 @@ RegisterServerEvent("CarryPeople:requestCarry")
 AddEventHandler("CarryPeople:requestCarry", function(targetSrc)
     local source = source
     requests[targetSrc] = source
+    TriggerClientEvent('CarryPeople:carryRequest', targetSrc)
 end)
 
 RegisterServerEvent("CarryPeople:stop")

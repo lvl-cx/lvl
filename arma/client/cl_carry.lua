@@ -58,7 +58,7 @@ RegisterNetEvent("CarryPeople:carryRequest",function()
                 ExecuteCommand("carryaccept")
                 e = false
             elseif IsControlJustPressed(0, 182) then
-                tARMA.notify("~g~Request Refused")
+                tARMA.notify("~r~Request Refused")
                 ExecuteCommand("carryrefuse")
                 e = false
             end
@@ -94,6 +94,7 @@ end)
 RegisterNetEvent("CarryPeople:syncTarget",function(target, o, p, q, r, s, t, u, v)
     local l = tARMA.getPlayerPed()
     local w = GetPlayerPed(GetPlayerFromServerId(target))
+    print(w)
     carryingBackInProgress = true
     RequestAnimDict(o)
     while not HasAnimDictLoaded(o) do
