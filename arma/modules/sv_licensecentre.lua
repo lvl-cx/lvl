@@ -1,22 +1,6 @@
 
 local cfg = module("armacore/cfg/cfg_licensecentre")
 
-local prices = {
-    {group = "Weed", price = 200000},
-    {group = "Gang",price = 500000},
-    {group = "Cocaine", price = 500000},
-    {group = "Heroin", price = 10000000},
-    {group = "LSD", price = 50000000},
-    {group = "Rebel",price = 30000000},
-    {group = "AdvancedRebel",price = 15000000},
-    {group = "Scrap", price = 100000},
-    {group = "Gold", price = 1000000},
-    {group = "Diamond", price = 5000000},
-    {group = "DJ", price = 50000000},
-    {group = "polblips", price = 5000000},
-    {group = "PilotLicense", price = 1500000},
-}
-
 RegisterServerEvent("LicenseCentre:BuyGroup")
 AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
     local source = source
@@ -33,7 +17,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
             ARMAclient.notify(source, {"~o~You have already purchased this license!"})
             TriggerClientEvent("arma:PlaySound", source, 2)
         else
-            for k,v in pairs(prices) do
+            for k,v in pairs(cfg.licenses) do
                 if v.group == job then
                     if ARMA.tryFullPayment(userid, v.price) then
                         ARMA.addUserGroup(userid,job)
