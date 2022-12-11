@@ -3,6 +3,8 @@ local Proxy = module("arma", "lib/Proxy")
 local ARMA = Proxy.getInterface("ARMA")
 local ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 
+MySQL = module("arma_mysql", "MySQL")
+
 local Inventory = module("arma", "cfg/inventory")
 local Housing = module("arma", "armacore/cfg/cfg_housing")
 local InventorySpamTrack = {}
@@ -23,8 +25,18 @@ AddEventHandler('ARMA:FetchPersonalInventory', function()
             for i,v in pairs(data.inventory) do
                 FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
             end
-            TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId}))
-            InventorySpamTrack[source] = false;
+            exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = UserId}, function(vipClubData)
+                if #vipClubData > 0 then
+                    if vipClubData[1].plathours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId})+20)
+                    elseif vipClubData[1].plushours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId})+10)
+                    else
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId}))
+                    end
+                    InventorySpamTrack[source] = false;
+                end
+            end)
         else 
             print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
         end
@@ -40,7 +52,18 @@ AddEventHandler('ARMA:RefreshInventory', function(source)
         for i,v in pairs(data.inventory) do
             FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
         end
-        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId}))
+        exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = UserId}, function(vipClubData)
+            if #vipClubData > 0 then
+                if vipClubData[1].plathours > 0 then
+                    TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId})+20)
+                elseif vipClubData[1].plushours > 0 then
+                    TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId})+10)
+                else
+                    TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({UserId}))
+                end
+                InventorySpamTrack[source] = false;
+            end
+        end)
     else 
         print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
