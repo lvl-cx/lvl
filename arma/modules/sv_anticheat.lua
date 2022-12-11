@@ -420,7 +420,7 @@ AddEventHandler("ARMA:acType15", function()
 	local name = GetPlayerName(source)
     Wait(500)
     if not godmodeVid then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.sendWebhook('anticheat'))
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
         Wait(30000)
         godmodeVid = true
     end
