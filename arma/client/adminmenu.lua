@@ -54,6 +54,7 @@ local r = {
     vector3(-39.604099273682,-1111.8635253906,26.438835144043),
 }
 local s = 1
+local communityPot = '0'
 
 
 
@@ -70,6 +71,7 @@ RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu
 RMenu.Add("adminmenu", "outfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Outfits Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "manageoutfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "outfits"), "", menuColour..'Manage Outfits',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "checkban", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Check Ban',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
+RMenu.Add("adminmenu", "communitypot", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Community Pot',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "communitypot"))
 RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "actypes", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "anticheat"), "", menuColour..'AC Types',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -396,7 +398,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         TriggerServerEvent("ARMA:getCommunityPotAmount")
                     end
-                end,RMenu:Get('communitypot','mainmenu'))
+                end,RMenu:Get('adminmenu','communitypot'))
             end  
             if GlobalAdminLevel >= 10 then
                 RageUI.ButtonWithStyle("Give Money","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
@@ -510,6 +512,33 @@ RageUI.CreateWhile(1.0, true, function()
                     end)
                 end
             end, RMenu:Get('adminmenu', 'moneymenu'))
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('adminmenu', 'communitypot')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.Separator("Community Pot Balance: ~g~£"..getMoneyStringFormatted(a))
+            RageUI.ButtonWithStyle("Deposit","",{RightLabel="→→→"},true,function(e,f,g)
+                if g then 
+                    tARMA.clientPrompt("Enter Amount:","",function(d)
+                        if tonumber(d)then 
+                            TriggerServerEvent("ARMA:tryDepositCommunityPot",d)
+                        else 
+                            tARMA.notify("~r~Invalid amount.")
+                        end 
+                    end)
+                end 
+            end)
+            RageUI.ButtonWithStyle("Withdraw","",{RightLabel="→→→"},true,function(e,f,g)
+                if g then 
+                    tARMA.clientPrompt("Enter Amount:","",function(d)
+                        if tonumber(d)then 
+                            TriggerServerEvent("ARMA:tryWithdrawCommunityPot",d)
+                        else 
+                            tARMA.notify("~r~Invalid amount.")
+                        end 
+                    end)
+                end 
+            end)
         end)
     end
 end)
@@ -1101,7 +1130,6 @@ RageUI.CreateWhile(1.0, true, function()
             end   
         end)
     end
-
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbannedplayers')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
@@ -1117,7 +1145,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-
     if RageUI.Visible(RMenu:Get('adminmenu', 'acsearchpermid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
@@ -1140,7 +1167,6 @@ RageUI.CreateWhile(1.0, true, function()
              end
         end)
     end
-
     if RageUI.Visible(RMenu:Get('adminmenu', 'acbanmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
@@ -1164,7 +1190,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-
     if RageUI.Visible(RMenu:Get('adminmenu', 'actypes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() then
@@ -1177,31 +1202,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-
-    if RageUI.Visible(RMenu:Get('adminmenu', 'acvehwhitelist')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() then
-                RageUI.Separator("Anticheat Duration: Lifetime", function() end)
-                RageUI.Separator("Banned Players: " .. acbannedplayers, function() end)
-                RageUI.ButtonWithStyle("Add to Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:editACVehicleWhitelist', true)
-                    end
-                end)
-                RageUI.ButtonWithStyle("Remove from Vehicle Whitelist","",{RightLabel = "→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:editACVehicleWhitelist', false)
-                    end
-                end)
-            end
-        end)
-    end
 end)
-
-RegisterCommand("cleanup", function()
-    TriggerServerEvent('ARMA:CleanAll')
-end)
-
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
@@ -1250,6 +1251,10 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get('adminmenu', 'groups')) 
         end)
     end
+end)
+
+RegisterCommand("cleanup", function()
+    TriggerServerEvent('ARMA:CleanAll')
 end)
 
 RegisterNetEvent('ARMA:SlapPlayer')
@@ -1332,6 +1337,11 @@ AddEventHandler("ARMA:getDevOutfits",function(outfits)
     savedOutfits = outfits
 end)
 
+RegisterNetEvent("ARMA:gotCommunityPotAmount",function(d)
+    communityPot=tostring(d)
+end)
+
+
 function Draw2DText(x, y, text, scale)
     SetTextFont(4)
     SetTextProportional(7)
@@ -1398,25 +1408,6 @@ function SpawnVehicle(VehicleName)
     SetPedIntoVehicle(Ped, Vehicle, -1)
     SetModelAsNoLongerNeeded(hash)
 end
-
-RegisterNetEvent("ARMA:TPCoords")
-AddEventHandler("ARMA:TPCoords", function(coords)
-    SetEntityCoordsNoOffset(GetPlayerPed(-1), coords.x, coords.y, coords.z, false, false, false)
-end)
-
-RegisterNetEvent("ARMA:EntityWipe")
-AddEventHandler("ARMA:EntityWipe", function(id)
-    Citizen.CreateThread(function() 
-        for k,v in pairs(GetAllEnumerators()) do 
-            local enum = v
-            for entity in enum() do 
-                local owner = NetworkGetEntityOwner(entity)
-                local playerID = GetPlayerServerId(owner)
-                NetworkDelete(entity)
-            end
-        end
-    end)
-end)
 
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)
