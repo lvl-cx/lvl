@@ -100,6 +100,10 @@ function tARMA.sendWebhook(webhook, name, message)
     end
 end
 
+function ARMA.sendWebhook(webhook, name, message) -- used for other resources to send through webhook logs 
+   tARMA.sendWebhook(webhook, name, message)
+end
+
 function tARMA.getWebhook(webhook)
     if webhooks[webhook] ~= nil then
         return webhooks[webhook]
