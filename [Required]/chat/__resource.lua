@@ -3,7 +3,11 @@ description 'chat management stuff'
 ui_page 'html/index.html'
 
 client_script 'cl_chat.lua'
-server_script 'sv_chat.lua'
+
+server_scripts {
+    "@arma/lib/utils.lua",
+    'sv_chat.lua',
+}
 
 files {
     'html/index.html',
@@ -12,7 +16,6 @@ files {
     'html/config.js',
     'html/ooc.png',
     'html/twt.png',
-    "html/staff.png",
     'html/alert.png',
 	'html/App.js',
     'html/Message.js',
@@ -27,4 +30,4 @@ files {
     'html/vendor/fonts/LatoLight.woff2',
     'html/vendor/fonts/LatoBold.woff2',
     'html/vendor/fonts/LatoBold2.woff2',
-  }
+}

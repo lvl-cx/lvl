@@ -1,3 +1,8 @@
+local Tunnel = module("arma", "lib/Tunnel")
+local Proxy = module("arma", "lib/Proxy")
+ARMA = Proxy.getInterface("ARMA")
+ARMAclient = Tunnel.getInterface("ARMA","ARMA_CHAT")
+
 RegisterServerEvent('chat:init')
 RegisterServerEvent('chat:addTemplate')
 RegisterServerEvent('chat:addMessage')
@@ -17,7 +22,6 @@ AddEventHandler('_chat:messageEntered', function(author, color, message)
     if not WasEventCanceled() then
         for word in pairs(blockedWords) do
             if(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(message:lower(), "-", ""), ",", ""), "%.", ""), " ", ""), "*", ""), "+", ""):find(blockedWords[word])) then
-                --TriggerClientEvent('chatMessage', source, '',  { 255, 255, 255 }, "That word is not allowed.", "alert")
                 TriggerClientEvent('ARMA:chatFilterScaleform', source, 10, 'That word is not allowed.')
                 CancelEvent()
                 return
