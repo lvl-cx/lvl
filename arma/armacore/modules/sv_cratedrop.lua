@@ -30,9 +30,10 @@ RegisterServerEvent('openLootCrate', function(playerCoords, boxCoords)
         if not used then
             used = true
             lootrandom = math.random(1, 3)
-            while lootrandom > 0 do
-                for k,v in pairs(availableItems) do
+            for k,v in pairs(availableItems) do
+                while lootrandom > 0 do
                     ARMA.giveInventoryItem(user_id, v[1], v[2], true)
+                    lootrandom = lootrandom - 1
                 end
             end
             ARMA.giveMoney(user_id,math.random(50000,150000))
