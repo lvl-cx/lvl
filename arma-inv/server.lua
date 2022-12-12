@@ -6,7 +6,7 @@ local ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 MySQL = module("arma_mysql", "MySQL")
 
 local Inventory = module("arma", "cfg/inventory")
-local Housing = module("arma", "armacore/cfg/cfg_housing")
+local Housing = module("arma", "cfg/cfg_housing")
 local InventorySpamTrack = {}
 local LootBagEntities = {}
 local InventoryCoolDown = {}
