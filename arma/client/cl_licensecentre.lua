@@ -1,6 +1,5 @@
 licensecentre = module("armacore/cfg/cfg_licensecentre")
 
-
 RMenu.Add('LicenseCentre', 'main', RageUI.CreateMenu("", "~b~" .. "Job Centre", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "groups"))
 RMenu.Add("LicenseCentre", "confirm", RageUI.CreateSubMenu(RMenu:Get('LicenseCentre', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))
 
@@ -8,7 +7,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LicenseCentre', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i , p in pairs(licensecentre.licenses) do 
-                RageUI.Button(p.name , nil, { RightLabel = '£' .. tostring(getMoneyStringFormatted(p.price)) }, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle(p.name..' (£'..tostring(getMoneyStringFormatted(p.price))..')', nil, { RightLabel = '→→→' }, p.notOwned, function(Hovered, Active, Selected)
                     if Selected then
                         cGroup = p.group
                         cName = p.name
@@ -32,28 +31,12 @@ RageUI.CreateWhile(1.0, true, function()
                             RageUI.Separator(b)
                         end
                     end
-                    RageUI.Button("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
+                    RageUI.ButtonWithStyle("Confirm" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
                         if Selected then
                             TriggerServerEvent('LicenseCentre:BuyGroup', cGroup, cName)
                         end
                     end, RMenu:Get("LicenseCentre", "main"))
-                    RageUI.Button("Refund License [£"..getMoneyStringFormatted(v.price/4).."]" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            if string.upper(Confirm()) == 'YES' then
-                                TriggerServerEvent('ARMA:RefundLicense', cGroup)
-                            else
-                                tARMA.notify('~r~Invalid Input.')
-                            end
-                        end
-                    end, RMenu:Get("LicenseCentre", "main"))
-                    if v.sellable then
-                        RageUI.Button("Sell to Nearest Player" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected)
-                            if Selected then
-                                TriggerServerEvent('ARMA:SellLicense', cGroup)
-                            end
-                        end, RMenu:Get("LicenseCentre", "main"))
-                    end
-                    RageUI.Button("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
+                    RageUI.ButtonWithStyle("Decline" , nil, {RightLabel = ""}, true, function(Hovered, Active, Selected) end, RMenu:Get("LicenseCentre", "main"))
                 end
             end
         end) 
@@ -66,10 +49,13 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
         end
         local t = function(s)
             RageUI.Visible(RMenu:Get("LicenseCentre", "main"), false)
+            RageUI.Visible(RMenu:Get("LicenseCentre", "confirm"), false)
             RageUI.ActuallyCloseAll()
         end
         local u = function(s)
             if IsControlJustPressed(1, 38) then
+                TriggerServerEvent('ARMA:getOwnedLicenses')
+                Wait(500)
                 RageUI.Visible(RMenu:Get("LicenseCentre", "main"), not RageUI.Visible(RMenu:Get("LicenseCentre", "main")))
             end
             local v, w, x = table.unpack(GetFinalRenderedCamCoord())
@@ -116,7 +102,16 @@ RegisterNetEvent("ARMA:RecievedLicenses",function(i)
     b = i
     a = true
 end)
-
+RegisterNetEvent("ARMA:gotOwnedLicenses",function(i)
+    for k,v in pairs(licensecentre.licenses) do
+        v.notOwned = true
+        for a,b in pairs(i) do
+            if v.name == b then
+                v.notOwned = false
+            end
+        end
+    end
+end)
 
 function Confirm()
 	AddTextEntry('FMMC_KEY_TIP8', "Type 'YES' to Confirm.")
@@ -132,5 +127,4 @@ function Confirm()
 		end
     end
 	return false
-
 end
