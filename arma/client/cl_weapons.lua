@@ -65,7 +65,7 @@ local s=GetGameTimer()
 RegisterCommand("storecurrentweapon",function()
     if s+3000<GetGameTimer()then 
         s=GetGameTimer()
-        if HasPedGotWeapon(PlayerPedId(),`WEAPON_PISTOL50`)or HasPedGotWeapon(PlayerPedId(),`WEAPON_MACHINEPISTOL`)then 
+        if HasPedGotWeapon(PlayerPedId(),'WEAPON_PISTOL50')or HasPedGotWeapon(PlayerPedId(),'WEAPON_MACHINEPISTOL')then 
         else 
             local l,i=GetCurrentPedWeapon(PlayerPedId())
             local g=a.weaponHashToModels[i]

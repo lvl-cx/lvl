@@ -170,8 +170,8 @@ RegisterCommand("notes",function(f,g)
     local i="missheistdockssetup1clipboard@base"
     local e=PlayerPedId()
     loadAnimDict(i)
-    loadModel(`prop_notepad_01`)
-    loadModel(`prop_pencil_01`)
+    loadModel('prop_notepad_01')
+    loadModel('prop_pencil_01')
     if DoesEntityExist(e)and canAnim()and not IsEntityDead(e)and d()then 
         m()
         if IsEntityPlayingAnim(e,i,"base",3)then 
@@ -180,9 +180,9 @@ RegisterCommand("notes",function(f,g)
             ClearPedSecondaryTask(PlayerPedId())
         else 
             local q=GetEntityCoords(e)
-            local prop=CreateObject(`prop_notepad_01`,q.x,q.y,q.z+0.2,true,true,true)
+            local prop=CreateObject('prop_notepad_01',q.x,q.y,q.z+0.2,true,true,true)
             table.insert(l,prop)
-            local secondaryprop=CreateObject(`prop_pencil_01`,q.x,q.y,q.z+0.2,true,true,true)
+            local secondaryprop=CreateObject('prop_pencil_01',q.x,q.y,q.z+0.2,true,true,true)
             table.insert(l,secondaryprop)
             AttachEntityToEntity(prop,e,GetPedBoneIndex(e,18905),0.1,0.02,0.05,10.0,0.0,0.0,true,true,false,true,1,true)
             AttachEntityToEntity(secondaryprop,e,GetPedBoneIndex(e,58866),0.12,0.0,0.001,-150.0,0.0,0.0,true,true,false,true,1,true)

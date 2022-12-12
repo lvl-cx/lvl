@@ -16,7 +16,7 @@ Citizen.CreateThread(function()
         local f=tARMA.getPlayerVehicle()
         local g=PlayerId()
         if not c then 
-            if GetSelectedPedWeapon(e)==`WEAPON_UNARMED`then 
+            if GetSelectedPedWeapon(e)=='WEAPON_UNARMED'then 
                 DisableControlAction(0,263,true)
                 DisableControlAction(0,264,true)
                 DisableControlAction(0,257,true)

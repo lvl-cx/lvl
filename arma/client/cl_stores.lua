@@ -1,4 +1,4 @@
-local cfg = module("armacore/cfg/cfg_stores")
+local cfg = module("cfg/cfg_stores")
 
 RMenu.Add('ARMAStores', 'main', RageUI.CreateMenu("", "~b~Shop", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'shop'))
 RMenu.Add("ARMAStores", "confirm", RageUI.CreateSubMenu(RMenu:Get('ARMAStores', 'main',  tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())))

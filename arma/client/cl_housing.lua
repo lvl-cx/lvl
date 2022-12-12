@@ -1,4 +1,4 @@
-local Housing = module("armacore/cfg/cfg_housing")
+local Housing = module("cfg/cfg_housing")
 local isInMenu = false
 local isInLeaveMenu = false
 local isInWardrobeMenu = false

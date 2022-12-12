@@ -13,7 +13,7 @@ RMenu.Add('casino_exit','casino',RageUI.CreateMenu("","",tARMA.getRageUIMenuWidt
 RMenu:Get('casino_exit','casino'):SetSubtitle("~b~EXIT")
 RMenu.Add('casino_rooftop_exit','casino',RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"shopui_title_casino","shopui_title_casino"))
 RMenu:Get('casino_rooftop_exit','casino'):SetSubtitle("~b~EXIT")
-local h={{model=`u_f_m_casinocash_01`,pedPosition=vector3(1117.671,218.7382,-49.4),pedHeading=100.0,entryPosition=vector3(1116.0776367188,218.04238891602,-50.435089111328)},{model=`u_f_m_casinocash_01`,pedPosition=vector3(20.152572631836,6705.5737304688,-105.85441589355),pedHeading=75.0,entryPosition=vector3(18.445615768433,6705.7485351563,-106.85442352295)}}
+local h={{model='u_f_m_casinocash_01',pedPosition=vector3(1117.671,218.7382,-49.4),pedHeading=100.0,entryPosition=vector3(1116.0776367188,218.04238891602,-50.435089111328)},{model='u_f_m_casinocash_01',pedPosition=vector3(20.152572631836,6705.5737304688,-105.85441589355),pedHeading=75.0,entryPosition=vector3(18.445615768433,6705.7485351563,-106.85442352295)}}
 Citizen.CreateThread(function()
     local i="mini@strip_club@idles@bouncer@base"
     RequestAnimDict(i)

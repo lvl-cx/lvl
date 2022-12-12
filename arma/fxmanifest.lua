@@ -8,9 +8,11 @@ dependency "arma_mysql"
 
 ui_page "ui/index.html"
 
+minify "yes"
+
 shared_scripts {
   "sharedcfg/*",
-  "armacore/cfg/cfg_*.lua",
+  "arma/cfg/cfg_*.lua",
   --"cfg/cfg_*.lua",
   "shared/*.lua",
 }
@@ -96,32 +98,30 @@ client_scripts{
   "lib/cl_cache.lua",
   "lib/cl_util.lua",
   "lib/utils.lua",
-  "client/Tunnel.lua",
-  "client/Proxy.lua",
-  "client/base.lua",
+  "client_min/Tunnel.lua",
+  "client_min/Proxy.lua",
+  "client_min/base.lua",
   "utils/cl_*.lua",
-  "client/iplloader.lua",
-  "client/cl_lscustomsmenu.lua",
-  "client/gui.lua",
-  "client/player_state.lua",
-  "client/survival.lua",
-  "client/identity.lua",
-  "client/basic_garage.lua",
-  "client/police.lua",
-  "client/lockcar-client.lua",
-  "client/admin.lua",
-  "client/enumerators.lua",
-  "client/inventory.lua",
-  "client/clothing.lua",
-  "client/atms.lua",
-  "client/garages.lua",
-  "client/adminmenu.lua",
-  "client/LsCustomsMenu.lua",
-  "client/LsCustoms.lua",
-  "client/warningsystem.lua",
-  "client/cl_*.lua",
-  "armacore/client/cl_*.lua",
-  "armacore/cfg/cfg_*.lua",
+  "client_min/iplloader.lua",
+  "client_min/cl_lscustomsmenu.lua",
+  "client_min/gui.lua",
+  "client_min/player_state.lua",
+  "client_min/survival.lua",
+  "client_min/identity.lua",
+  "client_min/basic_garage.lua",
+  "client_min/police.lua",
+  "client_min/lockcar-client.lua",
+  "client_min/admin.lua",
+  "client_min/enumerators.lua",
+  "client_min/inventory.lua",
+  "client_min/clothing.lua",
+  "client_min/atms.lua",
+  "client_min/garages.lua",
+  "client_min/adminmenu.lua",
+  "client_min/LsCustomsMenu.lua",
+  "client_min/LsCustoms.lua",
+  "client_min/warningsystem.lua",
+  "client_min/cl_*.lua",
   "cfg/client.lua",
 }
 
@@ -141,7 +141,6 @@ server_scripts{
   "modules/server_commands.lua",
   "modules/sv_*.lua",
   "servercfg/*.lua",
-  "armacore/modules/sv_*.lua",
   "modules/webhooks.lua"
 }
 

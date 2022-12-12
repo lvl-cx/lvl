@@ -1,6 +1,6 @@
 local a={}
 local b=630.0
-local c=`prop_car_airbag`
+local c='prop_car_airbag'
 local d=0
 Citizen.CreateThread(function()
     while true do 

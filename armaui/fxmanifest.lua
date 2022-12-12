@@ -3,12 +3,14 @@ games { 'gta5' }
 
 description "RP module/framework"
 
+minify "yes"
+
 ui_page "ui/index.html"
 
 -- client scripts
 client_scripts{
     "@arma/lib/utils.lua",
-    "client/*.lua",
+    "client_min/*.lua",
 }
 
 -- client files

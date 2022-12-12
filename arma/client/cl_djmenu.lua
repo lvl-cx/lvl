@@ -187,10 +187,10 @@ function setupDj()
     a.active=true
     a.coords=tARMA.getPlayerCoords()
     a.spawnedDecks=true
-    createDjObject(0.0,1.5,0.0,`ba_prop_battle_dj_stand`,0.0)
-    createDjObject(-1.5,1.5,0.0,`ba_prop_battle_club_speaker_large`,180.0)
-    createDjObject(1.5,1.5,0.0,`ba_prop_battle_club_speaker_large`,180.0)
-    createDjObject(0.0,-1.2,0.0,`prop_studio_light_01`,180.0)
+    createDjObject(0.0,1.5,0.0,'ba_prop_battle_dj_stand',0.0)
+    createDjObject(-1.5,1.5,0.0,'ba_prop_battle_club_speaker_large',180.0)
+    createDjObject(1.5,1.5,0.0,'ba_prop_battle_club_speaker_large',180.0)
+    createDjObject(0.0,-1.2,0.0,'prop_studio_light_01',180.0)
 end
 function createDjObject(C,D,E,F,G)
     local F=tARMA.loadModel(F)

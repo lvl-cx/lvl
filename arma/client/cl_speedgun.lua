@@ -1,4 +1,4 @@
-local a=`WEAPON_SPEEDGUN`
+local a='WEAPON_SPEEDGUN'
 local b=false
 local c=false
 local d=101

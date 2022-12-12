@@ -1,4 +1,5 @@
 ownedGaffs = {}
+local cfg = module("cfg/cfg_housing")
 
 --SQL
 
@@ -57,7 +58,7 @@ function leaveHome(user_id, home, number, cbr)
     local player = ARMA.getUserSource(user_id)
     SetPlayerRoutingBucket(player, 0) 
     TriggerClientEvent('ARMA:setBucket', player, 0)
-    for k, v in pairs(cfghomes.homes) do
+    for k, v in pairs(cfg.homes) do
         if k == home then
             local x,y,z = table.unpack(v.entry_point)
             ARMAclient.teleport(player, {x,y,z})
@@ -71,7 +72,7 @@ function accessHome(user_id, home, number, cbr)
     local task = Task(cbr)
     local player = ARMA.getUserSource(user_id)
     local count = 0
-    for k, v in pairs(cfghomes.homes) do
+    for k, v in pairs(cfg.homes) do
         count = count+1
         if k == home then
             SetPlayerRoutingBucket(player, count)
@@ -90,7 +91,7 @@ AddEventHandler("ARMAHousing:Buy", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
 
-    for k, v in pairs(cfghomes.homes) do
+    for k, v in pairs(cfg.homes) do
         if house == k then
             getUserByAddress(house,1,function(noowner) --check if house already has a owner
                 if noowner == nil then
@@ -424,7 +425,7 @@ end)
 --Blips
 
 AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
-    for k, v in pairs(cfghomes.homes) do
+    for k, v in pairs(cfg.homes) do
         local x,y,z = table.unpack(v.entry_point)
         getUserByAddress(k,1,function(owner)
             if owner == nil then

@@ -56,12 +56,12 @@ function tARMA.isPlayerInAnimalForm()
 end
 local function k()
     local l=GetEntityModel(PlayerPedId())
-    if l==`mp_m_freemode_01`or l==`mp_f_freemode_01`then 
+    if l=='mp_m_freemode_01'or l=='mp_f_freemode_01'then 
         local m=tARMA.loadModel("a_c_deer")
         local n=tARMA.getPlayerCoords()
         local o=ClonePed(PlayerPedId(),true,true,true)
         local p=tARMA.getCustomization()
-        tARMA.setCustomization({modelhash=`a_c_deer`})
+        tARMA.setCustomization({modelhash='a_c_deer'})
         local q="Horse"
         local r=1
         local s=0.12
@@ -75,7 +75,7 @@ local function k()
         SetBlockingOfNonTemporaryEvents(o,true)
         SetPedCombatAttributes(o,292,true)
         SetPedFleeAttributes(o,0,0)
-        SetPedRelationshipGroupHash(o,`CIVFEMALE`)
+        SetPedRelationshipGroupHash(o,'CIVFEMALE')
         j=true
         while j do 
             Wait(0)

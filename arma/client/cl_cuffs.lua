@@ -15,7 +15,7 @@ RegisterKeyMapping("cuff","Handcuff","keyboard","F11")
 RegisterNetEvent("ARMA:arrestCriminal")
 AddEventHandler("ARMA:arrestCriminal",function(g)
     local h=tARMA.getPlayerPed()
-    tARMA.setWeapon(h,`WEAPON_PDGLOCK`,true)
+    tARMA.setWeapon(h,'WEAPON_PDGLOCK',true)
     local i=GetEntityCoords(h)
     local j=GetPlayerPed(GetPlayerFromServerId(g))
     f=true
@@ -86,7 +86,7 @@ AddEventHandler("ARMA:unHandcuff",function(k)
         DetachEntity(c,true,true)
         DeleteEntity(c)
     else 
-        local m=tARMA.loadModel(`p_cs_cuffs_02_s`)
+        local m=tARMA.loadModel('p_cs_cuffs_02_s')
         local n=GetEntityCoords(tARMA.getPlayerPed(),true)
         e=CreateObject(m,n.x,n.y,n.z,true,true,true)
         d=true

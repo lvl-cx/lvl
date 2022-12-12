@@ -1,4 +1,4 @@
-local cfg = module("armacore/cfg/cfg_gunstores")
+local cfg = module("cfg/cfg_gunstores")
 local organheist = module('cfg/cfg_organheist')
 
 MySQL.createCommand("ARMA/get_weapons", "SELECT weapon_info FROM arma_weapon_whitelists WHERE user_id = @user_id")

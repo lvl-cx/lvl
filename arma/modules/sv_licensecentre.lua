@@ -1,5 +1,5 @@
 
-local cfg = module("armacore/cfg/cfg_licensecentre")
+local cfg = module("cfg/cfg_licensecentre")
 
 RegisterServerEvent("LicenseCentre:BuyGroup")
 AddEventHandler('LicenseCentre:BuyGroup', function(job, name)

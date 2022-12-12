@@ -228,7 +228,7 @@ function policeChase()
     TriggerEvent("arma:PlaySound", "policePursuitContinue")
     tARMA.notifyPicture(i.images.dict,i.images.govLarge,"You are required to ~b~move over ~w~to allow a police pursuit to continue.","DVSA","UK Government")
     currentTest.subtitle="Move ~y~over"
-    local G=`blista`
+    local G='blista'
     tARMA.loadModel(G)
     local H=vector3(113.0901,-1226.426,37.60364)
     local I=tARMA.spawnVehicle(G,H,270.93,false,true)
@@ -236,7 +236,7 @@ function policeChase()
         Wait(0)
     end
     SetModelAsNoLongerNeeded(G)
-    local J=`a_f_y_business_02`
+    local J='a_f_y_business_02'
     tARMA.loadModel(J)
     local K=CreatePed(4,J,H,270.93,true)
     while not DoesEntityExist(K)do 
@@ -252,9 +252,9 @@ function policeChase()
     local L=vector3(816.9495,-1216.404,45.8938)
     TaskVehicleDriveToCoord(K,I,L.x,L.y,L.z,60.0,1.0,G,786472,1.0,true)
     Wait(2000)
-    local M=`incidentsupportunit`
+    local M='incidentsupportunit'
     if not IsModelValid(M)then 
-        M=`policet`
+        M='policet'
     end
     tARMA.loadModel(M)
     local N=tARMA.spawnVehicle(M,H,270.93,false,true)
@@ -262,7 +262,7 @@ function policeChase()
         Wait(0)
     end
     SetModelAsNoLongerNeeded(M)
-    local O=`s_m_y_airworker`
+    local O='s_m_y_airworker'
     tARMA.loadModel(O)
     local P=CreatePed(4,O,H,270.93,true)
     while not DoesEntityExist(P)do 
@@ -575,7 +575,7 @@ function emergencyStop()
     useTablet()
 end
 function useTablet()
-    local B=tARMA.loadModel(`prop_cs_tablet`)
+    local B=tARMA.loadModel('prop_cs_tablet')
     currentTest.tabletHandle=CreateObject(B,0,0,0,true,true,true)
     AttachEntityToEntity(currentTest.tabletHandle,currentTest.ped,GetPedBoneIndex(currentTest.ped,57005),0.17,0.10,-0.13,24.0,180.0,180.0,true,true,false,true,1,true)
     RequestAnimDict("amb@world_human_seat_wall_tablet@female@base")

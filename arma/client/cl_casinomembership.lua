@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
         Wait(0)
     end
     for g,h in pairs(a)do 
-        local i=tARMA.loadModel(`u_f_m_casinocash_01`)
+        local i=tARMA.loadModel('u_f_m_casinocash_01')
         local j=CreatePed(26,i,h.pedPosition.x,h.pedPosition.y,h.pedPosition.z,175.0,false,true)
         SetModelAsNoLongerNeeded(i)
         SetEntityCanBeDamaged(j,0)
