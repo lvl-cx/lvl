@@ -318,7 +318,7 @@ function robPerson(entityId)
     local player = GetPlayerByEntityID(entityId)
     local playerSrc = GetPlayerServerId(player)
     if playerSrc > 0 then
-        if GetSelectedPedWeapon(PlayerPedId()) ~= `WEAPON_UNARMED` then
+        if GetSelectedPedWeapon(PlayerPedId()) ~= GetHashKey(`WEAPON_UNARMED`) then
             TriggerServerEvent("ARMA:robPlayer",playerSrc)
         else
             TriggerEvent("ARMA:Notify","~r~You need a weapon in your hands.")

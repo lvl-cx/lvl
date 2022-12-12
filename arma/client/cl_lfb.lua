@@ -799,7 +799,7 @@
 --         if globalLFBOnDuty then
 --             if ae == 0 then
 --                 local as = GetSelectedPedWeapon(a4)
---                 if as == ao and IsPlayerFreeAiming(tARMA.getPlayerId()) then
+--                 if as == GetHashKey(ao) and IsPlayerFreeAiming(tARMA.getPlayerId()) then
 --                     a0 = true
 --                     DisableControlAction(0, 24, true)
 --                     if IsDisabledControlPressed(0, 24) then
@@ -842,7 +842,7 @@
 -- function hoseParticle(aq, ar)
 --     local at = tARMA.getObjectId(an[aq][1], "hoseParticle")
 --     local t = GetEntityCoords(at)
---     if #(tARMA.getPlayerCoords() - t) < 100.0 and GetSelectedPedWeapon(at) == ao then
+--     if #(tARMA.getPlayerCoords() - t) < 100.0 and GetSelectedPedWeapon(at) == GetHashKey(ao) then
 --         tARMA.loadPtfx("core")
 --         UseParticleFxAsset("core")
 --         an[aq][4] = StartParticleFxLoopedOnEntity("water_cannon_jet",at,0.2,0.15,0.0,0.1,0.0,0.0,0.7,false,false,false)
@@ -863,7 +863,7 @@
 --         DecorSetFloat(a4, "HosePitch", GetGameplayCamRelativePitch())
 --         DisablePlayerFiring(tARMA.getPlayerId(), true)
 --         putOutFires()
---         if not IsDisabledControlPressed(0, 24) or tARMA.getPlayerVehicle() ~= 0 or IsPauseMenuActive() or GetSelectedPedWeapon(a4) ~= ao or not IsPlayerFreeAiming(tARMA.getPlayerId()) or not X and _ < 1 then
+--         if not IsDisabledControlPressed(0, 24) or tARMA.getPlayerVehicle() ~= 0 or IsPauseMenuActive() or GetSelectedPedWeapon(a4) ~= GetHashKey(ao) or not IsPlayerFreeAiming(tARMA.getPlayerId()) or not X and _ < 1 then
 --             ap = false
 --             TriggerServerEvent("ARMA:hoseUpdateServer", aq, 0.0, true)
 --         end

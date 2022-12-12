@@ -17,7 +17,7 @@ local function b()
 end
 local function h(i)
     local j = GetSelectedPedWeapon(i.playerPed)
-    if j == "WEAPON_SMOKEGRENADE" or j == "WEAPON_SMOKEGRENADEPD" then
+    if j == GetHashKey("WEAPON_SMOKEGRENADE") or j == GetHashKey("WEAPON_SMOKEGRENADEPD") then
         if GetGameTimer() - a < 4000 then
             DisableControlAction(0, 24, true)
             DisableControlAction(0, 69, true)

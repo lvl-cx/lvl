@@ -87,7 +87,7 @@ Citizen.CreateThread(function()
                 end
             end
             local h = GetSelectedPedWeapon(g)
-            if h ~= "WEAPON_UNARMED" and (not b[a.id].allowPistol or not table.has(c, h)) then
+            if h ~= GetHashKey("WEAPON_UNARMED") and (not b[a.id].allowPistol or not table.has(c, h)) then
                 tARMA.setWeapon(g, "WEAPON_UNARMED", true)
             end
             DisableControlAction(0, 210, true)

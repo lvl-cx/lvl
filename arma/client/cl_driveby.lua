@@ -4,7 +4,7 @@ local function a()
         local c = tARMA.getPlayerPed()
         local d = tARMA.getPlayerId()
         if GetVehicleClass(b) == 8 then
-            if GetPedInVehicleSeat(b, -1) == c or GetSelectedPedWeapon(c) == "WEAPON_UNARMED" then
+            if GetPedInVehicleSeat(b, -1) == c or GetSelectedPedWeapon(c) == GetHashKey("WEAPON_UNARMED") then
                 SetPlayerCanDoDriveBy(d, false)
             else
                 SetPlayerCanDoDriveBy(d, true)

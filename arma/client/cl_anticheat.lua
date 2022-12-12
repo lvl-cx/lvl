@@ -336,13 +336,13 @@ Citizen.CreateThread(function()
 		local j = tARMA.getPlayerId()
 		local k = tARMA.getPlayerVehicle()
 		if k == 0 then
-			SetWeaponDamageModifier("WEAPON_RUN_OVER_BY_CAR", 0.0)
-			SetWeaponDamageModifier("WEAPON_RAMMED_BY_CAR", 0.0)
-			SetWeaponDamageModifier("VEHICLE_WEAPON_ROTORS", 0.0)
-			SetWeaponDamageModifier("WEAPON_UNARMED", 0.5)
-			SetWeaponDamageModifier("WEAPON_SNOWBALL", 0.0)
+			SetWeaponDamageModifier(GetHashKey("WEAPON_RUN_OVER_BY_CAR"), 0.0)
+			SetWeaponDamageModifier(GetHashKey("WEAPON_RAMMED_BY_CAR"), 0.0)
+			SetWeaponDamageModifier(GetHashKey("VEHICLE_WEAPON_ROTORS"), 0.0)
+			SetWeaponDamageModifier(GetHashKey("WEAPON_UNARMED"), 0.5)
+			SetWeaponDamageModifier(GetHashKey("WEAPON_SNOWBALL"), 0.0)
 			local l = GetSelectedPedWeapon(i)
-			if l == "WEAPON_SNOWBALL" then
+			if l == GetHashKey("WEAPON_SNOWBALL") then
 				SetPlayerWeaponDamageModifier(j, 0.0)
 			else
 				SetPlayerWeaponDamageModifier(j, 1.0)

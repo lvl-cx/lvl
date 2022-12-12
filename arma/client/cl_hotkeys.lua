@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
 			TriggerServerEvent('ARMA:ejectFromVehicle')
             Wait(1000)
 		end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= 'WEAPON_SNOWBALL' then -- LEFTALT + G
+		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= GetHashKey('WEAPON_SNOWBALL') then -- LEFTALT + G
 			TriggerServerEvent("ARMA:Knockout")
 			Wait(1000)
 	    end

@@ -39,7 +39,7 @@ tARMA.createThreadOnTick(func_drawRadar)
 Citizen.CreateThread(function()
     while true do 
         if tARMA.globalOnPoliceDuty() and not usingDelgun then
-            if GetSelectedPedWeapon(tARMA.getPlayerPed())==a then 
+            if GetSelectedPedWeapon(tARMA.getPlayerPed())==GetHashKey(a) then 
                 b=true 
             else 
                 b=false 

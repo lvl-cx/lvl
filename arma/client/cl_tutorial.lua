@@ -658,7 +658,7 @@ local function ag()
             end
         end
         local E = PlayerPedId()
-        if GetSelectedPedWeapon(E) ~= "WEAPON_UNARMED" then
+        if GetSelectedPedWeapon(E) ~= GetHashKey("WEAPON_UNARMED") then
             tARMA.setWeapon(E, "WEAPON_UNARMED", true)
         end
     end

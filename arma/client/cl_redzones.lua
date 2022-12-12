@@ -67,7 +67,7 @@ Citizen.CreateThread(function()
                         while i(r, k, true) do
                             r = GetEntityCoords(tARMA.getPlayerPed())
                             t = r
-                            if IsPedShooting(tARMA.getPlayerPed()) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= "WEAPON_UNARMED" then
+                            if IsPedShooting(tARMA.getPlayerPed()) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= GetHashKey("WEAPON_UNARMED") then
                                 tARMA.setPlayerCombatTimer(60, true)
                             end
                             if b == 0 then
@@ -150,7 +150,7 @@ tARMA.createThreadOnTick(y)
 local function B()
     local z = PlayerPedId()
     SetCanPedEquipWeapon(z, "WEAPON_MOLOTOV", false)
-    if GetSelectedPedWeapon(z) == "WEAPON_MOLOTOV" then
+    if GetSelectedPedWeapon(z) == GetHashKey("WEAPON_MOLOTOV") then
         tARMA.setWeapon(z, "WEAPON_UNARMED", true)
     end
 end

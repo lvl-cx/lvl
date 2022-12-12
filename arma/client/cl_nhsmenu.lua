@@ -404,7 +404,7 @@ local function C()
     if globalNHSOnDuty or globalLFBOnDuty then
         local D = PlayerPedId()
         local E = GetSelectedPedWeapon(D)
-        if E ~= "WEAPON_UNARMED" and not B[E] then
+        if E ~= GetHashKey("WEAPON_UNARMED") and not GetHashKey(B[E]) then
             tARMA.setWeapon(D, "WEAPON_UNARMED", true)
         end
     end
