@@ -351,6 +351,12 @@ RageUI.CreateWhile(1.0, true, function()
                     ExecuteCommand("compass")
                 end
             end)
+            RageUI.Checkbox("Display Health UI as %", nil, healthuipercent, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
+                if Selected then
+                    healthuipercent = not healthuipercent
+                    ExecuteCommand("healthui")
+                end
+            end)
             local function _()
                 ExecuteCommand("hideui")
                 hideUI = true
