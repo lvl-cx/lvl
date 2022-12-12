@@ -60,6 +60,7 @@ AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
                 end
                 plrTable[ARMA.getUserId(k)] = {GetPlayerName(k), k, ARMA.getUserId(k), math.ceil(PlayerTimeInHours)}
             end
+            plrTable[user_id] = {GetPlayerName(source), source, ARMA.getUserId(source), math.ceil((ARMA.getUserDataTable(user_id).PlayerTime/60)) or 0}
             TriggerClientEvent("ARMA:ReturnNearbyPlayers", source, plrTable)
         end)
     end
