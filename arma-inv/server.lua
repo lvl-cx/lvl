@@ -779,7 +779,7 @@ AddEventHandler('ARMA:InComa', function()
             if weight == 0 then return end
             local model = GetHashKey('xs_prop_arena_bag_01')
             local name1 = GetPlayerName(source)
-            local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
+            local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.2, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
             local ndata = ARMA.getUserDataTable({user_id})
             local stored_inventory = nil;

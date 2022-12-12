@@ -3,14 +3,7 @@ local MoneydropID = nil;
 local MoneydropIDNew = nil;
 local MoneydropCoords = nil;
 local PlayerInMoneyComa = false;
-local ItemsInMoneydrop = {}
 local model = GetHashKey('prop_poly_bag_money')
-local MoneyBag = false;
-
-RegisterNetEvent('ARMA:MoneyNotInBag')
-AddEventHandler('ARMA:MoneyNotInBag', function()
-    MoneyBag = false
-end)
 
 AddEventHandler('ARMA:IsInMoneyComa', function(coma)
     PlayerInMoneyComa = coma
@@ -30,6 +23,7 @@ Citizen.CreateThread(function()
                 if not NearMoneydrop then
                     NearMoneydrop = true;
                     MoneydropID = GetClosestObjectOfType(coords, 10.5, model, false, false, false)
+                    PlaceObjectOnGroundProperly(MoneydropID)
                     MoneydropIDNew = ObjToNet(MoneydropID)
                     MoneydropCoords = GetEntityCoords(MoneydropID)
                 end

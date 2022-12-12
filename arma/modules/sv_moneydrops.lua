@@ -9,7 +9,7 @@ function tARMA.MoneyDrop()
     if money > 0 then
         local model = GetHashKey('prop_poly_bag_money')
         local name1 = GetPlayerName(source)
-        local moneydrop = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.4, true, true, false)
+        local moneydrop = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.2, true, true, false)
         local moneydropnetid = NetworkGetNetworkIdFromEntity(moneydrop)
         MoneydropEntities[moneydropnetid] = {moneydrop, moneydrop, false, source}
         MoneydropEntities[moneydropnetid].Money = {}
@@ -48,7 +48,6 @@ Citizen.CreateThread(function()
             if v.Money == 0 then
                 if DoesEntityExist(v[1]) then 
                     DeleteEntity(v[1])
-
                     MoneydropEntities[i] = nil;
                 end
             end
