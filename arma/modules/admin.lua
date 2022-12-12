@@ -446,31 +446,29 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
     local CurrentTime = os.time()
     local PlayerDiscordID = 0
 
-    ARMA.prompt(source, "Ban Evidence","",function(player, Evidence)
-        local Evidence = Evidence or ""
-        if Evidence ~= nil and Evidence ~= "" then
-            if ARMA.hasPermission(AdminPermID, "admin.tickets") then
-                if Duration == -1 then
-                    banDuration = "perm"
-                else
-                    banDuration = CurrentTime + (60 * 60 * tonumber(Duration))
-                end
-                tARMA.sendWebhook('ban-player', AdminName.. " banned "..PlayerID, "> Admin Name: **"..AdminName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..AdminPermID.."**\n> Players PermID: **"..PlayerID.."**\n> Ban Duration: **"..Duration.."**")
-                ARMA.ban(source,PlayerID,banDuration,BanMessage)
-                f10Ban(PlayerID, AdminName, BanMessage, Duration)
-                exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
-                local a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = PlayerID})
-                for k,v in pairs(a) do
-                    if v.UserID == PlayerID then
-                        if v.points > 10 then
-                            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = 10}, function() end)
-                            ARMA.banConsole(PlayerID,2160,"You have reached 10 points and have received a 3 month ban.")
-                        end
+    ARMA.prompt(source, "Extra Ban Information (Hidden)","",function(player, Evidence)
+        if ARMA.hasPermission(AdminPermID, "admin.tickets") then
+            if Evidence == "" then
+                ARMAclient.notify(source, {"~r~Evidence field was left empty, please fill this in via Discord."})
+            end
+            if Duration == -1 then
+                banDuration = "perm"
+            else
+                banDuration = CurrentTime + (60 * 60 * tonumber(Duration))
+            end
+            tARMA.sendWebhook('ban-player', AdminName.. " banned "..PlayerID, "> Admin Name: **"..AdminName.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..AdminPermID.."**\n> Players PermID: **"..PlayerID.."**\n> Ban Duration: **"..Duration.."**")
+            ARMA.ban(source,PlayerID,banDuration,BanMessage,Evidence)
+            f10Ban(PlayerID, AdminName, BanMessage, Duration)
+            exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = BanPoints}, function() end)
+            local a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = PlayerID})
+            for k,v in pairs(a) do
+                if v.UserID == PlayerID then
+                    if v.points > 10 then
+                        exports['ghmattimysql']:execute("UPDATE arma_bans_offenses SET Rules = @Rules, points = @points WHERE UserID = @UserID", {Rules = json.encode(PlayerOffenses[PlayerID]), UserID = PlayerID, points = 10}, function() end)
+                        ARMA.banConsole(PlayerID,2160,"You have reached 10 points and have received a 3 month ban.")
                     end
                 end
             end
-        else
-            ARMAclient.notify(source, {"~r~Evidence field was left empty!"})
         end
     end)
 end)
@@ -632,21 +630,23 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, targetid, reviveall)
     local admin_id = ARMA.getUserId(admin)
     local player_id = targetid
     local target = ARMA.getUserSource(player_id)
-    if ARMA.hasPermission(admin_id, "admin.revive") then
-        ARMAclient.RevivePlayer(target, {})
-        if not reviveall then
-            local playerName = GetPlayerName(source)
-            local playerOtherName = GetPlayerName(target)
-            tARMA.sendWebhook('revive', 'ARMA Revive Logs', "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..admin.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..player_id.."**")
-            ARMAclient.notify(admin, {'~g~Revived Player.'})
-            return
+    if target ~= nil then
+        if ARMA.hasPermission(admin_id, "admin.revive") then
+            ARMAclient.RevivePlayer(target, {})
+            if not reviveall then
+                local playerName = GetPlayerName(source)
+                local playerOtherName = GetPlayerName(target)
+                tARMA.sendWebhook('revive', 'ARMA Revive Logs', "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..admin.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..GetPlayerName(target).."**\n> Player TempID: **"..target.."**\n> Player PermID: **"..player_id.."**")
+                ARMAclient.notify(admin, {'~g~Revived Player.'})
+                return
+            end
+            ARMAclient.notify(admin, {'~g~Revived all Nearby.'})
+        else
+            local player = ARMA.getUserSource(admin_id)
+            local name = GetPlayerName(source)
+            Wait(500)
+            TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Revive Someone')
         end
-        ARMAclient.notify(admin, {'~g~Revived all Nearby.'})
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Revive Someone')
     end
 end)
 
@@ -873,52 +873,6 @@ AddEventHandler('ARMA:AddCar', function()
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Add Car')
-    end
-end)
-
-RegisterServerEvent("ARMA:checkBan")
-AddEventHandler("ARMA:checkBan",function(permid)
-    local source = source 
-    local user_id = ARMA.getUserId(source)
-    local permid = tonumber(permid)
-    local bantable = {}
-    if ARMA.hasPermission(user_id, 'admin.tickets') then
-        exports['ghmattimysql']:execute("SELECT * FROM arma_users WHERE id = @id", {id = permid}, function(result) 
-            if result ~= nil then
-                for k,v in pairs(result) do
-                    if v.username == nil then
-                        v.username = "Unknown"
-                    end
-                    if v.banned then
-                        if v.bantime ~= "perm" then
-                            expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.bantime))
-                            local hoursLeft = ((tonumber(v.bantime)-os.time()))/3600
-                            local minutesLeft = nil
-                            if hoursLeft < 1 then
-                                minutesLeft = hoursLeft * 60
-                                minutesLeft = string.format("%." .. (0) .. "f", minutesLeft)
-                                datetime = minutesLeft .. " mins" 
-                            else
-                                hoursLeft = string.format("%." .. (0) .. "f", hoursLeft)
-                                datetime = hoursLeft .. " hours" 
-                            end
-                        else
-                            datetime = "Permanent"
-                            expiry = "Never"
-                        end
-                        bantable[permid] = {name = v.username, id = v.id, banned = v.banned, timeleft = datetime, banexpires = expiry, banreason = v.banreason, banadmin = v.banadmin}
-                    else
-                        bantable[permid] = {name = v.username, id = v.id, banned = v.banned}
-                    end
-                    TriggerClientEvent("ARMA:sendBanChecked", source, bantable)
-                end
-            end
-        end)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Check Ban')
     end
 end)
 

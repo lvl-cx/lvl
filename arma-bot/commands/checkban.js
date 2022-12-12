@@ -9,9 +9,13 @@ exports.runcmd = (fivemexports, client, message, params) => {
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_users` WHERE id = ?", [params[0]], (result) => {
         if (result.length > 0) {
             if (result[0].banned) {
+                let baninfo = result[0].baninfo
+                if (baninfo == null) {
+                    baninfo = "No ban info provided"
+                }
                 var embed = {
                     "title": `Checking Ban Status for ${result[0].username}`,
-                    "description": `Ban Status: **${result[0].banned}**\nPlayer Name: **${result[0].username}**\nPlayer PermID: **${result[0].id}**\nBan Reason: **${result[0].banreason}**\nBan Expires: **${new Date(result[0].bantime * 1000)}**\nBan Admin: **${result[0].banadmin}**`,
+                    "description": `Ban Status: **${result[0].banned}**\nPlayer Name: **${result[0].username}**\nPlayer PermID: **${result[0].id}**\nBan Reason: **${result[0].banreason}**\nBan Expires: **${new Date(result[0].bantime * 1000)}**\nBan Admin: **${result[0].banadmin}**\nBan Info: **${result[0].baninfo}**`,
                     "color": settingsjson.settings.botColour,
                     "footer": {
                         "text": ""

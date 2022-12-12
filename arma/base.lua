@@ -89,6 +89,7 @@ Citizen.CreateThread(function()
     bantime VARCHAR(100) NOT NULL DEFAULT "",
     banreason VARCHAR(1000) NOT NULL DEFAULT "",
     banadmin VARCHAR(100) NOT NULL DEFAULT "",
+    baninfo VARCHAR(2000) NOT NULL DEFAULT "",
     CONSTRAINT pk_user PRIMARY KEY(id)
     );
     ]])
@@ -379,7 +380,7 @@ MySQL.createCommand("ARMA/set_srvdata","REPLACE INTO ARMA_srv_data(dkey,dvalue) 
 MySQL.createCommand("ARMA/get_srvdata","SELECT dvalue FROM ARMA_srv_data WHERE dkey = @key")
 
 MySQL.createCommand("ARMA/get_banned","SELECT banned FROM arma_users WHERE id = @user_id")
-MySQL.createCommand("ARMA/set_banned","UPDATE arma_users SET banned = @banned, bantime = @bantime,  banreason = @banreason,  banadmin = @banadmin WHERE id = @user_id")
+MySQL.createCommand("ARMA/set_banned","UPDATE arma_users SET banned = @banned, bantime = @bantime,  banreason = @banreason,  banadmin = @banadmin, baninfo = @baninfo WHERE id = @user_id")
 MySQL.createCommand("ARMA/set_identifierbanned","UPDATE arma_user_ids SET banned = @banned WHERE identifier = @iden")
 MySQL.createCommand("ARMA/getbanreasontime", "SELECT * FROM arma_users WHERE id = @user_id")
 
@@ -687,36 +688,36 @@ function ARMA.BanIdentifiers(user_id, value)
     end)
 end
 
-function ARMA.setBanned(user_id,banned,time,reason, admin)
+function ARMA.setBanned(user_id,banned,time,reason,admin,baninfo)
     if banned then 
-        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = time, banreason = reason, banadmin = admin, banevidence})
+        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = time, banreason = reason, banadmin = admin, baninfo = baninfo})
         ARMA.BanIdentifiers(user_id, true)
         ARMA.BanTokens(user_id, true) 
     else 
-        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = "", banreason =  "", banadmin =  ""})
+        MySQL.execute("ARMA/set_banned", {user_id = user_id, banned = banned, bantime = "", banreason =  "", banadmin =  "", baninfo = ""})
         ARMA.BanIdentifiers(user_id, false)
         ARMA.BanTokens(user_id, false) 
         MySQL.execute("ac/delete_ban", {user_id = user_id})
     end 
 end
 
-function ARMA.ban(adminsource,permid,time,reason)
+function ARMA.ban(adminsource,permid,time,reason,baninfo)
     local adminPermID = ARMA.getUserId(adminsource)
     local getBannedPlayerSrc = ARMA.getUserSource(tonumber(permid))
     if getBannedPlayerSrc then 
         if tonumber(time) then
-            ARMA.setBanned(permid,true,time,reason, GetPlayerName(adminsource))
+            ARMA.setBanned(permid,true,time,reason,GetPlayerName(adminsource),baninfo)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", time).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
         else
-            ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource))
+            ARMA.setBanned(permid,true,"perm",reason,GetPlayerName(adminsource),baninfo)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
         end
         ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
     else 
         if tonumber(time) then 
-            ARMA.setBanned(permid,true,time,reason, GetPlayerName(adminsource))
+            ARMA.setBanned(permid,true,time,reason,GetPlayerName(adminsource),baninfo)
         else 
-            ARMA.setBanned(permid,true,"perm",reason, GetPlayerName(adminsource))
+            ARMA.setBanned(permid,true,"perm",reason,GetPlayerName(adminsource),baninfo)
         end
         ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
     end
