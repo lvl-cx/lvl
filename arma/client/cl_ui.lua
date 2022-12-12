@@ -45,6 +45,11 @@ AddEventHandler("ARMA:showHUD",function(flag)
     hideUI = not flag
 end)
 
+local percentUI = false
+RegisterCommand("healthui",function(source,args)
+    percentUI = not percentUI
+end)
+
 Citizen.CreateThread(function()
     while true do
         if not hideUI then
@@ -70,6 +75,10 @@ Citizen.CreateThread(function()
                 end
                 p(z.Left_x + 0.001, z.Bottom_y - 0.015, z.Width - 0.002, 0.009, 88, 88, 88, 200)
                 p(z.Left_x + 0.001, z.Bottom_y - 0.015, (z.Width - 0.002) * A, 0.009, 86, 215, 64, 200)
+                if percentUI then
+                    DrawAdvancedText(0.085, 0.775, 0.1, 0.2, 0.4, tostring(GetEntityHealth(y)-100)..'%', 255, 255, 255, 255, 4, 0)
+                    DrawAdvancedText(0.085, 0.795, 0.1, 0.2, 0.4, tostring(GetPedArmour(y))..'%', 255, 255, 255, 255, 4, 0)
+                end
                 p(z.Left_x + 0.001, z.Bottom_y - 0.002, z.Width - 0.002, 0.009, 88, 88, 88, 200)
                 if IsPedSwimmingUnderWater(y) and C >= 0.0 then
                     p(z.Left_x + 0.001, z.Bottom_y - 0.002, (z.Width - 0.002) * C, 0.009, 243, 214, 102, 200)
