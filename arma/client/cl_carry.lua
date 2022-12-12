@@ -94,7 +94,6 @@ end)
 RegisterNetEvent("CarryPeople:syncTarget",function(target, o, p, q, r, s, t, u, v)
     local l = tARMA.getPlayerPed()
     local w = GetPlayerPed(GetPlayerFromServerId(target))
-    print(w)
     carryingBackInProgress = true
     RequestAnimDict(o)
     while not HasAnimDictLoaded(o) do
@@ -135,11 +134,11 @@ RegisterNetEvent("CarryPeople:cl_stop",function()
     ClearPedSecondaryTask(tARMA.getPlayerPed())
     DetachEntity(tARMA.getPlayerPed(), true, false)
 end)
-function func_carryAnimation(z)
+function func_carryAnimation()
     if carryingBackInProgress then
         DisablePlayerFiring(tARMA.getPlayerId(), true)
-        if not IsEntityPlayingAnim(z.playerPed, b, a, 3) then
-            TaskPlayAnim(z.playerPed, b, a, 8.0, -8.0, 100000, c, 0, false, false, false)
+        if not IsEntityPlayingAnim(tARMA.getPlayerPed(), b, a, 3) then
+            TaskPlayAnim(tARMA.getPlayerPed(), b, a, 8.0, -8.0, 100000, c, 0, false, false, false)
         end
     end
 end

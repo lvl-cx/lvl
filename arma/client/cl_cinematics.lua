@@ -1719,6 +1719,7 @@ RegisterCommand("setlastvehicleon",function()
         end
     end
 end)
+
 Citizen.CreateThread(function()
     while true do
         local al, am = tARMA.getPlayerVehicle()
@@ -1732,7 +1733,7 @@ Citizen.CreateThread(function()
             if ao ~= -1 then
                 local ap = GetPlayerServerId(ao)
                 if ap > 0 then
-                    if not tARMA.clientGetPlayerIsStaff(ap) then
+                    if not tARMA.clientGetPlayerIsStaff(tARMA.clientGetUserIdFromSource(ap)) then
                         SetEntityVisible(PlayerPedId(), true, true)
                         DetachEntity(PlayerPedId(), true, true)
                     end
