@@ -5,8 +5,8 @@ author 'JamesUK'
 ui_page 'nui/inventory.html'
 
 client_scripts {
-    '@arma/client/Tunnel.lua',
-    '@arma/client/Proxy.lua',
+    '@arma/client_min/Tunnel.lua',
+    '@arma/client_min/Proxy.lua',
     'client.lua'
 }
 

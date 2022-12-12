@@ -1,4 +1,3 @@
--- A JamesUK Production. Licensed users only. Use without authorisation is illegal, and a criminal offence under UK Law.
 ARMA = Proxy.getInterface("ARMA")
 
 local inventoryOpen = false; 
