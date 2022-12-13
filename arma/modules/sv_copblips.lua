@@ -23,7 +23,7 @@ Citizen.CreateThread(function()
                 end
               end
             end
-            TriggerClientEvent('ARMA:sendFarBlips', ARMA.getUserSource(k), emergencyblips)
+            TriggerClientEvent('ARMA:sendFarBlips', v, emergencyblips)
           end
         end)
       end

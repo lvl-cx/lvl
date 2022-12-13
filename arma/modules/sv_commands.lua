@@ -10,7 +10,8 @@ end)
 
 
 RegisterCommand("a", function(source,args, rawCommand)
-    user_id = ARMA.getUserId(source)   
+    local source = source
+    local user_id = ARMA.getUserId(source)   
     if not ARMA.hasPermission(user_id, "admin.tickets") then
         local playerName = "Server "
         local msg = "Access denied."
@@ -29,7 +30,8 @@ RegisterCommand("a", function(source,args, rawCommand)
 end)
 
 RegisterCommand("p", function(source,args, rawCommand)
-    user_id = ARMA.getUserId(source)   
+    local source = source
+    local user_id = ARMA.getUserId(source)   
     if not ARMA.hasPermission(user_id, "police.onduty.permission") then
         return 
     end
@@ -44,7 +46,8 @@ RegisterCommand("p", function(source,args, rawCommand)
 end)
 
 RegisterCommand("g", function(source,args, rawCommand)
-    user_id = ARMA.getUserId(source)   
+    local source = source
+    local user_id = ARMA.getUserId(source)   
     local peoplesids = {}
     local gangmembers = {}
     local msg = rawCommand:sub(2)
