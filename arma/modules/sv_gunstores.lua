@@ -2,21 +2,78 @@ local cfg = module("cfg/cfg_gunstores")
 local organheist = module('cfg/cfg_organheist')
 
 MySQL.createCommand("ARMA/get_weapons", "SELECT weapon_info FROM arma_weapon_whitelists WHERE user_id = @user_id")
-MySQL.createCommand("ARMA/set_weapons", "UPDATE arma_weapon_whitelists SET weapon_info = @weapon_info WHERE AND user_id = @user_id")
+MySQL.createCommand("ARMA/set_weapons", "UPDATE arma_weapon_whitelists SET weapon_info = @weapon_info WHERE user_id = @user_id")
+MySQL.createCommand("ARMA/add_user", "INSERT IGNORE INTO arma_weapon_whitelists SET user_id = @user_id, weapon_info = ''")
 
+AddEventHandler("playerJoining", function()
+    local user_id = ARMA.getUserId(source)
+    MySQL.execute("ARMA/add_user", {user_id = user_id})
+end)
 
 local whitelistedGuns = {
     ["policeLargeArms"]={
         ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50"}
+    },
+    ["policeSmallArms"]={
+        ["WEAPON_MXM"]={"MXM",700000,0,"N/A","w_ar_mxm"},
+        ["WEAPON_SPAR16"]={"SPAR-16",700000,0,"N/A","w_ar_spar16"},
     }
 }
+
+-- {"policeLargeArms":{"WEAPON_AX50":["AX 50",0,0,"N/A","w_sr_ax50"]}}
+
+-- test case
+RegisterCommand('addwhitelist', function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local ownedWhitelists = {}
+    if user_id == 1 then
+        MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
+            if weaponWhitelists[1]['weapon_info'] then
+                ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
+                for k,v in pairs(ownedWhitelists) do
+                    if v[args[1]] then
+                        ARMAclient.notify(source, {"~r~You already own this whitelist."})
+                        return
+                    else
+                        for a,b in pairs(whitelistedGuns) do
+                            for c,d in pairs(b) do
+                                if c == args[1] then
+                                    ARMAclient.notify(source, {"~g~Added "..args[1].." to your whitelists."})
+                                    if not ownedWhitelists[a] then
+                                        ownedWhitelists[a] = {}
+                                    end
+                                    ownedWhitelists[a] = {[c]=d}
+                                end
+                            end
+                        end
+                    end
+                end
+            else
+                for a,b in pairs(whitelistedGuns) do
+                    for c,d in pairs(b) do
+                        if c == args[1] then
+                            ARMAclient.notify(source, {"~g~Added "..args[1].." to your whitelists."})
+                            if not ownedWhitelists[a] then
+                                ownedWhitelists[a] = {}
+                            end
+                            ownedWhitelists[a] = {[c]=d}
+                        end
+                    end
+                end
+            end
+            MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
+            TriggerClientEvent('ARMA:refreshGunStorePermissions', source)
+        end)
+    end
+end)
 
 RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
     local user_id = ARMA.getUserId(source)
     MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-        if #weaponWhitelists > 0 then
+        if weaponWhitelists[1]['weapon_info'] ~= nil then
             for k,v in pairs(weaponWhitelists) do                                      
                 if weaponWhitelists[k]['weapon_info'] ~= '' then                      
                     data = json.decode(weaponWhitelists[k]['weapon_info'])
