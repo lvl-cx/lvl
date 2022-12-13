@@ -353,7 +353,7 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_weapon_codes (
     user_id int(11) NOT NULL AUTO_INCREMENT,
     spawncode varchar(2048) NOT NULL DEFAULT '',
-    weapon_code int(11) NOT NULL DEFAULT '',
+    weapon_code int(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (user_id)
     );
     ]])
