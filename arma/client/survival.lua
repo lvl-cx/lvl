@@ -103,6 +103,7 @@ Citizen.CreateThread(function()
             end
             TriggerServerEvent("ARMA:forceStoreWeapons", false, true, true)
             tARMA.ejectVehicle()
+            tARMA.RemoveGears()
             b = true
             j = I
             TriggerServerEvent("ARMA:getNumOfNHSOnline")
