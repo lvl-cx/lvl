@@ -1068,7 +1068,6 @@ AddEventHandler("playerDropped",function(reason)
 end)
 
 MySQL.createCommand("ARMA/setusername","UPDATE arma_users SET username = @username WHERE id = @user_id")
---MySQL.createCommand("ARMA/setIP","UPDATE arma_users SET IP = @IP WHERE id = @user_id")
 
 RegisterServerEvent("ARMAcli:playerSpawned")
 AddEventHandler("ARMAcli:playerSpawned", function()

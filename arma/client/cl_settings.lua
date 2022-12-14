@@ -426,7 +426,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'weaponswhitelist')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for a7, a8 in pairs(o) do
-                RageUI.ButtonWithStyle(a8,"",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                RageUI.ButtonWithStyle(a8,nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
                     if a2 then
                         p = a8 -- a8 is name
                         q = a7 -- a7 is spawncode
@@ -446,7 +446,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("to purchase your custom weapon whitelist, which they ")
             RageUI.Separator("then enter on the store to receive their automated")
             RageUI.Separator("weapon whitelist.")
-            RageUI.ButtonWithStyle("Create access code","",{RightLabel = "→→→"},true,function(a0, a1, a2)
+            RageUI.ButtonWithStyle("Create access code",nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
                     local a9 = getGenericTextInput("User ID of player purchasing your weapon whitelist.")
                     if tonumber(a9) then
@@ -458,7 +458,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.ButtonWithStyle("View whitelisted users","",{RightLabel = "→→→"},true,function(a0, a1, a2)
+            RageUI.ButtonWithStyle("View whitelisted users",nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
                     TriggerServerEvent("ARMA:requestWhitelistedUsers", q)
                 end
@@ -475,7 +475,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~r~Requesting whitelisted users...")
             else
                 for aa, ab in pairs(s) do
-                    RageUI.ButtonWithStyle("ID: " .. tostring(aa),"",{RightLabel = ab},true,function()end)
+                    RageUI.ButtonWithStyle("ID: " .. tostring(aa),nil,{RightLabel = ab},true,function()end)
                 end
             end
        end)
