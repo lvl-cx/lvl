@@ -1,4 +1,5 @@
 RMenu.Add('CARDEV', 'main', RageUI.CreateMenu("","~r~Main Menu",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cardev"))
+RMenu.Add('CARDEV','vehiclestats',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle Statistics",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclemods',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle Mods",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclemodindexes',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclemods'),"","~r~Vehicle Mod Indexes",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
@@ -11,6 +12,20 @@ local garageCategorySelected
 local veh
 local extraSettings = false
 local b = false
+local function j()
+    return {
+        speedBuffer = {},
+        speed = 0.0,
+        speedDisplay = 0.0,
+        accel = 0.0,
+        accelDisplay = 0.0,
+        decel = 0.0,
+        decelDisplay = 0.0
+    }
+end
+local m = 0
+local n = 0
+local o = j()
 local q = {"Speed", "Drift", "Handling", "City", "Airport"}
 local r = {
     vector3(2370.8, 2856.58, 40.46),
@@ -73,6 +88,66 @@ local f = {
 }
 local s = 1
 local savedCoords = nil
+
+local function ak()
+    local al = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false))
+    table.insert(o.speedBuffer, al)
+    if #o.speedBuffer > 100 then
+        table.remove(o.speedBuffer, 1)
+    end
+    local am = 0.0
+    local an = 0.0
+    local ao = 0
+    local ap = 0
+    for aq, ar in ipairs(o.speedBuffer) do
+        if aq > 1 then
+            local as = ar - o.speedBuffer[aq - 1]
+            if as > 0.0 then
+                am = am + as
+                ao = ao + 1
+            else
+                an = am + as
+                ap = ap + 1
+            end
+        end
+    end
+    am = am / ao
+    an = an / ap
+    o.speed = math.max(o.speed, al)
+    o.speedDisplay = o.speed * 2.236936
+    o.accel = math.max(o.accel, am)
+    o.accelDisplay = o.accel * 60.0 * 2.236936
+    o.decel = math.min(o.decel, an)
+    o.decelDisplay = math.abs(o.decel) * 60.0 * 2.236936
+end
+
+local viewingVehicleStats = false
+
+local function ay()
+    if viewingVehicleStats then
+        DisableControlAction(0, 23, true)
+        DisableControlAction(0, 75, true)
+        local vehicle, az = tARMA.getPlayerVehicle()
+        if (vehicle ~= l or not az) and DoesEntityExist(l) then
+            SetPedIntoVehicle(PlayerPedId(), l, -1)
+        end
+        if n == 0 then
+            subtitleText("~y~Press [E] to stop recording stats")
+            ak()
+            if IsControlJustPressed(0, 51) then
+                n = GetGameTimer()
+            end
+        else
+            subtitleText("~y~Press [E] to start recording stats")
+            if IsControlJustPressed(0, 51) then
+                o = j()
+                m = GetGameTimer()
+                n = 0
+            end
+        end
+    end
+end
+tARMA.createThreadOnTick(ay)
 
 
 RageUI.CreateWhile(1.0, true, function()
@@ -182,6 +257,11 @@ RageUI.CreateWhile(1.0, true, function()
                     end)
                     RageUI.ButtonWithStyle("Vehicle List",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
                     end,RMenu:Get('CARDEV','vehiclelist'))
+                    RageUI.ButtonWithStyle("Record Vehicle Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
+                        if Selected then
+                            viewingVehicleStats = true
+                        end
+                    end,RMenu:Get('CARDEV','vehiclestats'))
                 end
                 RageUI.Checkbox("Toggle Extra Settings", nil, extraSettings, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
                     if Selected then
@@ -231,6 +311,31 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent("ARMA:setCarDev",b)
                     end
                 end)
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclestats')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if b then
+                local aw = 0
+                if n ~= 0 then
+                    aw = n - m
+                else
+                    aw = GetGameTimer() - m
+                end
+                RageUI.ButtonWithStyle("Time Elapsed","",{RightLabel = string.format("%.1fs", aw / 1000.0)},true,function()
+                end,nil)
+                RageUI.ButtonWithStyle("Top Speed","",{RightLabel = string.format("%.1f MPH", o.speedDisplay)},true,function()
+                end,nil)
+                RageUI.ButtonWithStyle("Top Acceleration","",{RightLabel = string.format("%.1f MPH", o.accelDisplay)},true,function()
+                end,nil)
+                RageUI.ButtonWithStyle("Top Deacceleration","",{RightLabel = string.format("%.1f MPH", o.decelDisplay)},true,function()
+                end,nil)
+                RageUI.ButtonWithStyle("Stop viewing Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
+                    if Selected then
+                        viewingVehicleStats = false
+                    end
+                end,RMenu:Get('CARDEV','main'))
             end
         end)
     end
