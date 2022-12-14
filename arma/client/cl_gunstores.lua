@@ -41,7 +41,7 @@ RageUI.CreateWhile(1.0, true, function()
                     for o,p in pairs(sortedKeys(n))do 
                         local q=n[p]
                         if p~="_config"then 
-                            local r,s,t,u,v,w=table.unpack(q)
+                            local r,s,t=table.unpack(q)
                             local x=false
                             local y
                             if p=="item|fillUpArmour"then 
@@ -124,7 +124,7 @@ RageUI.CreateWhile(1.0, true, function()
                 h=true
                 local q=C[p]
                 if p~="_config"then 
-                    local r,s,t,u,v,w=table.unpack(q)
+                    local r,s,t=table.unpack(q)
                     local x=false
                     local y
                     if p=="item|fillUpArmour"then 
