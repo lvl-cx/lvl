@@ -1,6 +1,6 @@
 local currentPlate = nil
 local carstable = {}
-local location = vector3(-532.84381103516,-192.99229431152,38.222408294678)
+local location = vector3(-585.17864990234,-209.28169250488,38.219661712646)
 local m = module("arma-vehicles", "garages")
 m=m.garages
 
