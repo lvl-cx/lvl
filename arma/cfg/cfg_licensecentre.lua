@@ -1,6 +1,6 @@
 cfg = {}
 
-cfg.location = vector3(-547.30133056641,-200.14054870605,47.414928436279)
+cfg.location = vector3(-532.92028808594,-189.90745544434,38.219657897949)
 
 cfg.licenses = {
     {name = "Weed License", group = "Weed", price = 200000, pieceprice = 500, type = 'grind'},
