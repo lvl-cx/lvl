@@ -3,6 +3,9 @@ RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("S
 RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "killeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Kill Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "bloodeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Blood Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "weaponswhitelist", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Custom Weapons Owned',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "generateaccesscode", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "weaponswhitelist"), "", '~b~Generate Access Code',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "viewwhitelisted", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "generateaccesscode"), "", '~b~View Whilelisted Users',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 
 
 
@@ -11,9 +14,6 @@ local b = 0
 local d = 0
 local e = false
 local l = {
-    {"20%", 0.2},
-    {"30%", 0.3},
-    {"40%", 0.4},
     {"50%", 0.5},
     {"60%", 0.6},
     {"70%", 0.7},
@@ -24,8 +24,8 @@ local l = {
     {"200%", 2.0},
     {"1000%", 10.0}
 }
-local m = {"20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%", "150%", "200%", "1000%"}
-local n = 9
+local m = {"50%", "60%", "70%", "80%", "90%", "100%", "150%", "200%", "1000%"}
+local n = 6
 local u = {}
 local function v(w, x)
     return u[w.name .. x.name]
@@ -278,6 +278,23 @@ Citizen.CreateThread(function()
     end
 end)
 
+local o = {}
+local p
+local q
+local r
+local s
+RegisterNetEvent("ARMA:gotCustomWeaponsOwned",function(t)
+    print("gotCustomWeaponsOwned", dump(t))
+    o = t
+end)
+RegisterNetEvent("ARMA:generatedAccessCode",function(u)
+    print("got accessCode", u)
+    r = u
+end)
+RegisterNetEvent("ARMA:getWhitelistedUsers",function(v)
+    s = v
+end)
+
 function tARMA.setHitMarkerSetting(i)
     SetResourceKvp("arma_hitmarkersounds", tostring(i))
 end
@@ -341,8 +358,17 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,_,a0)
-            RageUI.ButtonWithStyle("Store Inventory","View your store inventory here.",{RightLabel = "→→→"},true,function()
-            end,RMenu:Get("store", "mainmenu"))
+            RageUI.ButtonWithStyle("Weapon Whitelists", "Sell your custom weapon whitelists here.", {RightLabel = "→→→"}, true, function(W, X, Y)
+                if Y then
+                    r = nil
+                    p = nil
+                    q = nil
+                    s = nil
+                    TriggerServerEvent("ARMA:getCustomWeaponsOwned")
+                end
+            end, RMenu:Get('SettingsMenu', 'weaponswhitelist'))
+            -- RageUI.ButtonWithStyle("Store Inventory","View your store inventory here.",{RightLabel = "→→→"},true,function()
+            -- end,RMenu:Get("store", "mainmenu"))
             RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
             RageUI.Checkbox("Toggle Compass", nil, compasschecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
@@ -395,6 +421,63 @@ RageUI.CreateWhile(1.0, true, function()
             end,RMenu:Get("SettingsMenu", "killeffects"))
             RageUI.ButtonWithStyle("Blood Effects","Toggle effects that occur when damaging a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "bloodeffects"))
+       end)
+    end
+    if RageUI.Visible(RMenu:Get('SettingsMenu', 'weaponswhitelist')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            for a7, a8 in pairs(o) do
+                RageUI.ButtonWithStyle(a8,"",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                    if a2 then
+                        p = a8 -- a8 is name
+                        q = a7 -- a7 is spawncode
+                        s = nil
+                    end
+                end,RMenu:Get("SettingsMenu", "generateaccesscode"))
+            end
+            RageUI.Separator("~y~If you do not see your custom weapon here.")
+            RageUI.Separator("~y~Please open a ticket on our support discord.")
+       end)
+    end
+    if RageUI.Visible(RMenu:Get('SettingsMenu', 'generateaccesscode')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.Separator("~g~Weapon Whitelist for " .. p)
+            RageUI.Separator("How it works:")
+            RageUI.Separator("You generate an access code for the player who wishes")
+            RageUI.Separator("to purchase your custom weapon whitelist, which they ")
+            RageUI.Separator("then enter on the store to receive their automated")
+            RageUI.Separator("weapon whitelist.")
+            RageUI.ButtonWithStyle("Create access code","",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                if a2 then
+                    local a9 = getGenericTextInput("User ID of player purchasing your weapon whitelist.")
+                    if tonumber(a9) then
+                        a9 = tonumber(a9)
+                        if a9 > 0 then
+                            print("selling", q, "to", a9)
+                            TriggerServerEvent("ARMA:generateWeaponAccessCode", q, a9)
+                        end
+                    end
+                end
+            end)
+            RageUI.ButtonWithStyle("View whitelisted users","",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                if a2 then
+                    TriggerServerEvent("ARMA:requestWhitelistedUsers", q)
+                end
+            end,RMenu:Get("SettingsMenu", "viewwhitelisted"))
+            if r then
+                RageUI.Separator("~g~Access code generated: " .. r)
+            end
+       end)
+    end
+    if RageUI.Visible(RMenu:Get('SettingsMenu', 'viewwhitelisted')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.Separator("~g~Whitelisted users for " .. p)
+            if s == nil then
+                RageUI.Separator("~r~Requesting whitelisted users...")
+            else
+                for aa, ab in pairs(s) do
+                    RageUI.ButtonWithStyle("ID: " .. tostring(aa),"",{RightLabel = ab},true,function()end)
+                end
+            end
        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'graphicpresets')) then
