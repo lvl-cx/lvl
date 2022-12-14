@@ -22,10 +22,6 @@ local whitelistedGuns = {
     ["policeLargeArms"]={
         ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50",1}
     },
-    ["policeSmallArms"]={
-        ["WEAPON_MXM"]={"MXM",700000,0,"N/A","w_ar_mxm",1},
-        ["WEAPON_SPAR16"]={"SPAR-16",700000,0,"N/A","w_ar_spar16",1},
-    }
 }
 
 
@@ -64,7 +60,7 @@ AddEventHandler("ARMA:requestWhitelistedUsers",function(spawncode)
                 data = json.decode(v['weapon_info'])
                 for a,b in pairs(data) do
                     if b[spawncode] then
-                        whitelistOwners[v['user_id']] = 'Test'
+                        whitelistOwners[v['user_id']] = (exports['ghmattimysql']:executeSync("SELECT username FROM arma_users WHERE id = @user_id", {user_id = user_id})[1]).username
                     end
                 end
             end
@@ -90,40 +86,63 @@ end)
 
 function addweaponwhitelist(_, arg)
     if _ ~= 0 and ARMA.getUserId(_) ~= 1 then return end
-    local user_id = tonumber(arg[1])
-    local code = tonumber(arg[2])
-    local usource = ARMA.getUserSource(user_id)
-    local ownedWhitelists = {}
-    MySQL.query("ARMA/get_weapon_codes", {}, function(weaponCodes)
-        if #weaponCodes > 0 then
-            for e,f in pairs(weaponCodes) do
-                if f['user_id'] == user_id and f['weapon_code'] == code then
-                    MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-                        if not next(weaponWhitelists) == nil then
-                            ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
+    if ARMA.getUserId(_) == 1 then
+        local user_id = tonumber(arg[1])
+        local spawncode = arg[2]
+        local ownedWhitelists = {}
+        MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
+            if not next(weaponWhitelists) == nil then
+                ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
+            end
+            for a,b in pairs(whitelistedGuns) do
+                for c,d in pairs(b) do
+                    if c == spawncode then
+                        if not ownedWhitelists[a] then
+                            ownedWhitelists[a] = {}
                         end
-                        for a,b in pairs(whitelistedGuns) do
-                            for c,d in pairs(b) do
-                                if c == spawncode then
-                                    if not ownedWhitelists[a] then
-                                        ownedWhitelists[a] = {}
-                                    end
-                                    ownedWhitelists[a][c] = d
-                                end
-                            end
-                        end
-                        MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
-                        MySQL.execute("ARMA/remove_weapon_code", {weapon_code = code})
-                        if usource ~= nil then
-                            TriggerClientEvent('ARMA:refreshGunStorePermissions', usource)
-                            print(GetPlayerName(usource)..'['..user_id..'] has redeemed a weapon whitelist code.')
-                            ARMAclient.notify(usource, {"~g~Your whitelist access has been granted. ❤️"})
-                        end
-                    end)
+                        ownedWhitelists[a][c] = d
+                    end
                 end
             end
-        end
-    end)
+            MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
+            ARMAclient.notify(_, {'~g~Added '..spawncode..' whitelist to '..user_id..'.'})
+        end)
+    else
+        local user_id = tonumber(arg[1])
+        local code = tonumber(arg[2])
+        local usource = ARMA.getUserSource(user_id)
+        local ownedWhitelists = {}
+        MySQL.query("ARMA/get_weapon_codes", {}, function(weaponCodes)
+            if #weaponCodes > 0 then
+                for e,f in pairs(weaponCodes) do
+                    if f['user_id'] == user_id and f['weapon_code'] == code then
+                        MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
+                            if not next(weaponWhitelists) == nil then
+                                ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
+                            end
+                            for a,b in pairs(whitelistedGuns) do
+                                for c,d in pairs(b) do
+                                    if c == f['spawncode'] then
+                                        if not ownedWhitelists[a] then
+                                            ownedWhitelists[a] = {}
+                                        end
+                                        ownedWhitelists[a][c] = d
+                                    end
+                                end
+                            end
+                            MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
+                            MySQL.execute("ARMA/remove_weapon_code", {weapon_code = code})
+                            if usource ~= nil then
+                                TriggerClientEvent('ARMA:refreshGunStorePermissions', usource)
+                                print(GetPlayerName(usource)..'['..user_id..'] has redeemed a weapon whitelist code.')
+                                ARMAclient.notify(usource, {"~g~Your whitelist access has been granted. ❤️"})
+                            end
+                        end)
+                    end
+                end
+            end
+        end)
+    end
 end
 RegisterCommand("addweaponwhitelist", addweaponwhitelist, true)
 
