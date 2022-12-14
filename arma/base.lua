@@ -244,7 +244,7 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_verification(
-    user_id INTEGER AUTO_INCREMENT,
+    user_id INT(11),
     code VARCHAR(100) NULL DEFAULT NULL,
     discord_id VARCHAR(100) NULL DEFAULT NULL,
     verified TINYINT NULL DEFAULT NULL,
@@ -336,7 +336,7 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_quests (
-    user_id int(11) NOT NULL AUTO_INCREMENT,
+    user_id INT(11),
     quests_completed INT(11) NOT NULL DEFAULT 0,
     reward_claimed BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (user_id)
@@ -344,17 +344,17 @@ Citizen.CreateThread(function()
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_weapon_whitelists (
-    user_id int(11) NOT NULL AUTO_INCREMENT,
-    weapon_info varchar(2048) NOT NULL DEFAULT '',
+    user_id INT(11),
+    weapon_info varchar(2048) DEFAULT NULL,
     PRIMARY KEY (user_id)
     );
     ]])
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_weapon_codes (
-    user_id int(11) NOT NULL AUTO_INCREMENT,
+    user_id INT(11),
     spawncode varchar(2048) NOT NULL DEFAULT '',
     weapon_code int(11) NOT NULL DEFAULT 0,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (weapon_code)
     );
     ]])
     MySQL.SingleQuery("ALTER TABLE arma_users ADD IF NOT EXISTS bantime varchar(100) NOT NULL DEFAULT '';")
