@@ -8,7 +8,17 @@ local e
 local f
 local g=""
 local h=false
-local i={}
+local i={
+    ["Shank"]={_config={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true}},
+    ["SmallArmsDealer"]={_config={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1129.3187255859,-2005.0549316406,34.512053710937)},110,1,"Small Arms Dealer",{""},true}},
+    ["LargeArmsDealer"]={_config={{vector3(-1108.3199462891,4934.7392578125,217.35540771484),vector3(5065.6201171875,-4591.3857421875,1.8652405738831)},110,1,"Large Arms Dealer",{"gang.whitelisted"},false}},
+    ["VIP"]={_config={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{"vip.gunstore"},true}},
+    ["Rebel"]={_config={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebellicense.whitelisted"},true}},
+    ["policeSmallArms"]={_config={{vector3(461.53082275391,-979.35876464844,29.689668655396),vector3(1842.9096679688,3690.7692871094,33.267082214355),vector3(-448.93994140625,6015.4150390625,31.716398239136),vector3(-1104.5264892578,-821.70153808594,13.282785415649)},110,5,"MET Police Small Arms",{"police.onduty.permission"},false,true}},
+    ["policeLargeArms"]={_config={{vector3(1840.6104736328,3691.4741210938,33.350730895996),vector3(461.43179321289,-982.66412353516,29.689668655396),vector3(-449.9557800293,6016.5454101563,31.716398239136),vector3(-1102.5059814453,-820.62091064453,13.282785415649)},110,5,"MET Police Large Arms",{"police.loadshop2","police.onduty.permission"},false,true}},
+    ["prisonArmoury"]={_config={{vector3(1779.3741455078,2542.5639648438,45.797782897949)},110,5,"Prison Armoury",{"prisonguard.onduty.permission"},false,true}},
+    ["NHS"]={_config={{vector3(340.41757202148,-582.71209716797,27.973259765625),vector3(-435.27032470703,-318.29010009766,34.08971484375)},110,5,"NHS Armoury",{"nhs.onduty.permission"},false,true}},
+}
 RMenu.Add("ARMAGunstore","mainmenu",RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
 RMenu:Get("ARMAGunstore","mainmenu"):SetSubtitle("~b~GUNSTORE")
 RMenu.Add("ARMAGunstore","type",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","mainmenu"),"","~b~Purchase Weapon or Ammo",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
