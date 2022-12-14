@@ -4,69 +4,129 @@ local organheist = module('cfg/cfg_organheist')
 MySQL.createCommand("ARMA/get_weapons", "SELECT weapon_info FROM arma_weapon_whitelists WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/set_weapons", "UPDATE arma_weapon_whitelists SET weapon_info = @weapon_info WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/add_user", "INSERT IGNORE INTO arma_weapon_whitelists SET user_id = @user_id, weapon_info = ''")
+MySQL.createCommand("ARMA/get_all_weapons", "SELECT * FROM arma_weapon_whitelists")
+MySQL.createCommand("ARMA/create_weapon_code", "INSERT IGNORE INTO arma_weapon_codes SET user_id = @user_id, spawncode = @spawncode, weapon_code = @weapon_code")
+MySQL.createCommand("ARMA/remove_weapon_code", "DELETE FROM arma_weapon_codes WHERE weapon_code = @weapon_code")
+MySQL.createCommand("ARMA/get_weapon_codes", "SELECT * FROM arma_weapon_codes")
 
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
     MySQL.execute("ARMA/add_user", {user_id = user_id})
 end)
 
-local whitelistedGuns = {
-    ["policeLargeArms"]={
-        ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50"}
-    },
-    ["policeSmallArms"]={
-        ["WEAPON_MXM"]={"MXM",700000,0,"N/A","w_ar_mxm"},
-        ["WEAPON_SPAR16"]={"SPAR-16",700000,0,"N/A","w_ar_spar16"},
-    }
-}
 
 -- {"policeLargeArms":{"WEAPON_AX50":["AX 50",0,0,"N/A","w_sr_ax50"]}}
 
--- test case
-RegisterCommand('addwhitelist', function(source, args)
+
+local whitelistedGuns = {
+    ["policeLargeArms"]={
+        ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50",1}
+    },
+    ["policeSmallArms"]={
+        ["WEAPON_MXM"]={"MXM",700000,0,"N/A","w_ar_mxm",1},
+        ["WEAPON_SPAR16"]={"SPAR-16",700000,0,"N/A","w_ar_spar16",1},
+    }
+}
+
+
+RegisterNetEvent("ARMA:getCustomWeaponsOwned")
+AddEventHandler("ARMA:getCustomWeaponsOwned",function()
     local source = source
     local user_id = ARMA.getUserId(source)
     local ownedWhitelists = {}
-    if user_id == 1 then
-        MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-            if weaponWhitelists[1]['weapon_info'] then
-                ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
-                for k,v in pairs(ownedWhitelists) do
-                    if v[args[1]] then
-                        ARMAclient.notify(source, {"~r~You already own this whitelist."})
-                        return
-                    else
-                        for a,b in pairs(whitelistedGuns) do
-                            for c,d in pairs(b) do
-                                if c == args[1] then
-                                    ARMAclient.notify(source, {"~g~Added "..args[1].." to your whitelists."})
-                                    if not ownedWhitelists[a] then
-                                        ownedWhitelists[a] = {}
-                                    end
-                                    ownedWhitelists[a] = {[c]=d}
-                                end
+    MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
+        if weaponWhitelists[1]['weapon_info'] ~= nil then
+            data = json.decode(weaponWhitelists[1]['weapon_info'])
+            for k,v in pairs(data) do
+                for a,b in pairs(v) do
+                    for c,d in pairs(whitelistedGuns) do
+                        for e,f in pairs(d) do
+                            if e == a and f[6] == user_id then
+                                ownedWhitelists[a] = b[1]
                             end
-                        end
-                    end
-                end
-            else
-                for a,b in pairs(whitelistedGuns) do
-                    for c,d in pairs(b) do
-                        if c == args[1] then
-                            ARMAclient.notify(source, {"~g~Added "..args[1].." to your whitelists."})
-                            if not ownedWhitelists[a] then
-                                ownedWhitelists[a] = {}
-                            end
-                            ownedWhitelists[a] = {[c]=d}
                         end
                     end
                 end
             end
-            MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
-            TriggerClientEvent('ARMA:refreshGunStorePermissions', source)
-        end)
+            TriggerClientEvent('ARMA:gotCustomWeaponsOwned', source, ownedWhitelists)
+        end
+    end)
+end)
+
+RegisterNetEvent("ARMA:requestWhitelistedUsers")
+AddEventHandler("ARMA:requestWhitelistedUsers",function(spawncode)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local whitelistOwners = {}
+    MySQL.query("ARMA/get_all_weapons", {}, function(weaponWhitelists)
+        for k,v in pairs(weaponWhitelists) do
+            if v['weapon_info'] ~= '' then
+                data = json.decode(v['weapon_info'])
+                for a,b in pairs(data) do
+                    if b[spawncode] then
+                        whitelistOwners[v['user_id']] = 'Test'
+                    end
+                end
+            end
+        end
+        TriggerClientEvent('ARMA:getWhitelistedUsers', source, whitelistOwners)
+    end)
+end)
+
+RegisterNetEvent("ARMA:generateWeaponAccessCode")
+AddEventHandler("ARMA:generateWeaponAccessCode",function(spawncode, id)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local code = math.random(100000,999999)
+    for a,b in pairs(whitelistedGuns) do
+        for c,d in pairs(b) do
+            if b[spawncode] and d[6]== user_id then
+                MySQL.execute("ARMA/create_weapon_code", {user_id = id, spawncode = spawncode, weapon_code = code})
+                TriggerClientEvent('ARMA:generatedAccessCode', source, code)
+            end
+        end
     end
 end)
+
+function addweaponwhitelist(_, arg)
+    if _ ~= 0 and ARMA.getUserId(_) ~= 1 then return end
+    local user_id = tonumber(arg[1])
+    local code = tonumber(arg[2])
+    local usource = ARMA.getUserSource(user_id)
+    local ownedWhitelists = {}
+    MySQL.query("ARMA/get_weapon_codes", {}, function(weaponCodes)
+        if #weaponCodes > 0 then
+            for e,f in pairs(weaponCodes) do
+                if f['user_id'] == user_id and f['weapon_code'] == code then
+                    MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
+                        if not next(weaponWhitelists) == nil then
+                            ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
+                        end
+                        for a,b in pairs(whitelistedGuns) do
+                            for c,d in pairs(b) do
+                                if c == spawncode then
+                                    if not ownedWhitelists[a] then
+                                        ownedWhitelists[a] = {}
+                                    end
+                                    ownedWhitelists[a][c] = d
+                                end
+                            end
+                        end
+                        MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
+                        MySQL.execute("ARMA/remove_weapon_code", {weapon_code = code})
+                        if usource ~= nil then
+                            TriggerClientEvent('ARMA:refreshGunStorePermissions', usource)
+                            print(GetPlayerName(usource)..'['..user_id..'] has redeemed a weapon whitelist code.')
+                            ARMAclient.notify(usource, {"~g~Your whitelist access has been granted. ❤️"})
+                        end
+                    end)
+                end
+            end
+        end
+    end)
+end
+RegisterCommand("addweaponwhitelist", addweaponwhitelist, true)
+
 
 RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
@@ -74,16 +134,12 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
     local user_id = ARMA.getUserId(source)
     MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
         if weaponWhitelists[1]['weapon_info'] ~= nil then
-            for k,v in pairs(weaponWhitelists) do                                      
-                if weaponWhitelists[k]['weapon_info'] ~= '' then                      
-                    data = json.decode(weaponWhitelists[k]['weapon_info'])
-                    for a,b in pairs(cfg.GunStores) do
-                        for c,d in pairs(data) do
-                            if a == c then
-                                for e,f in pairs(data[a]) do
-                                    cfg.GunStores[a][e] = f
-                                end
-                            end
+            data = json.decode(weaponWhitelists[1]['weapon_info'])
+            for a,b in pairs(cfg.GunStores) do
+                for c,d in pairs(data) do
+                    if a == c then
+                        for e,f in pairs(data[a]) do
+                            cfg.GunStores[a][e] = f
                         end
                     end
                 end
