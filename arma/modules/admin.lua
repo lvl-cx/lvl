@@ -841,25 +841,22 @@ end)
 
 RegisterNetEvent('ARMA:AddCar')
 AddEventHandler('ARMA:AddCar', function()
-    local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    local admin_name = GetPlayerName(admin)
     local source = source
-    local userid = ARMA.getUserId(source)
-    if ARMA.hasPermission(userid, 'admin.addcar') then
+    local admin_id = ARMA.getUserId(source)
+    local admin_name = GetPlayerName(source)
+    if ARMA.hasPermission(admin_id, 'admin.addcar') then
         ARMA.prompt(source,"Add to Perm ID:","",function(source, permid)
             if permid == "" then return end
-            local playerName = GetPlayerName(permid)
+            local playerName = GetPlayerName(ARMA.getUserSource(permid))
             ARMA.prompt(source,"Car Spawncode:","",function(source, car) 
                 if car == "" then return end
                 local car = car
-                local adminName = GetPlayerName(source)
                 ARMA.prompt(source,"Locked:","",function(source, locked) 
                 if locked == '0' or locked == '1' then
                     if permid and car ~= "" then  
                         exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
                         ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Spawncode: **"..car.."**")
+                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..playerName.."**\n> Player TempID: **"..ARMA.getUserSource(permid).."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
                     else 
                         ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
                     end
