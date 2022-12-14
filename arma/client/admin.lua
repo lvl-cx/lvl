@@ -85,8 +85,10 @@ function tARMA.toggleNoclip()
     SetVehicleRadioEnabled(c, not noclipActive)
     if noclipActive then
         SetEntityVisible(tARMA.getPlayerPed(), false, false)
+        tARMA.setRedzoneTimerDisabled(true)
     else
         SetEntityVisible(tARMA.getPlayerPed(), true, false)
+        tARMA.setRedzoneTimerDisabled(false)
     end
 end
 RegisterKeyMapping("noclip", "Staff Noclip", "keyboard", "F4")
