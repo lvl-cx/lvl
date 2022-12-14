@@ -101,7 +101,7 @@ Citizen.CreateThread(function()
             if currentBackpack then
                 TriggerEvent('ARMA:removeBackpack')
             end
-            TriggerServerEvent("ARMA:forceStoreWeapons", false, true, true)
+            TriggerServerEvent("ARMA:forceStoreWeapons")
             tARMA.ejectVehicle()
             tARMA.RemoveGears()
             b = true
