@@ -19,6 +19,10 @@ end)
 
 
 local whitelistedGuns = {
+    -- format:
+    -- [store] = {
+    --     [weapon_spawncode] = {weapon_name, weapon_price, 0, "N/A", model, owner_userid}
+    -- }
     ["policeLargeArms"]={
         ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50",1}
     },
@@ -105,7 +109,7 @@ function addweaponwhitelist(_, arg)
                 end
             end
             MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
-            ARMAclient.notify(_, {'~g~Added '..spawncode..' whitelist to '..user_id..'.'})
+            ARMAclient.notify(_, {'~g~Added '..spawncode..' whitelist to ID: '..user_id..'.'})
             if ARMA.getUserSource(user_id) ~= nil then
                 TriggerClientEvent('ARMA:refreshGunStorePermissions', ARMA.getUserSource(user_id))
             end
