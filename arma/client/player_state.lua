@@ -86,10 +86,8 @@ end)
 function tARMA.checkCustomization()
     local c = userdata.customisation
     if c == nil or c.modelhash == 0 or not IsModelValid(c.modelhash) then
-        print('default')
         tARMA.setCustomization(getDefaultCustomization(), true, true)
     else
-        print('custom')
         tARMA.setCustomization(c, true, true)
     end
 end
