@@ -206,6 +206,7 @@ client.getPerms = function(msg) {
 }
 
 client.on('message', (message) => {
+    if (!message.guild.id === settingsjson.settings.GuildID) return;
     if (!message.author.bot){
         if (message.channel.name.includes('auction-')){
             if (message.channel.name == '│auction-room'){
