@@ -200,10 +200,8 @@ end)
 
 RegisterServerEvent("ARMA:askId")
 AddEventHandler("ARMA:askId", function(nplayer)
-  print(nplayer)
   local player = source
   local nuser_id = ARMA.getUserId(nplayer)
-  print(nuser_id)
   if nuser_id ~= nil then
     ARMAclient.notify(player,{'~g~Request sent.'})
     ARMA.request(nplayer,"Do you want to give your ID card ?",15,function(nplayer,ok)
@@ -231,10 +229,8 @@ end)
 
 RegisterNetEvent('ARMA:searchPlayer')
 AddEventHandler("ARMA:searchPlayer", function(nplayer)
-  print(nplayer)
   player = source
   local nuser_id = ARMA.getUserId(nplayer)
-  print(nuser_id)
   if nuser_id ~= nil then
     ARMAclient.notify(nplayer,{"You are being searched."})
     ARMAclient.getWeapons(nplayer,{},function(weapons)
