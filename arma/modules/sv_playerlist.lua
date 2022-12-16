@@ -68,14 +68,12 @@ local hmpGroups = {
     ["Trainee Prison Officer"] = true
 }
 local defaultGroups = {
-    --["AA Mechanic"] = true,
     ["Royal Mail Driver"] = true,
     ["Bus Driver"] = true,
     ["Deliveroo"] = true,
     ["Scuba Diver"] = true,
     ["Pilot"] = true,
     ["G4S Driver"] = true,
-    ["Lorry Driver"] = true,
     ["Taco Seller"] = true,
     ["Burger Shot Cook"] = true,
 }
