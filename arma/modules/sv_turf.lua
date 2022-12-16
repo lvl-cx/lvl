@@ -325,14 +325,3 @@ function ARMA.turfSaleToGangFunds(amount, drugtype)
 		end
 	end
 end
-
-RegisterCommand('largearms', function(source, args)
-	local source = source
-	local user_id = ARMA.getUserId(source)
-	if user_id == 1 then
-		turfData[5].commission = tonumber(args[1])
-		ARMA.updateTraderInfo()
-		TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
-		TriggerClientEvent('ARMA:recalculateLargeArms', -1, tonumber(args[1]))
-	end
-end)
