@@ -98,7 +98,7 @@ function sendFullPlayerListData()
     if M >= 1 then
         SendNUIMessage({appendToContentPlayerList = '<span id="playerlist_seperator_civs">Civilians</span>'})
     end
-    for S, T in ipairs(sortedPlayersCivillians) do
+    for S, T in pairs(sortedPlayersCivillians) do
         SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersCivillians[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersCivillians[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersCivillians[S].hours) .. "hrs</span><br/>"})
     end
 end

@@ -1727,19 +1727,20 @@ Citizen.CreateThread(function()
             SetVehicleEngineOn(al, false, true, true)
             ak = -1
         end
-        local an = GetEntityAttachedTo(PlayerPedId())
-        if an ~= 0 and IsEntityAPed(an) and IsPedAPlayer(an) and not IsEntityVisible(an) then
-            local ao = NetworkGetPlayerIndexFromPed(an)
-            if ao ~= -1 then
-                local ap = GetPlayerServerId(ao)
-                if ap > 0 then
-                    if not tARMA.clientGetPlayerIsStaff(tARMA.clientGetUserIdFromSource(ap)) then
-                        SetEntityVisible(PlayerPedId(), true, true)
-                        DetachEntity(PlayerPedId(), true, true)
-                    end
-                end
-            end
-        end
+        -- unneeded have a server side check
+        -- local an = GetEntityAttachedTo(PlayerPedId())
+        -- if an ~= 0 and IsEntityAPed(an) and IsPedAPlayer(an) and not IsEntityVisible(an) then
+        --     local ao = NetworkGetPlayerIndexFromPed(an)
+        --     if ao ~= -1 then
+        --         local ap = GetPlayerServerId(ao)
+        --         if ap > 0 then
+        --             if not tARMA.clientGetPlayerIsStaff(tARMA.clientGetUserIdFromSource(ap)) then
+        --                 SetEntityVisible(PlayerPedId(), true, true)
+        --                 DetachEntity(PlayerPedId(), true, true)
+        --             end
+        --         end
+        --     end
+        -- end
         Citizen.Wait(1000)
     end
 end)

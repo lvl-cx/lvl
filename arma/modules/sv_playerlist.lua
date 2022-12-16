@@ -146,8 +146,8 @@ AddEventHandler('ARMA:getPlayerListData', function()
     local staff = {}
     local police = {}
     local nhs = {}
-    local hmp = {}
     local lfb = {}
+    local hmp = {}
     local civillians = {}
     for k,v in pairs(ARMA.getUsers()) do
         local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
@@ -162,10 +162,10 @@ AddEventHandler('ARMA:getPlayerListData', function()
             police[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
         elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
             nhs[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
-        elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
-            hmp[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
         elseif ARMA.hasPermission(k, 'lfb perm') then
             lfb[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = hours}
+        elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
+            hmp[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
         end
         if not ARMA.hasPermission(k, "police.onduty.permission") and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
             civillians[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'default'), hours = hours}
