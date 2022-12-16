@@ -4,7 +4,7 @@ local cfg = {}
 
 cfg.GunStores={
     ["policeLargeArms"]={
-        ["_config"]={{vector3(1840.6104736328,3691.4741210938,33.350730895996),vector3(461.43179321289,-982.66412353516,29.689668655396),vector3(-449.9557800293,6016.5454101563,31.716398239136),vector3(-1102.5059814453,-820.62091064453,13.282785415649)},110,5,"MET Police Large Arms",{"police.loadshop2","police.onduty.permission"},false,true}, 
+        ["_config"]={{vector3(1840.6104736328,3691.4741210938,33.350730895996),vector3(461.43179321289,-982.66412353516,29.689668655396),vector3(-449.9557800293,6016.5454101563,31.716398239136),vector3(-1102.5059814453,-820.62091064453,13.282785415649)},110,5,"MET Police Large Arms",{"police.loadshop2"},false,true}, 
         ["WEAPON_SMOKEGRENADE"]={"Smoke/Tear Gas",0,0,"N/A","w_me_smokegrenade"},
         ["WEAPON_FLASHBANG"]={"Flashbang",0,0,"N/A","w_me_flashbang"},
         --["WEAPON_G36"]={"G36C",0,0,"N/A","w_ar_g36"},
