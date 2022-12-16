@@ -68,6 +68,7 @@ local forbiddenNames = {
 }
 
 MySQL.createCommand("ARMA/update_numplate","UPDATE arma_user_vehicles SET vehicle_plate = @registration WHERE user_id = @user_id AND vehicle = @vehicle")
+MySQL.createCommand("ARMA/check_numplate","SELECT * FROM arma_user_vehicles WHERE vehicle_plate = @plate")
 
 RegisterNetEvent('ARMA:getCars')
 AddEventHandler('ARMA:getCars', function()
@@ -88,6 +89,7 @@ end)
 
 RegisterNetEvent("ARMA:ChangeNumberPlate")
 AddEventHandler("ARMA:ChangeNumberPlate", function(vehicle)
+	local source = source
     local user_id = ARMA.getUserId(source)
 	ARMA.prompt(source,"Plate Name:","",function(source, plateName)
 		if plateName == '' then return end
@@ -113,5 +115,18 @@ AddEventHandler("ARMA:ChangeNumberPlate", function(vehicle)
 				end
             end
         end)
+	end)
+end)
+
+RegisterNetEvent("ARMA:checkPlateAvailability")
+AddEventHandler("ARMA:checkPlateAvailability", function(plate)
+	local source = source
+    local user_id = ARMA.getUserId(source)
+	MySQL.query("ARMA/check_numplate", {plate = plate}, function(result)
+		if #result > 0 then 
+			ARMAclient.notify(source, {"~r~The plate "..plate.." is already taken."})
+		else
+			ARMAclient.notify(source, {"~g~The plate "..plate.." is available."})
+		end
 	end)
 end)

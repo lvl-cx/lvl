@@ -472,15 +472,7 @@ function ARMA.getSourceIdKey(source)
     return idk
 end
 
-function ARMA.getPlayerEndpoint(player)
-    if ARMAConfig.DoNotDisplayIps then 
-        return ""
-    end
-    return GetPlayerEP(player) or "0.0.0.0"
-end
-
 function ARMA.getPlayerIP(player)
-  
     return GetPlayerEP(player) or "0.0.0.0"
 end
 
@@ -855,10 +847,11 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
     if ids ~= nil and #ids > 0 then
         deferrals.update("[ARMA] Checking identifiers...")
         ARMA.getUserIdByIdentifiers(ids, function(user_id)
-            ARMA.IdentifierBanCheck(source, user_id, function(status, id)
+            ARMA.IdentifierBanCheck(source, user_id, function(status, id, bannedIdentifier)
                 if status then
                     print("[ARMA] User rejected for attempting to evade ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
                     deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. id)
+                    tARMA.sendWebhook('ban-evaders', 'ARMA Ban Evade Logs', "> Player Name: **"..name.."**\n> Player Current Perm ID: **"..user_id.."**\n> Player Banned PermID: **"..id.."**\n> Player Banned Identifier: **"..bannedIdentifier.."**")
                     return 
                 end
             end)
@@ -1089,7 +1082,6 @@ AddEventHandler("ARMAcli:playerSpawned", function()
             end
             ARMAclient.addPlayer(-1,{source})
             MySQL.execute("ARMA/setusername", {user_id = user_id, username = GetPlayerName(source)})
-            --MySQL.execute("ARMA/setIP", {user_id = user_id, IP = ARMA.getPlayerIP(source)})
         end
         TriggerEvent("ARMA:playerSpawn",user_id,player,first_spawn)
         TriggerClientEvent("ARMA:onClientSpawn",player,user_id,first_spawn)
