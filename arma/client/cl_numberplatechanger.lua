@@ -4,10 +4,25 @@ local location = vector3(-585.17864990234,-209.28169250488,38.219661712646)
 local m = module("arma-vehicles", "garages")
 m=m.garages
 
-RMenu.Add('plateshop', 'main', RageUI.CreateMenu("Number Plate", "~b~Number Plate", 1350, 50))
-RMenu.Add("plateshop", "sub", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Number Plate", 1350, 50))
+RMenu.Add('plateshop', 'main', RageUI.CreateMenu("Number Plate", "~b~DVLA", 1350, 50))
+RMenu.Add("plateshop", "ownedvehicles", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Owned Vehicles", 1350, 50))
+RMenu.Add("plateshop", "changeplate", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Plate management", 1350, 50))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('plateshop', 'main')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.ButtonWithStyle("Owned Vehicles", "View your owned vehicles", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+            end, RMenu:Get("plateshop", "ownedvehicles"))
+            RageUI.ButtonWithStyle("Check Plate Availability", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                if Selected then
+                    local u = GetLicensePlateString()
+                    if u ~= "" then
+                        TriggerServerEvent("ARMA:checkPlateAvailability", u)
+                    end
+                end
+            end)
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('plateshop', 'ownedvehicles')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if next(carstable) == nil then
                 RageUI.Separator('~r~You do not own any vehicles.')
@@ -41,23 +56,25 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
 end)
-
-AddEventHandler("ARMA:onClientSpawn",function(D, E)
-    if E then
-		local H = function(I)
-            TriggerServerEvent('ARMA:getCars')
-            RageUI.Visible(RMenu:Get("plateshop", "main"), true)
+AddEventHandler("ARMA:onClientSpawn",function(h, i)
+    if i then
+        local j = function(k)
         end
-        local J = function(I)
+        local l = function(k)
             RageUI.Visible(RMenu:Get("plateshop", "main"), false)
-            RageUI.Visible(RMenu:Get("plateshop", "sub"), false)
         end
-        local K = function(I)
+        local m = function(k)
+            if IsControlJustPressed(1, 38) then
+                TriggerServerEvent('ARMA:getCars')
+                RageUI.ActuallyCloseAll()
+                RageUI.Visible(RMenu:Get("plateshop", "main"), not RageUI.Visible(RMenu:Get("plateshop", "main")))
+            end
+            tARMA.DrawText3D(location, "Press [E] to open License Plate Management", 0.2)
         end
-        tARMA.addBlip(location.x, location.y, location.z, 521, 2, "Plate Shop", 0.7, true)
-        tARMA.createArea("platechanger", location, 1.5, 6, H, J, K, {})
-        tARMA.addMarker(location.x, location.y, location.z-0.98,1.0,1.0,1.0,138,43,226,70,50,27)
-	end
+        tARMA.createArea("licenseplate", location, 1.5, 6, j, l, m, {})
+        tARMA.addMarker(location.x, location.y, location.z - 1, 1.0, 1.0, 1.0, 255, 0, 0, 170, 50, 27)
+        tARMA.addBlip(location.x, location.y, location.z, 606, 2, "Licence Plate Manager")
+    end
 end)
 
 
@@ -73,3 +90,17 @@ RegisterNetEvent("ARMA:carsTable")
 AddEventHandler("ARMA:carsTable",function(cars)
     carstable = cars
 end)
+
+function GetLicensePlateString()
+    AddTextEntry("FMMC_MPM_NA", "Enter text:")
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "", "", "", "", "", 30)
+    while UpdateOnscreenKeyboard() == 0 do
+        DisableAllControlActions(0)
+        Wait(0)
+    end
+    if GetOnscreenKeyboardResult() then
+        local A = GetOnscreenKeyboardResult()
+        return A
+    end
+    return ""
+end
