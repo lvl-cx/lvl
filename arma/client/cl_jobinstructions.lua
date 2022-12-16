@@ -1,7 +1,7 @@
 RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting job from sv job selector
     if a == "AA" then
         aaInstructions()
-    elseif a == "Royal Mail" then
+    elseif a == "Royal Mail Driver" then
         royalMailInstructions()
     elseif a == "Bus Driver" then
         busDriverInstructions()

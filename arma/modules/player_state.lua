@@ -47,9 +47,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         ARMAclient.setNHS(source, {true})
                         TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
                     end
-                    if ARMA.hasGroup(user_id, 'Taco Seller') then
-                        TriggerClientEvent('ARMA:toggleTacoJob', source, true)
-                    end
                         
                     local adminlevel = 0
                     if ARMA.hasGroup(user_id,"Developer") then
