@@ -39,6 +39,7 @@ function ARMA.removeAllJobs(user_id)
             end
         end
     end
+    -- remove all faction ranks
     ARMAclient.setPolice(source, {false})
     TriggerClientEvent('ARMAUI5:globalOnPoliceDuty', source, false)
     ARMAclient.setNHS(source, {false})
@@ -47,6 +48,9 @@ function ARMA.removeAllJobs(user_id)
     TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, false)
     ARMAclient.setLFB(source, {false})
     TriggerClientEvent('ARMA:disableFactionBlips', source)
+    -- toggle all main jobs to false
+    TriggerClientEvent('ARMA:toggleTacoJob', source, false)
+    TriggerClientEvent('ARMA:setTruckerOnDuty', source, false)
 end
 
 RegisterNetEvent("ARMA:jobSelector")
@@ -105,6 +109,11 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             ARMA.addUserGroup(user_id,b)
             ARMAclient.notify(source, {"~g~Employed as "..b.."."})
             TriggerClientEvent('ARMA:jobInstructions',source,b)
+            if b == 'Taco Seller' then
+                TriggerClientEvent('ARMA:toggleTacoJob', source, true)
+            elseif b == 'Lorry Driver' then
+                TriggerClientEvent('ARMA:setTruckerOnDuty', source, true)
+            end
         end
         ARMA.updateCurrentPlayerInfo()
     end
