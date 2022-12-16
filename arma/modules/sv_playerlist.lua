@@ -129,7 +129,7 @@ local function playerListMetaUpdates()
     elseif uptime >= 3600 then
         uptimemessage = math.floor(uptime/3600) .. ' hours and ' .. math.floor((uptime%3600)/60) .. ' minutes and ' .. math.floor(uptime%60) .. ' seconds'
     end
-    return {uptimemessage, #GetPlayers(), 32}
+    return {uptimemessage, #GetPlayers(), GetConvarInt("sv_maxclients",64)}
 end
 
 Citizen.CreateThread(function()
