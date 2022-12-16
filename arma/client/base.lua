@@ -65,7 +65,7 @@ end)
 
 function tARMA.isDevMode()
   if tARMA.isDev() then
-      return false
+      return true
   else
       return false
   end
