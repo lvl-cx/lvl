@@ -68,7 +68,7 @@ if (settingsjson.settings.StatusEnabled) {
                 "color": settingsjson.settings.botColour,
                 "fields": [{
                         "name": "👀 Players Online:",
-                        "value": `${GetNumPlayerIndices()}/${GetConvarInt("sv_maxclients",60)}`,
+                        "value": `${GetNumPlayerIndices()}/${GetConvarInt("sv_maxclients",64)}`,
                         "inline": true
                     },
                     {
