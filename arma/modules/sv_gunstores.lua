@@ -3,7 +3,7 @@ local organheist = module('cfg/cfg_organheist')
 
 MySQL.createCommand("ARMA/get_weapons", "SELECT weapon_info FROM arma_weapon_whitelists WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/set_weapons", "UPDATE arma_weapon_whitelists SET weapon_info = @weapon_info WHERE user_id = @user_id")
-MySQL.createCommand("ARMA/add_user", "INSERT IGNORE INTO arma_weapon_whitelists SET user_id = @user_id, weapon_info = ''")
+MySQL.createCommand("ARMA/add_user", "INSERT IGNORE INTO arma_weapon_whitelists SET user_id = @user_id")
 MySQL.createCommand("ARMA/get_all_weapons", "SELECT * FROM arma_weapon_whitelists")
 MySQL.createCommand("ARMA/create_weapon_code", "INSERT IGNORE INTO arma_weapon_codes SET user_id = @user_id, spawncode = @spawncode, weapon_code = @weapon_code")
 MySQL.createCommand("ARMA/remove_weapon_code", "DELETE FROM arma_weapon_codes WHERE weapon_code = @weapon_code")
