@@ -132,15 +132,19 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 function showCasinoChipsCashier(u)
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAChips','cashier'),u)
 end
 function showCasinoEnter(u)
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('casino_enter','casino'),u)
 end
 function showCasinoRooftopExit(u)
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('casino_rooftop_exit','casino'),u)
 end
 function showCasinoExit(u)
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('casino_exit','casino'),u)
 end
 Citizen.CreateThread(function()

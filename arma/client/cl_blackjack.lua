@@ -426,6 +426,7 @@ RageUI.CreateWhile(1.0, true, function()
 end, 1)
 
 function showHowToBlackjack(flag)
+    RageUI.ActuallyCloseAll()
     if closestChair < 8 then 
         RageUI.Visible(RMenu:Get('armablackjack', 'instructions'), flag)
     else 
