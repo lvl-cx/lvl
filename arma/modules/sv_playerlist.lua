@@ -68,7 +68,7 @@ local hmpGroups = {
     ["Trainee Prison Officer"] = true
 }
 local defaultGroups = {
-    ["AA Mechanic"] = true,
+    --["AA Mechanic"] = true,
     ["Royal Mail Driver"] = true,
     ["Bus Driver"] = true,
     ["Deliveroo"] = true,
@@ -169,7 +169,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
         elseif ARMA.hasPermission(k, 'lfb perm') then
             lfb[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = hours}
         end
-        if not ARMA.hasPermission(k, "police.onduty.permission") and not ARMA.hasPermission(k, "nhs perm") and not ARMA.hasPermission(k, "lfb perm") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
+        if not ARMA.hasPermission(k, "police.onduty.permission") and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
             civillians[k] = {name = GetPlayerName(v), rank = getGroupInGroups(k, 'default'), hours = hours}
         end
     end
