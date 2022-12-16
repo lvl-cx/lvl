@@ -67,6 +67,7 @@ Citizen.CreateThread(function()
                             if v.currentJob.stopNumber==10 then
                                 TriggerClientEvent("ARMA:royalMailJobEnd", ARMA.getUserSource(k))
                                 v.currentJob.jobActive=false
+                                usersInRoyalMailJob[user_id] = nil
                             else
                                 v.currentJob.stopNumber=v.currentJob.stopNumber+1
                                 TriggerClientEvent("ARMA:royalMailJobSetNextBlip",ARMA.getUserSource(k),RoyalMailDrops[v.currentJob.stopNumber].dropPosition)

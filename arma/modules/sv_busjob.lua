@@ -67,6 +67,7 @@ Citizen.CreateThread(function()
                             if v.currentJob.stopNumber==10 then
                                 TriggerClientEvent("ARMA:endBusJob", ARMA.getUserSource(k))
                                 v.currentJob.jobActive=false
+                                usersInBusJob[user_id] = nil
                             else
                                 v.currentJob.stopNumber=v.currentJob.stopNumber+1
                                 TriggerClientEvent("ARMA:setNextBusJobBlip",ARMA.getUserSource(k),busJobStops[v.currentJob.stopNumber].stopPosition)

@@ -6,6 +6,7 @@ local policeInGame = 0
 local civsInGame = 0
 local cfg = module('cfg/cfg_organheist')
 
+
 RegisterNetEvent("ARMA:joinOrganHeist")
 AddEventHandler("ARMA:joinOrganHeist",function()
     local source = source
