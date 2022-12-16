@@ -250,7 +250,6 @@ local function T(U)
     end)
 end
 RegisterNetEvent("ARMA:cookingInstruction",function(Z)
-    print(Z)
     for r, _ in pairs(R) do
         tARMA.removeArea("temp_cooking_instruction")
         tARMA.removeMarker(_)
