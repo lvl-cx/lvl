@@ -335,7 +335,7 @@ function sequence()
     SetCamCoord(a2, vector3(886.589, -3165.547, 9.892334))
     SetCamCoord(a3, vector3(975.2308, -3166.602, 9.892334))
     SetCamActiveWithInterp(a3, a2, 25000, 5, 5)
-    drawNativeNotification("You will be driving a wide selection of trailers around the city of CMG!")
+    drawNativeNotification("You will be driving a wide selection of trailers around the city of ARMA!")
     Wait(25000)
     for L = 1, #a4 do
         DeleteEntity(a4[L])
