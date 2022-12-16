@@ -7,14 +7,12 @@ cfg.selectorTypes = {
     ["default"] = {
         _config = {name="Job Selector", blipid = 351, blipcolor = 47, permissions = {}, TextureDictionary = "banners",texture = "clockon"},
         jobs = {
-            --{"AA Mechanic", 0},
             {"Royal Mail Driver", 0},
             {"Bus Driver", 0},
             {"Deliveroo", 0},
             {"Scuba Diver",  0},
             {"Pilot", 0},
             {"G4S Driver", 0},
-            {"Lorry Driver", 0},
             {"Taco Seller", 0},
             {"Burger Shot Cook", 0},
         }

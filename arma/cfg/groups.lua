@@ -806,14 +806,12 @@ cfg.groups = {
   ["polblips"] = {},
 
   -- Default Jobs
-  ["AA Mechanic"] = {},
   ["Royal Mail Driver"] = {},
   ["Bus Driver"] = {},
   ["Deliveroo"] = {},
   ["Scuba Diver"] = {},
   ["Pilot"] = {},
   ["G4S Driver"] = {},
-  ["Lorry Driver"] = {},
   ["Taco Seller"] = {},
   ["Burger Shot Cook"] = {},
 

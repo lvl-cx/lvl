@@ -50,7 +50,6 @@ function ARMA.removeAllJobs(user_id)
     TriggerClientEvent('ARMA:disableFactionBlips', source)
     -- toggle all main jobs to false
     TriggerClientEvent('ARMA:toggleTacoJob', source, false)
-    TriggerClientEvent('ARMA:setTruckerOnDuty', source, false)
 end
 
 RegisterNetEvent("ARMA:jobSelector")
@@ -111,8 +110,6 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             TriggerClientEvent('ARMA:jobInstructions',source,b)
             if b == 'Taco Seller' then
                 TriggerClientEvent('ARMA:toggleTacoJob', source, true)
-            elseif b == 'Lorry Driver' then
-                TriggerClientEvent('ARMA:setTruckerOnDuty', source, true)
             end
         end
         ARMA.updateCurrentPlayerInfo()

@@ -381,11 +381,6 @@ cfg.simeonsCategories = {
         ["polbird"] = {"polbird",0, "emergency"},
         ["npas4"] = {"NPAS 4",0, "emergency"},
     },
-    ["AA Mechanics"] = {
-        ["_config"] = {permissionTable={"aa.onduty.permission"}},
-        ["towtruck"] = {"AA Tow Truck",0, ""},
-        ["flatbed"] = {"AA Flat Bed",0, ""},
-    },
     ["NHS Helicopters"] = {
         ["_config"] = {permissionTable={"nhs.whitelisted"}},
         ["nhsbigheli"] = {"NHS Big Heli",0,""},
@@ -426,15 +421,7 @@ cfg.simeonsCategories = {
         ["tropic"] = {"Tropic (80kg)",1600000, ""},
         ["tropic2"] = {"Tropic 2 (90kg)",1800000, ""},
         ["tug"] = {"Tug (300kg)",6000000, ""},
-    },
-    ["Trucks"] = {
-        ["_config"] = {permissionTable={}},
-        ["hauler"] = {"Scania",200000, ""},
-        ["transmbenzarocs"] = {"Mercedes Acros",200000, ""},
-        ["bvmbenz6"] = {"Mercedes Benz BVM",200000, ""},
-        ["combusken"] = {"Combusken",200000, ""},
-        ["man"] = {"Man",200000, ""},
-    },
+    }
 }
 
 cfg.simeonsInstances = {
@@ -449,7 +436,6 @@ cfg.simeonsInstances = {
         permissionsTable={},
         categorys={
             "Beta Cars (Free)",
-            "AA Mechanics",
             "Compacts",
             "Coupes",
             "Sports",
@@ -483,31 +469,7 @@ cfg.simeonsInstances = {
         categorys={
             "Boats",
         }
-    },
-    ["Legal Trucks"] = {
-        posVector=vector3(895.5809, -3187.351, 5.898145),
-        previewVector=vector3(895.5809, -3187.351, 5.898145),
-        blipid=477,
-        blipcolor=1,
-        markerId=29,
-        markerColourTable={0,200,0},
-        permissionsTable={},
-        categorys={
-            "Trucks",
-        }
-    },
-    ["Illegal Trucks"] = {
-        posVector=vector3(213.6047, -3119.031, 5.790276),
-        previewVector=vector3(213.6047, -3119.031, 5.790276),
-        blipid=477,
-        blipcolor=1,
-        markerId=29,
-        markerColourTable={0,200,0},
-        permissionsTable={},
-        categorys={
-            "Trucks",
-        }
-    },
+    }
 }
 
 return cfg

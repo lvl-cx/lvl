@@ -1,7 +1,5 @@
 RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting job from sv job selector
-    if a == "AA" then
-        aaInstructions()
-    elseif a == "Royal Mail Driver" then
+    if a == "Royal Mail Driver" then
         royalMailInstructions()
     elseif a == "Bus Driver" then
         busDriverInstructions()
@@ -13,8 +11,6 @@ RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting 
         pilotInstructions()
     elseif a == "G4S Driver" then
         G4SInstructions()
-    elseif a == "Lorry Driver" then
-        lorryInstructions()
     elseif a == "Taco Seller" then
         tacoInstructions()
     elseif a == "Burger Shot Cook" then
@@ -22,12 +18,6 @@ RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting 
     end
 end)
 
-function aaInstructions()
-    globalOnAADuty = true
-    PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-    initializeInstructionalJobScaleform("Welcome to the AA","I have set a waypoint to the AA garage where you can pickup your truck.")
-    SetNewWaypoint(494.83721923828, -1329.7965087891)
-end
 function burgerShotInstructions()
     globalOnAADuty = true
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
@@ -63,11 +53,6 @@ function G4SInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
     initializeInstructionalJobScaleform("G4S","I have set a waypoint to the G4S depot where you'll start your first job.")
     SetNewWaypoint(-710.4659, 269.6835)
-end
-function lorryInstructions()
-    PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-    initializeInstructionalJobScaleform("Lorry Driving","I have set a waypoint to the garage where you'll start your first job.")
-    SetNewWaypoint(862.86767578125, -3195.6655273438)
 end
 function tacoInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
