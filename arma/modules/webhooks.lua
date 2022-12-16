@@ -80,7 +80,6 @@ local webhooks = {
     [''] = '',
     -- anticheat
     ['anticheat'] = 'https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm',
-    ['crash-error'] = 'https://discord.com/api/webhooks/999463264616468499/O-tprA7VriJJuGbNg-QtlHoaG3VTlKwtWPD2cD-rnc2D3XDvT2C66hx8GFkWL-6BKGFc',
 }
 
 function tARMA.sendWebhook(webhook, name, message)

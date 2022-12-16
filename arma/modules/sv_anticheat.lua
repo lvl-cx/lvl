@@ -3,12 +3,6 @@ f=f.weapons
 
 local gettingVideo = false
 
-local cheatingCrashes = {
-    --'Exiting' (Example)
-    'Game crashed: GTA5_b2189.exe!rage::grcTextureFactoryDX11::PopRenderTarget (0xfd)',
-    'Game crashed: GTA5_b2189.exe!sub_141377114 (0x2e)',
-}
-
 local actypes = {
     {type = 1, desc = 'Noclip'},
     {type = 2, desc = 'Spawning of Weapon(s)'},
@@ -524,16 +518,6 @@ AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Edit AC Vehicle Whitelist')
-    end
-end)
-
-AddEventHandler('ARMA:playerLeave', function(user_id, source, reason)
-    if user_id ~= nil then
-        for k,v in pairs(cheatingCrashes) do
-            if v == reason then
-                tARMA.sendWebhook('crash-error', 'Cheating Crash Error', "> Name: **"..GetPlayerName(source).."**\n> Perm ID: **"..user_id.."**\n> Temp ID: **"..source.."**\n> Reason: **" .. reason .. "**\n\n*These can sometimes be false positives, if a person flags 2 or more times they are most likely cheating*")
-            end
-        end
     end
 end)
 
