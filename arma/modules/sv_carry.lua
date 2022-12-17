@@ -7,8 +7,8 @@ RegisterCommand('carryaccept', function(source)
         TriggerClientEvent('CarryPeople:syncMe', requests[source], 'missfinale_c2mcs_1', 'fin_c2_mcs_1_camman', 0, 49)
         TriggerClientEvent('CarryPeople:syncTarget', source, requests[source], 'nm', 'firemans_carry', 0.15, 0.27, 0.63, GetEntityHeading(GetPlayerPed(requests[source])), 10000, 33)
         ARMAclient.notify(requests[source], {"~g~Request Accepted"})
-        carrying[source] = requests[source]
-        carried[requests[source]] = source
+        carrying[requests[source]] = source
+        carried[source] = requests[source]
         requests[source] = nil
     end
 end)
