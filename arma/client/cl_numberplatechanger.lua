@@ -37,7 +37,7 @@ RageUI.CreateWhile(1.0, true, function()
                                             selectedCar = j[1]
                                             selectedCarName = l[1]
                                         end
-                                    end, RMenu:Get("plateshop", "sub"))
+                                    end, RMenu:Get("plateshop", "changeplate"))
                                 end
                             end
                         end
@@ -46,7 +46,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-    if RageUI.Visible(RMenu:Get('plateshop', 'sub')) then
+    if RageUI.Visible(RMenu:Get('plateshop', 'changeplate')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.Button("Change Number Plate", "~g~Changing plate of "..selectedCarName, {RightLabel = "~g~£50,000"}, true, function(Hovered, Active, Selected)
                 if Selected then
