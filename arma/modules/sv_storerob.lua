@@ -108,27 +108,31 @@ RegisterNetEvent('ARMA:initiateStoreRobbery')
 AddEventHandler('ARMA:initiateStoreRobbery', function(store)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, "police.onduty.permission") then
-        ARMAclient.notify(source, {'~r~You cannot rob a store while on duty.'})
-    else
-        for k,v in pairs(stores) do
-            if k == store then
-                if v.cooldown == 0 then
-                    v.beingrobbed = true
-                    v.cooldown = 300
-                    TriggerClientEvent('ARMA:updateStoreRobBlips', -1, stores)
-                    TriggerClientEvent('ARMA:beginStoreRobbingAnimations', -1, store)
-                    TriggerClientEvent('ARMA:storeRobberyInProgress', source, true, store)
-                    for a, b in pairs(ARMA.getUsers({})) do
-                        if ARMA.hasPermission(b, "police.onduty.permission") then
-                            TriggerClientEvent('chatMessage', -1, "^7Robbery in progress at ^2"..v.storename, { 128, 128, 128 }, message, "alert")
+    if #ARMA.getUsersByPermission('police.onduty.permission') > 2 then
+        if ARMA.hasPermission(user_id, "police.onduty.permission") then
+            ARMAclient.notify(source, {'~r~You cannot rob a store while on duty.'})
+        else
+            for k,v in pairs(stores) do
+                if k == store then
+                    if v.cooldown == 0 then
+                        v.beingrobbed = true
+                        v.cooldown = 300
+                        TriggerClientEvent('ARMA:updateStoreRobBlips', -1, stores)
+                        TriggerClientEvent('ARMA:beginStoreRobbingAnimations', -1, store)
+                        TriggerClientEvent('ARMA:storeRobberyInProgress', source, true, store)
+                        for a, b in pairs(ARMA.getUsers({})) do
+                            if ARMA.hasPermission(b, "police.onduty.permission") then
+                                TriggerClientEvent('chatMessage', -1, "^7Robbery in progress at ^2"..v.storename, { 128, 128, 128 }, message, "alert")
+                            end
                         end
+                    else
+                        TriggerClientEvent('chatMessage', -1, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
                     end
-                else
-                    TriggerClientEvent('chatMessage', -1, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
                 end
             end
         end
+    else
+        ARMAclient.notify(source, {'~r~There are not enough police on duty to rob a store.'})
     end
 end)
 
