@@ -14,7 +14,7 @@ RegisterCommand("carry",function(f, g)
             if GetEntityHealth(tARMA.getPlayerPed()) > 102 then
                 local h = GetEntityCoords(tARMA.getPlayerPed())
                 distanceToCasino = #(h - d)
-                if not carryingBackInProgress and distanceToCasino > 200 then
+                if not carryingBackInProgress and (distanceToCasino > 200 or tARMA.isStaffedOn()) then
                     local i = tARMA.getPlayerPed()
                     local j = GetClosestPlayer(3)
                     if j ~= -1 then
