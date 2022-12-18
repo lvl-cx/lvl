@@ -705,6 +705,45 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
     end
 end)
 
+RegisterServerEvent('ARMA:TeleportToPlayer')
+AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
+    local coords = GetEntityCoords(GetPlayerPed(newtarget))
+    local user_id = ARMA.getUserId(source)
+    local player_id = ARMA.getUserId(newtarget)
+    if ARMA.hasPermission(user_id, 'admin.tp2player') then
+        local playerName = GetPlayerName(source)
+        local playerOtherName = GetPlayerName(newtarget)
+        local adminbucket = GetPlayerRoutingBucket(source)
+        local playerbucket = GetPlayerRoutingBucket(newtarget)
+        if adminbucket ~= playerbucket then
+            SetPlayerRoutingBucket(source, playerbucket)
+            TriggerClientEvent('ARMA:setBucket', source, playerbucket)
+            ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
+        end
+        ARMAclient.teleport(source, coords)
+        ARMAclient.notify(newtarget, {'~g~An admin has teleported to you.'})
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport to Someone')
+    end
+end)
+
+RegisterServerEvent('ARMA:Teleport2Legion')
+AddEventHandler('ARMA:Teleport2Legion', function(newtarget)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.tp2player') then
+        ARMAclient.teleport(newtarget, vector3(178.5132598877, -1007.5575561523, 29.329647064209))
+        ARMAclient.notify(newtarget, {'~g~An admin has teleported you to Legion.'})
+    else
+        local player = ARMA.getUserSource(user_id)
+        local name = GetPlayerName(source)
+        Wait(500)
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport someone to Legion')
+    end
+end)
 
 RegisterNetEvent('ARMA:BringPlayer')
 AddEventHandler('ARMA:BringPlayer', function(id)
@@ -733,22 +772,6 @@ AddEventHandler('ARMA:BringPlayer', function(id)
         local name = GetPlayerName(source)
         Wait(500)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
-    end
-end)
-
-RegisterServerEvent("ARMA:Teleport")
-AddEventHandler("ARMA:Teleport",function(id, coords)
-    local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
-        local ped = GetPlayerPed(source)
-        local ped2 = GetPlayerPed(id)
-        SetEntityCoords(ped2, coords)
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport to Someone')
     end
 end)
 
