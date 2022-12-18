@@ -11,7 +11,6 @@ cfg.weapons = {
 	{name = 'WEAPON_CRICKETBAT', bone = 24818, x=0.32,y=-0.15,z=0.13, xRot=55.0,yRot=-90.0, zRot=0.0, category = 'melee', model = `w_me_cricketbat`},
 	{name = 'WEAPON_FIREAXE', bone = 24818, x=0.32,y=-0.15,z=0.13, xRot=0.0,yRot=-90.0, zRot=0.0, category = 'melee', model = `w_me_fireaxe`},
 
-
     -- --?PD SMGs/Rifles
 	{name = 'WEAPON_PDM4A1', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_m4a1`},
 	{name = 'WEAPON_AR15', bone = 24818, x=0.00,y=0.22,z=0.0, xRot=180.0,yRot=148.0, zRot=0.0, category = 'assault', model = `w_ar_ar15`},
@@ -26,7 +25,6 @@ cfg.weapons = {
 
     -- --?CIV SMGs/Rifles/Shotguns
 	{name = 'WEAPON_EF88', bone = 24818, x=0.05,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'assault', model = `w_ar_ef88`},
-	{name = 'WEAPON_SPAR16', bone = 24818, x=-0.02,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'assault', model = `w_ar_spar16`},
 	{name = 'WEAPON_SPAZ12', bone = 24818, x=0.1,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'shotgun', model = `w_ar_spaz12`},
 	{name = 'WEAPON_RPK16', bone = 24818, x=-0.05,y=-0.12,z=-0.13, xRot=100.0,yRot=-3.0, zRot=5.0, category = 'heavy', model = `w_mg_rpk16`},
 

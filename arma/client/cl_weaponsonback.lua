@@ -130,6 +130,7 @@ function SetGear(weapon)
 		local boneIndex = GetPedBoneIndex(playerPed, bone)
 		local bonePos 	= GetWorldPositionOfEntityBone(playerPed, boneIndex)
 		AttachEntityToEntity(obj, playerPed, boneIndex, boneX, boneY, boneZ, boneXRot, boneYRot, boneZRot, false, false, false, false, 2, true)
+		SetModelAsNoLongerNeeded(model)
 		table.insert(Weapons,{weapon = weapon, obj = obj})
 	end)
 end
