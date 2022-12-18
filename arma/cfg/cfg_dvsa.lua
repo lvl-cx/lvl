@@ -21,7 +21,7 @@ cfg.test = {
         },
     },
     price = 20000,
-    modelName = `dvsa`,
+    modelName = `police2`,
     examinerModel = `s_m_y_airworker`,
     routes = {
         { -- test route 1 (bay park manoeuvre)

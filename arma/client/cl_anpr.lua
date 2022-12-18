@@ -36,7 +36,7 @@ Citizen.CreateThread(function()
 end)
 
 function func_drawFullAnpr()
-    if a and s then
+    if a and s and tARMA.globalOnPoliceDuty() then
         drawFrontAnprText()
         drawRearAnprText()
     end
