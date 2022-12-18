@@ -60,7 +60,8 @@ function ch_give(idname, player, choice)
           ARMA.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, nplayer) --ask for id
             nplayer = nplayer
             if nplayer ~= nil and nplayer ~= "" then
-              local nuser_id = ARMA.getUserId(nplayer)
+              if nplayers[tonumber(nplayer)] then
+                local nuser_id = ARMA.getUserId(nplayer)
                 if nuser_id ~= nil then
                   -- prompt number
                   TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
@@ -87,8 +88,12 @@ function ch_give(idname, player, choice)
                   end)
                 else
                     TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
-                  ARMAclient.notify(player,{lang.common.no_player_near()})
+                    ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
                 end
+              else
+                  TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+                  ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
+              end
             else
               TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
               ARMAclient.notify(player,{lang.common.no_player_near()})
