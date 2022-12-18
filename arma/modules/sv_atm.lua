@@ -35,7 +35,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
 end)
 
 local function coordsCheck(coords)
-    for i, v in pairs(cfg.atms) do
+    for i, v in pairs(atms) do
         local atmCoords = vec3(v[1], v[2], v[3])
         for j,k in pairs(organheist.locations) do
             if #(coords - atmCoords) <= 5.0 or #(coords - k.atmLocation) <= 5.0 then
@@ -49,7 +49,7 @@ end
 RegisterNetEvent('ARMA:Withdraw')
 AddEventHandler('ARMA:Withdraw', function(amount)
     local source = source
-    amount = parseInt(amount)
+    local amount = parseInt(amount)
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
     if coordsCheck(playerCoords) then
@@ -74,7 +74,7 @@ end)
 RegisterNetEvent('ARMA:Deposit')
 AddEventHandler('ARMA:Deposit', function(amount)
     local source = source
-    amount = parseInt(amount)
+    local amount = parseInt(amount)
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
     if coordsCheck(playerCoords) then
@@ -98,8 +98,7 @@ end)
 RegisterNetEvent('ARMA:WithdrawAll')
 AddEventHandler('ARMA:WithdrawAll', function()
     local source = source
-    local userid = ARMA.getUserId(source)
-    local amount = ARMA.getBankMoney(userid)
+    local amount = ARMA.getBankMoney(ARMA.getUserId(source))
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
     if coordsCheck(playerCoords) then
@@ -124,8 +123,7 @@ end)
 RegisterNetEvent('ARMA:DepositAll')
 AddEventHandler('ARMA:DepositAll', function()
     local source = source
-    local userid = ARMA.getUserId(source)
-    local amount = ARMA.getMoney(userid)
+    local amount = ARMA.getMoney(ARMA.getUserId(source))
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
     if coordsCheck(playerCoords) then

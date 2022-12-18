@@ -1,6 +1,4 @@
-local cfg = module("cfg/cfg_atms")
 RMenu.Add('ARMAATM', 'main', RageUI.CreateMenu("", "~b~ATM",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), 'banners', 'atm'))
-
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMAATM', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
