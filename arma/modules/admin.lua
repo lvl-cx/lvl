@@ -732,7 +732,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        TriggerEvent("RDMAdmin:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
+        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Teleport Someone to Them')
     end
 end)
 
