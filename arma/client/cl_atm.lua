@@ -83,25 +83,24 @@ local function g()
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAATM', 'main'), false) 
 end
-AddEventHandler("ARMA:onClientSpawn",function(D, E)
-    if E then
-        local i=function(j)
-            tARMA.setCanAnim(false)
-            f(j.atmId)
-            a=true 
-        end
-        local k=function(j)
-            g(j.atmId)
-            tARMA.setCanAnim(true)
-            a=false 
-        end
-        local l=function(j)
-        end
-        for m,n in pairs(cfg.atms) do
-            tARMA.createArea("atm_"..m,n,1.5,6,i,k,l,{atmId=m})
-            tARMA.addBlip(n.x,n.y,n.z,108,4,"ATM",0.8,true)
-            tARMA.addMarker(n.x,n.y,n.z,0.7,0.7,0.5,0,255,125,125,50,29,false,false,true)
-        end 
+
+RegisterNetEvent("ARMA:setupAtms",function(h)
+    local i = function(j)
+        tARMA.setCanAnim(false)
+        f()
+        a = true
+    end
+    local k = function(j)
+        g()
+        tARMA.setCanAnim(true)
+        a = false
+    end
+    local l = function(j)
+    end
+    for m, n in pairs(h) do
+        tARMA.createArea("atm_" .. m, n, 1.5, 6, i, k, l, {atmId = m})
+        tARMA.addBlip(n.x, n.y, n.z, 108, 4, "ATM", 0.8, true)
+        tARMA.addMarker(n.x, n.y, n.z, 0.7, 0.7, 0.5, 0, 255, 125, 125, 50, 29, false, false, true)
     end
 end)
 
