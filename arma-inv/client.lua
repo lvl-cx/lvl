@@ -139,6 +139,12 @@ RegisterNUICallback('UseBtn', function(data, cb)
     PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
 end)
 
+RegisterNUICallback('UseAllBtn', function(data, cb)
+    TriggerServerEvent('ARMA:UseAllItem', data.itemId, data.invType)
+    cb(true);
+    PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+end)
+
 RegisterNUICallback('TrashBtn', function(data, cb)
     TriggerServerEvent('ARMA:TrashItem', data.itemId, data.invType)
     cb(true);

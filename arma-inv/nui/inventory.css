@@ -45,11 +45,15 @@ body {
     src: url(./assets/pricedown.otf);
 }
 
+#UseAllBtn {
+    display: none;
+}
+
 #ButtonRow1 {
     width: 15.3em;
     height: auto;
     position: relative;
-    bottom: 52em;
+    bottom: 53em;
     left: 32em;
     float: left;
 }

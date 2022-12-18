@@ -1,6 +1,18 @@
 let ItemSelected = undefined;
 let personalInv = false;
 let invType = undefined;
+const ammoTypes = {
+    1: "9mm Bullets",
+    2: "12 Gauge Bullets",
+    3: ".308 Sniper Rounds",
+    4: "7.62mm Bullets",
+    5: "5.56mm NATO",
+    6: ".357 Bullets",
+    7: "Police Issued 5.56mm",
+    8: "Police Issued .308 Sniper Rounds",
+    9: "Police Issued 9mm",
+    10: "Police Issued 12 Gauge",
+};
 
 function ClearPersonalInventory() {
     $('.ItemTable').each(function(i, obj) {
@@ -29,6 +41,13 @@ $(document).ready(function() {
             $.post(`https://${GetParentResourceName()}/UseBtn`, JSON.stringify({ invType: 'Plr', itemId: $(ItemSelected).attr('id') }));
         } else {
             $.post(`https://${GetParentResourceName()}/UseBtn`, JSON.stringify({ invType: 'notpersonalinv' }));
+        }
+    }) 
+    $('#UseAllBtn').click(function() {
+        if (personalInv) {
+            $.post(`https://${GetParentResourceName()}/UseAllBtn`, JSON.stringify({ invType: 'Plr', itemId: $(ItemSelected).attr('id') }));
+        } else {
+            $.post(`https://${GetParentResourceName()}/UseAllBtn`, JSON.stringify({ invType: 'notpersonalinv' }));
         }
     })
     $('#DropBtn').click(function() {
@@ -70,7 +89,6 @@ $(document).ready(function() {
 
 window.addEventListener('message', function(event) {
     var msg = event.data;
-    //console.log('NUI! Debug: ' + msg.action)
     if (msg.action == "InventoryDisplay" && msg.showInv) {
         $('#MainInventoryContainer').show();
         $('#ndInventoryText').show();
@@ -106,15 +124,18 @@ window.addEventListener('message', function(event) {
         $('.ItemTable').each(function(i, obj) {
             if (!$(this).hasClass("ExampleTable")) {
                 $(this).click(function() {
-                    if (!ItemSelected) {
-                        $(this).addClass('ItemSelected')
-                        ItemSelected = $(this)
-                        personalInv = true;
-                    } else {
+                    if (ItemSelected) {
                         $(ItemSelected).removeClass('ItemSelected')
-                        ItemSelected = $(this)
-                        $(this).addClass('ItemSelected')
-                        personalInv = true;
+                    }
+                    ItemSelected = $(this)
+                    $(this).addClass('ItemSelected')
+                    personalInv = true;
+                    var x = document.getElementById("UseAllBtn");
+                    x.style.display = "none";
+                    for (const property in ammoTypes) {
+                        if ($(ItemSelected).attr('id') === ammoTypes[property]) {
+                            x.style.display = "block";
+                        }
                     }
                 })
             }

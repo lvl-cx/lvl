@@ -177,6 +177,19 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     end
 end)
 
+RegisterNetEvent('ARMA:UseAllItem')
+AddEventHandler('ARMA:UseAllItem', function(itemId, itemLoc)
+    local source = source
+    local user_id = ARMA.getUserId({source}) 
+    if not itemId then ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
+    if itemLoc == "Plr" then
+        ARMA.LoadAllTask({source, itemId})
+        TriggerEvent('ARMA:RefreshInventory', source)
+    else
+        ARMAclient.notify(source, {'~r~You need to have this item on you to use it.'})
+    end
+end)
+
 
 RegisterNetEvent('ARMA:MoveItem')
 AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, Lootbag)

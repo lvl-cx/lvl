@@ -278,6 +278,12 @@ function ARMA.RunInventoryTask(source, itemName)
     TriggerEvent('ARMA:RefreshInventory', source)
 end
 
+function ARMA.LoadAllTask(source, itemName)
+  local choices = ARMA.getItemChoices(itemName)
+  choices['LoadAll'][1](source)
+  TriggerEvent('ARMA:RefreshInventory', source)
+end
+
 -- try to get item from a connected user inventory
 function ARMA.tryGetInventoryItem(user_id,idname,amount,notify)
   if notify == nil then notify = true end -- notify by default

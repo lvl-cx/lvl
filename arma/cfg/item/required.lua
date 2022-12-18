@@ -92,6 +92,30 @@ local wammo_choices = function(args)
       end)
     end
   end}
+  choices["LoadAll"] = {function(player,choice)
+    local user_id = ARMA.getUserId(player)
+    if user_id ~= nil then
+      ramount = parseInt(ARMA.getInventoryItemAmount(user_id, fullidname))
+      ARMAclient.getWeapons(player, {}, function(uweapons) -- gets current weapons
+        for k,v in pairs(a.weapons) do -- goes through new weapons cfg
+          for c,d in pairs(uweapons) do -- goes through current weapons
+            if k == c then  -- if weapon in new cfg is the same as in current weapons
+              if fullidname == v.ammo then -- check if ammo being loaded is the same as the ammo for that gun
+                if ARMA.tryGetInventoryItem(user_id, fullidname, ramount, true) then -- take ammo from inv
+                  local weapons = {}
+                  weapons[k] = {ammo = ramount}
+                  ARMAclient.giveWeapons(player, {weapons,false})
+                  ARMA.closeMenu(player)
+                  TriggerEvent('ARMA:RefreshInventory', player)
+                  return
+                end
+              end
+            end
+          end
+        end
+      end)
+    end
+  end}
 
   return choices
 end
