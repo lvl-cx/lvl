@@ -111,7 +111,7 @@ AddEventHandler("ARMA:jailPlayer", function(player)
                                 if prisontime[1].prison_time == 0 then
                                     ARMA.prompt(source,"Jail Time (in minutes):","",function(source,jailtime) 
                                         local jailtime = math.floor(tonumber(jailtime) * 60)
-                                        if jailtime > 0 and jailtime =< cfg.maxTimeNotGc then
+                                        if jailtime > 0 and jailtime <= cfg.maxTimeNotGc then
                                             -- check if gc then compare jailtime to 
                                             -- maxTimeGc = 7200,
                                             MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = jailtime})
