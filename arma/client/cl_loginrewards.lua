@@ -100,7 +100,7 @@ RegisterNetEvent("ARMA:setDailyRewardInfo",function(w, x, y)
     c = GetGameTimer() + (86400 - (y - x)) * 1000
     if w == 0 then
         Citizen.Wait(20000)
-        tARMA.("~y~You have not started your daily reward. Do /dailyrewards to start now!")
+        tARMA.notify("~y~You have not started your daily reward. Do /dailyrewards to start now!")
     end
 end)
 RegisterCommand("dailyrewards",function()
@@ -110,7 +110,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(20000)
     while true do
         if r() and b > 0 then
-            tARMA.("~g~You can claim your next daily reward at /dailyrewards!")
+            tARMA.notify("~g~You can claim your next daily reward at /dailyrewards!")
             break
         end
         Citizen.Wait(6000)
