@@ -128,7 +128,7 @@ local cfg = {
         endingLocations = {
             ["kitchen_job"] = {name = "kitchen_job", action = "Serve food", nextAction = "~g~Food served", coords = vector3(1779.5081787109,2591.3984375,44.75136303711), duration = 10000, timeToReduce = 15, animDict = "mp_common", animName = "givetake2_a"},
             ["laundry_job"] = {name = "laundry_job", action = "Iron laundry", nextAction = "~g~Laundry ironed", coords = {vector3(1784.3763427734,2614.5812988281,49.55), vector3(1784.3817138672,2615.9196777344,49.55), vector3(1784.3203125,2613.3195800781,49.55)}, heading = 359.15, duration = 15000, timeToReduce = 15, animDict = "missheist_jewel_setup", animName = "ironing_idle_character_a"},
-            ["gym_job"] = {name = "gym_job", action = "Workout", nextAction = "", coords = vector3(1769.6834716797,2590.6257324219,44.75136303711), heading = 142.49, duration = 30000, timeToReduce = 20, animDict = "WORLD_HUMAN_MUSCLE_FREE_WEIGHTS", animName = "", isScenario = true},
+            ["gym_job"] = {name = "gym_job", action = "Workout", nextAction = "~g~Weights lifted", coords = vector3(1769.6834716797,2590.6257324219,44.75136303711), heading = 142.49, duration = 30000, timeToReduce = 20, animDict = "WORLD_HUMAN_MUSCLE_FREE_WEIGHTS", animName = "", isScenario = true},
         }
     },
 
