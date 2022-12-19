@@ -83,7 +83,6 @@ cfg.groups = {
 		"admin.tickets",
 	},
 	["Founder"] = {
-		
 		"admin.menu",
         "admin.warn",
         "admin.showwarn",
@@ -158,12 +157,6 @@ cfg.groups = {
 		"cardev.menu",
 	},
 	["Staff Manager"] = {
-		"dev.menu",
-        "dev.spawncar",
-        "dev.deletecar",
-        "dev.fixcar",
-		"dev.tp2coords",
-	    "dev.getcoords",
 		"admin.vehmenu",
 		"admin.special",
 		"admin.managecommunitypot",

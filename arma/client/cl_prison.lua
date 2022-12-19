@@ -244,7 +244,7 @@ RegisterNetEvent("ARMA:prisonCreateItemAreas",function(M)
     end
     local P = function(v)
         if globalInPrison then
-            Draw3DText(v.coords.x, v.coords.y, v.coords.z, "[E] Pickup " .. v.item)
+            tARMA.DrawText3D(v.coords,"[E] Pickup "..v.item,0.5)
             if IsControlJustPressed(0, 38) then
                 TriggerServerEvent("ARMA:prisonPickupItem", v.item)
             end
@@ -279,9 +279,8 @@ local function R()
         tARMA.loadCustomisationPreset("PrisonerFemale")
     end
 end
-RegisterNetEvent("ARMA:putInPrisonOnSpawn",function(T, U)
+RegisterNetEvent("ARMA:putInPrisonOnSpawn",function(T)
     Citizen.Wait(5000)
-    U = U - 5
     tARMA.teleport(a.prisonCells[T].coords.x, a.prisonCells[T].coords.y, a.prisonCells[T].coords.z)
     b = true
     globalInPrison = true
@@ -304,15 +303,13 @@ RegisterNetEvent("ARMA:prisonTransportWithBus",function(T)
     c = true
     local V = getClosestPoliceStation()
     tARMA.teleport(V.coords.x, V.coords.y, V.coords.z)
-    Citizen.CreateThread(
-        function()
-            while c do
-                DisableControlAction(0, 75, true)
-                DisableControlAction(27, 75, true)
-                Wait(0)
-            end
+    Citizen.CreateThread(function()
+        while c do
+            DisableControlAction(0, 75, true)
+            DisableControlAction(27, 75, true)
+            Wait(0)
         end
-    )
+    end)
     local W = tARMA.spawnVehicle("pbus", V.coords.x, V.coords.y, V.coords.z, V.heading, false, false, false)
     RequestModel("s_m_m_prisguard_01")
     while not HasModelLoaded("s_m_m_prisguard_01") do
