@@ -218,7 +218,7 @@ function GetCoordsFromCam(distance)
     return newCoordX, newCoordY, newCoordZ
 end
 
--- Get entity's ID and coords from where player sis targeting
+-- Get entity's ID and coords from where player is targeting
 function Target(Distance, Ped)
     local Entity = nil
     local camCoords = GetGameplayCamCoord()
@@ -237,7 +237,7 @@ function loadAnimDict(dict)
 end
 
 function lockCar(entityId)
-    TriggerEvent("ARMA:lockNearestVehicle") -- not done
+    TriggerEvent("ARMA:lockNearestVehicle")
 end
 
 local savedBoot

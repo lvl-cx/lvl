@@ -110,7 +110,6 @@ client_scripts{
   "client_min/identity.lua",
   "client_min/basic_garage.lua",
   "client_min/police.lua",
-  "client_min/lockcar-client.lua",
   "client_min/admin.lua",
   "client_min/enumerators.lua",
   "client_min/inventory.lua",
