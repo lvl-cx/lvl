@@ -219,9 +219,3 @@ AddEventHandler("ARMA:NHSComaCall", function()
         TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'nhs')
     end
 end)
-
-RegisterNetEvent("ARMA:getNumOfNHSOnline")
-AddEventHandler("ARMA:getNumOfNHSOnline", function()
-    local source = source
-    TriggerClientEvent('ARMA:getNumberOfDocsOnline', source, #ARMA.getUsersByPermission('nhs.onduty.permission'))
-end)
