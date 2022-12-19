@@ -727,7 +727,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
     local user_id = ARMA.getUserId(source)
     local source = source 
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.summon') then
+    if ARMA.hasPermission(user_id, 'admin.tp2player') then
         if id then  
             local ped = GetPlayerPed(source)
             local pedCoords = GetEntityCoords(ped)

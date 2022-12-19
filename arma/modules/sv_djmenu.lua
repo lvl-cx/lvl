@@ -9,7 +9,7 @@ end)
 RegisterCommand("djadmin", function(source, args, rawCommand)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id,"admin.menu") then
+    if ARMA.hasPermission(user_id,"admin.noclip") then
         TriggerClientEvent('ARMA:toggleDjAdminMenu', source, c)
     end
 end)

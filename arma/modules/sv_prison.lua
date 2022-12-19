@@ -16,8 +16,8 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         MySQL.query("ARMA/get_prison_time", {user_id = user_id}, function(prisontime)
             if prisontime ~= nil then 
                 if prisontime[1].prison_time > 0 then
-                    TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                     TriggerClientEvent('ARMA:putInPrisonOnSpawn', source, 1)
+                    TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                     TriggerClientEvent('ARMA:prisonCreateBreakOutAreas', source)
                     TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time)
                     local prisonItemsTable = {}
@@ -58,12 +58,6 @@ AddEventHandler("ARMA:prisonArrivedForJail", function()
                 TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                 TriggerClientEvent('ARMA:prisonCreateBreakOutAreas', source)
                 TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time)
-                local prisonItemsTable = {}
-                for k,v in pairs(cfg.prisonItems) do
-                    local item = math.random(1, #prisonItems)
-                    prisonItemsTable[prisonItems[item]] = v
-                end
-                TriggerClientEvent('ARMA:prisonCreateItemAreas', source, prisonItemsTable)
             end
         end
     end)
@@ -86,7 +80,7 @@ AddEventHandler("ARMA:prisonEndJob", function(job)
         prisonPlayerJobs[user_id] = nil
         MySQL.query("ARMA/get_prison_time", {user_id = user_id}, function(prisontime)
             if prisontime ~= nil then 
-                if prisontime[1].prison_time > 0 then
+                if prisontime[1].prison_time > 21 then
                     MySQL.execute("ARMA/set_prison_time", {user_id = user_id, prison_time = prisontime[1].prison_time - 20})
                     TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time - 20)
                     ARMAclient.notify(source, {"~g~Prison time reduced by 20s."})
@@ -111,11 +105,17 @@ AddEventHandler("ARMA:jailPlayer", function(player)
                         MySQL.query("ARMA/get_prison_time", {user_id = ARMA.getUserId(player)}, function(prisontime)
                             if prisontime ~= nil then 
                                 if prisontime[1].prison_time == 0 then
-                                    ARMA.prompt(source,"Jail Time:","",function(source,jailtime) 
-                                        local jailtime = tonumber(jailtime)
+                                    ARMA.prompt(source,"Jail Time (in minutes):","",function(source,jailtime) 
+                                        local jailtime = math.floor(tonumber(jailtime) * 60)
                                         if jailtime > 0 then
                                             MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = jailtime})
-                                            TriggerClientEvent('ARMA:prisonTransportWithBus', player, cellnumber)
+                                            TriggerClientEvent('ARMA:prisonTransportWithBus', player, 1)
+                                            local prisonItemsTable = {}
+                                            for k,v in pairs(cfg.prisonItems) do
+                                                local item = math.random(1, #prisonItems)
+                                                prisonItemsTable[prisonItems[item]] = v
+                                            end
+                                            TriggerClientEvent('ARMA:prisonCreateItemAreas', player, prisonItemsTable)
                                             ARMAclient.notify(source, {"~g~Jailed Player."})
                                         else
                                             ARMAclient.notify(source, {"~r~Invalid time."})

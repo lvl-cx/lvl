@@ -2,7 +2,7 @@ RegisterCommand('sw', function(player, args)
     local user_id = ARMA.getUserId(player)
     local permID =  tonumber(args[1])
     if permID ~= nil then
-        if ARMA.hasPermission(user_id,"admin.showwarn") then
+        if ARMA.hasPermission(user_id,"admin.tickets") then
 			armawarningstables = getarmaWarnings(permID,player)
 			a = exports['ghmattimysql']:executeSync("SELECT * FROM arma_bans_offenses WHERE UserID = @uid", {uid = permID})
 			for k,v in pairs(a) do
