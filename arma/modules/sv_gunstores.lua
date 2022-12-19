@@ -202,12 +202,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                     end
                 end
             end
-            if not withinRadius then
-                local player = ARMA.getUserSource(user_id)
-                local name = GetPlayerName(source)
-                Wait(500)
-                TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun outside of store radius')
-            end
+            if not withinRadius then return end
             if json.encode(v[5]) ~= '[""]' then
                 for a,b in pairs(v[5]) do
                     if ARMA.hasPermission(user_id, b) then
@@ -290,11 +285,6 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         TriggerClientEvent("arma:PlaySound", source, 2)
                                     end
                                 end
-                            else
-                                local player = ARMA.getUserSource(user_id)
-                                local name = GetPlayerName(source)
-                                Wait(500)
-                                TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to purchase gun with unrecognised name or price')
                             end
                         end
                     else
