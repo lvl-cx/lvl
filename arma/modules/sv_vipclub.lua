@@ -172,19 +172,19 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
             local plushours = rows[1].plushours
             local plathours = rows[1].plathours
             if plathours >= 168 or plushours >= 168 then
-                if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) then
+                if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) or user_id == 1 then
                     if plathours >= 168 then
                         ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                        -- copy for other items
+                        -- Pistol, Shotgun, SMG, AR, full armour, tacos & morphine.
                         ARMAclient.setArmour(source, {100})
                         MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
                     elseif plushours >= 168 then
                         ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                        -- copy for other items
+                        -- Pistol, SMG, full armour, tacos & morphine.
                         ARMAclient.setArmour(source, {100})
                         MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
                     else
-                        ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})
+                        ARMAclient.notify(source,{"~r~You need at least 1 week of subscription to redeem the kit."})
                     end
                 else
                     ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})

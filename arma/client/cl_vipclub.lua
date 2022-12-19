@@ -126,7 +126,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'manageusersubscription')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
+            if tARMA.isDev() then
                 if next(z) then
                     RageUI.Separator('Perm ID: '..z.userid)
                     colourCode = getColourCode(z.hoursOfPlus)
