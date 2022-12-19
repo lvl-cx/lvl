@@ -6,6 +6,8 @@ MySQL.createCommand("ARMA/get_current_prisoners", "SELECT * FROM arma_prison WHE
 local cfg = module("cfg/cfg_prison")
 local prisonItems = {"toothbrush", "blade", "rope", "metal_rod", "spring"}
 
+local lastCellUsed = 0
+
 AddEventHandler("playerJoining", function()
     local user_id = ARMA.getUserId(source)
     MySQL.execute("ARMA/add_prisoner", {user_id = user_id})
@@ -16,7 +18,10 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         MySQL.query("ARMA/get_prison_time", {user_id = user_id}, function(prisontime)
             if prisontime ~= nil then 
                 if prisontime[1].prison_time > 0 then
-                    TriggerClientEvent('ARMA:putInPrisonOnSpawn', source, 1)
+                    if lastCellUsed == 27 then
+                        lastCellUsed = 0
+                    end
+                    TriggerClientEvent('ARMA:putInPrisonOnSpawn', source, lastCellUsed+1)
                     TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                     TriggerClientEvent('ARMA:prisonCreateBreakOutAreas', source)
                     TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time)
@@ -55,6 +60,7 @@ AddEventHandler("ARMA:prisonArrivedForJail", function()
     MySQL.query("ARMA/get_prison_time", {user_id = user_id}, function(prisontime)
         if prisontime ~= nil then 
             if prisontime[1].prison_time > 0 then
+                SetPlayerRoutingBucket(source, 0)
                 TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                 TriggerClientEvent('ARMA:prisonCreateBreakOutAreas', source)
                 TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time)
@@ -100,16 +106,20 @@ AddEventHandler("ARMA:jailPlayer", function(player)
                 ARMAclient.isHandcuffed(player,{}, function(handcuffed)  -- check handcuffed
                     if handcuffed then
                         -- check for gc in cfg 
-                        -- prompt to ask how much time to send them to prison
-                        -- need to keep track of cells that are in use to give them an empty one
                         MySQL.query("ARMA/get_prison_time", {user_id = ARMA.getUserId(player)}, function(prisontime)
                             if prisontime ~= nil then 
                                 if prisontime[1].prison_time == 0 then
                                     ARMA.prompt(source,"Jail Time (in minutes):","",function(source,jailtime) 
                                         local jailtime = math.floor(tonumber(jailtime) * 60)
-                                        if jailtime > 0 then
+                                        if jailtime > 0 and jailtime =< cfg.maxTimeNotGc then
+                                            -- check if gc then compare jailtime to 
+                                            -- maxTimeGc = 7200,
                                             MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = jailtime})
-                                            TriggerClientEvent('ARMA:prisonTransportWithBus', player, 1)
+                                            if lastCellUsed == 27 then
+                                                lastCellUsed = 0
+                                            end
+                                            TriggerClientEvent('ARMA:prisonTransportWithBus', player, lastCellUsed+1)
+                                            SetPlayerRoutingBucket(player, lastCellUsed+1)
                                             local prisonItemsTable = {}
                                             for k,v in pairs(cfg.prisonItems) do
                                                 local item = math.random(1, #prisonItems)
