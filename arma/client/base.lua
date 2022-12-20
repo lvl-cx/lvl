@@ -743,29 +743,20 @@ tARMA.RegisterClientCallback=function(aJ,aO)
 end
 
 
-local prevtime,curframes = GetGameTimer()
-local prevframes,curframes = GetFrameCount()  
-local fps = -1
-Citizen.CreateThread(function()	  
-    while not NetworkIsPlayerActive(PlayerId()) or not NetworkIsSessionStarted() do	        
-        Citizen.Wait(250)
-        prevframes = GetFrameCount()
-        prevtime = GetGameTimer()            
-    end
-    while true do		 
-        curtime = GetGameTimer()
-        curframes = GetFrameCount()	   
-        if((curtime - prevtime) > 1000) then
-            fps = (curframes - prevframes) - 1				
-            prevtime = curtime
-            prevframes = curframes
-        end          
-        Citizen.Wait(1)
-    end
-end)
-
-tARMA.RegisterClientCallback("ARMA:requestClientFPS",function(...)
-    return fps,...
+Citizen.CreateThread(function()
+  while true do
+    SetVehicleDensityMultiplierThisFrame(0.0)
+    SetPedDensityMultiplierThisFrame(0.0)
+    SetRandomVehicleDensityMultiplierThisFrame(0.0)
+    SetParkedVehicleDensityMultiplierThisFrame(0.0)
+    SetScenarioPedDensityMultiplierThisFrame(0.0, 0.0)
+    local playerPed = GetPlayerPed(-1)
+    local pos = GetEntityCoords(playerPed) 
+    RemoveVehiclesFromGeneratorsInArea(pos['x'] - 500.0, pos['y'] - 500.0, pos['z'] - 500.0, pos['x'] + 500.0, pos['y'] + 500.0, pos['z'] + 500.0);
+    SetGarbageTrucks(0)
+    SetRandomBoats(0)
+    Citizen.Wait(1)
+  end
 end)
 
 function tARMA.drawTxt(L, M, N, D, E, O, P, Q, R, S)
