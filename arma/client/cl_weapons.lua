@@ -70,7 +70,6 @@ RegisterCommand("storecurrentweapon",function()
             local l,i=GetCurrentPedWeapon(PlayerPedId())
             local g=a.weaponHashToModels[i]
             TriggerServerEvent("ARMA:forceStoreSingleWeapon",g)
-            tARMA.RemoveGears()
         end 
     else 
         tARMA.notify("~r~Store weapons cooldown, please wait.")

@@ -302,17 +302,25 @@ function tARMA.setCODHitMarkerSetting(i)
     SetResourceKvp("arma_codhitmarkersounds", tostring(i))
 end
 function tARMA.setDiagonalWeaponSetting(f)
-    SetResourceKvp("ARMA_diagonalweapons",tostring(f))
+    SetResourceKvp("arma_diagonalweapons",tostring(f))
 end
 
 Citizen.CreateThread(function()
     local f = GetResourceKvpString("arma_diagonalweapons") or "false"
     if f == "false" then
         b = false
-        TriggerEvent("ARMA:setDiagonalWeapons", b)
+        TriggerEvent("ARMA:setVerticalWeapons")
     else
         b = true
-        TriggerEvent("ARMA:setDiagonalWeapons", b)
+        TriggerEvent("ARMA:setDiagonalWeapons")
+    end
+    local g = GetResourceKvpString("arma_frontars") or "false"
+    if g == "false" then
+        c = false
+        TriggerEvent("ARMA:setBackAR")
+    else
+        c = true
+        TriggerEvent("ARMA:setFrontAR")
     end
     local h = GetResourceKvpString("arma_hitmarkersounds") or "false"
     if h == "false" then
@@ -334,12 +342,12 @@ RageUI.CreateWhile(1.0, true, function()
             end,function()end,nil)
             local function _()
                 b = true
-                TriggerEvent("ARMA:setDiagonalWeapons", b)
+                TriggerEvent("ARMA:setDiagonalWeapons")
                 tARMA.setDiagonalWeaponSetting(b)
             end
             local function a0()
                 b = false
-                TriggerEvent("ARMA:setDiagonalWeapons", b)
+                TriggerEvent("ARMA:setVerticalWeapons")
                 tARMA.setDiagonalWeaponSetting(b)
             end
             RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)

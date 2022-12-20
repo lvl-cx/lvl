@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(3000)
     if IsPlayerPlaying(PlayerId()) and state_ready then
-      --ARMAserver.updateWeapons({tARMA.getWeapons()})
+      ARMAserver.updateWeapons({tARMA.getWeapons()})
     end
   end
 end)

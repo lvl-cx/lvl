@@ -255,7 +255,6 @@ local choice_store_weapons = function(player, choice)
               end
               ARMAclient.notify(player,{"~g~Weapons Stored"})
               TriggerEvent('ARMA:RefreshInventory', source)
-              ARMAclient.RemoveGears(source, {})
               SetTimeout(3000,function()
                     isStoring[player] = nil 
               end)
