@@ -688,9 +688,9 @@ function tARMA.getObjectId(a_, aX)
   return aL
 end
 
-function tARMA.KeyboardInput(TextEntry, ExampleText, MaxStringLenght)
+function tARMA.KeyboardInput(TextEntry, ExampleText, MaxStringLength)
 	AddTextEntry('FMMC_KEY_TIP1', TextEntry) 
-	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", ExampleText, "", "", "", MaxStringLenght)
+	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP1", "", ExampleText, "", "", "", MaxStringLength)
     blockinput = true 
 	while UpdateOnscreenKeyboard() ~= 1 and UpdateOnscreenKeyboard() ~= 2 do 
 		Citizen.Wait(0)

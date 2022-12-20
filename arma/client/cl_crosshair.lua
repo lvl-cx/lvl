@@ -135,25 +135,6 @@ RegisterCommand("crosshair",function(h,i,j)
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('crosshair','main'),true)
 end)
-function getInput(k,l)
-    AddTextEntry('FMMC_MPM_NA',k)
-    DisplayOnscreenKeyboard(1,"FMMC_MPM_NA",k,"","","","",3)
-    while UpdateOnscreenKeyboard()==0 do 
-        DisableAllControlActions(0)
-        Wait(0)
-    end
-    if GetOnscreenKeyboardResult()then 
-        local m=GetOnscreenKeyboardResult()
-        local n=tonumber(m)
-        if m then
-            if m~=nil and m~=""and type(n)=="number"and n<=255 and n>=1 then 
-                return n 
-            else 
-                return l 
-            end 
-        end
-    end 
-end
 function doesWeaponHaveScope()
     local o=GetCurrentPedWeaponEntityIndex(PlayerPedId())
     local p={

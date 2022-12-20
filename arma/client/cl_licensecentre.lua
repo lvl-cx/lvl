@@ -112,19 +112,3 @@ RegisterNetEvent("ARMA:gotOwnedLicenses",function(i)
         end
     end
 end)
-
-function Confirm()
-	AddTextEntry('FMMC_KEY_TIP8', "Type 'YES' to Confirm.")
-	DisplayOnscreenKeyboard(1, "FMMC_KEY_TIP8", "", "", "", "", "", 30)
-    while (UpdateOnscreenKeyboard() == 0) do
-        DisableAllControlActions(0);
-        Wait(0);
-    end
-    if (GetOnscreenKeyboardResult()) then
-        local result = GetOnscreenKeyboardResult()
-		if result ~= '' then
-			return result
-		end
-    end
-	return false
-end

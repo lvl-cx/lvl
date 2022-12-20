@@ -1,6 +1,3 @@
-function AddTextEntry(a,b)
-    Citizen.InvokeNative('ADD_TEXT_ENTRY',a,b)
-end
 Citizen.CreateThread(function()
     AddTextEntry('FE_THDR_GTAO','ARMA British RP - discord.gg/armarp')
     AddTextEntry("PM_PANE_CFX","ARMA")

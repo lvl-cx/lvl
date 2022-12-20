@@ -4,7 +4,7 @@ RegisterNetEvent("gettingUserId",function(user_id, maxplayers)
 		while true do
 			SetDiscordRichPresenceAsset('mainlogo') 
 			SetDiscordRichPresenceAssetText("discord.gg/armarp") 
-			SetDiscordRichPresenceAssetSmall('mainlogo') -- Name of the smaller image asset.
+			SetDiscordRichPresenceAssetSmall('mainlogo')
 			SetDiscordRichPresenceAssetSmallText('ARMA')
 			while (user_id == 0 ) do
 				SetRichPresence("[ID:fetching...] | " ..#GetActivePlayers().. "/" .. maxplayers .. " Players") 
