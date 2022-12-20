@@ -64,7 +64,7 @@ Citizen.CreateThread(function()
                             local pay = math.random(1000,1500)
                             ARMA.giveBankMoney(k,pay)
                             TriggerClientEvent("ARMA:nextStopReachedBusJob",ARMA.getUserSource(k),pay)
-                            if v.currentJob.stopNumber==10 then
+                            if v.currentJob.stopNumber==#busJobStops then
                                 TriggerClientEvent("ARMA:endBusJob", ARMA.getUserSource(k))
                                 v.currentJob.jobActive=false
                                 usersInBusJob[user_id] = nil
