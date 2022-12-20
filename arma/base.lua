@@ -739,11 +739,9 @@ function ARMA.banConsole(permid,time,reason)
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, adminPermID)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Ban expires on: "..os.date("%c", banTime).."\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by ARMA \nAppeal @ discord.gg/armarp") 
-            f10Ban(permid, adminPermID, reason, time)
         else 
             ARMA.setBanned(permid,true,"perm",reason, adminPermID)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by ARMA \nAppeal @ discord.gg/armarp") 
-            f10Ban(permid, adminPermID, reason, "perm")
         end
         print("Successfully banned Perm ID: " .. permid)
     else 
@@ -751,10 +749,8 @@ function ARMA.banConsole(permid,time,reason)
             local banTime = os.time()
             banTime = banTime  + (60 * 60 * tonumber(time))  
             ARMA.setBanned(permid,true,banTime,reason, adminPermID)
-            f10Ban(permid, adminPermID, reason, time)
         else 
             ARMA.setBanned(permid,true,"perm",reason, adminPermID)
-            f10Ban(permid, adminPermID, reason, "perm")
         end
         print("Successfully banned Perm ID: " .. permid)
     end
