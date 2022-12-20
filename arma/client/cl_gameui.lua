@@ -1,15 +1,4 @@
-local function a(b, c, d, e, f, g, h, i, j, k)
-    SetTextFont(0)
-    SetTextProportional(0)
-    SetTextScale(f, f)
-    SetTextColour(h, i, j, k)
-    SetTextDropshadow(0, 0, 0, 0, 255)
-    SetTextEdge(1, 0, 0, 0, 255)
-    BeginTextCommandDisplayText("STRING")
-    AddTextComponentSubstringPlayerName(g)
-    EndTextCommandDisplayText(b - d / 2, c - e / 2 + 0.005)
-end
-local l = {
+local a = {
     ["AIRP"] = "Los Santos International Airport",
     ["ALAMO"] = "Alamo Sea",
     ["ALTA"] = "Alta",
@@ -100,55 +89,43 @@ local l = {
     ["ZP_ORT"] = "Port of South Los Santos",
     ["ZQ_UAR"] = "Davis Quartz"
 }
-local m = {
-    [0] = "N",
-    [45] = "NW",
-    [90] = "W",
-    [135] = "SW",
-    [180] = "S",
-    [225] = "SE",
-    [270] = "E",
-    [315] = "NE",
-    [360] = "N"
-}
-local n = false
-local o
-local p
-local q = ""
-local r = ""
+local b = false
+local c
+local d = ""
 Citizen.CreateThread(function()
     while true do
-        if n then
-            local s = tARMA.getPlayerCoords()
-            o, p = GetStreetNameAtCoord(s.x, s.y, s.z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
-            q = l[GetNameOfZone(s.x, s.y, s.z)] or "N/A"
+        if b then
+            local e = tARMA.getPlayerCoords()
+            c, _ = GetStreetNameAtCoord(e.x, e.y, e.z, Citizen.ResultAsInteger(), Citizen.ResultAsInteger())
+            d = a[GetNameOfZone(e.x, e.y, e.z)] or "N/A"
         end
         Wait(1000)
     end
 end)
-function func_drawStreetNamesGameUi(t)
+function func_drawStreetNamesGameUi(f)
     HideHudComponentThisFrame(3)
     HideHudComponentThisFrame(4)
-    if n and not hideHud then
-        a(0.515, 1.25, 1.0, 1.0, 0.4, tostring(GetStreetNameFromHashKey(o)) .. " ~w~| ~b~" .. q, 255, 255, 255, 255)
+    if b and not hideHud then
+        local g = tARMA.getCachedMinimapAnchor()
+        tARMA.DrawText(g.leftX + 0.0045, g.topY - 0.03, tostring(GetStreetNameFromHashKey(c)) .. " ~w~| ~b~" .. d, 0.4)
     end
 end
 tARMA.createThreadOnTick(func_drawStreetNamesGameUi)
 RegisterCommand("streetnames",function()
-    n = not n
+    b = not b
 end)
 function tARMA.isStreetnamesEnabled()
-    return n
+    return b
 end
-function tARMA.setStreetnamesEnabled(u)
-    n = u
-    SetResourceKvp("arma_streetnames", tostring(u))
+function tARMA.setStreetnamesEnabled(h)
+    b = h
+    SetResourceKvp("arma_streetnames", tostring(h))
 end
 Citizen.CreateThread(function()
-    local v = GetResourceKvpString("arma_streetnames") or "false"
-    if v == "false" then
-        n = false
+    local i = GetResourceKvpString("arma_streetnames") or "false"
+    if i == "false" then
+        b = false
     else
-        n = true
+        b = true
     end
 end)

@@ -1,112 +1,87 @@
 local hideUI = false
-
-local function a()
-    local b = GetSafeZoneSize()
-    local c = 1.0 / 20.0
-    local d = 1.0 / 20.0
-    local e = GetAspectRatio(0)
-    if e > 2 then
-        e = 16 / 9
-    end
-    local f, g = GetActiveScreenResolution()
-    local h = 1.0 / f
-    local i = 1.0 / g
-    local j = {}
-    j.Width = h * f / (4 * e)
-    j.height = i * g / 5.674
-    j.Left_x = h * f * c * math.abs(b - 1.0) * 10
-    if GetAspectRatio(0) > 2 then
-        j.Left_x = j.Left_x + j.Width * 0.845
-        j.Width = j.Width * 0.76
-    elseif GetAspectRatio(0) > 1.8 then
-        j.Left_x = j.Left_x + j.Width * 0.2225
-        j.Width = j.Width * 0.995
-    end
-    j.Bottom_y = 1.0 - i * g * d * math.abs(b - 1.0) * 10
-    j.right_x = j.Left_x + j.Width
-    j.top_y = j.Bottom_y - j.height
-    j.x = j.Left_x
-    j.y = j.top_y
-    j.xunit = h
-    j.yunit = i
-    return j
-end
-local k, l = GetActiveScreenResolution()
-local m = a()
-local n = 10.0
-function tARMA.setMaxUnderWaterUITimenewTime(o)
-    n = o
-end
-local function p(q, r, s, t, u, v, w, x)
-    DrawRect(q + s / 2, r + t / 2, s, t, u, v, w, x)
-end
-
 AddEventHandler("ARMA:showHUD",function(flag)
     hideUI = not flag
 end)
 
-local percentUI = false
-RegisterCommand("healthui",function(source,args)
-    percentUI = not percentUI
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        if not hideUI then
-            if not globalHideEmergencyCallUI then
-                local y = tARMA.getPlayerPed()
-                local f, g = GetActiveScreenResolution()
-                if f ~= k or g ~= l then
-                    k, l = GetActiveScreenResolution()
-                    m = a()
-                end
-                local z = m
-                local A = (GetEntityHealth(y) - 100) / 100.0
-                if A < 0 then
-                    A = 0.0
-                end
-                if A == 0.98 then
-                    A = 1.0
-                end
-                local B = GetPedArmour(y) / 100.0
-                local C = GetPlayerUnderwaterTimeRemaining(PlayerId()) / n
-                if B > 1.0 then
-                    B = 1.0
-                end
-                p(z.Left_x + 0.001, z.Bottom_y - 0.015, z.Width - 0.002, 0.009, 88, 88, 88, 200)
-                p(z.Left_x + 0.001, z.Bottom_y - 0.015, (z.Width - 0.002) * A, 0.009, 86, 215, 64, 200)
-                if percentUI then
-                    DrawAdvancedText(0.085, 0.775, 0.1, 0.2, 0.4, tostring(GetEntityHealth(y)-100)..'%', 255, 255, 255, 255, 4, 0)
-                    DrawAdvancedText(0.085, 0.795, 0.1, 0.2, 0.4, tostring(GetPedArmour(y))..'%', 255, 255, 255, 255, 4, 0)
-                end
-                p(z.Left_x + 0.001, z.Bottom_y - 0.002, z.Width - 0.002, 0.009, 88, 88, 88, 200)
-                if IsPedSwimmingUnderWater(y) and C >= 0.0 then
-                    p(z.Left_x + 0.001, z.Bottom_y - 0.002, (z.Width - 0.002) * C, 0.009, 243, 214, 102, 200)
-                elseif B > 0.0 then
-                    p(z.Left_x + 0.001, z.Bottom_y - 0.002, (z.Width - 0.002) * B, 0.009, 60, 79, 255, 200)
+local function a()
+    local b = {}
+    local c, d = GetActiveScreenResolution()
+    local e = GetAspectRatio()
+    local f = 1 / c
+    local g = 1 / d
+    local h, i
+    SetScriptGfxAlign(string.byte("L"), string.byte("B"))
+    if IsBigmapActive() then
+        h, i = GetScriptGfxPosition(-0.003975, 0.022 + -0.460416666)
+        b.width = f * c / (2.52 * e)
+        b.height = g * d / 2.3374
+    else
+        h, i = GetScriptGfxPosition(-0.0045, 0.002 + -0.188888)
+        b.width = f * c / (4 * e)
+        b.height = g * d / 5.674
+    end
+    ResetScriptGfxAlign()
+    b.resX = c
+    b.resY = d
+    b.leftX = h
+    b.rightX = h + b.width
+    b.topY = i
+    b.bottomY = i + b.height
+    b.X = h + b.width / 2
+    b.Y = i + b.height / 2
+    b.Width = b.rightX - b.leftX
+    return b
+end
+local j, k = GetActiveScreenResolution()
+local l = a()
+local m = 10.0
+function tARMA.setMaxUnderWaterUITimenewTime(n)
+    m = n
+end
+local function o(p, q, r, s, t, u, v, w)
+    DrawRect(p + r / 2, q + s / 2, r, s, t, u, v, w)
+end
+function tARMA.getCachedMinimapAnchor()
+    return l
+end
+function tARMA.getCachedResolution()
+    return {w = l.resX, h = l.resY}
+end
+Citizen.CreateThread(
+    function()
+        while true do
+            if not hideUI then
+                if not globalHideEmergencyCallUI then
+                    local x = tARMA.getPlayerPed()
+                    local y, z = GetActiveScreenResolution()
+                    if y ~= j or z ~= k then
+                        j, k = GetActiveScreenResolution()
+                        l = a()
+                    end
+                    local A = l
+                    local B = (GetEntityHealth(x) - 100) / 100.0
+                    if B < 0 then
+                        B = 0.0
+                    end
+                    if B == 0.98 then
+                        B = 1.0
+                    end
+                    local C = GetPedArmour(x) / 100.0
+                    local D = GetPlayerUnderwaterTimeRemaining(PlayerId()) / m
+                    if C > 1.0 then
+                        C = 1.0
+                    end
+                    o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width, 0.009, 88, 88, 88, 200)
+                    o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width * B, 0.009, 86, 215, 64, 200)
+                    o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width, 0.009, 88, 88, 88, 200)
+                    if IsPedSwimmingUnderWater(x) and D >= 0.0 then
+                        o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * D, 0.009, 243, 214, 102, 200)
+                    elseif C > 0.0 then
+                        o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * C, 0.009, 60, 79, 255, 200)
+                    end
                 end
             end
+            Wait(0)
         end
-        Wait(0)
     end
-end)
-
-Citizen.CreateThread(function()
-    local z = RequestScaleformMovie("minimap")
-    SetRadarBigmapEnabled(true, false)
-    Wait(0)
-    SetRadarBigmapEnabled(false, false)
-    while true do
-        Citizen.Wait(0)
-        HideHudComponentThisFrame(3)
-        HideHudComponentThisFrame(4)
-        HideHudComponentThisFrame(2)
-        HideHudComponentThisFrame(9)
-        HideHudComponentThisFrame(7)
-        HideHudComponentThisFrame(8)
-        HideHudComponentThisFrame(6)
-        BeginScaleformMovieMethod(z, "SETUP_HEALTH_ARMOUR")
-        ScaleformMovieMethodAddParamInt(3)
-        EndScaleformMovieMethod()
-    end
-end)
+)
