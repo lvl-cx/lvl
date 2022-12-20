@@ -1,34 +1,46 @@
 local usersInRoyalMailJob={}
 local RoyalMailDrops={
     [1]={
-        dropPosition=vector3(396.8274230957,-993.54077148438,29.404117584229)
+        dropPosition=vector3(-7.3154945373535,-574.64617919922,37.746841430664)
     },
     [2]={
-        dropPosition=vector3(146.29943847656,-1002.9825439453,29.345203399658)
+        dropPosition=vector3(82.115982055664,-798.28112792969,31.461261749268)
     },
     [3]={
-        dropPosition=vector3(-45.810665130615,-1129.7127685547,26.039571762085)
+        dropPosition=vector3(34.906936645508,-1100.61328125,29.330247879028)
     },
     [4]={
-        dropPosition=vector3(-230.99066162109,-979.03881835938,29.242504119873)
+        dropPosition=vector3(20.257566452026,-1311.3227539062,29.350305557251)
     },
     [5]={
-        dropPosition=vector3(62.544189453125,-728.20678710938,44.133487701416)
+        dropPosition=vector3(-67.687004089355,-1337.8675537109,29.25726890564)
     },
     [6]={
-        dropPosition=vector3(-349.51934814453,-1.5412160158157,47.257663726807)
+        dropPosition=vector3(-56.406318664551,-1117.8198242188,26.434648513794)
     },
     [7]={
-        dropPosition=vector3(-459.90826416016,-366.56008911133,33.858005523682)
+        dropPosition=vector3(-96.674522399902,-862.63696289062,26.889167785645)
     },
     [8]={
-        dropPosition=vector3(153.43214416504,-1029.8165283203,29.21466255188)
+        dropPosition=vector3(-304.58959960938,-622.50946044922,33.405879974365)
     },
     [9]={
-        dropPosition=vector3(399.83349609375,-995.69421386719,29.457012176514)
+        dropPosition=vector3(-514.36181640625,-603.34991455078,25.308664321899)
     },
     [10]={
-        dropPosition=vector3(-12.371451377869,-692.36560058594,32.33810043335)
+        dropPosition=vector3(-657.90789794922,-436.78344726562,34.717582702637)
+    },
+    [11]={
+        dropPosition=vector3(-774.52838134766,-194.44358825684,37.284130096436)
+    },
+    [12]={
+        dropPosition=vector3(-530.25933837891,-325.36654663086,35.036434173584)
+    },
+    [13]={
+        dropPosition=vector3(-207.1000213623,-562.47955322266,34.623355865479)
+    },
+    [14]={
+        dropPosition=vector3(0.62487214803696,-702.77575683594,32.338115692139)
     }
 }
 
@@ -64,7 +76,7 @@ Citizen.CreateThread(function()
                             local pay = math.random(1000,1500)
                             ARMA.giveBankMoney(k,pay)
                             TriggerClientEvent("ARMA:royalMailReachedNextStop",ARMA.getUserSource(k),RoyalMailDrops[v.currentJob.stopNumber].dropPosition,pay)
-                            if v.currentJob.stopNumber==10 then
+                            if v.currentJob.stopNumber==#RoyalMailDrops then
                                 TriggerClientEvent("ARMA:royalMailJobEnd", ARMA.getUserSource(k))
                                 v.currentJob.jobActive=false
                                 usersInRoyalMailJob[user_id] = nil
