@@ -65,7 +65,7 @@ Citizen.CreateThread(function()
                             ARMA.giveBankMoney(k,pay)
                             TriggerClientEvent("ARMA:deliverooJobReachedNextStop",ARMA.getUserSource(k),pay)
                             if v.currentJob.stopNumber==#deliverooStops then
-                                TriggerClientEvent("ARMA:deliverooJobEnd", ARMA.getUserSource(k))
+                                TriggerClientEvent("ARMA:deliverooJobEnd", ARMA.getUserSource(k), true)
                                 v.currentJob.jobActive=false
                                 usersInDeliverooJob[user_id] = nil
                             else
