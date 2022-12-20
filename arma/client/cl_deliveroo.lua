@@ -1,4 +1,4 @@
-local a = module("cfg/identity")
+local a = module("cfg/cfg_identity")
 local b = {
     onJob = false,
     spawnVehicleVector = vector3(-1172.4587402344, -876.53637695312, 14.131204605103),
@@ -18,6 +18,7 @@ RegisterNetEvent("ARMA:beginDeliverooJob",function()
     local e = d[math.random(1, #d)]
     b.tempVehicle = tARMA.spawnVehicle(e,b.spawnVehicleVector.x,b.spawnVehicleVector.y,b.spawnVehicleVector.z,343,true,true,true)
     b.onJob = true
+    tARMA.disableCustomizationSave(b.onJob)
     b.previousCustomisation = tARMA.getCustomization()
     local f = PlayerPedId()
     SetPedComponentVariation(f, 5, 126, 0, 0)
@@ -42,6 +43,7 @@ RegisterNetEvent("ARMA:deliverooJobEnd",function(g)
     end
     tARMA.setCustomization(b.previousCustomisation)
     b.onJob = false
+    tARMA.disableCustomizationSave(b.onJob)
     b.tempMarker = 0
     b.tempBlip = 0
     b.tempVehicle = 0
@@ -51,7 +53,7 @@ RegisterNetEvent("ARMA:deliverooJobEnd",function(g)
     b.customerName = ""
     b.previousCustomisation = nil
 end)
-RegisterNetEvent("ARMA:deliverooJobReachedNextStop",function(h, i)
+RegisterNetEvent("ARMA:deliverooJobReachedNextStop",function(i)
     local j = b.tempVehicle
     b.stopNumber = b.stopNumber + 1
     if i then
