@@ -1,7 +1,3 @@
-------------------------------------------------------------------
---                          Variables
-------------------------------------------------------------------
-
 local showHud = true                          -- Boolean to show / hide HUD
 local moneyDisplay = 0
 local bankMoneyDisplay = 0
@@ -12,6 +8,45 @@ proximityIdToString = {
     [3] = "Shouting",
 }
 prox = 35.01
+
+local ARMA = {}
+
+local function GetMinimapAnchor()
+	local minimap = {}
+	local resX, resY = GetActiveScreenResolution()
+	local aspectRatio = GetAspectRatio()
+	local scaleX = 1/resX
+	local scaleY = 1/resY
+	local minimapRawX, minimapRawY
+	SetScriptGfxAlign(string.byte('L'), string.byte('B'))
+	if IsBigmapActive() then
+		minimapRawX, minimapRawY = GetScriptGfxPosition(-0.003975, 0.022 + (-0.460416666))
+		minimap.width = scaleX*(resX/(2.52*aspectRatio))
+		minimap.height = scaleY*(resY/(2.3374))
+	else
+		minimapRawX, minimapRawY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
+		minimap.width = scaleX*(resX/(4*aspectRatio))
+		minimap.height = scaleY*(resY/(5.674))
+	end
+	ResetScriptGfxAlign()
+    minimap.resX = resX
+    minimap.resY = resY
+	minimap.leftX = minimapRawX
+	minimap.rightX = minimapRawX+minimap.width
+	minimap.topY = minimapRawY
+	minimap.bottomY = minimapRawY+minimap.height
+	minimap.X = minimapRawX+(minimap.width/2)
+	minimap.Y = minimapRawY+(minimap.height/2)
+    minimap.Width = minimap.rightX -  minimap.leftX
+	return minimap
+end
+
+local cachedXRes, cachedYRes = GetActiveScreenResolution()
+local cachedMinimapAnchor = GetMinimapAnchor()
+
+function ARMA.getCachedMinimapAnchor()
+    return cachedMinimapAnchor
+end
 
 function setProximity(vprox)
     if vprox == 1 then
@@ -60,19 +95,6 @@ AddEventHandler("ARMAHUD:hide", function()
     TriggerEvent('ARMA:showHUD', false)
 end)
 
-function getMinimapAnchor()
-    SetScriptGfxAlign(string.byte('L'), string.byte('B'))
-    local minimapTopX, minimapTopY = GetScriptGfxPosition(-0.0045, 0.002 + (-0.188888))
-    ResetScriptGfxAlign()
-    local w, h = GetActiveScreenResolution()
-    local aspect_ratio = GetAspectRatio(0)
-    local xscale = 1.0 / w
-    local yscale = 1.0 / h
-    local Minimap = {}
-    local width = xscale * (w / (4 * aspect_ratio))
-    return { w * 2 * minimapTopX, (h * minimapTopY)+((width*0.61)*h), width * w}
-end
-
 RegisterNetEvent("ARMA:setDisplayMoney")
 AddEventHandler("ARMA:setDisplayMoney",function(value)
 	local moneyString = tostring(math.floor(value))
@@ -93,14 +115,18 @@ AddEventHandler("ARMA:initMoney",function(cash,bank)
     local moneyString = tostring(math.floor(bank))
     bankMoneyDisplay = getMoneyStringFormatted(moneyString)
 
-    local topLeftAnchor = getMinimapAnchor()
-    updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor[1]+topLeftAnchor[3],topLeftAnchor[2])
+    local topLeftAnchor = ARMA.getCachedMinimapAnchor()
+    updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor.rightX * topLeftAnchor.resX)
 end)
 
 Citizen.CreateThread(function()
     while true do
-        local topLeftAnchor = getMinimapAnchor()
-        updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor[1]+topLeftAnchor[3],topLeftAnchor[2])
+        local res_x, res_y = GetActiveScreenResolution()
+        if res_x ~= cachedXRes or res_y ~= cachedYRes then
+            cachedXRes, cachedYRes = GetActiveScreenResolution()
+            cachedMinimapAnchor = GetMinimapAnchor()
+            updateHungerThirstHUD("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,cachedMinimapAnchor.rightX * cachedMinimapAnchor.resX)
+        end
         NetworkSetTalkerProximity(prox)
         NetworkSetVoiceActive(true)
         HideHudComponentThisFrame(9)
@@ -138,31 +164,3 @@ Citizen.CreateThread(function()
 		Wait(0)
 	end	
 end)
-
-
-
-local function drawRct(x,y,Width,height,r,g,b,a)
-    DrawRect(x+Width/2,y+height/2,Width,height,r,g,b,a,0)
-end
-
-local function GetMinimapAnchor()
-    local safezone = GetSafeZoneSize()
-    local safezone_x = 1.0 / 20.0
-    local safezone_y = 1.0 / 20.0
-    local aspect_ratio = GetAspectRatio(0)
-    local res_x, res_y = GetActiveScreenResolution()
-    local xscale = 1.0 / res_x
-    local yscale = 1.0 / res_y
-    local Minimap = {}
-    Minimap.Width = xscale * (res_x / (4 * aspect_ratio))
-    Minimap.height = yscale * (res_y / 5.674)
-    Minimap.Left_x = xscale * (res_x * (safezone_x * ((math.abs(safezone - 1.0)) * 10)))
-    Minimap.Bottom_y = 1.0 - yscale * (res_y * (safezone_y * ((math.abs(safezone - 1.0)) * 10)))
-    Minimap.right_x = Minimap.Left_x + Minimap.Width
-    Minimap.top_y = Minimap.Bottom_y - Minimap.height
-    Minimap.x = Minimap.Left_x
-    Minimap.y = Minimap.top_y
-    Minimap.xunit = xscale
-    Minimap.yunit = yscale
-    return Minimap
-end

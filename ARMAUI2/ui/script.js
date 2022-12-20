@@ -1,14 +1,14 @@
 $(document).ready(function(){
     window.addEventListener("message", function(event){
     if(event.data.update == true){
-        positionHud(event.data.topLeftAnchor,event.data.yAnchor)
+        positionHud(event.data.topLeftAnchor)
         setMoney(event.data.cash,'#cash-text');
         setMoney(event.data.bank,'#bank-text');
         setProximity(event.data.proximity);
     }
     if(event.data.talking == true){
         document.getElementById('proximity').style.color = "lightblue";
-    } else {
+    }else if(event.data.talking == false) {
         document.getElementById('proximity').style.color = "white";
     }
     if(event.data.showhud == false){
@@ -31,19 +31,19 @@ $(document).ready(function(){
     function setMoney(amount, element){
         $(element).text(amount);
     }
-    function positionHud(topLeftAnchor,yAnchor){
+    function positionHud(topLeftAnchor){
         $( ".hud" ).css( "left", topLeftAnchor + "px" );
-        $( ".hud" ).css( "top", yAnchor + "px" );
+        // $( ".hud" ).css( "top", yAnchor + "px" );
     }
 
     // Clock based on user's local hour
     function updateClock() {
-        var now = new Date(),
-            time = (now.getHours()<10?'0':'') + now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
-    
-        document.getElementById('hour').innerHTML = [time];
-        setTimeout(updateClock, 1000);
-        }
-        updateClock();
+    var now = new Date(),
+        time = (now.getHours()<10?'0':'') + now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes();
+
+    document.getElementById('hour').innerHTML = [time];
+    setTimeout(updateClock, 1000);
+    }
+    updateClock();
 
 });
