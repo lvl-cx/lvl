@@ -28,7 +28,6 @@ Citizen.CreateThread(function()
                 DisableControlAction(0,25,true)
             end 
         end
-        SetPlayerHealthRechargeMultiplier(e, 0.0)
         SetPedCanBeDraggedOut(e,false)
         SetPedConfigFlag(e,149,true)
         SetPedConfigFlag(e,438,true)

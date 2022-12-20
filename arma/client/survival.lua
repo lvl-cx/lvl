@@ -512,10 +512,3 @@ AddEventHandler("ARMA:onClientSpawn",function(aj, ak)
         tARMA.setFriendlyFire(true)
     end
 end)
-
-Citizen.CreateThread(function()
-    while true do
-        SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0)
-        Wait(0)
-    end
-end)

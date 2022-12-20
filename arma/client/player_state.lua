@@ -4,7 +4,7 @@ local state_ready = false
 AddEventHandler("playerSpawned",function() -- delay state recording
   state_ready = false
   Citizen.CreateThread(function()
-    Citizen.Wait(30000)
+    Citizen.Wait(2000)
     state_ready = true
   end)
 end)
@@ -13,7 +13,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(3000)
     if IsPlayerPlaying(PlayerId()) and state_ready then
-      ARMAserver.updateWeapons({tARMA.getWeapons()})
+      --ARMAserver.updateWeapons({tARMA.getWeapons()})
     end
   end
 end)

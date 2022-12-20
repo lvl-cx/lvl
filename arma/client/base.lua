@@ -642,10 +642,6 @@ function tARMA.getModelGender()
   end 
 end
 
-function tARMA.setWeapon(m, s, t)
-  SetCurrentPedWeapon(m, s, t)
-end
-
 function tARMA.getPedServerId(a5)
   local a6=GetActivePlayers()
   for T,U in pairs(a6)do 

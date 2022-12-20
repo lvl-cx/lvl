@@ -306,20 +306,16 @@ end)
 
 
 local b = {
-    "demonhawkk",
-    "RS322",
+    GetHashKey("demonhawkk"),
+    GetHashKey("RS322"),
 }
 
 Citizen.CreateThread(function()
 	while true do
 		local f = tARMA.getPlayerVehicle()
-		local c = {}
-		for k,v in pairs(b) do
-			table.insert(c, GetHashKey(v))
-		end
 		if GetVehicleHasParachute(f) then
 			local be = GetEntityModel(f)
-			if not table.has(c, be) then
+			if not table.has(b, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
 			end
 		end
@@ -360,14 +356,6 @@ Citizen.CreateThread(function()
 		ToggleUsePickupsForPlayer(j, "PICKUP_AMMO_BULLET_MP", false)
 		SetPlayerHealthRechargeMultiplier(j, 0.0)
 		Wait(0)
-	end
-end)
-
-Citizen.CreateThread(function()
-	Wait(60000)
-	local min,max = GetModelDimensions(GetEntityModel(PlayerPedId()))
-	if min.y < -0.29 or max.z > 0.98 then
-		TriggerServerEvent("ARMA:acType14")
 	end
 end)
 

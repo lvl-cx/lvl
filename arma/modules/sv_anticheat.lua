@@ -209,15 +209,6 @@ AddEventHandler("ARMA:acType13", function()
     TriggerEvent("ARMA:acBan", user_id, 13, name, player)
 end)
 
-RegisterServerEvent("ARMA:acType14")
-AddEventHandler("ARMA:acType14", function()
-    local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
-	local name = GetPlayerName(source)
-    Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 14, name, player)
-end)
-
 local godmodeVid = false
 RegisterServerEvent("ARMA:acType15")
 AddEventHandler("ARMA:acType15", function()
