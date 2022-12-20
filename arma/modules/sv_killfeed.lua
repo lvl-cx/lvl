@@ -117,11 +117,6 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
                     ["inline"] = true
                 },
                 {
-                    ["name"] = "Distance",
-                    ["value"] = distance..'m',
-                    ["inline"] = true
-                },
-                {
                     ["name"] = "Killer Group",
                     ["value"] = killergroup,
                     ["inline"] = true
