@@ -845,6 +845,7 @@ AddEventHandler('ARMA:AddCar', function()
     if ARMA.hasPermission(admin_id, 'admin.addcar') then
         ARMA.prompt(source,"Add to Perm ID:","",function(source, permid)
             if permid == "" then return end
+            permid = tonumber(permid)
             local playerName = GetPlayerName(ARMA.getUserSource(permid))
             ARMA.prompt(source,"Car Spawncode:","",function(source, car) 
                 if car == "" then return end
