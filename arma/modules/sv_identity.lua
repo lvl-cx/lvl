@@ -1,6 +1,6 @@
 local htmlEntities = module("lib/htmlEntities")
 
-local cfg = module("cfg/identity")
+local cfg = module("cfg/cfg_identity")
 local lang = ARMA.lang
 
 local sanitizes = module("cfg/sanitizes")
