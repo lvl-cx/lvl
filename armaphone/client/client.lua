@@ -193,7 +193,7 @@ RegisterNetEvent("ARMA:receiveMessage")
 AddEventHandler("ARMA:receiveMessage", function(message)
   -- SendNUIMessage({event = 'updateMessages', messages = messages})
   if exports["arma"]:isHandcuffed() then return end
-  --if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
+  if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
   SendNUIMessage({event = 'newMessage', message = message})
   table.insert(messages, message)
   if not globalIsDND then
@@ -313,7 +313,7 @@ end)
 RegisterNetEvent("ARMA:acceptCall")
 AddEventHandler("ARMA:acceptCall", function(infoCall, initiator)
   if exports["arma"]:isHandcuffed() then return end
-  --if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
+  if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
   if inCall == false and USE_RTC == false then
     inCall = true
     if Config.UseMumbleVoIP then
