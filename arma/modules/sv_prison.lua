@@ -165,6 +165,33 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterCommand('unjail', function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'admin.noclip') then
+        ARMA.prompt(source,"Enter Temp ID:","",function(source,player) 
+            local player = tonumber(player)
+            if player ~= nil then
+                MySQL.query("ARMA/get_prison_time", {user_id = player}, function(prisontime)
+                    if prisontime ~= nil then 
+                        if prisontime[1].prison_time > 0 then
+                            MySQL.execute("ARMA/set_prison_time", {user_id = player, prison_time = 0})
+                            TriggerClientEvent('ARMA:prisonStopClientTimer', player)
+                            TriggerClientEvent('ARMA:prisonReleased', player)
+                            TriggerClientEvent('ARMA:forcePlayerInPrison', player, false)
+                            ARMAclient.notify(source, {"~g~Target will be released soon."})
+                        else
+                            ARMAclient.notify(source, {"~r~Player is not in prison."})
+                        end
+                    end
+                end)
+            else
+                ARMAclient.notify(source, {"~r~Invalid ID."})
+            end
+        end)
+    end
+end)
+
 -- on pickup 
 -- ARMA:prisonRemoveItemAreas(item)
 
