@@ -81,7 +81,6 @@ AddEventHandler("ARMA:proposeCoinflip",function(betAmount)
                     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
                         chips = rows[1].chips
                         if chips >= betAmount then
-                            --MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = betAmount})
                             TriggerClientEvent('ARMA:chipsUpdated', source)
                             if coinflipGameData[betId][source] == nil then
                                 coinflipGameData[betId][source] = {}
@@ -118,6 +117,36 @@ AddEventHandler("ARMA:cancelCoinflip", function()
         if v.user_id == user_id then
             coinflipGameData[k] = nil
             TriggerClientEvent("ARMA:cancelCoinflipBet",-1,k)
+        end
+    end
+end)
+
+RegisterNetEvent("ARMA:acceptCoinflip")
+AddEventHandler("ARMA:acceptCoinflip", function(gameid)   
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    for k,v in pairs(coinflipGameData) do
+        if v.betId == gameid then
+            MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = v.betAmount})
+            TriggerClientEvent('ARMA:chipsUpdated', source)
+            MySQL.execute("casinochips/remove_chips", {user_id = v.user_id, amount = v.betAmount})
+            TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
+            local coinFlipOutcome = math.random(0,1)
+            if coinFlipOutcome == 0 then
+                local game = {amount = v.betAmount, winner = GetPlayerName(source), loser = GetPlayerName(ARMA.getUserSource(v.user_id))}
+                TriggerClientEvent('ARMA:coinflipOutcome', source, true, game)
+                TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), false, game)
+                Wait(10000)
+                MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = v.betAmount*2})
+                TriggerClientEvent('ARMA:chipsUpdated', source)
+            else
+                local game = {amount = v.betAmount, winner = GetPlayerName(ARMA.getUserSource(v.user_id)), loser = GetPlayerName(source)}
+                TriggerClientEvent('ARMA:coinflipOutcome', source, false, game)
+                TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), true, game)
+                Wait(10000)
+                MySQL.execute("casinochips/add_chips", {user_id = v.user_id, amount = v.betAmount*2})
+                TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
+            end
         end
     end
 end)
