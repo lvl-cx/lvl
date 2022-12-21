@@ -57,6 +57,8 @@ files{
   "ui/pnc/components/*.js",
   "ui/pnc/components/*.html",
   "ui/playerlist_images/*.png",
+  "ui/radios/index.js",
+  "ui/radios/index.css",
   "cfg/peds.meta",
 	'audio/dlcvinewood_amp.dat10',
 	'audio/dlcvinewood_amp.dat10.nametable',
