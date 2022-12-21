@@ -19,7 +19,7 @@ AddEventHandler("ARMA:applyMorphine",function()
         end
         a=false 
     else 
-        tARMA.notify("~r~fuck, I don't feel too good...")
+        tARMA.notify("~r~Fuck, I don't feel too good...")
         local c="mp_suicide"
         local d="pill"
         tARMA.loadAnimDict(c)
