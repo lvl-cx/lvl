@@ -245,3 +245,13 @@ AddEventHandler("ARMA:bankTransfer", function(id, amount)
       ARMAclient.notify(source,{'~r~Player is not online'})
     end
 end)
+
+RegisterServerEvent('ARMA:requestPlayerBankBalance')
+AddEventHandler('ARMA:requestPlayerBankBalance', function()
+    local user_id = ARMA.getUserId(source)
+    local bank = ARMA.getBankMoney(user_id)
+    local wallet = ARMA.getMoney(user_id)
+    TriggerClientEvent('ARMA:setDisplayMoney', source, wallet)
+    TriggerClientEvent('ARMA:setDisplayBankMoney', source, bank)
+    TriggerClientEvent('ARMA:initMoney', source, wallet, bank)
+end)
