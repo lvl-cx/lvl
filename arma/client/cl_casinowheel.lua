@@ -2,7 +2,7 @@ local a = {{entryPosition = vector3(1109.76, 227.89, -49.64)}}
 local b
 local c
 local d = false
-c = "bmx"
+c = "m4lb"
 RMenu.Add("luckywheel", "casino", RageUI.CreateMenu("", "", 0, 100, "casinoui_lucky_wheel", "casinoui_lucky_wheel"))
 RMenu:Get("luckywheel", "casino"):SetSubtitle("~b~You may only spin the wheel once per restart.")
 RegisterNetEvent("ARMA:frameworkCleanup")
