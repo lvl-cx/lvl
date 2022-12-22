@@ -91,7 +91,7 @@ RegisterCommand("ooc", function(source, args, raw)
 				ChatCooldown = 3
 			end
 		else
-			TriggerClientEvent('chatMessage', source, "^1^[ARMA]", { 128, 128, 128 }, " Chat Spam | Retry in 3 Seconds", "alert")
+			TriggerClientEvent('chatMessage', source, "^1[ARMA]", { 128, 128, 128 }, " Chat Spam | Retry in 3 Seconds", "alert")
 			ChatCooldown = 3
 		end
 	end
@@ -164,7 +164,7 @@ RegisterCommand("/", function(source, args, raw)
 				ChatCooldown = 3
 			end
 		else
-			TriggerClientEvent('chatMessage', source, "^1^[ARMA]", { 128, 128, 128 }, " Chat Spam | Retry in 3 Seconds", "alert")
+			TriggerClientEvent('chatMessage', source, "^1[ARMA]", { 128, 128, 128 }, " Chat Spam | Retry in 3 Seconds", "alert")
 			ChatCooldown = 3
 		end
 	end
