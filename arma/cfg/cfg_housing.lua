@@ -3778,7 +3778,7 @@ cfghomes.homes = {
         leave_point = vector3(1594.1871337891, 6451.9516601563, 26.014041900635),
         chest_point = vector3(1585.6749267578, 6458.8950195313, 26.0140209198),
         wardrobe_point = vector3(1595.4031982422, 6454.1494140625, 26.0140209198),
-        buy_price = 1000000000
+        buy_price = 1000000000,
         image = "https://i.imgur.com/LpRQBLr.png",
     },
     ["Grove Street Customs"] = {
