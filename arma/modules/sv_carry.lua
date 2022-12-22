@@ -37,8 +37,11 @@ end)
 RegisterServerEvent("CarryPeople:requestCarry")
 AddEventHandler("CarryPeople:requestCarry", function(targetSrc)
     local source = source
-    requests[targetSrc] = source
-    TriggerClientEvent('CarryPeople:carryRequest', targetSrc)
+    if targetSrc ~= nil then
+        requests[targetSrc] = source
+        TriggerClientEvent('CarryPeople:carryRequest', targetSrc)
+        ARMAclient.notify(source, {"~g~Request Sent"})
+    end
 end)
 
 RegisterServerEvent("CarryPeople:stop")
