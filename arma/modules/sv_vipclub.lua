@@ -88,6 +88,7 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                     MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = sellerplushours - tonumber(hours)})
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' hours of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' hours of '..subtype..' subscription to you for £'..amount})
+                                                                    ARMA.giveBankMoney(user_id,tonumber(amount))
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
                                                                     ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
@@ -98,6 +99,7 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                     MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = sellerplathours - tonumber(hours)})
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' hours of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' hours of '..subtype..' subscription to you for £'..amount})
+                                                                    ARMA.giveBankMoney(user_id,tonumber(amount))
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
                                                                     ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
