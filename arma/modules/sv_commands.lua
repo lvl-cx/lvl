@@ -10,22 +10,18 @@ end)
 
 
 RegisterCommand("a", function(source,args, rawCommand)
-    local source = source
-    local user_id = ARMA.getUserId(source)   
-    if not ARMA.hasPermission(user_id, "admin.tickets") then
-        local playerName = "Server "
-        local msg = "Access denied."
-        TriggerClientEvent('chatMessage', source, "^7Alert: " , { 128, 128, 128 }, msg, "alert")
-        return 
-    end
-    local msg = rawCommand:sub(2)
-    local playerName =  "^3Admin Chat | " .. GetPlayerName(source)..": "
-    local players = GetPlayers()
-    for i,v in pairs(ARMA.getUsersByPermission('admin.tickets')) do 
-        name = GetPlayerName(v)
-        user_id = ARMA.getUserId(v)   
-        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "ooc")
-        tARMA.sendWebhook('staff', "ARMA Chat Logs", "```"..msg.."```".."\n> Admin Name: **"..GetPlayerName(source).."**\n> Admin PermID: **"..user_id.."**\n> Player TempID: **"..source.."**")
+    if #args <= 0 then return end
+	local name = GetPlayerName(source)
+    local message = table.concat(args, " ")
+    local user_id = ARMA.getUserId(source)
+
+    if ARMA.hasPermission(user_id, "admin.tickets") then
+        tARMA.sendWebhook('staff', "ARMA Chat Logs", "```"..message.."```".."\n> Admin Name: **"..name.."**\n> Admin PermID: **"..user_id.."**\n> Admin TempID: **"..source.."**")
+        for k, v in pairs(ARMA.getUsers({})) do
+            if ARMA.hasPermission(k, 'admin.tickets') then
+                TriggerClientEvent('chatMessage', v, "^3Admin Chat | " .. name..": " , { 128, 128, 128 }, message, "ooc")
+            end
+        end
     end
 end)
 
