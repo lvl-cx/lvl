@@ -615,3 +615,13 @@ AddEventHandler('ARMA:startThrowSmokeGrenade', function(name)
     local source = source
     TriggerClientEvent('ARMA:displaySmokeGrenade', -1, name, GetEntityCoords(GetPlayerPed(source)))
 end)
+
+RegisterServerEvent('ARMA:speedGunFinePlayer')
+AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      ARMA.tryBankPayment(ARMA.getUserId(temp), speed*10)
+      TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
+    end
+end)

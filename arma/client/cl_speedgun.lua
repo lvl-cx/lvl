@@ -49,7 +49,7 @@ Citizen.CreateThread(function()
                 if IsPlayerFreeAiming(n)then 
                     local o,e=GetEntityPlayerIsFreeAimingAt(n)
                     local p=GetVehiclePedIsIn(e,false)
-                    if p~=0 and GetPedInVehicleSeat(p,-1)==e and not IsPedInAnyPlane(e)and not IsPedInAnyHeli(e) then 
+                    if p~=0 and GetPedInVehicleSeat(p,-1)==e and not IsPedInAnyPlane(e) and not IsPedInAnyHeli(e) then 
                         local q=p
                         f=GetVehicleNumberPlateText(q)or"N/A"
                         g=GetLabelText(GetDisplayNameFromVehicleModel(GetEntityModel(q)))or"N/A"
