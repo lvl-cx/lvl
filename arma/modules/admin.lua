@@ -196,7 +196,7 @@ AddEventHandler("ARMA:ForceClockOff", function(player_temp)
     if ARMA.hasPermission(user_id,"admin.tp2waypoint") then
         ARMA.removeAllJobs(player_perm)
         ARMAclient.notify(source,{'~g~User clocked off'})
-        ARMAclient.notify(player_perm,{'~r~You have been force clocked off'})
+        ARMAclient.notify(player_temp,{'~r~You have been force clocked off.'})
         tARMA.sendWebhook('force-clock-off',"ARMA Faction Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Players Name: **"..GetPlayerName(player_temp).."**\n> Players TempID: **"..player_temp.."**\n> Players PermID: **"..player_perm.."**")
     else
         local player = ARMA.getUserSource(user_id)

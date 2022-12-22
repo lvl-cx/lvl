@@ -32,10 +32,10 @@ function ARMA.removeAllJobs(user_id)
         for k,v in pairs(j.jobs)do
             if i == 'default' and ARMA.hasGroup(user_id, v[1]) then
                 ARMA.removeUserGroup(user_id, v[1])
-                ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]}) -- remove later
+                --ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]}) -- remove later
             elseif i ~= 'default' and ARMA.hasGroup(user_id, v[1]..' Clocked') then
                 ARMA.removeUserGroup(user_id, v[1]..' Clocked')
-                ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]..' Clocked'}) -- remove later
+                --ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]..' Clocked'}) -- remove later
             end
         end
     end
