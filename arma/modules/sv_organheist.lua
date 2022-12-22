@@ -27,6 +27,7 @@ AddEventHandler("ARMA:joinOrganHeist",function()
             end
             SetPlayerRoutingBucket(source, 15)
             TriggerClientEvent('ARMA:setBucket', source, 15)
+            ARMAclient.setArmour(source, {100, true})
         else
             ARMAclient.notify(source, {'~r~The organ heist has already started.'})
         end
@@ -110,3 +111,29 @@ Citizen.CreateThread(function()
         end
     end
 end)
+
+--[[ RegisterCommand('startorgan', function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if user_id == 1 then
+        policeInGame = 0
+        civsInGame = 0
+        playersInOrganHeist = {}
+        inWaitingStage = false
+        inGameStage = false
+        inWaitingStage = true
+        timeTillOrgan = 60
+        TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..math.floor((timeTillOrgan/60)).." minutes.", { 128, 128, 128 }, message, "alert")
+        Wait(60000)
+        if civsInGame > 0 and policeInGame > 0 then
+            TriggerClientEvent('ARMA:startOrganHeist', -1)
+            inGameStage = true
+        else
+            for k,v in pairs(playersInOrganHeist) do
+                TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
+                ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
+                SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
+            end
+        end
+    end
+end) ]]
