@@ -625,3 +625,21 @@ AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
       TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
     end
 end)
+
+RegisterCommand('breathalyse', function(source, args)
+  local source = source
+  local user_id = ARMA.getUserId(source)
+  if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      TriggerClientEvent('ARMA:breathalyserCommand', source)
+  end
+end)
+
+RegisterServerEvent('ARMA:breathalyserRequest')
+AddEventHandler('ARMA:breathalyserRequest', function(temp)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      TriggerClientEvent('ARMA:beingBreathalysed', temp)
+      TriggerClientEvent('ARMA:breathTestResult', source, math.random(0, 100), GetPlayerName(temp))
+    end
+end)
