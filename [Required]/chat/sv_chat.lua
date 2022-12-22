@@ -12,7 +12,40 @@ RegisterServerEvent('_chat:messageEntered')
 RegisterServerEvent('chat:clear')
 RegisterServerEvent('__cfx_internal:commandFallback')
 
-local blockedWords = {"nigger", "nigga", "wog", "coon", "paki"}
+local blockedWords = {
+"nigger", 
+"nigga", 
+"wog", 
+"coon", 
+"paki",
+"admin",
+"cunt",
+"faggot",
+"anal",
+"dick",
+"kys",
+"gay",
+"homosexual",
+"lesbian",
+"suicide",
+"negro",
+"queef",
+"queer",
+"weeb",
+"suck",
+"tard",
+"allahu akbar",
+"terrorist",
+"wanker",
+"n1gger",
+"f4ggot",
+"n0nce",
+"d1ck",
+"h0m0",
+"n1gg3r",
+"h0m0s3xual",
+"nazi",
+"hitler",}
 
 AddEventHandler('_chat:messageEntered', function(author, color, message)
     local source = source
