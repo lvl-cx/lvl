@@ -305,23 +305,29 @@ end)
 RegisterCommand('cuff', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
-  ARMAclient.isStaffedOn(source, {}, function(staffedOn) 
-    if (staffedOn and ARMA.hasPermission(user_id, 'admin.tickets')) or ARMA.hasPermission(user_id, 'police.onduty.permission') then
-      ARMAclient.getNearestPlayer(source,{10},function(nplayer)
-        if nplayer ~= nil then
-            ARMAclient.isHandcuffed(nplayer,{},function(handcuffed)
-              if handcuffed then
-                TriggerClientEvent('ARMA:uncuffAnim', source, nplayer, false)
-                TriggerClientEvent('ARMA:unHandcuff', source, false)
-              else
-                TriggerClientEvent('ARMA:arrestCriminal', nplayer, source)
-                TriggerClientEvent('ARMA:arrestFromPolice', source)
-              end
-              TriggerClientEvent('ARMA:toggleHandcuffs', nplayer, false)
-              TriggerClientEvent('ARMA:playHandcuffSound', -1, GetEntityCoords(GetPlayerPed(source)))
-            end)
-        else
-          ARMAclient.notify(source,{lang.common.no_player_near()})
+  ARMAclient.isHandcuffed(source,{},function(handcuffed)
+    if handcuffed then
+      return
+    else
+      ARMAclient.isStaffedOn(source, {}, function(staffedOn) 
+        if (staffedOn and ARMA.hasPermission(user_id, 'admin.tickets')) or ARMA.hasPermission(user_id, 'police.onduty.permission') then
+          ARMAclient.getNearestPlayer(source,{10},function(nplayer)
+            if nplayer ~= nil and not ARMA.hasPermission(ARMA.getUserId(nplayer), 'police.onduty.permission') then
+                ARMAclient.isHandcuffed(nplayer,{},function(handcuffed)
+                  if handcuffed then
+                    TriggerClientEvent('ARMA:uncuffAnim', source, nplayer, false)
+                    TriggerClientEvent('ARMA:unHandcuff', source, false)
+                  else
+                    TriggerClientEvent('ARMA:arrestCriminal', nplayer, source)
+                    TriggerClientEvent('ARMA:arrestFromPolice', source)
+                  end
+                  TriggerClientEvent('ARMA:toggleHandcuffs', nplayer, false)
+                  TriggerClientEvent('ARMA:playHandcuffSound', -1, GetEntityCoords(GetPlayerPed(source)))
+                end)
+            else
+              ARMAclient.notify(source,{lang.common.no_player_near()})
+            end
+          end)
         end
       end)
     end
@@ -541,7 +547,7 @@ end)
 RegisterCommand('drone', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
-  if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
+  if ARMA.hasPermission(user_id, 'police.drone') or ARMA.hasPermission(user_id, 'nhs.drone') then
       TriggerClientEvent('toggleDrone', source)
   end
 end)
