@@ -33,10 +33,7 @@ local shouldForceIdleCardGames = false
 
 local cfg = {}
 
-
---Please note the config order is important, dealerPositions must start from 0 and increase consecutively 
 cfg.blackjackTables = {
-    --[id] = {x,y,z,heading}
     [0] = {
         dealerPos = vector3(1149.3828125,269.19174194336,-52.020873718262),
         dealerHeading = 46.0,
@@ -56,7 +53,7 @@ cfg.blackjackTables = {
     [2] = {
         dealerPos = vector3(1128.862,261.795,-51.0357),
         dealerHeading = 315.0,
-        tablePos = vector3(1129.406, 262.3578, -52.041),
+        tablePos = vector3(1140,257,-51),
         tableHeading = 135.31,
         distance = 1000.0,
         prop = "vw_prop_casino_blckjack_01b"
@@ -570,17 +567,14 @@ AddEventHandler("Blackjack:standOrHit",function(gameId,chairId,nextCardCount,tab
                             PlayAmbientSpeech1(dealerPed,"MINIGAME_DEALER_COMMENT_SLOW","SPEECH_PARAMS_FORCE_NORMAL_CLEAR",1) --TODO check this is the right sound?
                         end
                         if standOrHitThisRound then
-                            --print("terminating standorhit timer thread")
                             timeLeft = 20
                             drawTimerBar = false
                             return
-                            --print("failed it didnt terminate!")
                         end
                         Wait(1000)
                     end
                 end
                 if not standOrHitThisRound and sittingAtBlackjackTable then
-                    --print("you took too long fam standing shit")
                     waitingForStandOrHitState = false
                     TriggerServerEvent("Blackjack:standBlackjack",globalGameId,globalNextCardCount)
                     declineCard()
