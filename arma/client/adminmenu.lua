@@ -852,7 +852,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 11 then
                 RageUI.ButtonWithStyle("Commit Godly Wrath on Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:zapPlayer", SelectedPlayer[2])

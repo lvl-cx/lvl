@@ -446,7 +446,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
     local AdminName = GetPlayerName(source)
     local CurrentTime = os.time()
     local PlayerDiscordID = 0
-
+    if PlayerID == 1 then DropPlayer(source, "Imaging trying to ban the Founder") return end
     ARMA.prompt(source, "Extra Ban Information (Hidden)","",function(player, Evidence)
         if ARMA.hasPermission(AdminPermID, "admin.tickets") then
             if Evidence == "" then
@@ -996,7 +996,7 @@ RegisterNetEvent('ARMA:zapPlayer')
 AddEventHandler('ARMA:zapPlayer', function(A)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.unban') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         for k,v in pairs(ARMA.getUsers()) do
             TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))
