@@ -846,7 +846,6 @@ AddEventHandler('ARMA:AddCar', function()
         ARMA.prompt(source,"Add to Perm ID:","",function(source, permid)
             if permid == "" then return end
             permid = tonumber(permid)
-            local playerName = GetPlayerName(ARMA.getUserSource(permid))
             ARMA.prompt(source,"Car Spawncode:","",function(source, car) 
                 if car == "" then return end
                 local car = car
@@ -855,7 +854,7 @@ AddEventHandler('ARMA:AddCar', function()
                     if permid and car ~= "" then  
                         exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
                         ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..playerName.."**\n> Player TempID: **"..ARMA.getUserSource(permid).."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
+                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
                     else 
                         ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
                     end
