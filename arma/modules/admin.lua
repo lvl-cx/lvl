@@ -504,7 +504,7 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
         local player = ARMA.getUserSource(admin_id)
         local name = GetPlayerName(source)
         Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Request Screenshot')
+        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Request Video')
     end   
 end)
 

@@ -272,6 +272,7 @@ cfg.groups = {
         "admin.tp2player",
         "admin.freeze",
         "admin.tickets",
+        "admin.screenshot",
         "admin.ban"
     },
     ["Trial Staff"] = {
@@ -279,6 +280,7 @@ cfg.groups = {
         "admin.tp2player",
         "admin.freeze",
         "admin.tickets"
+        "admin.screenshot",
     },
     ["cardev"] = {
         "cardev.menu"
