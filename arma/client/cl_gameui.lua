@@ -105,7 +105,7 @@ end)
 function func_drawStreetNamesGameUi(f)
     HideHudComponentThisFrame(3)
     HideHudComponentThisFrame(4)
-    if b and not globalHideUi then
+    if b and not globalHideUi and not globalHideEmergencyCallUI then
         local g = tARMA.getCachedMinimapAnchor()
         tARMA.DrawText(g.leftX + 0.0045, g.topY - 0.03, tostring(GetStreetNameFromHashKey(c)) .. " ~w~| ~b~" .. d, 0.4)
     end

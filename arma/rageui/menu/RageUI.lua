@@ -314,7 +314,7 @@ function RageUI.Visible(Menu, Value)
     if Menu ~= nil then
         if Menu() then
             if type(Value) == "boolean" then
-                if noclipActive and CMG.getStaffLevel() < 4 and Menu.Sprite.Dictionary ~= "new_editor" then
+                if noclipActive and tARMA.getStaffLevel() < 4 and Menu.Sprite.Dictionary ~= "new_editor" then
                     return
                 end
                 if Value then
