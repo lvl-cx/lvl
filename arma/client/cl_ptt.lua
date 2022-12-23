@@ -16,10 +16,7 @@ function func_ptt()
                 a = false
             end
         else
-            if
-                IsControlJustPressed(0, 19) and not IsPlayerFreeAiming(c) and IsUsingKeyboard(2) and
-                    not IsPedReloading(b)
-             then
+            if IsControlJustPressed(0, 19) and not IsPlayerFreeAiming(c) and IsUsingKeyboard(2) and not IsPedReloading(b) then
                 SendNUIMessage({transactionType = "radioon"})
                 tARMA.loadAnimDict("random@arrests")
                 TaskPlayAnim(b, "random@arrests", "generic_radio_enter", 8.0, 2.0, -1, 50, 2.0, 0, 0, 0)

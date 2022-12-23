@@ -162,7 +162,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
             police[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
         elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
             nhs[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
-        elseif ARMA.hasPermission(k, 'lfb perm') then
+        elseif ARMA.hasPermission(k, 'lfb.onduty.permission') then
             lfb[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = hours}
         elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
             hmp[k] = {name = GetPlayerName(v), rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
