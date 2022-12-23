@@ -22,7 +22,7 @@ AddEventHandler('ARMA:payTacoSeller', function(id)
     local user_id = ARMA.getUserId(source)
     if tacoDrivers[id] then
         if ARMA.tryFullPayment(user_id,15000) then
-            ARMA.giveInventoryItem(user_id, 'taco', 1)
+            ARMA.giveInventoryItem(user_id, 'Taco', 1)
             ARMA.giveBankMoney(id, 15000)
             TriggerClientEvent("arma:PlaySound", source, "money")
         else
