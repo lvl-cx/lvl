@@ -254,7 +254,7 @@ cfg.groups = {
         "admin.freeze",
         "admin.screenshot",
         "admin.spectate",
-        "admin.tickets"
+        "admin.tickets",
     },
     ["Moderator"] = {
         "admin.ban",
@@ -264,7 +264,7 @@ cfg.groups = {
         "admin.freeze",
         "admin.screenshot",
         "admin.spectate",
-        "admin.tickets"
+        "admin.tickets",
     },
     ["Support Team"] = {
         "admin.kick",
@@ -273,13 +273,13 @@ cfg.groups = {
         "admin.freeze",
         "admin.tickets",
         "admin.screenshot",
-        "admin.ban"
+        "admin.ban",
     },
     ["Trial Staff"] = {
         "admin.kick",
         "admin.tp2player",
         "admin.freeze",
-        "admin.tickets"
+        "admin.tickets",
         "admin.screenshot",
     },
     ["cardev"] = {
@@ -303,7 +303,7 @@ cfg.groups = {
         "police.armoury",
         "police.maxarmour",
         "police.loadshop2",
-        "police.announce"
+        "police.announce",
     },
     ["Deputy Commissioner"] = {
         "cop.whitelisted"
@@ -314,7 +314,7 @@ cfg.groups = {
         "police.armoury",
         "police.maxarmour",
         "police.loadshop2",
-        "police.announce"
+        "police.announce",
     },
     ["Assistant Commissioner"] = {
         "cop.whitelisted"
@@ -325,7 +325,7 @@ cfg.groups = {
         "police.armoury",
         "police.maxarmour",
         "police.loadshop2",
-        "police.announce"
+        "police.announce",
     },
     ["Deputy Assistant Commissioner"] = {
         "cop.whitelisted"
@@ -336,7 +336,7 @@ cfg.groups = {
         "police.armoury",
         "police.maxarmour",
         "police.loadshop2",
-        "police.announce"
+        "police.announce",
     },
     ["Commander"] = {
         "cop.whitelisted"
@@ -345,7 +345,7 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour"
+        "police.maxarmour",
     },
     ["Chief Superintendent"] = {
         "cop.whitelisted"
@@ -354,7 +354,7 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour"
+        "police.maxarmour",
     },
     ["Superintendent"] = {
         "cop.whitelisted"
@@ -386,7 +386,9 @@ cfg.groups = {
     ["Special Constable Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.maxarmour",
+        "police.loadshop2",
     },
     ["Special Constable"] = {
         "cop.whitelisted"
