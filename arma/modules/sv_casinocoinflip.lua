@@ -1,12 +1,15 @@
 local coinflipTables = {
-    [0] = false,
     [1] = false,
     [2] = false,
-    [3] = false,
-    [4] = false,
     [5] = false,
     [6] = false,
-    [7] = false,
+}
+
+local linkedTables = {
+    [1] = 2,
+    [2] = 1,
+    [5] = 6,
+    [6] = 5,
 }
 
 local coinflipGameInProgress = {}
@@ -86,7 +89,14 @@ AddEventHandler("ARMA:proposeCoinflip",function(betAmount)
                                 coinflipGameData[betId][source] = {}
                             end
                             coinflipGameData[betId] = {betId = betId, betAmount = betAmount, user_id = user_id}
-                            TriggerClientEvent('ARMA:addCoinflipProposal', -1, betId, {betId = betId, betAmount = betAmount, user_id = user_id})
+                            for k,v in pairs(coinflipTables) do
+                                if v == source then
+                                    TriggerClientEvent('ARMA:addCoinflipProposal', source, betId, {betId = betId, betAmount = betAmount, user_id = user_id})
+                                    if coinflipTables[linkedTables[k]] ~= nil then
+                                        TriggerClientEvent('ARMA:addCoinflipProposal', coinflipTables[linkedTables[k]], betId, {betId = betId, betAmount = betAmount, user_id = user_id})
+                                    end
+                                end
+                            end
                             ARMAclient.notify(source,{"~g~Bet placed: " .. tostring(betAmount) .. " chips."})
                         else 
                             ARMAclient.notify(source,{"~r~Not enough chips!"})
@@ -127,26 +137,37 @@ AddEventHandler("ARMA:acceptCoinflip", function(gameid)
     local user_id = ARMA.getUserId(source)
     for k,v in pairs(coinflipGameData) do
         if v.betId == gameid then
-            MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = v.betAmount})
-            TriggerClientEvent('ARMA:chipsUpdated', source)
-            MySQL.execute("casinochips/remove_chips", {user_id = v.user_id, amount = v.betAmount})
-            TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
-            local coinFlipOutcome = math.random(0,1)
-            if coinFlipOutcome == 0 then
-                local game = {amount = v.betAmount, winner = GetPlayerName(source), loser = GetPlayerName(ARMA.getUserSource(v.user_id))}
-                TriggerClientEvent('ARMA:coinflipOutcome', source, true, game)
-                TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), false, game)
-                Wait(10000)
-                MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = v.betAmount*2})
-                TriggerClientEvent('ARMA:chipsUpdated', source)
-            else
-                local game = {amount = v.betAmount, winner = GetPlayerName(ARMA.getUserSource(v.user_id)), loser = GetPlayerName(source)}
-                TriggerClientEvent('ARMA:coinflipOutcome', source, false, game)
-                TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), true, game)
-                Wait(10000)
-                MySQL.execute("casinochips/add_chips", {user_id = v.user_id, amount = v.betAmount*2})
-                TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
-            end
+            MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+                chips = rows[1].chips
+                if chips >= v.betAmount then
+                    MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = v.betAmount})
+                    TriggerClientEvent('ARMA:chipsUpdated', source)
+                    MySQL.execute("casinochips/remove_chips", {user_id = v.user_id, amount = v.betAmount})
+                    TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
+                    local coinFlipOutcome = math.random(0,1)
+                    if coinFlipOutcome == 0 then
+                        local game = {amount = v.betAmount, winner = GetPlayerName(source), loser = GetPlayerName(ARMA.getUserSource(v.user_id))}
+                        TriggerClientEvent('ARMA:coinflipOutcome', source, true, game)
+                        TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), false, game)
+                        Wait(10000)
+                        MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = v.betAmount*2})
+                        TriggerClientEvent('ARMA:chipsUpdated', source)
+                    else
+                        local game = {amount = v.betAmount, winner = GetPlayerName(ARMA.getUserSource(v.user_id)), loser = GetPlayerName(source)}
+                        TriggerClientEvent('ARMA:coinflipOutcome', source, false, game)
+                        TriggerClientEvent('ARMA:coinflipOutcome', ARMA.getUserSource(v.user_id), true, game)
+                        Wait(10000)
+                        MySQL.execute("casinochips/add_chips", {user_id = v.user_id, amount = v.betAmount*2})
+                        TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
+                    end
+                else 
+                    ARMAclient.notify(source,{"~r~Not enough chips!"})
+                end
+            end)
         end
     end
+end)
+
+RegisterCommand('tables', function(source)
+    print(json.encode(coinflipTables))
 end)
