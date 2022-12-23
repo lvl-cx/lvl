@@ -7,6 +7,7 @@ AddEventHandler("ARMA:onClientSpawn",function(a, b)
             tARMA.setCanAnim(false)
             tARMA.overrideTime(12, 0, 0)
             TriggerEvent("ARMA:enteredDiamondCasino")
+            TriggerServerEvent('ARMA:getChips')
         end
         local f = function(e)
             insideDiamondCasino = false
