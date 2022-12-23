@@ -91,8 +91,8 @@ cfg.weapons = {
     },
     ["WEAPON_FLAREGUN"] = {
         name = "Flare Gun",
-        class = "Melee",
-        ammo = "Flares",
+        class = "Pistol",
+        ammo = "modelammo",
         policeWeapon = false,
         model = "",
         showonback = false,
