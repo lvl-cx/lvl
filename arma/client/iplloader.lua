@@ -1,7 +1,7 @@
 if cfg.iplload then
   Citizen.CreateThread(function()
-    LoadMpDlcMaps()
-    EnableMpDlcMaps(true)
+    OnEnterMp()
+    SetInstancePriorityMode(true)
     RequestIpl("chop_props")
     RequestIpl("FIBlobby")
     RemoveIpl("FIBlobbyfake")
@@ -76,9 +76,5 @@ if cfg.iplload then
     RequestIpl("FINBANK")
     RemoveIpl("DT1_03_Shutter")
     RemoveIpl("DT1_03_Gr_Closed")
-    RequestIpl("ex_sm_13_office_01a")
-    RequestIpl("ex_sm_13_office_01b")
-    RequestIpl("ex_sm_13_office_02a")
-    RequestIpl("ex_sm_13_office_02b")
   end)
 end
