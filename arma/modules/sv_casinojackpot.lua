@@ -83,7 +83,7 @@ local winnerTicketsBought = nil
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        if #currentJackpotBets >= 1 and not currentJackpotInProgress then
+        if #currentJackpotBets >= 2 and not currentJackpotInProgress then
             TriggerClientEvent('ARMA:beginJackpot', -1)
             currentJackpotInProgress = true
             Wait(60000)

@@ -15,32 +15,23 @@ RMenu.Add('casino_rooftop_exit','casino',RageUI.CreateMenu("","",tARMA.getRageUI
 RMenu:Get('casino_rooftop_exit','casino'):SetSubtitle("~b~EXIT")
 local h={{model='u_f_m_casinocash_01',pedPosition=vector3(1117.671,218.7382,-49.4),pedHeading=100.0,entryPosition=vector3(1116.0776367188,218.04238891602,-50.435089111328)},{model='u_f_m_casinocash_01',pedPosition=vector3(20.152572631836,6705.5737304688,-105.85441589355),pedHeading=75.0,entryPosition=vector3(18.445615768433,6705.7485351563,-106.85442352295)}}
 Citizen.CreateThread(function()
-    local i="mini@strip_club@idles@bouncer@base"
-    RequestAnimDict(i)
-    while not HasAnimDictLoaded(i)do 
-        RequestAnimDict(i)
-        Wait(0)
+    for i, j in pairs(h) do
+        tARMA.createDynamicPed(j.model,j.pedPosition,100.0,true,"mini@strip_club@idles@bouncer@base","base",75.0,nil,function(k)
+            SetEntityCanBeDamaged(k, 0)
+            SetPedAsEnemy(k, 0)
+            SetBlockingOfNonTemporaryEvents(k, 1)
+            SetPedResetFlag(k, 249, 1)
+            SetPedConfigFlag(k, 185, true)
+            SetPedConfigFlag(k, 108, true)
+            SetPedCanEvasiveDive(k, 0)
+            SetPedCanRagdollFromPlayerImpact(k, 0)
+            SetPedConfigFlag(k, 208, true)
+            SetEntityCollision(k, false)
+            SetEntityCoordsNoOffset(k, j.pedPosition.x, j.pedPosition.y, j.pedPosition.z, 100.0, 0, 0)
+            SetEntityHeading(k, j.pedHeading)
+            FreezeEntityPosition(k, true)
+        end)
     end
-    for j,k in pairs(h)do 
-        local l=tARMA.loadModel(k.model)
-        local m=CreatePed(26,l,k.pedPosition.x,k.pedPosition.y,k.pedPosition.z,100.0,false,true)
-        SetModelAsNoLongerNeeded(l)
-        SetEntityCanBeDamaged(m,0)
-        SetPedAsEnemy(m,0)
-        SetBlockingOfNonTemporaryEvents(m,1)
-        SetPedResetFlag(m,249,1)
-        SetPedConfigFlag(m,185,true)
-        SetPedConfigFlag(m,108,true)
-        SetPedCanEvasiveDive(m,0)
-        SetPedCanRagdollFromPlayerImpact(m,0)
-        SetPedConfigFlag(m,208,true)
-        SetEntityCollision(m,false)
-        SetEntityCoordsNoOffset(m,k.pedPosition.x,k.pedPosition.y,k.pedPosition.z,100.0,0,0,1)
-        SetEntityHeading(m,k.pedHeading)
-        FreezeEntityPosition(m,true)
-        TaskPlayAnim(m,i,"base",8.0,0.0,-1,1,0,0,0,0)
-    end
-    RemoveAnimDict(i)
 end)
 
 RageUI.CreateWhile(1.0, true, function()
@@ -238,23 +229,6 @@ AddEventHandler("ARMA:onClientSpawn",function(D, E)
             end,function()
             end,G,{})
         end 
-        local c = vector3(1121.7922363281, 239.42251586914, -50.440742492676)
-        local d = function(e)
-            insideDiamondCasino = true
-            tARMA.setCanAnim(false)
-            tARMA.overrideTime(12, 0, 0)
-            TriggerEvent("ARMA:enteredDiamondCasino")
-            TriggerServerEvent('ARMA:getChips')
-        end
-        local f = function(e)
-            insideDiamondCasino = false
-            tARMA.setCanAnim(true)
-            tARMA.cancelOverrideTimeWeather()
-            TriggerEvent("ARMA:exitedDiamondCasino")
-        end
-        local g = function(e)
-        end
-        tARMA.createArea("diamondcasino", c, 100.0, 20, d, f, g, {})
     end
 end)
 
