@@ -18,6 +18,7 @@ local jackpotChairs = {
 }
 local currentJackpotTotal = 0
 local currentJackpotBets = {}
+local currentJackpotInProgress = false
 
 RegisterNetEvent("ARMA:requestJackpotChairData")
 AddEventHandler("ARMA:requestJackpotChairData", function()   
@@ -50,12 +51,74 @@ RegisterNetEvent("ARMA:setJackpotBet")
 AddEventHandler("ARMA:setJackpotBet", function(betAmount)   
     local source = source
     local user_id = ARMA.getUserId(source)
-    -- trigger ARMA:newJackpotBet on -1 source with bet info like 
-    -- info: centerXPos, rectLength, tickets_end, tickets_start, .colour.r, .colour.g, .colour.b, .colour.a, user_id 
+    if not currentJackpotInProgress then
+        MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+            chips = rows[1].chips
+            if chips >= betAmount then
+                MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = betAmount})
+                currentJackpotBets[user_id] = {user_id = user_id, colour = {r = math.random(0,255), g = math.random(0,255), b = math.random(0,255), a = 255}, betAmount = betAmount, tickets_start = currentJackpotTotal, tickets_end = currentJackpotTotal + betAmount}
+                currentJackpotTotal = currentJackpotTotal + betAmount
+                TriggerClientEvent("ARMA:updateTotalPot", -1, currentJackpotTotal)
+                TriggerClientEvent('ARMA:successJackpotBet', source)
+                TriggerClientEvent('ARMA:newJackpotBet', -1, currentJackpotBets[user_id])
+                TriggerClientEvent('ARMA:chipsUpdated', source)
+                for k,v in pairs(currentJackpotBets) do
+                    if ARMA.getUserSource(k) ~= nil then
+                        TriggerClientEvent("ARMA:updatePlayerWinChance", ARMA.getUserSource(k), (currentJackpotTotal/v.betAmount)*100)
+                    end
+                end
+            else 
+                ARMAclient.notify(source,{"~r~Not enough chips!"})
+            end
+        end)
+    else
+        ARMAclient.notify(source,{"~r~Please wait for the next Jackpot."})
+    end
 end)
 
--- triggerclient ARMA:updatePlayerWinChance(winChance) (loop through all people in current jackpot and send them their win chance)
--- triggerclient ARMA:updateTotalPot(currentJackpotTotal) on -1 source
+local winner = nil
+local winnerName = nil
+local winnerBetPercentage = nil
+local winnerTicketsBought = nil
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        if #currentJackpotBets >= 1 and not currentJackpotInProgress then
+            TriggerClientEvent('ARMA:beginJackpot', -1)
+            currentJackpotInProgress = true
+            Wait(60000)
+            local winningTicket = math.random(1, currentJackpotTotal)
+            print('winning ticket: '..winningTicket)
+            for k,v in pairs(currentJackpotBets) do
+                print('tickets: '..v.tickets_start..' - '..v.tickets_end)
+                if winningTicket >= v.tickets_start and winningTicket <= v.tickets_end then
+                    winner = v.user_id
+                    winnerName = GetPlayerName(ARMA.getUserSource(winner))
+                    winnerBetPercentage = (currentJackpotTotal/v.betAmount)*100
+                    winnerTicketsBought = v.betAmount
+                    print('winner: '..winner, 'winner name:' ..winnerName, 'winner bet percentage: '..winnerBetPercentage, 'winner tickets bought: '..winnerTicketsBought)
+                end
+            end
+            TriggerClientEvent('ARMA:rollJackpot', -1, winner, winnerTicketsBought, winnerName, winnerBetPercentage, winner)
+        end
+    end
+end)
 
--- when jackpot ends
--- trigger ARMA:cleanupJackpot on -1 source for all
+RegisterNetEvent("ARMA:waitingOnWinConfirm")
+AddEventHandler("ARMA:waitingOnWinConfirm", function()   
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if user_id == winner then
+        MySQL.execute("casinochips/add_chips", {user_id = winner, amount = winnerTicketsBought})
+        TriggerClientEvent('ARMA:chipsUpdated', source)
+        Wait(10000)
+        TriggerClientEvent("ARMA:cleanupJackpot", -1)
+        currentJackpotTotal = 0
+        currentJackpotBets = {}
+        winner = nil
+        winnerName = nil
+        winnerBetPercentage = nil
+        winnerTicketsBought = nil
+        currentJackpotInProgress = false
+    end
+end)

@@ -381,6 +381,9 @@ Citizen.CreateThread(function()
     end
 end)
 RegisterNetEvent("ARMA:rollJackpot",function(a8, a9, aa, ab, ac)
+    if tARMA.getUserId() == 1 then
+        print(a8, a9, aa, ab, ac)
+    end
     if not u[a8] then
         return
     end
@@ -506,7 +509,6 @@ Citizen.CreateThread(function()
     Wait(5000)
     local O = "vw_vwint01_betting_screen"
     local P = CreateNamedRenderTargetForModel("casinoscreen_02", O)
-    local aq = "ARMA Jackpot Coming soon"
     while true do
         SetTextRenderId(P)
         SetScriptGfxDrawOrder(4)
