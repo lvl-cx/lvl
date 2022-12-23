@@ -5168,7 +5168,7 @@ webpackJsonp([1], [, , , , , , , , , , function(t, e, n) {
                         })
                     } else {
                         this.startCall({
-                            numero: e.number + "_show"
+                            numero: e.number
                         })
                     }
                 }
@@ -6485,11 +6485,11 @@ webpackJsonp([1], [, , , , , , , , , , function(t, e, n) {
                         n.deleteAllMessages()
                     } else if (t.id === 4) {
                         n.startCall({
-                            numero: e.number + "_show"
+                            numero: e.number
                         })
                     } else if (t.id === 5) {
                         n.startCall({
-                            numero: e.number + "_hidden"
+                            numero: e.number
                         })
                     } else if (t.id === 6) {
                         n.$router.push({

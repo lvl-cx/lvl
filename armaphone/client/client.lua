@@ -1,8 +1,3 @@
---====================================================================================
--- #Author: Jonathan D @ Gannon
---====================================================================================
-
--- Configuration
 local KeyToucheCloseEvent = {
   { code = 172, event = 'ArrowUp' },
   { code = 173, event = 'ArrowDown' },
@@ -29,16 +24,10 @@ local currentPlaySound = false
 local soundDistanceMax = 8.0
 
 
---====================================================================================
---  Check si le joueurs poséde un téléphone
---  Callback true or false
---====================================================================================
 function hasPhone (cb)
   cb(true)
 end
---====================================================================================
---  Que faire si le joueurs veut ouvrir sont téléphone n'est qu'il en a pas ?
---====================================================================================
+
 function ShowNoPhoneWarning ()
 end
 
@@ -47,7 +36,7 @@ RegisterCommand("openphone", function()
   TriggerEvent("ARMA:phoneToggledDvsa")
   if GetEntityHealth(PlayerPedId()) <= 102 then return end
   if exports["arma"]:isHandcuffed() then return end
-  --if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
+  if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
   if takePhoto ~= true then
       TogglePhone()
   end
@@ -127,9 +116,6 @@ AddEventHandler("ARMA:notifyFixePhoneChange", function(_PhoneInCall)
   PhoneInCall = _PhoneInCall
 end)
 
---[[
-  Affiche les imformations quant le joueurs est proche d'un fixe
---]]
 function showFixePhoneHelper (coords)
   for number, data in pairs(Config.FixePhone) do
     local dist = GetDistanceBetweenCoords(
@@ -171,7 +157,6 @@ end)
 --====================================================================================
 RegisterNetEvent("ARMA:myPhoneNumber")
 AddEventHandler("ARMA:myPhoneNumber", function(_myPhoneNumber)
-  --exports["arma"]:debugLog("recieved my phone number", _myPhoneNumber)
   myPhoneNumber = _myPhoneNumber
   SendNUIMessage({event = 'updateMyPhoneNumber', myPhoneNumber = myPhoneNumber})
 end)
@@ -191,7 +176,6 @@ end)
 
 RegisterNetEvent("ARMA:receiveMessage")
 AddEventHandler("ARMA:receiveMessage", function(message)
-  -- SendNUIMessage({event = 'updateMessages', messages = messages})
   if exports["arma"]:isHandcuffed() then return end
   if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
   SendNUIMessage({event = 'newMessage', message = message})
@@ -290,8 +274,7 @@ local inCall = false
 RegisterNetEvent("ARMA:waitingCall")
 AddEventHandler("ARMA:waitingCall", function(infoCall, initiator)
     if exports["arma"]:isHandcuffed() then return end
-    --if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
-    --exports["arma"]:debugLog("ARMA:waitingCall", "receiver_num: "..infoCall.receiver_num, "transmitter_num: ".. infoCall.transmitter_num, "DND state:", globalIsDND )
+    if exports["arma"]:isPlayerInPrison() and not exports["arma"]:nearPrisonPayPhone() then return end
     if initiator or (not initiator and not globalIsDND) then
         SendNUIMessage({event = 'waitingCall', infoCall = infoCall, initiator = initiator})
         if menuIsOpen == false then
@@ -396,7 +379,6 @@ end
 --====================================================================================
 
 RegisterNUICallback('startCall', function (data, cb)
-  --exports["arma"]:debugLog("attempting to call:", data.numero)
   startCall(data.numero, data.rtcOffer, data.extraData)
   cb()
 end)
@@ -415,8 +397,6 @@ RegisterNUICallback('ignoreCall', function (data, cb)
   cb()
 end)
 RegisterNUICallback('dnd', function (data, cb)
-    --exports["arma"]:debugLog("GOT NUI CALLBACK FOR DND", data.dnd)
-
     if data.dnd == "true" or data.dnd == true then
         data.dnd = true
     else
@@ -566,7 +546,6 @@ RegisterNUICallback('deleteALL', function(data, cb)
 end)
 
 function TogglePhone(anim)
-  --exports["arma"]:debugLog("Toggling arma Phone.")
   if anim == nil then anim = true end
   menuIsOpen = not menuIsOpen
   SendNUIMessage({show = menuIsOpen})

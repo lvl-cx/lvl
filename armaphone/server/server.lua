@@ -329,7 +329,7 @@ end)
 
 RegisterServerEvent('ARMA:internal_startCall')
 AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOffer, extraData)
-    if FixePhone[phone_number] ~= nil then
+    if Config.FixePhone[phone_number] ~= nil then
         onCallFixePhone(source, phone_number, rtcOffer, extraData)
         return
     end
@@ -374,17 +374,14 @@ AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOff
     
 
     if is_valid == true then
-        -- getSourceFromIdentifier(destPlayer, function (srcTo)
         if ARMA.getUserSource({destPlayer}) ~= nil then
             srcTo = tonumber(ARMA.getUserSource({destPlayer}))
 
             if srcTo ~= nil then
                 AppelsEnCours[indexCall].receiver_src = srcTo
-                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
                 TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
                 TriggerClientEvent('ARMA:waitingCall', srcTo, AppelsEnCours[indexCall], false)
             else
-                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
                 TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
             end
         end
@@ -560,24 +557,6 @@ AddEventHandler('onMySQLReady', function ()
     -- MySQL.Async.fetchAll("DELETE FROM phone_messages WHERE (DATEDIFF(CURRENT_DATE,time) > 10)")
 end)
 
---====================================================================================
---  App ... WIP
---====================================================================================
-
-
--- SendNUIMessage('ongcPhoneRTC_receive_offer')
--- SendNUIMessage('ongcPhoneRTC_receive_answer')
-
--- RegisterNUICallback('gcPhoneRTC_send_offer', function (data)
-
-
--- end)
-
-
--- RegisterNUICallback('gcPhoneRTC_send_answer', function (data)
-
-
--- end)
 
 
 
@@ -610,7 +589,7 @@ function onCallFixePhone (source, phone_number, rtcOffer, extraData)
         hidden = hidden,
         rtcOffer = rtcOffer,
         extraData = extraData,
-        coords = FixePhone[phone_number].coords
+        coords = Config.FixePhone[phone_number].coords
     }
     
     PhoneFixeInfo[indexCall] = AppelsEnCours[indexCall]
