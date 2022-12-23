@@ -65,6 +65,7 @@ AddEventHandler('ARMA:gangDefenseLocationUpdate', function(turfname, atkdfnd, tr
 		if trueorfalse then
 			turfData[turfID].beingCaptured = false
 			turfData[turfID].timeLeft = 300
+			TriggerClientEvent('chatMessage', -1, "^2"..turfData[turfID].name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
 		end
 	elseif atkdfnd == 'Defenders' then
 		if trueorfalse then
@@ -74,6 +75,7 @@ AddEventHandler('ARMA:gangDefenseLocationUpdate', function(turfname, atkdfnd, tr
 		else
 			turfData[turfID].beingCaptured = false
 			turfData[turfID].timeLeft = 300
+			TriggerClientEvent('chatMessage', -1, "^2"..turfData[turfID].name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
 		end
 	end
 	
@@ -89,33 +91,37 @@ RegisterNetEvent('ARMA:initiateGangCapture')
 AddEventHandler('ARMA:initiateGangCapture', function(x,y)
     local source = source
 	local user_id = ARMA.getUserId(source)
-	if not turfData[x].beingCaptured then
-		if not turfData[x].cooldown > 0 then
-			exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-				for K,V in pairs(gotGangs) do
-					for I,L in pairs(json.decode(V.gangmembers)) do
-						if tostring(user_id) == I then
-							TriggerClientEvent('ARMA:initiateGangCaptureCheck', source, y, true)
-							turfData[x].beingCaptured = true 
-							TriggerClientEvent('chatMessage', -1, "^2"x.." ^1is being captured.", { 128, 128, 128 }, message, "alert")
-							if turfData[x].gangOwner ~= 'N/A' then
-								exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-									for K,V in pairs(gotGangs) do
-										if V.gangname == turfData[x].gangOwner then
-											for I,L in pairs(json.decode(V.gangmembers)) do
-												TriggerClientEvent('ARMA:defendGangCapture', ARMA.getUserSource(I))
+	if not ARMA.hasPermission(user_id, 'police.onduty.permission') or not ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
+		if not turfData[x].beingCaptured then
+			if turfData[x].cooldown == 0 then
+				exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+					for K,V in pairs(gotGangs) do
+						for I,L in pairs(json.decode(V.gangmembers)) do
+							if tostring(user_id) == I then
+								TriggerClientEvent('ARMA:initiateGangCaptureCheck', source, y, true)
+								turfData[x].beingCaptured = true 
+								TriggerClientEvent('chatMessage', -1, "^2"..turfData[x].name.." ^1is being captured.", { 128, 128, 128 }, message, "alert")
+								if turfData[x].gangOwner ~= 'N/A' then
+									exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+										for K,V in pairs(gotGangs) do
+											if V.gangname == turfData[x].gangOwner then
+												for I,L in pairs(json.decode(V.gangmembers)) do
+													TriggerClientEvent('ARMA:defendGangCapture', ARMA.getUserSource(I))
+												end
 											end
 										end
-									end
-								end)
+									end)
+								end
 							end
 						end
 					end
-				end
-			end)
-		else
-			ARMAclient.notify(source, {'This turf is on cooldown for another '..turfData[x].cooldown..' seconds.'})
+				end)
+			else
+				ARMAclient.notify(source, {'This turf is on cooldown for another '..turfData[x].cooldown..' seconds.'})
+			end
 		end
+	else
+		ARMAclient.notify(source, {'You cannot capture a turf while on duty.'})
 	end
 end)
 
@@ -130,7 +136,7 @@ AddEventHandler('ARMA:gangCaptureSuccess', function(turfname)
 					for K,V in pairs(gotGangs) do
 						for I,L in pairs(json.decode(V.gangmembers)) do
 							if tostring(user_id) == I then
-								TriggerClientEvent('chatMessage', -1, "^2"x.." ^1has been captured.", { 128, 128, 128 }, message, "alert")
+								TriggerClientEvent('chatMessage', -1, "^2"..v.name.." ^1has been captured.", { 128, 128, 128 }, message, "alert")
 								for a,b in pairs(json.decode(V.gangmembers)) do
 									turfData[k].gangOwner = V.gangname
 									turfData[k].commission = V.commission
@@ -158,9 +164,9 @@ AddEventHandler('ARMA:gangDefenseSuccess', function(turfname)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I then
-						TriggerClientEvent('chatMessage', -1, "^2"x.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
 						for a,b in pairs(turfData) do
 							if b.name == turfname then
+								TriggerClientEvent('chatMessage', -1, "^2"..b.name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
 								turfData[a] = {ownership = true, gangOwner = V.gangname, commission = b.commission, cooldown = 300}
 								TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 								return

@@ -115,7 +115,7 @@ Citizen.CreateThread(function()
     end
 end)
 
---[[ RegisterCommand('startorgan', function(source, args)
+RegisterCommand('startorgan', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     if user_id == 1 then
@@ -139,4 +139,4 @@ end)
             end
         end
     end
-end) ]]
+end)
