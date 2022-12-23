@@ -1,6 +1,6 @@
 local h = {
     ["demonhawkk"] = {1},
-    ["RS322"] = {2},
+    ["rsqurus"] = {2},
 }
 local function i(j)
     DisableControlAction(0, 32, true)
