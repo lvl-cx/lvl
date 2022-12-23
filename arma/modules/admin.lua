@@ -996,7 +996,7 @@ RegisterNetEvent('ARMA:zapPlayer')
 AddEventHandler('ARMA:zapPlayer', function(A)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'Founder') then
+    if ARMA.hasPermission('admin.noclip') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         for k,v in pairs(ARMA.getUsers()) do
             TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))

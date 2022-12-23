@@ -13,7 +13,6 @@ local SelectedPerm = nil
 local SelectedName = nil
 local SelectedPlayerSource = nil
 local hoveredPlayer = nil
-local GlobalAdminLevel = 0
 local banreasons = {}
 local selectedbans = {}
 local Duration = 0
@@ -163,7 +162,7 @@ local groups = {
 
 
 RageUI.CreateWhile(1.0, true, function()
-    if GlobalAdminLevel > 0 then
+    if tARMA.getStaffLevel() >= 1 then
         if RageUI.Visible(RMenu:Get('adminmenu', 'main')) then
             RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
                 hoveredPlayer = nil
@@ -256,7 +255,28 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'functions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 2 then
+            if tARMA.getStaffLevel() >= 1 then
+                RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent('ARMA:GetCoords')
+                    end
+                end)                 
+                RageUI.List("Teleport",q,s,"",{},true,function(x, y, z, N)
+                    s = N
+                    if z then
+                        tARMA.teleport2(vector3(r[s]), true)
+                    end
+                end,
+                function()end)
+            end
+            if tARMA.getStaffLevel() >= 4 then
+                RageUI.ButtonWithStyle("TP To Coords","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("ARMA:Tp2Coords")
+                    end
+                end)
+            end
+            if tARMA.getStaffLevel() >= 2 then
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if foundMatch == false then
@@ -274,63 +294,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
-            if GlobalAdminLevel >= 5 then
-                RageUI.ButtonWithStyle("Unban Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent("ARMA:Unban")
-                    end
-                end)
-            end
-            if GlobalAdminLevel >= 6 then
-                RageUI.ButtonWithStyle("Remove Warning","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
-                    if Selected then
-                        AddTextEntry('FMMC_MPM_NC', "Enter the Warning ID")
-                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
-                        while (UpdateOnscreenKeyboard() == 0) do
-                            DisableAllControlActions(0);
-                            Wait(0);
-                        end
-                        if (GetOnscreenKeyboardResult()) then
-                            local result = GetOnscreenKeyboardResult()
-                            if result then 
-                                TriggerServerEvent('ARMA:RemoveWarning', result)
-                            end
-                        end
-                    end
-                end)
-            end 
-            if GlobalAdminLevel >= 6 then
-                RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        local A = GetEntityCoords(tARMA.getPlayerPed())
-                        tARMA.spawnVehicle("taxi",A.x,A.y,A.z,GetEntityHeading(tARMA.getPlayerPed()),true,true,true)
-                    end
-                end)
-            end
-            if GlobalAdminLevel >= 1 then
-                RageUI.ButtonWithStyle("Get Coords", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:GetCoords')
-                    end
-                end)
-            end
-            if GlobalAdminLevel >= 4 then                   
-                RageUI.List("Teleport",q,s,"",{},true,function(x, y, z, N)
-                    s = N
-                    if z then
-                        tARMA.teleport2(vector3(r[s]), true)
-                    end
-                end,
-                function()end)
-            end
-            if GlobalAdminLevel >= 5 then
-                RageUI.ButtonWithStyle("TP To Coords","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent("ARMA:Tp2Coords")
-                    end
-                end)
-            end
-            if GlobalAdminLevel >= 5 then
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local WaypointHandle = GetFirstBlipInfoId(8)
@@ -350,8 +314,17 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
-            end
-            if GlobalAdminLevel >= 6 then
+                RageUI.ButtonWithStyle("Unban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        TriggerServerEvent("ARMA:Unban")
+                    end
+                end)
+                RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        local A = GetEntityCoords(tARMA.getPlayerPed())
+                        tARMA.spawnVehicle("taxi",A.x,A.y,A.z,GetEntityHeading(tARMA.getPlayerPed()),true,true,true)
+                    end
+                end)
                 RageUI.ButtonWithStyle("Revive All Nearby", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local D = tARMA.getPlayerCoords()
@@ -371,7 +344,25 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
-            if GlobalAdminLevel >= 7 then
+            if tARMA.getStaffLevel() >= 5 then
+                RageUI.ButtonWithStyle("Remove Warning","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                    if Selected then
+                        AddTextEntry('FMMC_MPM_NC', "Enter the Warning ID")
+                        DisplayOnscreenKeyboard(1, "FMMC_MPM_NC", "", "", "", "", "", 30)
+                        while (UpdateOnscreenKeyboard() == 0) do
+                            DisableAllControlActions(0);
+                            Wait(0);
+                        end
+                        if (GetOnscreenKeyboardResult()) then
+                            local result = GetOnscreenKeyboardResult()
+                            if result then 
+                                TriggerServerEvent('ARMA:RemoveWarning', result)
+                            end
+                        end
+                    end
+                end)
+            end 
+            if tARMA.getStaffLevel() >= 6 then
                 local P=""
                 if tARMA.hasStaffBlips() then 
                     P="~r~Turn off blips"
@@ -383,17 +374,15 @@ RageUI.CreateWhile(1.0, true, function()
                         tARMA.staffBlips(not tARMA.hasStaffBlips())
                     end
                 end)
-                RageUI.ButtonWithStyle("RP Zones","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
-                end,RMenu:Get("rpzones","mainmenu"))
-            end
-            if GlobalAdminLevel >= 9 then
                 RageUI.ButtonWithStyle("Community Pot Menu","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:getCommunityPotAmount")
                     end
                 end,RMenu:Get('adminmenu','communitypot'))
+                RageUI.ButtonWithStyle("RP Zones","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
+                end,RMenu:Get("rpzones","mainmenu"))
             end  
-            if GlobalAdminLevel >= 10 then
+            if tARMA.getStaffLevel() >= 10 then
                 RageUI.ButtonWithStyle("Give Money","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                 end,RMenu:Get('adminmenu','moneymenu'))
                 RageUI.ButtonWithStyle("Add Car", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -540,7 +529,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'devfunctions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or GlobalAdminLevel >= 10 then
+            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 RageUI.ButtonWithStyle("Spawn Weapon", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:Giveweapon')
@@ -556,7 +545,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'outfits')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or GlobalAdminLevel >= 10 then
+            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 if next(savedOutfits) then
                     for a,b in pairs(savedOutfits) do 
                         RageUI.ButtonWithStyle(a, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
@@ -584,7 +573,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'manageoutfits')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or GlobalAdminLevel >= 10 then
+            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
                 RageUI.ButtonWithStyle('Equip Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         for a,b in pairs(savedOutfits) do 
@@ -716,15 +705,19 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             hoveredPlayer = nil
-            RageUI.Separator("~y~Player must provide POV on request: "..povlist)
-            if GlobalAdminLevel > 1 then
+            if povlist == nil then
+                RageUI.Separator("~y~Player must provide POV on request: Loading...")
+            elseif povlist == true then
+                RageUI.Separator("~y~Player must provide POV on request: ~g~true")
+            elseif povlist == false then
+                RageUI.Separator("~y~Player must provide POV on request: ~r~false")
+            end
+            if tARMA.getStaffLevel() >=1 then
                 RageUI.ButtonWithStyle("Player Notes", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:getNotes', SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'notesub'))
-            end              
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Kick Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -732,7 +725,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if GlobalAdminLevel >= 2 then
+            if tARMA.getStaffLevel() >= 2 then
                 RageUI.ButtonWithStyle("Ban Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         banningPermID = SelectedPlayer[3]
@@ -746,7 +739,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
-            if GlobalAdminLevel >= 3 then
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
@@ -770,7 +763,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if GlobalAdminLevel > 0 then
+            if tARMA.getStaffLevel() >= 1 then
                 RageUI.ButtonWithStyle("Teleport to Player", "Name: " .. SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local newSource = GetPlayerServerId(PlayerId())
@@ -807,35 +800,33 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if GlobalAdminLevel > 3 then
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Slap Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:SlapPlayer', uid, SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 4 then
                 RageUI.ButtonWithStyle("Force Clock Off", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:ForceClockOff', SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if GlobalAdminLevel > 0 then
+            if tARMA.getStaffLevel() >= 1 then
                 RageUI.ButtonWithStyle("Open F10 Warning Log", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         ExecuteCommand("sw " .. SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if GlobalAdminLevel > 0 then
                 RageUI.ButtonWithStyle("Take Screenshot", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RequestScreenshot', uid , SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
+            end
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -843,7 +834,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if GlobalAdminLevel > 6 then
+            if tARMA.getStaffLevel() >= 6 then
                 RageUI.ButtonWithStyle("Request Account Info", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:requestAccountInfosv", SelectedPlayer[3])
@@ -861,7 +852,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
-            if GlobalAdminLevel >= 11 then
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("Commit Godly Wrath on Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:zapPlayer", SelectedPlayer[2])
@@ -886,7 +877,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'notespreviewban')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 2 then
+            if tARMA.getStaffLevel() >= 2 then
                 if noteslist == nil then
                     RageUI.Separator("~o~Player notes: Loading...")
                 elseif #noteslist == 0 then
@@ -904,7 +895,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'banselection')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 2 then
+            if tARMA.getStaffLevel() >= 2 then
                 if IsControlJustPressed(0, 37) then
                     tARMA.clientPrompt("Search for: ","",function(O)
                         if O ~= "" then
@@ -955,7 +946,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'generatedban')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel >= 2 then
+            if tARMA.getStaffLevel() >= 2 then
                 if next(selectedbans) then
                     if BanMessage == "N/A" then
                         RageUI.Separator("~g~Generating ban info, please wait...")
@@ -1006,7 +997,7 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator("~o~ID: " .. noteslist[_].id .. " " .. noteslist[_].note .. " (" .. noteslist[_].author .. ")")
                 end
             end
-            if GlobalAdminLevel > 1 then
+            if tARMA.getStaffLevel() >= 1 then
                 RageUI.ButtonWithStyle("Add To Notes:", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], { RightLabel = "→→→" }, true, function(Hovered, Active, Selected)
                     if Selected then
                         tARMA.clientPrompt("Add To Notes: ","",function(a7)
@@ -1166,7 +1157,7 @@ end)
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if GlobalAdminLevel > 7 then
+            if tARMA.getStaffLevel() >= 7 then
                 if IsControlJustPressed(0, 37) then
                     tARMA.clientPrompt("Search for: ","",function(S)
                         tt=string.lower(S)
@@ -1315,7 +1306,6 @@ AddEventHandler('ARMA:OpenAdminMenu', function(admin)
         TriggerServerEvent('ARMA:GetPlayerData')
         TriggerServerEvent("ARMA:GetNearbyPlayerData")
         TriggerServerEvent("ARMA:getAdminLevel")
-        GlobalAdminLevel = tARMA.getStaffLevel()
     end
 end)
 
