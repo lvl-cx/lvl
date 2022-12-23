@@ -30,7 +30,7 @@ RegisterCommand("armaclub",function()
 end)
 
 local c = {
-    ["Default"] = {checked = true, soundId = "dead"},
+    ["Default"] = {checked = true, soundId = "playDead"},
     ["Fortnite"] = {checked = false, soundId = "fortnite_death"},
     ["Roblox"] = {checked = false, soundId = "roblox_death"},
     ["Minecraft"] = {checked = false, soundId = "minecraft_death"},
@@ -48,7 +48,7 @@ AddEventHandler("ARMA:onClientSpawn",function(f, g)
         TriggerServerEvent('ARMA:getPlayerSubscription')
         Wait(5000)
         local i=tARMA.getDeathSound()
-        local j="dead"
+        local j="playDead"
         for k,l in pairs(c)do 
             if l.soundId==i then 
                 j=k 
@@ -78,10 +78,10 @@ function tARMA.getDeathSound()
         if type(k) == "string" and k~="" then 
             return k 
         else 
-            return "dead"
+            return "playDead"
         end 
     else 
-        return "dead"
+        return "playDead"
     end 
 end
 RageUI.CreateWhile(1.0, true, function()
