@@ -295,16 +295,6 @@ RegisterNetEvent("ARMA:getWhitelistedUsers",function(v)
     s = v
 end)
 
-function tARMA.setHitMarkerSetting(i)
-    SetResourceKvp("arma_hitmarkersounds", tostring(i))
-end
-function tARMA.setCODHitMarkerSetting(i)
-    SetResourceKvp("arma_codhitmarkersounds", tostring(i))
-end
-function tARMA.setDiagonalWeaponSetting(f)
-    SetResourceKvp("arma_diagonalweapons",tostring(f))
-end
-
 Citizen.CreateThread(function()
     local f = GetResourceKvpString("arma_diagonalweapons") or "false"
     if f == "false" then
@@ -332,6 +322,19 @@ Citizen.CreateThread(function()
     end
 end)
 
+function tARMA.setHitMarkerSetting(i)
+    SetResourceKvp("arma_hitmarkersounds", tostring(i))
+end
+function tARMA.setCODHitMarkerSetting(i)
+    SetResourceKvp("arma_codhitmarkersounds", tostring(i))
+end
+function tARMA.setDiagonalWeaponSetting(f)
+    SetResourceKvp("arma_diagonalweapons",tostring(f))
+end
+function tARMA.setFrontARSetting(i)
+    SetResourceKvp("arma_frontars", tostring(i))
+end
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'MainMenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -352,6 +355,18 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,_,a0)
+            RageUI.Checkbox("Enable Front Assault Rifles","~g~This changes the positioning of Assault Rifles from back to front.",c,{Style = RageUI.CheckboxStyle.Car},function()
+            end,
+            function()
+                TriggerEvent("ARMA:setFrontAR")
+                c = true
+                tARMA.setFrontARSetting(c)
+            end,
+            function()
+                TriggerEvent("ARMA:setBackAR")
+                c = false
+                tARMA.setFrontARSetting(c)
+            end)
             local function _()
                 d = true
                 TriggerEvent("ARMA:hsSoundsOn")
