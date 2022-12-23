@@ -8,7 +8,7 @@ local playersNearby = {}
 local playersNearbyDistance = 250
 local searchPlayerGroups = {}
 local selectedGroup
-local povlist = ''
+local povlist = nil
 local SelectedPerm = nil
 local SelectedName = nil
 local SelectedPlayerSource = nil
@@ -865,11 +865,7 @@ end)
     
 RegisterNetEvent('ARMA:ReturnPov')
 AddEventHandler('ARMA:ReturnPov', function(pov)
-    if pov then 
-        povlist = '~g~true' 
-    else
-        povlist = '~r~false'
-    end
+    povlist = pov
 end)
 
 
