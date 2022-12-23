@@ -314,6 +314,9 @@ function RageUI.Visible(Menu, Value)
     if Menu ~= nil then
         if Menu() then
             if type(Value) == "boolean" then
+                if noclipActive and CMG.getStaffLevel() < 4 and Menu.Sprite.Dictionary ~= "new_editor" then
+                    return
+                end
                 if Value then
                     if RageUI.CurrentMenu ~= nil then
                         RageUI.CurrentMenu.Open = not Value
@@ -375,6 +378,7 @@ function RageUI.CloseAll()
     RageUI.CurrentMenu = nil
     RageUI.Options = 0
     RageUI.ItemOffset = 0
+    ResetScriptGfxAlign()
     for i,v in pairs(RMenu:Return()) do 
         if type(v) ~= 'function' then 
             for iterate,menuoptions in pairs(v) do 

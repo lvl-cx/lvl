@@ -2,7 +2,7 @@ local a = false
 local b = {x = 0.000, y = -0.001}
 local function c()
     a = not a
-    if a and not hideHud then
+    if a and not globalHideUi then
         Citizen.CreateThread(function()
             while true do
                 Citizen.Wait(0)

@@ -159,19 +159,7 @@ local function G()
     end
     ExecuteCommand("hideui")
     SetPlayerControl(PlayerId(), false, 0)
-    local F =
-        CreateCamWithParams(
-        "DEFAULT_SCRIPTED_CAMERA",
-        -1071.7298583984,
-        -2706.7395019531,
-        -5.5527291297913,
-        0.0,
-        0.0,
-        0.0,
-        GetGameplayCamFov(),
-        true,
-        2
-    )
+    local F = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA",-1071.7298583984,-2706.7395019531,-5.5527291297913,0.0,0.0,0.0,GetGameplayCamFov(),true,2)
     PointCamAtEntity(F, j, 0.0, 0.0, 0.0, true)
     SetCamActive(F, true)
     RenderScriptCams(true, true, 0, true, true)

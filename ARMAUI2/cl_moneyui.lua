@@ -3,7 +3,7 @@ local moneyDisplay = 0
 local bankMoneyDisplay = 0
 local voiceChatProximity = 2
 proximityIdToString = {
-    [1] = "Whispering",
+    [1] = "Whisper",
     [2] = "Talking",
     [3] = "Shouting",
 }
@@ -47,11 +47,16 @@ function ARMA.getCachedMinimapAnchor()
     return cachedMinimapAnchor
 end
 
-function getMoneyStringFormatted(cashString)
+local function getMoneyStringFormatted(cashString)
 	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
 	int = int:reverse():gsub("(%d%d%d)", "%1,")
-	return minus .. int:reverse():gsub("^,", "") .. fraction 
+	return minus .. int:reverse():gsub("^,", "") .. fraction
 end
+
+RegisterNetEvent("ARMA:showHUD")
+AddEventHandler("ARMA:showHUD",function(flag)
+    showhudUI(flag)
+end)
 
 AddEventHandler('pma-voice:setTalkingMode', function(newTalkingRange)
     voiceChatProximity = newTalkingRange
@@ -70,26 +75,16 @@ function updateMoneyUI(cash, bank, proximity, topLeftAnchor,yAnchor)
     })
 end
 
-RegisterNetEvent("ARMAHUD:show")
-AddEventHandler("ARMAHUD:show", function()
+function showhudUI(flag)
     SendNUIMessage({
-        showhud = true
+        showhud = flag
     })
-    TriggerEvent('ARMA:showHUD', true)
-end)
-
-RegisterNetEvent("ARMAHUD:hide")
-AddEventHandler("ARMAHUD:hide", function()
-    SendNUIMessage({
-        showhud = false
-    })
-    TriggerEvent('ARMA:showHUD', false)
-end)
+end
 
 RegisterNetEvent("ARMA:setDisplayMoney")
 AddEventHandler("ARMA:setDisplayMoney",function(value)
 	local moneyString = tostring(math.floor(value))
-	moneyDisplay = getMoneyStringFormatted(moneyString)
+    moneyDisplay = getMoneyStringFormatted(moneyString)
     local topLeftAnchor = ARMA.getCachedMinimapAnchor()
     updateMoneyUI("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor.rightX * topLeftAnchor.resX)
 end)
@@ -97,7 +92,7 @@ end)
 RegisterNetEvent("ARMA:setDisplayBankMoney")
 AddEventHandler("ARMA:setDisplayBankMoney",function(value)
 	local moneyString = tostring(math.floor(value))
-	bankMoneyDisplay = getMoneyStringFormatted(moneyString)
+    bankMoneyDisplay = getMoneyStringFormatted(moneyString)
     local topLeftAnchor = ARMA.getCachedMinimapAnchor()
     updateMoneyUI("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor.rightX * topLeftAnchor.resX)
 end)
@@ -115,7 +110,8 @@ AddEventHandler("ARMA:initMoney",function(cash,bank)
 end)
 
 Citizen.CreateThread(function()
-    TriggerServerEvent('ARMA:requestPlayerBankBalance')
+    TriggerServerEvent("ARMA:requestPlayerBankBalance")
+
     local talking = false
     while true do
         local res_x, res_y = GetActiveScreenResolution()
@@ -124,6 +120,7 @@ Citizen.CreateThread(function()
             cachedMinimapAnchor = GetMinimapAnchor()
             updateMoneyUI("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,cachedMinimapAnchor.rightX * cachedMinimapAnchor.resX)
         end
+
         if NetworkIsPlayerTalking(PlayerId()) then
             if not talking then
                 talking = true
@@ -142,3 +139,4 @@ Citizen.CreateThread(function()
 		Wait(0)
     end
 end)
+

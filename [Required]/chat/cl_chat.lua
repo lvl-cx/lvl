@@ -235,14 +235,9 @@ Citizen.CreateThread(function()
   end
 end)
 
-
-RegisterNetEvent("ARMACHAT:show")
-AddEventHandler("ARMACHAT:show", function()
-  hideChat = false
-end)
-
-RegisterNetEvent("ARMACHAT:hide")
-AddEventHandler("ARMACHAT:hide", function()
-  hideChat = true
-  TriggerEvent('chat:clear')
+AddEventHandler("ARMA:hideChat",function(flag)
+  hideChat = flag
+  if hidechat then
+    TriggerEvent('chat:clear')
+  end
 end)

@@ -24,6 +24,9 @@ RegisterNetEvent("ARMA:showHUD",function(c)
 end)
 
 RegisterNetEvent("ARMA:newKillFeed",function(d, e, f, g, h, i, j)
+    if GetIsLoadingScreenActive() then
+        return
+    end
     local k = "other"
     local l = GetPlayerName(tARMA.getPlayerId())
     if e == l or d == l then

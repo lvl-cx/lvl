@@ -250,7 +250,7 @@ end)
 
 
 function drawNativeText(V)
-    if not hideHud then
+    if not globalHideUi then
         BeginTextCommandPrint("STRING")
         AddTextComponentSubstringPlayerName(V)
         EndTextCommandPrint(100, 1)

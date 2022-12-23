@@ -205,7 +205,7 @@ function tARMA.getNearestPlayer(radius)
 end
 
 function tARMA.notify(msg)
-  if not hideHud then
+  if not globalHideUi then
     SetNotificationTextEntry("STRING")
     AddTextComponentString(msg)
     DrawNotification(true, false)
@@ -981,25 +981,37 @@ CreateThread(function()
     end
 end)
 
-hideHud = false
+globalHideUi = false
 RegisterCommand('showui', function()
-  hideHud = false
-  TriggerEvent('ARMAHUD:show')
-  TriggerEvent('ARMACHAT:show')
+  globalHideUi = false
+  TriggerEvent("ARMA:showHUD", true)
+  TriggerEvent('ARMA:hideChat', false)
 end)
 
 RegisterCommand('hideui', function()
   tARMA.notify("~g~/showui to re-enable UI")
-  hideHud = true
-  TriggerEvent('ARMAHUD:hide')
-  TriggerEvent('ARMACHAT:hide')
+  globalHideUi = true
+  TriggerEvent("ARMA:showHUD", false)
+  TriggerEvent('ARMA:hideChat', true)
 end)
 
 RegisterCommand('showchat', function()
-  TriggerEvent('ARMACHAT:show')
+  TriggerEvent('ARMA:hideChat', false)
 end)
 
 RegisterCommand('hidechat', function()
   tARMA.notify("~g~/showui to re-enable Chat")
-  TriggerEvent('ARMACHAT:hide')
+  TriggerEvent('ARMA:hideChat', true)
+end)
+
+RegisterCommand("getcoords",function()
+    print(GetEntityCoords(tARMA.getPlayerPed()))
+end)
+Citizen.CreateThread(function()
+    while true do
+        if globalHideUi then
+            HideHudAndRadarThisFrame()
+        end
+        Wait(0)
+    end
 end)

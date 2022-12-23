@@ -1,8 +1,3 @@
-local hideUI = false
-AddEventHandler("ARMA:showHUD",function(flag)
-    hideUI = not flag
-end)
-
 local function a()
     local b = {}
     local c, d = GetActiveScreenResolution()
@@ -47,41 +42,39 @@ end
 function tARMA.getCachedResolution()
     return {w = l.resX, h = l.resY}
 end
-Citizen.CreateThread(
-    function()
-        while true do
-            if not hideUI then
-                if not globalHideEmergencyCallUI then
-                    local x = tARMA.getPlayerPed()
-                    local y, z = GetActiveScreenResolution()
-                    if y ~= j or z ~= k then
-                        j, k = GetActiveScreenResolution()
-                        l = a()
-                    end
-                    local A = l
-                    local B = (GetEntityHealth(x) - 100) / 100.0
-                    if B < 0 then
-                        B = 0.0
-                    end
-                    if B == 0.98 then
-                        B = 1.0
-                    end
-                    local C = GetPedArmour(x) / 100.0
-                    local D = GetPlayerUnderwaterTimeRemaining(PlayerId()) / m
-                    if C > 1.0 then
-                        C = 1.0
-                    end
-                    o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width, 0.009, 88, 88, 88, 200)
-                    o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width * B, 0.009, 86, 215, 64, 200)
-                    o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width, 0.009, 88, 88, 88, 200)
-                    if IsPedSwimmingUnderWater(x) and D >= 0.0 then
-                        o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * D, 0.009, 243, 214, 102, 200)
-                    elseif C > 0.0 then
-                        o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * C, 0.009, 60, 79, 255, 200)
-                    end
+Citizen.CreateThread(function()
+    while true do
+        if not globalHideUi then
+            if not globalHideEmergencyCallUI then
+                local x = tARMA.getPlayerPed()
+                local y, z = GetActiveScreenResolution()
+                if y ~= j or z ~= k then
+                    j, k = GetActiveScreenResolution()
+                    l = a()
+                end
+                local A = l
+                local B = (GetEntityHealth(x) - 100) / 100.0
+                if B < 0 then
+                    B = 0.0
+                end
+                if B == 0.98 then
+                    B = 1.0
+                end
+                local C = GetPedArmour(x) / 100.0
+                local D = GetPlayerUnderwaterTimeRemaining(PlayerId()) / m
+                if C > 1.0 then
+                    C = 1.0
+                end
+                o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width, 0.009, 88, 88, 88, 200)
+                o(A.leftX + 0.0045, A.bottomY - 0.004, A.Width * B, 0.009, 86, 215, 64, 200)
+                o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width, 0.009, 88, 88, 88, 200)
+                if IsPedSwimmingUnderWater(x) and D >= 0.0 then
+                    o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * D, 0.009, 243, 214, 102, 200)
+                elseif C > 0.0 then
+                    o(A.leftX + 0.0045, A.bottomY + 0.009, A.Width * C, 0.009, 60, 79, 255, 200)
                 end
             end
-            Wait(0)
         end
+        Wait(0)
     end
-)
+end)

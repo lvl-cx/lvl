@@ -404,12 +404,12 @@ RageUI.CreateWhile(1.0, true, function()
             local function _()
                 tARMA.toggleBlackBars()
                 e = true
-                TriggerEvent('ARMAHUD:hide')
+                TriggerEvent("ARMA:showHUD", false)
             end
             local function a0()
                 tARMA.toggleBlackBars()
                 e = false
-                TriggerEvent('ARMAHUD:show')
+                TriggerEvent("ARMA:showHUD", true)
             end
             RageUI.Checkbox("Cinematic Black Bars","",e,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
             end,_,a0)

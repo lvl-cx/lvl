@@ -606,6 +606,7 @@ function func_drawCallsign()
     if a8 ~= "" and globalOnPrisonDuty then
         DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, a8, 255, 255, 255, 255, 0, 0)
     end
+    DrawAdvancedText(1.064, 0.95, 0.005, 0.0028, 0.4, 'ARMA', 255, 255, 255, 255, 0, 0)
 end
 tARMA.createThreadOnTick(func_drawCallsign)
 local ae = 0
