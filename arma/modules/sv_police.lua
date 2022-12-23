@@ -621,8 +621,11 @@ AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-      ARMA.tryBankPayment(ARMA.getUserId(temp), speed*10)
+      local fine = speed*1000
+      ARMA.tryBankPayment(ARMA.getUserId(temp), fine)
       TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
+      TriggerClientEvent('ARMA:dvsaMessage', temp,"DVSA","UK Government","You were fined £"..fine.." for going "..speed.."MPH over the speed limit.")
+      ARMAclient.notify(source, "~r~Fined "..GetPlayerName(temp).." £"..fine.." for going "..speed.."MPH over the speed limit.")
     end
 end)
 
