@@ -801,27 +801,6 @@ AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
 end)
 
--- voice proximity computation
-Citizen.CreateThread(function()
-  while true do
-    Citizen.Wait(500)
-    local ped = PlayerPedId()
-    local proximity = 30.0
-
-    if IsPedSittingInAnyVehicle(ped) then
-      local veh = GetVehiclePedIsIn(ped,false)
-      local hash = GetEntityModel(veh)
-      -- make open vehicles (bike,etc) use the default proximity
-      if IsThisModelACar(hash) or IsThisModelAHeli(hash) or IsThisModelAPlane(hash) then
-        proximity = 5.0
-      end
-    elseif tARMA.isInside() then
-      proximity = 9.0
-    end
-
-    NetworkSetTalkerProximity(proximity+0.0001)
-  end
-end)
 
 TriggerServerEvent('ARMA:CheckID')
 
@@ -1006,6 +985,8 @@ end)
 
 RegisterCommand("getcoords",function()
     print(GetEntityCoords(tARMA.getPlayerPed()))
+    tARMA.notify("~g~Coordinates copied to clipboard.")
+    tARMA.CopyToClipBoard(tostring(GetEntityCoords(tARMA.getPlayerPed())))
 end)
 Citizen.CreateThread(function()
     while true do
