@@ -157,6 +157,7 @@ Citizen.CreateThread(function()
                         TriggerClientEvent('ARMA:prisonStopClientTimer', ARMA.getUserSource(v.user_id))
                         TriggerClientEvent('ARMA:prisonReleased', ARMA.getUserSource(v.user_id))
                         TriggerClientEvent('ARMA:forcePlayerInPrison', ARMA.getUserSource(v.user_id), false)
+                        ARMAclient.setHandcuffed(ARMA.getUserSource(v.user_id), {false})
                     end
                 end
             end
@@ -179,6 +180,7 @@ RegisterCommand('unjail', function(source)
                             TriggerClientEvent('ARMA:prisonStopClientTimer', player)
                             TriggerClientEvent('ARMA:prisonReleased', player)
                             TriggerClientEvent('ARMA:forcePlayerInPrison', player, false)
+                            ARMAclient.setHandcuffed(player, {false})
                             ARMAclient.notify(source, {"~g~Target will be released soon."})
                         else
                             ARMAclient.notify(source, {"~r~Player is not in prison."})
