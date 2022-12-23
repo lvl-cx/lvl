@@ -18,6 +18,7 @@ local jackpotChairs = {
 }
 local currentJackpotTotal = 0
 local currentJackpotBets = {}
+local numJackpotBets = 0
 local currentJackpotInProgress = false
 
 RegisterNetEvent("ARMA:requestJackpotChairData")
@@ -58,13 +59,14 @@ AddEventHandler("ARMA:setJackpotBet", function(betAmount)
                 MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = betAmount})
                 currentJackpotBets[user_id] = {user_id = user_id, colour = {r = math.random(0,255), g = math.random(0,255), b = math.random(0,255), a = 255}, betAmount = betAmount, tickets_start = currentJackpotTotal, tickets_end = currentJackpotTotal + betAmount}
                 currentJackpotTotal = currentJackpotTotal + betAmount
+                numJackpotBets = numJackpotBets + 1
                 TriggerClientEvent("ARMA:updateTotalPot", -1, currentJackpotTotal)
                 TriggerClientEvent('ARMA:successJackpotBet', source)
                 TriggerClientEvent('ARMA:newJackpotBet', -1, currentJackpotBets[user_id])
                 TriggerClientEvent('ARMA:chipsUpdated', source)
                 for k,v in pairs(currentJackpotBets) do
                     if ARMA.getUserSource(k) ~= nil then
-                        TriggerClientEvent("ARMA:updatePlayerWinChance", ARMA.getUserSource(k), (currentJackpotTotal/v.betAmount)*100)
+                        TriggerClientEvent("ARMA:updatePlayerWinChance", ARMA.getUserSource(k), (v.betAmount/currentJackpotTotal)*100)
                     end
                 end
             else 
@@ -83,20 +85,17 @@ local winnerTicketsBought = nil
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        if #currentJackpotBets >= 2 and not currentJackpotInProgress then
+        if numJackpotBets >= 2 and not currentJackpotInProgress then
             TriggerClientEvent('ARMA:beginJackpot', -1)
             currentJackpotInProgress = true
             Wait(60000)
             local winningTicket = math.random(1, currentJackpotTotal)
-            print('winning ticket: '..winningTicket)
             for k,v in pairs(currentJackpotBets) do
-                print('tickets: '..v.tickets_start..' - '..v.tickets_end)
                 if winningTicket >= v.tickets_start and winningTicket <= v.tickets_end then
                     winner = v.user_id
                     winnerName = GetPlayerName(ARMA.getUserSource(winner))
-                    winnerBetPercentage = (currentJackpotTotal/v.betAmount)*100
+                    winnerBetPercentage = (v.betAmount/currentJackpotTotal)*100
                     winnerTicketsBought = v.betAmount
-                    print('winner: '..winner, 'winner name:' ..winnerName, 'winner bet percentage: '..winnerBetPercentage, 'winner tickets bought: '..winnerTicketsBought)
                 end
             end
             TriggerClientEvent('ARMA:rollJackpot', -1, winner, winnerTicketsBought, winnerName, winnerBetPercentage, winner)
@@ -109,7 +108,7 @@ AddEventHandler("ARMA:waitingOnWinConfirm", function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if user_id == winner then
-        MySQL.execute("casinochips/add_chips", {user_id = winner, amount = winnerTicketsBought})
+        MySQL.execute("casinochips/add_chips", {user_id = winner, amount = currentJackpotTotal})
         TriggerClientEvent('ARMA:chipsUpdated', source)
         Wait(10000)
         TriggerClientEvent("ARMA:cleanupJackpot", -1)
