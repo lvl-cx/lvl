@@ -232,7 +232,7 @@ AddEventHandler("ARMA:bankTransfer", function(id, amount)
     local id = tonumber(id)
     local amount = tonumber(amount)
     if ARMA.getUserSource(id) then
-      if ARMA.tryFullPayment(user_id,amount) then
+      if ARMA.tryBankPayment(user_id,amount) then
         ARMAclient.notify(source,{'~g~Transferred £'..getMoneyStringFormatted(amount)..' to ID: '..id})
         ARMAclient.notify(ARMA.getUserSource(id),{'~g~Received £'..getMoneyStringFormatted(amount)..' from ID: '..user_id})
         TriggerClientEvent("arma:PlaySound", source, "apple")
