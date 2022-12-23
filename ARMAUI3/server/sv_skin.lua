@@ -19,6 +19,9 @@ AddEventHandler("ARMA:saveClothingHairData", function(hairtype, haircolour)
     ARMA.getUData({user_id, "ARMA:Face:Data", function(data)
         if data ~= nil and hairtype ~= nil and haircolour ~= nil then
             facesavedata = json.decode(data)
+            if facesavedata == nil then
+                facesavedata = {}
+            end
             facesavedata["hair"] = hairtype
             facesavedata["haircolor"] = haircolour
             ARMA.setUData({user_id, "ARMA:Face:Data", json.encode(facesavedata)})
