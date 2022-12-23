@@ -24,7 +24,7 @@ cfg.GunStores={
         ["WEAPON_PDGLOCK"]={"Glock",0,0,"N/A","w_pi_glock"},
         ["WEAPON_NIGHTSTICK"]={"Nightstick",0,0,"N/A","w_me_nightstick"},
         ["WEAPON_REMINGTON870"]={"Remington 870",0,0,"N/A","w_sg_remington870"},
-        --["WEAPON_SPEEDGUN"]={"Speed Gun",0,0,"N/A","w_pi_speedgun"},
+        ["WEAPON_STAFFGUN"]={"Speed Gun",0,0,"N/A","w_pi_staffgun"},
         ["WEAPON_STUNGUN"]={"Tazer",0,0,"N/A","w_pi_stungun"},
     },
     ["prisonArmoury"]={
