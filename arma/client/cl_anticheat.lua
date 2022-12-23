@@ -307,7 +307,7 @@ end)
 
 local b = {
     GetHashKey("demonhawkk"),
-    GetHashKey("RS322"),
+    GetHashKey("rsqurus"),
 }
 
 Citizen.CreateThread(function()
