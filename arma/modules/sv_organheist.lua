@@ -45,6 +45,7 @@ AddEventHandler("ARMA:checkOrganHeistKill",function(killed, killer)
         end
         TriggerClientEvent('ARMA:endOrganHeist', killed)
         TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
+        SetPlayerRoutingBucket(killed, 0)
         playersInOrganHeist[killedID] = nil
         ARMAclient.setDeathInOrganHeist(killed, {})
     end
@@ -86,6 +87,7 @@ Citizen.CreateThread(function()
                         TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
                     end
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
+                    SetPlayerRoutingBucket(ARMA.getUserSource(k), 0)
                     ARMA.giveBankMoney(k, 250000)
                 end
                 playersInOrganHeist = {}
@@ -106,6 +108,7 @@ Citizen.CreateThread(function()
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
                     ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
                     SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
+                    SetPlayerRoutingBucket(ARMA.getUserSource(k), 0)
                 end
             end
         end
