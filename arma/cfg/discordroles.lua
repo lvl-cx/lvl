@@ -7,7 +7,6 @@ cfg = {
 		-- ['HMP'] = '1016844313591812128',
 		-- ['LFB'] = '1016858643293024308',
   	},
-	Bot_Token = 'OTg4MTIwODUwNTQ2OTYyNTAy.GcITZ7.dvzSCOOX9do7-jhT3CIQvq3P02xxHmUuWKW7ug',
 	RoleList = {},
 
 	CacheDiscordRoles = true, -- true to cache player roles, false to make a new Discord Request every time
@@ -85,5 +84,8 @@ for faction_name, faction_roles in pairs(cfg.Guild_Roles) do
 		cfg.RoleList[role_name] = role_id
 	end
 end
+
+
+cfg.Bot_Token = 'OTg4MTIwODUwNTQ2OTYyNTAy.GcITZ7.dvzSCOOX9do7-jhT3CIQvq3P02xxHmUuWKW7ug'
 
 return cfg
