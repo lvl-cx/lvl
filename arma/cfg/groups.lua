@@ -1,6 +1,16 @@
 local cfg = {}
 
 cfg.groups = {
+
+    -- $$$$$$\ $$$$$$$$\  $$$$$$\  $$$$$$$$\ $$$$$$$$\ 
+    -- $$  __$$\\__$$  __|$$  __$$\ $$  _____|$$  _____|
+    -- $$ /  \__|  $$ |   $$ /  $$ |$$ |      $$ |      
+    -- \$$$$$$\    $$ |   $$$$$$$$ |$$$$$\    $$$$$\    
+    --  \____$$\   $$ |   $$  __$$ |$$  __|   $$  __|   
+    -- $$\   $$ |  $$ |   $$ |  $$ |$$ |      $$ |      
+    -- \$$$$$$  |  $$ |   $$ |  $$ |$$ |      $$ |      
+    --  \______/   \__|   \__|  \__|\__|      \__|      
+                                                                                                                                                  
     ["Developer"] = {
         "dev.menu",
         "cardev.menu",
@@ -296,13 +306,25 @@ cfg.groups = {
     ["cardev"] = {
         "cardev.menu"
     },
-    -- [Police Groups]
+   
+    -- $$\      $$\ $$$$$$$\  $$$$$$$\  
+    -- $$$\    $$$ |$$  __$$\ $$  __$$\ 
+    -- $$$$\  $$$$ |$$ |  $$ |$$ |  $$ |
+    -- $$\$$\$$ $$ |$$$$$$$  |$$ |  $$ |
+    -- $$ \$$$  $$ |$$  ____/ $$ |  $$ |
+    -- $$ |\$  /$$ |$$ |      $$ |  $$ |
+    -- $$ | \_/ $$ |$$ |      $$$$$$$  |
+    -- \__|     \__|\__|      \_______/ 
+                                     
+                                                              
+    ["Large Arms Access"] = {
+        "police.loadshop2",
+        "police.maxarmour"
+    },
     ["Commissioner Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
         "police.announce"
     },
     ["Commissioner"] = {
@@ -312,8 +334,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
         "police.announce",
     },
     ["Deputy Commissioner"] = {
@@ -323,8 +343,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
         "police.announce",
     },
     ["Assistant Commissioner"] = {
@@ -334,8 +352,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
         "police.announce",
     },
     ["Deputy Assistant Commissioner"] = {
@@ -345,8 +361,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
         "police.announce",
     },
     ["Commander"] = {
@@ -356,7 +370,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
     },
     ["Chief Superintendent"] = {
         "cop.whitelisted"
@@ -365,7 +378,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
     },
     ["Superintendent"] = {
         "cop.whitelisted"
@@ -398,8 +410,6 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.maxarmour",
-        "police.loadshop2",
     },
     ["Special Constable"] = {
         "cop.whitelisted"
@@ -428,86 +438,105 @@ cfg.groups = {
     ["PCSO"] = {
         "cop.whitelisted"
     },
+
+    -- $$\   $$\ $$\   $$\  $$$$$$\  
+    -- $$$\  $$ |$$ |  $$ |$$  __$$\ 
+    -- $$$$\ $$ |$$ |  $$ |$$ /  \__|
+    -- $$ $$\$$ |$$$$$$$$ |\$$$$$$\  
+    -- $$ \$$$$ |$$  __$$ | \____$$\ 
+    -- $$ |\$$$ |$$ |  $$ |$$\   $$ |
+    -- $$ | \$$ |$$ |  $$ |\$$$$$$  |
+    -- \__|  \__|\__|  \__| \______/ 
+                                                        
+    
     ["NHS Head Chief Clocked"] = {
         "nhs.onduty.permission"
+    },
+    ["NHS Head Chief"] = {
+        "nhs.whitelisted"
     },
     ["NHS Assistant Chief Clocked"] = {
         "nhs.onduty.permission"
     },
+    ["NHS Assistant Chief"] = {
+        "nhs.whitelisted"
+    },
     ["NHS Deputy Chief Clocked"] = {
         "nhs.onduty.permission"
+    },
+    ["NHS Deputy Chief"] = {
+        "nhs.whitelisted"
     },
     ["NHS Captain Clocked"] = {
         "nhs.onduty.permission"
     },
-    ["NHS Consultant Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Specialist Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Senior Doctor Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Doctor Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Junior Doctor Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Critical Care Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Paramedic Clocked"] = {
-        "nhs.onduty.permission"
-    },
-    ["NHS Trainee Paramedic Clocked"] = {
-        "nhs.onduty.permission"
-    },
-     --
-    --[[ NHS Clock On Groups ]] ["NHS Head Chief"] = {
-        "nhs.whitelisted"
-    },
-    ["NHS Assistant Chief"] = {
-        "nhs.whitelisted"
-    },
-    ["NHS Deputy Chief Officer"] = {
-        "nhs.whitelisted"
-    },
     ["NHS Captain"] = {
         "nhs.whitelisted"
+    },
+    ["NHS Consultant Clocked"] = {
+        "nhs.onduty.permission"
     },
     ["NHS Consultant"] = {
         "nhs.whitelisted"
     },
+    ["NHS Specialist Clocked"] = {
+        "nhs.onduty.permission"
+    },
     ["NHS Specialist"] = {
         "nhs.whitelisted"
+    },
+    ["NHS Senior Doctor Clocked"] = {
+        "nhs.onduty.permission"
     },
     ["NHS Senior Doctor"] = {
         "nhs.whitelisted"
     },
+    ["NHS Doctor Clocked"] = {
+        "nhs.whitelisted"
+        "nhs.onduty.permission"
+    },
     ["NHS Doctor"] = {
         "nhs.whitelisted"
+    },
+    ["NHS Junior Doctor Clocked"] = {
+        "nhs.onduty.permission"
     },
     ["NHS Junior Doctor"] = {
         "nhs.whitelisted"
     },
+    ["NHS Critical Care Clocked"] = {
+        "nhs.onduty.permission"
+    },
     ["NHS Critical Care"] = {
         "nhs.whitelisted"
+    },
+    ["NHS Paramedic Clocked"] = {
+        "nhs.onduty.permission"
     },
     ["NHS Paramedic"] = {
         "nhs.whitelisted"
     },
+    ["NHS Trainee Paramedic Clocked"] = {
+        "nhs.onduty.permission"
+    },
     ["NHS Trainee Paramedic"] = {
         "nhs.whitelisted"
     },
-    -- ILLEGAL LICENSES --
+    
+    -- $$\       $$$$$$\  $$$$$$\  $$$$$$$$\ $$\   $$\  $$$$$$\  $$$$$$$$\  $$$$$$\  
+    -- $$ |      \_$$  _|$$  __$$\ $$  _____|$$$\  $$ |$$  __$$\ $$  _____|$$  __$$\ 
+    -- $$ |        $$ |  $$ /  \__|$$ |      $$$$\ $$ |$$ /  \__|$$ |      $$ /  \__|
+    -- $$ |        $$ |  $$ |      $$$$$\    $$ $$\$$ |\$$$$$$\  $$$$$\    \$$$$$$\  
+    -- $$ |        $$ |  $$ |      $$  __|   $$ \$$$$ | \____$$\ $$  __|    \____$$\ 
+    -- $$ |        $$ |  $$ |  $$\ $$ |      $$ |\$$$ |$$\   $$ |$$ |      $$\   $$ |
+    -- $$$$$$$$\ $$$$$$\ \$$$$$$  |$$$$$$$$\ $$ | \$$ |\$$$$$$  |$$$$$$$$\ \$$$$$$  |
+    -- \________|\______| \______/ \________|\__|  \__| \______/ \________| \______/ 
+                                                                                                                                                          
     ["Weed"] = {},
     ["Cocaine"] = {},
     ["Heroin"] = {},
     ["Meth"] = {},
     ["LSD"] = {},
-    -- LEGAL LICENSES --
     ["Copper"] = {},
     ["Gold"] = {},
     ["Diamond"] = {},
@@ -523,7 +552,16 @@ cfg.groups = {
     ["AdvancedRebel"] = {
         "advancedrebel.license"
     },
-    -- DONATOR GROUPS --
+    
+    -- $$$$$$$\   $$$$$$\  $$\   $$\  $$$$$$\ $$$$$$$$\  $$$$$$\  $$$$$$$\  
+    -- $$  __$$\ $$  __$$\ $$$\  $$ |$$  __$$\\__$$  __|$$  __$$\ $$  __$$\ 
+    -- $$ |  $$ |$$ /  $$ |$$$$\ $$ |$$ /  $$ |  $$ |   $$ /  $$ |$$ |  $$ |
+    -- $$ |  $$ |$$ |  $$ |$$ $$\$$ |$$$$$$$$ |  $$ |   $$ |  $$ |$$$$$$$  |
+    -- $$ |  $$ |$$ |  $$ |$$ \$$$$ |$$  __$$ |  $$ |   $$ |  $$ |$$  __$$< 
+    -- $$ |  $$ |$$ |  $$ |$$ |\$$$ |$$ |  $$ |  $$ |   $$ |  $$ |$$ |  $$ |
+    -- $$$$$$$  | $$$$$$  |$$ | \$$ |$$ |  $$ |  $$ |    $$$$$$  |$$ |  $$ |
+    -- \_______/  \______/ \__|  \__|\__|  \__|  \__|    \______/ \__|  \__|
+                                                                         
     ["Supporter"] = {
         "vip.gunstore"
     },
@@ -536,7 +574,16 @@ cfg.groups = {
     ["Underboss"] = {
         "vip.gunstore"
     },
-    -- POV GROUP --
+    
+    -- $$\      $$\ $$$$$$\  $$$$$$\   $$$$$$\  
+    -- $$$\    $$$ |\_$$  _|$$  __$$\ $$  __$$\ 
+    -- $$$$\  $$$$ |  $$ |  $$ /  \__|$$ /  \__|
+    -- $$\$$\$$ $$ |  $$ |  \$$$$$$\  $$ |      
+    -- $$ \$$$  $$ |  $$ |   \____$$\ $$ |      
+    -- $$ |\$  /$$ |  $$ |  $$\   $$ |$$ |  $$\ 
+    -- $$ | \_/ $$ |$$$$$$\ \$$$$$$  |\$$$$$$  |
+    -- \__|     \__|\______| \______/  \______/ 
+                                                                                   
     ["pov"] = {
         "pov.list"
     },
@@ -559,14 +606,5 @@ cfg.groups = {
     ["Taco Seller"] = {},
     ["Burger Shot Cook"] = {}
 }
-
--- groups are added dynamically using the API or the menu, but you can add group when an user join here
-cfg.users = {}
-
--- group selectors
--- _config
---- x,y,z, blipid, blipcolor, permissions (optional)
-
-cfg.selectors = {}
 
 return cfg
