@@ -710,7 +710,7 @@ AddEventHandler('ARMA:Teleport2Legion', function(newtarget)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.tp2player') then
-        ARMAclient.teleport(newtarget, vector3(178.5132598877, -1007.5575561523, 29.329647064209))
+        ARMAclient.teleport(newtarget, vector3(152.66354370117,-1035.9771728516,29.337995529175))
         ARMAclient.notify(newtarget, {'~g~You have been teleported to Legion by an admin.'})
     else
         local player = ARMA.getUserSource(user_id)
