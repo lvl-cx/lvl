@@ -365,7 +365,6 @@ RegisterNetEvent("ARMA:clientPlayNhsSound",function(x, y)
 end)
 
 RegisterCommand("nhs",function()
-    --globalNHSOnDuty = not globalNHSOnDuty -- test for stuff
     if globalNHSOnDuty or globalLFBOnDuty then
         if not RageUI.Visible(RMenu:Get("nhs", "main")) then
             RageUI.Visible(RMenu:Get("nhs", "main"), not RageUI.Visible(RMenu:Get("nhs", "main")))

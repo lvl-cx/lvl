@@ -114,7 +114,7 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
 		for _, role_id in pairs(does_not_have_roles) do
 			for k,v in pairs(cfg.Guild_Roles[guild_name]) do
                 if v == role_id and ARMA.hasGroup(user_id, k) then
-                    print("Removed role: " .. k .. " from user: " .. user_id)
+                    --print("Removed role: " .. k .. " from user: " .. user_id)
                     ARMA.removeUserGroup(user_id, k)
                 end
 			end
@@ -123,7 +123,7 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
 		for _, role_id in pairs(has_roles) do
             for k,v in pairs(cfg.Guild_Roles[guild_name]) do
                 if v == role_id and not ARMA.hasGroup(user_id, k) then
-                    print("Added role: " .. k .. " to user: " .. user_id)
+                    --print("Added role: " .. k .. " to user: " .. user_id)
                     ARMA.addUserGroup(user_id, k)
                 end
             end
