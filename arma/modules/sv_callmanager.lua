@@ -156,6 +156,17 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 else
                                     ticketPay = 10000
                                 end
+                                exports['ghmattimysql']:execute("SELECT * FROM `arma_staff_tickets` WHERE user_id = @user_id", {user_id = user_id}, function(result)
+                                    if result ~= nil then 
+                                        for k,v in pairs(result) do
+                                            if v.user_id == user_id then
+                                                exports['ghmattimysql']:execute("UPDATE arma_staff_tickets SET ticket_count = @ticket_count WHERE user_id = @user_id", {user_id = user_id, ticket_count = v.ticket_count + 1}, function() end)
+                                                return
+                                            end
+                                        end
+                                        exports['ghmattimysql']:execute("INSERT INTO arma_staff_tickets (`user_id`, `ticket_count`, `username`) VALUES (@user_id, @ticket_count, @username);", {user_id = user_id, ticket_count = 1, username = GetPlayerName(admin_source)}, function() end) 
+                                    end
+                                end)
                                 ARMA.giveBankMoney(user_id, ticketPay)
                                 ARMAclient.notify(admin_source,{"~g~£"..getMoneyStringFormatted(ticketPay).." earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~An admin has taken your ticket."})
