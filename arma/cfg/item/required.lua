@@ -30,12 +30,24 @@ local wbody_choices = function(args)
   choices["Equip"] = {function(player,choice)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
-      if ARMA.tryGetInventoryItem(user_id, fullidname, 1, true) then -- give weapon body
+      if ARMA.tryGetInventoryItem(user_id, fullidname, 1, true) then
         local weapons = {}
         weapons[args[2]] = {ammo = 0}
-        ARMAclient.giveWeapons(player, {weapons})
-        SetPedAmmo(GetPlayerPed(player), args[2], 0)
-        ARMA.closeMenu(player)
+        for k,v in pairs(a.weapons) do
+          if k == args[2] then
+            if v.policeWeapon then
+              if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+                ARMAclient.giveWeapons(player, {weapons})
+                SetPedAmmo(GetPlayerPed(player), args[2], 0)
+              else
+                ARMAclient.notify(player, {'~r~You cannot equip this weapon.'})
+              end
+            else
+              ARMAclient.giveWeapons(player, {weapons})
+              SetPedAmmo(GetPlayerPed(player), args[2], 0)
+            end
+          end
+        end
       end
     end
   end}
@@ -69,6 +81,12 @@ local wammo_choices = function(args)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
       local amount = ARMA.getInventoryItemAmount(user_id, fullidname)
+      if string.find(fullidname, "Police") and not ARMA.hasPermission(user_id, 'police.onduty.permission') then
+        ARMAclient.notify(player, {'~r~You cannot load this ammo.'})
+        local bulletAmount = ARMA.getInventoryItemAmount(user_id, fullidname)
+        ARMA.tryGetInventoryItem(user_id, fullidname, bulletAmount, false)
+        return
+      end
       ARMA.prompt(player, "Amount to load ? (max "..amount..")", "", function(player,ramount)
         ramount = parseInt(ramount)
         ARMAclient.getWeapons(player, {}, function(uweapons) -- gets current weapons
@@ -80,7 +98,6 @@ local wammo_choices = function(args)
                     local weapons = {}
                     weapons[k] = {ammo = ramount}
                     ARMAclient.giveWeapons(player, {weapons,false})
-                    ARMA.closeMenu(player)
                     TriggerEvent('ARMA:RefreshInventory', player)
                     return
                   end
@@ -96,6 +113,12 @@ local wammo_choices = function(args)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
       ramount = parseInt(ARMA.getInventoryItemAmount(user_id, fullidname))
+      if string.find(fullidname, "Police") and not ARMA.hasPermission(user_id, 'police.onduty.permission') then
+        ARMAclient.notify(player, {'~r~You cannot load this ammo.'})
+        local bulletAmount = ARMA.getInventoryItemAmount(user_id, fullidname)
+        ARMA.tryGetInventoryItem(user_id, fullidname, bulletAmount, false)
+        return
+      end
       ARMAclient.getWeapons(player, {}, function(uweapons) -- gets current weapons
         for k,v in pairs(a.weapons) do -- goes through new weapons cfg
           for c,d in pairs(uweapons) do -- goes through current weapons
@@ -105,7 +128,6 @@ local wammo_choices = function(args)
                   local weapons = {}
                   weapons[k] = {ammo = ramount}
                   ARMAclient.giveWeapons(player, {weapons,false})
-                  ARMA.closeMenu(player)
                   TriggerEvent('ARMA:RefreshInventory', player)
                   return
                 end
