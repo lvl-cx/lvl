@@ -43,7 +43,7 @@ local function Get_Client_Discord_ID(source)
 	if discord_id then
 		return discord_id:gsub('discord:', '')
 	else
-		return nil
+		return exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = ARMA.getUserId(source)})[1].discord_id
 	end
 end
 
@@ -124,6 +124,7 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
             end
 		end
 	end
+	ARMA.getJobSelectors(ARMA.getUserSource(user_id))
 end
 
 local tracked = {}
