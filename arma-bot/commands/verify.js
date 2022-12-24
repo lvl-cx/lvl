@@ -7,7 +7,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
     if (!params[0] && !parseInt(params[0])) {
         let embed = {
             "title": "Verify",
-            "description": `:x: Invalid command usage \`${prefix}verify [code]\``,
+            "description": `:x: Invalid command usage \`${process.env.PREFIX}verify [code]\``,
             "color": settingsjson.settings.botColour,
             "footer": {
                 "text": ""
