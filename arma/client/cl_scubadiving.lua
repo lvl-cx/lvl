@@ -7,7 +7,7 @@ local f = ""
 local g = 0
 local h
 local i = false
-RMenu.Add("scubadiving","main",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "scubajob_banner", "scubajob_banner"))
+RMenu.Add("scubadiving","main",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "scubajob"))
 RMenu:Get("scubadiving", "main"):SetSubtitle("ARMA | ~b~Scuba Diving")
 local function j()
     RageUI.ActuallyCloseAll()

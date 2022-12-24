@@ -359,7 +359,7 @@ RegisterNetEvent("ARMA:prisonSpawnInMedicalBay",function()
     TaskPlayAnim(PlayerPedId(), "mp_bedmid", "f_sleep_l_loop_bighouse", 8.0, 1.0, -1, 1, 0, 0, 0, 0)
     RemoveAnimDict("mp_bedmid")
 end)
-RMenu.Add("armaPrisonItemMenu","main",RageUI.CreateMenu("","~b~Craft Items",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "prison"))
+RMenu.Add("armaPrisonItemMenu","main",RageUI.CreateMenu("","~b~Craft Items",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "prisonui"))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armaPrisonItemMenu', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()

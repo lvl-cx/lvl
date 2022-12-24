@@ -19,11 +19,11 @@ local i={
     ["prisonArmoury"]={_config={{vector3(1779.3741455078,2542.5639648438,45.797782897949)},110,5,"Prison Armoury",{"prisonguard.onduty.permission"},false,true}},
     ["NHS"]={_config={{vector3(340.41757202148,-582.71209716797,27.973259765625),vector3(-435.27032470703,-318.29010009766,34.08971484375)},110,5,"NHS Armoury",{"nhs.onduty.permission"},false,true}},
 }
-RMenu.Add("ARMAGunstore","mainmenu",RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
+RMenu.Add("ARMAGunstore","mainmenu",RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "gunstore"))
 RMenu:Get("ARMAGunstore","mainmenu"):SetSubtitle("~b~GUNSTORE")
-RMenu.Add("ARMAGunstore","type",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","mainmenu"),"","~b~Purchase Weapon or Ammo",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
-RMenu.Add("ARMAGunstore","confirm",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","type"),"","~b~Purchase confirm your purchase",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
-RMenu.Add("ARMAGunstore","vip",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","mainmenu"),"","~b~Purchase Weapon or Ammo",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "large"))
+RMenu.Add("ARMAGunstore","type",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","mainmenu"),"","~b~Purchase Weapon or Ammo",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "gunstore"))
+RMenu.Add("ARMAGunstore","confirm",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","type"),"","~b~Purchase confirm your purchase",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "gunstore"))
+RMenu.Add("ARMAGunstore","vip",RageUI.CreateSubMenu(RMenu:Get("ARMAGunstore","mainmenu"),"","~b~Purchase Weapon or Ammo",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "gunstore"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get("ARMAGunstore", "mainmenu")) then
@@ -184,9 +184,9 @@ local function J(m,K)
     b=m
     c=K
     if m=="Rebel"then 
-        RMenu:Get('ARMAGunstore','mainmenu'):SetSpriteBanner("banners", "large")
+        RMenu:Get('ARMAGunstore','mainmenu'):SetSpriteBanner("banners", "rebel")
     else 
-        RMenu:Get('ARMAGunstore','mainmenu'):SetSpriteBanner("banners", "large")
+        RMenu:Get('ARMAGunstore','mainmenu'):SetSpriteBanner("banners", "gunstore")
     end
     RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('ARMAGunstore','mainmenu'),true)
