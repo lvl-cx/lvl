@@ -113,6 +113,7 @@ local wammo_choices = function(args)
     local user_id = ARMA.getUserId(player)
     if user_id ~= nil then
       ramount = parseInt(ARMA.getInventoryItemAmount(user_id, fullidname))
+      if ramount > 250 then ramount = 250 end
       if string.find(fullidname, "Police") and not ARMA.hasPermission(user_id, 'police.onduty.permission') then
         ARMAclient.notify(player, {'~r~You cannot load this ammo.'})
         local bulletAmount = ARMA.getInventoryItemAmount(user_id, fullidname)
