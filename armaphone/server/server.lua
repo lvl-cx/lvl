@@ -19,20 +19,22 @@ function getSourceFromIdentifier(identifier, cb)
     return ARMA.getUserSource({identifier})
 end
 function getNumberPhone(identifier)
-    exports["ghmattimysql"]:execute("SELECT arma_user_identities.phone FROM arma_user_identities WHERE arma_user_identities.user_id = @identifier", {identifier = identifier}, function(result)
-        if result[1] ~= nil then
-            return result[1].phone
-        end
-        return nil
-    end)
+    local result = MySQL.Sync.fetchAll("SELECT arma_user_identities.phone FROM arma_user_identities WHERE arma_user_identities.user_id = @identifier", {
+        ['@identifier'] = identifier
+    })
+    if result[1] ~= nil then
+        return result[1].phone
+    end
+    return nil
 end
 function getIdentifierByPhoneNumber(phone_number) 
-    exports["ghmattimysql"]:execute("SELECT arma_user_identities.user_id FROM arma_user_identities WHERE arma_user_identities.phone = @phone_number", {phone_number = phone_number}, function(result)
-        if result[1] ~= nil then
-            return result[1].user_id
-        end
-        return nil
-    end)
+    local result = MySQL.Sync.fetchAll("SELECT arma_user_identities.user_id FROM arma_user_identities WHERE arma_user_identities.phone = @phone_number", {
+        ['@phone_number'] = phone_number
+    })
+    if result[1] ~= nil then
+        return result[1].user_id
+    end
+    return nil
 end
 
 
@@ -56,8 +58,10 @@ function getOrGeneratePhoneNumber (sourcePlayer, identifier, cb)
             myPhoneNumber = getPhoneRandomNumber()
             local id = getIdentifierByPhoneNumber(myPhoneNumber)
         until id == nil
-        exports["ghmattimysql"]:execute("UPDATE arma_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", {myPhoneNumber = myPhoneNumber, identifier = identifier
-        }, function() 
+        MySQL.Async.insert("UPDATE arma_user_identities SET phone = @myPhoneNumber WHERE user_id = @identifier", { 
+            ['@myPhoneNumber'] = myPhoneNumber,
+            ['@identifier'] = identifier
+        }, function ()
             cb(myPhoneNumber)
         end)
     else
@@ -68,31 +72,43 @@ end
 --  Contacts
 --====================================================================================
 function getContacts(identifier)
-    exports["ghmattimysql"]:execute("SELECT * FROM phone_users_contacts WHERE phone_users_contacts.identifier = @identifier", {identifier = identifier}, function(result)
-        return result
-    end)
+    local result = MySQL.Sync.fetchAll("SELECT * FROM phone_users_contacts WHERE phone_users_contacts.identifier = @identifier", {
+        ['@identifier'] = identifier
+    })
+    return result
 end
 function addContact(source, identifier, number, display)
     local sourcePlayer = tonumber(source)
-    exports["ghmattimysql"]:executeSync("INSERT INTO phone_users_contacts (`identifier`, `number`,`display`) VALUES(@identifier, @number, @display)", {identifier = identifier, number = number, display = display
-    }, function() 
+    MySQL.Async.insert("INSERT INTO phone_users_contacts (`identifier`, `number`,`display`) VALUES(@identifier, @number, @display)", {
+        ['@identifier'] = identifier,
+        ['@number'] = number,
+        ['@display'] = display,
+    },function()
         notifyContactChange(sourcePlayer, identifier)
     end)
 end
 function updateContact(source, identifier, id, number, display)
     local sourcePlayer = tonumber(source)
-    exports["ghmattimysql"]:execute("UPDATE phone_users_contacts SET number = @number, display = @display WHERE id = @id", {number = number, display = display, id = id
-    }, function() 
+    MySQL.Async.insert("UPDATE phone_users_contacts SET number = @number, display = @display WHERE id = @id", { 
+        ['@number'] = number,
+        ['@display'] = display,
+        ['@id'] = id,
+    },function()
         notifyContactChange(sourcePlayer, identifier)
     end)
 end
 function deleteContact(source, identifier, id)
     local sourcePlayer = tonumber(source)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_users_contacts WHERE `identifier` = @identifier AND `id` = @id", {identifier = identifier, id = id})
+    MySQL.Sync.execute("DELETE FROM phone_users_contacts WHERE `identifier` = @identifier AND `id` = @id", {
+        ['@identifier'] = identifier,
+        ['@id'] = id,
+    })
     notifyContactChange(sourcePlayer, identifier)
 end
 function deleteAllContact(identifier)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_users_contacts WHERE `identifier` = @identifier", {identifier = identifier})
+    MySQL.Sync.execute("DELETE FROM phone_users_contacts WHERE `identifier` = @identifier", {
+        ['@identifier'] = identifier
+    })
 end
 function notifyContactChange(source, identifier)
     local sourcePlayer = tonumber(source)
@@ -127,9 +143,11 @@ end)
 --  Messages
 --====================================================================================
 function getMessages(identifier)
-    exports["ghmattimysql"]:execute("SELECT phone_messages.* FROM phone_messages LEFT JOIN arma_user_identities ON arma_user_identities.user_id = @identifier WHERE phone_messages.receiver = arma_user_identities.phone", {identifier = identifier}, function(result)
-        return result
-    end)
+    local result = MySQL.Sync.fetchAll("SELECT phone_messages.* FROM phone_messages LEFT JOIN arma_user_identities ON arma_user_identities.user_id = @identifier WHERE phone_messages.receiver = arma_user_identities.phone", {
+         ['@identifier'] = identifier
+    })
+    return result
+    --return MySQLQueryTimeStamp("SELECT phone_messages.* FROM phone_messages LEFT JOIN users ON users.identifier = @identifier WHERE phone_messages.receiver = users.phone_number", {['@identifier'] = identifier})
 end
 
 RegisterServerEvent('ARMA:_internalAddMessage')
@@ -138,8 +156,19 @@ AddEventHandler('ARMA:_internalAddMessage', function(transmitter, receiver, mess
 end)
 
 function _internalAddMessage(transmitter, receiver, message, owner)
-    local id = exports["ghmattimysql"]:executeSync("INSERT INTO phone_messages (`transmitter`, `receiver`,`message`, `isRead`,`owner`) VALUES(@transmitter, @receiver, @message, @isRead, @owner);", {transmitter = transmitter, receiver = receiver, message = message, isRead = owner, owner = owner})
-    return exports["ghmattimysql"]:execute(Query2, {id = id})[1]
+    local Query = "INSERT INTO phone_messages (`transmitter`, `receiver`,`message`, `isRead`,`owner`) VALUES(@transmitter, @receiver, @message, @isRead, @owner);"
+    local Query2 = 'SELECT * from phone_messages WHERE `id` = @id;'
+	local Parameters = {
+        ['@transmitter'] = transmitter,
+        ['@receiver'] = receiver,
+        ['@message'] = message,
+        ['@isRead'] = owner,
+        ['@owner'] = owner
+    }
+    local id = MySQL.Sync.insert(Query, Parameters)
+    return MySQL.Sync.fetchAll(Query2, {
+        ['@id'] = id
+    })[1]
 end
 
 function addMessage(source, identifier, phone_number, message)
@@ -156,23 +185,30 @@ end
 
 function setReadMessageNumber(identifier, num)
     local mePhoneNumber = getNumberPhone(identifier)
-    exports["ghmattimysql"]:executeSync("UPDATE phone_messages SET phone_messages.isRead = 1 WHERE phone_messages.receiver = @receiver AND phone_messages.transmitter = @transmitter", {receiver = mePhoneNumber, transmitter = num})
+    MySQL.Sync.execute("UPDATE phone_messages SET phone_messages.isRead = 1 WHERE phone_messages.receiver = @receiver AND phone_messages.transmitter = @transmitter", { 
+        ['@receiver'] = mePhoneNumber,
+        ['@transmitter'] = num
+    })
 end
 
 function deleteMessage(msgId)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_messages WHERE `id` = @id", {id = msgId})
+    MySQL.Sync.execute("DELETE FROM phone_messages WHERE `id` = @id", {
+        ['@id'] = msgId
+    })
 end
 
 function deleteAllMessageFromPhoneNumber(source, identifier, phone_number)
     local source = source
     local identifier = identifier
     local mePhoneNumber = getNumberPhone(identifier)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_messages WHERE `receiver` = @mePhoneNumber and `transmitter` = @phone_number", {mePhoneNumber = mePhoneNumber, phone_number = phone_number})
+    MySQL.Sync.execute("DELETE FROM phone_messages WHERE `receiver` = @mePhoneNumber and `transmitter` = @phone_number", {['@mePhoneNumber'] = mePhoneNumber,['@phone_number'] = phone_number})
 end
 
 function deleteAllMessage(identifier)
     local mePhoneNumber = getNumberPhone(identifier)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_messages WHERE `receiver` = @mePhoneNumber", {mePhoneNumber = mePhoneNumber})
+    MySQL.Sync.execute("DELETE FROM phone_messages WHERE `receiver` = @mePhoneNumber", {
+        ['@mePhoneNumber'] = mePhoneNumber
+    })
 end
 
 RegisterServerEvent('ARMA:sendMessage')
@@ -192,6 +228,7 @@ AddEventHandler('ARMA:deleteMessageNumber', function(number)
     local sourcePlayer = tonumber(source)
     local identifier = getPlayerID(source)
     deleteAllMessageFromPhoneNumber(sourcePlayer,identifier, number)
+    -- TriggerClientEvent("ARMA:allMessage", sourcePlayer, getMessages(identifier))
 end)
 
 RegisterServerEvent('ARMA:deleteAllMessage')
@@ -237,9 +274,10 @@ local PhoneFixeInfo = {}
 local lastIndexCall = 10
 
 function getHistoriqueCall (num)
-    exports["ghmattimysql"]:execute("SELECT * FROM phone_calls WHERE phone_calls.owner = @num ORDER BY time DESC LIMIT 120", {num = num}, function(result)
-        return result
-    end)
+    local result = MySQL.Sync.fetchAll("SELECT * FROM phone_calls WHERE phone_calls.owner = @num ORDER BY time DESC LIMIT 120", {
+        ['@num'] = num
+    })
+    return result
 end
 
 function sendHistoriqueCall (src, num) 
@@ -249,7 +287,11 @@ end
 
 function saveAppels (appelInfo)
     if appelInfo.extraData == nil or appelInfo.extraData.useNumber == nil then
-        exports["ghmattimysql"]:executeSync("INSERT INTO phone_calls (`owner`, `num`,`incoming`, `accepts`) VALUES(@owner, @num, @incoming, @accepts)", {owner = appelInfo.transmitter_num, num = appelInfo.receiver_num, incoming = 0, accepts = appelInfo.is_accepts
+        MySQL.Async.insert("INSERT INTO phone_calls (`owner`, `num`,`incoming`, `accepts`) VALUES(@owner, @num, @incoming, @accepts)", {
+            ['@owner'] = appelInfo.transmitter_num,
+            ['@num'] = appelInfo.receiver_num,
+            ['@incoming'] = 1,
+            ['@accepts'] = appelInfo.is_accepts
         }, function()
             notifyNewAppelsHisto(appelInfo.transmitter_src, appelInfo.transmitter_num)
         end)
@@ -259,7 +301,11 @@ function saveAppels (appelInfo)
         if appelInfo.hidden == true then
             mun = "###-####"
         end
-        exports["ghmattimysql"]:executeSync("INSERT INTO phone_calls (`owner`, `num`,`incoming`, `accepts`) VALUES(@owner, @num, @incoming, @accepts)", {owner = appelInfo.transmitter_num, num = num, incoming = 0, accepts = appelInfo.is_accepts
+        MySQL.Async.insert("INSERT INTO phone_calls (`owner`, `num`,`incoming`, `accepts`) VALUES(@owner, @num, @incoming, @accepts)", {
+            ['@owner'] = appelInfo.receiver_num,
+            ['@num'] = num,
+            ['@incoming'] = 0,
+            ['@accepts'] = appelInfo.is_accepts
         }, function()
             if appelInfo.receiver_src ~= nil then
                 notifyNewAppelsHisto(appelInfo.receiver_src, appelInfo.receiver_num)
@@ -283,7 +329,7 @@ end)
 
 RegisterServerEvent('ARMA:internal_startCall')
 AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOffer, extraData)
-    if Config.FixePhone[phone_number] ~= nil then
+    if FixePhone[phone_number] ~= nil then
         onCallFixePhone(source, phone_number, rtcOffer, extraData)
         return
     end
@@ -328,14 +374,17 @@ AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOff
     
 
     if is_valid == true then
+        -- getSourceFromIdentifier(destPlayer, function (srcTo)
         if ARMA.getUserSource({destPlayer}) ~= nil then
             srcTo = tonumber(ARMA.getUserSource({destPlayer}))
 
             if srcTo ~= nil then
                 AppelsEnCours[indexCall].receiver_src = srcTo
+                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
                 TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
                 TriggerClientEvent('ARMA:waitingCall', srcTo, AppelsEnCours[indexCall], false)
             else
+                -- TriggerEvent('ARMA:addCall', AppelsEnCours[indexCall])
                 TriggerClientEvent('ARMA:waitingCall', sourcePlayer, AppelsEnCours[indexCall], true)
             end
         end
@@ -353,12 +402,14 @@ end)
 
 RegisterServerEvent('ARMA:candidates')
 AddEventHandler('ARMA:candidates', function (callId, candidates)
+    -- print('send cadidate', callId, candidates)
     if AppelsEnCours[callId] ~= nil then
         local source = source
         local to = AppelsEnCours[callId].transmitter_src
         if source == to then 
             to = AppelsEnCours[callId].receiver_src
         end
+        -- print('TO', to)
         TriggerClientEvent('ARMA:candidates', to, candidates)
     end
 end)
@@ -416,12 +467,17 @@ AddEventHandler('ARMA:appelsDeleteHistorique', function (numero)
     local sourcePlayer = tonumber(source)
     local srcIdentifier = getPlayerID(source)
     local srcPhone = getNumberPhone(srcIdentifier)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_calls WHERE `owner` = @owner AND `num` = @num", {owner = srcPhone, num = numero})
+    MySQL.Sync.execute("DELETE FROM phone_calls WHERE `owner` = @owner AND `num` = @num", {
+        ['@owner'] = srcPhone,
+        ['@num'] = numero
+    })
 end)
 
 function appelsDeleteAllHistorique(srcIdentifier)
     local srcPhone = getNumberPhone(srcIdentifier)
-    exports["ghmattimysql"]:execute("DELETE FROM phone_calls WHERE `owner` = @owner", {owner = srcPhone})
+    MySQL.Sync.execute("DELETE FROM phone_calls WHERE `owner` = @owner", {
+        ['@owner'] = srcPhone
+    })
 end
 
 RegisterServerEvent('ARMA:appelsDeleteAllHistorique')
@@ -504,6 +560,24 @@ AddEventHandler('onMySQLReady', function ()
     -- MySQL.Async.fetchAll("DELETE FROM phone_messages WHERE (DATEDIFF(CURRENT_DATE,time) > 10)")
 end)
 
+--====================================================================================
+--  App ... WIP
+--====================================================================================
+
+
+-- SendNUIMessage('ongcPhoneRTC_receive_offer')
+-- SendNUIMessage('ongcPhoneRTC_receive_answer')
+
+-- RegisterNUICallback('gcPhoneRTC_send_offer', function (data)
+
+
+-- end)
+
+
+-- RegisterNUICallback('gcPhoneRTC_send_answer', function (data)
+
+
+-- end)
 
 
 
@@ -536,7 +610,7 @@ function onCallFixePhone (source, phone_number, rtcOffer, extraData)
         hidden = hidden,
         rtcOffer = rtcOffer,
         extraData = extraData,
-        coords = Config.FixePhone[phone_number].coords
+        coords = FixePhone[phone_number].coords
     }
     
     PhoneFixeInfo[indexCall] = AppelsEnCours[indexCall]

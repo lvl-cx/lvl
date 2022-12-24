@@ -88,7 +88,7 @@ client_script {
 }
 
 server_script {
-	'@arma/modules/MySQL.lua',
+	'@mysql-async/lib/MySQL.lua',
     '@arma/lib/utils.lua',
 	"locales/en.lua",
 	"locales/es.lua",

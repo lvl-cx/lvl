@@ -1,3 +1,8 @@
+--====================================================================================
+-- #Author: Jonathan D @ Gannon
+--====================================================================================
+
+-- Configuration
 local KeyToucheCloseEvent = {
   { code = 172, event = 'ArrowUp' },
   { code = 173, event = 'ArrowDown' },
@@ -24,10 +29,16 @@ local currentPlaySound = false
 local soundDistanceMax = 8.0
 
 
+--====================================================================================
+--  Check si le joueurs poséde un téléphone
+--  Callback true or false
+--====================================================================================
 function hasPhone (cb)
   cb(true)
 end
-
+--====================================================================================
+--  Que faire si le joueurs veut ouvrir sont téléphone n'est qu'il en a pas ?
+--====================================================================================
 function ShowNoPhoneWarning ()
 end
 
@@ -116,6 +127,9 @@ AddEventHandler("ARMA:notifyFixePhoneChange", function(_PhoneInCall)
   PhoneInCall = _PhoneInCall
 end)
 
+--[[
+  Affiche les imformations quant le joueurs est proche d'un fixe
+--]]
 function showFixePhoneHelper (coords)
   for number, data in pairs(Config.FixePhone) do
     local dist = GetDistanceBetweenCoords(
@@ -379,6 +393,7 @@ end
 --====================================================================================
 
 RegisterNUICallback('startCall', function (data, cb)
+  --exports["arma"]:debugLog("attempting to call:", data.numero)
   startCall(data.numero, data.rtcOffer, data.extraData)
   cb()
 end)
@@ -397,6 +412,8 @@ RegisterNUICallback('ignoreCall', function (data, cb)
   cb()
 end)
 RegisterNUICallback('dnd', function (data, cb)
+    --exports["arma"]:debugLog("GOT NUI CALLBACK FOR DND", data.dnd)
+
     if data.dnd == "true" or data.dnd == true then
         data.dnd = true
     else
@@ -546,6 +563,7 @@ RegisterNUICallback('deleteALL', function(data, cb)
 end)
 
 function TogglePhone(anim)
+  --exports["arma"]:debugLog("Toggling arma Phone.")
   if anim == nil then anim = true end
   menuIsOpen = not menuIsOpen
   SendNUIMessage({show = menuIsOpen})

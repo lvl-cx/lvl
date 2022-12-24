@@ -5,7 +5,8 @@ Config.Locale = 'en'
 
 Config.AutoFindFixePhones = true -- Automatically add pay phones as they are found by their models.
 
-Config.FixePhone = {}
+Config.FixePhone = {
+}
 
 Config.KeyOpenClose = 311 -- F1
 Config.KeyTakeCall  = 38  -- E
