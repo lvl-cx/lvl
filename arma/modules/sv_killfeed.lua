@@ -6,6 +6,13 @@ f=f.weapons
 
 local function getWeaponName(weapon)
     for k,v in pairs(f) do
+        if weapon == 'Fists' then
+            return 'Fist'
+        elseif weapon == 'Fire' then
+            return 'Fire'
+        elseif weapon == 'Explosion' then
+            return 'Explode'
+        end
         if v.name == weapon then
             if v.class == 'AR' then
                 return 'Assault-Rifle'

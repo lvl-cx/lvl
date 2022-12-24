@@ -740,6 +740,7 @@ cfg.nativeWeaponModelsToNames = {
     ["WEAPON_SNOWBALL"] = 'Snowball',
     ["WEAPON_ANIMAL"] = 'Animal',
     ["WEAPON_COUGAR"] = 'Cougar',
+    ["WEAPON_UNARMED"] = "Fists"
 }
 
 cfg.illegalNativeWeaponsHashToModels = {
