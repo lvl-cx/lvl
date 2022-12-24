@@ -4,22 +4,18 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     if (params[0] && parseInt(params[0])) {
-        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_ids` WHERE user_id = ?", [params[0]], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT discord_id FROM `arma_verification` WHERE user_id = ?", [params[0]], (result) => {
             if (result.length > 0) {
-                for (i = 0; i < result.length; i++) {
-                    if (result[i].identifier.includes('discord')) {
-                        let embed = {
-                            "title": "Perm ID to Discord",
-                            "description": `\n**Perm ID: **${[params[0]]}**\nDiscord**: <@${result[i].identifier.split(":")[1]}>\n**Discord Profile**: https://lookup.guru/${result[i].identifier.split(":")[1]}`,
-                            "color": settingsjson.settings.botColour,
-                            "footer": {
-                                "text": ''
-                            },
-                            "timestamp": new Date()
-                        }
-                        message.channel.send({ embed })
-                    }
+                let embed = {
+                    "title": "Perm ID to Discord",
+                    "description": `\n**Perm ID: **${[params[0]]}**\nDiscord**: <@${result[0].discord_id}>\n**Discord Profile**: https://lookup.guru/${result[0].discord_id}`,
+                    "color": settingsjson.settings.botColour,
+                    "footer": {
+                        "text": ''
+                    },
+                    "timestamp": new Date()
                 }
+                message.channel.send({ embed })
             } else {
                 let embed = {
                     "title": "Perm ID to Discord",
