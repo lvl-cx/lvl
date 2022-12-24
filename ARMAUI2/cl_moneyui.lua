@@ -101,10 +101,8 @@ RegisterNetEvent("ARMA:initMoney")
 AddEventHandler("ARMA:initMoney",function(cash,bank)
 	local cashString = tostring(math.floor(cash))
     moneyDisplay = getMoneyStringFormatted(cashString)
-
     local moneyString = tostring(math.floor(bank))
     bankMoneyDisplay = getMoneyStringFormatted(moneyString)
-
     local topLeftAnchor = ARMA.getCachedMinimapAnchor()
     updateMoneyUI("£" .. moneyDisplay, "£" .. bankMoneyDisplay,voiceChatProximity,topLeftAnchor.rightX * topLeftAnchor.resX)
 end)
