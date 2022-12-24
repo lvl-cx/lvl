@@ -1,0 +1,96 @@
+cfg = {
+	Guild_ID = '975490533344559154',
+  	Multiguild = true,
+  	Guilds = {
+		['MPD'] = '991799285681233930', 
+		-- ['NHS'] = '1005632218133180487',
+		-- ['HMP'] = '1016844313591812128',
+		-- ['LFB'] = '1016858643293024308',
+  	},
+	Bot_Token = 'OTg4MTIwODUwNTQ2OTYyNTAy.GcITZ7.dvzSCOOX9do7-jhT3CIQvq3P02xxHmUuWKW7ug',
+	RoleList = {},
+
+	CacheDiscordRoles = true, -- true to cache player roles, false to make a new Discord Request every time
+	CacheDiscordRolesTime = 60, -- if CacheDiscordRoles is true, how long to cache roles before clearing (in seconds)
+}
+
+cfg.Guild_Roles = {
+	['MPD'] = {
+		['Commissioner'] = 991804031561379890,
+		['Deputy Commissioner'] = 991804033176178748,
+		['Assistant Commissioner'] = 991804033377505400,
+		['Deputy Assistant Commissioner'] = 991804034723893278,
+		['Commander'] = 991804034958774273,
+		['Chief Superintendent'] = 991804037357908108,
+		['Superintendent'] = 991804075404447764,
+		['Chief Inspector'] = 991805761434959982,
+		['Inspector'] = 991805761678229564,
+		['Sergeant'] = 991815810333036725,
+		['Special Constable'] = 991817168465449000,
+		['Senior Constable'] = 991815812371464282,
+		['Police Constable'] = 991815812312739950,
+		['PCSO'] = 991815812967051344,
+		['Large Arms Access'] = 991813471475859538,
+		-- ['Drone Trained'] = 1007419420731265034, (need discord group made)
+	}
+
+	-- none of these groups are finished
+
+	-- ['NHS'] = {
+	-- 	['Chief Medical Director'] = 1013072143208157234,
+	-- 	['Deputy Medical Director'] = 1013072231695388743,
+	-- 	['Assistant Medical Director'] = 1013072284061270127,
+	-- 	['Captain'] = 1017618355047383141,
+	-- 	['Specialist'] = 1017618411284615260,
+	-- 	['Medic of the week'] = 1019584557785301003,
+	-- 	['Senior Doctor'] = 1017618467731554364,
+	-- 	['Doctor'] = 1017618570940780576,
+	-- 	['Junior Doctor'] = 1017618604541362277,
+	-- 	['Critical Care Paramedic'] = 1017618670559698995,
+	-- 	['Paramedic'] = 1017618728348811306,
+	-- 	['Trainee Paramedic'] = 1017618794333614140,
+	-- 	['NHS Needs Training'] = 1017863422748151860,
+	-- 	['NHS Suspended'] = 1017991729971994725,
+	-- 	['Drone Trained'] = 1022642333696675840,
+	-- },
+	
+	-- ['HMP'] = {
+	-- 	['Governor'] = 1017619823804547113,
+	-- 	['Deputy Governor'] = 1017619884177358882,
+	-- 	['Assistant Governor'] = 1017619931526877246,
+	-- 	['Custodial Supervisor'] = 1017619970349334590,
+	-- 	['Custodial Officer'] = 1017620004373544992,
+	-- 	['Honourable Guard'] = 1017620044798251148,
+	-- 	['Guard of the week'] = 1019584898396327946,
+	-- 	['Supervising Officer'] = 1017620085654958080,
+	-- 	['Principal Officer'] = 1017620118433431653,
+	-- 	['Specialist Officer'] = 1017620166990888960,
+	-- 	['Senior Officer'] = 1017620204655755317,
+	-- 	['Prison Officer'] = 1017620239686582403,
+	-- 	['Trainee Prison Officer'] = 1017620274537046086,
+	-- },
+
+	-- ['LFB'] = {
+	-- 	['Chief Fire Command'] = 1017621455120379944,
+	-- 	['Divisional Command'] = 1017621512255197254,
+	-- 	['Sector Command'] = 1017621546212261888,
+	-- 	['Honourable Firefighter'] = 1017621584850190417,
+	-- 	['Firefighter of the week'] = 1019584345108918393,
+	-- 	['Leading Firefighter'] = 1017621616416538677,
+	-- 	['Specialist Firefighter'] = 1017621659332644865,
+	-- 	['Advanced Firefighter'] = 1017621694740959233,
+	-- 	['Senior Firefighter'] = 1017621729885036597,
+	-- 	['Firefighter'] = 1017621763531751434,
+	-- 	['Junior Firefighter'] = 1017621801355976756,
+	-- 	['Provisional Firefighter'] = 1017621836089016420,
+	-- },
+	
+}
+
+for faction_name, faction_roles in pairs(cfg.Guild_Roles) do
+	for role_name, role_id in pairs(faction_roles) do
+		cfg.RoleList[role_name] = role_id
+	end
+end
+
+return cfg

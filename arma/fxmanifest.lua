@@ -141,7 +141,28 @@ server_scripts{
   "modules/server_commands.lua",
   "modules/sv_*.lua",
   "servercfg/*.lua",
-  "modules/webhooks.lua"
+  "modules/webhooks.lua", 
+  "cfg/discordroles.lua",
+}
+
+server_exports { 
+	"GetDiscordRoles",
+	"GetRoleIdFromRoleName",
+	"GetDiscordAvatar",
+	"GetDiscordName",
+	"GetDiscordEmail",
+	"IsDiscordEmailVerified",
+	"GetDiscordNickname",
+	"GetGuildIcon",
+	"GetGuildSplash",
+	"GetGuildName",
+	"GetGuildDescription",
+	"GetGuildMemberCount",
+	"GetGuildOnlineMemberCount",
+	"GetGuildRoleList",
+	"ResetCaches",
+	"CheckEqual",
+	"SetNickname",
 }
 
 data_file "PED_METADATA_FILE" "cfg/peds.meta"
