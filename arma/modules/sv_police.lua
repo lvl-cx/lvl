@@ -547,7 +547,7 @@ end)
 RegisterCommand('drone', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
-  if ARMA.hasPermission(user_id, 'police.drone') or ARMA.hasPermission(user_id, 'nhs.drone') then
+  if ARMA.hasGroup(user_id, 'Drone Trained') then
       TriggerClientEvent('toggleDrone', source)
   end
 end)

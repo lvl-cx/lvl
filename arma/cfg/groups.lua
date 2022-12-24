@@ -320,12 +320,14 @@ cfg.groups = {
     ["Large Arms Access"] = {
         "police.loadshop2",
         "police.maxarmour"
-    },
+    }, 
+    ["Drone Trained"] = {},
     ["Commissioner Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
         "police.announce"
+        "police.commissioner",
     },
     ["Commissioner"] = {
         "cop.whitelisted"
@@ -335,6 +337,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.announce",
+        "police.deputycommissioner",
     },
     ["Deputy Commissioner"] = {
         "cop.whitelisted"
@@ -344,6 +347,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.announce",
+        "police.assistantcommissioner",
     },
     ["Assistant Commissioner"] = {
         "cop.whitelisted"
@@ -353,6 +357,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.announce",
+        "police.deputyassistantcommissioner",
     },
     ["Deputy Assistant Commissioner"] = {
         "cop.whitelisted"
@@ -362,6 +367,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.announce",
+        "police.commander",
     },
     ["Commander"] = {
         "cop.whitelisted"
