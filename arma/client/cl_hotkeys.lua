@@ -26,24 +26,6 @@ Citizen.CreateThread(function()
 			TriggerServerEvent("ARMA:Knockout")
 			Wait(1000)
 	    end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,8) and (tARMA.isDev()) then -- LEFTALT + S
-			Wait(1000)
-			local ad = "melee@unarmed@streamed_variations"
-			local anim = "plyr_takedown_front_slap"
-			local ped = tARMA.getPlayerPed()
-
-			if (DoesEntityExist(ped) and not IsEntityDead(ped)) then
-				loadAnimDict(ad)
-				if ( IsEntityPlayingAnim(ped, ad, anim, 3)) then 
-					TaskPlayAnim(ped, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0)
-					ClearPedSecondaryTask(ped)
-				else
-					TaskPlayAnim(ped, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0)
-				end       
-			end
-			TriggerServerEvent("ARMA:KnockoutNoAnim")
-            Wait(1000)
-	    end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,74) and (tARMA.isDev()) then -- LEFTALT + H
 			local ad = "melee@unarmed@streamed_variations"
 			local anim = "plyr_takedown_front_headbutt"
