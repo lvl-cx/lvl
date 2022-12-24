@@ -3,20 +3,6 @@ local b = false
 local c = nil
 local d = false
 local e = false
-RegisterNetEvent("playRussianRoulette",function(f)
-    local g = GetEntityCoords(tARMA.getPlayerPed())
-    local h = #(g - f)
-    if h <= 15 then
-        SendNUIMessage({transactionType = "playRussianRoulette"})
-    end
-end)
-RegisterNetEvent("playEmptyGun",function(f)
-    local g = GetEntityCoords(tARMA.getPlayerPed())
-    local h = #(g - f)
-    if h <= 15 then
-        SendNUIMessage({transactionType = "emptygun"})
-    end
-end)
 
 function tARMA.putInNearestVehicleAsPassenger(i)
     local j = tARMA.getNearestVehicle(i)
@@ -418,96 +404,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-RMenu.Add("incidentsupportunit","main",RageUI.CreateMenu("Incident Support Unit", "~b~Control Panel", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-local W = {active = false, signUp = false, flashing = false, accidentSign = false, aheadSign = false}
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('incidentsupportunit', 'main')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            local V = tARMA.getPlayerVehicle()
-            if GetEntityModel(V) == "incidentsupportunit" then
-                W.active = true
-                RageUI.Checkbox("Vehicle Sign Up","Toggle the vehicle sign on/off",W.signUp,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
-                    if F then
-                        if W.signUp then
-                            RageUI.Text({message = string.format("~w~Sign is now ~g~~h~up")})
-                            SetVehicleExtra(V, 12, false)
-                            SetVehicleExtra(V, 11, true)
-                            SetVehicleExtra(V, 5, true)
-                            SetVehicleExtra(V, 6, true)
-                        else
-                            RageUI.Text({message = string.format("~w~Sign is now ~g~~h~down")})
-                            SetVehicleExtra(V, 12, true)
-                            SetVehicleExtra(V, 5, true)
-                            SetVehicleExtra(V, 6, true)
-                            SetVehicleExtra(V, 11, false)
-                        end
-                    end
-                    W.signUp = X
-                end)
-                if W.signUp then
-                    RageUI.Checkbox("Accident Message","Toggle the vehicle accident sign on/off",W.accidentSign,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
-                        if F then
-                            if W.accidentSign then
-                                RageUI.Text({message = string.format("~w~Accident Message is now ~g~~h~on")})
-                                SetVehicleExtra(V, 6, false)
-                            else
-                                RageUI.Text({message = string.format("~w~Accident Message now ~g~~h~off")})
-                                SetVehicleExtra(V, 6, true)
-                                W.flashing = false
-                            end
-                        end
-                        W.accidentSign = X
-                    end)
-                    RageUI.Checkbox("Ahead Message","Toggle the vehicle ahead sign on/off",W.aheadSign,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
-                        if F then
-                            if W.aheadSign then
-                                RageUI.Text({message = string.format("~w~Ahead Message is now ~g~~h~on")})
-                                SetVehicleExtra(V, 5, false)
-                            else
-                                RageUI.Text({message = string.format("~w~Ahead Message now ~g~~h~off")})
-                                SetVehicleExtra(V, 5, true)
-                            end
-                        end
-                        W.aheadSign = X
-                    end)
-                    RageUI.Checkbox("Matrix Flash","Toggle the flashing of the matrix sign ahead sign on/off",W.flashing,{Style = RageUI.CheckboxStyle.Car},function(D, F, E, X)
-                        if F then
-                            if W.flashing then
-                                RageUI.Text({message = string.format("~w~Flashing is now ~g~~h~enabled")})
-                                W.flashing = true
-                                W.active = true
-                            else
-                                RageUI.Text({message = string.format("~w~Flashing now ~g~~h~disabled")})
-                            end
-                        end
-                        W.flashing = X
-                    end)
-                end
-            end
-        end)
-    end
-end)
 
-RegisterCommand("isu",function(R, S)
-    if tARMA.globalOnPoliceDuty() or tARMA.globalOnPrisonDuty() or tARMA.globalNHSOnDuty() then
-        RageUI.Visible(RMenu:Get("incidentsupportunit", "main"), true)
-    end
-end)
-
-CreateThread(function()
-    while true do
-        if W.active and W.flashing then
-            local V = tARMA.getPlayerVehicle()
-            SetVehicleExtra(V, 5, true)
-            SetVehicleExtra(V, 6, false)
-            Wait(500)
-            SetVehicleExtra(V, 6, true)
-            SetVehicleExtra(V, 5, false)
-            Wait(500)
-        end
-        Wait(0)
-    end
-end)
 RegisterNetEvent("ARMA:startSearchingSuspect",function()
     tARMA.setCanAnim(false)
     tARMA.loadAnimDict("custom@police")
@@ -606,7 +503,7 @@ function func_drawCallsign()
     if a8 ~= "" and globalOnPrisonDuty then
         DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, a8, 255, 255, 255, 255, 0, 0)
     end
-    DrawAdvancedText(1.064, 0.95, 0.005, 0.0028, 0.4, 'ARMA', 255, 255, 255, 255, 0, 0)
+    --DrawAdvancedText(1.064, 0.95, 0.005, 0.0028, 0.4, 'ARMA', 255, 255, 255, 255, 0, 0)
 end
 tARMA.createThreadOnTick(func_drawCallsign)
 local ae = 0
