@@ -1,8 +1,6 @@
 local cfg=module("cfg/cfg_groupselector")
 
-
-RegisterNetEvent("ARMA:getJobSelectors")
-AddEventHandler("ARMA:getJobSelectors",function()
+function ARMA.getJobSelectors(source)
     local source=source
     local jobSelectors={}
     local user_id = ARMA.getUserId(source)
@@ -29,7 +27,14 @@ AddEventHandler("ARMA:getJobSelectors",function()
         end
     end
     TriggerClientEvent("ARMA:gotJobSelectors",source,jobSelectors)
+end
+
+RegisterNetEvent("ARMA:getJobSelectors")
+AddEventHandler("ARMA:getJobSelectors",function()
+    local source = source
+    ARMA.getJobSelectors(source)
 end)
+
 
 function ARMA.removeAllJobs(user_id)
     local source = ARMA.getUserSource(user_id)
