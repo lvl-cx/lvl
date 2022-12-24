@@ -151,7 +151,7 @@ AddEventHandler('ARMA:getFactionWhitelistedGroups', function()
 			-- Modify_Client_Roles('HMP', discord_id, user_id)
             -- Modify_Client_Roles('LFB', discord_id, user_id)
 			
-			print(('Synced Discord Role Groups for (%s [User ID: %s])'):format(GetPlayerName(source), user_id))
+			--print(('Synced Discord Role Groups for (%s [User ID: %s])'):format(GetPlayerName(source), user_id))
 		end
 	end
 end)
