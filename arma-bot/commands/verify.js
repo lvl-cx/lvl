@@ -5,38 +5,68 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = async(fivemexports, client, message, params) => {
     message.delete()
     if (!params[0] && !parseInt(params[0])) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'verify [code]', delete_after=10)
+        let embed = {
+            "title": "Verify",
+            "description": `:x: Invalid command usage \`${prefix}verify [code]\``,
+            "color": settingsjson.settings.botColour,
+            "footer": {
+                "text": ""
+            },
+            "timestamp": new Date()
+        }
+        message.channel.send({ embed }).then(msg => {
+            msg.delete(10000)
+        })
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_verification` WHERE code = ?", [params[0]], (code) => {
         if (code.length > 0) {
            if (code[0].discord_id === null ){
-            fivemexports.ghmattimysql.execute("UPDATE `arma_verification` SET discord_id = ?, verified = 1 WHERE code = ?", [message.author.id, params[0]], (result) => {
+            fivemexports.ghmattimysql.execute("UPDATE `arma_verification` SET discord_id = ?, verified = 1 WHERE code = ?", [message.author.id, params[0]], async (result) => {
                 if (result) {
                     let embed = {
-                        "title": "Verified",
-                        "description": `**Code: **${params[0]}\n**Perm ID:** ${code[0].user_id}`,
+                        "title": "Verify",
+                        "description": `:white_check_mark: Great you're verified, head back in game and press connect.`,
                         "color": settingsjson.settings.botColour,
                         "footer": {
                             "text": ""
                         },
                         "timestamp": new Date()
                     }
-                    message.channel.send({ embed })
-                    try {
-                        let role = message.guild.roles.find(r => r.name === '| Verified')
-                        message.member.addRole(role)
-                    } catch (err) {
-                        console.log()
-                    }
+                    message.channel.send({ embed }).then(msg => {
+                        msg.delete(10000)
+                    })
+                    await message.member.addRole("975490533344559161").then().catch(console.error);
                 }
             });
            }
            else{
-            return message.reply('This code has already been used!', delete_after=10)
+            let embed = {
+                "title": "Verify",
+                "description": `:x: That code was invalid make sure you have a valid code.`,
+                "color": settingsjson.settings.botColour,
+                "footer": {
+                    "text": ""
+                },
+                "timestamp": new Date()
+            }
+            message.channel.send({ embed }).then(msg => {
+                msg.delete(10000)
+            })
            }
         }
         else {
-            message.reply('Invalid code!', delete_after=10)
+            let embed = {
+                "title": "Verify",
+                "description": `:x: That code was invalid make sure you have a valid code.`,
+                "color": settingsjson.settings.botColour,
+                "footer": {
+                    "text": ""
+                },
+                "timestamp": new Date()
+            }
+            message.channel.send({ embed }).then(msg => {
+                msg.delete(10000)
+            })
         }
     })
 }

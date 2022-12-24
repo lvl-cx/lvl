@@ -233,9 +233,14 @@ client.on('message', (message) => {
         cmd = client.commands.get(command);
     }
     if (cmd) {
-        if (!message.channel.name.includes('bot') && (cmd.conf.name === 'verify' || cmd.conf.name === 'leaderboard')) {
+        if (!message.channel.name.includes('bot') && cmd.conf.name === 'leaderboard') {
             message.delete()
             message.reply('Please use bot commands for this command.').then(msg => {
+                msg.delete(5000)
+            })
+        }else if (!message.channel.name.includes('verify') && cmd.conf.name === 'verify'){
+            message.delete()
+            message.reply('Please use #verify for this command.').then(msg => {
                 msg.delete(5000)
             })
         }
