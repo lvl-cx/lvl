@@ -28,7 +28,7 @@ local pdGroups = {
     ["Special Constable Clocked"]=true,
 }
 local nhsGroups = {
-    ["NHS Trainee Paramedic" Clocked] = true,
+    ["NHS Trainee Paramedic Clocked"] = true,
     ["NHS Paramedic Clocked"] = true,
     ["NHS Critical Care Clocked"] = true,
     ["NHS Junior Doctor Clocked"] = true,
