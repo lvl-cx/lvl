@@ -1,4 +1,4 @@
-MySQL = module("arma_mysql", "MySQL")
+MySQL = module("modules/MySQL")
 MySQL.createCommand("casinochips/get_chips","SELECT * FROM arma_casino_chips WHERE user_id = @user_id")
 MySQL.createCommand("casinochips/add_chips", "UPDATE arma_casino_chips SET chips = (chips + @amount) WHERE user_id = @user_id")
 MySQL.createCommand("casinochips/remove_chips", "UPDATE arma_casino_chips SET chips = (chips - @amount) WHERE user_id = @user_id")

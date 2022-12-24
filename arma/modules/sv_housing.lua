@@ -3,7 +3,7 @@ local cfg = module("cfg/cfg_housing")
 
 --SQL
 
-MySQL = module("arma_mysql", "MySQL")
+MySQL = module("modules/MySQL")
 
 MySQL.createCommand("ARMA/get_address","SELECT home, number FROM arma_user_homes WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/get_home_owner","SELECT user_id FROM arma_user_homes WHERE home = @home AND number = @number")
