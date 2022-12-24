@@ -99,7 +99,6 @@ local function GetDiscordRoles(guild_id, user_discord_id)
 		end
 		return roles
 	else
-		--print("ERROR: Code 200 was not reached... Returning false. [Member Data NOT FOUND] DETAILS: " .. error_codes_defined[member.code])
 		return false
 	end
 	return false
@@ -109,12 +108,9 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
 	local discord_roles = GetDiscordRoles(cfg.Guilds[guild_name], discord_id)
 	if discord_roles then
 		local has_roles, does_not_have_roles = Get_Client_Has_Roles(cfg.Guild_Roles[guild_name], discord_roles)
-        -- print(json.encode(has_roles))
-        -- print(json.encode(does_not_have_roles))
 		for _, role_id in pairs(does_not_have_roles) do
 			for k,v in pairs(cfg.Guild_Roles[guild_name]) do
                 if v == role_id and ARMA.hasGroup(user_id, k) then
-                    --print("Removed role: " .. k .. " from user: " .. user_id)
                     ARMA.removeUserGroup(user_id, k)
                 end
 			end
@@ -123,7 +119,6 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
 		for _, role_id in pairs(has_roles) do
             for k,v in pairs(cfg.Guild_Roles[guild_name]) do
                 if v == role_id and not ARMA.hasGroup(user_id, k) then
-                    --print("Added role: " .. k .. " to user: " .. user_id)
                     ARMA.addUserGroup(user_id, k)
                 end
             end
@@ -135,6 +130,11 @@ local tracked = {}
 RegisterNetEvent('ARMA:getFactionWhitelistedGroups')
 AddEventHandler('ARMA:getFactionWhitelistedGroups', function()
 	local source = source
+	tARMA.getFactionGroups(source)
+end)
+
+function tARMA.getFactionGroups(source)
+    local source = source
 	local fivem_license = GetIdentifier(source, 'license')
 	if not tracked[fivem_license] then 
 		tracked[fivem_license] = true
@@ -145,16 +145,13 @@ AddEventHandler('ARMA:getFactionWhitelistedGroups', function()
 		local discord_id = Get_Client_Discord_ID(source)
 		if discord_id then
 			Discord_Sources[discord_id] = {user_source = source, user_id = user_id}
-
 			Modify_Client_Roles('MPD', discord_id, user_id)
 			-- Modify_Client_Roles('NHS', discord_id, user_id)
 			-- Modify_Client_Roles('HMP', discord_id, user_id)
             -- Modify_Client_Roles('LFB', discord_id, user_id)
-			
-			--print(('Synced Discord Role Groups for (%s [User ID: %s])'):format(GetPlayerName(source), user_id))
 		end
 	end
-end)
+end
 
 local function Get_Guild_Nickname(guild_id, discord_id)
 	local endpoint = ("guilds/%s/members/%s"):format(guild_id, discord_id)
@@ -164,7 +161,6 @@ local function Get_Guild_Nickname(guild_id, discord_id)
 		local nickname = data.nick
 		return nickname
 	else
-		--print("ERROR: Code 200 was not reached. Error Code: " .. error_codes_defined[member.code])
 		return nil
 	end
 end

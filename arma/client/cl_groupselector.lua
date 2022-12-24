@@ -8,6 +8,7 @@ RMenu:Get("main", "groupselector"):SetSubtitle("~b~Select a job.")
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
     if E then
 		TriggerServerEvent("ARMA:getJobSelectors")
+        TriggerServerEvent('ARMA:getFactionWhitelistedGroups')
 	end
 end)
 RegisterNetEvent("ARMA:gotJobSelectors",function(h)

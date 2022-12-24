@@ -78,7 +78,7 @@ local defaultGroups = {
     ["Burger Shot Cook"] = true,
 }
 
-local function getGroupInGroups(id, type)
+function getGroupInGroups(id, type)
     if type == 'staff' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if staffGroups[k] then 

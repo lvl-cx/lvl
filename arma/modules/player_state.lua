@@ -7,6 +7,7 @@ baseplayers = {}
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     Debug.pbegin("playerSpawned_player_state")
     local player = source
+    tARMA.getFactionGroups(source)
     local data = ARMA.getUserDataTable(user_id)
     local tmpdata = ARMA.getUserTmpTable(user_id)
     local playername = GetPlayerName(player)
