@@ -150,7 +150,6 @@ server_exports {
 	"GetRoleIdFromRoleName",
 	"GetDiscordAvatar",
 	"GetDiscordName",
-	"GetDiscordEmail",
 	"IsDiscordEmailVerified",
 	"GetDiscordNickname",
 	"GetGuildIcon",
