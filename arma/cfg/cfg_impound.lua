@@ -87,13 +87,11 @@ cfg.disallowedGarageTypes = {
     ["Police Helicopters"] = true,
     ["NHS Helicopters"] = true,
     ["HMP Vehicles"] = true,
-    ["AA"] = true,
     -- Large vehicles
     ["Standard Aircraft"] = true,
     ["Standard Helicopters"] = true,
     ["VIP Aircraft"] = true,
     ["VIP Helicopters"] = true,
-
 }
 
 cfg.disallowedVehicleClasses = {
