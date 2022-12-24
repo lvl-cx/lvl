@@ -64,7 +64,7 @@ AddEventHandler("ARMA:requestWhitelistedUsers",function(spawncode)
                 data = json.decode(v['weapon_info'])
                 for a,b in pairs(data) do
                     if b[spawncode] then
-                        whitelistOwners[v['user_id']] = (exports['ghmattimysql']:executeSync("SELECT username FROM arma_users WHERE id = @user_id", {user_id = user_id})[1]).username
+                        whitelistOwners[v['user_id']] = (exports['ghmattimysql']:executeSync("SELECT username FROM arma_users WHERE id = @user_id", {user_id = v['user_id']})[1]).username
                     end
                 end
             end
