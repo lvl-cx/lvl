@@ -1,6 +1,6 @@
 local a = false
 function func_ptt()
-    if globalOnPoliceDuty and tARMA.canAnim() then
+    if globalOnPoliceDuty and tARMA.canAnim() and not noclipActive then
         local b = tARMA.getPlayerPed()
         local c = tARMA.getPlayerId()
         if a then
