@@ -152,10 +152,11 @@ end
 RegisterKeyMapping("drawmarker", "Gang Marker", "MOUSE_BUTTON", "MOUSE_MIDDLE")
 RegisterCommand('drawmarker', createMarker)
 
-RMenu.Add('markercolour','main',RageUI.CreateMenu("Marker Colour","~b~ARMA Marker Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","gangmarker"))
+RMenu.Add('markercolour','main',RageUI.CreateMenu("","~b~ARMA Marker Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","gangmarker"))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('markercolour', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.Separator('Remember to do ~b~/markers ~w~to enable them.')
             RageUI.SliderProgress("Red ["..config.r.."]",config.r,255,"Press ~b~SPACE~w~ to enter RGB Red value",{ProgressBackgroundColor={R=186,G=58,B=48,A=255},ProgressColor={R=212,G=66,B=55,A=255}},true,function(c,e,d,f)
                 if e then 
                     if IsControlJustPressed(0,22)then 
@@ -209,6 +210,7 @@ end)
 
 RegisterCommand("markers",function()
     markersEnabled = not markersEnabled
+    tARMA.notify("Markers are now "..(markersEnabled and "~g~enabled" or "~r~disabled"))
     SetResourceKvpInt('ARMA_markers_enabled', markersEnabled)
 end)
 
