@@ -97,7 +97,7 @@ function func_taserHandler(k)
                 drawNativeNotification("Barbs Disconnected - ~b~Cartridge 2")
             end
         end
-        if k.weapon == a.hash then
+        if k.weapon == GetHashKey(a.hash) then
             if IsControlJustPressed(1, 308) then
                 if a.reactivate1.active == true then
                     drawNativeNotification("Reactivated cartridge: ~INPUT_SELECT_WEAPON_UNARMED~")
