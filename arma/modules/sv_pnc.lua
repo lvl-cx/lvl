@@ -55,6 +55,9 @@ AddEventHandler('ARMA:finePlayer', function(id, charges, amount, notes)
     local source = source
     local user_id = ARMA.getUserId(source)
     local amount = tonumber(amount)
+    if amount > 250000 then
+        amount = 250000
+    end
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
         if ARMA.tryBankPayment(id, amount) then
             ARMA.giveBankMoney(user_id, amount*0.1)
