@@ -3,7 +3,7 @@ local Proxy = module("arma", "lib/Proxy")
 local ARMA = Proxy.getInterface("ARMA")
 local ARMAclient = Tunnel.getInterface("ARMA","ARMA")
 
-MySQL = module("arma_mysql", "MySQL")
+MySQL = module("modules/MySQL")
 
 local Inventory = module("arma", "cfg/inventory")
 local Housing = module("arma", "cfg/cfg_housing")

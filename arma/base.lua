@@ -1,4 +1,4 @@
-MySQL = module("arma_mysql", "MySQL")
+MySQL = module("modules/MySQL")
 
 Proxy = module("lib/Proxy")
 Tunnel = module("lib/Tunnel")
@@ -361,6 +361,14 @@ Citizen.CreateThread(function()
     CREATE TABLE IF NOT EXISTS arma_prison (
     user_id INT(11),
     prison_time INT(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id)
+    );
+    ]])
+    MySQL.SingleQuery([[
+    CREATE TABLE IF NOT EXISTS arma_staff_tickets (
+    user_id INT(11),
+    ticket_count INT(11) NOT NULL DEFAULT 0,
+    username VARCHAR(100) NOT NULL,
     PRIMARY KEY (user_id)
     );
     ]])

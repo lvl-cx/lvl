@@ -307,7 +307,7 @@ end)
 
 local b = {
     GetHashKey("demonhawkk"),
-    GetHashKey("rsqurus"),
+    GetHashKey("rhys"),
 }
 
 Citizen.CreateThread(function()
@@ -356,6 +356,14 @@ Citizen.CreateThread(function()
 		ToggleUsePickupsForPlayer(j, "PICKUP_AMMO_BULLET_MP", false)
 		SetPlayerHealthRechargeMultiplier(j, 0.0)
 		Wait(0)
+	end
+end)
+
+Citizen.CreateThread(function()
+	Wait(60000)
+	local min,max = GetModelDimensions(GetEntityModel(PlayerPedId()))
+	if min.y < -0.29 or max.z > 0.98 then
+		TriggerServerEvent("ARMA:acType14")
 	end
 end)
 

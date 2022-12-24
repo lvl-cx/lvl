@@ -257,6 +257,7 @@ cfg.groups = {
         "admin.kick",
         "admin.revive",
         "admin.slap",
+        "admin.tp2waypoint",
         "admin.tp2player",
         "admin.freeze",
         "admin.screenshot",

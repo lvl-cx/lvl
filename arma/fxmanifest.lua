@@ -4,7 +4,6 @@ games {  'gta5' }
 description "RP module/framework"
 
 dependency "ghmattimysql"
-dependency "arma_mysql"
 
 ui_page "ui/index.html"
 
