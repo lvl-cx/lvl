@@ -5,7 +5,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     if (message.mentions.members.first()) {
         let user = message.mentions.members.first()
-        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_ids` WHERE identifier = ?", ["discord:" + user.id], (result) => {
+        fivemexports.ghmattimysql.execute("SELECT user_id FROM `arma_verification` WHERE discord_id = ?", [user.id], (result) => {
             if (result.length > 0) {
                 let embed = {
                     "title": "Discord to Perm ID",
