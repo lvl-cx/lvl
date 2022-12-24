@@ -54,6 +54,16 @@ local verify_card = {
                 }
             }
         },
+        {
+            ["type"] = "ActionSet",
+            ["actions"] = {
+                {
+                    ["type"] = "Action.OpenUrl",
+                    ["title"] = "Join Discord",
+                    ["url"] = "https://discord.gg/armarp"
+                }
+            }
+        },
     }
 }
 
