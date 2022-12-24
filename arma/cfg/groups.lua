@@ -326,7 +326,7 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
-        "police.announce"
+        "police.announce",
         "police.commissioner",
     },
     ["Commissioner"] = {
@@ -376,6 +376,7 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
+        "police.chiefsuperintendent",
     },
     ["Chief Superintendent"] = {
         "cop.whitelisted"
@@ -384,14 +385,25 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
+        "police.superintendent",
     },
     ["Superintendent"] = {
+        "cop.whitelisted"
+    },
+    ["Special Constable Clocked"] = {
+        "cop.whitelisted",
+        "police.onduty.permission",
+        "police.armoury",
+        "police.specialconstable",
+    },
+    ["Special Constable"] = {
         "cop.whitelisted"
     },
     ["Chief Inspector Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.chiefinspector",
     },
     ["Chief Inspector"] = {
         "cop.whitelisted"
@@ -399,7 +411,8 @@ cfg.groups = {
     ["Inspector Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.inspector",
     },
     ["Inspector"] = {
         "cop.whitelisted"
@@ -407,23 +420,17 @@ cfg.groups = {
     ["Sergeant Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.sergeant",
     },
     ["Sergeant"] = {
-        "cop.whitelisted"
-    },
-    ["Special Constable Clocked"] = {
-        "cop.whitelisted",
-        "police.onduty.permission",
-        "police.armoury",
-    },
-    ["Special Constable"] = {
         "cop.whitelisted"
     },
     ["Senior Constable Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.seniorconstable",
     },
     ["Senior Constable"] = {
         "cop.whitelisted"
@@ -431,7 +438,8 @@ cfg.groups = {
     ["Police Constable Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.constable",
     },
     ["Police Constable"] = {
         "cop.whitelisted"
@@ -439,7 +447,8 @@ cfg.groups = {
     ["PCSO Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
-        "police.armoury"
+        "police.armoury",
+        "police.pcso",
     },
     ["PCSO"] = {
         "cop.whitelisted"
@@ -456,77 +465,89 @@ cfg.groups = {
                                                         
     
     ["NHS Head Chief Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.headchief",
     },
     ["NHS Head Chief"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Assistant Chief Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.assistantchief",
     },
     ["NHS Assistant Chief"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Deputy Chief Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.deputychief",
     },
     ["NHS Deputy Chief"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Captain Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
     },
     ["NHS Captain"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
+        "nhs.captain",
     },
     ["NHS Consultant Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.consultant",
     },
     ["NHS Consultant"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Specialist Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.specialist",
     },
     ["NHS Specialist"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Senior Doctor Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.seniordoctor",
     },
     ["NHS Senior Doctor"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Doctor Clocked"] = {
-        "nhs.whitelisted"
-        "nhs.onduty.permission"
+        "nhs.whitelisted",
+        "nhs.onduty.permission",
+        "nhs.doctor",
     },
     ["NHS Doctor"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Junior Doctor Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.juniordoctor",
     },
     ["NHS Junior Doctor"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Critical Care Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.criticalcare",
     },
     ["NHS Critical Care"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Paramedic Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.paramedic",
     },
     ["NHS Paramedic"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     ["NHS Trainee Paramedic Clocked"] = {
-        "nhs.onduty.permission"
+        "nhs.onduty.permission",
+        "nhs.traineeparamedic",
     },
     ["NHS Trainee Paramedic"] = {
-        "nhs.whitelisted"
+        "nhs.whitelisted",
     },
     
     -- $$\       $$$$$$\  $$$$$$\  $$$$$$$$\ $$\   $$\  $$$$$$\  $$$$$$$$\  $$$$$$\  
