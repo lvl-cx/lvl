@@ -60,7 +60,7 @@ AddEventHandler("ARMA:requestWhitelistedUsers",function(spawncode)
     local whitelistOwners = {}
     MySQL.query("ARMA/get_all_weapons", {}, function(weaponWhitelists)
         for k,v in pairs(weaponWhitelists) do
-            if v['weapon_info'] ~= '' then
+            if v['weapon_info'] ~= nil then
                 data = json.decode(v['weapon_info'])
                 for a,b in pairs(data) do
                     if b[spawncode] then
