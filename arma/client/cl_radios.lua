@@ -66,33 +66,9 @@ AddEventHandler("pma-voice:radioActive",function(n)
         exports["pma-voice"]:clearProximityOverride()
     end
 end)
-RMenu.Add(
-    "radios",
-    "mainmenu",
-    RageUI.CreateMenu("Radios", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight())
-)
-RMenu.Add(
-    "radios",
-    "advancedeffects",
-    RageUI.CreateSubMenu(
-        RMenu:Get("radios", "mainmenu"),
-        "Radios",
-        "Advanced Effects",
-        tARMA.getRageUIMenuWidth(),
-        tARMA.getRageUIMenuHeight()
-    )
-)
-RMenu.Add(
-    "radios",
-    "channelinfo",
-    RageUI.CreateSubMenu(
-        RMenu:Get("radios", "mainmenu"),
-        "Radios",
-        "Channel Information",
-        tARMA.getRageUIMenuWidth(),
-        tARMA.getRageUIMenuHeight()
-    )
-)
+RMenu.Add("radios","mainmenu",RageUI.CreateMenu("Radios", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
+RMenu.Add("radios","advancedeffects",RageUI.CreateSubMenu(RMenu:Get("radios", "mainmenu"),"Radios","Advanced Effects",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+RMenu.Add("radios","channelinfo",RageUI.CreateSubMenu(RMenu:Get("radios", "mainmenu"),"Radios","Channel Information",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 local function u(h, v)
     local w = GetResourceKvpInt(h)
     if w <= 0 then
@@ -373,7 +349,7 @@ end,false)
 Citizen.CreateThread(function()
     exports["pma-voice"]:setVoiceProperty("micClicks", false)
     exports["pma-voice"]:setRadioVolume(u("radios_volume", 10) * 10)
-    B = CreateAudioSubmix("CMGRadio")
+    B = CreateAudioSubmix("ARMARadio")
     SetAudioSubmixEffectRadioFx(B, 0)
     SetAudioSubmixEffectParamInt(B, 0, "default", 1)
     F()
