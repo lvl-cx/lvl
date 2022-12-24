@@ -18,22 +18,15 @@ local blockedWords = {
 "wog", 
 "coon", 
 "paki",
-"admin",
-"cunt",
 "faggot",
 "anal",
-"dick",
 "kys",
-"gay",
 "homosexual",
 "lesbian",
 "suicide",
 "negro",
 "queef",
 "queer",
-"weeb",
-"suck",
-"tard",
 "allahu akbar",
 "terrorist",
 "wanker",
@@ -45,7 +38,7 @@ local blockedWords = {
 "n1gg3r",
 "h0m0s3xual",
 "nazi",
-"hitler",}
+"hitler"}
 
 AddEventHandler('_chat:messageEntered', function(author, color, message)
     local source = source
