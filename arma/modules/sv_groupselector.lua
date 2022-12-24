@@ -12,7 +12,12 @@ AddEventHandler("ARMA:getJobSelectors",function()
                 if j._config.permissions[1]~=nil then
                     if ARMA.hasPermission(ARMA.getUserId(source),j._config.permissions[1])then
                         v['_config'] = j._config
-                        v['jobs'] = j.jobs
+                        v['jobs'] = {}
+                        for a,b in pairs(j.jobs) do
+                            if ARMA.hasGroup(user_id, b[1]) then
+                                table.insert(v['jobs'], b)
+                            end
+                        end
                         jobSelectors[k] = v
                     end
                 else
@@ -32,10 +37,8 @@ function ARMA.removeAllJobs(user_id)
         for k,v in pairs(j.jobs)do
             if i == 'default' and ARMA.hasGroup(user_id, v[1]) then
                 ARMA.removeUserGroup(user_id, v[1])
-                --ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]}) -- remove later
             elseif i ~= 'default' and ARMA.hasGroup(user_id, v[1]..' Clocked') then
                 ARMA.removeUserGroup(user_id, v[1]..' Clocked')
-                --ARMAclient.notify(source, {'~o~[DEBUG] Removing group: '..v[1]..' Clocked'}) -- remove later
             end
         end
     end
@@ -48,6 +51,7 @@ function ARMA.removeAllJobs(user_id)
     TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, false)
     ARMAclient.setLFB(source, {false})
     TriggerClientEvent('ARMA:disableFactionBlips', source)
+    TriggerClientEvent('ARMA:radiosClearAll', source)
     -- toggle all main jobs to false
     TriggerClientEvent('ARMA:toggleTacoJob', source, false)
 end
