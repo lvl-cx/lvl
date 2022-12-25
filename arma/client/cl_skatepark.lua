@@ -18,7 +18,7 @@ AddEventHandler("ARMA:onClientSpawn",function(b, c)
                 if GetGameTimer() - cd > 60000 then
                     local h = tARMA.loadModel(a[e.skateparkId].carID)
                     local i = CreateVehicle(h,a[e.skateparkId].position.x,a[e.skateparkId].position.y,a[e.skateparkId].position.z + 0.5,0.0,true,false)
-                    DecorSetInt(nveh, "ARMAACVeh", 955)
+                    DecorSetInt(i, "ARMAACVeh", 955)
                     SetVehicleOnGroundProperly(i)
                     SetEntityInvincible(i, false)
                     SetPedIntoVehicle(tARMA.getPlayerPed(), i, -1)
