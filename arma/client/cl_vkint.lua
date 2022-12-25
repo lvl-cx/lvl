@@ -11,7 +11,7 @@ local a = {
         id = 59,
         position = vector3(470.19061279296, -984.85455322266, 30.689586639404),
         name = "PD Main Floor",
-        destination = {68, 72},
+        destination = {69, 68, 72},
         permission = "police"
     },
     [68] = {
@@ -21,13 +21,13 @@ local a = {
         destination = {59},
         permission = "police"
     },
-   --[[  [69] = {
+    [69] = {
         id = 69,
         position = vector3(405.72525024414, -996.65222167968, -99.004089355468),
         name = "Photo Room",
         destination = {59},
         permission = "police"
-    }, ]]
+    },
     [72] = {
         id = 72,
         position = vector3(1851.3275146484, 3697.2602539063, 34.286640167236),
@@ -39,12 +39,12 @@ local a = {
         id = 74,
         position = vector3(-2173.7785644531, 5142.5498046875, 2.8199977874756),
         name = "VIP Island",
-        destination = {75, 133}
+        destination = {75}
     },
     [75] = {
         id = 75,
-        position = vector3(-2335.1215820313, 266.88153076172, 169.60194396973),
-        name = "Kortz Center",
+        position = vector3(-746.84411621094, 5807.5966796875, 17.611439041138),
+        name = "Paleto Lodges",
         destination = {74}
     },
     [95] = {
@@ -167,11 +167,7 @@ local a = {
         name = "Tower Ground Floor",
         destination = {125}
     },
-    [125] = {
-        id = 125, 
-        position = vector3(-2360.697, 3249.581, 92.90363), 
-        name = "Tower Top Floor", 
-        destination = {124}},
+    [125] = {id = 125, position = vector3(-2360.697, 3249.581, 92.90363), name = "Tower Top Floor", destination = {124}},
     [126] = {
         id = 126,
         position = vector3(2521.0390625, -279.24157714844, -58.72301864624),
@@ -214,12 +210,6 @@ local a = {
         name = "Integrity Lobby",
         destination = {131}
     },
-    [133] = {
-        id = 133,
-        position = vector3(152.98393249512,-1053.7336425781,29.220794677734),
-        name = "Legion Teleport (BETA only)",
-        destination = {74}
-    }
 }
 
 RMenu.Add("vkint","mainmenu",RageUI.CreateMenu("Teleporter", "Main Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
