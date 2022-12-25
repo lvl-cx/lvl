@@ -870,14 +870,12 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
         ARMA.getUserIdByIdentifiers(ids, function(user_id)
             local numtokens = GetNumPlayerTokens(source)
             if numtokens == 0 then
-                print("[ARMA] User rejected for attempting to evade ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
-                deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. id)
-                tARMA.sendWebhook('ban-evaders', 'ARMA Ban Evade Logs', "> Player Name: **"..name.."**\n> Player Current Perm ID: **"..user_id.."**\n> Player Banned PermID: **"..id.."**\n> Player Banned Identifier: **"..bannedIdentifier.."**")
+                deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. user_id)
+                tARMA.sendWebhook('ban-evaders', 'ARMA Ban Evade Logs', "> Player Name: **"..name.."**\n> Player Current Perm ID: **"..user_id.."**\n> Player Token Amount: **"..numtokens.."**")
                 return 
             end
             ARMA.IdentifierBanCheck(source, user_id, function(status, id, bannedIdentifier)
                 if status then
-                    print("[ARMA] User rejected for attempting to evade ID: " .. user_id .. " | (Ignore joined message, they were rejected)") 
                     deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. id)
                     tARMA.sendWebhook('ban-evaders', 'ARMA Ban Evade Logs', "> Player Name: **"..name.."**\n> Player Current Perm ID: **"..user_id.."**\n> Player Banned PermID: **"..id.."**\n> Player Banned Identifier: **"..bannedIdentifier.."**")
                     return 
