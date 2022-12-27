@@ -699,7 +699,7 @@ RegisterNUICallback('takePhoto', function(data, cb)
       break
     elseif IsControlJustPressed(0, 191) then -- TAKE.. PIC
         print(json.encode(data))
-        exports['screenshot-basic']:requestScreenshotUpload('https://cmdstudios.net/upld/upload.php', 'files[]', function(data)
+        exports['screenshot-basic']:requestScreenshotUpload('https://cmgstudios.net/upld/upload.php', 'files[]', function(data)
             local resp = json.decode(data)
             DestroyMobilePhone()
             CellCamActivate(false, false)

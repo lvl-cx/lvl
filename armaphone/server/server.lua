@@ -329,7 +329,7 @@ end)
 
 RegisterServerEvent('ARMA:internal_startCall')
 AddEventHandler('ARMA:internal_startCall', function(source, phone_number, rtcOffer, extraData)
-    if FixePhone[phone_number] ~= nil then
+    if Config.FixePhone[phone_number] ~= nil then
         onCallFixePhone(source, phone_number, rtcOffer, extraData)
         return
     end
@@ -610,7 +610,7 @@ function onCallFixePhone (source, phone_number, rtcOffer, extraData)
         hidden = hidden,
         rtcOffer = rtcOffer,
         extraData = extraData,
-        coords = FixePhone[phone_number].coords
+        coords = Config.FixePhone[phone_number].coords
     }
     
     PhoneFixeInfo[indexCall] = AppelsEnCours[indexCall]
