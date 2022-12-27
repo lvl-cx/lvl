@@ -4,25 +4,25 @@ local cfg = module("cfg/cfg_licensecentre")
 RegisterServerEvent("LicenseCentre:BuyGroup")
 AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
     local source = source
-    local userid = ARMA.getUserId(source)
+    local user_id = ARMA.getUserId(source)
     local coords = cfg.location
     local ped = GetPlayerPed(source)
     local playerCoords = GetEntityCoords(ped)
-    if not ARMA.hasGroup(source, "Rebel") and job == "AdvancedRebel" then
+    if not ARMA.hasGroup(user_id, "Rebel") and job == "AdvancedRebel" then
         ARMAclient.notify(source, {"~r~You need to have Rebel License."})
         return
     end
     if #(playerCoords - coords) <= 15.0 then
-        if ARMA.hasGroup(userid, job) then 
+        if ARMA.hasGroup(user_id, job) then 
             ARMAclient.notify(source, {"~o~You have already purchased this license!"})
             TriggerClientEvent("arma:PlaySound", source, 2)
         else
             for k,v in pairs(cfg.licenses) do
                 if v.group == job then
-                    if ARMA.tryFullPayment(userid, v.price) then
-                        ARMA.addUserGroup(userid,job)
+                    if ARMA.tryFullPayment(user_id, v.price) then
+                        ARMA.addUserGroup(user_id,job)
                         ARMAclient.notify(source, {"~g~Purchased " .. name .. " for ".. '£' ..tostring(getMoneyStringFormatted(v.price)) .. " ❤️"})
-                        tARMA.sendWebhook('purchases',"ARMA License Centre Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..userid.."**\n> Purchased: **"..name.."**")
+                        tARMA.sendWebhook('purchases',"ARMA License Centre Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**")
                         TriggerClientEvent("arma:PlaySound", source, 1)
                     else 
                         ARMAclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
