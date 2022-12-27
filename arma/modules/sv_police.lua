@@ -581,10 +581,10 @@ AddEventHandler('ARMA:arcTaser', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-      ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
+      ARMAclient.getNearestPlayer(source, {3}, function(nplayer)
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
-            TriggerClientEvent('ARMA:receiveBarbs', nplayer)
+            TriggerClientEvent('ARMA:receiveBarbs', nplayer, source)
         end
       end)
     end

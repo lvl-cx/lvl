@@ -268,6 +268,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         end
                                     end)
                                 elseif purchasetype == 'ammo' then
+                                    price = price/2
                                     if ARMA.tryPayment(user_id,price) then
                                         if price > 0 then
                                             ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})
