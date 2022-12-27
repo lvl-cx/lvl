@@ -17,7 +17,7 @@ cfg.presets = {
             [11] = {200, 0, 2}
         },
         props = {
-            [0] = {22, 0, 1} --Christmas Hat
+            --[0] = {22, 0, 1} --Christmas Hat
         }
     },
     ["StaffFemale"] = {
