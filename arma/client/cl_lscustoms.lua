@@ -4,26 +4,87 @@ local currentpos = nil
 local currentgarage = 0
 
 local garages = { 
-	[1] = { locked = false, camera = {x = -330.945, y = -135.471, z = 39.01, heading = 102.213}, driveout = {x = -350.376,y = -136.76, z = 38.294, heading = 70.226}, drivein = {x = -350.655,y = -136.55, z = 38.295, heading = 249.532}, outside = { x = -362.7962, y = -132.4005, z = 38.25239, heading = 71.187133}, inside = {x = -337.3863,y = -136.9247,z = 38.5737, heading = 269.455}},
-	[2] = { locked = false, camera = {x = 737.09, y = -1085.721, z = 22.169, heading = 114.86}, driveout = {x = 725.46,y = -1088.822, z = 21.455, heading = 89.395}, drivein = {x = 726.157, y = -1088.768, z = 22.169, heading = 270.288}, outside = {x = 716.54,y = -1088.757, z = 21.651, heading = 89.248}, inside = {x = 733.69,y = -1088.74, z = 21.733, heading = 270.528}},
-	[3] = { locked = false, camera = {x = -1154.902, y = -2011.438, z = 13.18, heading = 95.49}, driveout = {x = -1150.379,y = -1995.845, z = 12.465, heading = 313.594}, drivein = {x = -1150.26,y = -1995.642, z = 12.466, heading = 136.859}, outside = {x = -1140.352,y = -1985.89, z = 12.45, heading = 314.406}, inside = {x = -1155.077,y = -2006.61, z = 12.465, heading = 162.58}},
-	[4] = { locked = false, camera = {x = 1177.98, y = 2636.059, z = 37.754, heading = 37.082}, driveout = {x = 1175.003,y = 2642.175, z = 37.045, heading = 0.759}, drivein = {x = 1174.701,y = 2643.764, z = 37.048, heading = 178.119}, outside = {x = 1175.565,y = 2652.819, z = 37.941, heading = 351.579}, inside = {x = 1174.823,y = 2637.807, z = 37.045, heading = 181.19}},
-	[5] = { locked = false, camera = {x = 105.825, y = 6627.562, z = 31.787, heading = 266.692}, driveout = {x = 112.326,y = 6625.148, z = 31.073, heading = 224.641}, drivein = {x = 112.738,y = 6624.644, z = 31.072, heading = 44.262}, outside = {x = 118.493,y = 6618.897, z = 31.13, heading = 224.701}, inside = {x = 108.842,y = 6628.447, z = 31.072, heading = 45.504}},
+	[1] = { 
+		locked = false, 
+		camera = {position = vector3(-330.945, -135.471, 39.01), heading = 102.213},
+        driveOut = {position = vector3(-350.376, -136.76, 38.294), heading = 70.226},
+		driveIn = {position = vector3(-350.655, -136.55, 38.295), heading = 249.532},
+		outside = {position = vector3(-362.7962, -132.4005, 38.25239), heading = 71.187133},
+		inside = {position = vector3(-337.3863, -136.9247, 38.5737), heading = 269.455}
+	},
+	[2] = { 
+		locked = false, 
+		camera = {position = vector3(737.09, -1085.721, 22.169), heading = 114.86},
+		driveOut = {position = vector3(725.46, -1088.822, 21.455), heading = 89.395},
+		driveIn = {position = vector3(726.157, -1088.768, 22.169), heading = 270.288},
+		outside = {position = vector3(716.54, -1088.757, 21.651), heading = 89.248},
+		inside = {position = vector3(733.69, -1088.74, 21.733), heading = 270.528}
+	},
+	[3] = { 
+		locked = false, 
+		camera = {position = vector3(-1154.902, -2011.438, 13.18), heading =95.49},
+		driveOut = {position = vector3(-1150.379, -1995.845, 12.465), heading = 313.594},
+		driveIn = {position = vector3(-1150.26, -1995.642, 12.466), heading = 136.859},
+		outside = {position = vector3(-1140.352, -1985.89, 12.45), heading = 314.406},
+		inside = {position = vector3(-1155.077, -2006.61, 12.465), heading = 162.58},
+		interior = {key = 164353, room = 2044753180}
+	},
+	[4] = { 
+		locked = false, 
+		camera = {position = vector3(1177.98, 2636.059, 37.754), heading = 37.082},
+		driveOut = {position = vector3(1175.003, 2642.175, 37.045), heading = 0.759},
+		driveIn = {position = vector3(1174.701, 2643.764, 37.048), heading = 178.119},
+		outside = {position = vector3(1175.565, 2652.819, 37.941), heading = 351.579},
+		inside = {position = vector3(1174.823, 2637.807, 37.045), heading = 181.19}
+	},
+	[5] = { 
+		locked = false, 
+		camera = {position = vector3(105.825, 6627.562, 31.787), heading = 266.692},
+		driveOut = {position = vector3(112.326, 6625.148, 31.073), heading = 224.641},
+		driveIn = {position = vector3(112.738, 6624.644, 31.072), heading = 44.262},
+		outside = {position = vector3(118.493, 6618.897, 31.13), heading = 224.701},
+		inside = {position = vector3(108.842, 6628.447, 31.072), heading = 45.504}
+	},
 	[6] = { 
 		locked = false, 
-		camera = {x = -215.518, y = -1329.135, z = 30.89, heading = 329.092},
-		 driveout = {x = -205.935,y = -1316.642, z = 30.176, heading = 356.495}, 
-		 drivein = {x = -205.626,y = -1314.99, z = 30.247, heading = 179.395}, 
-		 outside = {x = -205.594,y = -1304.085, z = 30.614, heading = 359.792}, 
-		 inside = {x = -212.368,y = -1325.486, z = 30.176, heading = 141.107}},
+		camera = {position = vector3(-215.518,-1329.135, 30.89), heading = 329.092},
+		driveOut = {position = vector3(-205.935,-1316.642, 30.176), heading = 356.495},
+		driveIn = {position = vector3(-205.626,-1314.99, 30.247), heading = 179.395},
+		outside = {position = vector3(-205.594,-1304.085, 30.614), heading = 359.792},
+		inside = {position = vector3(-212.368,-1325.486, 30.176), heading = 141.107}
+	},
 	[7] = {
         locked = false,
-
-        camera = {x = -86.057243347168, y = -1819.9788818359, z = 26.958625793457},
-        driveout = {x = -82.01148223877, y = -1812.5144042969, z = 26.812662124634, heading = 240.107},
-        drivein = {x = -72.518035888672, y = -1820.6060791016, z = 26.941911697388, heading = 51.495},
-        outside = {x = -72.518035888672, y = -1820.6060791016, z = 26.941911697388},
-        inside = {x = -82.01148223877, y = -1812.5144042969, z = 26.812662124634}},
+        camera = {position = vector3(-86.057243347168,-1819.9788818359,26.958625793457)},
+		driveOut = {position = vector3(-82.01148223877,-1812.5144042969,26.812662124634), heading = 240.107},
+		driveIn = {position = vector3(-72.518035888672,-1820.6060791016,26.941911697388), heading = 51.495},
+		outside = {position = vector3(-72.518035888672,-1820.6060791016,26.941911697388)},
+		inside = {position = vector3(-82.01148223877,-1812.5144042969,26.812662124634)}
+	},
+	[8] = {
+        locked = false,
+        camera = {position = vector3(-1070.8831787109,-846.38702392578,4.8841347694397), heading = 63.092},
+		driveOut = {position = vector3(-1075.5308837891,-847.00433349609,4.8841781616211), heading = 240.107},
+		driveIn = {position = vector3(-1071.5559082031,-852.48406982422,4.8729567527771), heading = 42.495},
+		outside = {position = vector3(-1071.5559082031,-852.48406982422,4.8729567527771), heading = 215.495},
+		inside = {position = vector3(-1077.9399414063,-846.11657714844, 4.8841381072998), heading = 224.107}
+	},
+	[9] = {
+        locked = false,
+        camera = {position = vector3(545.97668457031,-187.05009460449,55.878513336182), heading = 120.092},
+		driveOut = {position = vector3(545.31378173828,-189.39358520508,54.493225097656), heading = 85.107},
+		driveIn = {position = vector3(534.91668701172,-189.12139892578,53.944599151611), heading = 270.495},
+		outside = {position = vector3(534.91668701172,-189.12139892578,53.944599151611), heading = 80.495},
+		inside = {position = vector3(545.31378173828,-189.39358520508,54.493225097656), heading = 265.107}
+	},
+	[10] = {
+        locked = false,
+        camera = {position = vector3(135.45944213867,266.33685302734,112.62689971924)},
+		driveOut = {position = vector3(129.97991943359,263.06198120117,109.86600494385), heading = 340.0},
+		driveIn = {position = vector3(133.83386230469,273.98858642578,110.05864715576), heading = 160.0},
+		outside = {position = vector3(133.83386230469,273.98858642578,110.05864715576)},
+		inside = {position = vector3(129.97991943359,263.06198120117,109.86600494385)}
+	},
 }
 
 local Menu = SetMenu()
@@ -127,12 +188,11 @@ end
 
 --Set up inside camera
 local function SetupInsideCam()
-	local coords = currentpos.camera
+	local coords = currentpos.camera.position
 	cam = CreateCam("DEFAULT_SCRIPTED_CAMERA",true,2)
-	SetCamCoord(cam, coords.x, coords.y, coords.z + 1.0)
-	coords = currentpos.inside
-	PointCamAtCoord(cam, coords.x, coords.y, coords.z)
-	--PointCamAtEntity(cam, GetVehiclePedIsUsing(ped), p2, p3, p4, 1)
+	SetCamCoord(cam, coords + 1.0)
+	coords = currentpos.inside.position
+	PointCamAtCoord(cam, coords)
 	SetCamActive(cam, true)
 	RenderScriptCams( 1, 0, cam, 0, 0)
 end
@@ -528,17 +588,9 @@ local function DriveInGarage()
 		end
 
 		Citizen.CreateThread(function()
-			--NetworkSetEntityVisibleToNetwork(entity, toggle)
-			--NetworkFadeOutEntity(veh, true, true)
 			FadeOutLocalPlayer(1)
-			--NetworkUnregisterNetworkedEntity(veh)
-			--NetworkSetEntityVisibleToNetwork(veh, true)
-			--SetEntityVisible(veh, true, 0)
-			--SetNetworkIdExistsOnAllMachines(NetworkGetNetworkIdFromEntity(veh), false)
-			--SetEntityLocallyVisible(veh,true)
-			--SetEntityLocallyInvisible(veh,false)
-			SetEntityCoordsNoOffset(veh,pos.drivein.x,pos.drivein.y,pos.drivein.z)
-			SetEntityHeading(veh,pos.drivein.heading)
+			SetEntityCoordsNoOffset(veh,pos.driveIn.position)
+			SetEntityHeading(veh,pos.driveIn.heading)
 			SetVehicleOnGroundProperly(veh)
 			SetVehicleLights(veh, 2)
 			SetVehicleInteriorlight(veh, true)
@@ -546,13 +598,18 @@ local function DriveInGarage()
 			SetPlayerInvincible(GetPlayerIndex(),true)
 			SetEntityInvincible(veh,true)
 			SetVehRadioStation(veh, 255)
-
+			local hasInterior = pos.interior
+			if hasInterior then
+				ForceRoomForEntity(PlayerPedId(), hasInterior.key, hasInterior.room)
+				ForceRoomForEntity(veh, hasInterior.key, hasInterior.room)
+				ForceRoomForGameViewport(hasInterior.key, hasInterior.room)
+			end
 			gameplaycam = GetRenderingCam()
 			SetupInsideCam()
 			Citizen.Wait(50)
-
-			TaskVehicleDriveToCoord(ped, veh, pos.inside.x, pos.inside.y, pos.inside.z, f(3), f(1), GetEntityModel(veh), 16777216, f(0.1), true)
-			EndFade()Citizen.Wait(3000)
+			TaskVehicleDriveToCoord(ped, veh, pos.inside.position, f(3), f(1), GetEntityModel(veh), 16777216, f(0.1), true)
+			EndFade()
+			Citizen.Wait(3000)
 
 			local c = 0
 			while not IsVehicleStopped(veh) do
@@ -594,9 +651,14 @@ local function DriveOutOfGarage(pos)
 		local veh = GetVehiclePedIsIn(ped)
 		
 		pos = currentpos
-		TaskVehicleDriveToCoord(ped, veh, pos.outside.x, pos.outside.y, pos.outside.z, f(5), f(0.1), GetEntityModel(veh), 16777216, f(0.1), true)
-		
-		pos = currentpos.driveout
+		TaskVehicleDriveToCoord(ped, veh, pos.outside.position, f(5), f(0.1), GetEntityModel(veh), 16777216, f(0.1), true)
+		local hasInterior = pos.interior
+		if hasInterior then
+			ForceRoomForEntity(PlayerPedId(), hasInterior.key, hasInterior.room)
+			ForceRoomForEntity(veh, hasInterior.key, hasInterior.room)
+			ForceRoomForGameViewport(hasInterior.key, hasInterior.room)
+		end
+		pos = currentpos.driveOut
 		
 		--The vehicle customization is finished, so we send to server our vehicle data
 		local ok, veh_type, model = tARMA.getNearestOwnedVehicle(1)
@@ -612,7 +674,7 @@ local function DriveOutOfGarage(pos)
 		SetEntityCollision(veh,true,true)
 		FreezeEntityPosition(ped, false)
 		FreezeEntityPosition(veh, false)
-		SetEntityCoords(veh,pos.x,pos.y,pos.z)
+		SetEntityCoords(veh,pos.position)
 		SetEntityHeading(veh,pos.heading)
 		SetVehicleOnGroundProperly(veh)
 		SetVehicleDoorsLocked(veh,0)
@@ -683,9 +745,9 @@ Citizen.CreateThread(function()
 				local veh = GetVehiclePedIsUsing(ped)
 				if DoesEntityExist(veh) and GetPedInVehicleSeat(veh, -1) == ped and (IsThisModelACar(GetEntityModel(veh)) or IsThisModelAHeli(GetEntityModel(veh)) or IsThisModelABike(GetEntityModel(veh)))  then
 					for i,pos in ipairs(garages) do
-						outside = pos.drivein	
+						outside = pos.driveIn	
 						if LSC_Config.oldenter then			
-							if #(vec3(outside.x,outside.y,outside.z) - GetEntityCoords(ped)) <= f(5) then
+							if #(vec3(outside.position) - GetEntityCoords(ped)) <= f(5) then
 								if not tableContains(LSC_Config.ModelBlacklist,GetDisplayNameFromVehicleModel(GetEntityModel(veh)):lower()) then
 									if pos.locked then
 										if not LSC_Config.lock then
@@ -715,7 +777,7 @@ Citizen.CreateThread(function()
 								end
 							end
 						else
-							if math.abs(GetEntityHeading(veh)-outside.heading) <= 90 and IsVehicleStopped(veh) and GetDistanceBetweenCoords(outside.x,outside.y,outside.z,GetEntityCoords(ped)) <= f(5) then
+							if math.abs(GetEntityHeading(veh)-outside.heading) <= 90 and IsVehicleStopped(veh) and GetDistanceBetweenCoords(outside.position,GetEntityCoords(ped)) <= f(5) then
 								if not tableContains(LSC_Config.ModelBlacklist,GetDisplayNameFromVehicleModel(GetEntityModel(veh)):lower()) then
 									if pos.locked then
 										if not LSC_Config.lock then
@@ -746,7 +808,7 @@ end)
 
 --Lets drive out of the garage 
 function LSCMenu:OnMenuClose(m)
-	DriveOutOfGarage(currentpos.outside)
+	DriveOutOfGarage(currentpos.outside.position)
 end
 
 function LSCMenu:onSelectedIndexChanged(name, button)
@@ -1463,7 +1525,7 @@ AddEventHandler("ARMA:onClientSpawn",function(D, E)
         local p=function(n)
         end
         for q,h in pairs(garages)do 
-            tARMA.addBlip(h.inside.x,h.inside.y,h.inside.z,72, nil, "LS Customs")
+            tARMA.addBlip(h.inside.position.x,h.inside.position.y,h.inside.position.z,72, nil, "LS Customs")
         end 
 	end
 end)
