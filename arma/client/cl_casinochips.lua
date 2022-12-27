@@ -203,6 +203,7 @@ insideDiamondCasino = false
 
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
     if E then
+        TriggerServerEvent('ARMA:getChips')
         RequestStreamedTextureDict("CommonMenu")
         local C=function(D)
             showCasinoChipsCashier(true)
