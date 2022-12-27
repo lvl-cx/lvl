@@ -174,32 +174,30 @@ AddEventHandler("ARMA:save", function()
 end)
 
 RegisterNetEvent('ARMA:giveCashToPlayer')
-AddEventHandler('ARMA:giveCashToPlayer', function()
+AddEventHandler('ARMA:giveCashToPlayer', function(nplayer)
   local source = source
   local user_id = ARMA.getUserId(source)
   if user_id ~= nil then
-    ARMAclient.getNearestPlayer(source,{10},function(nplayer)
-      if nplayer ~= nil then
-        local nuser_id = ARMA.getUserId(nplayer)
-        if nuser_id ~= nil then
-          -- prompt number
-          ARMA.prompt(source,lang.money.give.prompt(),"",function(source,amount)
-            local amount = parseInt(amount)
-            if amount > 0 and ARMA.tryPayment(user_id,amount) then
-              ARMA.giveMoney(nuser_id,amount)
-              ARMAclient.notify(source,{lang.money.given({amount})})
-              ARMAclient.notify(nplayer,{lang.money.received({amount})})
-            else
-              ARMAclient.notify(source,{lang.money.not_enough()})
-            end
-          end)
-        else
-          ARMAclient.notify(source,{lang.common.no_player_near()})
-        end
+    if nplayer ~= nil then
+      local nuser_id = ARMA.getUserId(nplayer)
+      if nuser_id ~= nil then
+        ARMA.prompt(source,lang.money.give.prompt(),"",function(source,amount)
+          local amount = parseInt(amount)
+          if amount > 0 and ARMA.tryPayment(user_id,amount) then
+            ARMA.giveMoney(nuser_id,amount)
+            ARMAclient.notify(source,{lang.money.given({amount})})
+            ARMAclient.notify(nplayer,{lang.money.received({amount})})
+            tARMA.sendWebhook('give-cash', "ARMA Give Cash Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(nplayer).."**\n> Target PermID: **"..nuser_id.."**\n> Amount: **"..amount.."**")
+          else
+            ARMAclient.notify(source,{lang.money.not_enough()})
+          end
+        end)
       else
         ARMAclient.notify(source,{lang.common.no_player_near()})
       end
-    end)
+    else
+      ARMAclient.notify(source,{lang.common.no_player_near()})
+    end
   end
 end)
 
@@ -238,6 +236,7 @@ AddEventHandler("ARMA:bankTransfer", function(id, amount)
         TriggerClientEvent("arma:PlaySound", source, "apple")
         TriggerClientEvent("arma:PlaySound", ARMA.getUserSource(id), "apple")
         ARMA.giveBankMoney(id, amount)
+        tARMA.sendWebhook('bank-transfer', "ARMA Bank Transfer Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Target PermID: **"..id.."**\n> Amount: **"..amount.."**")
       else
         ARMAclient.notify(source,{'~r~You do not have enough money.'})
       end

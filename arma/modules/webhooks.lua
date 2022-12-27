@@ -6,7 +6,8 @@ local webhooks = {
     ['join'] = 'https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2',
     ['leave'] = 'https://discord.com/api/webhooks/991556666095050803/cGTvcrMqB4wmub370MCRQHwW74tzLIHsmgkqXyNBqLPExMWNnB7lTXFRrcDmSNUYhAWQ',
     -- civ
-    ['give-money'] = 'https://discord.com/api/webhooks/991455014751064104/5YHDx5686AN82SjPXGNFjdhqwY6eE46x811zFDBCcTGaoCV4azBEVnpqRplJTF5M0ZwJ',
+    ['give-cash'] = 'https://discord.com/api/webhooks/991455014751064104/5YHDx5686AN82SjPXGNFjdhqwY6eE46x811zFDBCcTGaoCV4azBEVnpqRplJTF5M0ZwJ',
+    ['bank-transfer'] = 'https://discord.com/api/webhooks/1057150997924937760/KIrZsrRwZP-v2qI4wRjuzYjjR1NoWuvFwDkBtWoMg6nWl9CPJBh72FLxpdtm0iynaoYx',
     ['search-player'] = 'https://discord.com/api/webhooks/1050349594384551956/1zCXDtzA7SBEHpWBM7OqKY8_7XqmZb-bMK9RhkTui8yQoUDpoDuMnBwj4fGwdh1-9tJZ',
     ['ask-id'] = 'https://discord.com/api/webhooks/991453068325556264/eJpHA6UOLpkz767qNXyZDJemLtKQ3mGPsyGxmaAvxYZ5cn9kcaGI7w_R_-7RW9ZClTTi',
     -- chat
