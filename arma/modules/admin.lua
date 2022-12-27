@@ -446,7 +446,6 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
     local AdminName = GetPlayerName(source)
     local CurrentTime = os.time()
     local PlayerDiscordID = 0
-    if PlayerID == 1 then DropPlayer(source, "Imagine trying to ban the Founder") return end
     ARMA.prompt(source, "Extra Ban Information (Hidden)","",function(player, Evidence)
         if ARMA.hasPermission(AdminPermID, "admin.tickets") then
             if Evidence == "" then

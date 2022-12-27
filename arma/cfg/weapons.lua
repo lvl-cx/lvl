@@ -40,11 +40,11 @@ cfg.weapons = {
         weight = 2.5,
     },
     ["WEAPON_NIGHTSTICK"] = {
-        name = "Batton",
+        name = "Police Baton",
         class = "Melee",
         ammo = "modelammo",
         policeWeapon = true,
-        model = "w_me_nightstick",
+        model = "",
         showonback = false,
         weight = 2.5,
     },

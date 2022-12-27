@@ -278,7 +278,6 @@ function showHowToCoinflip(W)
     RageUI.Visible(RMenu:Get("armacoinflip", "instructions"), W)
 end
 function showCoinflipMenu(W)
-    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("armacoinflip", "mainmenu"), W)
 end
 RMenu.Add("armacoinflip", "instructions", RageUI.CreateMenu("", "~b~COINFLIP", 0, 100, "banners", "coinflip"))
