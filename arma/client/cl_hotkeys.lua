@@ -44,7 +44,7 @@ Citizen.CreateThread(function()
             Wait(1000)
 		end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,32) then 
-			if not IsPauseMenuActive() and not IsPedInAnyVehicle(tARMA.getPlayerPed(), true) and not IsPedSwimming(tARMA.getPlayerPed()) and not IsPedSwimmingUnderWater(tARMA.getPlayerPed()) and not IsPedShooting(tARMA.getPlayerPed()) and not IsPedDiving(tARMA.getPlayerPed()) and not IsPedFalling(tARMA.getPlayerPed()) and GetEntityHealth(tARMA.getPlayerPed()) > 105 and not tARMA.isHandcuffed() and not tARMA.isInRadioChannel() then 
+			if not IsPauseMenuActive() and not IsPedInAnyVehicle(tARMA.getPlayerPed(), true) and not IsPedSwimming(tARMA.getPlayerPed()) and not IsPedSwimmingUnderWater(tARMA.getPlayerPed()) and not IsPedShooting(tARMA.getPlayerPed()) and not IsPedDiving(tARMA.getPlayerPed()) and not IsPedFalling(tARMA.getPlayerPed()) and GetEntityHealth(tARMA.getPlayerPed()) > 105 and not tARMA.isHandcuffed() then --and not tARMA.isInRadioChannel() then  remove when radios are fixed
 				tARMA.playAnim(true,{{"rcmnigel1c","hailing_whistle_waive_a"}},false)
 			end 
 		end
