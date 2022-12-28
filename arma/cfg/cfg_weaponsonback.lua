@@ -25,13 +25,8 @@ cfg.weapons = {
 	[`WEAPON_SIGMPX`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_sigmpx`},
 	[`WEAPON_SPAR17`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_spar17`},
 	[`WEAPON_G36`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_g36`},
-	[`WEAPON_G36`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_g36c`},
 	[`WEAPON_MP5X`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_sb_mp5x`},
-	[`WEAPON_G36K`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_g36k`},
-	[`WEAPON_MK18SOG`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_mk18sog`},
 	[`WEAPON_NSR9`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_nsr9`},
-	[`WEAPON_PDMK18`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_pdmk18`},
-	[`WEAPON_DEVGRU`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_devgru`},
 	[`WEAPON_REMINGTON870`] = {bone = 24818, offset = vector3(-0.12, -0.12, -0.13), rotation = vector3(100.0, -3.0, 5.0), model = `w_sg_remington870`, components = {`COMPONENT_REMINGTON870_CLIP_01`, `COMPONENT_REMINGTON870_TUBE_01`, `COMPONENT_REMINGTON870_STOCK_01`, `COMPONENT_REMINGTON870_SCOPE_01`}, removeComponents = {`COMPONENT_REMINGTON870_FLSH_01`}},
 
 	--?Mosin
