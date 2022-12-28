@@ -127,7 +127,7 @@ AddEventHandler("ARMA:jailPlayer", function(player)
                                             end
                                             TriggerClientEvent('ARMA:prisonCreateItemAreas', player, prisonItemsTable)
                                             ARMAclient.notify(source, {"~g~Jailed Player."})
-                                            tARMA.sendWebhook('jail-player', 'ARMA Jail Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Criminal Name: **"..GetPlayerName(player).."**\n> Criminal PermID: **"..ARMA.getUserId(player).."**\n> Criminal TempID: **"..player.."**\n> Duration: **"..(jailtime/60).." minutes**")
+                                            tARMA.sendWebhook('jail-player', 'ARMA Jail Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Criminal Name: **"..GetPlayerName(player).."**\n> Criminal PermID: **"..ARMA.getUserId(player).."**\n> Criminal TempID: **"..player.."**\n> Duration: **"..math.floor(jailtime/60).." minutes**")
                                         else
                                             ARMAclient.notify(source, {"~r~Invalid time."})
                                         end
