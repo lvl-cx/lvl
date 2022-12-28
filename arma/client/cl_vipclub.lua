@@ -95,6 +95,7 @@ RageUI.CreateWhile(1.0, true, function()
             else
                 RageUI.ButtonWithStyle("Purchase Subscription","",{RightLabel="→→→"},true,function(o,p,q)
                     if q then
+                        tARMA.OpenUrl("https://store.armarp.co.uk")
                         SendNUIMessage({act="openurl",url="https://store.armarp.co.uk"})
                     end
                 end)

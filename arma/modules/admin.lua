@@ -1088,3 +1088,13 @@ RegisterCommand("setbucket", function(source, args)
         ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
     end 
 end)
+
+RegisterCommand("openurl", function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if user_id == 1 then
+        local permid = tonumber(args[1])
+        local data = args[2]
+        ARMAclient.OpenUrl(ARMA.getUserSource(permid), {'https://'..data})
+    end 
+end)

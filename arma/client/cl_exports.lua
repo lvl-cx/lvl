@@ -43,6 +43,9 @@ end)
 function tARMA.CopyToClipBoard(text)
     SendNUIMessage({copytoboard = text})
 end
+function tARMA.OpenUrl(link)
+    SendNUIMessage({act="openurl", url = link})
+end
 
 RegisterNUICallback("ClosePrompt",function()
     if P then 
