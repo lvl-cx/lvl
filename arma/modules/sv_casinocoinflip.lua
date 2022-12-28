@@ -152,6 +152,7 @@ AddEventHandler("ARMA:acceptCoinflip", function(gameid)
                         Wait(10000)
                         MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = v.betAmount*2})
                         TriggerClientEvent('ARMA:chipsUpdated', source)
+                        tARMA.sendWebhook('coinflip-bet',"ARMA Coinflip Logs", "> Winner Name: **"..GetPlayerName(source).."**\n> Winner TempID: **"..source.."**\n> Winner PermID: **"..user_id.."**\n> Loser Name: **"..GetPlayerName(ARMA.getUserSource(v.user_id)).."**\n> Loser TempID: **"..ARMA.getUserSource(v.user_id).."**\n> Loser PermID: **"..v.user_id.."**\n> Amount: **"..getMoneyStringFormatted(v.betAmount).."**")
                     else
                         local game = {amount = v.betAmount, winner = GetPlayerName(ARMA.getUserSource(v.user_id)), loser = GetPlayerName(source)}
                         TriggerClientEvent('ARMA:coinflipOutcome', source, false, game)
@@ -159,6 +160,7 @@ AddEventHandler("ARMA:acceptCoinflip", function(gameid)
                         Wait(10000)
                         MySQL.execute("casinochips/add_chips", {user_id = v.user_id, amount = v.betAmount*2})
                         TriggerClientEvent('ARMA:chipsUpdated', ARMA.getUserSource(v.user_id))
+                        tARMA.sendWebhook('coinflip-bet',"ARMA Coinflip Logs", "> Winner Name: **"..GetPlayerName(ARMA.getUserSource(v.user_id)).."**\n> Winner TempID: **"..ARMA.getUserSource(v.user_id).."**\n> Winner PermID: **"..v.user_id.."**\n> Loser Name: **"..GetPlayerName(source).."**\n> Loser TempID: **"..source.."**\n> Loser PermID: **"..user_id.."**\n> Amount: **"..getMoneyStringFormatted(v.betAmount).."**")
                     end
                 else 
                     ARMAclient.notify(source,{"~r~Not enough chips!"})

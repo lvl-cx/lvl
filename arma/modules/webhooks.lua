@@ -64,6 +64,7 @@ local webhooks = {
     ['sell-to-nearest-player'] = 'https://discord.com/api/webhooks/1050352744160034817/blvujZVCfns9W1O5BYu-PYVSSu4G0F6sGArsdvn74FBPHL2jS5UFJ82qohX6p-0-cY7a',
     -- casino
     ['blackjack-bet'] = 'https://discord.com/api/webhooks/1050352894127390740/h29WYQilD31Ism7YcOUR827S4d3G_X6lbhXmws-HkyUxHEEy5AVl49EDO4roc-QTw99G',
+    ['coinflip-bet'] = 'https://discord.com/api/webhooks/1057570226801217556/mToQntSgGYtp0AjGMWj9YyhwMY-_hzdA_ocP-fpgxGmLtQoVvWx59gLpsobG-79qNQ9b',
     ['purchase-chips'] = 'https://discord.com/api/webhooks/1050352950310080532/I4iZFDHszuSxjkyWRugTQdlfZ9bq__Tx5JcABJPpi7pPsnDW8qs3qpNtv67SA8iTTCDt',
     ['sell-chips'] = 'https://discord.com/api/webhooks/1050353008887734312/nqpG1zJhxAVtlaKCYL-g69hsn5vDnpk9yJzv_X-cbk_NPr3fMUxO8iHfnltQl7VxBqYP',
     ['purchase-highrollers'] = 'https://discord.com/api/webhooks/1050353072884416575/oAp-99C1cYXZZ4RsO0q_m6x86qS8NVZrVAw1CWa2eXie86gnqff_0vFefmBAtvCmHuXD',
