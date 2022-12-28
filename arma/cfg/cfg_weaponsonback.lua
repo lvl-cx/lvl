@@ -9,6 +9,7 @@ cfg.weapons = {
 	[`WEAPON_GUITAR`] = {bone = 24818, offset = vector3(0.32, -0.15, 0.13), rotation = vector3(0.0, -90.0, 0.0), model = `w_me_guitar`},
 	[`WEAPON_TOILETBRUSH`] = {bone = 51826, offset = vector3(-0.01, 0.10, 0.07),  rotation = vector3(0.0, 0.0, -100.0), model = `w_me_toiletbrush`},
 	[`WEAPON_DILDO`] = {bone = 58271, offset = vector3(-0.01, 0.1, -0.07), rotation = vector3(-35.0, 0.10, -100.0), model = `w_me_dildo`},
+	[`WEAPON_MJOLNIR`] = {bone = 58271, offset = vector3(-0.01, 0.1, -0.07), rotation = vector3(-35.0, 0.10, -100.0), model = `w_me_mjolnir`},
 	[`WEAPON_CRICKETBAT`] = {bone = 24818, offset = vector3(0.32, -0.15, 0.13), rotation = vector3(0.0, -90.0, 0.0), model = `w_me_cricketbat`},
 	[`WEAPON_BASEBALLBAT`] = {bone = 24818, offset = vector3(0.32, -0.15, 0.13), rotation = vector3(0.0, -90.0, 0.0), model = `w_me_baseballbat`},
 	[`WEAPON_FIREAXE`] = {bone = 24818, offset = vector3(0.32, -0.15, 0.13), rotation = vector3(0.0, -90.0, 0.0), model = `w_me_fireaxe`},
