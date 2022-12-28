@@ -27,97 +27,86 @@ exports.runcmd = (fivemexports, client, message, params) => {
         userConnected = connected
     })
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_vehicles` WHERE user_id = ?", [params[0]], (cars) => {
-        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_notes` WHERE user_id = ?", [params[0]], (notes) => {
-            fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [params[0]], (userdata) => {
-                fivemexports.ghmattimysql.execute("SELECT * FROM arma_warnings WHERE user_id = ?", [params[0]], (warnings) => {
-                    fivemexports.ghmattimysql.execute("SELECT * FROM arma_user_moneys WHERE user_id = ?", [params[0]], (money) => {
-                        fivemexports.ghmattimysql.execute("SELECT * FROM arma_casino_chips WHERE user_id = ?", [params[0]], (chips) => {
-                            fivemexports.ghmattimysql.execute("SELECT * FROM `arma_users` WHERE id = ?", [params[0]], (users) => {
-                                fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_ids` WHERE user_id = ?", [params[0]], (userids) => {
-                                    for (i = 0; i < userids.length; i++) {
-                                        if (userids[i].identifier.includes('discord')) {
-                                            discord = `<@${userids[i].identifier.split(":")[1]}>`
-                                        }
-                                    }
-                                    hours = JSON.stringify(JSON.parse(userdata[0].dvalue).PlayerTime/60)
-                                    obj = JSON.parse(userdata[0].dvalue).groups
-                                    lastlogin = users[0].last_login.split(" ")
-                                    time = lastlogin[0]
-                                    date = lastlogin[1]
-                                    if (users[0].banned == 1) {
-                                        banned = 'Yes'
-                                    }
-                                    else {
-                                        banned = 'No'
-                                    }
-                                    let embed = {
-                                        "title": `**User Profile**`,
-                                        "description": `Perm ID: ***${params[0]}***`,
-                                        "color": settingsjson.settings.botColour,
-                                        "fields": [
-                                            {
-                                                name: '**Last Known Username:**',
-                                                value: `${users[0].username}`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Associated Discord:**',
-                                                value: `${discord}`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Balance:**',
-                                                value: `Wallet: ${(money[0].wallet).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nBank: ${(money[0].bank).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nChips: ${(chips[0].chips).toLocaleString('en-US')}`,
-                                                inline: true,
-                                            }, 
-                                            {
-                                                name: '**Connected:**',
-                                                value: `User is ${userConnected}.`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Last Logged In:**',
-                                                value: `${date} at ${time}`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Hours:**',
-                                                value: `User has a total of ${Math.round(hours)} hours.`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Notes:**',
-                                                value: `User has a total of ${JSON.parse(notes[0].info).length} notes.`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Groups:**',
-                                                value: `${(JSON.stringify(Object.keys(obj)).replace(/"/g, '').replace('[', '').replace(']', '')).replace(/,/g, ', ')}`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Garage:**',
-                                                value: `User has a total of ${cars.length} vehicles in their garage.`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**F10:**',
-                                                value: `User has a total of ${warnings.length} warnings.`,
-                                                inline: true,
-                                            },
-                                            {
-                                                name: '**Banned:**',
-                                                value: `${banned}`,
-                                                inline: true,
-                                            }, 
-                                        ],
-                                        "footer": {
-                                            "text": ""
+        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [params[0]], (userdata) => {
+            fivemexports.ghmattimysql.execute("SELECT * FROM arma_warnings WHERE user_id = ?", [params[0]], (warnings) => {
+                fivemexports.ghmattimysql.execute("SELECT * FROM arma_user_moneys WHERE user_id = ?", [params[0]], (money) => {
+                    fivemexports.ghmattimysql.execute("SELECT * FROM arma_casino_chips WHERE user_id = ?", [params[0]], (chips) => {
+                        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_users` WHERE id = ?", [params[0]], (users) => {
+                            fivemexports.ghmattimysql.execute("SELECT discord_id FROM `arma_verification` WHERE user_id = ?", [params[0]], (discordid) => {
+                                discord = `<@${discordid[0].discord_id}>`
+                                hours = JSON.stringify(JSON.parse(userdata[0].dvalue).PlayerTime/60)
+                                obj = JSON.parse(userdata[0].dvalue).groups
+                                lastlogin = users[0].last_login.split(" ")
+                                time = lastlogin[0]
+                                date = lastlogin[1]
+                                if (users[0].banned == 1) {
+                                    banned = 'Yes'
+                                }
+                                else {
+                                    banned = 'No'
+                                }
+                                let embed = {
+                                    "title": `**User Profile**`,
+                                    "description": `Perm ID: ***${params[0]}***`,
+                                    "color": settingsjson.settings.botColour,
+                                    "fields": [
+                                        {
+                                            name: '**Last Known Username:**',
+                                            value: `${users[0].username}`,
+                                            inline: true,
                                         },
-                                        "timestamp": new Date()
-                                    }
-                                    message.channel.send({ embed })
-                                });
+                                        {
+                                            name: '**Associated Discord:**',
+                                            value: `${discord}`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Balance:**',
+                                            value: `Wallet: ${(money[0].wallet).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nBank: ${(money[0].bank).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nChips: ${(chips[0].chips).toLocaleString('en-US')}`,
+                                            inline: true,
+                                        }, 
+                                        {
+                                            name: '**Connected:**',
+                                            value: `User is ${userConnected}.`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Last Logged In:**',
+                                            value: `${date} at ${time}`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Hours:**',
+                                            value: `User has a total of ${Math.round(hours)} hours.`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Groups:**',
+                                            value: `${(JSON.stringify(Object.keys(obj)).replace(/"/g, '').replace('[', '').replace(']', '')).replace(/,/g, ', ')}`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Garage:**',
+                                            value: `User has a total of ${cars.length} vehicles in their garage.`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**F10:**',
+                                            value: `User has a total of ${warnings.length} warnings.`,
+                                            inline: true,
+                                        },
+                                        {
+                                            name: '**Banned:**',
+                                            value: `${banned}`,
+                                            inline: true,
+                                        }, 
+                                    ],
+                                    "footer": {
+                                        "text": ""
+                                    },
+                                    "timestamp": new Date()
+                                }
+                                message.channel.send({ embed })
                             });
                         });
                     });
