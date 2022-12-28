@@ -459,9 +459,9 @@ local function am(aj)
     local an = math.random(1, 3)
     if an == 1 then
         ai(aj, 11000)
-        F("~g~Harrison the mechanic is looking at your car.")
+        F("~g~Rhys the mechanic is looking at your car.")
         Citizen.Wait(11000)
-        F("~g~Harrison is working on your car.")
+        F("~g~Rhys is working on your car.")
     elseif an == 2 then
         ai(aj, 11000 * 5)
         F("~g~Connor the mechanic is looking at your car.")
@@ -477,13 +477,13 @@ local function am(aj)
         F("~g~The Manager is also hitting things with a hammer.")
     elseif an == 3 then
         ai(aj, 11000 * 3)
-        F("~g~Kenzie the mechanic is looking at your car.")
+        F("~g~Ollie the mechanic is looking at your car.")
         Citizen.Wait(11000)
-        F("~g~Kenzie yells for Harrison to come look at it.")
+        F("~g~Ollie yells for Rhys to come look at it.")
         Citizen.Wait(11000)
         F("~g~Just look at it.")
         Citizen.Wait(11000)
-        F("~g~Harrison is working on your car.")
+        F("~g~Rhys is working on your car.")
     end
 end
 local function ao(aj, ap)
