@@ -70,7 +70,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if m then 
                         TriggerEvent("ARMA:showNotification",
                         {   
-                            text="The Video ID is the ID at the end of the YouTube URL after =",
+                            text="Use /play, The Video ID is the ID at the end of the YouTube URL after =",
                             height="200px",
                             width="auto",
                             colour="#FFF",
