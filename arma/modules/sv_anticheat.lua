@@ -258,6 +258,7 @@ RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
     local reason = ''
+    if user_id == 1 then return end
     if extra == nil then extra = 'None' end
     if source == '' then
         if not gettingVideo then
@@ -295,44 +296,6 @@ AddEventHandler("ARMA:acUnban",function(permid)
         TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to AC Unban Someone')
     end
 end)
-
-
-RegisterServerEvent("ARMA:editACVehicleWhitelist")
-AddEventHandler("ARMA:editACVehicleWhitelist", function(manage)
-    local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
-    local name = GetPlayerName(source)
-    if ARMA.hasGroup(user_id, 'Developer') then
-        ARMA.prompt(source,"Spawncode:","",function(source,spawncode)
-            if spawncode ~= '' then
-                model = GetHashKey(spawncode)
-                if manage then
-                    if not otherVehicles[model] then
-                        otherVehicles[model] = true
-                        ARMAclient.notify(source,{"~g~Added "..spawncode.." to the AC Vehicle Whitelist"})
-                    else
-                        ARMAclient.notify(source,{"~r~"..spawncode.." is already in the AC Vehicle Whitelist"})
-                    end
-                else
-                    if otherVehicles[model] then
-                        otherVehicles[model] = false
-                        ARMAclient.notify(source,{"~g~Removed "..spawncode.." from the AC Vehicle Whitelist"})
-                    else
-                        ARMAclient.notify(source,{"~r~"..spawncode.." is not in the AC Vehicle Whitelist"})
-                    end
-                end
-            else
-                ARMAclient.notify(source,{"~r~Invalid Input"})
-            end
-        end)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to Edit AC Vehicle Whitelist')
-    end
-end)
-
 
 Citizen.CreateThread(function()
     Wait(2500)
