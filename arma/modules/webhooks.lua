@@ -25,11 +25,6 @@ local webhooks = {
     ['move-to-house'] = 'https://discord.com/api/webhooks/991456454127132774/PHBmQEG1JAE-rKIPcCuictDdi98cFWuRb4Su2AvBKycRyqTkufRs_8SLWgg7Frxj0IeH',
     ['move-from-vehicle'] = 'https://discord.com/api/webhooks/991456581562683434/BdOs9ThFs-JHtHH8FvMkce4watcUBeL57RYsRE9472Ucqq8kxxd3rmlR3xTLUAXd2KoH',
     ['move-from-house'] = 'https://discord.com/api/webhooks/991456616354422954/vQbgVJkokcJ0UYdKr4Z37iZ-fVRYZjhNbq4mNWLPXMhWRMKATLDsWanh0t8uH0EpkH8J',
-    -- developer
-    ['spawn-weapon'] = 'https://discord.com/api/webhooks/991456674038681680/2MLwDbdHTr_wOtJZHn5bZuO8ZK-C9LnigXBanDzSc-GnDEgfTWj_KYK8HWBOXzQU4wWn',
-    ['give-weapon'] = 'https://discord.com/api/webhooks/991456700362137620/OXE6qxXf2dUAAFFlNsVH716-LT4tP6bR6Xim3PWyyv5vKrJ50nlNTh0h5iM9qNDUfjDY',
-    ['add-car'] = 'https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes',
-    ['manage-balance'] = 'https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9',
     -- admin menu
     ['kick-player'] = 'https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe',
     ['ban-player'] = 'https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2',
@@ -42,11 +37,13 @@ local webhooks = {
     ['freeze'] = 'https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN',
     ['slap'] = 'https://discord.com/api/webhooks/991476247660073040/XNH5g7OwPFDoCA4D1wqNo_HWrZD5EWNbb6QoYc2ducFjV2cPkryg8ACyFOj_ItKSOdSC',
     ['force-clock-off'] = 'https://discord.com/api/webhooks/991476290496503818/vOqaK1KdoP1k3iK0aHRZlVBRBCXuOs4UOpK-sMcI7XTWnOFfT_7pnwhDoA_Bx-ccEub4',
-    ['video'] = 'https://discord.com/api/webhooks/1051212433106161805/LRRvao6bFlSK5IwDAzWbo8v9R5UxEOQRN7Yryx0snckC9s4s6skF48SHDEorZD36lRAK',
     ['screenshot'] = 'https://discord.com/api/webhooks/991476361690628126/lTXMxhKvuhPic9Mc9aWM8eVBI5BZLJu_B3axgA80RtJp3LSCGqB6HqiScxiGq3mn_bum',
+    ['video'] = 'https://discord.com/api/webhooks/1051212433106161805/LRRvao6bFlSK5IwDAzWbo8v9R5UxEOQRN7Yryx0snckC9s4s6skF48SHDEorZD36lRAK',
     ['group'] = 'https://discord.com/api/webhooks/991476392875274281/whNkj8tAOrjcODLqugXJEnyn6_Nd2rTLQ_ObAY3wXDljFarnwi-RCABeLJY9FXwPK2gB',
     ['unban-player'] = 'https://discord.com/api/webhooks/991476724363706418/m2aEhULB5NWG0NzS5FgGscLSeJvMDApibQ7oMmBHPctTrlXxfLCodlvFByoTCJoAmzdZ',
     ['remove-warning'] = 'https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ',
+    ['add-car'] = 'https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes',
+    ['manage-balance'] = 'https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9',
     -- vehicles
     ['spawn'] = 'https://discord.com/api/webhooks/1050351249440129056/DPnHZ_T-10ULTC24-EYc-jjvmBi0BKHELjFOnZ-z-HWhXyGkUViKagK_oo1vaZHoVsXd',
     ['crush'] = 'https://discord.com/api/webhooks/1050351302015729714/h-CcvORewDCPeEZ8ED-l9M-lmk9omTw9uKWdjfFeDSfeh09YvnSJxn4yPcN4pHGWLRGs',
