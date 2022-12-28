@@ -290,7 +290,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("Unban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Unban")

@@ -263,7 +263,6 @@ cfg.groups = {
     },
     ["Senior Mod"] = {
         "admin.ban",
-        "admin.unban",
         "admin.kick",
         "admin.revive",
         "admin.slap",
