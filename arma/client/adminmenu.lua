@@ -1299,31 +1299,6 @@ function DrawHelpMsg(msg)
     DisplayHelpTextFromStringLabel(0,0,1,-1)
 end
 
-function SpawnVehicle(VehicleName)
-	local hash = GetHashKey(VehicleName)
-	RequestModel(hash)
-	local i = 0
-	while not HasModelLoaded(hash) and i < 50 do
-		Citizen.Wait(10)
-		i = i + 1
-	end
-    if i >= 50 then
-        return
-	end
-	local Ped = PlayerPedId()
-	local Vehicle = CreateVehicle(hash, GetEntityCoords(Ped), GetEntityHeading(Ped), true, 0)
-    i = 0
-	while not DoesEntityExist(Vehicle) and i < 50 do
-		Citizen.Wait(10)
-		i = i + 1
-	end
-	if i >= 50 then
-		return
-	end
-    SetPedIntoVehicle(Ped, Vehicle, -1)
-    SetModelAsNoLongerNeeded(hash)
-end
-
 function bank_drawTxt(x,y ,width,height,scale, text, r,g,b,a, outline)
     SetTextFont(0)
     SetTextProportional(0)

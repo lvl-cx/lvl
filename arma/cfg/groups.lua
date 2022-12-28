@@ -466,6 +466,7 @@ cfg.groups = {
     
     ["NHS Head Chief Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.headchief",
     },
     ["NHS Head Chief"] = {
@@ -473,6 +474,7 @@ cfg.groups = {
     },
     ["NHS Assistant Chief Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.assistantchief",
     },
     ["NHS Assistant Chief"] = {
@@ -480,6 +482,7 @@ cfg.groups = {
     },
     ["NHS Deputy Chief Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.deputychief",
     },
     ["NHS Deputy Chief"] = {
@@ -487,6 +490,7 @@ cfg.groups = {
     },
     ["NHS Captain Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
     },
     ["NHS Captain"] = {
         "nhs.whitelisted",
@@ -494,6 +498,7 @@ cfg.groups = {
     },
     ["NHS Consultant Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.consultant",
     },
     ["NHS Consultant"] = {
@@ -501,6 +506,7 @@ cfg.groups = {
     },
     ["NHS Specialist Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.specialist",
     },
     ["NHS Specialist"] = {
@@ -508,6 +514,7 @@ cfg.groups = {
     },
     ["NHS Senior Doctor Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.seniordoctor",
     },
     ["NHS Senior Doctor"] = {
@@ -516,6 +523,7 @@ cfg.groups = {
     ["NHS Doctor Clocked"] = {
         "nhs.whitelisted",
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.doctor",
     },
     ["NHS Doctor"] = {
@@ -523,6 +531,7 @@ cfg.groups = {
     },
     ["NHS Junior Doctor Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.juniordoctor",
     },
     ["NHS Junior Doctor"] = {
@@ -530,6 +539,7 @@ cfg.groups = {
     },
     ["NHS Critical Care Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.criticalcare",
     },
     ["NHS Critical Care"] = {
@@ -537,6 +547,7 @@ cfg.groups = {
     },
     ["NHS Paramedic Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.paramedic",
     },
     ["NHS Paramedic"] = {
@@ -544,6 +555,7 @@ cfg.groups = {
     },
     ["NHS Trainee Paramedic Clocked"] = {
         "nhs.onduty.permission",
+        "nhs.whitelisted",
         "nhs.traineeparamedic",
     },
     ["NHS Trainee Paramedic"] = {

@@ -393,12 +393,14 @@ end
 function tARMA.spawnVehicle(W,v,w,H,X,Y,Z,_)
   local a0=tARMA.loadModel(W)
   local a1=CreateVehicle(a0,v,w,H,X,Z,_)
+  SetModelAsNoLongerNeeded(a0)
   SetEntityAsMissionEntity(a1)
   DecorSetInt(a1, "ARMAACVeh", 955)
   SetModelAsNoLongerNeeded(a0)
   if Y then 
       TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
   end
+  setVehicleFuel(a1, 100)
   return a1 
 end
 
