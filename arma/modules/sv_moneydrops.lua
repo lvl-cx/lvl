@@ -11,6 +11,7 @@ function tARMA.MoneyDrop()
         local name1 = GetPlayerName(source)
         local moneydrop = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.2, true, true, false)
         local moneydropnetid = NetworkGetNetworkIdFromEntity(moneydrop)
+        SetEntityRoutingBucket(moneydrop, GetPlayerRoutingBucket(source))
         MoneydropEntities[moneydropnetid] = {moneydrop, moneydrop, false, source}
         MoneydropEntities[moneydropnetid].Money = {}
         local ndata = ARMA.getUserDataTable(user_id)
