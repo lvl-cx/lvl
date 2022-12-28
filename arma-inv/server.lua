@@ -794,6 +794,7 @@ AddEventHandler('ARMA:InComa', function()
             local name1 = GetPlayerName(source)
             local lootbag = CreateObjectNoOffset(model, GetEntityCoords(GetPlayerPed(source)) + 0.2, true, true, false)
             local lootbagnetid = NetworkGetNetworkIdFromEntity(lootbag)
+            SetEntityRoutingBucket(lootbag, GetPlayerRoutingBucket(source))
             local ndata = ARMA.getUserDataTable({user_id})
             local stored_inventory = nil;
             TriggerEvent('ARMA:StoreWeaponsRequest', source)
@@ -827,17 +828,17 @@ AddEventHandler('ARMA:LootBag', function(netid)
                     LootBagEntities[netid][5] = source
                     if ARMA.hasPermission({user_id, "police.armoury"}) then
                         -- this will eventually stop pd weapons from being seized cba to finish tonight icl
-                        --[[ local savePDWeapons = {}
-                        for k,v in pairs(a.weapons) do
-                            print(LootBagEntities[netid].Items[k])
-                            if LootBagEntities[netid].Items[k] == k then
-                                if v.policeWeapon then
-                                    table.insert(savePDWeapons, k)
-                                end
-                            end
-                        end ]]
+                        -- local savePDWeapons = {}
+                        -- for k,v in pairs(a.weapons) do
+                        --     print(LootBagEntities[netid].Items[k])
+                        --     if LootBagEntities[netid].Items[k] == k then
+                        --         if v.policeWeapon then
+                        --             table.insert(savePDWeapons, k)
+                        --         end
+                        --     end
+                        -- end
                         LootBagEntities[netid].Items = {}
-                        --LootBagEntities[netid].Items = savePDWeapons
+                        LootBagEntities[netid].Items = savePDWeapons
                         ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
