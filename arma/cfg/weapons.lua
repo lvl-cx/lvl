@@ -179,7 +179,7 @@ cfg.weapons = {
         weight = 2.5,
     },
     ["WEAPON_KITCHENKNIFE"] = {
-        name = "Kithcen Knife",
+        name = "Kitchen Knife",
         class = "Pistol",
         ammo = "",
         policeWeapon = false,
