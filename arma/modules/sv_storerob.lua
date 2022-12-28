@@ -108,10 +108,10 @@ RegisterNetEvent('ARMA:initiateStoreRobbery')
 AddEventHandler('ARMA:initiateStoreRobbery', function(store)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if #ARMA.getUsersByPermission('police.onduty.permission') > 2 then
-        if ARMA.hasPermission(user_id, "police.onduty.permission") then
-            ARMAclient.notify(source, {'~r~You cannot rob a store while on duty.'})
-        else
+    if ARMA.hasPermission(user_id, "police.onduty.permission") then
+        TriggerClientEvent('ARMA:resetStorePed', source, store)
+    else
+        if #ARMA.getUsersByPermission('police.onduty.permission') > 2 then
             for k,v in pairs(stores) do
                 if k == store then
                     if v.cooldown == 0 then
@@ -130,9 +130,10 @@ AddEventHandler('ARMA:initiateStoreRobbery', function(store)
                     end
                 end
             end
+        else
+            ARMAclient.notify(source, {'~r~There are not enough police on duty to rob a store.'})
+            TriggerClientEvent('ARMA:resetStorePed', source, store)
         end
-    else
-        ARMAclient.notify(source, {'~r~There are not enough police on duty to rob a store.'})
     end
 end)
 

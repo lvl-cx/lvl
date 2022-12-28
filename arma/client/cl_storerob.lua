@@ -798,17 +798,7 @@ RegisterNetEvent("ARMA:resetStorePed",function(v)
         DeleteEntity(Z)
     end
     local I = tARMA.loadModel(r[v].shopNpcModel)
-    local J =
-        CreatePed(
-        26,
-        I,
-        r[v].shopNpcPosition.x,
-        r[v].shopNpcPosition.y,
-        r[v].shopNpcPosition.z,
-        r[v].shopNpcHeading,
-        false,
-        true
-    )
+    local J = CreatePed(26,I,r[v].shopNpcPosition.x,r[v].shopNpcPosition.y,r[v].shopNpcPosition.z,r[v].shopNpcHeading,false,true)
     r[v].shopNpcHandler = J
     SetModelAsNoLongerNeeded(I)
     SetEntityAsMissionEntity(J, true, true)
@@ -1171,24 +1161,7 @@ function EndMiniGame(v, ad)
     ClearPedTasks(tARMA.getPlayerPed())
     local at = "mini@safe_cracking"
     loadAnimDict(at)
-    TaskPlayAnimAdvanced(
-        tARMA.getPlayerPed(),
-        at,
-        "door_open_succeed_stand",
-        g.x,
-        g.y,
-        g.z,
-        0.0,
-        0.0,
-        h,
-        8.0,
-        8.0,
-        -1,
-        2,
-        0.3,
-        0,
-        0
-    )
+    TaskPlayAnimAdvanced(tARMA.getPlayerPed(),at,"door_open_succeed_stand",g.x,g.y,g.z,0.0,0.0,h,8.0,8.0,-1,2,0.3,0,0)
     FreezeEntityPosition(tARMA.getPlayerPed(), false)
     Wait(2500)
     TriggerServerEvent("ARMA:syncOpenSafeDoor", v)
