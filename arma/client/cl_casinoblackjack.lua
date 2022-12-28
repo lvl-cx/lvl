@@ -396,9 +396,7 @@ Citizen.CreateThread(function()
         end
         if w then
             BeginTextCommandPrint("STRING")
-            AddTextComponentSubstringPlayerName(
-                "Your hand is [" .. tostring(x) .. "], the dealers hand is [" .. tostring(y) .. "]"
-            )
+            AddTextComponentSubstringPlayerName("Your hand is [" .. tostring(x) .. "], the dealers hand is [" .. tostring(y) .. "]")
             EndTextCommandPrint(1000, 1)
         end
         if h then
@@ -408,11 +406,7 @@ Citizen.CreateThread(function()
                     W = tonumber(W)
                     if W > 0 then
                         if not isChairHighRollers(F) and z > B then
-                            tARMA.notify(
-                                "~r~Max bet is " ..
-                                    tostring(getMoneyStringFormatted(B)) ..
-                                        " please purchase a membership for higher bets."
-                            )
+                            tARMA.notify("~r~Maximum bet is " ..tostring(getMoneyStringFormatted(B)) .." please purchase a membership for higher bets.")
                         else
                             z = W
                         end
@@ -422,11 +416,7 @@ Citizen.CreateThread(function()
             if IsControlJustPressed(0, 201) then
                 if tonumber(z) >= 0 then
                     if not isChairHighRollers(F) and z > B then
-                        tARMA.notify(
-                            "~r~Maximum bet is " ..
-                                tostring(getMoneyStringFormatted(B)) ..
-                                    " please purchase a membership for higher bets."
-                        )
+                        tARMA.notify("~r~Maximum bet is " ..tostring(getMoneyStringFormatted(B)) .." please purchase a membership for higher bets.")
                     elseif isChairHighRollers(F) and z < B then
                         tARMA.notify("~r~Minimum bet is " .. tostring(getMoneyStringFormatted(B)))
                     elseif z > 1000000000 then
