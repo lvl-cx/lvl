@@ -16,6 +16,7 @@ Citizen.CreateThread(function()
         local h=function()
             RageUI.ActuallyCloseAll()
             RageUI.Visible(RMenu:Get("identity","main"),false)
+            RageUI.Visible(RMenu:Get('identity','confirm'), false)
         end
         local i=function()
             if IsControlJustPressed(1,51)then 
