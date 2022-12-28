@@ -175,6 +175,19 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
     end)
 end)
 
+function gunStoreLogs(weaponshop, webhook, title, text)
+    if weaponshop == 'policeLargeArms' or weaponshop == 'policeSmallArms' then
+        tARMA.sendWebhook('pd-armoury', 'ARMA Police Armoury Logs', text)
+    elseif weaponshop == 'NHS' then
+        tARMA.sendWebhook('nhs-armoury', 'ARMA NHS Armoury Logs', text)
+    elseif weaponshop == 'prisonArmoury' then
+        tARMA.sendWebhook('hmp-armoury', 'ARMA HMP Armoury Logs', text)
+    elseif weaponshop == 'LFB' then
+        tARMA.sendWebhook('lfb-armoury', 'ARMA LFB Armoury Logs', text)
+    end
+    tARMA.sendWebhook(webhook,title,text)
+end
+
 RegisterNetEvent("ARMA:buyWeapon")
 AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, purchasetype, vipstore)
     local source = source
@@ -224,7 +237,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                             ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                             TriggerClientEvent("arma:PlaySound", source, 1)
                                             ARMAclient.setArmour(source, {100, true})
-                                            tARMA.sendWebhook('weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
+                                            tARMA.sendWebhook(weaponshop, 'weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
                                             return
                                         end
                                     elseif GetPedArmour(GetPlayerPed(source)) >= (price/1000) then
@@ -235,7 +248,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                         TriggerClientEvent("arma:PlaySound", source, 1)
                                         ARMAclient.setArmour(source, {price/1000, true})
-                                        tARMA.sendWebhook('weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
+                                        tARMA.sendWebhook(weaponshop, 'weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
                                         if weaponshop == 'LargeArmsDealer' then
                                             ARMA.turfSaleToGangFunds(price, 'LargeArms')
                                         end
@@ -260,7 +273,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                                 TriggerClientEvent("arma:PlaySound", source, 1)
                                                 ARMAclient.allowWeapon(source,{spawncode})
                                                 GiveWeaponToPed(source, spawncode, 250, false, false)
-                                                tARMA.sendWebhook('weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
+                                                tARMA.sendWebhook(weaponshop, 'weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
                                             else
                                                 ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
                                                 TriggerClientEvent("arma:PlaySound", source, 2)
@@ -280,7 +293,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                         end
                                         TriggerClientEvent("arma:PlaySound", source, 1)
                                         SetPedAmmo(GetPlayerPed(source), spawncode, 250)
-                                        tARMA.sendWebhook('weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
+                                        tARMA.sendWebhook(weaponshop, 'weapon-shops',"ARMA Weapon Shop Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**\n> Price: **£"..getMoneyStringFormatted(price).."**\n> Weapon Shop: **"..weaponshop.."**\n> Purchase Type: **"..purchasetype.."**")
                                     else
                                         ARMAclient.notify(source, {'You do not have enough money for this purchase.'})
                                         TriggerClientEvent("arma:PlaySound", source, 2)
