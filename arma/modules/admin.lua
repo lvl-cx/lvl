@@ -388,7 +388,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                         if b.id == k then
                             PlayerOffenses[PlayerID][k] = PlayerOffenses[PlayerID][k] + 1
                             if PlayerOffenses[PlayerID][k] > 3 then
-                                bans[a].durations[PlayerOffenses[PlayerID][k]] = bans[a].durations[PlayerOffenses[PlayerID][3]]
+                                PlayerOffenses[PlayerID][k] = 3
                             end
                             PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
