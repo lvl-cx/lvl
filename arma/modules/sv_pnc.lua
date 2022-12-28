@@ -69,7 +69,7 @@ AddEventHandler('ARMA:finePlayer', function(id, charges, amount, notes)
             ARMAclient.notify(source, {'~g~You have received £'..getMoneyStringFormatted(math.floor(amount*0.1))..' for fining '..GetPlayerName(ARMA.getUserSource(id))..'.'})
             TriggerEvent('ARMA:addToCommunityPot', tonumber(amount))
             TriggerClientEvent('ARMA:verifyFineSent', source, true)
-            -- add webhook for pd cord
+            tARMA.sendWebhook('fine-player', 'ARMA Fine Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Criminal Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Criminal PermID: **"..id.."**\n> Criminal TempID: **"..ARMA.getUserSource(id).."**\n> Amount: **£"..amount.."**")
             -- do notes later
         else
             TriggerClientEvent('ARMA:verifyFineSent', source, false, 'The player does not have enough money.')
