@@ -8,7 +8,7 @@ ARMATips= {
     "KOS is only allowed at redzones!",
     "You can point with B",
     "You can make your minimap bigger with Z",
-    "You can perform CPR on your dead friends, with a small chance of resuscitation using /cpr",
+    "You can perform CPR on your dead friends, with a small chance of resuscitation",
     "You sell all legal goods (Copper,Gold etc..) at the Trader which is south of the map near the docks",
     "You can get your GP to take a look at you and restore your health at any Hospital",
     "Check out our Website for whitelisted faction applications, https://www.armarp.co.uk",
