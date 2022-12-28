@@ -153,10 +153,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
         local name = GetPlayerName(v)
         if name ~= nil then
             local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
-            local hours = math.ceil(minutesPlayed/60)
-            if hours == 0 then
-                hours = 1
-            end
+            local hours = math.floor(minutesPlayed/60)
             if ARMA.hasPermission(k, 'admin.tickets') then
                 staff[k] = {name = name, rank = getGroupInGroups(k, 'staff'), hours = hours}
             end
