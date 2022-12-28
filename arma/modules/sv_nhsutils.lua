@@ -72,6 +72,8 @@ AddEventHandler('ARMA:finishRevive', function(permid)
         for k,v in pairs(lifePaksConnected) do
             if k == user_id and v.permid == permid then
                 TriggerClientEvent('ARMA:returnRevive', source)
+                ARMA.giveBankMoney(user_id, 5000)
+                ARMAclient.notify(source, {"~g~You have been paid £5,000 for reviving this person."})
                 lifePaksConnected[k] = nil
             end
         end
@@ -99,27 +101,25 @@ AddEventHandler('ARMA:nhsRevive', function(playersrc)
     end
 end)
 
-RegisterServerEvent("ARMA:attemptCPR") -- cpr on radial
+RegisterServerEvent("ARMA:attemptCPR")
 AddEventHandler('ARMA:attemptCPR', function(playersrc)
     local source = source
     local user_id = ARMA.getUserId(source)
-    local cprChance = math.random(1,8)
-    ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
-        local nuser_id = ARMA.getUserId(nplayer)
-        if nuser_id ~= nil then
-            ARMAclient.isInComa(nplayer, {}, function(in_coma)
-                if in_coma then
-                    if cprChance == math.random(1,8) then
-                        ARMAclient.RevivePlayer(nplayer, {})
-                    else
-                        ARMAclient.notify(source, {'~r~Failed to CPR.'})
-                    end
+    ARMAclient.getNearestPlayers(source,{15},function(nplayers)
+        if nplayers[playersrc] then
+            if GetEntityHealth(GetPlayerPed(playersrc)) > 102 then
+                ARMAclient.notify(source, {"~r~This person already healthy."})
+            else
+                Wait(15000)
+                local cprChance = math.random(1,8)
+                if cprChance == 1 then
+                    ARMAclient.RevivePlayer(playersrc, {})
                 else
-                    ARMAclient.notify(source, {'~r~This player is already healthy.'})
+                    ARMAclient.notify(source, {'~r~Failed to CPR.'})
                 end
-            end)
+            end
         else
-            ARMAclient.notify(source, {"~r~There is no player nearby"})
+            ARMAclient.notify(source, {"~r~Player not found."})
         end
     end)
 end)
@@ -141,5 +141,11 @@ AddEventHandler('ARMA:wheelchairAttachPlayer', function(entity)
 end)
 
 
-
-
+RegisterCommand('testnhs', function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    ARMA.addUserGroup(user_id, 'NHS Head Chief Clocked')
+    ARMAclient.notify(source, {"~g~You have been added to the NHS Head Chief Clocked group."})
+    ARMAclient.setNHS(source, {true})
+    TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
+end)
