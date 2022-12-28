@@ -97,7 +97,7 @@ AddEventHandler("ARMA:proposeCoinflip",function(betAmount)
                                     end
                                 end
                             end
-                            ARMAclient.notify(source,{"~g~Bet placed: " .. tostring(betAmount) .. " chips."})
+                            ARMAclient.notify(source,{"~g~Bet placed: " .. getMoneyStringFormatted(betAmount) .. " chips."})
                         else 
                             ARMAclient.notify(source,{"~r~Not enough chips!"})
                         end
