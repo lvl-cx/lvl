@@ -92,7 +92,7 @@ AddEventHandler("ARMA:proposeCoinflip",function(betAmount)
                             for k,v in pairs(coinflipTables) do
                                 if v == source then
                                     TriggerClientEvent('ARMA:addCoinflipProposal', source, betId, {betId = betId, betAmount = betAmount, user_id = user_id})
-                                    if coinflipTables[linkedTables[k]] ~= nil then
+                                    if coinflipTables[linkedTables[k]] then
                                         TriggerClientEvent('ARMA:addCoinflipProposal', coinflipTables[linkedTables[k]], betId, {betId = betId, betAmount = betAmount, user_id = user_id})
                                     end
                                 end
