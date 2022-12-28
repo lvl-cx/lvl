@@ -172,7 +172,7 @@ Citizen.CreateThread(function()
                 if a.dict == nil then
                     a = getRandomComaAnimation()
                 end
-                if not IsEntityPlayingAnim(L, a.dict, a.anim, 3) then --and not tARMA.isUsingStretcher() then
+                if not IsEntityPlayingAnim(L, a.dict, a.anim, 3) and not tARMA.isUsingStretcher() then
                     if a.dict ~= nil then
                         tARMA.loadAnimDict(a.dict)
                         TaskPlayAnim(L, a.dict, a.anim, 3.0, 1.0, -1, 1, 0, 0, 0, 0)
