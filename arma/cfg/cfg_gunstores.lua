@@ -1,15 +1,13 @@
 local cfg = {}
 
--- guns commented out need stream / meta adding
-
 cfg.GunStores={
     ["policeLargeArms"]={
         ["_config"]={{vector3(1840.6104736328,3691.4741210938,33.350730895996),vector3(461.43179321289,-982.66412353516,29.689668655396),vector3(-449.9557800293,6016.5454101563,31.716398239136),vector3(-1102.5059814453,-820.62091064453,13.282785415649)},110,5,"MET Police Large Arms",{"police.loadshop2"},false,true}, 
         ["WEAPON_FLASHBANG"]={"Flashbang",0,0,"N/A","w_me_flashbang"},
-        ["WEAPON_G36"]={"G36C",0,0,"N/A","w_ar_g36"}, -- need model
-        ["WEAPON_M4CARBINE"]={"M4 Carbine",0,0,"N/A","w_ar_g36"}, -- need model
+        ["WEAPON_G36"]={"G36C",0,0,"N/A","w_ar_g36"}, 
+        ["WEAPON_PDM4A1"]={"M4 Carbine",0,0,"N/A","w_ar_m4a1"}, 
         ["WEAPON_MP5"]={"MP5",0,0,"N/A","w_sb_mp5"},
-        ["WEAPON_REMINGTON700"]={"Remington 700",0,0,"N/A","w_sb_mp5"}, -- need model
+        ["WEAPON_REMINGTON700"]={"Remington 700",0,0,"N/A","w_sr_remington700"}, 
         ["WEAPON_SIGMCX"]={"SigMCX",0,0,"N/A","w_ar_sigmcx"},
         -- smoke grenade
         ["WEAPON_SPAR17"]={"SPAR17",0,0,"N/A","w_ar_spar17"},
@@ -43,12 +41,12 @@ cfg.GunStores={
     },
     ["VIP"]={
         ["_config"]={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{"vip.gunstore"},true},
-        ["WEAPON_AKGOLD"]={"Golden AK-47",10000,0,"N/A","w_ar_goldak"}, -- price and model
-        ["WEAPON_AKGOLD"]={"Fire Extinguisher",10000,0,"N/A",""}, -- price and model
-        ["WEAPON_AKGOLD"]={"Mjlonir",10000,0,"N/A",""}, -- price and model
-        ["WEAPON_AKGOLD"]={"Molotov Cocktail",10000,0,"N/A",""}, -- price and model
-        ["WEAPON_AKGOLD"]={"Smoke Grenade",10000,0,"N/A",""}, -- price and model
-        ["WEAPON_SNOWBALL"]={"Snowball",10000,0,"N/A","w_ex_snowball"}, -- price and model
+        ["WEAPON_GOLDAK"]={"Golden AK-47",750000,0,"N/A","w_ar_goldak"},
+        --["WEAPON_AKGOLD"]={"Fire Extinguisher",10000,0,"N/A",""}, -- add this bit with ur codey magic(default gta idfk)
+        ["WEAPON_MJOLNIR"]={"Mjlonir",10000,0,"N/A","w_me_mjolnir"},
+        --["WEAPON_AKGOLD"]={"Molotov Cocktail",5000,0,"N/A",""}, -- add this bit with ur codey magic(default gta idfk)
+        --["WEAPON_AKGOLD"]={"Smoke Grenade",50000,0,"N/A",""}, -- add this bit with ur codey magic
+        ["WEAPON_SNOWBALL"]={"Snowball",10000,0,"N/A","w_ex_snowball"},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
     },
@@ -64,7 +62,7 @@ cfg.GunStores={
     },
     ["LargeArmsDealer"]={
         ["_config"]={{vector3(-1108.3199462891,4934.7392578125,217.35540771484),vector3(5065.6201171875,-4591.3857421875,1.8652405738831)},110,1,"Large Arms Dealer",{"gang.whitelisted"},false},
-        ["WEAPON_AK74KASHNAR"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_ak74kashnar",750000},
+        ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_goldak",750000},
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",900000},
         ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_ar_mosin",900000}, -- model and price
         ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",300000},
