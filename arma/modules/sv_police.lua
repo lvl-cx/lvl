@@ -246,7 +246,7 @@ local choice_store_weapons = function(player, choice)
                   ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
                   if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
                     for i,c in pairs(a.weapons) do
-                      if i == k then
+                      if i == k and c.class ~= 'Melee' then
                         ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
                       end   
                     end
@@ -278,7 +278,7 @@ AddEventHandler("ARMA:forceStoreSingleWeapon",function(model)
             ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
             if v.ammo > 0 then
               for i,c in pairs(a.weapons) do
-                if i == model then
+                if i == model and c.class ~= 'Melee' then
                   ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
                 end   
               end
