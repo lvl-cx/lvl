@@ -15,9 +15,9 @@ exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {return}
     if (message.channel.name.includes('auction-room')){return} 
     if (params[0] < minBid) { let embed = {"title": `Unsuccessful Auction Bid`,"description": `Minimum bid is £${minBid}, ${user}.`,"color": settingsjson.settings.botColour,"timestamp": new Date()}; message.channel.send({embed}).then(msg => msg.delete(5000)); return}
-    fivemexports.ghmattimysql.execute("SELECT * FROM `vrp_user_ids` WHERE identifier = ?", ["discord:" + user.id], (result) => {
+    fivemexports.ghmattimysql.execute("SELECT user_id FROM `arma_verification` WHERE discord_id = ?", [user.id], (result) => {
         if (result.length > 0) {
-            fivemexports.ghmattimysql.execute("SELECT * FROM vrp_user_moneys WHERE user_id = ?", [result[0].user_id], (result) => {
+            fivemexports.ghmattimysql.execute("SELECT * FROM arma_user_moneys WHERE user_id = ?", [result[0].user_id], (result) => {
                 if (result) { bank = result[0].bank
                     if (message.channel.name.includes('auction')) {
                         if (bank > params[0]) {
