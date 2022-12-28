@@ -80,6 +80,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setPolice(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnPoliceDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                tARMA.sendWebhook('pd-clock', 'ARMA Police Clock On Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
@@ -90,6 +91,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setNHS(source, {true})
                 TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                tARMA.sendWebhook('nhs-clock', 'ARMA NHS Clock On Logs',"> Medic Name: **"..GetPlayerName(source).."**\n> Medic TempID: **"..source.."**\n> Medic PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
@@ -99,6 +101,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setLFB(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                tARMA.sendWebhook('lfb-clock', 'ARMA LFB Clock On Logs',"> Firefighter Name: **"..GetPlayerName(source).."**\n> Firefighter TempID: **"..source.."**\n> Firefighter PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
@@ -109,6 +112,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setHMP(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                tARMA.sendWebhook('hmp-clock', 'ARMA HMP Clock On Logs',"> Prison Officer Name: **"..GetPlayerName(source).."**\n> Prison Officer TempID: **"..source.."**\n> Prison Officer PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
             end
