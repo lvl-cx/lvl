@@ -244,7 +244,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end,
                 function()end)
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("TP To Coords","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Tp2Coords")
@@ -269,7 +269,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("TP To Waypoint", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local WaypointHandle = GetFirstBlipInfoId(8)
@@ -289,17 +289,23 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
+            end
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("Unban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:Unban")
                     end
                 end)
+            end
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Spawn Taxi", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local A = GetEntityCoords(tARMA.getPlayerPed())
                         tARMA.spawnVehicle("taxi",A.x,A.y,A.z,GetEntityHeading(tARMA.getPlayerPed()),true,true,true)
                     end
                 end)
+            end
+            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("Revive All Nearby", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local D = tARMA.getPlayerCoords()
@@ -318,8 +324,6 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end)
-            end
-            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("Remove Warning","",{RightLabel="→→→"},true,function(Hovered, Active, Selected)
                     if Selected then
                         AddTextEntry('FMMC_MPM_NC', "Enter the Warning ID")
@@ -687,7 +691,7 @@ RageUI.CreateWhile(1.0, true, function()
             elseif povlist == false then
                 RageUI.Separator("~y~Player must provide POV on request: ~r~false")
             end
-            if tARMA.getStaffLevel() >=1 then
+            if tARMA.getStaffLevel() >= 1 then
                 RageUI.ButtonWithStyle("Player Notes", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent('ARMA:getNotes', SelectedPlayer[3])
@@ -731,6 +735,8 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
+            end
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -775,7 +781,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if tARMA.getStaffLevel() >= 3 then
+            if tARMA.getStaffLevel() >= 4 then
                 RageUI.ButtonWithStyle("Slap Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())

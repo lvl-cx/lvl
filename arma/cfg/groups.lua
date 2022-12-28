@@ -267,7 +267,6 @@ cfg.groups = {
         "admin.kick",
         "admin.revive",
         "admin.slap",
-        "admin.tp2waypoint",
         "admin.tp2player",
         "admin.freeze",
         "admin.screenshot",
@@ -278,14 +277,11 @@ cfg.groups = {
     ["Moderator"] = {
         "admin.ban",
         "admin.kick",
-        "admin.revive",
         "admin.tp2player",
         "admin.freeze",
         "admin.screenshot",
         "admin.spectate",
         "admin.tickets",
-        "admin.slap",
-        "admin.revive",
     },
     ["Support Team"] = {
         "admin.kick",
