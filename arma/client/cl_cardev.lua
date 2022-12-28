@@ -161,7 +161,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 veh = result
                                 local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
-                                local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
+                                local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 DecorSetInt(nveh, "ARMAACVeh", 955)
                                 SetVehicleOnGroundProperly(nveh)
                                 SetEntityInvincible(nveh,false)
@@ -181,7 +181,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 veh = result
                                 local k=tARMA.loadModel(result)
                                 local coords = GetEntityCoords(PlayerPedId())
-                                local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
+                                local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                                 DecorSetInt(nveh, "ARMAACVeh", 955)
                                 SetVehicleOnGroundProperly(nveh)
                                 SetEntityInvincible(nveh,false)
@@ -411,7 +411,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         local k=tARMA.loadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
-                        local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
+                        local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
                         SetEntityInvincible(nveh,false)
                         SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
@@ -425,7 +425,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if Selected then
                         local k=tARMA.loadModel(veh)
                         local coords = GetEntityCoords(PlayerPedId())
-                        local nveh=spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
+                        local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
                         SetVehicleOnGroundProperly(nveh)
                         SetEntityInvincible(nveh,false)
                         SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
@@ -483,17 +483,6 @@ function cleanveh()
 	else
 		tARMA.notify("~o~You're not in a vehicle! There is no vehicle to clean!")
 	end
-end
-
-function spawnVehicle(W,v,w,H,X,Y,Z,_)
-    local a0=tARMA.loadModel(W)
-    local a1=CreateVehicle(a0,v,w,H,X,Z,_)
-    SetEntityAsMissionEntity(a1)
-    SetModelAsNoLongerNeeded(a0)
-    if Y then 
-        TaskWarpPedIntoVehicle(PlayerPedId(),a1,-1)
-    end
-    return a1 
 end
 
 Citizen.CreateThread(function()
@@ -574,8 +563,25 @@ local A={
     {name="fTractionLossMult",type="float"},
     {name="fSuspensionForce",type="float"},
     {name="fSuspensionCompDamp",type="float"},
-    {name="fSuspensionReboundDamp",type="float"}
-    ,{name="fSuspensionUpperLimit",type="float"},{name="fSuspensionLowerLimit",type="float"},{name="fSuspensionRaise",type="float"},{name="fSuspensionBiasFront",type="float"},{name="fAntiRollBarForce",type="float"},{name="fAntiRollBarBiasFront",type="float"},{name="fRollCentreHeightFront",type="float"},{name="fRollCentreHeightRear",type="float"},{name="fCollisionDamageMult",type="float"},{name="fWeaponDamageMult",type="float"},{name="fDeformationDamageMult",type="float"},{name="fEngineDamageMult",type="float"},{name="fPetrolTankVolume",type="float"},{name="fOilVolume",type="float"},{name="fSeatOffsetDistX",type="float"},{name="fSeatOffsetDistY",type="float"},{name="fSeatOffsetDistZ",type="float"},{name="nMonetaryValue",type="integer"}
+    {name="fSuspensionReboundDamp",type="float"},
+    {name="fSuspensionUpperLimit",type="float"},
+    {name="fSuspensionLowerLimit",type="float"},
+    {name="fSuspensionRaise",type="float"},
+    {name="fSuspensionBiasFront",type="float"},
+    {name="fAntiRollBarForce",type="float"},
+    {name="fAntiRollBarBiasFront",type="float"},
+    {name="fRollCentreHeightFront",type="float"},
+    {name="fRollCentreHeightRear",type="float"},
+    {name="fCollisionDamageMult",type="float"},
+    {name="fWeaponDamageMult",type="float"},
+    {name="fDeformationDamageMult",type="float"},
+    {name="fEngineDamageMult",type="float"},
+    {name="fPetrolTankVolume",type="float"},
+    {name="fOilVolume",type="float"},
+    {name="fSeatOffsetDistX",type="float"},
+    {name="fSeatOffsetDistY",type="float"},
+    {name="fSeatOffsetDistZ",type="float"},
+    {name="nMonetaryValue",type="integer"}
 }
 local function B()
     return{speedBuffer={},speed=0.0,speedDisplay=0.0,accel=0.0,accelDisplay=0.0,decel=0.0,decelDisplay=0.0}
