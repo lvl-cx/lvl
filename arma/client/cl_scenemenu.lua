@@ -147,9 +147,7 @@ RageUI.CreateWhile(1.0, true, function()
             local H = k[d.object]
             for J, s in pairs(d.previewObjects) do
                 if DoesEntityExist(s) then
-                    local O =
-                        GetEntityCoords(PlayerPedId()) +
-                        GetEntityForwardVector(PlayerPedId()) * (3.0 + h[d.seperation] * (J - 1))
+                    local O = GetEntityCoords(PlayerPedId()) + GetEntityForwardVector(PlayerPedId()) * (3.0 + h[d.seperation] * (J - 1))
                     if H[4] then
                         local P = H[4]
                         SetEntityCoordsNoOffset(s, O.x, O.y, O.z)
