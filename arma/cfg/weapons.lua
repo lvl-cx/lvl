@@ -82,22 +82,6 @@ cfg.weapons = {
         model = "",
         weight = 2.5,
     },
-    ["WEAPON_FLARE"] = {
-        name = "Flare",
-        class = "Melee",
-        ammo = "modelammo",
-        policeWeapon = false,
-        model = "",
-        weight = 2.5,
-    },
-    ["WEAPON_FLAREGUN"] = {
-        name = "Flare Gun",
-        class = "Pistol",
-        ammo = "modelammo",
-        policeWeapon = false,
-        model = "",
-        weight = 2.5,
-    },
     ["WEAPON_STAFFGUN"] = {
         name = "ARMA Staff Gun",
         class = "Pistol",
