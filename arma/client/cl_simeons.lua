@@ -186,7 +186,7 @@ RageUI.CreateWhile(1.0, true, function()
                     if P then
                         DeleteVehicle(GetVehiclePedIsIn(tARMA.getPlayerPed()))
                         if not k then
-                            RageUI.CloseAll()
+                            RageUI.ActuallyCloseAll()
                             hash = GetHashKey(j)
                             while not HasModelLoaded(hash) do
                                 RequestModel(hash)
