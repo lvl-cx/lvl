@@ -259,14 +259,14 @@ end
 
 
 RegisterCommand("dv", function()
-    if staffMode or tARMA.isDev() or tARMA.globalOnPoliceDuty() then
+    if tARMA.isStaffedOn() or tARMA.isDev() or tARMA.globalOnPoliceDuty() then
         TriggerEvent( "wk:deleteVehicle" )
     end
 end)
 
 
 RegisterCommand("fix", function()
-    if staffMode or tARMA.getStaffLevel() >= 6 then
+    if tARMA.isStaffedOn() or tARMA.getStaffLevel() >= 6 then
         TriggerServerEvent( "wk:fixVehicle")
     end
 end)

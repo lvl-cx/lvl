@@ -111,7 +111,7 @@ RegisterServerEvent("wk:fixVehicle")
 AddEventHandler("wk:fixVehicle",function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.noclip') then
+    if ARMA.hasPermission(user_id, 'admin.tickets') then
         TriggerClientEvent('wk:fixVehicle', source)
     end
 end)
