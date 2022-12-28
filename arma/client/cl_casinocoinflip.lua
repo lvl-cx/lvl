@@ -112,8 +112,9 @@ Citizen.CreateThread(function()
     TriggerServerEvent("ARMA:requestCoinflipTableData")
     for q = 0, #c.coinflipTables do
         local D = c.coinflipTables[q]
-        tARMA.loadModel(D.tableModel)
+        local DD = tARMA.loadModel(D.tableModel)
         c.coinflipTables[q].objectId = CreateObjectNoOffset(D.tableModel, D.tablePos.x, D.tablePos.y, D.tablePos.z, false, false, false)
+        SetModelAsNoLongerNeeded(DD)
         SetEntityHeading(c.coinflipTables[q].objectId, D.tableHeading)
         FreezeEntityPosition(c.coinflipTables[q].objectId, true)
         SetObjectTextureVariant(c.coinflipTables[q].objectId, c.coinflipTables[q].textureVariant)
@@ -329,6 +330,10 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('armacoinflip', 'confirm')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if not h[i] then
+                RageUI.Visible(RMenu:Get("armacoinflip", "confirm"), false)
+                RageUI.Visible(RMenu:Get("armacoinflip", "mainmenu"), true)
+            end
             RageUI.Separator("Coinflip " .. j .. "?")
             if k then
                 RageUI.Separator("~y~This is your pending proposal.")
