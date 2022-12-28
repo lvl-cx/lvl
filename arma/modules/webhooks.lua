@@ -54,9 +54,11 @@ local webhooks = {
     ['cancel-rent'] = 'https://discord.com/api/webhooks/1050351430642446346/tsDqIlxntaguV94ukIvC6jvl8RMm_n-t-3vZOuy2Wwb-J5ErIwwHe1Bc7yGB3hxGOThb',
     ['sell'] = 'https://discord.com/api/webhooks/1050351477450870814/aRku5v0sDcF7mvg3yAQMOu_eFGx6gCAHAmzA9RAj4-E6tWjplk1ZNXqAnRkCW2uvwyYq',
     -- mpd
-    ['mpd-clock'] = '',
-    ['fine-player'] = '',
-    ['jail-player'] = '',
+    ['pd-clock'] = 'https://discord.com/api/webhooks/1056165736684474398/bWUtN88MrbTlFiPdBhMLdhvSF7s_r76Z6LAESdLf4uSPiWBVRx7NT1kL8rTGkmC4k1YA',
+    ['pd-afk'] = 'https://discord.com/api/webhooks/1056165912501309480/kajjJF9qX9HpkDFJB0Wyb2u1LckDaynGtKMuF5qYbQfs6v8p8XTpqODXfNfwlHX_KIcC',
+    ['pd-armoury'] = 'https://discord.com/api/webhooks/1056166199228108842/bV6w1j2aLInCEkklnJ3h9ez108TMOvWesttFwM5rntcjiYESrXJO_4c0nn4Vh5ZcH2fr',
+    ['fine-player'] = 'https://discord.com/api/webhooks/1057560302444630056/fsfZiDMAXTuDFfMrQ2w9CI_RiUCLN6-2XpzqDI9Bj_roZ8yov4u66ikQFkk5A_v-arga',
+    ['jail-player'] = 'https://discord.com/api/webhooks/1056166087756091462/PgygWzUleg5KWmCAxsETa9zezkP37pDLBaqtvyPxYa9YUtskSEcKW3kFU3zRaFOi4ZOS',
     -- nhs
     ['nhs-clock'] = '',
     ['cpr'] = '',
