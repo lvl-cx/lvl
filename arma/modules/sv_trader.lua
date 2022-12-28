@@ -193,7 +193,7 @@ AddEventHandler('ARMA:sellLSDNorth', function()
     local user_id = ARMA.getUserId(source)
     if ARMA.getInventoryItemAmount(user_id, 'LSDNorth') > 0 then
         ARMA.tryGetInventoryItem(user_id, 'LSDNorth', 1, false)
-        ARMAclient.notify(source, {'~g~Sold LSDNorth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
+        ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDNorth'))
         ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDNorth'), 'LSDNorth')
     else
@@ -207,7 +207,7 @@ AddEventHandler('ARMA:sellLSDSouth', function()
     local user_id = ARMA.getUserId(source)
     if ARMA.getInventoryItemAmount(user_id, 'LSDSouth') > 0 then
         ARMA.tryGetInventoryItem(user_id, 'LSDSouth', 1, false)
-        ARMAclient.notify(source, {'~g~Sold LSDSouth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
+        ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDSouth'))
         ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDSouth'), 'LSDSouth')
     else
