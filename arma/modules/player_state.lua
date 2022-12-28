@@ -44,11 +44,11 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
             end
             if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
                 ARMAclient.setNHS(source, {true})
-                TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
+                TriggerClientEvent('ARMAUI5:globalOnNHSDuty', source, true)
             end
-            if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
+            if ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
                 ARMAclient.setNHS(source, {true})
-                TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
+                TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, true)
             end
             if ARMA.hasGroup(user_id, 'Taco Seller') then
                 TriggerClientEvent('ARMA:toggleTacoJob', source, true)
