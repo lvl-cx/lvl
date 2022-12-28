@@ -20,16 +20,16 @@ Citizen.CreateThread(function()
                     end
                     if d == 1202 then
                         e = false
-                    end
-                    if d == 1201 and not e and k then
-                        TriggerServerEvent("ARMA:factionAfkAlert", "10 minutes")
-                        e = true
-                    end
-                    if b and d == math.ceil(a / 4) then
-                        afkScaleForm()
+                        if not e and k then
+                            TriggerServerEvent("ARMA:factionAfkAlert", "10 minutes")
+                            e = true
+                        end
                     end
                     if b and d == math.ceil(a / 2) then
                         tARMA.notify(string.format("~r~You will be set to AFK in: %s seconds", d))
+                    end
+                    if b and d == math.ceil(a / 4) then
+                        afkScaleForm()
                     end
                     d = d - 1
                     c = true
