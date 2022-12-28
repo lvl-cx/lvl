@@ -1,25 +1,16 @@
-local netObjects = {}
+local bodyBags = {}
 
 RegisterServerEvent("ARMA:requestBodyBag")
 AddEventHandler('ARMA:requestBodyBag', function(playerToBodyBag)
     local source = source
-    netObjects[playerToBodyBag] = {source = source, id = ARMA.getUserId(source)}
+    TriggerClientEvent('ARMA:placeBodyBag', playerToBodyBag)
 end)
 
 RegisterServerEvent("ARMA:removeBodybag")
-AddEventHandler('ARMA:removeBodybag', function(oldBodyBag)
+AddEventHandler('ARMA:removeBodybag', function(bodybagObject)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.tickets') then
-        for k,v in pairs(netObjects) do
-            if v.source == source and k == oldBodyBag then
-                netObjects[k] = nil
-                TriggerClientEvent('ARMA:removeIfOwned', source, oldBodyBag)
-            end
-        end
-    else
-        TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Trigger Remove Bodybag')
-    end
+    TriggerClientEvent('ARMA:removeIfOwned', -1, NetworkGetEntityFromNetworkId(bodybagObject))
 end)
 
 RegisterServerEvent("ARMA:playNhsSound")
@@ -47,7 +38,7 @@ AddEventHandler('ARMA:attachLifepakServer', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
-        ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
+        ARMAclient.getNearestPlayer(source, {3}, function(nplayer)
             local nuser_id = ARMA.getUserId(nplayer)
             if nuser_id ~= nil then
                 ARMAclient.isInComa(nplayer, {}, function(in_coma)
@@ -75,6 +66,8 @@ AddEventHandler('ARMA:finishRevive', function(permid)
                 ARMA.giveBankMoney(user_id, 5000)
                 ARMAclient.notify(source, {"~g~You have been paid £5,000 for reviving this person."})
                 lifePaksConnected[k] = nil
+                Wait(15000)
+                ARMAclient.RevivePlayer(ARMA.getUserSource(permid), {})
             end
         end
     else
@@ -88,14 +81,10 @@ AddEventHandler('ARMA:nhsRevive', function(playersrc)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
-        for k,v in pairs(lifePaksConnected) do
-            if k == user_id and ARMA.getUserSource(v.permid) == playersrc then
-                ARMAclient.isInComa(nplayer, {}, function(in_coma)
-                    TriggerClientEvent('ARMA:beginRevive', source, in_coma, ARMA.getUserId(playersrc), playersrc, GetPlayerName(playersrc))
-                    lifePaksConnected[user_id] = {permid = ARMA.getUserId(playersrc)} 
-                end)
-            end
-        end
+        ARMAclient.isInComa(playersrc, {}, function(in_coma)
+            TriggerClientEvent('ARMA:beginRevive', source, in_coma, ARMA.getUserId(playersrc), playersrc, GetPlayerName(playersrc))
+            lifePaksConnected[user_id] = {permid = ARMA.getUserId(playersrc)} 
+        end)
     else
         TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Trigger NHS Revive')
     end
@@ -144,8 +133,9 @@ end)
 RegisterCommand('testnhs', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
+    ARMA.removeAllJobs(user_id)
     ARMA.addUserGroup(user_id, 'NHS Head Chief Clocked')
     ARMAclient.notify(source, {"~g~You have been added to the NHS Head Chief Clocked group."})
     ARMAclient.setNHS(source, {true})
-    TriggerClientEvent('ARMAUI5:globalNHSOnDuty', source, true)
+    TriggerClientEvent('ARMAUI5:globalOnNHSDuty', source, true)
 end)
