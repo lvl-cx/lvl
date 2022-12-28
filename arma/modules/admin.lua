@@ -177,12 +177,14 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
         ARMA.prompt(source,"Perm ID:","",function(source,permid) 
             local permid = tonumber(permid)
             local permsource = ARMA.getUserSource(permid)
-            ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
-                ARMAclient.allowWeapon(permsource,{'WEAPON_'..string.upper(hash)})
-                GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
-                tARMA.sendWebhook('give-weapon',"ARMA Give Weapon Logs", "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..permid.."**\n> Weapon Given: **WEAPON_"..hash.."**")
-                ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
-            end)
+            if permsource ~= nil then
+                ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
+                    ARMAclient.allowWeapon(permsource,{'WEAPON_'..string.upper(hash)})
+                    GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
+                    tARMA.sendWebhook('give-weapon',"ARMA Give Weapon Logs", "> Admin Name: **"..GetPlayerName(admin).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Players Name: **"..GetPlayerName(permsource).."**\n> Players TempID: **"..permsource.."**\n> Players PermID: **"..permid.."**\n> Weapon Given: **WEAPON_"..hash.."**")
+                    ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
+                end)
+            end
         end)
     end
 end)
@@ -508,7 +510,7 @@ AddEventHandler('ARMA:RequestVideo', function(admin,target)
 end)
 
 RegisterServerEvent('ARMA:KickPlayer')
-AddEventHandler('ARMA:KickPlayer', function(admin, target, reason, tempid)
+AddEventHandler('ARMA:KickPlayer', function(admin, target, tempid)
     local source = source
     local target_id = ARMA.getUserSource(target)
     local target_permid = target
