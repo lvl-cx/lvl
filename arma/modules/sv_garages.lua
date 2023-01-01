@@ -688,7 +688,7 @@ local bullets = {
     ['7.62mm Bullets'] = true,
     ['.357 Bullets'] = true,
     ['12 Gauge Bullets'] = true,
-    ['.308 Sniper Round'] = true,
+    ['.308 Sniper Rounds'] = true,
 }
 
 RegisterServerEvent("ARMA:searchVehicle")
