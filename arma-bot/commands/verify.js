@@ -42,7 +42,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
            else{
             let embed = {
                 "title": "Verify",
-                "description": `:x: That code was invalid make sure you have a valid code.`,
+                "description": `:x: A discord account is already linked to this Perm ID, please contact Management to reverify.`,
                 "color": settingsjson.settings.botColour,
                 "footer": {
                     "text": ""
