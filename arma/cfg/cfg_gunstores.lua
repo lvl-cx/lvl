@@ -64,7 +64,7 @@ cfg.GunStores={
         ["_config"]={{vector3(-1108.3199462891,4934.7392578125,217.35540771484),vector3(5065.6201171875,-4591.3857421875,1.8652405738831)},110,1,"Large Arms Dealer",{"gang.whitelisted"},false},
         ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_goldak",750000},
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",900000},
-        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",900000}, -- model and price
+        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",900000},
         ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",300000},
         ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_ump45",250000}, -- model and price
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup",25000},
@@ -90,8 +90,9 @@ cfg.GunStores={
         ["_config"]={{vector3(1192.556,-3308.844,4.535559)},154,1,"ARMA Trader Gunstore",{"dev.menu"},false},
         ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",0,0,"N/A","w_ar_goldak"},
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",0,0,"N/A","w_ar_mosin"},
-        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"}, -- model and price
+        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"},
         ["WEAPON_UMP45"]={"UMP45 SMG",0,0,"N/A","w_sb_ump45"},
+        ["item|fillUpArmour"]={"Replenish Armour",0,0,"N/A","prop_armour_pickup"},
     }
 }
 
