@@ -18,6 +18,7 @@ local i={
     ["policeLargeArms"]={_config={{vector3(1840.6104736328,3691.4741210938,33.350730895996),vector3(461.43179321289,-982.66412353516,29.689668655396),vector3(-449.9557800293,6016.5454101563,31.716398239136),vector3(-1102.5059814453,-820.62091064453,13.282785415649)},110,5,"MET Police Large Arms",{"police.loadshop2","police.onduty.permission"},false,true}},
     ["prisonArmoury"]={_config={{vector3(1779.3741455078,2542.5639648438,45.797782897949)},110,5,"Prison Armoury",{"prisonguard.onduty.permission"},false,true}},
     ["NHS"]={_config={{vector3(340.41757202148,-582.71209716797,27.973259765625),vector3(-435.27032470703,-318.29010009766,34.08971484375)},110,5,"NHS Armoury",{"nhs.onduty.permission"},false,true}},
+    ["ARMATrader"]={_config={{vector3(1192.556,-3308.844,4.535559)},110,5,"ARMA Trader Gunstore",{"dev.menu"},false,true}},
 }
 RMenu.Add("ARMAGunstore","mainmenu",RageUI.CreateMenu("","",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "gunstore"))
 RMenu:Get("ARMAGunstore","mainmenu"):SetSubtitle("~b~GUNSTORE")

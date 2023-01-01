@@ -42,10 +42,10 @@ cfg.GunStores={
     ["VIP"]={
         ["_config"]={{vector3(-2151.5739746094,5191.2548828125,14.718822479248)},110,5,"VIP Gun Store",{"vip.gunstore"},true},
         ["WEAPON_GOLDAK"]={"Golden AK-47",750000,0,"N/A","w_ar_goldak"},
-        ["WEAPON_FIREEXTINGUISHER"]={"Fire Extinguisher",10000,0,"N/A","prop_fire_exting_1b"}, -- add this bit with ur codey magic(default gta idfk)
+        ["WEAPON_FIREEXTINGUISHER"]={"Fire Extinguisher",10000,0,"N/A","prop_fire_exting_1b"},
         ["WEAPON_MJOLNIR"]={"Mjlonir",10000,0,"N/A","w_me_mjolnir"},
-        ["WEAPON_MOLOTOV"]={"Molotov Cocktail",5000,0,"N/A","w_ex_molotov"}, -- add this bit with ur codey magic(default gta idfk)
-        --["WEAPON_AKGOLD"]={"Smoke Grenade",50000,0,"N/A",""}, -- add this bit with ur codey magic
+        ["WEAPON_MOLOTOV"]={"Molotov Cocktail",5000,0,"N/A","w_ex_molotov"},
+        -- smoke grenade
         ["WEAPON_SNOWBALL"]={"Snowball",10000,0,"N/A","w_ex_snowball"},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
@@ -64,7 +64,7 @@ cfg.GunStores={
         ["_config"]={{vector3(-1108.3199462891,4934.7392578125,217.35540771484),vector3(5065.6201171875,-4591.3857421875,1.8652405738831)},110,1,"Large Arms Dealer",{"gang.whitelisted"},false},
         ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_goldak",750000},
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",900000},
-        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_ar_mosin",900000}, -- model and price
+        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",900000}, -- model and price
         ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",300000},
         ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_ump45",250000}, -- model and price
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup",25000},
@@ -85,6 +85,13 @@ cfg.GunStores={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
         ["WEAPON_BROOM"]={"Broom",1000,0,"N/A","prop_tool_broom"},
         -- do the rest
+    },
+    ["ARMATrader"]={
+        ["_config"]={{vector3(1192.556,-3308.844,4.535559)},154,1,"ARMA Trader Gunstore",{"dev.menu"},false},
+        ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",0,0,"N/A","w_ar_goldak"},
+        ["WEAPON_MOSIN"]={"Mosin Bolt-Action",0,0,"N/A","w_ar_mosin"},
+        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"}, -- model and price
+        ["WEAPON_UMP45"]={"UMP45 SMG",0,0,"N/A","w_sb_ump45"},
     }
 }
 
