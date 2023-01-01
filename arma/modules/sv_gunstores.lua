@@ -217,10 +217,14 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
             end
             if not withinRadius then return end
             if json.encode(v[5]) ~= '[""]' then
+                local hasPermissions = 0
                 for a,b in pairs(v[5]) do
                     if ARMA.hasPermission(user_id, b) then
-                        hasPerm = true
+                        hasPermissions = hasPermissions + 1
                     end
+                end
+                if hasPermissions == #v[5] then
+                    hasPerm = true
                 end
             else
                 hasPerm = true
