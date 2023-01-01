@@ -158,20 +158,21 @@ RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
     local user_id = ARMA.getUserId(source)
+    local gunstoreData = cfg.GunStores
     MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
         if weaponWhitelists[1]['weapon_info'] ~= nil then
             data = json.decode(weaponWhitelists[1]['weapon_info'])
-            for a,b in pairs(cfg.GunStores) do
+            for a,b in pairs(gunstoreData) do
                 for c,d in pairs(data) do
                     if a == c then
                         for e,f in pairs(data[a]) do
-                            cfg.GunStores[a][e] = f
+                            gunstoreData[a][e] = f
                         end
                     end
                 end
             end
         end
-        TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, cfg.GunStores)
+        TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
     end)
 end)
 
