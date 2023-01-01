@@ -773,7 +773,7 @@ function displayStatistics()
     SetTextColour(255, 255, 255, 255)
     SetTextDropshadow(0, 0, 0, 0, 255)
     BeginTextCommandDisplayText("STRING")
-    AddTextComponentSubstringPlayerName("Job Number: " .. m.totalJobs + 1)
+    AddTextComponentSubstringPlayerName("Job Number: " .. m.totalJobs)
     EndTextCommandDisplayText(0.011, 0.55)
     DrawRect(0.175, 0.51, 0.005, 0.17, 0, 121, 235, 255)
 end

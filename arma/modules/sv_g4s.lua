@@ -1,171 +1,188 @@
-local currentG4SUsersOnJob = {}
-local shops = {
-    [1] = {
-        name = 'Bean Machine',
-        coords = vector3(-628.38208007812,239.23078918457,81.894218444824),
-        collected = false,
+local currentUsersOnG4SJob={}
+local collectFrom={
+    [1]={
+        collectionName="Bean Machine",
+        collectionPoint=vector3(-628.38208007812,239.23078918457,81.894218444824)
     },
-    [2] = {
-        name = 'Terry\'s Scrap Yard',
-        --coords = vector3(-457.82553100586,-2274.5856933594,8.5158166885376),
-        coords = vector3(-575.54486083984,240.8359375,82.72395324707),
-        collected = false,
-    }
-}
-local banks = {
-    [1] = {
-        name = 'Terry\'s Scrap Yard',
-        --coords = vector3(-457.82553100586,-2274.5856933594,8.5158166885376),
-        coords = vector3(-575.54486083984,240.8359375,82.72395324707),
-        deposited = false,
+    [2]={
+        collectionName="LA | Fitness",
+        collectionPoint=vector3(259.08432006836,-269.02905273438,53.963539123535)
     },
-    [2] = {
-        name = 'Bean Machine',
-        coords = vector3(-628.38208007812,239.23078918457,81.894218444824),
-        deposited = false,
-    }
+    [3]={
+        collectionName="PFC Arena",
+        collectionPoint=vector3(-265.88760375977,-2017.5471191406,30.145708084106)
+    },
+    [4]={
+        collectionName="Redwood Cigarettes",
+        collectionPoint=vector3(1332.0754394531,-1642.0830078125,52.117248535156)
+    },
 }
+local depositTo={
+    [1]={
+        depositName="Pacific Standard Bank",
+        depositPoint=vector3(254.10975646973,225.61262512207,101.87567901611)
+    },
+    [2]={
+        depositName="Fleeca Bank",
+        depositPoint=vector3(314.35034179688,-278.65893554688,54.170753479004)
+    },
+    [3]={
+        depositName="Maze Bank",
+        depositPoint=vector3(5.2346858978271,-934.26495361328,29.904996871948)
+    },
+    [4]={
+        depositName="Union Depository",
+        depositPoint=vector3(5.282205581665,-707.33819580078,45.97477722168)
+    },
+}
+local jobsCompleted = {}
 
-function getG4SJobs(user_id)
-    local collectionLocation
-    local depositLocation
-    local randomShop = math.random(1, #shops)
-    local randomBank = math.random(2, #banks)
-    local returnedTable = {}
-    for k,v in pairs(shops) do
-        if k == randomShop then
+function GetCollection(user_id)
+    local randomShop=math.random(1,#collectFrom)
+    local randomBank=math.random(1,#depositTo)
+    local returnedTable={}
+    for k,v in pairs(collectFrom)do
+        if k==randomShop then
             returnedTable.collected=v.collected
             returnedTable.collecting=false
-            returnedTable.collectionName=v.name
-            returnedTable.collectionCoords=v.coords
+            returnedTable.collectionName=v.collectionName
+            returnedTable.collectionCoords=v.collectionPoint
         end
     end
-    for k,v in pairs(banks) do
-        if k == randomBank then
+    for k,v in pairs(depositTo)do
+        if k==randomBank then
             returnedTable.deposited=v.deposited
-            returnedTable.depositing=false
-            returnedTable.depositName=v.name
-            returnedTable.depositCoords=v.coords
+            returnedTable.depositName=v.depositName
+            returnedTable.depositCoords=v.depositPoint
         end
     end
-    returnedTable.jobActive = false
-    returnedTable.totalJobs = 0
-    returnedTable.moneyInVehicle = false
-    returnedTable.moneyOutVehicle = false
-    currentG4SUsersOnJob[user_id].currentjob = returnedTable
+    returnedTable.jobActive=false
+    jobsCompleted[user_id] = jobsCompleted[user_id] + 1
+    returnedTable.totalJobs = jobsCompleted[user_id]
+    returnedTable.moneyInVehicle=false
+    returnedTable.moneyOutVehicle=false
+    currentUsersOnG4SJob[user_id].currentJob=returnedTable
     return returnedTable
 end
 
-RegisterServerEvent("ARMA:toggleShiftG4S")
-AddEventHandler("ARMA:toggleShiftG4S", function(shiftStatus)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'G4S Driver') then
-        if shiftStatus then
-            local pin = math.random(1000,9999)
-            currentG4SUsersOnJob[user_id] = {currentjob = ''}
-            TriggerClientEvent('ARMA:startShiftG4S', source, pin)
+RegisterNetEvent("ARMA:toggleShiftG4S")
+AddEventHandler("ARMA:toggleShiftG4S", function(Status)
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if ARMA.hasGroup(user_id,"G4S Driver")then
+        if Status then
+            currentUsersOnG4SJob[user_id]={currentJob=""}
+            TriggerClientEvent("ARMA:startShiftG4S",source,math.random(1000,9999))
+            jobsCompleted[user_id] = 0
             Wait(10000)
-            TriggerClientEvent('ARMA:updateJobInformation', source, getG4SJobs(user_id))
+            TriggerClientEvent("ARMA:updateJobInformation",source,GetCollection(user_id))
         else
-            TriggerClientEvent('ARMA:endShiftG4S', source)
+            if currentUsersOnG4SJob[user_id]~=nil then
+                currentUsersOnG4SJob[user_id]=nil
+                jobsCompleted[user_id] = nil
+                TriggerClientEvent("ARMA:endShiftG4S",source)
+            end
         end
     else
-        ARMAclient.notify(source, {"~r~Please visit City Hall and select the G4S Job."})
+        ARMAclient.notify(source,{"~r~You are not clocked on as currentUsersOnG4SJob G4S Driver."})
     end
 end)
 
-RegisterServerEvent("ARMA:acceptJob")
-AddEventHandler("ARMA:acceptJob", function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'G4S Driver') then
-        for k,v in pairs(currentG4SUsersOnJob)do
-            if k == user_id then
-                v.currentjob.jobActive = true
-                v.currentjob.totalJobs = v.currentjob.totalJobs + 1
-                currentG4SUsersOnJob[user_id].currentjob = v.currentjob
-                TriggerClientEvent('ARMA:updateJobInformation', source, v.currentjob)
+RegisterNetEvent("ARMA:acceptJob")
+AddEventHandler("ARMA:acceptJob",function()
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if ARMA.hasGroup(user_id,"G4S Driver")then
+        for k,v in pairs(currentUsersOnG4SJob)do
+            if k == user_id then    
+                v.currentJob.jobActive=true
+                v.currentJob.collected=false
+                v.currentJob.collecting=false
+                v.currentJob.depoting=true
+                v.currentJob.deposited=false
+                currentUsersOnG4SJob[user_id].currentJob=v.currentJob
+                TriggerClientEvent("ARMA:updateJobInformation",source,v.currentJob)
             end
         end
+    else
+        ARMAclient.notify(source,{"~r~You are not clocked on as currentUsersOnG4SJob G4S Driver."})
     end
 end)
 
-RegisterServerEvent("ARMA:updateMoneyInVehicle")
+RegisterNetEvent("ARMA:updateMoneyInVehicle")
 AddEventHandler("ARMA:updateMoneyInVehicle", function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'G4S Driver') then
-        for k,v in pairs(currentG4SUsersOnJob)do
-            if k == user_id then
-                v.currentjob.collected = true
-                v.currentjob.moneyInVehicle = true
-                v.currentjob.moneyOutVehicle = false
-                currentG4SUsersOnJob[user_id].currentjob = v.currentjob
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if ARMA.hasGroup(user_id,"G4S Driver")then
+        for k,v in pairs(currentUsersOnG4SJob)do
+            if k==user_id then
+                v.currentJob.moneyInVehicle=true
+                v.currentJob.moneyOutVehicle=false
+                currentUsersOnG4SJob[user_id].currentJob=v.currentJob
             end
         end
+    else
+        ARMAclient.notify(source,{"~r~You are not clocked on as currentUsersOnG4SJob G4S Driver."})
     end
 end)
 
-RegisterServerEvent("ARMA:updateMoneyOutVehicle")
+RegisterNetEvent("ARMA:updateMoneyOutVehicle")
 AddEventHandler("ARMA:updateMoneyOutVehicle", function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'G4S Driver') then
-        for k,v in pairs(currentG4SUsersOnJob)do
-            if k == user_id then
-                v.currentjob.moneyInVehicle = false
-                v.currentjob.moneyOutVehicle = true
-                currentG4SUsersOnJob[user_id].currentjob = v.currentjob
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if ARMA.hasGroup(user_id,"G4S Driver")then
+        for k,v in pairs(currentUsersOnG4SJob)do
+            if k==user_id then
+                v.currentJob.moneyOutVehicle=true
+                v.currentJob.moneyInVehicle = false
+                currentUsersOnG4SJob[user_id].currentJob=v.currentJob
             end
         end
+    else
+        ARMAclient.notify(source,{"~r~You are not clocked on as currentUsersOnG4SJob G4S Driver."})
     end
 end)
-
 
 Citizen.CreateThread(function()
     while true do
-        for k,v in pairs(currentG4SUsersOnJob)do
-            if v.currentjob.jobActive then
-                if not v.currentjob.collected then
-                    if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentjob.collectionCoords) < 1.5 then
-                        TriggerClientEvent('ARMA:requestMoneyInVehicle', ARMA.getUserSource(k))
-                    end
-                elseif v.currentjob.moneyInVehicle and not v.currentjob.depositing and not v.currentjob.moneyOutVehicle then
-                    if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentjob.depositCoords) < 5 then
-                        v.currentjob.depositing = true
-                        print('set depositing to true')
-                        currentG4SUsersOnJob[k].currentjob = v.currentjob
-                        TriggerClientEvent('ARMA:requestMoneyOutVehicle', ARMA.getUserSource(k))
-                    end
-                elseif not v.currentjob.deposited and v.currentjob.moneyOutVehicle then
-                    if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentjob.depositCoords) < 1.5 then
-                        print('give new job')
-                        v.currentjob.deposited = true
-                        v.currentjob.depositing = false
-                        ARMA.giveBankMoney(k, math.random(8000,12000))
-                        TriggerClientEvent('ARMA:updateJobInformation', ARMA.getUserSource(k), getG4SJobs(k))
+        Wait(1000)
+        for k,v in pairs(currentUsersOnG4SJob)do
+            if v.currentJob.jobActive then
+                if ARMA.getUserSource(k)then
+                    if not v.currentJob.collected then
+                        if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentJob.collectionCoords)<1.5 then
+                            v.currentJob.collected=true
+                            currentUsersOnG4SJob[k].currentJob=v.currentJob
+                            TriggerClientEvent("ARMA:updateJobInformation",ARMA.getUserSource(k),v.currentJob)
+                            TriggerClientEvent("ARMA:requestMoneyInVehicle",ARMA.getUserSource(k))
+                        end
+                    elseif v.currentJob.moneyInVehicle and not v.currentJob.depositing and not v.currentJob.moneyOutVehicle then
+                        if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentJob.depositCoords)<20 then
+                            v.currentJob.depositing=true
+                            currentUsersOnG4SJob[k].currentJob=v.currentJob
+                            TriggerClientEvent("ARMA:updateJobInformation",ARMA.getUserSource(k),v.currentJob)
+                            TriggerClientEvent("ARMA:requestMoneyOutVehicle",ARMA.getUserSource(k))
+                        end
+                    elseif not v.currentJob.deposited and v.currentJob.moneyOutVehicle then
+                        if #(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-v.currentJob.depositCoords)<1.5 then
+                            v.currentJob.deposited=true
+                            v.currentJob.depositing=false
+                            TriggerClientEvent("ARMA:updateJobInformation",ARMA.getUserSource(k),GetCollection(k))
+                            ARMA.giveBankMoney(k,math.random(8000,12000))
+                        end
                     end
                 end
             end
         end
-        Citizen.Wait(1000)
     end
 end)
 
 RegisterCommand('g4s', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
-    -- check if they're in table
     for k,v in pairs(currentG4SUsersOnJob) do
         if k == user_id then
             TriggerClientEvent("ARMA:openG4SMenu", source)
         end
     end
-end)
-
-
-RegisterCommand('gog4s', function(source, args)
-    local source = source
-    ARMAclient.teleport(source, {-697.84259033203,271.23403930664,83.108764648438})
 end)
