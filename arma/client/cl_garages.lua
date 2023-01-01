@@ -335,6 +335,7 @@ RageUI.CreateWhile(1.0, true, function()
                     VehiclesFetchedTable = {}
                     TriggerServerEvent('ARMA:FetchCars', garage_type)
                     TriggerServerEvent('ARMA:getCustomFolders')
+                    TriggerServerEvent("ARMA:getImpoundedVehicles")
                 end
             end, RMenu:Get("ARMAGarages", "owned_vehicles"))
             RageUI.ButtonWithStyle("Store Vehicle", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
@@ -869,7 +870,6 @@ end)
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
     if E then
 		TriggerServerEvent("ARMA:refreshGaragePermissions")
-        TriggerServerEvent("ARMA:getImpoundedVehicles")
 	end
 end)
 
