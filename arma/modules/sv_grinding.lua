@@ -9,7 +9,7 @@
 -- if diamond or some other grinding shit trigger ARMA:playGrindingPickaxe client event
 
 local grindingData = {
-    ['Copper'] = {license = 'Gold', miningScenario = '', hasFX = false, firstItem = '', secondItem = '', pickaxe = true},
+    ['Copper'] = {license = 'Copper', miningScenario = '', hasFX = false, firstItem = '', secondItem = '', pickaxe = true},
     ['Limestone'] = {license = 'Limestone', miningScenario = '', hasFX = false, firstItem = '', secondItem = '', pickaxe = true},
     ['Gold'] = {license = 'Gold', miningScenario = '', hasFX = false, firstItem = '', secondItem = '', pickaxe = true},
     ['Weed'] = {license = 'Weed', miningScenario = '', hasFX = false, firstItem = '', secondItem = ''},
