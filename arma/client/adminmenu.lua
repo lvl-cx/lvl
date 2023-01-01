@@ -781,7 +781,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 5 then
                 RageUI.ButtonWithStyle("Slap Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
