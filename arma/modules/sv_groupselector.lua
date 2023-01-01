@@ -44,6 +44,7 @@ function ARMA.removeAllJobs(user_id)
                 ARMA.removeUserGroup(user_id, v[1])
             elseif i ~= 'default' and ARMA.hasGroup(user_id, v[1]..' Clocked') then
                 ARMA.removeUserGroup(user_id, v[1]..' Clocked')
+                RemoveAllPedWeapons(GetPlayerPed(source), true)
             end
         end
     end
@@ -80,6 +81,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setPolice(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnPoliceDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                RemoveAllPedWeapons(GetPlayerPed(source), true)
                 tARMA.sendWebhook('pd-clock', 'ARMA Police Clock On Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
@@ -91,6 +93,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setNHS(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnNHSDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                RemoveAllPedWeapons(GetPlayerPed(source), true)
                 tARMA.sendWebhook('nhs-clock', 'ARMA NHS Clock On Logs',"> Medic Name: **"..GetPlayerName(source).."**\n> Medic TempID: **"..source.."**\n> Medic PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
@@ -101,6 +104,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMA.addUserGroup(user_id,b..' Clocked')
                 ARMAclient.setLFB(source, {true})
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                RemoveAllPedWeapons(GetPlayerPed(source), true)
                 tARMA.sendWebhook('lfb-clock', 'ARMA LFB Clock On Logs',"> Firefighter Name: **"..GetPlayerName(source).."**\n> Firefighter TempID: **"..source.."**\n> Firefighter PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
@@ -112,6 +116,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 ARMAclient.setHMP(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, true)
                 ARMAclient.notify(source, {"~g~Clocked on as "..b.."."})
+                RemoveAllPedWeapons(GetPlayerPed(source), true)
                 tARMA.sendWebhook('hmp-clock', 'ARMA HMP Clock On Logs',"> Prison Officer Name: **"..GetPlayerName(source).."**\n> Prison Officer TempID: **"..source.."**\n> Prison Officer PermID: **"..user_id.."**\n> Clocked Rank: **"..b.."**")
             else
                 ARMAclient.notify(source, {"~r~You do not have permission to clock on as "..b.."."})
