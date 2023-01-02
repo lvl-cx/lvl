@@ -224,15 +224,23 @@ cfg.weapons = {
         class = "Pistol",
         ammo = "Police Issued 9mm",
         policeWeapon = true,
-        model = "w_pi_glock",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_BERETTA"] = {
-        name = "Beretta",
+        name = "Berreta M9 Pistol",
         class = "Pistol",
         ammo = "9mm Bullets",
         policeWeapon = false,
-        model = "w_pi_beretta",
+        model = "",
+        weight = 2.5,
+    },
+    ["WEAPON_M1911"] = {
+        name = "M1911 Pistol",
+        class = "Pistol",
+        ammo = "9mm Bullets",
+        policeWeapon = false,
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_FNX"] = {
@@ -240,7 +248,7 @@ cfg.weapons = {
         class = "Pistol",
         ammo = "9mm Bullets",
         policeWeapon = false,
-        model = "w_pi_fnx",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_TX22"] = {
@@ -248,7 +256,7 @@ cfg.weapons = {
         class = "Pistol",
         ammo = "9mm Bullets",
         policeWeapon = false,
-        model = "w_pi_fnx",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_PYTHON"] = {
@@ -256,7 +264,15 @@ cfg.weapons = {
         class = "Pistol",
         ammo = ".357 Bullets",
         policeWeapon = false,
-        model = "w_pi_python",
+        model = "",
+        weight = 2.5,
+    },
+    ["WEAPON_TEC9"] = {
+        name = "Tec-9",
+        class = "Pistol",
+        ammo = "9mm Bullets",
+        policeWeapon = false,
+        model = "",
         weight = 2.5,
     },
     --? ARs
@@ -381,6 +397,13 @@ cfg.weapons = {
         model = "w_sb_mac11",
         weight = 5,
     },
+    ["WEAPON_UZI"] = {
+        name = "Uzi",
+        class = "SMG",
+        ammo = "9mm Bullets",
+        policeWeapon = false,
+        model = "w_sb_uzi",
+    },
     --? shotguns
     ["WEAPON_REMINGTON870"] = {
         name = "Remington870",
@@ -412,6 +435,14 @@ cfg.weapons = {
         ammo = "12 Gauge Bullets",
         policeWeapon = false,
         model = "w_sg_aa12",
+        weight = 7.5,
+    },
+    ["WEAPON_OLYMPIA"] = {
+        name = "Olympia Shotgun",
+        class = "Shotgun",
+        ammo = "12 Gauge Bullets",
+        policeWeapon = false,
+        model = "w_sg_olympia",
         weight = 7.5,
     },
     --? snipers

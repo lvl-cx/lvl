@@ -66,18 +66,18 @@ cfg.GunStores={
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",900000},
         ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",900000},
         ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",300000},
-        ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_ump45",250000}, -- model and price
+        ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_uzi",250000},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup",25000},
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02",50000},
     },
     ["SmallArmsDealer"]={
         ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1242.7232666016,-426.84201049805,67.913963317871)},110,1,"Small Arms Dealer",{""},true},
         ["WEAPON_BERETTA"]={"Berreta M9 Pistol",60000,0,"N/A","w_pi_beretta"},
-        ["WEAPON_M1911"]={"M1911 Pistol",60000,0,"N/A","w_pi_beretta"}, -- need model
+        ["WEAPON_M1911"]={"M1911 Pistol",60000,0,"N/A","w_pi_m1911"},
         ["WEAPON_MPX"]={"MPX",300000,0,"N/A","w_pi_beretta"}, -- need model
-        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000,0,"N/A","w_pi_beretta"}, -- need model
+        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000,0,"N/A","w_pi_python"},
         ["WEAPON_ROOK"]={"Rook 9mm",60000,0,"N/A","w_pi_beretta"}, -- need model
-        ["WEAPON_TEC9"]={"Tec-9",50000,0,"N/A","w_pi_beretta"}, -- need model
+        ["WEAPON_TEC9"]={"Tec-9",50000,0,"N/A","w_sb_tec9"},
         ["WEAPON_UMP45"]={"UMP-45",300000,0,"N/A","w_sb_ump45"},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
     },
