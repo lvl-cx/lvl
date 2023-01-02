@@ -191,8 +191,8 @@ RegisterNetEvent('ARMA:sellLSDNorth')
 AddEventHandler('ARMA:sellLSDNorth', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'LSDNorth') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'LSDNorth', 1, false)
+    if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
+        ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
         ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDNorth'))
         ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDNorth'), 'LSDNorth')
@@ -205,13 +205,27 @@ RegisterNetEvent('ARMA:sellLSDSouth')
 AddEventHandler('ARMA:sellLSDSouth', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'LSDSouth') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'LSDSouth', 1, false)
+    if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
+        ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
         ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
         ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDSouth'))
         ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDSouth'), 'LSDSouth')
     else
         ARMAclient.notify(source, {'~r~You do not have LSD.'})
+    end
+end)
+
+RegisterNetEvent('ARMA:sellAll')
+AddEventHandler('ARMA:sellAll', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    for k,v in pairs(defaultPrices) do
+        if ARMA.getInventoryItemAmount(user_id, k) > 0 then
+            local amount = ARMA.getInventoryItemAmount(user_id, k)
+            ARMA.tryGetInventoryItem(user_id, k, amount, false)
+            ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
+            ARMA.giveMoney(user_id, defaultPrices[k]*amount)
+        end
     end
 end)
 
