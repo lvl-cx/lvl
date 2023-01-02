@@ -19,7 +19,6 @@ RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting 
 end)
 
 function burgerShotInstructions()
-    globalOnAADuty = true
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
     initializeInstructionalJobScaleform("Welcome to Burgershot","I have set a waypoint to Burgershot where you can start your career.")
     SetNewWaypoint(-1202.330078125, -896.974609375)
