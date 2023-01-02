@@ -511,8 +511,9 @@ cfg.peds = {
         {"mp_m_freemode_01", "Citizen"},
     },
     ["admin"] = {
-        ["config"] = {"Admin Peds", permissions = {"player.group.add"}},
+        ["config"] = {"Admin Peds", permissions = {"admin.tickets"}},
         {"child", "Child"},
+        {"batman", "Batman"},
         {"spiderman", "Spiderman"},
         {"a_m_y_bevhills_01", "Messi"},
         {"Yamcha", "Yamcha"},
@@ -532,6 +533,11 @@ cfg.peds = {
         {"MK50_MFF", "MK50_MFF"},
         {"sidious", "sidious"},
         {"STR_Dilophosaurus", "STR_Dilophosaurus"},
+        {"agent47_01", "Agent 47"},
+        {"agent47_02", "Agent 47(white)"},
+        {"DarthVader", "Darth Vader"},
+        {"VegetaDBS", "VegetaDBS"},
+        {"piccolo", "Piccolo"},
     },
     ["aa"] = {
         ["config"] = {"AA Peds", permissions = {}},
