@@ -78,7 +78,6 @@ RegisterNetEvent("ARMA:buildPedMenus",function(t)
         SetEntityHealth(tARMA.getPlayerPed(), l)
     end
     for i = 1, #t do
-        print(json.encode(t[i]))
         local z = t[i]
         local A = z[1]
         local B = string.format("pedmenu_%s_%s", A, i)
