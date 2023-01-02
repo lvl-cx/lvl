@@ -407,7 +407,7 @@ div.death-screen-snow{
     width: 100%;
     height: 100%;
     /* uncomment background for xmas death screen */
-    background-image: url(snow.png);
+    /*background-image: url(snow.png); */
     background-size: 100%;
     background-repeat: no-repeat;
     position: absolute;
