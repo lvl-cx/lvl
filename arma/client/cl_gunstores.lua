@@ -86,7 +86,7 @@ RageUI.CreateWhile(1.0, true, function()
                     g="body"
                 end 
             end,RMenu:Get("ARMAGunstore","confirm"))
-            if not weapons.weapons[d.model] or weapons.weapons[d.model].ammo ~= "modelammo" then 
+            if not weapons.weapons[d.model] or (weapons.weapons[d.model].ammo ~= "modelammo" and weapons.weapons[d.model].ammo ~= "") then 
                 RageUI.ButtonWithStyle("Purchase Weapon Ammo (Max)","£"..getMoneyStringFormatted(math.floor(d.price/2)),{RightLabel="→→→"},true,function(j,k,l)
                     if l then 
                         g="ammo"

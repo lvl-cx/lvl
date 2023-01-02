@@ -143,7 +143,7 @@ cfg.weapons = {
         class = "Melee",
         ammo = "",
         policeWeapon = false,
-        model = "w_me_cleaver",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_CRICKETBAT"] = {
@@ -183,15 +183,15 @@ cfg.weapons = {
         class = "Pistol",
         ammo = "",
         policeWeapon = false,
-        model = "w_me_kitchenknife",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_SHANK"] = {
         name = "Wooden Shank",
-        class = "Pistol",
+        class = "Melee",
         ammo = "",
         policeWeapon = false,
-        model = "w_me_shank",
+        model = "",
         weight = 2.5,
     },
     ["WEAPON_SHOVEL"] = {

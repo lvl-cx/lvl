@@ -92,7 +92,6 @@ cfg.GunStores={
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",0,0,"N/A","w_ar_mosin"},
         ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"},
         ["WEAPON_UMP45"]={"UMP45 SMG",0,0,"N/A","w_sb_ump45"},
-        ["item|fillUpArmour"]={"Replenish Armour",0,0,"N/A","prop_armour_pickup"},
     }
 }
 
