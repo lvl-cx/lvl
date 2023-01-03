@@ -6,7 +6,6 @@ local takenHostage = {}
 RegisterServerEvent("TakeHostage:sync")
 AddEventHandler("TakeHostage:sync", function(targetSrc)
 	local source = source
-
 	TriggerClientEvent("TakeHostage:syncTarget", targetSrc, source)
 	takingHostage[source] = targetSrc
 	takenHostage[targetSrc] = source
@@ -35,7 +34,6 @@ end)
 RegisterServerEvent("TakeHostage:stop")
 AddEventHandler("TakeHostage:stop", function(targetSrc)
 	local source = source
-
 	if takingHostage[source] then
 		TriggerClientEvent("TakeHostage:cl_stop", targetSrc)
 		takingHostage[source] = nil
@@ -49,13 +47,11 @@ end)
 
 AddEventHandler('playerDropped', function(reason)
 	local source = source
-	
 	if takingHostage[source] then
 		TriggerClientEvent("TakeHostage:cl_stop", takingHostage[source])
 		takenHostage[takingHostage[source]] = nil
 		takingHostage[source] = nil
 	end
-
 	if takenHostage[source] then
 		TriggerClientEvent("TakeHostage:cl_stop", takenHostage[source])
 		takingHostage[takenHostage[source]] = nil

@@ -14,38 +14,3 @@ AddEventHandler('ARMA:setCarDev', function(status)
       TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Attempted to Teleport to Car Dev Universe')
     end
 end)
-
-RegisterServerEvent('ARMA:takeCarScreenshot')
-AddEventHandler('ARMA:takeCarScreenshot', function(spawncode, orientation)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local name = GetPlayerName(source)
-    if user_id ~= nil and ARMA.hasPermission(user_id, "cardev.menu") then 
-      os.execute('mkdir C:\\xampp\\htdocs\\locks\\'..spawncode)
-        exports['screenshot-basic']:requestClientScreenshot(source, {
-          fileName = 'C:/xampp/htdocs/locks/'..spawncode..'/'..orientation..'.jpg'
-          }, function()
-      end)
-      if orientation == 'side' then
-        local file = io.open('C:/xampp/htdocs/locks/'..spawncode..'/index.html',"w+")
-        file:write('<html><style>	body {background-color: #262626;}</style><img src="front.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="rear.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"><img src="side.jpg" style="max-width: 80%;height: auto; display: block; margin-left: auto;margin-right: auto;padding: 10px;margin-bottom: 10px;"></html>')
-        file:close()
-        PerformHttpRequest('https://discord.com/api/webhooks/991560897170526249/95AzsuBqELh6w87d-X3O3nE9I2uy8SMpz55TT08gkLA11Sg8uvkSjgGYPCLXMeixDsPu', function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA", embeds = {
-            {
-                ["color"] = "16448403",
-                ["title"] = "Car Screenshots",
-                ["description"] = "**Admin Name: **"..name.."\n**Admin ID: **"..user_id.."\n**Link:** http://86.141.230.253/cars/"..spawncode,
-                ["footer"] = {
-                    ["text"] = "Time - "..os.date("%x %X %p"),
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
-      end
-    else
-        local player = ARMA.getUserSource(user_id)
-        Wait(500)
-        reason = "Type #11"
-        TriggerEvent("ARMA:acBan", user_id, reason, name, player, 'Attempted to Take Car Screenshot')
-    end   
-end)

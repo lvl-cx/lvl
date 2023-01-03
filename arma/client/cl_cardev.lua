@@ -10,7 +10,6 @@ local garages = module("arma-vehicles", "garages")
 garages=garages.garages
 local garageCategorySelected
 local veh
-local extraSettings = false
 local b = false
 local function j()
     return {
@@ -249,25 +248,13 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end, RMenu:Get("CARDEV", "vehiclemods"))
                 end
-                if extraSettings then
-                    RageUI.ButtonWithStyle("Take Car Screenshot" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                        if Selected then 
-                            TakeVehScreenshot()
-                        end
-                    end)
-                    RageUI.ButtonWithStyle("Vehicle List",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
-                    end,RMenu:Get('CARDEV','vehiclelist'))
-                    RageUI.ButtonWithStyle("Record Vehicle Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                        if Selected then
-                            viewingVehicleStats = true
-                        end
-                    end,RMenu:Get('CARDEV','vehiclestats'))
-                end
-                RageUI.Checkbox("Toggle Extra Settings", nil, extraSettings, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
+                RageUI.ButtonWithStyle("Vehicle List",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
+                end,RMenu:Get('CARDEV','vehiclelist'))
+                RageUI.ButtonWithStyle("Record Vehicle Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
                     if Selected then
-                        extraSettings = not extraSettings
+                        viewingVehicleStats = true
                     end
-                end,RMenu:Get('CARDEV','main'))
+                end,RMenu:Get('CARDEV','vehiclestats'))
                 if b then
                     RageUI.Checkbox("Return to normal Universe", "~r~Leave Car Dev Mode", b, {}, function(Hovered, Active, Selected, Checked)
                         if Selected then
