@@ -926,6 +926,15 @@ RegisterCommand("car",function(bY, bZ, b_)
     end
 end)
 
+RegisterCommand("dv",function()
+    if globalOnPoliceDuty or globalNHSOnDuty or globalLFBOnDuty or tARMA.isStaffedOn() or tARMA.isDev() or globalOnPrisonDuty and isPlayerNearPrison() then
+        local aT = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
+        if NetworkHasControlOfEntity(aT) and (tARMA.getStaffLevel() > 0 or GetEntitySpeed(aT) < 1.0) then
+            DeleteEntity(aT)
+        end
+    end
+end,false)
+
 function tARMA.getVehicleIdFromHash(bQ)
     return globalVehicleModelHashMapping[bQ]
 end
