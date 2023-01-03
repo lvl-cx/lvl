@@ -1,6 +1,6 @@
 local a=module("cfg/cfg_crosshair")
 local b=false
-RMenu.Add('crosshair','main',RageUI.CreateMenu("Crosshair","~b~ARMA Crosshair Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","crosshair"))
+RMenu.Add('crosshair','main',RageUI.CreateMenu("","~b~ARMA Crosshair Customisation ",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","crosshair"))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('crosshair', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
