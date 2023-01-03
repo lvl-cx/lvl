@@ -44,18 +44,18 @@ local grindingData = {
     ['Cocaine'] = {
         license = 'Cocaine', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
-        processingScenario = '', 
+        processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
         hasFX = false, 
-        firstItem = '', 
-        secondItem = ''
+        firstItem = 'Coca leaf', 
+        secondItem = 'Cocaine'
     },
     ['Meth'] = {
         license = 'Meth', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
-        processingScenario = '', 
+        processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
         hasFX = false, 
-        firstItem = '', 
-        secondItem = ''
+        firstItem = 'Ephedra', 
+        secondItem = 'Meth'
     },
     ['Diamond'] = {
         license = 'Diamond', 
