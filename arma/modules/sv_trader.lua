@@ -1,16 +1,16 @@
 local grindBoost = 1.0
 
 local defaultPrices = {
-    ["Weed"] = 1500*grindBoost,
-    ["Cocaine"] = 2500*grindBoost,
-    ["Meth"] = 3000*grindBoost,
-    ["Heroin"] = 10000*grindBoost,
-    ["LSDNorth"] = 18000*grindBoost,
-    ["LSDSouth"] = 18000*grindBoost,
-    ["Copper"] = 1000*grindBoost,
-    ["Limestone"] = 2000*grindBoost,
-    ["Gold"] = 4000*grindBoost,
-    ["Diamond"] = 8000*grindBoost,
+    ["Weed"] = math.floor(1500*grindBoost),
+    ["Cocaine"] = math.floor(2500*grindBoost),
+    ["Meth"] = math.floor(3000*grindBoost),
+    ["Heroin"] = math.floor(10000*grindBoost),
+    ["LSDNorth"] = math.floor(18000*grindBoost),
+    ["LSDSouth"] = math.floor(18000*grindBoost),
+    ["Copper"] = math.floor(1000*grindBoost),
+    ["Limestone"] = math.floor(2000*grindBoost),
+    ["Gold"] = math.floor(4000*grindBoost),
+    ["Diamond"] = math.floor(8000*grindBoost),
 }
 
 function ARMA.getCommissionPrice(drugtype)
