@@ -47,7 +47,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 TriggerClientEvent('ARMAUI5:globalOnNHSDuty', source, true)
             end
             if ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-                ARMAclient.setNHS(source, {true})
+                ARMAclient.setHMP(source, {true})
                 TriggerClientEvent('ARMAUI5:globalOnPrisonDuty', source, true)
             end
             if ARMA.hasGroup(user_id, 'Taco Seller') then
