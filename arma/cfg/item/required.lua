@@ -56,7 +56,23 @@ local wbody_choices = function(args)
 end
 
 local wbody_weight = function(args)
-  return 5.00
+  for k,v in pairs(a.weapons) do
+    for c,d in pairs(args) do
+      if k == d then
+        if v.class == "Melee" then
+          return 1.00
+        elseif v.class == "Pistol" then
+          return 5.00
+        elseif v.class == "SMG" or v.class == "Shotgun" then
+          return 7.50
+        elseif v.class == "AR" then
+          return 10.00
+        elseif v.class == "Heavy" then
+          return 15.00
+        end
+      end
+    end
+  end
 end
 
 items["wbody"] = {wbody_name,wbody_desc,wbody_choices,wbody_weight}
@@ -143,32 +159,13 @@ local wammo_choices = function(args)
   return choices
 end
 
-RegisterNetEvent('sendAmmo')
-AddEventHandler('sendAmmo', function(bool)
-  hasWep = bool 
-end)
-
 local wammo_weight = function(args)
   return 0.01
 end
 
-
 for i,v in pairs(ARMAAmmoTypes) do
-  
   items[i] = {wammo_name,wammo_desc,wammo_choices,wammo_weight}
-  
 end
-
---local wammo_name = function(args)
---  for i,v in pairs(ARMAAmmoTypes) do
---     for a,d in pairs(v) do 
---        if d == args[2] then
---          return i
---        end
---     end
---  end
---  return args[1]
---end
 
 items["wammo"] = {wammo_name,wammo_desc,wammo_choices,wammo_weight}
 
