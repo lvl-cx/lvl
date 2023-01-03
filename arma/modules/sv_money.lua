@@ -185,9 +185,9 @@ AddEventHandler('ARMA:giveCashToPlayer', function(nplayer)
           local amount = parseInt(amount)
           if amount > 0 and ARMA.tryPayment(user_id,amount) then
             ARMA.giveMoney(nuser_id,amount)
-            ARMAclient.notify(source,{lang.money.given({getMoneyStringFormatted(amount)})})
-            ARMAclient.notify(nplayer,{lang.money.received({getMoneyStringFormatted(amount)})})
-            tARMA.sendWebhook('give-cash', "ARMA Give Cash Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(nplayer).."**\n> Target PermID: **"..nuser_id.."**\n> Amount: **"..amount.."**")
+            ARMAclient.notify(source,{lang.money.given({getMoneyStringFormatted(math.floor(amount))})})
+            ARMAclient.notify(nplayer,{lang.money.received({getMoneyStringFormatted(math.floor(amount))})})
+            tARMA.sendWebhook('give-cash', "ARMA Give Cash Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(nplayer).."**\n> Target PermID: **"..nuser_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
           else
             ARMAclient.notify(source,{lang.money.not_enough()})
           end
