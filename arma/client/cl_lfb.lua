@@ -542,7 +542,7 @@
 -- RegisterNetEvent(
 --     "ARMA:toggleLFBMenu",
 --     function()
---         RageUI.CloseAll()
+--         RageUI.ActuallyCloseAll()
 --         RageUI.Visible(RMenu:Get("lfb", "tools"), false)
 --         RageUI.Visible(RMenu:Get("lfb", "main"), false)
 --         RageUI.Visible(RMenu:Get("lfb", "water"), false)
@@ -576,7 +576,7 @@
 --     return tARMA.generateUUID("fire", 20, "alphanumeric")
 -- end
 -- RegisterNetEvent("ARMA:startFireMenu",function(F, G, H)
---     RageUI.CloseAll()
+--     RageUI.ActuallyCloseAll()
 --     RageUI.Visible(RMenu:Get("lfb", "tools"), false)
 --     RageUI.Visible(RMenu:Get("lfb", "main"), false)
 --     RageUI.Visible(RMenu:Get("lfb", "water"), false)

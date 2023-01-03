@@ -88,7 +88,7 @@ RageUI.CreateWhile(1.0, true, function()
                             TriggerServerEvent("ARMA:startPilotJob", p)
                             d = false
                             RageUI.Visible(RMenu:Get("ARMApilotjob", "mainMenu"), false)
-                            RageUI.CloseAll()
+                            RageUI.ActuallyCloseAll()
                             h = false
                         end
                     end
@@ -104,7 +104,7 @@ RageUI.CreateWhile(1.0, true, function()
                     TriggerServerEvent("ARMA:pilotJobReset")
                     tARMA.notify("~r~Ended Shift!")
                     RageUI.Visible(RMenu:Get("ARMApilotjob", "mainMenu"), false)
-                    RageUI.CloseAll()
+                    RageUI.ActuallyCloseAll()
                     DeleteEntity(e)
                     h = false
                 end

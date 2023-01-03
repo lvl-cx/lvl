@@ -154,11 +154,9 @@ RegisterNetEvent("ARMA:pilotJobPickupLoc",function(Q)
                 TriggerServerEvent("ARMA:pilotPickupPassengers")
                 FreezeEntityPosition(tARMA.getPlayerVehicle(), true)
                 SetVehicleEngineOn(tARMA.getPlayerVehicle(), false, true, true)
-                Citizen.CreateThread(
-                    function()
-                        createPeds(true, Q)
-                    end
-                )
+                Citizen.CreateThread(function()
+                    createPeds(true, Q)
+                end)
                 tARMA.notify("~g~Picking up passengers!")
             else
                 tARMA.notify("~r~You are going too fast!")
@@ -216,11 +214,9 @@ RegisterNetEvent("ARMA:pilotJobCollectedPassengers",function(U)
             TriggerServerEvent("ARMA:dropoffPassengers")
             SetVehicleEngineOn(tARMA.getPlayerVehicle(), false, false, false)
             FreezeEntityPosition(tARMA.getPlayerVehicle(), true)
-            Citizen.CreateThread(
-                function()
-                    createPeds(false, U)
-                end
-            )
+            Citizen.CreateThread(function()
+                createPeds(false, U)
+            end)
             tARMA.notify("~g~Dropping off passengers!")
         elseif IsControlJustPressed(0, 51) and not IsPedInVehicle(tARMA.getPlayerPed(), f, false) and not k then
             tARMA.notify("~r~You are not in your plane!")
@@ -234,22 +230,20 @@ RegisterNetEvent("ARMA:pilotJobUpdatePlaneCapacity",function(Y, Z)
     if not createdBar then
         createdBar = true
         d = true
-        Citizen.CreateThread(
-            function()
-                while d do
-                    if IsPedInVehicle(tARMA.getPlayerPed(), f, false) then
-                        DrawRect(t.x, t.y, t.width, t.height, 0, 0, 0, 120)
-                        DrawRect(u.x, u.y, u.width, u.height, 0, 200, 0, 255)
-                        DrawRect(v.x, v.y, v.width, v.height, 0, 0, 0, 200)
-                        DrawRect(w.x, w.y, w.width, w.height, 0, 0, 0, 200)
-                        DrawRect(x.x, x.y, x.width, x.height, 0, 0, 0, 200)
-                        DrawRect(y.x, y.y, y.width, y.height, 0, 0, 0, 200)
-                        DrawSprite("pilotjob", "passengerSprite", t.x, t.y, 0.022, 0.045, 0.0, 255, 255, 255, 255)
-                    end
-                    Wait(0)
+        Citizen.CreateThread(function()
+            while d do
+                if IsPedInVehicle(tARMA.getPlayerPed(), f, false) then
+                    DrawRect(t.x, t.y, t.width, t.height, 0, 0, 0, 120)
+                    DrawRect(u.x, u.y, u.width, u.height, 0, 200, 0, 255)
+                    DrawRect(v.x, v.y, v.width, v.height, 0, 0, 0, 200)
+                    DrawRect(w.x, w.y, w.width, w.height, 0, 0, 0, 200)
+                    DrawRect(x.x, x.y, x.width, x.height, 0, 0, 0, 200)
+                    DrawRect(y.x, y.y, y.width, y.height, 0, 0, 0, 200)
+                    DrawSprite("pilotjob", "passengerSprite", t.x, t.y, 0.022, 0.045, 0.0, 255, 255, 255, 255)
                 end
+                Wait(0)
             end
-        )
+        end)
     end
     if createdBar then
         local _ = u.height
@@ -287,12 +281,10 @@ RegisterNetEvent("ARMA:pilotCreateFuelStations",function()
             if IsControlJustPressed(0, 51) and not j and q < 145 then
                 tARMA.notify("~g~Your plane will begin refuelling shortly")
                 j = true
-                Citizen.CreateThread(
-                    function()
-                        deleteFuelCheckpoints()
-                        fuelPlane(a3.currentStation)
-                    end
-                )
+                Citizen.CreateThread(function()
+                    deleteFuelCheckpoints()
+                    fuelPlane(a3.currentStation)
+                end)
             elseif IsControlJustPressed(0, 51) and j then
                 tARMA.notify("~r~Your plane is currently being refuelled!")
             elseif IsControlJustPressed(0, 51) and q >= 145 then
@@ -658,15 +650,7 @@ function createPeds(ap, aq)
         while r ~= 0 do
             Citizen.CreateThread(function()
                 local ah = GetOffsetFromEntityInWorldCoords(tARMA.getPlayerPed(), -15.0, 3.0, 0.0)
-                local az =
-                    CreatePedInsideVehicle(
-                    tARMA.getPlayerVehicle(),
-                    "PED_TYPE_CIVMALE",
-                    2120901815,
-                    e.seatPedSitsIn,
-                    false,
-                    false
-                )
+                local az = CreatePedInsideVehicle(tARMA.getPlayerVehicle(),"PED_TYPE_CIVMALE",2120901815,e.seatPedSitsIn,false,false)
                 TaskLeaveVehicle(az, tARMA.getPlayerVehicle(), 256)
                 Citizen.Wait(3000)
                 TaskGoStraightToCoord(az, ah.x, ah.y, ah.z, 2.0, -1, 0.0, 0)
@@ -719,9 +703,7 @@ function drawPlaneScaleForm(aA, aB, aC)
                 Wait(0)
                 BeginScaleformMovieMethod(aE, "SHOW_SHARD_WASTED_MP_MESSAGE")
                 ScaleformMovieMethodAddParamTextureNameString(aA)
-                ScaleformMovieMethodAddParamTextureNameString(
-                    string.format("%s (Your plane will be deleted in %s seconds and your shift will end)", aB, an)
-                )
+                ScaleformMovieMethodAddParamTextureNameString(string.format("%s (Your plane will be deleted in %s seconds and your shift will end)", aB, an))
                 ScaleformMovieMethodAddParamInt(5)
                 EndScaleformMovieMethod()
                 DrawScaleformMovieFullscreen(aE, 255, 255, 255, 255)
