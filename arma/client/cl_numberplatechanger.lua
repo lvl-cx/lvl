@@ -6,7 +6,7 @@ m=m.garages
 
 RMenu.Add('plateshop', 'main', RageUI.CreateMenu("Number Plate", "~b~DVLA", 1350, 50))
 RMenu.Add("plateshop", "ownedvehicles", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Owned Vehicles", 1350, 50))
-RMenu.Add("plateshop", "changeplate", RageUI.CreateSubMenu(RMenu:Get("plateshop", "main"), "Number Plate", "~b~Plate management", 1350, 50))
+RMenu.Add("plateshop", "changeplate", RageUI.CreateSubMenu(RMenu:Get("plateshop", "ownedvehicles"), "Number Plate", "~b~Plate management", 1350, 50))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('plateshop', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
