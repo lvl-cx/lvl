@@ -141,6 +141,7 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                                 ARMAclient.notify(source, {"~r~You do not have enough "..v.secondItem.."."})
                             end
                         end
+                        TriggerEvent('ARMA:RefreshInventory', source)
                     end
                 end)
             end
