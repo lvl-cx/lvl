@@ -963,6 +963,16 @@ CreateThread(function()
 end)
 
 globalHideUi = false
+function tARMA.hideUI()
+  globalHideUi = true
+  TriggerEvent("ARMA:showHUD", false)
+  TriggerEvent('ARMA:hideChat', true)
+end
+function tARMA.showUI()
+  globalHideUi = false
+  TriggerEvent("ARMA:showHUD", true)
+  TriggerEvent('ARMA:hideChat', false)
+end
 RegisterCommand('showui', function()
   globalHideUi = false
   TriggerEvent("ARMA:showHUD", true)
