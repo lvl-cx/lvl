@@ -10,7 +10,6 @@ cfg.licenses = {
     {name = "LSD License", group = "LSD", price = 50000000, pieceprice = 40000, type = 'grind'},
     {name = "Rebel License", group = "Rebel", price = 30000000, info = {"Access to Rebel Gunstore."}},
     {name = "Advanced Rebel License", group = "AdvancedRebel",price = 15000000, info = {"Access to Advanced Rebel Gunstore."}},
-    {name = "Scrap Job License", group = "Scrap", price = 100000, pieceprice = 250, type = 'grind'},
     {name = "Gold License", group = "Gold", price = 1000000, pieceprice = 2500, type = 'grind'},
     {name = "Diamond License", group = "Diamond", price = 5000000, pieceprice = 10000, type = 'grind'},
     {name = "DJ License", group = "DJ", price = 35000000, info = {"~r~Abuse of this license will result in it being revoked."}},
