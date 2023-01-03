@@ -148,7 +148,11 @@ window.addEventListener('message', function(event) {
             let newItem = $('.ExampleSecondTable').clone().appendTo("#SecondaryInventoryTable");
             $(newItem).find(".ItemName").text(msg.items[key].ItemName)
             $(newItem).find(".ItemQuantity").text(msg.items[key].amount)
-            $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "kg")
+            if (isNaN(msg.items[key].Weight * msg.items[key].amount)) {
+                $(newItem).find(".ItemKG").text("0kg")
+            } else {
+                $(newItem).find(".ItemKG").text((msg.items[key].Weight * msg.items[key].amount).toFixed(2) + "kg")
+            }
             $(newItem).removeClass('ExampleSecondTable')
             $(newItem).show();
             $(newItem).attr("id", key)

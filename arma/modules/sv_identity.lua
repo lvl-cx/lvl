@@ -226,35 +226,3 @@ AddEventHandler("ARMA:askId", function(nplayer)
     ARMAclient.notify(player,{"~r~No player near you."})
   end
 end)
-
-RegisterNetEvent('ARMA:searchPlayer')
-AddEventHandler("ARMA:searchPlayer", function(nplayer)
-  player = source
-  local nuser_id = ARMA.getUserId(nplayer)
-  if nuser_id ~= nil then
-    ARMAclient.notify(nplayer,{"You are being searched."})
-    ARMAclient.getWeapons(nplayer,{},function(weapons)
-      local money = ARMA.getMoney(nuser_id)
-      local items = ""
-      local data = ARMA.getUserDataTable(nuser_id)
-      if data and data.inventory then
-        for k,v in pairs(data.inventory) do
-          local item_name = ARMA.getItemName(k)
-          if item_name then
-            items = items.."<br />"..item_name.." ("..v.amount..")"
-          end
-        end
-      end
-      local weapons_info = ""
-      for k,v in pairs(weapons) do
-        weapons_info = weapons_info.."<br />"..k.." ("..v.ammo..")"
-      end
-      ARMAclient.setDiv(player,{"police_check",".div_police_check{ background-color: rgba(0,0,0,0.75); color: white; font-weight: bold; width: 500px; padding: 10px; margin: auto; margin-top: 150px; }",lang.police.menu.check.info({getMoneyStringFormatted(money),items,weapons_info})})
-      ARMA.request(player, "Hide the check report.", 1000, function(player,ok)
-        ARMAclient.removeDiv(player,{"police_check"})
-      end)
-    end)
-  else
-    ARMAclient.notify(player,{"~r~No player near you."})
-  end
-end)

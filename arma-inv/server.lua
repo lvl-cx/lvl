@@ -130,6 +130,95 @@ AddEventHandler('ARMA:FetchHouseInventory', function(nameHouse)
     end})
 end)
 
+-- rob player with the second inventory data
+RegisterNetEvent('ARMA:searchPlayer')
+AddEventHandler('ARMA:searchPlayer', function(playersrc)
+    local source = source
+    if not InventorySpamTrack[source] then
+        InventorySpamTrack[source] = true;
+        local user_id = ARMA.getUserId({source}) 
+        local data = ARMA.getUserDataTable({user_id})
+        local their_id = ARMA.getUserId({playersrc}) 
+        local their_data = ARMA.getUserDataTable({their_id})
+        if data and data.inventory then
+            local FormattedInventoryData = {}
+            for i,v in pairs(data.inventory) do
+                FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
+            end
+            exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = user_id}, function(vipClubData)
+                if #vipClubData > 0 then
+                    if their_data and their_data.inventory then
+                        local FormattedSecondaryInventoryData = {}
+                        for i,v in pairs(their_data.inventory) do
+                            FormattedSecondaryInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
+                        end
+                        if ARMA.getMoney({their_id}) > 0 then
+                            FormattedSecondaryInventoryData['cash'] = {amount = '£'..getMoneyStringFormatted(ARMA.getMoney({their_id})), ItemName = 'Cash'}
+                        end
+                        TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedSecondaryInventoryData, ARMA.computeItemsWeight({their_data.inventory}), 200)
+                    end
+                    if vipClubData[1].plathours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id})+20)
+                    elseif vipClubData[1].plushours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id})+10)
+                    else
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id}))
+                    end
+                    TriggerClientEvent('ARMA:InventoryOpen', source, true)
+                    InventorySpamTrack[source] = false;
+                end
+            end)
+        else 
+            print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
+        end
+    end
+end)
+
+-- rob player where it gives you their inventory
+RegisterNetEvent('ARMA:robPlayer')
+AddEventHandler('ARMA:robPlayer', function(playersrc)
+    local source = source
+    if not InventorySpamTrack[source] then
+        InventorySpamTrack[source] = true;
+        local user_id = ARMA.getUserId({source}) 
+        local data = ARMA.getUserDataTable({user_id})
+        local their_id = ARMA.getUserId({playersrc}) 
+        local their_data = ARMA.getUserDataTable({their_id})
+        if data and data.inventory then
+            local FormattedInventoryData = {}
+            for i,v in pairs(data.inventory) do
+                FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
+            end
+            exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = user_id}, function(vipClubData)
+                if #vipClubData > 0 then
+                    if their_data and their_data.inventory then
+                        local FormattedSecondaryInventoryData = {}
+                        for i,v in pairs(their_data.inventory) do
+                            ARMA.giveInventoryItem({user_id, i, v.amount})
+                            ARMA.tryGetInventoryItem({their_id, i, v.amount})
+                        end
+                    end
+                    if ARMA.getMoney({their_id}) > 0 then
+                        ARMA.giveMoney({user_id, ARMA.getMoney({their_id})})
+                        ARMA.tryPayment({their_id, ARMA.getMoney({their_id})})
+                    end
+                    if vipClubData[1].plathours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id})+20)
+                    elseif vipClubData[1].plushours > 0 then
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id})+10)
+                    else
+                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight({data.inventory}), ARMA.getInventoryMaxWeight({user_id}))
+                    end
+                    TriggerClientEvent('ARMA:InventoryOpen', source, true)
+                    InventorySpamTrack[source] = false;
+                end
+            end)
+        else 
+            print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
+        end
+    end
+end)
+
 RegisterNetEvent('ARMA:UseItem')
 AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
     local source = source
@@ -391,48 +480,43 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
             TriggerClientEvent('ARMA:ToggleNUIFocus', source, false)
             ARMA.prompt({source, 'How many ' .. ARMA.getItemName({itemId}) .. 's. Do you want to move?', "", function(player, Quantity)
                 Quantity = parseInt(Quantity)
-        
-                
-                    TriggerClientEvent('ARMA:ToggleNUIFocus', source, true)
-                    if Quantity >= 1 then
-                        local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
-                        ARMA.getSData({carformat, function(cdata)
-                            cdata = json.decode(cdata) or {}
-                            if cdata[itemId] and Quantity <= cdata[itemId].amount  then
-                                local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * Quantity)
-                                if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
-                                    if cdata[itemId].amount > Quantity then
-                                        cdata[itemId].amount = cdata[itemId].amount - Quantity; 
-                                        ARMA.giveInventoryItem({UserId, itemId, Quantity, true})
-                                    else 
-                                        cdata[itemId] = nil;
-                                        ARMA.giveInventoryItem({UserId, itemId, Quantity, true})
-                                    end 
-                                    local FormattedInventoryData = {}
-                                    for i, v in pairs(cdata) do
-                                        FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
-                                    end
-                                    local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
-                                    TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
-                                    TriggerEvent('ARMA:RefreshInventory', source)
-                                    InventoryCoolDown[source] = nil;
-                                    ARMA.setSData({carformat, json.encode(cdata)})
+                TriggerClientEvent('ARMA:ToggleNUIFocus', source, true)
+                if Quantity >= 1 then
+                    local carformat = "chest:u1veh_" .. inventoryInfo .. '|' .. UserId
+                    ARMA.getSData({carformat, function(cdata)
+                        cdata = json.decode(cdata) or {}
+                        if cdata[itemId] and Quantity <= cdata[itemId].amount  then
+                            local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
+                                if cdata[itemId].amount > Quantity then
+                                    cdata[itemId].amount = cdata[itemId].amount - Quantity; 
+                                    ARMA.giveInventoryItem({UserId, itemId, Quantity, true})
                                 else 
-                                    InventoryCoolDown[source] = nil;
-                                    ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
+                                    cdata[itemId] = nil;
+                                    ARMA.giveInventoryItem({UserId, itemId, Quantity, true})
+                                end 
+                                local FormattedInventoryData = {}
+                                for i, v in pairs(cdata) do
+                                    FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName({i}), Weight = ARMA.getItemWeight({i})}
                                 end
+                                local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
+                                TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight({cdata}), maxVehKg)
+                                TriggerEvent('ARMA:RefreshInventory', source)
+                                InventoryCoolDown[source] = nil;
+                                ARMA.setSData({carformat, json.encode(cdata)})
                             else 
                                 InventoryCoolDown[source] = nil;
-                                ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
+                                ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                             end
-                        end})
-                    else
-                        InventoryCoolDown[source] = nil;
-                        ARMAclient.notify(source, {'~r~Invalid Amount!'})
-                    end
-  
-             
-    
+                        else 
+                            InventoryCoolDown[source] = nil;
+                            ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
+                        end
+                    end})
+                else
+                    InventoryCoolDown[source] = nil;
+                    ARMAclient.notify(source, {'~r~Invalid Amount!'})
+                end
             end})
         elseif inventoryType == "LootBag" then    
             if LootBagEntities[inventoryInfo].Items[itemId] then 
@@ -945,11 +1029,15 @@ Citizen.CreateThread(function()
             if itemCount == 0 then
                 if DoesEntityExist(v[1]) then 
                     DeleteEntity(v[1])
-                    --print('Deleted Lootbag')
                     LootBagEntities[i] = nil;
                 end
             end
         end
-        --print('All Lootbag garbage collected.')
     end
 end)
+
+function getMoneyStringFormatted(cashString)
+	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
+	int = int:reverse():gsub("(%d%d%d)", "%1,")
+	return minus .. int:reverse():gsub("^,", "") .. fraction 
+end
