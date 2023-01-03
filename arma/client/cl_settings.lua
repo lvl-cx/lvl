@@ -1,18 +1,57 @@
 RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", "~b~Settings Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners","settings")) 
-RMenu.Add("SettingsMenu", "crosshairsettings", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Crosshair Settings',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "killeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Kill Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "bloodeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Blood Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "weaponswhitelist", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Custom Weapons Owned',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "generateaccesscode", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "weaponswhitelist"), "", '~b~Generate Access Code',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "viewwhitelisted", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "generateaccesscode"), "", '~b~View Whilelisted Users',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
-
-
-
 local a = module("cfg/cfg_settings")
 local b = 0
+local c = 0
 local d = 0
 local e = false
+Citizen.CreateThread(function()
+    local f = GetResourceKvpString("arma_diagonalweapons") or "false"
+    if f == "false" then
+        b = false
+        TriggerEvent("ARMA:setVerticalWeapons")
+    else
+        b = true
+        TriggerEvent("ARMA:setDiagonalWeapons")
+    end
+    local g = GetResourceKvpString("arma_frontars") or "false"
+    if g == "false" then
+        c = false
+        TriggerEvent("ARMA:setBackAR")
+    else
+        c = true
+        TriggerEvent("ARMA:setFrontAR")
+    end
+    local h = GetResourceKvpString("arma_hitmarkersounds") or "false"
+    if h == "false" then
+        d = false
+        TriggerEvent("ARMA:hsSoundsOff")
+    else
+        d = true
+        TriggerEvent("ARMA:hsSoundsOn")
+    end
+end)
+function tARMA.setDiagonalWeaponSetting(i)
+    SetResourceKvp("arma_diagonalweapons", tostring(i))
+end
+function tARMA.setFrontARSetting(i)
+    SetResourceKvp("arma_frontars", tostring(i))
+end
+function tARMA.setHitMarkerSetting(i)
+    SetResourceKvp("arma_hitmarkersounds", tostring(i))
+end
+function tARMA.setCODHitMarkerSetting(i)
+    SetResourceKvp("arma_codhitmarkersounds", tostring(i))
+end
+local function j(k)
+    RageUI.CloseAll()
+    RageUI.Visible(RMenu:Get("SettingsMenu", "settings"), k)
+end
 local l = {
     {"50%", 0.5},
     {"60%", 0.6},
@@ -26,40 +65,55 @@ local l = {
 }
 local m = {"50%", "60%", "70%", "80%", "90%", "100%", "150%", "200%", "1000%"}
 local n = 6
-local u = {}
-local function v(w, x)
-    return u[w.name .. x.name]
+local o = {}
+local p
+local q
+local r
+local s
+RegisterNetEvent("ARMA:gotCustomWeaponsOwned",function(t)
+    print("gotCustomWeaponsOwned", dump(t))
+    o = t
+end)
+RegisterNetEvent("ARMA:generatedAccessCode",function(u)
+    print("got accessCode", u)
+    r = u
+end)
+RegisterNetEvent("ARMA:getWhitelistedUsers",function(v)
+    s = v
+end)
+local w = {}
+local function x(y, z)
+    return w[y.name .. z.name]
 end
-local function y(w)
-    local z = false
-    for A, x in pairs(w.presets) do
-        if u[w.name .. x.name] then
-            z = true
-            u[w.name .. x.name] = nil
+local function A(y)
+    local B = false
+    for C, z in pairs(y.presets) do
+        if w[y.name .. z.name] then
+            B = true
+            w[y.name .. z.name] = nil
         end
     end
-    if z then
-        for B, C in pairs(w.default) do
-            SetVisualSettingFloat(B, C)
+    if B then
+        for D, E in pairs(y.default) do
+            SetVisualSettingFloat(D, E)
         end
     end
 end
-local function D(x)
-    for B, C in pairs(x.values) do
-        SetVisualSettingFloat(B, C)
+local function F(z)
+    for D, E in pairs(z.values) do
+        SetVisualSettingFloat(D, E)
     end
 end
-local function E(w, x, F)
-    y(w)
-    if F then
-        u[w.name .. x.name] = true
-        D(x)
+local function G(y, z, H)
+    A(y)
+    if H then
+        w[y.name .. z.name] = true
+        F(z)
     end
-    local G = json.encode(u)
-    SetResourceKvp("arma_graphic_presets", G)
+    local I = json.encode(w)
+    SetResourceKvp("arma_graphic_presets", I)
 end
-
-local H = {
+local J = {
     "0%",
     "5%",
     "10%",
@@ -82,7 +136,7 @@ local H = {
     "95%",
     "100%"
 }
-local I = {
+local K = {
     0.0,
     0.05,
     0.1,
@@ -105,7 +159,7 @@ local I = {
     0.95,
     1.0
 }
-local J = {
+local L = {
     "25%",
     "50%",
     "75%",
@@ -123,8 +177,8 @@ local J = {
     "750%",
     "1000%"
 }
-local K = {0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 7.5, 10.0}
-local L = {
+local M = {0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 7.5, 10.0}
+local N = {
     "0.1s",
     "0.2s",
     "0.3s",
@@ -140,8 +194,8 @@ local L = {
     "1.75s",
     "2.0s"
 }
-local M = {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000}
-local N = {
+local O = {100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000}
+local P = {
     "Disabled",
     "Fireworks",
     "Celebration",
@@ -165,9 +219,12 @@ local N = {
     "Falling Leaves",
     "Wood Smash",
     "Train Smoke",
-    "Money"
+    "Money",
+    "Confetti",
+    "Marbles",
+    "Sparkles"
 }
-local O = {
+local Q = {
     {"DISABLED", "DISABLED", 1.0},
     {"scr_indep_fireworks", "scr_indep_firework_shotburst", 0.2},
     {"scr_xs_celebration", "scr_xs_confetti_burst", 1.2},
@@ -191,9 +248,12 @@ local O = {
     {"des_stilthouse", "ent_ray_fam3_falling_leaves", 1.0},
     {"des_stilthouse", "ent_ray_fam3_wood_frags", 1.0},
     {"des_train_crash", "ent_ray_train_smoke", 1.0},
-    {"core", "ent_brk_banknotes", 2.0}
+    {"core", "ent_brk_banknotes", 2.0},
+    {"core", "ent_dst_inflate_ball_clr", 1.0},
+    {"core", "ent_dst_gen_gobstop", 1.0},
+    {"core", "ent_sht_telegraph_pole", 1.0}
 }
-local P = {
+local R = {
     "Disabled",
     "BikerFilter",
     "CAMERA_BW",
@@ -221,7 +281,7 @@ local P = {
     "WATER_river",
     "WATER_salton"
 }
-local Q = {
+local S = {
     lightning = false,
     pedFlash = false,
     pedFlashRGB = {11, 11, 11},
@@ -235,10 +295,10 @@ local Q = {
     timecycle = 1,
     timecycleTime = 1
 }
-local R = 0
-local function S()
-    local T = json.encode(Q)
-    SetResourceKvp("arma_kill_effects", T)
+local T = 0
+local function U()
+    local V = json.encode(S)
+    SetResourceKvp("arma_kill_effects", V)
 end
 local W = {head = 1, body = 1, arms = 1, legs = 1}
 local function X()
@@ -247,23 +307,23 @@ local function X()
 end
 Citizen.CreateThread(function()
     Citizen.Wait(1000)
-    local G = GetResourceKvpString("arma_graphic_presets")
-    if G and G ~= "" then
-        u = json.decode(G) or {}
+    local I = GetResourceKvpString("arma_graphic_presets")
+    if I and I ~= "" then
+        w = json.decode(I) or {}
     end
-    for A, w in pairs(a.presets) do
-        for A, x in pairs(w.presets) do
-            if v(w, x) then
-                D(x)
+    for C, y in pairs(a.presets) do
+        for C, z in pairs(y.presets) do
+            if x(y, z) then
+                F(z)
             end
         end
     end
-    local T = GetResourceKvpString("arma_kill_effects")
-    if T and T ~= "" then
-        local U = json.decode(T)
-        for V, F in pairs(U) do
-            if Q[V] then
-                Q[V] = F
+    local V = GetResourceKvpString("arma_kill_effects")
+    if V and V ~= "" then
+        local Z = json.decode(V)
+        for _, H in pairs(Z) do
+            if S[_] then
+                S[_] = H
             end
         end
     end
@@ -277,84 +337,29 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
-local o = {}
-local p
-local q
-local r
-local s
-RegisterNetEvent("ARMA:gotCustomWeaponsOwned",function(t)
-    print("gotCustomWeaponsOwned", dump(t))
-    o = t
-end)
-RegisterNetEvent("ARMA:generatedAccessCode",function(u)
-    print("got accessCode", u)
-    r = u
-end)
-RegisterNetEvent("ARMA:getWhitelistedUsers",function(v)
-    s = v
-end)
-
-Citizen.CreateThread(function()
-    local f = GetResourceKvpString("arma_diagonalweapons") or "false"
-    if f == "false" then
-        b = false
-        TriggerEvent("ARMA:setVerticalWeapons")
-    else
-        b = true
-        TriggerEvent("ARMA:setDiagonalWeapons")
-    end
-    local g = GetResourceKvpString("arma_frontars") or "false"
-    if g == "false" then
-        c = false
-        TriggerEvent("ARMA:setBackAR")
-    else
-        c = true
-        TriggerEvent("ARMA:setFrontAR")
-    end
-    local h = GetResourceKvpString("arma_hitmarkersounds") or "false"
-    if h == "false" then
-        d = false
-        TriggerEvent("ARMA:hsSoundsOff")
-    else
-        d = true
-        TriggerEvent("ARMA:hsSoundsOn")
-    end
-end)
-
-function tARMA.setHitMarkerSetting(i)
-    SetResourceKvp("arma_hitmarkersounds", tostring(i))
-end
-function tARMA.setCODHitMarkerSetting(i)
-    SetResourceKvp("arma_codhitmarkersounds", tostring(i))
-end
-function tARMA.setDiagonalWeaponSetting(f)
-    SetResourceKvp("arma_diagonalweapons",tostring(f))
-end
-function tARMA.setFrontARSetting(i)
-    SetResourceKvp("arma_frontars", tostring(i))
-end
-
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'MainMenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.List("Render Distance Modifier",m,n,"~g~Lowering this will increase your FPS!",{},true,function(W, X, Y, Z)
-                if Y then
+            if tARMA.isNewPlayer() then
+                drawNativeNotification("Press ~INPUT_REPLAY_START_STOP_RECORDING_SECONDARY~ to toggle the Settings Menu.")
+            end
+            RageUI.List("Render Distance Modifier",m,n,"~g~Lowering this will increase your FPS!",{},true,function(a0, a1, a2, a3)
+                if a2 then
                 end
-                n = Z
+                n = a3
             end,function()end,nil)
-            local function _()
-                b = true
+            local function a4()
                 TriggerEvent("ARMA:setDiagonalWeapons")
+                b = true
                 tARMA.setDiagonalWeaponSetting(b)
             end
-            local function a0()
-                b = false
+            local function a5()
                 TriggerEvent("ARMA:setVerticalWeapons")
+                b = false
                 tARMA.setDiagonalWeaponSetting(b)
             end
-            RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,_,a0)
+            RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,a4,a5)
             RageUI.Checkbox("Enable Front Assault Rifles","~g~This changes the positioning of Assault Rifles from back to front.",c,{Style = RageUI.CheckboxStyle.Car},function()
             end,
             function()
@@ -367,93 +372,93 @@ RageUI.CreateWhile(1.0, true, function()
                 c = false
                 tARMA.setFrontARSetting(c)
             end)
-            local function _()
-                d = true
+            local function a4()
                 TriggerEvent("ARMA:hsSoundsOn")
+                d = true
                 tARMA.setHitMarkerSetting(d)
                 tARMA.notify("~y~Experimental Headshot sounds now set to " .. tostring(d))
             end
-            local function a0()
-                d = false
+            local function a5()
                 TriggerEvent("ARMA:hsSoundsOff")
+                d = false
                 tARMA.setHitMarkerSetting(d)
                 tARMA.notify("~y~Experimental Headshot sounds now set to " .. tostring(d))
             end
-            RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,_,a0)
-            RageUI.ButtonWithStyle("Weapon Whitelists", "Sell your custom weapon whitelists here.", {RightLabel = "→→→"}, true, function(W, X, Y)
-                if Y then
+            RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,a4,a5)
+            RageUI.ButtonWithStyle("Weapon Whitelists","Sell your custom weapon whitelists here.",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                if a2 then
                     r = nil
                     p = nil
                     q = nil
                     s = nil
                     TriggerServerEvent("ARMA:getCustomWeaponsOwned")
                 end
-            end, RMenu:Get('SettingsMenu', 'weaponswhitelist'))
+            end,RMenu:Get("SettingsMenu", "weaponswhitelist"))
             -- RageUI.ButtonWithStyle("Store Inventory","View your store inventory here.",{RightLabel = "→→→"},true,function()
             -- end,RMenu:Get("store", "mainmenu"))
-            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,function()tARMA.setStreetnamesEnabled(true)end,function()tARMA.setStreetnamesEnabled(false)end)
-            RageUI.Checkbox("Toggle Compass", nil, compasschecked, {RightLabel = ""}, function(Hovered, Active, Selected, Checked)
-                if Selected then
-                    compasschecked = not compasschecked
-                    ExecuteCommand("compass")
-                end
+            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,
+            function()
+                tARMA.setStreetnamesEnabled(true)
+            end,
+            function()
+                tARMA.setStreetnamesEnabled(false)
             end)
-            local function _()
-                ExecuteCommand("hideui")
+            RageUI.Checkbox("Compass","",tARMA.isCompassEnabled(),{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,
+            function()
+                tARMA.setCompassEnabled(true)
+            end,
+            function()
+                tARMA.setCompassEnabled(false)
+            end)
+            local function a4()
+                tARMA.hideUI()
                 hideUI = true
             end
-            local function a0()
-                ExecuteCommand("showui")
+            local function a5()
+                tARMA.showUI()
                 hideUI = false
             end
-            RageUI.Checkbox("Hide UI","",hideUI,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,_,a0)
-            local function _()
+            RageUI.Checkbox("Hide UI","",hideUI,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,a4,a5)
+            local function a4()
                 tARMA.toggleBlackBars()
                 e = true
-                TriggerEvent("ARMA:showHUD", false)
             end
-            local function a0()
+            local function a5()
                 tARMA.toggleBlackBars()
                 e = false
-                TriggerEvent("ARMA:showHUD", true)
             end
-            RageUI.Checkbox("Cinematic Black Bars","",e,{Style = RageUI.CheckboxStyle.Car},function(W, Y, X, a1)
-            end,_,a0)
-            RageUI.ButtonWithStyle("Crosshair Settings", "Create a custom built-in crosshair here.", {RightLabel = "→→→"}, true, function(W, X, Y)
-                if Y then
-                    ExecuteCommand('crosshair')
-                end
-            end)
-            RageUI.ButtonWithStyle("Scope Settings","Add a toggleable range finder when using sniper scopes.",{RightLabel = "→→→"},true,function(W, X, Y)
-                if Y then
-                    ExecuteCommand("scope")
-                end
-            end)
+            RageUI.Checkbox("Cinematic Black Bars","",e,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            end,a4,a5)
+            RageUI.ButtonWithStyle("Crosshair","Create a custom built-in crosshair here.",{RightLabel = "→→→"},true,function(a0, a1, a2)
+            end,RMenu:Get("crosshair", "main"))
+            RageUI.ButtonWithStyle("Scope Settings","Add a toggleable range finder when using sniper scopes.",{RightLabel = "→→→"},true,function(a0, a1, a2)
+            end,RMenu:Get("scope", "main"))
             -- RageUI.ButtonWithStyle("Graphic Presets","View a list of preconfigured graphic settings.",{RightLabel = "→→→"},true,function()
             -- end,RMenu:Get("SettingsMenu", "graphicpresets"))
             RageUI.ButtonWithStyle("Kill Effects","Toggle effects that occur on killing a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "killeffects"))
             RageUI.ButtonWithStyle("Blood Effects","Toggle effects that occur when damaging a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "bloodeffects"))
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'weaponswhitelist')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for a7, a8 in pairs(o) do
-                RageUI.ButtonWithStyle(a8,nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
+                RageUI.ButtonWithStyle(a8,"",{RightLabel = "→→→"},true,function(a0, a1, a2)
                     if a2 then
-                        p = a8 -- a8 is name
-                        q = a7 -- a7 is spawncode
+                        p = a8
+                        q = a7
                         s = nil
                     end
                 end,RMenu:Get("SettingsMenu", "generateaccesscode"))
             end
             RageUI.Separator("~y~If you do not see your custom weapon here.")
             RageUI.Separator("~y~Please open a ticket on our support discord.")
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'generateaccesscode')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -463,7 +468,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("to purchase your custom weapon whitelist, which they ")
             RageUI.Separator("then enter on the store to receive their automated")
             RageUI.Separator("weapon whitelist.")
-            RageUI.ButtonWithStyle("Create access code",nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
+            RageUI.ButtonWithStyle("Create access code","",{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
                     local a9 = getGenericTextInput("User ID of player purchasing your weapon whitelist.")
                     if tonumber(a9) then
@@ -475,7 +480,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.ButtonWithStyle("View whitelisted users",nil,{RightLabel = "→→→"},true,function(a0, a1, a2)
+            RageUI.ButtonWithStyle("View whitelisted users","",{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
                     TriggerServerEvent("ARMA:requestWhitelistedUsers", q)
                 end
@@ -483,7 +488,7 @@ RageUI.CreateWhile(1.0, true, function()
             if r then
                 RageUI.Separator("~g~Access code generated: " .. r)
             end
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'viewwhitelisted')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -492,164 +497,164 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.Separator("~r~Requesting whitelisted users...")
             else
                 for aa, ab in pairs(s) do
-                    RageUI.ButtonWithStyle("ID: " .. tostring(aa),nil,{RightLabel = ab},true,function()end)
+                    RageUI.ButtonWithStyle("ID: " .. tostring(aa),"",{RightLabel = ab},true,function()
+                    end)
                 end
             end
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'graphicpresets')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            for A, w in pairs(a.presets) do
-                RageUI.Separator(w.name)
-                for A, x in pairs(w.presets) do
-                    local a7 = v(w, x)
-                    RageUI.Checkbox(x.name,nil,a7,{},function(W, Y, X, a1)
-                        if a1 ~= a7 then
-                            E(w, x, a1)
+            for C, y in pairs(a.presets) do
+                RageUI.Separator(y.name)
+                for C, z in pairs(y.presets) do
+                    local ac = x(y, z)
+                    RageUI.Checkbox(z.name,nil,ac,{},function(a0, a2, a1, a6)
+                        if a6 ~= ac then
+                            G(y, z, a6)
                         end
                     end,function()end,function()end)
                 end
             end
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'killeffects')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Checkbox("Create Lightning","",Q.lightning,{},function(W, Y, X, a1)
-                if Y then
-                    Q.lightning = a1
-                    S()
+            RageUI.Checkbox("Create Lightning","",S.lightning,{},function(a0, a2, a1, a6)
+                if a2 then
+                    S.lightning = a6
+                    U()
                 end
             end)
-            RageUI.Checkbox("Ped Flash","",Q.pedFlash,{},function(W, Y, X, a1)
-                if Y then
-                    Q.pedFlash = a1
-                    S()
+            RageUI.Checkbox("Ped Flash","",S.pedFlash,{},function(a0, a2, a1, a6)
+                if a2 then
+                    S.pedFlash = a6
+                    U()
                 end
             end)
-            if Q.pedFlash then
-                RageUI.List("Ped Flash Red",H,Q.pedFlashRGB[1],"",{},Q.pedFlash,function(W, X, Y, Z)
-                    if X and Q.pedFlashRGB[1] ~= Z then
-                        Q.pedFlashRGB[1] = Z
-                        S()
+            if S.pedFlash then
+                RageUI.List("Ped Flash Red",J,S.pedFlashRGB[1],"",{},S.pedFlash,function(a0, a1, a2, a3)
+                    if a1 and S.pedFlashRGB[1] ~= a3 then
+                        S.pedFlashRGB[1] = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Ped Flash Green",H,Q.pedFlashRGB[2],"",{},Q.pedFlash,function(W, X, Y, Z)
-                    if X and Q.pedFlashRGB[2] ~= Z then
-                        Q.pedFlashRGB[2] = Z
-                        S()
+                RageUI.List("Ped Flash Green",J,S.pedFlashRGB[2],"",{},S.pedFlash,function(a0, a1, a2, a3)
+                    if a1 and S.pedFlashRGB[2] ~= a3 then
+                        S.pedFlashRGB[2] = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Ped Flash Blue",H,Q.pedFlashRGB[3],"",{},Q.pedFlash,function(W, X, Y, Z)
-                    if X and Q.pedFlashRGB[3] ~= Z then
-                        Q.pedFlashRGB[3] = Z
-                        S()
+                RageUI.List("Ped Flash Blue",J,S.pedFlashRGB[3],"",{},S.pedFlash,function(a0, a1, a2, a3)
+                    if a1 and S.pedFlashRGB[3] ~= a3 then
+                        S.pedFlashRGB[3] = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Ped Flash Intensity",J,Q.pedFlashIntensity,"",{},Q.pedFlash,function(W, X, Y, Z)
-                    if X and Q.pedFlashIntensity ~= Z then
-                        Q.pedFlashIntensity = Z
-                        S()
+                RageUI.List("Ped Flash Intensity",L,S.pedFlashIntensity,"",{},S.pedFlash,function(a0, a1, a2, a3)
+                    if a1 and S.pedFlashIntensity ~= a3 then
+                        S.pedFlashIntensity = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Ped Flash Time",L,Q.pedFlashTime,"",{},Q.pedFlash,function(W, X, Y, Z)
-                    if X and Q.pedFlashTime ~= Z then
-                        Q.pedFlashTime = Z
-                        S()
+                RageUI.List("Ped Flash Time",N,S.pedFlashTime,"",{},S.pedFlash,function(a0, a1, a2, a3)
+                    if a1 and S.pedFlashTime ~= a3 then
+                        S.pedFlashTime = a3
+                        U()
                     end
                 end,function()end)
             end
-            RageUI.Checkbox("Screen Flash","",Q.screenFlash,{},function(W, Y, X, a1)
-                if Y then
-                    Q.screenFlash = a1
-                    S()
+            RageUI.Checkbox("Screen Flash","",S.screenFlash,{},function(a0, a2, a1, a6)
+                if a2 then
+                    S.screenFlash = a6
+                    U()
                 end
             end)
-            if Q.screenFlash then
-                RageUI.List("Screen Flash Red",H,Q.screenFlashRGB[1],"",{},Q.screenFlash,function(W, X, Y, Z)
-                    if X and Q.screenFlashRGB[1] ~= Z then
-                        Q.screenFlashRGB[1] = Z
-                        S()
+            if S.screenFlash then
+                RageUI.List("Screen Flash Red",J,S.screenFlashRGB[1],"",{},S.screenFlash,function(a0, a1, a2, a3)
+                    if a1 and S.screenFlashRGB[1] ~= a3 then
+                        S.screenFlashRGB[1] = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Screen Flash Green",H,Q.screenFlashRGB[2],"",{},Q.screenFlash,function(W, X, Y, Z)
-                    if X and Q.screenFlashRGB[2] ~= Z then
-                        Q.screenFlashRGB[2] = Z
-                        S()
+                RageUI.List("Screen Flash Green",J,S.screenFlashRGB[2],"",{},S.screenFlash,function(a0, a1, a2, a3)
+                        if a1 and S.screenFlashRGB[2] ~= a3 then
+                            S.screenFlashRGB[2] = a3
+                            U()
+                        end
+                    end,function()end)
+                RageUI.List("Screen Flash Blue",J,S.screenFlashRGB[3],"",{},S.screenFlash,function(a0, a1, a2, a3)
+                    if a1 and S.screenFlashRGB[3] ~= a3 then
+                        S.screenFlashRGB[3] = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Screen Flash Blue",H,Q.screenFlashRGB[3],"",{},Q.screenFlash,function(W, X, Y, Z)
-                    if X and Q.screenFlashRGB[3] ~= Z then
-                        Q.screenFlashRGB[3] = Z
-                        S()
+                RageUI.List("Screen Flash Intensity",L,S.screenFlashIntensity,"",{},S.screenFlash,function(a0, a1, a2, a3)
+                    if a1 and S.screenFlashIntensity ~= a3 then
+                        S.screenFlashIntensity = a3
+                        U()
                     end
                 end,function()end)
-                RageUI.List("Screen Flash Intensity",J,Q.screenFlashIntensity,"",{},Q.screenFlash,function(W, X, Y, Z)
-                    if X and Q.screenFlashIntensity ~= Z then
-                        Q.screenFlashIntensity = Z
-                        S()
-                    end
-                end,function()end)
-                RageUI.List("Screen Flash Time",L,Q.screenFlashTime,"",{},Q.screenFlash,function(W, X, Y, Z)
-                    if X and Q.screenFlashTime ~= Z then
-                        Q.screenFlashTime = Z
-                        S()
+                RageUI.List("Screen Flash Time",N,S.screenFlashTime,"",{},S.screenFlash,function(a0, a1, a2, a3)
+                    if a1 and S.screenFlashTime ~= a3 then
+                        S.screenFlashTime = a3
+                        U()
                     end
                 end,function()end)
             end
-            RageUI.List("Timecycle Flash",P,Q.timecycle,"",{},true,function(W, X, Y, Z)
-                if X and Q.timecycle ~= Z then
-                    Q.timecycle = Z
-                    S()
+            RageUI.List("Timecycle Flash",R,S.timecycle,"",{},true,function(a0, a1, a2, a3)
+                if a1 and S.timecycle ~= a3 then
+                    S.timecycle = a3
+                    U()
                 end
             end,function()end)
-            if Q.timecycle ~= 1 then
-                RageUI.List("Timecycle Flash Time",L,Q.timecycleTime,"",{},true,function(W, X, Y, Z)
-                    if X and Q.timecycleTime ~= Z then
-                        Q.timecycleTime = Z
-                        S()
+            if S.timecycle ~= 1 then
+                RageUI.List("Timecycle Flash Time",N,S.timecycleTime,"",{},true,function(a0, a1, a2, a3)
+                    if a1 and S.timecycleTime ~= a3 then
+                        S.timecycleTime = a3
+                        U()
                     end
                 end,function()end)
             end
-            RageUI.List("~y~Particles~w~",N,Q.particle,"",{},true,function(W, X, Y, Z)
-                if X and Q.particle ~= Z then
-                    if not tARMA.isPlatClub() and not tARMA.isPlusClub() then
-                        tARMA.notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
-                        tARMA.notify("~y~Available @ store.armarp.co.uk")
-                    else
-                        Q.particle = Z
-                        S()
+            RageUI.List("~y~Particles~w~",P,S.particle,"",{},true,function(a0, a1, a2, a3)
+                if a1 and S.particle ~= a3 then
+                    if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~Available @ store.armarp.co.uk")
                     end
+                    S.particle = a3
+                    U()
                 end
             end,function()end)
-            local a8 = 0
-            if Q.lightning then
-                a8 = math.max(a8, 1000)
+            local ad = 0
+            if S.lightning then
+                ad = math.max(ad, 1000)
             end
-            if Q.pedFlash then
-                a8 = math.max(a8, M[Q.pedFlashTime])
+            if S.pedFlash then
+                ad = math.max(ad, O[S.pedFlashTime])
             end
-            if Q.screenFlash then
-                a8 = math.max(a8, M[Q.screenFlashTime])
+            if S.screenFlash then
+                ad = math.max(ad, O[S.screenFlashTime])
             end
-            if Q.timecycleTime ~= 1 then
-                a8 = math.max(a8, I[Q.timecycleTime])
+            if S.timecycleTime ~= 1 then
+                ad = math.max(ad, K[S.timecycleTime])
             end
-            if Q.particle ~= 1 then
-                a8 = math.max(a8, 1000)
+            if S.particle ~= 1 then
+                ad = math.max(ad, 1000)
             end
-            if GetGameTimer() - R > a8 + 1000 then
+            if GetGameTimer() - T > ad + 1000 then
                 tARMA.addKillEffect(PlayerPedId(), true)
-                R = GetGameTimer()
+                T = GetGameTimer()
             end
             DrawAdvancedTextNoOutline(0.59, 0.9, 0.005, 0.0028, 1.5, "PREVIEW", 255, 0, 0, 255, 2, 0)
-       end)
+        end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'bloodeffects')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.List("~y~Head",P,W.head,"Effect that displays when you hit the head.",{},true,function(a0, a1, a2, a3)
                 if W.head ~= a3 then
                     if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
-                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~You need to be a subscriber of ARMA Plus or CMG Platinum to use this feature.")
                         notify("~y~Available @ store.armarp.co.uk")
                     end
                     W.head = a3
@@ -662,7 +667,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.List("~y~Body",P,W.body,"Effect that displays when you hit the body.",{},true,function(a0, a1, a2, a3)
                 if W.body ~= a3 then
                     if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
-                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
+                        notify("~y~You need to be a subscriber of ARMA Plus or CMG Platinum to use this feature.")
                         notify("~y~Available @ store.armarp.co.uk")
                     end
                     W.body = a3
@@ -700,10 +705,9 @@ RageUI.CreateWhile(1.0, true, function()
                     tARMA.addBloodEffect("legs", 0xB3FE, PlayerPedId())
                 end
             end)
-       end)
+        end)
     end
 end)
-
 
 RegisterNetEvent('ARMA:OpenSettingsMenu')
 AddEventHandler('ARMA:OpenSettingsMenu', function(admin)
@@ -711,13 +715,10 @@ AddEventHandler('ARMA:OpenSettingsMenu', function(admin)
         RageUI.Visible(RMenu:Get("SettingsMenu", "MainMenu"), true)
     end
 end)
-
 RegisterCommand('opensettingsmenu',function()
     TriggerServerEvent('ARMA:OpenSettings')
 end)
-
 RegisterKeyMapping('opensettingsmenu', 'Opens the Settings menu', 'keyboard', 'F2')
-
 Citizen.CreateThread(function()
     while true do
         OverrideLodscaleThisFrame(l[n][2])
@@ -729,77 +730,78 @@ Citizen.CreateThread(function()
         Wait(0)
     end
 end)
-
-local function aa(ab)
-    local ac = GetEntityCoords(ab, true)
-    local ad = GetGameTimer()
-    local ae = math.floor(I[Q.pedFlashRGB[1]] * 255)
-    local af = math.floor(I[Q.pedFlashRGB[2]] * 255)
-    local ag = math.floor(I[Q.pedFlashRGB[3]] * 255)
-    local ah = K[Q.pedFlashIntensity]
-    local ai = M[Q.pedFlashTime]
-    while GetGameTimer() - ad < ai do
-        local aj = (ai - (GetGameTimer() - ad)) / ai
-        local ak = ah * 25.0 * aj
-        DrawLightWithRange(ac.x, ac.y, ac.z + 1.0, ae, af, ag, 50.0, ak)
+AddEventHandler("ARMA:enteredCity",function()end)
+AddEventHandler("ARMA:leftCity",function()end)
+local function af(ag)
+    local ah = GetEntityCoords(ag, true)
+    local ai = GetGameTimer()
+    local aj = math.floor(K[S.pedFlashRGB[1]] * 255)
+    local ak = math.floor(K[S.pedFlashRGB[2]] * 255)
+    local al = math.floor(K[S.pedFlashRGB[3]] * 255)
+    local am = M[S.pedFlashIntensity]
+    local an = O[S.pedFlashTime]
+    while GetGameTimer() - ai < an do
+        local ao = (an - (GetGameTimer() - ai)) / an
+        local ap = am * 25.0 * ao
+        DrawLightWithRange(ah.x, ah.y, ah.z + 1.0, aj, ak, al, 50.0, ap)
         Citizen.Wait(0)
     end
 end
-local function al()
-    local ad = GetGameTimer()
-    local ae = math.floor(I[Q.screenFlashRGB[1]] * 255)
-    local af = math.floor(I[Q.screenFlashRGB[2]] * 255)
-    local ag = math.floor(I[Q.screenFlashRGB[3]] * 255)
-    local ah = K[Q.screenFlashIntensity]
-    local ai = M[Q.screenFlashTime]
-    while GetGameTimer() - ad < ai do
-        local aj = (ai - (GetGameTimer() - ad)) / ai
-        local ak = math.floor(25.5 * ah * aj)
-        DrawRect(0.0, 0.0, 2.0, 2.0, ae, af, ag, ak)
+local function aq()
+    local ai = GetGameTimer()
+    local aj = math.floor(K[S.screenFlashRGB[1]] * 255)
+    local ak = math.floor(K[S.screenFlashRGB[2]] * 255)
+    local al = math.floor(K[S.screenFlashRGB[3]] * 255)
+    local am = M[S.screenFlashIntensity]
+    local an = O[S.screenFlashTime]
+    while GetGameTimer() - ai < an do
+        local ao = (an - (GetGameTimer() - ai)) / an
+        local ap = math.floor(25.5 * am * ao)
+        DrawRect(0.0, 0.0, 2.0, 2.0, aj, ak, al, ap)
         Citizen.Wait(0)
     end
 end
-local function am(ab)
-    local ac = GetEntityCoords(ab, true)
-    local an = O[Q.particle]
-    tARMA.loadPtfx(an[1])
-    UseParticleFxAsset(an[1])
-    StartParticleFxNonLoopedAtCoord(an[2], ac.x, ac.y, ac.z, 0.0, 0.0, 0.0, an[3], false, false, false)
-    RemoveNamedPtfxAsset(an[1])
+local function ar(ag)
+    local ah = GetEntityCoords(ag, true)
+    local as = Q[S.particle]
+    tARMA.loadPtfx(as[1])
+    UseParticleFxAsset(as[1])
+    StartParticleFxNonLoopedAtCoord(as[2], ah.x, ah.y, ah.z, 0.0, 0.0, 0.0, as[3], false, false, false)
+    RemoveNamedPtfxAsset(as[1])
 end
-local function ao()
-    local ad = GetGameTimer()
-    local ai = M[Q.timecycleTime]
-    SetTimecycleModifier(P[Q.timecycle])
-    while GetGameTimer() - ad < ai do
-        local aj = (ai - (GetGameTimer() - ad)) / ai
-        SetTimecycleModifierStrength(1.0 * aj)
+local function at()
+    local ai = GetGameTimer()
+    local an = O[S.timecycleTime]
+    SetTimecycleModifier(R[S.timecycle])
+    while GetGameTimer() - ai < an do
+        local ao = (an - (GetGameTimer() - ai)) / an
+        SetTimecycleModifierStrength(1.0 * ao)
         Citizen.Wait(0)
     end
     ClearTimecycleModifier()
 end
-function tARMA.addKillEffect(ap, aq)
-    if Q.lightning then
+function tARMA.addKillEffect(au, av)
+    if S.lightning then
         ForceLightningFlash()
     end
-    if Q.pedFlash then
+    if S.pedFlash then
         Citizen.CreateThreadNow(function()
-            aa(ap)
+            af(au)
         end)
     end
-    if Q.screenFlash then
+    if S.screenFlash then
         Citizen.CreateThreadNow(function()
-            al()
+            aq()
         end)
     end
-    if Q.particle ~= 1 and (tARMA.isPlatClub() or aq) then
+    if S.particle ~= 1 and (tARMA.isPlatClub() or av) then
         Citizen.CreateThreadNow(function()
-            am(ap)
+            ar(au)
         end)
     end
-    if Q.timecycle ~= 1 then
+    if S.timecycle ~= 1 then
         Citizen.CreateThreadNow(function()
-            ao()
+            at()
         end)
     end
 end
@@ -813,11 +815,9 @@ function tARMA.addBloodEffect(aw, ax, ag)
         RemoveNamedPtfxAsset(as[1])
     end
 end
-RegisterNetEvent("ARMA:onPlayerKilledPed")
-AddEventHandler("ARMA:onPlayerKilledPed",function(ar)
-    tARMA.addKillEffect(ar, false)
+AddEventHandler("ARMA:onPlayerKilledPed",function(az)
+    tARMA.addKillEffect(az, false)
 end)
-
 local aA = {
     [0x0] = "body",
     [0x2E28] = "body",
