@@ -39,7 +39,7 @@ local function h(i,j,k)
     end 
 end
 
-local function checkVisbleOrStaff(n, o)
+local function checkVisibleOrStaff(n, o)
     return IsEntityVisible(n) or not tARMA.clientGetPlayerIsStaff(o)
 end
 
@@ -97,7 +97,7 @@ Citizen.CreateThread(function()
                         local r=tARMA.clientGetUserIdFromSource(q)
                         local s=tARMA.getJobType(r)
                         if s~="" and r ~= tARMA.getUserId() then 
-                            if checkVisbleOrStaff(j, q) then
+                            if checkVisibleOrStaff(j, q) then
                                 if a then
                                     if s=="metpd"then 
                                         h(i,j,3)
