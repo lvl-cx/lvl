@@ -237,7 +237,7 @@ end)
 
 AddEventHandler("ARMA:hideChat",function(flag)
   hideChat = flag
-  if hidechat then
+  if hideChat then
     TriggerEvent('chat:clear')
   end
 end)
