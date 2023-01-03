@@ -224,7 +224,7 @@ AddEventHandler('ARMA:sellAll', function()
             local amount = ARMA.getInventoryItemAmount(user_id, k)
             ARMA.tryGetInventoryItem(user_id, k, amount, false)
             ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
-            ARMA.giveMoney(user_id, defaultPrices[k]*amount)
+            ARMA.giveBankMoney(user_id, defaultPrices[k]*amount)
         end
     end
 end)
