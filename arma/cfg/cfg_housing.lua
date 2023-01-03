@@ -3969,12 +3969,30 @@ cfghomes.homes = {
         leave_point = vector3(-2669.4123535156, 1326.0823974609, 147.4450378418),
         chest_point = vector3(-2676.7741699219, 1310.2375488281, 152.01364135742),
         wardrobe_point = vector3(-2677.6069335938, 1307.7264404297, 152.05590820313),
-        buy_price = 1000000000
-    }
+        buy_price = 1000000000,
+    },
+    ["Diamond Casino Offices"] = {
+        entry_point = vector3(1120.76, 214.8104, -49.44009),
+        leave_point = vector3(2486.7927246094,-253.51942443848,-70.694305419922),
+        chest_point = vector3(2481.2424316406,-273.74774169922,-70.694267272949),
+        wardrobe_point = vector3( 2487.4567871094,-274.48468017578,-70.694259643555),
+        buy_price = 1000000000,
+        image = "https://cdn.cmg.city/content/fivem/houses/diamondcasinooffices.png",
+    },
+    ["Diamond Penthouse"] = {
+        entry_point = vector3(1085.641, 214.5961, -49.20046),
+        leave_point = vector3(979.9312, 57.16403, 116.1691),
+        chest_point = vector3(984.69372558594, 60.439826965332, 116.16412353516),
+        wardrobe_point = vector3(974.44250488281, 63.718231201172, 116.62840270996),
+        buy_price = 1000000000,
+        image = "https://cdn.cmg.city/content/fivem/houses/designerpenthouse.png",
+    },
     -- Custom MLOS
 }
 
 cfghomes.chestsize = {
+    ["Diamond Casino Offices"] = 4000,
+    ["Diamond Penthouse"] = 4000,
     ["Vineyard Mansion"] = 4000,
     ["Beanmachine"] = 4000,
     ["Paleto Cafe"] = 4000,
@@ -4249,6 +4267,6 @@ cfghomes.chestsize = {
     ["Callisto Hotel Room 10"] = 1000,
     ["Callisto Hotel Room 11"] = 1000,
     ["Callisto Hotel Room 12"] = 1000,
-    ["Callisto Hotel Room 13"] = 1000
+    ["Callisto Hotel Room 13"] = 1000,
 }
 return cfghomes
