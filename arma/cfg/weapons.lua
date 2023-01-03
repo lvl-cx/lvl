@@ -479,7 +479,7 @@ cfg.weapons = {
     },
     ["WEAPON_MOSIN"] = {
         name = "Mosin Nagant",
-        class = "Shotgun",
+        class = "Heavy",
         ammo = "7.62mm Bullets",
         policeWeapon = false,
         model = "w_ar_mosin",
