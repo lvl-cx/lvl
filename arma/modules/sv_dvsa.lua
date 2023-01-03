@@ -219,10 +219,10 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
     if ARMA.hasPermission(user_id,"police.onduty.permission") then
         return
     end
-    if tonumber(bank) > 5000 then
-        ARMA.setBankMoney(user_id,bank-5000)
-        TriggerEvent('ARMA:addToCommunityPot', 5000)
-        TriggerClientEvent('ARMA:dvsaMessage', source,"DVSA","UK Government","You were fined £"..fine.." for going "..overspeed.."MPH over the speed limit.")
+    if tonumber(bank) > fine then
+        ARMA.setBankMoney(user_id,bank-fine)
+        TriggerEvent('ARMA:addToCommunityPot', fine)
+        TriggerClientEvent('ARMA:dvsaMessage', source,"DVSA","UK Government","You were fined £"..getMoneyStringFormatted(fine).." for going "..overspeed.."MPH over the speed limit.")
         -- could add in the future that it gives points to a license
         return
     else
