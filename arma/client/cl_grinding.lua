@@ -133,7 +133,7 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
         end
         local u = function(s)
             if s.nearby then
-                if IsControlJustReleased(0, 38) then
+                if IsControlJustReleased(0, 38) and GetVehiclePedIsIn(PlayerPedId(), false) == 0 then
                     if not a then
                         m()
                         TriggerServerEvent("ARMA:requestGrinding", s.drug, s.type)
