@@ -4,6 +4,7 @@ cfg.location = vector3(-532.92028808594,-189.90745544434,38.219657897949)
 
 cfg.licenses = {
     {name = "Weed License", group = "Weed", price = 200000, pieceprice = 500, type = 'grind'},
+    {name = "Limestone License", group = "Limestone", price = 50000, pieceprice = 2000, type = 'grind'},
     {name = "Gang License", group = "Gang", price = 500000, info = {"Access to Large Arms.", "Create a Gang using F5.", "Capture turfs & manage commission."}},
     {name = "Cocaine License", group = "Cocaine", price = 500000, pieceprice = 1250, type = 'grind'},
     {name = "Heroin License", group = "Heroin", price = 10000000, pieceprice = 20000, type = 'grind'},
