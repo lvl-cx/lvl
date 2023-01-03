@@ -6,8 +6,8 @@ RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main')
 RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelist'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 
-local m = module("arma-vehicles", "garages")
-m=m.garages
+local garages = module("arma-vehicles", "garages")
+garages=garages.garages
 local garageCategorySelected
 local veh
 local extraSettings = false
@@ -375,7 +375,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclelist')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if b then
-                for k,v in pairs(m) do
+                for k,v in pairs(garages) do
                     RageUI.ButtonWithStyle(k,nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
                         if Selected then
                             garageCategorySelected=k
@@ -388,7 +388,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclelistmain')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if b then
-                for k,v in pairs(m) do
+                for k,v in pairs(garages) do
                     if k == garageCategorySelected then
                         for a,l in pairs(v) do
                             if a ~= "_config" then
