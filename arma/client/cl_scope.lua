@@ -27,7 +27,7 @@ end
 local i = GetResourceKvpString("arma_scope_enabled") == "true"
 local j = false
 
-RMenu.Add("scope","main",RageUI.CreateMenu("Scope Settings", "Main Menu", tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","crosshair"))
+RMenu.Add("scope","main",RageUI.CreateMenu("", "Scope Settings", tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","scope"))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('scope', 'main')) then
@@ -56,6 +56,7 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 RegisterCommand("scope",function()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("SettingsMenu", "MainMenu"), false)
     RageUI.Visible(RMenu:Get("scope", "main"), true)
 end)
