@@ -61,12 +61,12 @@ taco_choices["Take"] = {function(player,choice)
 end}
 
 -- Drugs
-items["Cocaine"] = {"Cocaine","Some Cocaine.",function(args) return cocaine_sniff end,0.5}
-items["Heroin"] = {"Heroin","Some Heroin.",function(args) return heroin_take end,0.10}
-items["LSD"] = {"LSD","Some LSD.",function(args) return lsd_take end,0.1}
+items["Cocaine"] = {"Cocaine","Some Cocaine.",function(args) return cocaine_sniff end,4}
+items["Heroin"] = {"Heroin","Some Heroin.",function(args) return heroin_take end,4}
+items["LSD"] = {"LSD","Some LSD.",function(args) return lsd_take end,4}
 
 -- Edibles
-items["Morphine"] = {"Morphine","Some Morphine.",function(args) return morphine_choices end,0.1}
-items["Taco"] = {"Taco","A Taco.",function(args) return taco_choices end,0.1}
+items["Morphine"] = {"Morphine","Some Morphine.",function(args) return morphine_choices end,1}
+items["Taco"] = {"Taco","A Taco.",function(args) return taco_choices end,1}
 
 return items
