@@ -38,10 +38,17 @@ local c = {
     ["Mario"] = {checked = false, soundId = "mario_death"},
     ["CS:GO"] = {checked = false, soundId = "csgo_death"}
 }
-
-local function m(h)
-    SendNUIMessage({transactionType = h})
-end
+local d = false
+Citizen.CreateThread(function()
+    local e = GetResourceKvpString("arma_codhitmarkersounds") or "false"
+    if e == "false" then
+        d = false
+        TriggerEvent("ARMA:codHMSoundsOff")
+    else
+        d = true
+        TriggerEvent("ARMA:codHMSoundsOn")
+    end
+end)
 
 AddEventHandler("ARMA:onClientSpawn",function(f, g)
     if g then
@@ -84,6 +91,11 @@ function tARMA.getDeathSound()
         return "playDead"
     end 
 end
+
+local function m(h)
+    SendNUIMessage({transactionType = h})
+end
+
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
@@ -161,6 +173,20 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('vipclubmenu', 'manageperks')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            local function q()
+                TriggerEvent("ARMA:codHMSoundsOn")
+                d = true
+                tARMA.setCODHitMarkerSetting(d)
+                tARMA.notify("~y~COD Hitmarkers now set to " .. tostring(d))
+            end
+            local function r()
+                TriggerEvent("ARMA:codHMSoundsOff")
+                d = false
+                tARMA.setCODHitMarkerSetting(d)
+                tARMA.notify("~y~COD Hitmarkers now set to " .. tostring(d))
+            end
+            RageUI.Checkbox("Enable COD Hitmarkers","~g~This adds 'hit marker' sound and image when shooting another player.",d,{Style = RageUI.CheckboxStyle.Car},function(n, p, o, s)
+            end,q,r)
             RageUI.ButtonWithStyle("Custom Death Sounds","",{RightLabel="→→→"},true,function(o,p,q)
             end,RMenu:Get("vipclubmenu","deathsounds"))
             RageUI.ButtonWithStyle("Vehicle Extras","",{RightLabel="→→→"},true,function(o,p,q)
