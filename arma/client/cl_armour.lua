@@ -56,7 +56,7 @@ function tARMA.isPlayerInAnimalForm()
 end
 local function k()
     local l=GetEntityModel(PlayerPedId())
-    if l=='mp_m_freemode_01'or l=='mp_f_freemode_01'then 
+    if l==GetHashKey('mp_m_freemode_01') or l==GetHashKey('mp_f_freemode_01') then 
         local m=tARMA.loadModel("a_c_deer")
         local n=tARMA.getPlayerCoords()
         local o=ClonePed(PlayerPedId(),true,true,true)
