@@ -9,8 +9,7 @@ local Coords = { --Where you want the crate to spawn ALL MESSAGES YOU CAN DELETE
 }
 
 local stayTime = 3600 --How long till the airdrop disappears
-local spawnTime = 3600
-local amountOffItems = 600 --How many items are in the crate 
+local spawnTime = 20*60 --3600
 local used = false
 
 local dropMsg = "An airdrop is landing..."
