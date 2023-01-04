@@ -97,7 +97,15 @@ Citizen.CreateThread(function()
 			id = 1,
 			position = vector3(2539.0964355469, -376.51586914063, 92.986785888672),
 			blipsize = 120.0
-		}
+		},
+		{
+			title = "MidMap",
+			type = "radius",
+			colour = 1,
+			id = 1,
+			position = vector3(31.95584, 3692.867, 39.70517),
+			blipsize = 300.0
+		},
 	}
 	for s, t in pairs(r) do
 		local u
