@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
         if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then -- and not tARMA.isInPaintball()
           tARMA.updatePos()
         end
-        if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning then
+        if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning and not tARMA.isPlayerInAnimalForm() then
             tARMA.updateCustomization()
         end
         tARMA.updateHealth()
