@@ -568,8 +568,8 @@ cfg.groups = {
                         
     ["Weed"] = {},
     ["Cocaine"] = {},
-    ["Heroin"] = {},
     ["Meth"] = {},
+    ["Heroin"] = {},
     ["LSD"] = {},
     ["Copper"] = {},
     ["Limestone"] = {},

@@ -1,18 +1,7 @@
--- ['WORLD_HUMAN_CONST_DRILL'] = true, (gold, copper, limestone idk)
--- ['WORLD_HUMAN_CLIPBOARD'] = true, (lsd processing, Frogs legs location)
--- ['CODE_HUMAN_MEDIC_KNEEL'] = true, (lsd grinding first location)
--- ['WORLD_HUMAN_HAMMERING'] = true, (hammering obviously)
--- ['WORLD_HUMAN_WELDING'] = true, (diamond location)
-
--- if diamond or some other grinding shit trigger ARMA:playGrindingPickaxe client event
--- need to find out if copper and gold have a pickaxe
--- hasFX = foundry smoke 
-
 local grindingData = {
     ['Copper'] = {
         license = 'Copper', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
-        hasFX = true, 
         firstItem = 'Copper Ore', 
         secondItem = 'Copper', 
         pickaxe = true
@@ -27,7 +16,6 @@ local grindingData = {
     ['Gold'] = {
         license = 'Gold', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
-        hasFX = true, 
         firstItem = 'Gold Ore', 
         secondItem = 'Gold', 
         pickaxe = true
@@ -35,8 +23,7 @@ local grindingData = {
     ['Weed'] = {
         license = 'Weed', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
-        processingScenario = '', 
-        hasFX = false, 
+        processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
         firstItem = 'Weed leaf', 
         secondItem = 'Weed'
     },
@@ -44,7 +31,6 @@ local grindingData = {
         license = 'Cocaine', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
         processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
-        hasFX = false, 
         firstItem = 'Coca leaf', 
         secondItem = 'Cocaine'
     },
@@ -52,14 +38,12 @@ local grindingData = {
         license = 'Meth', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
         processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
-        hasFX = false, 
         firstItem = 'Ephedra', 
         secondItem = 'Meth'
     },
     ['Diamond'] = {
         license = 'Diamond', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
-        hasFX = false, 
         firstItem = 'Uncut Diamond', 
         secondItem = 'Processed Diamond', 
         pickaxe = true
@@ -68,7 +52,6 @@ local grindingData = {
         license = 'Heroin', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
         processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
-        hasFX = false, 
         firstItem = 'Opium Poppy', 
         secondItem = 'Heroin'
     },
@@ -76,7 +59,6 @@ local grindingData = {
         license = 'LSD', 
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
         processingScenario = 'WORLD_HUMAN_CLIPBOARD', 
-        hasFX = false, 
         firstItem = 'Frogs legs', 
         secondItem = 'Lysergic Acid Amide', 
         thirdItem = 'LSD'
@@ -100,7 +82,7 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                             if v.pickaxe then
                                 TriggerClientEvent('ARMA:playGrindingPickaxe', source)  
                             else
-                                TriggerClientEvent('ARMA:playGrindingScenario', source, v.miningScenario, v.hasFX) 
+                                TriggerClientEvent('ARMA:playGrindingScenario', source, v.miningScenario, false) 
                             end
                             Citizen.Wait(delay)
                             if ARMA.getInventoryWeight(user_id)+(1*4) > ARMA.getInventoryMaxWeight(user_id) then
@@ -110,7 +92,7 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                             end
                         elseif grindingtype == 'processing' then
                             if ARMA.getInventoryItemAmount(user_id, v.firstItem) >= 4 then
-                                TriggerClientEvent('ARMA:playGrindingScenario', source, v.processingScenario, v.hasFX)
+                                TriggerClientEvent('ARMA:playGrindingScenario', source, v.processingScenario, false)
                                 Citizen.Wait(delay)
                                 if ARMA.getInventoryWeight(user_id)+(4*1) > ARMA.getInventoryMaxWeight(user_id) then
                                     ARMAclient.notify(source,{"~r~Not enough space in inventory."})
@@ -128,7 +110,7 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                             end
                         elseif grindingtype == 'refinery' then
                             if ARMA.getInventoryItemAmount(user_id, v.secondItem) >= 4 then
-                                TriggerClientEvent('ARMA:playGrindingScenario', source, 'WORLD_HUMAN_CLIPBOARD', v.hasFX)
+                                TriggerClientEvent('ARMA:playGrindingScenario', source, 'WORLD_HUMAN_CLIPBOARD', false)
                                 Citizen.Wait(delay)
                                 if ARMA.getInventoryWeight(user_id)+(4*1) > ARMA.getInventoryMaxWeight(user_id) then
                                     ARMAclient.notify(source,{"~r~Not enough space in inventory."})
