@@ -53,7 +53,12 @@ cfg.GunStores={
     ["Rebel"]={
         ["_config"]={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebellicense.whitelisted"},true},
         ["GADGET_PARACHUTE"]={"Parachute",1000,0,"N/A","p_parachute_s"},
-        -- need the ars
+        ["WEAPON_AK200"]={"AK-200",750000,0,"N/A","w_ar_akkal"},
+        ["WEAPON_AKM"]={"AKM",700000,0,"N/A","w_ar_akm"},
+        ["WEAPON_REVOLVER"]={"Revolver",200000,0,"N/A","w_pi_revolver"},
+        ["WEAPON_SPAS12"]={"Spas 12",400000,0,"N/A","w_sg_spaz"},
+        ["WEAPON_SVD"]={"Dragunov SVD",2500000,0,"N/A","w_sr_svd"},
+        ["WEAPON_WINCHESTER12"]={"Winchester 12",350000,0,"N/A","w_sg_winchester12"},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
         ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
