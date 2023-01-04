@@ -34,7 +34,7 @@ AddEventHandler("ARMA:GotGangData",function(i,j,k,PO)
         PlayerIsInGang=true
         d={}
         f=1
-        GangBalance=getMoneyStringFormatted(tostring(i.money))
+        GangBalance=getMoneyStringFormatted(math.floor(i.money))
         gangID=i.id
         gangPermission=tonumber(k)
         if j~=nil then 
