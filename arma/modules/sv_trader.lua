@@ -10,7 +10,7 @@ local defaultPrices = {
     ["Copper"] = math.floor(1000*grindBoost),
     ["Limestone"] = math.floor(2000*grindBoost),
     ["Gold"] = math.floor(4000*grindBoost),
-    ["Diamond"] = math.floor(8000*grindBoost),
+    ["Diamond"] = math.floor(7000*grindBoost),
 }
 
 function ARMA.getCommissionPrice(drugtype)
