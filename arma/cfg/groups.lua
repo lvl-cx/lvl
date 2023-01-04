@@ -316,6 +316,7 @@ cfg.groups = {
         "police.loadshop2",
         "police.maxarmour"
     }, 
+    ["Police Horse Trained"] = {}, 
     ["Drone Trained"] = {},
     ["Commissioner Clocked"] = {
         "cop.whitelisted",

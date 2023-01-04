@@ -30,7 +30,8 @@ cfg.Guild_Roles = {
 		['Police Constable'] = 991815812312739950,
 		['PCSO'] = 991815812967051344,
 		['Large Arms Access'] = 991813471475859538,
-		--['Drone Trained'] = 1007419420731265034, (need discord group made)
+		['Police Horse Trained'] = 991813474667737088,
+		['Drone Trained'] = 1060270118229254235,
 	}
 
 	-- ['NHS'] = {

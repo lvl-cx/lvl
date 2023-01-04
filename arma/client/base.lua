@@ -830,6 +830,7 @@ local carDev = false
 local user_id = nil
 local stafflevel = 0
 globalOnPoliceDuty = false
+globalHorseTrained = false
 globalNHSOnDuty = false
 globalOnPrisonDuty = false
 inHome = false
@@ -843,6 +844,12 @@ function tARMA.setPolice(y)
 end
 function tARMA.globalOnPoliceDuty()
   return globalOnPoliceDuty
+end
+function tARMA.setglobalHorseTrained(y)
+  globalHorseTrained = y
+end
+function tARMA.globalHorseTrained()
+  return globalHorseTrained
 end
 function tARMA.setHMP(x)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
