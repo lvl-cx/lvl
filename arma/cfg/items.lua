@@ -1,25 +1,35 @@
 local cfg = {}
 
 cfg.items = {
--- [Weed] 
-  ["cannabis"] = {"Cannabis Sativa", "", nil, 1},
-  ["weed"] = {"Weed", "", nil, 4}, 
--- [Cocaine] 
-  ["coca"] = {"Coca Leaf", "", nil, 1},
-  ["cocaine"] = {"Cocaine", "", nil, 4}, 
---[Gold]
-  ["golddust"] = {"Gold Dust", "", nil, 1}, 
-  ["gold"] = {"Gold", "", nil, 4},
---[Dui]
-  ["crystal"] = {"Diamond Crystal", "", nil, 1}, 
-  ["diamond"] = {"Diamond", "", nil, 4},
--- [Heroin]
-  ["heroin"] = {"Heroin", "", nil, 4}, 
-  ["opium"] = {"Opium", "", nil, 1},
--- [LSD]
-  ["lsd"] = {"LSD", "", nil, 4},
-  ["acid"] = {"Lysergic Acid", "", nil, 1}, 
-
+  -- Copper
+  ["Copper Ore"] = {"Copper Ore", "", nil, 1}, 
+  ["Copper"] = {"Copper", "", nil, 4},
+  -- Limestone
+  ["Limestone Ore"] = {"Limestone Ore", "", nil, 1}, 
+  ["Limestone"] = {"Limestone", "", nil, 4},
+  -- Weed
+  ["Weed leaf"] = {"Weed leaf", "", nil, 1}, 
+  ["Weed"] = {"Weed", "", nil, 4},
+  -- Gold
+  ["Gold Ore"] = {"Gold Ore", "", nil, 1}, 
+  ["Gold"] = {"Gold", "", nil, 4},
+  -- Cocaine
+  ["Coca leaf"] = {"Coca leaf", "", nil, 1}, 
+  ["Cocaine"] = {"Cocaine", "", nil, 4},
+  -- Heroin
+  ["Opium Poppy"] = {"Opium Poppy", "", nil, 1}, 
+  ["Heroin"] = {"Heroin", "", nil, 4},
+  -- Meth
+  ["Ephedra"] = {"Ephedra", "", nil, 1}, 
+  ["Meth"] = {"Meth", "", nil, 4},
+  -- Diamond
+  ["Uncut Diamond"] = {"Uncut Diamond", "", nil, 1}, 
+  ["Processed Diamond"] = {"Processed Diamond", "", nil, 4},
+  -- LSD
+  ["Frogs legs"] = {"Frogs legs", "", nil, 1},
+  ["Lysergic Acid Amide"] = {"Lysergic Acid Amide", "", nil, 1}, 
+  ["LSD"] = {"LSD", "", nil, 4},
+  -- Bags
   ["greenhikingbackpack"] = {"Green Hiking Backpack", "", nil, 5.00},
   ["tanhikingbackpack"] = {"Tan Hiking Backpack", "", nil, 5.00}, 
   ["guccibag"] = {"Gucci Bag", "Just A Louis Vuitton Bag", nil, 5.00},

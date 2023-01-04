@@ -37,8 +37,8 @@ local grindingData = {
         miningScenario = 'WORLD_HUMAN_GARDENER_PLANT', 
         processingScenario = '', 
         hasFX = false, 
-        firstItem = '', 
-        secondItem = ''
+        firstItem = 'Weed leaf', 
+        secondItem = 'Weed'
     },
     ['Cocaine'] = {
         license = 'Cocaine', 
