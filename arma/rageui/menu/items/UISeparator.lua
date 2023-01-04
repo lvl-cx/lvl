@@ -21,7 +21,7 @@ function RageUI.Separator(Label)
                             CurrentMenu.Index = RageUI.CurrentMenu.Options
                         end
                     else
-                        CurrentMenu.Index = Option + 1 -- removing this allows you to scroll up on separators, however classes each separator as a rageui item in the index
+                        CurrentMenu.Index = Option + 1
                     end
                 end
             end
@@ -29,3 +29,4 @@ function RageUI.Separator(Label)
         end
     end
 end
+

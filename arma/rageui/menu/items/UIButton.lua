@@ -487,4 +487,3 @@ end
 function RageUI.BackspaceMenuCallback(Callback)
     RageUI.ParentCallback = Callback
 end
-

@@ -4,19 +4,6 @@
 --- DateTime: 21/04/2019 21:20
 ---
 
---[[print("")
-print("^1Author : Dylan Malandain (iTexZoz)^0")
-print("^4Contributor : Parow, Frazzle.^0")
-print("")
-print("^2[Download] : https://github.com/iTexZoz/RageUI/releases^0")
-print("^2[Feature Suggestions] : https://github.com/iTexZoz/RageUI/issues/2^0")
-print("^2[Wiki] : https://github.com/iTexZoz/RageUI/wiki^0")
-print("")
-print("^6RageUI, and a project specially created to replace the NativeUILua-Reloaded library. This library allows to create menus similar to the one of Grand Theft Auto online.^0")
-print("")
-print("^6Thank you for your support of this project.^0")
-print("")]]
-
 ---round
 ---@param num number
 ---@param numDecimalPlaces number
@@ -314,9 +301,6 @@ function RageUI.Visible(Menu, Value)
     if Menu ~= nil then
         if Menu() then
             if type(Value) == "boolean" then
-                if noclipActive and tARMA.getStaffLevel() < 4 and Menu.Sprite.Dictionary ~= "new_editor" then
-                    return
-                end
                 if Value then
                     if RageUI.CurrentMenu ~= nil then
                         RageUI.CurrentMenu.Open = not Value
@@ -359,26 +343,11 @@ function RageUI.IsVisible(Menu, Items, Panels)
     end
 end
 
-function RageUI.IsAnyMenuOfTypeVisible(type)
-    local visible = false
-    if RMenu:GetType(type) then
-        local menuTypes = RMenu:GetType(type)
-        for _, menuType in pairs(menuTypes) do
-            if menuType.Menu and menuType.Menu.Open then
-                visible = true
-                break
-            end
-        end
-    end
-    return visible
-end
-
-function RageUI.CloseAll()
+function RageUI.ActuallyCloseAll()
     menuOpen = false
     RageUI.CurrentMenu = nil
     RageUI.Options = 0
     RageUI.ItemOffset = 0
-    ResetScriptGfxAlign()
     for i,v in pairs(RMenu:Return()) do 
         if type(v) ~= 'function' then 
             for iterate,menuoptions in pairs(v) do 
@@ -488,7 +457,6 @@ function RageUI.Subtitle()
                 if RageUI.CurrentMenu.Index > RageUI.CurrentMenu.Options or RageUI.CurrentMenu.Index < 0 then
                     RageUI.CurrentMenu.Index = 1
                 end
-                RageUI.RefreshPagination()
                 if RageUI.CurrentMenu.PageCounter == nil then
                     RenderText(RageUI.CurrentMenu.PageCounterColour .. RageUI.CurrentMenu.Index .. " / " .. RageUI.CurrentMenu.Options, RageUI.CurrentMenu.X + RageUI.Settings.Items.Subtitle.PreText.X + RageUI.CurrentMenu.WidthOffset, RageUI.CurrentMenu.Y + RageUI.Settings.Items.Subtitle.PreText.Y + RageUI.ItemOffset, 0, RageUI.Settings.Items.Subtitle.PreText.Scale, 245, 245, 245, 255, 2)
                 else
@@ -591,7 +559,6 @@ function RageUI.Render(instructionalButton)
                     RageUI.PlaySound(Audio[Audio.Use].Back.audioName, Audio[Audio.Use].Back.audioRef)
                     RageUI.ParentCallback()
                     if RageUI.CurrentMenu.Closed ~= nil then
-                        collectgarbage()
                         RageUI.CurrentMenu.Closed()
                     end
                     if RageUI.CurrentMenu.Parent ~= nil then
@@ -612,8 +579,6 @@ function RageUI.Render(instructionalButton)
                     RageUI.Visible(RageUI.CurrentMenu, false)
                     RageUI.Visible(RageUI.NextMenu, true)
                     RageUI.CurrentMenu.Controls.Select.Active = false
-                    RageUI.NextMenu = nil
-                    RageUI.LastControl = false
                 end
             end
         end
@@ -658,19 +623,6 @@ function RageUI.DrawContent(settings, items, panels)
         RageUI.Render(settings.instructionalButton)
     else
         RageUI.Render(true)
-    end
-end
-
-function RageUI.RefreshPagination()
-    if (RageUI.CurrentMenu ~= nil) then
-        if (RageUI.CurrentMenu.Index > 10) then
-            local offset = RageUI.CurrentMenu.Index - 10
-            RageUI.CurrentMenu.Pagination.Minimum = 1 + offset
-            RageUI.CurrentMenu.Pagination.Maximum = 10 + offset
-        else
-            RageUI.CurrentMenu.Pagination.Minimum = 1
-            RageUI.CurrentMenu.Pagination.Maximum = 10
-        end
     end
 end
 

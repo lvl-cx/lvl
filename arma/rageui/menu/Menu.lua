@@ -330,3 +330,22 @@ function RageUI.Menus:UpdateInstructionalButtons(Visible)
     ScaleformMovieMethodAddParamInt(-1)
     EndScaleformMovieMethod()
 end
+
+function RageUI.getRageUIMenuWidth()
+    local w, h = GetActiveScreenResolution()
+
+    if w == 1920 then
+        return 1300
+    elseif w == 1280 and h == 540 then
+        return 1000
+    elseif w == 2560 and h == 1080 then
+        return 1050
+    elseif w == 3440 and h == 1440 then
+        return 1050
+    end
+    return 1300
+end
+
+function RageUI.getRageUIMenuHeight()
+    return 100
+end

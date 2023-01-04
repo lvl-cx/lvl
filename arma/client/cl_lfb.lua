@@ -24,7 +24,7 @@
 --             false,
 --             true,
 --             function()
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Tools",
 --                     "View and use your LFB tools",
 --                     {RightBadge = RageUI.BadgeStyle.Key},
@@ -33,7 +33,7 @@
 --                     end,
 --                     RMenu:Get("lfb", "tools")
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Water",
 --                     "Manage your hose and water supply",
 --                     {RightBadge = RageUI.BadgeStyle.Key},
@@ -42,7 +42,7 @@
 --                     end,
 --                     RMenu:Get("lfb", "water")
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "BA",
 --                     "Manage your BA",
 --                     {RightBadge = RageUI.BadgeStyle.Key},
@@ -61,7 +61,7 @@
 --             false,
 --             true,
 --             function()
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup Decontamination Tent",
 --                     "Setup a decontamination tent",
 --                     {RightLabel = ""},
@@ -72,7 +72,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove Decontamination Tent",
 --                     "Remove a decontamination tent",
 --                     {RightLabel = ""},
@@ -83,7 +83,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup Rescue Cushion",
 --                     "Setup a rescue cushion",
 --                     {RightLabel = ""},
@@ -94,7 +94,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove Rescue Cushion",
 --                     "Remove a rescue cushion",
 --                     {RightLabel = ""},
@@ -106,7 +106,7 @@
 --                     end
 --                 )
 --                 if a then
---                     RageUI.ButtonWithStyle(
+--                     RageUI.Button(
 --                         "Remove Spreaders",
 --                         "Remove vehicle spreaders",
 --                         {RightLabel = ""},
@@ -118,7 +118,7 @@
 --                         end
 --                     )
 --                 else
---                     RageUI.ButtonWithStyle(
+--                     RageUI.Button(
 --                         "Use Spreaders",
 --                         "Use vehicle spreaders",
 --                         {RightLabel = ""},
@@ -130,7 +130,7 @@
 --                         end
 --                     )
 --                 end
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup Stabilisers",
 --                     "Setup vehicle stabilisers",
 --                     {RightLabel = ""},
@@ -141,7 +141,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove Stabilisers",
 --                     "Remove vehicle stabilisers",
 --                     {RightLabel = ""},
@@ -152,7 +152,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup extractor fan",
 --                     "Setup an extractor fan",
 --                     {RightLabel = ""},
@@ -163,7 +163,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove extractor fan",
 --                     "Remove an extractor fan",
 --                     {RightLabel = ""},
@@ -174,7 +174,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup inflatable jack",
 --                     "Setup an inflatable jack",
 --                     {RightLabel = ""},
@@ -185,7 +185,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove inflatable jack",
 --                     "Remove an inflatable jack",
 --                     {RightLabel = ""},
@@ -196,7 +196,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup wheel chocks",
 --                     "Setup wheel chocks",
 --                     {RightLabel = ""},
@@ -207,7 +207,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove wheel chocks",
 --                     "Remove wheel chocks",
 --                     {RightLabel = ""},
@@ -228,7 +228,7 @@
 --             false,
 --             true,
 --             function()
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Get Fire Hose",
 --                     "Get a fire hose",
 --                     {RightLabel = ""},
@@ -239,7 +239,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup Supply Line",
 --                     "Setup a supply line",
 --                     {RightLabel = ""},
@@ -250,7 +250,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove Supply Line",
 --                     "Remove a supply line",
 --                     {RightLabel = ""},
@@ -261,7 +261,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Setup Water Monitor",
 --                     "Setup a water monitor",
 --                     {RightLabel = ""},
@@ -272,7 +272,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove Water Monitor",
 --                     "Remove a water monitor",
 --                     {RightLabel = ""},
@@ -293,7 +293,7 @@
 --             false,
 --             true,
 --             function()
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Remove BA",
 --                     "Removes your BA",
 --                     {RightLabel = ""},
@@ -304,7 +304,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "BA Down",
 --                     "Puts your BA down",
 --                     {RightLabel = ""},
@@ -315,7 +315,7 @@
 --                         end
 --                     end
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "BA Up",
 --                     "Puts your BA up",
 --                     {RightLabel = ""},
@@ -380,7 +380,7 @@
 --             false,
 --             true,
 --             function()
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Start Fires",
 --                     "Start Fires",
 --                     {RightBadge = RageUI.BadgeStyle.Key},
@@ -389,7 +389,7 @@
 --                     end,
 --                     RMenu:Get("lfb", "fire")
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Call Settings",
 --                     "Manage fire call settings",
 --                     {RightBadge = RageUI.BadgeStyle.Key},
@@ -398,7 +398,7 @@
 --                     end,
 --                     RMenu:Get("lfb", "settings")
 --                 )
---                 RageUI.ButtonWithStyle(
+--                 RageUI.Button(
 --                     "Manage Fires",
 --                     "Manage Fires",
 --                     {RightBadge = RageUI.BadgeStyle.Key},

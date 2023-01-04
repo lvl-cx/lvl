@@ -126,11 +126,11 @@ function limiter()
   end)
 end
 
-RMenu.Add("vehicle_menu", "main", RageUI.CreateMenu("", "", 1300, 100, "banners", "vehiclemenu"))
+RMenu.Add("vehicle_menu", "main", RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "vehiclemenu"))
 RMenu:Get("vehicle_menu", "main"):SetSubtitle("~b~VEHICLE OPTIONS")
 RageUI.CreateWhile(1.0, true, function()
   if RageUI.Visible(RMenu:Get("vehicle_menu", "main")) then
-      RageUI.DrawContent({ header = true, glare = true, instructionalButton = true}, function()
+      RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
           RageUI.Button("Toggle Door Lock", "Select to toggle between doors locked and unlocked",{RightLabel=""},true,function(o,p,q)
               if q then
                   local L = tARMA.getPlayerVehicle()
@@ -178,7 +178,7 @@ RageUI.CreateWhile(1.0, true, function()
               end
               k.door = M
           end)
-          RageUI.Checkbox("Activate Speed Limiter","Select to turn on Speed Limiter",k.limiter,{Style = RageUI.CheckboxStyle.Tick},function(I, K, J, O)
+          RageUI.Checkbox("Activate Speed Limiter","Select to turn on Speed Limiter",k.limiter,{RightBadge = RageUI.CheckboxStyle.Tick},function(I, K, J, O)
               if K then
                   if k.limiter then
                       RageUI.Text({message = string.format("~w~Speed Limiter is currently ~g~~h~Active")})

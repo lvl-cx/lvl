@@ -176,7 +176,7 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'closeplayers')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if next(playersNearby) then
                 for i, v in pairs(playersNearby) do
                     RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
