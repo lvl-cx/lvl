@@ -77,14 +77,14 @@ cfg.GunStores={
     },
     ["SmallArmsDealer"]={
         ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1242.7232666016,-426.84201049805,67.913963317871)},110,1,"Small Arms Dealer",{""},true},
-        ["WEAPON_BERETTA"]={"Berreta M9 Pistol",60000,0,"N/A","w_pi_beretta"},
-        ["WEAPON_M1911"]={"M1911 Pistol",60000,0,"N/A","w_pi_m1911"},
-        ["WEAPON_MPX"]={"MPX",300000,0,"N/A","w_pi_beretta"}, -- need model
-        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000,0,"N/A","w_pi_python"},
-        ["WEAPON_ROOK"]={"Rook 9mm",60000,0,"N/A","w_pi_beretta"}, -- need model
-        ["WEAPON_TEC9"]={"Tec-9",50000,0,"N/A","w_sb_tec9"},
-        ["WEAPON_UMP45"]={"UMP-45",300000,0,"N/A","w_sb_ump45"},
-        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+        ["WEAPON_BERETTA"]={"Berreta M9 Pistol",60000/2,0,"N/A","w_pi_beretta"},
+        ["WEAPON_M1911"]={"M1911 Pistol",60000/2,0,"N/A","w_pi_m1911"},
+        ["WEAPON_MPX"]={"MPX",300000/2,0,"N/A","w_pi_beretta"}, -- need model
+        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000/2,0,"N/A","w_pi_python"},
+        ["WEAPON_ROOK"]={"Rook 9mm",60000/2,0,"N/A","w_pi_beretta"}, -- need model
+        ["WEAPON_TEC9"]={"Tec-9",50000/2,0,"N/A","w_sb_tec9"},
+        ["WEAPON_UMP45"]={"UMP-45",300000/2,0,"N/A","w_sb_ump45"},
+        ["item1"]={"LVL 1 Armour",25000/2,0,"N/A","prop_armour_pickup"},
     },
     ["Shank"]={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
