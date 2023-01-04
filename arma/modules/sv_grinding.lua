@@ -1,5 +1,3 @@
-
-
 -- ['WORLD_HUMAN_CONST_DRILL'] = true, (gold, copper, limestone idk)
 -- ['WORLD_HUMAN_CLIPBOARD'] = true, (lsd processing, Frogs legs location)
 -- ['CODE_HUMAN_MEDIC_KNEEL'] = true, (lsd grinding first location)
@@ -7,21 +5,22 @@
 -- ['WORLD_HUMAN_WELDING'] = true, (diamond location)
 
 -- if diamond or some other grinding shit trigger ARMA:playGrindingPickaxe client event
+-- need to find out if copper and gold have a pickaxe
+-- hasFX = foundry smoke 
 
 local grindingData = {
     ['Copper'] = {
         license = 'Copper', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
         hasFX = true, 
-        firstItem = 'Uncut Copper', 
+        firstItem = 'Copper Ore', 
         secondItem = 'Copper', 
         pickaxe = true
     },
     ['Limestone'] = {
         license = 'Limestone', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
-        hasFX = true, 
-        firstItem = 'Uncut Limestone', 
+        firstItem = 'Limestone Ore', 
         secondItem = 'Limestone', 
         pickaxe = true
     },
@@ -29,7 +28,7 @@ local grindingData = {
         license = 'Gold', 
         processingScenario = 'WORLD_HUMAN_WELDING', 
         hasFX = true, 
-        firstItem = 'Uncut Gold', 
+        firstItem = 'Gold Ore', 
         secondItem = 'Gold', 
         pickaxe = true
     },
@@ -62,7 +61,7 @@ local grindingData = {
         processingScenario = 'WORLD_HUMAN_WELDING', 
         hasFX = false, 
         firstItem = 'Uncut Diamond', 
-        secondItem = 'Diamond', 
+        secondItem = 'Processed Diamond', 
         pickaxe = true
     },
     ['Heroin'] = {
