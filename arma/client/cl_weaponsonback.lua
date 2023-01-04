@@ -48,7 +48,7 @@ local function g()
         local m = GetHashKey(l)
         local n = a.weapons[m]
         if n then
-            local o = (not k or n.type ~= "Heavy") and (tARMA.isEmergencyService() or not isInGreenzone)
+            local o = (not k or n.type ~= "Heavy") and (tARMA.isEmergencyService() or not isInGreenzone) and not tARMA.isPlayerInAnimalForm()
             if e[m] and not o then
                 e[m] = nil
                 j = true
