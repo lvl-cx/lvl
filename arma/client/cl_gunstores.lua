@@ -1,4 +1,3 @@
-local cfg = module("cfg/cfg_gunstores")
 local weapons = module("cfg/weapons")
 local a=false
 local b

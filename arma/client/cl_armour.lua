@@ -50,7 +50,7 @@ Citizen.CreateThread(function()
 end)
 
 
---[[ local j=false
+local j=false
 function tARMA.isPlayerInAnimalForm()
     return j 
 end
@@ -147,4 +147,4 @@ Citizen.CreateThread(function()
         end
         Wait(0)
     end
-end) ]]
+end)
