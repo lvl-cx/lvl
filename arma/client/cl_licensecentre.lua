@@ -22,11 +22,7 @@ RageUI.CreateWhile(1.0, true, function()
             for k,v in pairs(licensecentre.licenses) do
                 if v.group == cGroup then
                     RageUI.Separator(v.name.." Price: £"..getMoneyStringFormatted(v.price))
-                    if v.type == 'grind' then
-                        RageUI.Separator("Per Piece: £"..getMoneyStringFormatted(v.pieceprice))
-                        RageUI.Separator("1 x 200KG Run: £"..getMoneyStringFormatted(v.pieceprice*50))
-                        RageUI.Separator("1 x 300KG Run: £"..getMoneyStringFormatted(v.pieceprice*75))
-                    else
+                    if v.info ~= nil then
                         for a,b in pairs(v.info) do
                             RageUI.Separator(b)
                         end
