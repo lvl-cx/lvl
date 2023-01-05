@@ -166,15 +166,13 @@ local function aj(E)
             SetCamCoord(ap, aq)
             SetCamRot(ap, -20.0, ao.y, ao.z)
             ah = ap
-            Citizen.CreateThread(
-                function()
-                    while DoesEntityExist(am) do
-                        Citizen.Wait(25)
-                        ai = (ai + 1) % 360
-                        SetEntityHeading(am, ai)
-                    end
+            Citizen.CreateThread(function()
+                while DoesEntityExist(am) do
+                    Citizen.Wait(25)
+                    ai = (ai + 1) % 360
+                    SetEntityHeading(am, ai)
                 end
-            )
+            end)
             t = false
             n = true
             k = am
@@ -494,7 +492,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.ButtonWithStyle('Spawn Vehicle', a_, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 if Selected then 
-                    RageUI.ActuallyCloseAll()
                     for F, G in pairs(m) do
                         if not DoesEntityExist(G) then
                             table.remove(m, F)
@@ -521,6 +518,7 @@ RageUI.CreateWhile(1.0, true, function()
                     else
                         tARMA.notify("~r~You may only take out a maximum of 5 vehicles at a time.")
                     end
+                    RageUI.ActuallyCloseAll()
                 end
             end)
             if not RentedVeh then
