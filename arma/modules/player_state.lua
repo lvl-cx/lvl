@@ -57,7 +57,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 TriggerClientEvent('ARMA:setOnPilotDuty', source, true)
             end
             if ARMA.hasGroup(user_id, 'Police Horse Trained') then
-                ARMAclient.setglobalHorseTrained(source, {true})
+                ARMAclient.setglobalHorseTrained(source, {})
             end
                 
             local adminlevel = 0

@@ -837,8 +837,8 @@ end
 function tARMA.globalOnPoliceDuty()
   return globalOnPoliceDuty
 end
-function tARMA.setglobalHorseTrained(y)
-  globalHorseTrained = y
+function tARMA.setglobalHorseTrained()
+  globalHorseTrained = true
 end
 function tARMA.globalHorseTrained()
   return globalHorseTrained
