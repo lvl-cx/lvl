@@ -57,7 +57,7 @@ function tARMA.setCustomization(i, k, l)
                     print("[ARMA] Customisation, setting health to ", q)
                     tARMA.setHealth(q)
                 end
-                TriggerServerEvent('ARMA:changeHairStyle')
+                TriggerServerEvent('ARMA:changeHairstyle')
                 TriggerServerEvent('ARMA:changeTattoos')
                 h = PlayerPedId()
             else

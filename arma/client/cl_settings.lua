@@ -654,7 +654,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.List("~y~Head",P,W.head,"Effect that displays when you hit the head.",{},true,function(a0, a1, a2, a3)
                 if W.head ~= a3 then
                     if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
-                        notify("~y~You need to be a subscriber of ARMA Plus or CMG Platinum to use this feature.")
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
                         notify("~y~Available @ store.armarp.co.uk")
                     end
                     W.head = a3
@@ -667,7 +667,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.List("~y~Body",P,W.body,"Effect that displays when you hit the body.",{},true,function(a0, a1, a2, a3)
                 if W.body ~= a3 then
                     if not tARMA.isPlusClub() and not tARMA.isPlatClub() then
-                        notify("~y~You need to be a subscriber of ARMA Plus or CMG Platinum to use this feature.")
+                        notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
                         notify("~y~Available @ store.armarp.co.uk")
                     end
                     W.body = a3

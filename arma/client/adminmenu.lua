@@ -561,7 +561,7 @@ RageUI.CreateWhile(1.0, true, function()
                             if a == currentOutfit then
                                 tARMA.setCustomization(b)
                                 SetTimeout(50, function()
-                                    TriggerServerEvent('ARMA:changeHairStyle')
+                                    TriggerServerEvent('ARMA:changeHairstyle')
                                     TriggerServerEvent('ARMA:changeTattoos')
                                 end)
                             end

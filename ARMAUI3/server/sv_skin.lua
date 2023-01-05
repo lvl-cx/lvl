@@ -29,11 +29,10 @@ AddEventHandler("ARMA:saveClothingHairData", function(hairtype, haircolour)
     end})
 end)
 
-RegisterNetEvent("ARMA:changeHairStyle")
-AddEventHandler("ARMA:changeHairStyle", function()
+RegisterNetEvent("ARMA:changeHairstyle")
+AddEventHandler("ARMA:changeHairstyle", function()
     local source = source
     local user_id = ARMA.getUserId({source})
-
     ARMA.getUData({user_id, "ARMA:Face:Data", function(data)
         if data ~= nil then
             TriggerClientEvent("ARMA:setHairstyle", source, json.decode(data))

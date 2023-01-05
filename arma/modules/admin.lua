@@ -897,18 +897,6 @@ AddEventHandler('ARMA:noClip', function()
     end
 end)
 
-
-RegisterServerEvent('ARMA:CopyToClipBoard')
-AddEventHandler('ARMA:CopyToClipBoard', function(id)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'group.remove') then
-        ARMA.prompt(source,"Input text to copy to clipboard","",function(source,data) 
-            ARMAclient.CopyToClipBoard(ARMA.getUserSource(id), {data})
-        end)
-    end
-end)
-
 RegisterServerEvent("ARMA:GetPlayerData")
 AddEventHandler("ARMA:GetPlayerData",function()
     local source = source
