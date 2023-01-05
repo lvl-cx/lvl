@@ -52,7 +52,7 @@ cfg.GunStores={
     ["Rebel"]={
         ["_config"]={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebellicense.whitelisted"},true},
         ["GADGET_PARACHUTE"]={"Parachute",1000,0,"N/A","p_parachute_s"},
-        ["WEAPON_AK200"]={"AK-200",750000,0,"N/A","w_ar_akkal"},
+        ["WEAPON_AKKAL"]={"AK-200",750000,0,"N/A","w_ar_akkal"},
         ["WEAPON_AKM"]={"AKM",700000,0,"N/A","w_ar_akm"},
         ["WEAPON_REVOLVER"]={"Revolver",200000,0,"N/A","w_pi_revolver"},
         ["WEAPON_SPAS12"]={"Spas 12",400000,0,"N/A","w_sg_spaz"},
@@ -254,9 +254,9 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
     local user_id = ARMA.getUserId(source)
     --if user_id == 1 then return end
-    print('start: ^2'..json.encode(cfg.GunStores['policeLargeArms'])..'^0')
+    --print('start: ^2'..json.encode(cfg.GunStores['policeLargeArms'])..'^0')
     MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-        print('ID: '..user_id..' Whitelists SQL: '..json.encode(weaponWhitelists[1]['weapon_info']))
+        --print('ID: '..user_id..' Whitelists SQL: '..json.encode(weaponWhitelists[1]['weapon_info']))
         if weaponWhitelists[1]['weapon_info'] ~= nil then
             local gunstoreData = cfg.GunStores
             local data = json.decode(weaponWhitelists[1]['weapon_info'])
@@ -270,10 +270,10 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
                 end
             end
             TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
-            print('ID: '..user_id..' Whitelists: '..json.encode(gunstoreData['policeLargeArms']))
+            --print('ID: '..user_id..' Whitelists: '..json.encode(gunstoreData['policeLargeArms']))
             return
         end
-        print('ID: '..user_id..' Whitelists: '..json.encode(cfg.GunStores['policeLargeArms']))
+        --print('ID: '..user_id..' Whitelists: '..json.encode(cfg.GunStores['policeLargeArms']))
         TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, cfg.GunStores)
     end)
 end)
