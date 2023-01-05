@@ -59,24 +59,7 @@ function sortedKeys(query, sortFunction)
 	return keys
 end
 
-function sortAlphabetically(bN)
-    local b7={}
-    for bO,bP in pairsByKeys(bN)do 
-        table.insert(b7,{title=bO,value=bP})
-    end
-    bN=b7
-    return bN 
-end
-
-function tobool(input)
-    if input == "true" or tonumber(input) == 1 or input == true then
-    return true
-    else
-    return false
-    end
-end
-
-function getMoneyStringFormattedOG(cashString)
+function getMoneyStringFormatted(cashString)
 	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
 
 	-- reverse the int-string and append a comma to all blocks of 3 digits
@@ -85,17 +68,6 @@ function getMoneyStringFormattedOG(cashString)
 	-- reverse the int-string back remove an optional comma and put the
 	-- optional minus and fractional part back
 	return minus .. int:reverse():gsub("^,", "") .. fraction
-end
-
-function getMoneyStringFormatted(cashString)
-	local i, j, minus, int, fraction = tostring(cashString):find('([-]?)(%d+)([.]?%d*)')
-
-	-- reverse the int-string and append a comma to all blocks of 3 digits
-	int = tostring(math.floor(math.rounddp(tonumber(int or 0)+(tonumber(fraction or 0)or 0),0))):reverse():gsub("(%d%d%d)", "%1,")
-
-	-- reverse the int-string back remove an optional comma and put the
-	-- optional minus and fractional part back
-	return minus .. int:reverse():gsub("^,", "")
 end
 
 function dump(o)
@@ -207,7 +179,7 @@ function formatTime(time) -- returns table of numerical values
     remaining = remaining % 3600
     timeTable.minutes = math.floor(remaining/60)
     remaining = remaining % 60
-    timeTable.seconds = remaining
+    timeTable.seconds = math.floor(remaining)
     return timeTable
 end
 
