@@ -21,7 +21,6 @@ local availableItems = {
 }
 
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
-    local source = source
     if first_spawn then
        if #activeCrates > 0 then
             for k,v in pairs(activeCrates) do

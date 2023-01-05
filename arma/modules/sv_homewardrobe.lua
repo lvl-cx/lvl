@@ -6,14 +6,14 @@ AddEventHandler("ARMA:saveWardrobeOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
         local sets = json.decode(data)
-        if sets == nil then --check if user has no current wardrobe data and creates empty table
+        if sets == nil then
             sets = {}
         end
         ARMAclient.getCustomization(source,{},function(custom)
             sets[outfitName] = custom
-            ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add outfit to database
+            ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets))
             ARMAclient.notify(source,{"~g~Saved outfit "..outfitName.." to wardrobe!"})
-            TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets) --update wardrobe for client
+            TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets)
         end)
     end)
 end)
@@ -24,13 +24,13 @@ AddEventHandler("ARMA:deleteWardrobeOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
         local sets = json.decode(data)
-        if sets == nil then --check if user has no current wardrobe data and creates empty table
+        if sets == nil then
             sets = {}
         end
-        sets[outfitName] = nil --replaces outfit in table with nil
-        ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets)) --add new table to db
+        sets[outfitName] = nil
+        ARMA.setUData(user_id,"ARMA:home:wardrobe",json.encode(sets))
         ARMAclient.notify(source,{"~r~Remove outfit "..outfitName.." from wardrobe!"})
-        TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets) --update wardrobe for client
+        TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets)
     end)
 end)
 
@@ -40,7 +40,7 @@ AddEventHandler("ARMA:equipWardrobeOutfit", function(outfitName)
     local user_id = ARMA.getUserId(source)
     ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
         local sets = json.decode(data)
-        ARMAclient.setCustomization(source, {sets[outfitName]}) --set outfit
+        ARMAclient.setCustomization(source, {sets[outfitName]})
         ARMAclient.getHairAndTats(source, {})
     end)
 end)
@@ -49,12 +49,13 @@ RegisterNetEvent("ARMA:initWardrobe")
 AddEventHandler("ARMA:initWardrobe", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data) --get data 
+    ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
+        print(data)
         local sets = json.decode(data)
-        if sets == nil then --check if user has no current wardrobe data and creates empty table
+        if sets == nil then
             sets = {}
         end
-        TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets) --update wardrobe for client
+        TriggerClientEvent("ARMA:refreshOutfitMenu", source, sets)
     end)
 end)
 
