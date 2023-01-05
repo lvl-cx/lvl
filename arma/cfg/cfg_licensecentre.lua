@@ -21,7 +21,7 @@ cfg.licenses = {
     {
         name = "Gang License", 
         group = "Gang", 
-        price = 1500000, 
+        price = 500000, 
         info = {"Access to Large Arms.", "Create a Gang using F5.", "Capture turfs & manage commission."}
     },
     {
