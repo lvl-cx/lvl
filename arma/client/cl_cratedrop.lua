@@ -98,7 +98,7 @@ RegisterNetEvent("ARMA:crateDrop",function(e, f, g)
         RemoveBlip(b)
     end
     local y = GetEntityCoords(a[f].crate)
-    AddOwnedExplosion(tARMA.getPlayerPed(), y.x, y.y, y.z, 1, 0.0, true, false, 3.0)
+    --AddOwnedExplosion(tARMA.getPlayerPed(), y.x, y.y, y.z, 1, 0.0, true, false, 3.0)
     FreezeEntityPosition(a[f].crate, true)
     for h, i in pairs(c) do
         SetModelAsNoLongerNeeded(GetHashKey(i))
