@@ -1,16 +1,17 @@
 local cfg = {}
 
 cfg.simeonsCategories = {
-    --[name] = {
-        --["_config"] = {permissionTable}
-        --[veh_id] = {name,price}
-    --}}
     ["Beta Cars (Free)"] = {
         ["_config"] = {permissionTable={}},
         ["ventsraid"] = {"Off-Road Venatus",0},
         ["m2varis"] = {"BMW M2 Varis",0},
         ["fordconnect"] = {"Ford Connect(300kg)",0},
     },
+    -- ["Starter Cars"] = {
+    --     ["_config"] = {permissionTable={}},
+    --     some 200kg free
+    --     some ok car 150k
+    -- },
     ["Compacts"] = {
         ["_config"] = {permissionTable={}},
         ["blista"] = {"Dinka Blista",2000},
@@ -37,12 +38,10 @@ cfg.simeonsCategories = {
         ["cts"] = {"Cadillac CTS",30000},
         ["audirs7"] = {"Audi RS7",300000},
         ["taxi"] = {"London Taxi",300000},
-        --["raiden"] = {"Coil Raiden",455000},
         ["fagaloa"] = {"Vulcan Fagaloa",600000},
     },
     ["Sports"] = {
         ["_config"] = {permissionTable={}},
-        --["bmwm4"] = {"BMW M4",275000},
         ["gtr"] = {"Nissan GTR,",290000},
         ["lexus2"] = {"Mercedes AMG GTR",295000},
         ["ySbrImpS11"] = {"Subaru Impreza",330000},
@@ -166,7 +165,6 @@ cfg.simeonsCategories = {
     ["Vans"] = {
         ["_config"] = {permissionTable={}},
         ["taco"] = {"Taco Van",250000},
-        --["toyotatruck"] = {"Toyota XLS(40kg)",90000},
         ["fordtruck"] = {"Ford f150(45kg)",200000},
         ["Speedo"] = {"Speedo(50kg)",240000},
         ["Burrito3"] = {"Burrito3(55kg)",270000},
@@ -206,7 +204,7 @@ cfg.simeonsCategories = {
         ["scorcher"] = {"Scorcher",6000},
         ["tribike3"] = {"Race Bike",10000},
         ["f4rr"] = {"Agusta F4",450000},
-        ["diablous2"] = {"diablous2",130000}, --(fuck bike)
+        ["diablous2"] = {"diablous2",130000},
         ["Faggio"] = {"Faggio",5000},
         ["Vader"] = {"Vader",15000},
         ["Bagger"] = {"Bagger",18000},
@@ -300,7 +298,6 @@ cfg.simeonsCategories = {
         ["markeda4arv"] = {"Audi A4 ARV",0,""},
         ["g4svan"] = {"G4S Van (EVENTS & RP only)",0},
         ["polsuperb"] = {"Skoda SuperB",0, ""},
-        --["polm2"] = {"Interceptor BMW M2",0}, -- fuck having this as a simeons it's my dinger
         ["polm5"] = {"Interceptor BMW M5",0},
         ["polx5"] = {"BMW X5 Interceptor",0},
         ["pol3series"] = {"Marked BMW 3 series",0},
@@ -413,7 +410,6 @@ cfg.simeonsCategories = {
         ["seashark"] = {"Seashark",50000, ""},
         ["seashark2"] = {"Seashark 2",60000, ""},
         ["seashark3"] = {"Seashark 3",70000, ""},
-        --["speeder"] = {"Speeder (110kg)",2200000, ""},
         ["speeder2"] = {"Speeder 2(125kg)",2500000, ""},
         ["suntrap"] = {"Suntrap(70kg)",1400000, ""},
         ["toro"] = {"Toro (100kg)",2000000, ""},
