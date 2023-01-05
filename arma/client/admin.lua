@@ -170,10 +170,11 @@ function tARMA.staffMode(status)
                 a = tARMA.getCustomization()
                 if tARMA.getModelGender()=="male"then 
                     tARMA.loadCustomisationPreset("StaffMale")
+                    SetPedComponentVariation(PlayerPedId(), 11, 200, tARMA.getStaffLevel(), 0)
                 else
                     tARMA.loadCustomisationPreset("StaffFemale")
+                    SetPedComponentVariation(PlayerPedId(), 11, 202, tARMA.getStaffLevel(), 0)
                 end 
-                SetPedComponentVariation(PlayerPedId(), 11, 200, tARMA.getStaffLevel(), 0)
             else
                 tARMA.setRedzoneTimerDisabled(false)
                 SetEntityInvincible(PlayerPedId(),false)

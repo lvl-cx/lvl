@@ -637,7 +637,7 @@ end
 
 function tARMA.getModelGender()
   local B=PlayerPedId()
-  if GetEntityModel(B)=='mp_f_freemode_01'then 
+  if GetEntityModel(B)==GetHashKey('mp_f_freemode_01')then 
       return"female"
   else 
       return"male"
