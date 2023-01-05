@@ -91,7 +91,7 @@ cfg.GunStores={
         -- do the rest
     },
     ["ARMATrader"]={
-        ["_config"]={{vector3(1192.556,-3308.844,4.535559)},154,1,"ARMA Trader Gunstore",{"dev.menu"},false},
+        ["_config"]={{vector3(1192.556,-3308.844,4.535559)},154,1,"ARMA Trader Gunstore",{"armatrader.whitelisted"},false},
         ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",0,0,"N/A","w_ar_goldak"},
         ["WEAPON_MOSIN"]={"Mosin Bolt-Action",0,0,"N/A","w_ar_mosin"},
         ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"},

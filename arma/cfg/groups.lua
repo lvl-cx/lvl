@@ -640,7 +640,10 @@ cfg.groups = {
     ["Pilot"] = {},
     ["G4S Driver"] = {},
     ["Taco Seller"] = {},
-    ["Burger Shot Cook"] = {}
+    ["Burger Shot Cook"] = {},
+    ["ARMATrader"] = {
+        "armatrader.whitelisted"
+    },
 }
 
 return cfg
