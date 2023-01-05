@@ -273,7 +273,7 @@ RegisterNetEvent("ARMA:prisonReleased",function()
 end)
 local function R()
     local S = GetEntityModel(PlayerPedId())
-    if S == "mp_m_freemode_01" then
+    if S == GetHashKey("mp_m_freemode_01") then
         tARMA.loadCustomisationPreset("PrisonerMale")
     else
         tARMA.loadCustomisationPreset("PrisonerFemale")
@@ -290,7 +290,7 @@ RegisterNetEvent("ARMA:putInPrisonOnSpawn",function(T)
     createPrisonBlips()
     createPrisonCraftMenu()
     local S = GetEntityModel(PlayerPedId())
-    if S ~= "mp_m_freemode_01" and S ~= "mp_f_freemode_01" then
+    if S ~= GetHashKey("mp_m_freemode_01") and S ~= GetHashKey("mp_f_freemode_01") then
         tARMA.setCustomization({modelhash = "mp_m_freemode_01"})
     end
     Citizen.Wait(2000)
