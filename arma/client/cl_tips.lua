@@ -42,7 +42,10 @@ ARMATips= {
     "CURRENT SALE: 20% OFF @ store.armarp.co.uk",
     "CURRENT SALE: 20% OFF @ store.armarp.co.uk",
     "CURRENT SALE: 20% OFF @ store.armarp.co.uk",
-    "CURRENT SALE: 20% OFF @ store.armarp.co.uk"
+    "CURRENT SALE: 20% OFF @ store.armarp.co.uk",
+    "Check out the #starter-guide channel in our discord for a quick guide on getting ahead in the city!",
+    "Check out the #starter-guide channel in our discord for a quick guide on getting ahead in the city!",
+    "Check out the #starter-guide channel in our discord for a quick guide on getting ahead in the city!",
 }
 
 
