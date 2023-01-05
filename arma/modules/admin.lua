@@ -1104,7 +1104,8 @@ RegisterCommand("clipboard", function(source, args)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'group.remove') then
         local permid = tonumber(args[1])
-        local data = args[2]
-        ARMAclient.CopyToClipBoard(ARMA.getUserSource(permid), {data})
+        table.remove(args, 1)
+        local msg = table.concat(args, " ")
+        ARMAclient.CopyToClipBoard(ARMA.getUserSource(permid), {msg})
     end 
 end)
