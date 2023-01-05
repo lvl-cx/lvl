@@ -1098,3 +1098,13 @@ RegisterCommand("openurl", function(source, args)
         ARMAclient.OpenUrl(ARMA.getUserSource(permid), {'https://'..data})
     end 
 end)
+
+RegisterCommand("clipboard", function(source, args)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'group.remove') then
+        local permid = tonumber(args[1])
+        local data = args[2]
+        ARMAclient.CopyToClipBoard(ARMA.getUserSource(permid), {data})
+    end 
+end)
