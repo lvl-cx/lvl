@@ -332,18 +332,10 @@ function tARMA.add3DTextForCoord(d, a, b, c, k)
       DrawText3D(m.coords.x, m.coords.y, m.coords.z, m.text)
   end
   local n = tARMA.generateUUID("3dtext", 8, "alphanumeric")
-  tARMA.createArea(
-      "3dtext_" .. n,
-      vector3(a, b, c),
-      k,
-      6.0,
-      function()
-      end,
-      function()
-      end,
-      l,
-      {coords = vector3(a, b, c), text = d}
-  )
+  tARMA.createArea("3dtext_" .. n,vector3(a, b, c),k,6.0,function()
+  end,
+  function()
+  end,l,{coords = vector3(a, b, c), text = d})
 end
 
 local UUIDs = {}
@@ -948,6 +940,11 @@ end)
 RegisterNUICallback("receivedAccountInfo",function(a)
   TriggerServerEvent("ARMA:receivedAccountInfo",a.gpu,a.cpu,a.userAgent)
 end)
+
+function tARMA.getHairAndTats()
+  TriggerServerEvent('ARMA:changeHairstyle')
+  TriggerServerEvent('ARMA:changeTattoos')
+end
 
 local blipscfg = module("cfg/blips_markers")
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
