@@ -189,17 +189,31 @@ RageUI.CreateWhile(1.0, true, function()
                         D()
                     end 
                 end,RMenu:Get('ARMAclothing','changeClothing'))
-                RageUI.Button('Change Gender',nil,{RightLabel=">>>"},true,function(L,M,N)
-                end,RMenu:Get('ARMAclothing','changePed'))
+                if not inOrganHeist then
+                    RageUI.Button('Change Gender',nil,{RightLabel=">>>"},true,function(L,M,N)
+                    end,RMenu:Get('ARMAclothing','changePed'))
+                end
                 RageUI.Button('~y~Wardrobe',nil,{RightLabel=">>>"},true,function(L,M,N)
                     if N then 
                         if tARMA.isPlusClub()or tARMA.isPlatClub()then 
-                            RageUI.Visible(RMenu:Get('ARMAclothing','mainMenu'),false)
-                            TriggerEvent("ARMAHousing:openOutfitMenu")
+                            RageUI.Visible(RMenu:Get("ARMAclothing", "mainMenu"), false)
+                            TriggerEvent("ARMA:openOutfitMenu")
                         else 
                             tARMA.notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")
                             tARMA.notify("~y~Available @ store.armarp.co.uk")
                         end 
+                    end 
+                end)
+                RageUI.Button('Apply Outfit Code','Applys an outfit code given by a player with ~y~ARMA Plus~w~ or ~y~ARMA Platinum~w~.',{RightLabel=">>>"},true,function(L,M,N)
+                    if N then 
+                        tARMA.clientPrompt("Outfit Code:","",function(Q)
+                            local R = string.gsub(Q, "%s+", "")
+                            if #R == 5 then
+                                TriggerServerEvent("ARMA:applyOutfitCode", string.upper(R))
+                            else
+                                notify("~r~Outfit code is not in a valid format.")
+                            end
+                        end)
                     end 
                 end)
                 RageUI.Button('Remove Props',nil,{RightLabel=">>>"},true,function(L,M,N)
