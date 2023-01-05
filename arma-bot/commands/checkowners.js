@@ -66,6 +66,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 }
 
 exports.conf = {
-    name: "co",
+    name: "gco",
     perm: 1
 }
