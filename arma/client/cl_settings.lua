@@ -358,9 +358,9 @@ RageUI.CreateWhile(1.0, true, function()
                 b = false
                 tARMA.setDiagonalWeaponSetting(b)
             end
-            RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Enable Diagonal Weapons","~g~This changes the way weapons look on your back from vertical to diagonal.",b,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
-            RageUI.Checkbox("Enable Front Assault Rifles","~g~This changes the positioning of Assault Rifles from back to front.",c,{Style = RageUI.CheckboxStyle.Car},function()
+            RageUI.Checkbox("Enable Front Assault Rifles","~g~This changes the positioning of Assault Rifles from back to front.",c,{RightBadge = RageUI.CheckboxStyle.Car},function()
             end,
             function()
                 TriggerEvent("ARMA:setFrontAR")
@@ -384,7 +384,7 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.setHitMarkerSetting(d)
                 tARMA.notify("~y~Experimental Headshot sounds now set to " .. tostring(d))
             end
-            RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Enable Experimental Hit Marker Sounds","~g~This adds 'hit marker' sounds when shooting another player, however it can be unreliable.",d,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
             RageUI.ButtonWithStyle("Weapon Whitelists","Sell your custom weapon whitelists here.",{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
@@ -397,7 +397,7 @@ RageUI.CreateWhile(1.0, true, function()
             end,RMenu:Get("SettingsMenu", "weaponswhitelist"))
             -- RageUI.ButtonWithStyle("Store Inventory","View your store inventory here.",{RightLabel = "→→→"},true,function()
             -- end,RMenu:Get("store", "mainmenu"))
-            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Streetnames","",tARMA.isStreetnamesEnabled(),{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,
             function()
                 tARMA.setStreetnamesEnabled(true)
@@ -405,7 +405,7 @@ RageUI.CreateWhile(1.0, true, function()
             function()
                 tARMA.setStreetnamesEnabled(false)
             end)
-            RageUI.Checkbox("Compass","",tARMA.isCompassEnabled(),{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Compass","",tARMA.isCompassEnabled(),{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,
             function()
                 tARMA.setCompassEnabled(true)
@@ -421,7 +421,7 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.showUI()
                 hideUI = false
             end
-            RageUI.Checkbox("Hide UI","",hideUI,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Hide UI","",hideUI,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
             local function a4()
                 tARMA.toggleBlackBars()
@@ -431,7 +431,7 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.toggleBlackBars()
                 e = false
             end
-            RageUI.Checkbox("Cinematic Black Bars","",e,{Style = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
+            RageUI.Checkbox("Cinematic Black Bars","",e,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
             RageUI.ButtonWithStyle("Crosshair","Create a custom built-in crosshair here.",{RightLabel = "→→→"},true,function(a0, a1, a2)
             end,RMenu:Get("crosshair", "main"))
