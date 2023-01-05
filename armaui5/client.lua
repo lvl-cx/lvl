@@ -166,9 +166,8 @@ Citizen.CreateThread(function()
                         Crosshair(true)
                         if IsControlJustReleased(1, 38) then
                             local id = DecorGetInt(Entity,"lootid")
-                            TriggerEvent("ARMA:startCombatTimer")
-                            TriggerServerEvent("ARMA:openCrate",id)
                             TriggerEvent("ARMA:startCombatTimer", false)
+                            TriggerServerEvent("ARMA:openCrate",id)
                             Wait(1000)
                         end
                     end
