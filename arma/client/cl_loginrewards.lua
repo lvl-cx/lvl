@@ -59,7 +59,7 @@ end
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('loginrewards', 'mainmenu')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if b > 0 and c - GetGameTimer() < -86400000 then
                 b = 0
                 c = 0
@@ -71,7 +71,7 @@ RageUI.CreateWhile(1.0, true, function()
             end
             local s = r()
             local t = s and b + 1 or b
-            RageUI.ButtonWithStyle(string.format("Day %d", t),g(s),{RightLabel = n(t, not s)},s,function(p, p, u)
+            RageUI.Button(string.format("Day %d", t),g(s),{RightLabel = n(t, not s)},s,function(p, p, u)
                 if u then
                     TriggerServerEvent("ARMA:claimNextLoginReward")
                     b = b + 1
@@ -81,15 +81,15 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.Separator("Upcoming Rewards")
             local v = t < 7 and 5 or 3
             for j = t + 1, t + v do
-                RageUI.ButtonWithStyle(string.format("Day %d", j),i(j, s),{RightLabel = n(j, false)},false,function()
+                RageUI.Button(string.format("Day %d", j),i(j, s),{RightLabel = n(j, false)},false,function()
                 end)
             end
             if t < 55 then
-                RageUI.ButtonWithStyle("Day 60",i(60, s),{RightLabel = n(60, false)},false,function()
+                RageUI.Button("Day 60",i(60, s),{RightLabel = n(60, false)},false,function()
                 end)
             end
             if t < 115 then
-                RageUI.ButtonWithStyle("Day 120",i(120, s),{RightLabel = n(120, false)},false,function()
+                RageUI.Button("Day 120",i(120, s),{RightLabel = n(120, false)},false,function()
                 end)
             end
         end) 
