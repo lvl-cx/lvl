@@ -33,5 +33,7 @@ RegisterServerEvent('kick:AFK')
 AddEventHandler('kick:AFK', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    DropPlayer(source, 'You have been kicked for being AFK for too long.')
+    if not ARMA.hasPermission(user_id, 'group.add') then
+        DropPlayer(source, 'You have been kicked for being AFK for too long.')
+    end
 end)
