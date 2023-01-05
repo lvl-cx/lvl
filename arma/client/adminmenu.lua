@@ -29,8 +29,6 @@ local a10
 local acbannedplayers = 0
 local acbannedplayerstable = {}
 local actypes = {}
-local currentOutfit = nil
-local savedOutfits = {}
 
 admincfg = {}
 
@@ -54,10 +52,6 @@ local r = {
 local s = 1
 local communityPot = '0'
 
-
-
---[[ {enabled -- true or false}, permission required ]]
-
 menuColour = '~b~'
 
 RMenu.Add('adminmenu', 'main', RageUI.CreateMenu("", "~b~Admin Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "admin"))
@@ -66,8 +60,6 @@ RMenu.Add("adminmenu", "closeplayers", RageUI.CreateSubMenu(RMenu:Get("adminmenu
 RMenu.Add("adminmenu", "searchoptions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Player Search Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "functions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Admin Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "devfunctions", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "main"), "", menuColour..'Dev Functions Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
-RMenu.Add("adminmenu", "outfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Outfits Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
-RMenu.Add("adminmenu", "manageoutfits", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "outfits"), "", menuColour..'Manage Outfits',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("adminmenu", "communitypot", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Community Pot',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "communitypot"))
 RMenu.Add("adminmenu", "moneymenu", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'Money Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
 RMenu.Add("adminmenu", "anticheat", RageUI.CreateSubMenu(RMenu:Get("adminmenu", "functions"), "", menuColour..'AC Menu',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners", "admin"))
@@ -372,13 +364,6 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
             end
-            if tARMA.isDev() then
-                RageUI.ButtonWithStyle("Outfit Management", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:devOutfitLoad')
-                    end
-                end, RMenu:Get('adminmenu', 'outfits'))
-            end
         end)
     end
 end)
@@ -521,58 +506,6 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
-            end        
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('adminmenu', 'outfits')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
-                if next(savedOutfits) then
-                    for a,b in pairs(savedOutfits) do 
-                        RageUI.ButtonWithStyle(a, nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                            if Selected then
-                                currentOutfit = a
-                            end
-                        end, RMenu:Get('adminmenu', 'manageoutfits'))
-                    end
-                else
-                    RageUI.Separator("No Outfits Saved")
-                end
-                RageUI.ButtonWithStyle('Save Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        tARMA.clientPrompt("Outfit Name:","",function(outfitName)
-                            if outfitName ~= "" then
-                                TriggerServerEvent('ARMA:devOutfitSave',outfitName)
-                            else
-                                tARMA.notify("~r~Invalid Outfit Name")
-                            end
-                        end)
-                    end
-                end)
-            end        
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('adminmenu', 'manageoutfits')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
-                RageUI.ButtonWithStyle('Equip Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        for a,b in pairs(savedOutfits) do 
-                            if a == currentOutfit then
-                                tARMA.setCustomization(b)
-                                SetTimeout(50, function()
-                                    TriggerServerEvent('ARMA:changeHairstyle')
-                                    TriggerServerEvent('ARMA:changeTattoos')
-                                end)
-                            end
-                        end
-                    end
-                end)
-                RageUI.ButtonWithStyle('Delete Outfit', nil, {RightLabel = ">>>"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        TriggerServerEvent('ARMA:devOutfitDelete',currentOutfit)
-                    end
-                end, RMenu:Get('adminmenu', 'outfits'))
             end        
         end)
     end
@@ -1249,11 +1182,6 @@ AddEventHandler("ARMA:receivedUserInformation", function(us,un,ub,uw,uc)
     sb=getMoneyStringFormatted(ub)
     sw=getMoneyStringFormatted(uw)
     sch=getMoneyStringFormatted(uc)
-end)
-
-RegisterNetEvent("ARMA:getDevOutfits")
-AddEventHandler("ARMA:getDevOutfits",function(outfits)
-    savedOutfits = outfits
 end)
 
 RegisterNetEvent("ARMA:gotCommunityPotAmount",function(d)
