@@ -17,7 +17,6 @@ local SettingsButton = {
 ---@return nil
 ---@public
 function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
-    
     ---@type table
     local CurrentMenu = RageUI.CurrentMenu;
 
@@ -82,10 +81,12 @@ function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
                         if Style.RightLabel ~= nil and Style.RightLabel ~= "" then
                             RenderText(Style.RightLabel, CurrentMenu.X + SettingsButton.RightText.X - RightBadgeOffset + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsButton.RightText.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.RightText.Scale, 245, 245, 245, 255, 2)
                         end
-
                         RenderText(Label, CurrentMenu.X + SettingsButton.Text.X + LeftBadgeOffset, CurrentMenu.Y + SettingsButton.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.Text.Scale, 245, 245, 245, 255)
                     end
                 else
+                    if Style.RightLabel then
+                        RenderText(Style.RightLabel, CurrentMenu.X + SettingsButton.RightText.X - RightBadgeOffset + CurrentMenu.WidthOffset, CurrentMenu.Y + SettingsButton.RightText.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.RightText.Scale, 163, 159, 148, 255, 2)
+                    end
                     RenderText(Label, CurrentMenu.X + SettingsButton.Text.X + LeftBadgeOffset, CurrentMenu.Y + SettingsButton.Text.Y + CurrentMenu.SubtitleHeight + RageUI.ItemOffset, 0, SettingsButton.Text.Scale, 163, 159, 148, 255)
                 end
 
