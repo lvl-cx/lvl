@@ -34,15 +34,15 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
         }
         ARMAclient.playAnim(source,{true,anims,false})
         Wait(15000)
-        local lootrandom = math.random(3, 8)
-        while lootrandom > 0 do
+        local lootAmount = math.random(2,5)
+        while lootAmount > 0 do
             local randomItem = math.random(1, #availableItems)
             for k,v in pairs(availableItems) do
                 if k == randomItem then
                     ARMA.giveInventoryItem(user_id, v[1], v[2], true)
                 end
             end
-            lootrandom = lootrandom - 1
+            lootAmount = lootAmount - 1
         end
         ARMA.giveMoney(user_id,math.random(50000,150000))
         TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "Crate drop has been looted.", "alert")
@@ -65,8 +65,8 @@ Citizen.CreateThread(function()
         Wait(1000 * stayTime)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "The airdrop has disappeared.", "alert")
-            table.remove(activeCrates, num)
-            TriggerClientEvent("ARMA:removeLootcrate", num)
+            table.remove(activeCrates, crateID)
+            TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         end
         Wait(1000)
     end
@@ -85,8 +85,8 @@ RegisterCommand('testdrop', function(source)
         Wait(1000 * stayTime)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "The airdrop has disappeared.", "alert")
-            table.remove(activeCrates, num)
-            TriggerClientEvent("ARMA:removeLootcrate", num)
+            table.remove(activeCrates, crateID)
+            TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         end
         Wait(1000)
     end
