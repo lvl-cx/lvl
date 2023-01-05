@@ -70,7 +70,7 @@ AddEventHandler('explosionEvent', function(source, ev)
             ev.damagescale = 0.0
             CancelEvent()
             Wait(500)
-            TriggerEvent("ARMA:acBan", user_id, 3, name, player)
+            TriggerEvent("ARMA:acBan", user_id, 3, name, player, 'Explosion Type'..ev.explosionType)
         end
     end
 end)
@@ -215,7 +215,7 @@ AddEventHandler("ARMA:acType14", function()
 	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 14, name, player)
+    --TriggerEvent("ARMA:acBan", user_id, 14, name, player)
 end)
 
 local godmodeVid = false
