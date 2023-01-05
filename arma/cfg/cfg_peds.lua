@@ -519,7 +519,6 @@ cfg.peds = {
         {"Yamcha", "Yamcha"},
         {"rick", "Rick"},
         {"piccolo", "Piccolo"},
-        {"CJ", "CJ"},
         {"LioMessiCiv", "Messi 2"},
         {"a_c_rottweiler", "Dog 1"},
         {"a_c_shepherd", "Dog 2"},
@@ -529,7 +528,6 @@ cfg.peds = {
         {"ATSTWalker", "ATSTWalker"},
         {"Goku2", "Goku2"},
         {"leia", "leia"},
-        {"Leia_Slave_MT", "Leia_Slave_MT"},
         {"MK50_MFF", "MK50_MFF"},
         {"sidious", "sidious"},
         {"STR_Dilophosaurus", "STR_Dilophosaurus"},
@@ -591,6 +589,7 @@ cfg.peds = {
 
 cfg.pedMenus = {
     {"admin", vector3(54.124324798584, 7244.4296875, 2.3570654392242)},
+    {"admin",  vector3(3462.25, 2623.042, 15.47876)},
     {"Normal", vector3(71.812164306641,-1391.7836914063,29.376153945923)},
     {"Normal", vector3(-706.46051025391,-151.13081359863,37.415134429932)},
     {"Normal", vector3(429.30685424805,-807.82000732422,29.491151809692)},
