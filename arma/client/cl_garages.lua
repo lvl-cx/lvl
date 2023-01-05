@@ -1,5 +1,7 @@
 DecorRegister("vRP_owner", 3)
 DecorRegister("vRP_vmodel", 3)
+DecorRegister("lootid", 3)
+DecorRegister("lsAudioId", 3)
 local cfg = module("arma-vehicles", "garages")
 local b = cfg.garages
 local garage_type = ""
