@@ -185,7 +185,7 @@ RageUI.CreateWhile(1.0, true, function()
                 tARMA.setCODHitMarkerSetting(d)
                 tARMA.notify("~y~COD Hitmarkers now set to " .. tostring(d))
             end
-            RageUI.Checkbox("Enable COD Hitmarkers","~g~This adds 'hit marker' sound and image when shooting another player.",d,{Style = RageUI.CheckboxStyle.Car},function(n, p, o, s)
+            RageUI.Checkbox("Enable COD Hitmarkers","~g~This adds 'hit marker' sound and image when shooting another player.",d,{RightBadge = RageUI.CheckboxStyle.Car},function(n, p, o, s)
             end,q,r)
             RageUI.ButtonWithStyle("Custom Death Sounds","",{RightLabel="→→→"},true,function(o,p,q)
             end,RMenu:Get("vipclubmenu","deathsounds"))
