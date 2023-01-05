@@ -30,7 +30,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.Separator("Vehicle: ~b~" .. b.vehicle_name .. "~s~ | Owner: ~b~" .. b.owner_name)
             for h = 1, #a.reasonsForImpound do
-                RageUI.Checkbox(a.reasonsForImpound[h].option,"",a.reasonsForImpound[h].checked,{Style = 1},function(i, j, k, l)
+                RageUI.Checkbox(a.reasonsForImpound[h].option,"",a.reasonsForImpound[h].checked,{RightBadge = RageUI.CheckboxStyle.Car},function(i, j, k, l)
                     if j then
                         a.reasonsForImpound[h].checked = l
                     end

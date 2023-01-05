@@ -892,7 +892,7 @@ RageUI.CreateWhile(1.0, true, function()
                         selectedbans[v.id] = nil
                     end
                     if o == nil or string.match(string.lower(v.id), o) or string.match(string.lower(v.name), o) then
-                        RageUI.Checkbox(v.name, v.bandescription, v.itemchecked, { Style = RageUI.CheckboxStyle.Tick }, function(Hovered, Selected, Active, Checked)
+                        RageUI.Checkbox(v.name, v.bandescription, v.itemchecked, { RightBadge = RageUI.CheckboxStyle.Tick }, function(Hovered, Selected, Active, Checked)
                             if Selected then
                                 if v.itemchecked then
                                     SelectedTrue()

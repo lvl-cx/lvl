@@ -17,7 +17,7 @@ local SettingsButton = {
 ---@return nil
 ---@public
 function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
-
+    
     ---@type table
     local CurrentMenu = RageUI.CurrentMenu;
 
@@ -102,7 +102,7 @@ function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
                 if Selected and (CurrentMenu.Controls.Select.Active or (Hovered and CurrentMenu.Controls.Click.Active)) then
                     local Audio = RageUI.Settings.Audio
                     RageUI.PlaySound(Audio[Audio.Use].Select.audioName, Audio[Audio.Use].Select.audioRef)
-                    if Submenu ~= nil then
+                    if Submenu ~= nil and Enabled then
                         if Submenu() then
                             RageUI.NextMenu = Submenu
                         end

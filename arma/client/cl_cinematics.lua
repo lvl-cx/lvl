@@ -1192,7 +1192,7 @@ RageUI.CreateWhile(1.0, true, function()
                 ExecuteCommand("showui")
                 u = false
             end
-            RageUI.Checkbox("Hide UI","",u,{Style = RageUI.CheckboxStyle.Car},function(a1, a3, a2, a6)
+            RageUI.Checkbox("Hide UI","",u,{RightBadge = RageUI.CheckboxStyle.Car},function(a1, a3, a2, a6)
             end,a4,a5)
         end)
     end
@@ -1531,7 +1531,7 @@ RageUI.CreateWhile(1.0, true, function()
                 B = false
                 tARMA.cancelOverrideTimeWeather()
             end
-            RageUI.Checkbox("Override Weather/Time","",B,{Style = RageUI.CheckboxStyle.Car},function(a1, a3, a2, a6)
+            RageUI.Checkbox("Override Weather/Time","",B,{RightBadge = RageUI.CheckboxStyle.Car},function(a1, a3, a2, a6)
                 B = a6
             end,a4,a5)
             RageUI.List("Hours",C,D,"",{},true,function(a1, a2, a3, a8)
