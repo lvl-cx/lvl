@@ -1,7 +1,7 @@
 
 
 
-local crateLocations = { --Where you want the crate to spawn ALL MESSAGES YOU CAN DELETE AFTER (WOLFHILL)
+local crateLocations = {
     vector3(1865.0517578125,294.37481689453,168.91744995117),
     vector3(2945.5515136719,2795.4934082031,40.646308898926),
     vector3(-1627.5288085938,720.173828125,192.08515930176),
@@ -12,7 +12,7 @@ local activeCrates = {}
 local stayTime = 15*60 --How long till the airdrop disappears
 local spawnTime = 20*60 -- Time between each airdrop
 
-local availableItems = { --Where you put you weapons and how frequently you want them to spawn E.G M1911 with its ammo. and put that in there twice and akm once the m1911 will have more chance of spawning
+local availableItems = {
     {"wbody|WEAPON_UMP45", 1},
     {"9mm Bullets", 250},
     {"wbody|WEAPON_MOSIN", 1},
@@ -20,10 +20,20 @@ local availableItems = { --Where you put you weapons and how frequently you want
     {"7.62mm Bullets", 250},
 }
 
+AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
+    local source = source
+    if first_spawn then
+       if #activeCrates > 0 then
+            for k,v in pairs(activeCrates) do
+                TriggerClientEvent('ARMA:addCrateDropRedzone', source, v, crateLocations[v])
+            end
+       end
+    end
+end)
+
 RegisterServerEvent('ARMA:openCrate', function(crateID)
     local source = source
     local user_id = ARMA.getUserId(source)
-    print('Current Crate: '..crateID, 'Active Crates: '..json.encode(activeCrates))
     if activeCrates[crateID] == nil then return end
     if #(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0 then
         FreezeEntityPosition(GetPlayerPed(source), true)
@@ -45,7 +55,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
             lootAmount = lootAmount - 1
         end
         ARMA.giveMoney(user_id,math.random(50000,150000))
-        TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "Crate drop has been looted.", "alert")
+        TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "Crate drop has been looted.", "alert")
         FreezeEntityPosition(GetPlayerPed(source), false)
         TriggerClientEvent("ARMA:removeLootcrate", crateID)
         TriggerClientEvent("ARMA:removeCrateRedzone", -1)
@@ -61,7 +71,7 @@ Citizen.CreateThread(function()
         local oilrig = false -- need to setup oil rig loot and coords
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, oilrig)
         table.insert(activeCrates, crateID)
-        TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "An airdrop is landing...", "alert")
+        TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(1000 * stayTime)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "The airdrop has disappeared.", "alert")
@@ -81,10 +91,10 @@ RegisterCommand('testdrop', function(source)
         local oilrig = false -- need to setup oil rig loot and coords
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, oilrig)
         table.insert(activeCrates, crateID)
-        TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "An airdrop is landing...", "alert")
+        TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(1000 * stayTime)
         if activeCrates[crateID] ~= nil then
-            TriggerClientEvent('chatMessage', -1, "^1[ARMA RP]: ^0", {66, 72, 245}, "The airdrop has disappeared.", "alert")
+            TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
             table.remove(activeCrates, crateID)
             TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         end
