@@ -37,7 +37,7 @@ AddEventHandler("ARMA:claimQuestReward", function()
                 -- code to give plat days
                 MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
                     plathours = rows[1].plathours
-                    MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + 168})
+                    MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + 168*2})
                     exports['ghmattimysql']:execute("UPDATE arma_quests SET reward_claimed = true WHERE user_id = @user_id", {user_id = user_id}, function() end)
                 end)
             else
