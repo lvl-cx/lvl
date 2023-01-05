@@ -102,19 +102,7 @@ local function D()
     w(177.9623260498, -1774.7336425781, 29.108749389648)
     SetEntityHeading(E, GetEntityHeading(j))
     AttachEntityToEntity(E, j, -1, 0.0, 0.0, 1.83, 0.0, 0.0, 0.0, false, false, false, false, 0, true)
-    local F =
-        CreateCamWithParams(
-        "DEFAULT_SCRIPTED_CAMERA",
-        116.66564178467,
-        -1724.0200195312,
-        31.544952392578,
-        0.0,
-        0.0,
-        0.0,
-        GetGameplayCamFov(),
-        true,
-        2
-    )
+    local F = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA",116.66564178467,-1724.0200195312,31.544952392578,0.0,0.0,0.0,GetGameplayCamFov(),true,2)
     PointCamAtEntity(F, j, 0.0, 0.0, 0.0, true)
     SetCamActive(F, true)
     RenderScriptCams(true, true, 0, true, true)
@@ -192,20 +180,15 @@ local function N()
     r(vector3(-1061.8685302734, -2717.7609863282, -0.5), vector3(-1075.8397216796, -2728.1538085938, -0.5))
     h = nil
     p("tubearriving")
-    Citizen.CreateThreadNow(
-        function()
-            w(-1135.8150634766, -2806.2873535156, -8.3283023834229)
-            k = "ARRIVE_INTRO"
-        end
-    )
+    Citizen.CreateThreadNow(function()
+        w(-1135.8150634766, -2806.2873535156, -8.3283023834229)
+        k = "ARRIVE_INTRO"
+    end)
     r(vector3(-1075.8397216796, -2728.1538085938, -0.5), vector3(-1080.8995361328, -2715.8703613282, -0.5))
     h = "Hurry up fool!"
     r(vector3(-1080.8995361328, -2715.8703613282, -0.5), vector3(-1063.7435302734, -2699.1303710938, -9.4100732803344))
     h = nil
-    r(
-        vector3(-1063.7435302734, -2699.1303710938, -8.4100732803344),
-        vector3(-1063.7435302734, -2699.1303710938, -8.4100732803344)
-    )
+    r(vector3(-1063.7435302734, -2699.1303710938, -8.4100732803344),vector3(-1063.7435302734, -2699.1303710938, -8.4100732803344))
     while DoesEntityExist(j) and GetTrainDoorOpenRatio(j, 0) < 0.95 do
         Citizen.Wait(0)
     end
@@ -288,22 +271,7 @@ local function V()
     DecorSetInt(l, "ARMAACVeh", 955)
     SetEntityInvincible(l, true)
     SetModelAsNoLongerNeeded("taxi")
-    local u =
-        CreateCheckpoint(
-        1,
-        W[2].x,
-        W[2].y,
-        W[2].z,
-        -515.47406005859,
-        -264.78549194336,
-        34.403575897217,
-        2.0,
-        204,
-        204,
-        1,
-        100,
-        0
-    )
+    local u = CreateCheckpoint(1,W[2].x,W[2].y,W[2].z,-515.47406005859,-264.78549194336,34.403575897217,2.0,204,204,1,100,0)
     local v = AddBlipForCoord(W[1].x, W[1].y, W[1].z)
     SetBlipFlashes(v, true)
     Citizen.Wait(2000)
@@ -568,25 +536,18 @@ local function ad()
     tARMA.setCanAnim(true)
     g = false
 end
-RegisterCommand(
-    "tutorial",
-    function()
-        if tARMA.isDevMode() then
-            ad()
-        end
-    end,
-    false
-)
-RegisterNetEvent("ARMA:playTutorial", ad)
-AddEventHandler(
-    "ARMA:onClientSpawn",
-    function(ae, af)
-        if af then
-            Citizen.Wait(10000)
-            TriggerServerEvent("ARMA:checkTutorial")
-        end
+RegisterCommand("tutorial",function()
+    if tARMA.isDevMode() then
+        ad()
     end
-)
+end,false)
+RegisterNetEvent("ARMA:playTutorial", ad)
+AddEventHandler("ARMA:onClientSpawn",function(ae, af)
+    if af then
+        Citizen.Wait(10000)
+        TriggerServerEvent("ARMA:checkTutorial")
+    end
+end)
 local function ag()
     if g then
         if h then
