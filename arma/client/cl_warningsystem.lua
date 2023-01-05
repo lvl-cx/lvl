@@ -2,17 +2,19 @@ local a = {}
 local b = 0
 local c = false
 function func_f10warnings()
-	if IsControlJustPressed(0, 57) then
-		if IsUsingKeyboard(2) then
-			if not c then
-				TriggerServerEvent("arma:refreshWarningSystem")
-				SendNUIMessage({type = "showF10"})
-				c = not c
-				SetNuiFocus(true, true)
-			else
-				SendNUIMessage({type = "hideF10"})
-				c = not c
-				SetNuiFocus(false, false)
+	if not recordingMode then
+		if IsControlJustPressed(0, 57) then
+			if IsUsingKeyboard(2) then
+				if not c then
+					TriggerServerEvent("arma:refreshWarningSystem")
+					SendNUIMessage({type = "showF10"})
+					c = not c
+					SetNuiFocus(true, true)
+				else
+					SendNUIMessage({type = "hideF10"})
+					c = not c
+					SetNuiFocus(false, false)
+				end
 			end
 		end
 	end
