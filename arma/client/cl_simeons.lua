@@ -258,6 +258,7 @@ RageUI.CreateWhile(1.0, true, function()
             RageUI.ButtonWithStyle("Yes","",{RightLabel = "→→→"},true,function(N, O, P)
                 if P then
                     TriggerServerEvent("ARMA:purchaseCarDealerVehicle", e, j)
+                    TriggerServerEvent('ARMA:FetchCars', 'Standard Garage')
                 end
             end,RMenu:Get("cardealer", "mainmenu"))
             RageUI.ButtonWithStyle("No","",{RightLabel = "→→→"},true,function(N, O, P)

@@ -176,8 +176,9 @@ client.getPerms = function(msg) {
     let lvl4 = msg.guild.roles.find(r => r.name === settings.Level4Perm);
     let lvl5 = msg.guild.roles.find(r => r.name === settings.Level5Perm);
     let lvl6 = msg.guild.roles.find(r => r.name === settings.Level6Perm);
-    if (!lvl1 || !lvl2 || !lvl3 || !lvl4 || !lvl5 || !lvl6) {
-        console.log(`Your permissions are not setup correctly and the bot will not function as intended.\nStatus: Level 1 Perm is: ${lvl1}, Level 2 Perm is: ${lvl2}, Level 3 Perm is ${lvl3}, Level 4 Perm is ${lvl4}, Level 5 Perm is ${lvl5}, Level 6 Perm is ${lvl6}`)
+    let lvl7 = msg.guild.roles.find(r => r.name === settings.Level7Perm);
+    if (!lvl1 || !lvl2 || !lvl3 || !lvl4 || !lvl5 || !lvl6 || !lvl7) {
+        console.log(`Your permissions are not setup correctly and the bot will not function as intended.\nStatus: Please check permission levels are setup correctly.`)
     }
 
     // hot fix for Discord role caching 
@@ -189,7 +190,9 @@ client.getPerms = function(msg) {
     // hot fix for Discord role caching 
 
     let level = 0;
-    if (msg.member.roles.has(lvl6.id)) {
+    if (msg.member.roles.has(lvl7.id)) {
+        level = 7;
+    } else if (msg.member.roles.has(lvl6.id)) {
         level = 6;
     } else if (msg.member.roles.has(lvl5.id)) {
         level = 5;
