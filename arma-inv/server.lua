@@ -298,6 +298,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     cdata = json.decode(cdata) or {}
                     if cdata[itemId] and cdata[itemId].amount >= 1 then
                         local weightCalculation = ARMA.getInventoryWeight({UserId})+ARMA.getItemWeight({itemId})
+                        if weightCalculation == nil then return end
                         if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                             if cdata[itemId].amount > 1 then
                                 cdata[itemId].amount = cdata[itemId].amount - 1; 
