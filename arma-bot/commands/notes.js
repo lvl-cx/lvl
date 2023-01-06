@@ -5,7 +5,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_notes` WHERE user_id = ?", [params[0]], (result) => {
         let notes = ''
-        if (result.length > 0) {
+        if (result[0].info > 0) {
             let noteInfo = JSON.parse(result[0].info)
             for (i = 0; i < noteInfo.length; i++) { 
                 notes = notes + `\nID: ${noteInfo[i].id} ${noteInfo[i].note} (${noteInfo[i].author})`
