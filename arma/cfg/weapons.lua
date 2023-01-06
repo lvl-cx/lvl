@@ -423,19 +423,19 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_sr_mk14",
     },
-    ["WEAPON_STAC"] = {
-        name = "Stac 33",
-        class = "Heavy",
-        ammo = "Police Issued .308 Sniper Rounds",
-        policeWeapon = true,
-        model = "w_sr_stac",
-    },
     ["WEAPON_G36"] = {
         name = "G36C",
         class = "AR",
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_g36",
+    },
+    ["WEAPON_PDM4A1"] = {
+        name = "M4 Carbine",
+        class = "AR",
+        ammo = "Police Issued 5.56mm",
+        policeWeapon = true,
+        model = "w_ar_m4a1",
     },
 }
 
