@@ -1,6 +1,12 @@
 local a = nil
 local b = {}
 local c = ""
+local function checkOutfits()
+    if next(b) then
+        return true
+    end
+    return false
+end
 RMenu.Add("armawardrobe","mainmenu",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cstore"))
 RMenu:Get("armawardrobe", "mainmenu"):SetSubtitle("~b~HOME")
 RMenu.Add("armawardrobe","listoutfits",RageUI.CreateSubMenu(RMenu:Get("armawardrobe", "mainmenu"),"","~b~Wardrobe",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
@@ -9,9 +15,9 @@ RMenu.Add("armawardrobe","equip",RageUI.CreateSubMenu(RMenu:Get("armawardrobe", 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armawardrobe', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.ButtonWithStyle("List Outfits","",{RightLabel = "→→→"},true,function(d, e, f)
+            RageUI.Button("List Outfits","",{RightLabel = "→→→"},checkOutfits(),function(d, e, f)
             end,RMenu:Get("armawardrobe", "listoutfits"))
-            RageUI.ButtonWithStyle("Save Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
+            RageUI.Button("Save Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
                 if f then
                     c = getGenericTextInput("outfit name:")
                     if c then
@@ -25,7 +31,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end
             end)
-            RageUI.ButtonWithStyle("Get Outfit Code","Gets a code for your current outfit which can be shared with other players.",{RightLabel = "→→→"},true,function(d, e, f)
+            RageUI.Button("Get Outfit Code","Gets a code for your current outfit which can be shared with other players.",{RightLabel = "→→→"},true,function(d, e, f)
                 if f then
                     if tARMA.isPlusClub() or tARMA.isPlatClub() then
                         TriggerServerEvent("ARMA:getCurrentOutfitCode")
@@ -42,14 +48,14 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             if b ~= {} then
                 for g, h in pairs(b) do
-                    RageUI.ButtonWithStyle(g,"",{RightLabel = "→→→"},true,function(d, e, f)
+                    RageUI.Button(g,"",{RightLabel = "→→→"},true,function(d, e, f)
                         if f then
                             c = g
                         end
                     end,RMenu:Get("armawardrobe", "equip"))
                 end
             else
-                RageUI.ButtonWithStyle("~r~No outfits saved","",{RightLabel = "→→→"},true,function(d, e, f)
+                RageUI.Button("~r~No outfits saved","",{RightLabel = "→→→"},true,function(d, e, f)
                 end,RMenu:Get("armawardrobe", "mainmenu"))
             end
         end, function()
@@ -57,12 +63,12 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('armawardrobe', 'equip')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.ButtonWithStyle("Equip Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
+            RageUI.Button("Equip Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
                 if f then
                     TriggerServerEvent("ARMA:equipWardrobeOutfit", c)
                 end
             end,RMenu:Get("armawardrobe", "listoutfits"))
-            RageUI.ButtonWithStyle("Delete Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
+            RageUI.Button("Delete Outfit","",{RightLabel = "→→→"},true,function(d, e, f)
                 if f then
                     TriggerServerEvent("ARMA:deleteWardrobeOutfit", c)
                 end
@@ -73,8 +79,7 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 local function i()
-    RageUI.ActuallyCloseAll()
-    RageUI.Visible(RMenu:Get("armawardrobe", "mainmenu"), true)
+    RageUI.Visible(RMenu:Get('armawardrobe', 'mainmenu'), true)
 end
 local function j()
     RageUI.ActuallyCloseAll()

@@ -373,7 +373,7 @@ AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
                 ARMAclient.addBlip(source,{x,y,z,374,2,k,0.8,true}) -- remove the 0.8 and true to display on full map instead of minimap
             end
             if owner == user_id then
-                ARMAclient.addBlip(source,{x,y,z,374,1,k}) -- remove the 0.8 and true to display on full map instead of minimap
+                ARMAclient.addBlip(source,{x,y,z,374,1,k})
             end
         end)
     end

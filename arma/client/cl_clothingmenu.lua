@@ -195,8 +195,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end
                 RageUI.Button('~y~Wardrobe',nil,{RightLabel=">>>"},true,function(L,M,N)
                     if N then 
-                        if tARMA.isPlusClub()or tARMA.isPlatClub()then 
-                            RageUI.Visible(RMenu:Get("ARMAclothing", "mainMenu"), false)
+                        if tARMA.isPlusClub()or tARMA.isPlatClub()then
                             TriggerEvent("ARMA:openOutfitMenu")
                         else 
                             tARMA.notify("~y~You need to be a subscriber of ARMA Plus or ARMA Platinum to use this feature.")

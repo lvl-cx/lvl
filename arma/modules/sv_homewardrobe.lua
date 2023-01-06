@@ -50,7 +50,6 @@ AddEventHandler("ARMA:initWardrobe", function()
     local source = source
     local user_id = ARMA.getUserId(source)
     ARMA.getUData(user_id, "ARMA:home:wardrobe", function(data)
-        print(data)
         local sets = json.decode(data)
         if sets == nil then
             sets = {}
