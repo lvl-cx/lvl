@@ -343,10 +343,10 @@ Citizen.CreateThread(function()
 				SetPlayerWeaponDamageModifier(j, 1.0)
 				SetWeaponDamageModifier(l, 1.0)
 			end
-			-- if not h and GetUsingseethrough() and not tARMA.isPlayerInPoliceHeli() and not tARMA.isPlayerInDrone() and not tARMA.isPlayerUsingRobot() and not tARMA.isUsingPoliceRobot() then
-			-- 	TriggerServerEvent("ARMA:acType13")
-			-- 	h = true
-			-- end
+			if not h and GetUsingseethrough() and not tARMA.isPlayerInPoliceHeli() and not tARMA.isPlayerInDrone() then
+				TriggerServerEvent("ARMA:acType13")
+				h = true
+			end
 		end
 		SetPedInfiniteAmmoClip(i, false)
 		SetEntityInvincible(k, false)
