@@ -791,6 +791,13 @@ function tARMA.announceClient(d)
     end 
 end
 
+RegisterNetEvent("arma:PlaySound")
+AddEventHandler("arma:PlaySound", function(soundname)
+    SendNUIMessage({
+        transactionType = soundname,
+    })
+end)
+
 AddEventHandler("playerSpawned",function()
   TriggerServerEvent("ARMAcli:playerSpawned")
 end)

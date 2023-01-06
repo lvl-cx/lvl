@@ -11,14 +11,14 @@ AddEventHandler("ARMA:BuyStoreItem", function(item, amount)
                 if ARMA.tryPayment(user_id,v.price*amount) then
                     ARMA.giveInventoryItem(user_id, item, amount, false)
                     ARMAclient.notify(source, {"~g~Paid ".. '£' ..getMoneyStringFormatted(v.price*amount)..'.'})
-                    TriggerClientEvent("ARMA:PlaySound", source, 1)
+                    TriggerClientEvent("arma:PlaySound", source, 1)
                 else
                     ARMAclient.notify(source, {"~r~Not enough money."})
-                    TriggerClientEvent("ARMA:PlaySound", source, 2)
+                    TriggerClientEvent("arma:PlaySound", source, 2)
                 end
             else
                 ARMAclient.notify(source,{'~r~Not enough inventory space.'})
-                TriggerClientEvent("ARMA:PlaySound", source, 2)
+                TriggerClientEvent("arma:PlaySound", source, 2)
             end
         end
     end

@@ -56,10 +56,10 @@ AddEventHandler('ARMA:purchaseCarDealerVehicle', function(vehicleclass, vehicle)
                             MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
                         end)
                         ARMAclient.notify(player,{"~g~You paid £"..vehicle_price.." for "..vehicle_name.."."})
-                        TriggerClientEvent("ARMA:PlaySound", player, 1)
+                        TriggerClientEvent("arma:PlaySound", player, 1)
                     else
                         ARMAclient.notify(player,{"~r~Not enough money."})
-                        TriggerClientEvent("ARMA:PlaySound", player, 2)
+                        TriggerClientEvent("arma:PlaySound", player, 2)
                     end
                 end
             end)
