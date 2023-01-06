@@ -700,6 +700,7 @@ AddEventHandler('ARMA:searchVehicle', function(entity, permid)
             if spawncode and owner == permid then
                 local vehformat = 'chest:u1veh_'..spawncode..'|'..permid
                 ARMA.getSData(vehformat, function(cdata)
+                    if cdata == nil then return end
                     cdata = json.decode(cdata)
                     for a,b in pairs(cdata) do
                         if string.find(a, 'wbody|') then
@@ -723,6 +724,7 @@ AddEventHandler('ARMA:searchVehicle', function(entity, permid)
                         end
                     end
                     ARMA.setSData(vehformat, json.encode(cdata))
+                    tARMA.sendWebhook('seize-boot', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Owner ID: **"..permid.."**")
                 end)
             end
         end)

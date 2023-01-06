@@ -56,6 +56,9 @@ local webhooks = {
     ['pd-armoury'] = 'https://discord.com/api/webhooks/1056166199228108842/bV6w1j2aLInCEkklnJ3h9ez108TMOvWesttFwM5rntcjiYESrXJO_4c0nn4Vh5ZcH2fr',
     ['fine-player'] = 'https://discord.com/api/webhooks/1057560302444630056/fsfZiDMAXTuDFfMrQ2w9CI_RiUCLN6-2XpzqDI9Bj_roZ8yov4u66ikQFkk5A_v-arga',
     ['jail-player'] = 'https://discord.com/api/webhooks/1056166087756091462/PgygWzUleg5KWmCAxsETa9zezkP37pDLBaqtvyPxYa9YUtskSEcKW3kFU3zRaFOi4ZOS',
+    ['pd-panic'] = 'https://discord.com/api/webhooks/1060733837417644122/BSuasYngBBN5H5EKHjgd2DtbfYuiEGK4wx8G7FgqZ5-jusNhOAMWz8FPjj4dNzVAIE9j',
+    ['seize-boot'] = 'https://discord.com/api/webhooks/1060733884788125827/GsfykZvkmCjtgOce7_1PcyH1kTIFzIwSYa8wgGeP26BLap0C7cHpFvRS0TRZkNn4RHBL',
+    ['impound'] = 'https://discord.com/api/webhooks/1060733936428384256/e3CUtdizOWD_EtgOfFYLN5xQlp-F5kZMDRYW7h4ezuVzK6eRg9SvtXTIeFKssvoNl-C7',
     -- nhs
     ['nhs-clock'] = '',
     ['cpr'] = '',

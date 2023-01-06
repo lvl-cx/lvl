@@ -838,7 +838,6 @@ function sortAlphabetically(bU)
 end
 AddEventHandler("ARMA:searchClient",function(c9)
     local y = tonumber(DecorGetInt(c9, "vRP_owner"))
-    print("searching user_id", y, type(y))
     if y > 0 then
         tARMA.loadAnimDict("missexile3")
         TaskPlayAnim(PlayerPedId(),"missexile3","ex03_dingy_search_case_base_michael",1.0,8.0,12000,1,1.0,false,false,false)
