@@ -40,7 +40,25 @@ RegisterCommand("p", function(source,args, rawCommand)
         return 
     end
     local msg = rawCommand:sub(2)
-    local playerName =  "^5Police Chat | ["..getCallsign('MPD', source, user_id, 'police')[1] or "".."] "..GetPlayerName(source)..": "
+    local callsign = ""
+    local discord_id = exports['arma']:Get_Client_Discord_ID(source)
+    if discord_id then
+        local guilds_info = exports['arma']:Get_Guilds()
+        for guild_name, guild_id in pairs(guilds_info) do
+            if guild_name == guildType then
+                local nick_name = exports['arma']:Get_Guild_Nickname(guild_id, discord_id)
+                if nick_name then
+                    local open_bracket = string.find(nick_name, '[', nil, true) -- Extra Params to toggle pattern matching
+                    local closed_bracket = string.find(nick_name, ']', nil, true) -- Extra Params to toggle pattern matching
+                    if open_bracket and closed_bracket then
+                        local callsign_value = string.sub(nick_name, open_bracket + 1, closed_bracket - 1)
+                        callsign = callsign_value
+                    end
+                end
+            end
+        end
+    end
+    local playerName =  "^5Police Chat | "..callsign.." "..GetPlayerName(source)..": "
     local players = GetPlayers()
     for i,v in pairs(ARMA.getUsersByPermission('police.onduty.permission')) do 
         name = GetPlayerName(v)
