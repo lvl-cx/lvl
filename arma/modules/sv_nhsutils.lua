@@ -128,14 +128,3 @@ AddEventHandler('ARMA:wheelchairAttachPlayer', function(entity)
     local user_id = ARMA.getUserId(source)
     TriggerClientEvent('ARMA:wheelchairAttachPlayer', -1, entity, source)
 end)
-
-
-RegisterCommand('testnhs', function(source, args)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    ARMA.removeAllJobs(user_id)
-    ARMA.addUserGroup(user_id, 'NHS Head Chief Clocked')
-    ARMAclient.notify(source, {"~g~You have been added to the NHS Head Chief Clocked group."})
-    ARMAclient.setNHS(source, {true})
-    TriggerClientEvent('ARMAUI5:globalOnNHSDuty', source, true)
-end)
