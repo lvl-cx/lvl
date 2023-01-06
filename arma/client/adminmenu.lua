@@ -125,7 +125,6 @@ local groups = {
     ["Taco Seller"] = "Taco Seller",
     ["Burger Shot Cook"] = "Burger Shot Cook",
     ["Cinematic"] = "Cinematic Menu",
-    ["ARMATrader"] = "ARMA Trader Whitelist",
 }
 
 

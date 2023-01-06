@@ -80,23 +80,16 @@ cfg.GunStores={
         ["WEAPON_M1911"]={"M1911 Pistol",60000/2,0,"N/A","w_pi_m1911"},
         ["WEAPON_MPX"]={"MPX",300000/2,0,"N/A","w_pi_beretta"}, -- need model
         ["WEAPON_PYTHON"]={"Python .357 Revolver",50000/2,0,"N/A","w_pi_python"},
-        ["WEAPON_ROOK"]={"Rook 9mm",60000/2,0,"N/A","w_pi_rook"}, -- need model
+        ["WEAPON_ROOK"]={"Rook 9mm",60000/2,0,"N/A","w_pi_rook"},
         ["WEAPON_TEC9"]={"Tec-9",50000/2,0,"N/A","w_sb_tec9"},
         ["WEAPON_UMP45"]={"UMP-45",300000/2,0,"N/A","w_sb_ump45"},
         ["item1"]={"LVL 1 Armour",25000/2,0,"N/A","prop_armour_pickup"},
     },
-    ["Shank"]={
+    ["Legion"]={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
         ["WEAPON_BROOM"]={"Broom",1000,0,"N/A","prop_tool_broom"},
         -- do the rest
     },
-    ["ARMATrader"]={
-        ["_config"]={{vector3(1192.556,-3308.844,4.535559)},154,1,"ARMA Trader Gunstore",{"armatrader.whitelisted"},false},
-        ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",0,0,"N/A","w_ar_goldak"},
-        ["WEAPON_MOSIN"]={"Mosin Bolt-Action",0,0,"N/A","w_ar_mosin"},
-        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",0,0,"N/A","w_sg_olympia"},
-        ["WEAPON_UMP45"]={"UMP45 SMG",0,0,"N/A","w_sb_ump45"},
-    }
 }
 local organheist = module('cfg/cfg_organheist')
 
@@ -253,10 +246,7 @@ RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    --if user_id == 1 then return end
-    --print('start: ^2'..json.encode(cfg.GunStores['policeLargeArms'])..'^0')
     MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-        --print('ID: '..user_id..' Whitelists SQL: '..json.encode(weaponWhitelists[1]['weapon_info']))
         if weaponWhitelists[1]['weapon_info'] ~= nil then
             local gunstoreData = cfg.GunStores
             local data = json.decode(weaponWhitelists[1]['weapon_info'])
@@ -269,11 +259,30 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
                     end
                 end
             end
+            for k,v in pairs(gunstoreData) do
+                local hasPerm = false
+                if v['_config'] then
+                    if json.encode(v['_config'][5]) ~= '[""]' then
+                        local hasPermissions = 0
+                        for a,b in pairs(v['_config'][5]) do
+                            if ARMA.hasPermission(user_id, b) then
+                                hasPermissions = hasPermissions + 1
+                            end
+                        end
+                        if hasPermissions == #v['_config'][5] then
+                            hasPerm = true
+                        end
+                    else
+                        hasPerm = true
+                    end
+                end
+                if not hasPerm then
+                    gunstoreData[k] = nil
+                end
+            end
             TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
-            --print('ID: '..user_id..' Whitelists: '..json.encode(gunstoreData['policeLargeArms']))
             return
         end
-        --print('ID: '..user_id..' Whitelists: '..json.encode(cfg.GunStores['policeLargeArms']))
         TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, cfg.GunStores)
     end)
 end)
