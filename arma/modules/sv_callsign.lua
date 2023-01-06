@@ -1,4 +1,4 @@
-local function getCallsign(guildType, source, user_id, type)
+function getCallsign(guildType, source, user_id, type)
     local discord_id = exports['arma']:Get_Client_Discord_ID(source)
     if discord_id then
         local guilds_info = exports['arma']:Get_Guilds()

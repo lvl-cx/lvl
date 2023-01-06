@@ -32,7 +32,7 @@ RegisterCommand("p", function(source,args, rawCommand)
         return 
     end
     local msg = rawCommand:sub(2)
-    local playerName =  "^5[Police Chat] " .. GetPlayerName(source)..": "
+    local playerName =  "^5Police Chat | ["..getCallsign('MPD', source, user_id, 'police')[1] or "".."] "..GetPlayerName(source)..": "
     local players = GetPlayers()
     for i,v in pairs(ARMA.getUsersByPermission('police.onduty.permission')) do 
         name = GetPlayerName(v)
