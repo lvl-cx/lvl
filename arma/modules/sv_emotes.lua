@@ -41,12 +41,12 @@ end)
 function ARMA.ShaveHead(source)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'shaver') >= 1 then
+    if ARMA.getInventoryItemAmount(user_id, 'Shaver') >= 1 then
         ARMAclient.getNearestPlayer(source,{4},function(nplayer)
             if nplayer then
                 ARMAclient.globalSurrenderring(nplayer,{},function(surrendering)
                     if surrendering then
-                        ARMA.tryGetInventoryItem(user_id, 'shaver', 1)
+                        ARMA.tryGetInventoryItem(user_id, 'Shaver', 1)
                         TriggerClientEvent('ARMA:startShavingPlayer', source, nplayer)
                         TriggerClientEvent('ARMA:startBeingShaved', nplayer, source)
                         TriggerClientEvent('ARMA:playDelayedShave', -1, source)
@@ -63,21 +63,3 @@ function ARMA.ShaveHead(source)
         end)
     end
 end
-
-RegisterCommand('shavehead', function(source)
-    local source = source
-    if ARMA.getUserId(source) == 1 then
-        ARMAclient.getNearestPlayer(source,{4},function(nplayer)
-            if nplayer then
-                TriggerClientEvent('ARMA:startShavingPlayer', source, nplayer)
-                TriggerClientEvent('ARMA:startBeingShaved', nplayer, source)
-                TriggerClientEvent('ARMA:playDelayedShave', -1, source)
-                shavedPlayers[ARMA.getUserId(nplayer)] = {
-                    cooldown = 30,
-                }
-            else
-                ARMAclient.notify(source, {"~r~No one nearby."})
-            end
-        end)
-    end
-end)

@@ -248,7 +248,7 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
                 ARMA.tryGetInventoryItem({user_id, itemId, 1, true})
                 ARMA.updateInvCap({user_id, 100})
                 TriggerClientEvent('ARMA:boughtBackpack', source, 5, 90, 0,250000,70, 'Rebel Backpack (+70kg)')
-            elseif itemId == "shaver" then 
+            elseif itemId == "Shaver" then 
                 ARMA.ShaveHead({source})
             end
             TriggerEvent('ARMA:RefreshInventory', source)
