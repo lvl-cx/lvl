@@ -112,7 +112,7 @@ cfg.groups = {
         "group.remove.pov",
         "group.remove",
         "admin.tickets",
-        "cardev.menu"
+        "cardev.menu",
         "vip.gunstore",
         "vip.garage",
     },

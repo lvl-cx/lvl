@@ -919,32 +919,31 @@ AddEventHandler('ARMA:LootBag', function(netid)
                     TriggerClientEvent("arma:PlaySound", source, "zipper")
                     LootBagEntities[netid][5] = source
                     if ARMA.hasPermission({user_id, "police.armoury"}) then
-                        -- this stops pd weapons from being seized
-                        -- local bagData = LootBagEntities[netid].Items
-                        -- for a,b in pairs(bagData) do
-                        --     if string.find(a, 'wbody|') then
-                        --         c = a:gsub('wbody|', '')
-                        --         bagData[c] = b
-                        --         bagData[a] = nil
-                        --     end
-                        -- end
-                        -- for k,v in pairs(a.weapons) do
-                        --     if bagData[k] ~= nil then
-                        --         if not v.policeWeapon then
-                        --             ARMAclient.notify(source, {'~r~Seized '..bagData[k].amount..'x '..v.name..'.'})
-                        --             bagData[k] = nil
-                        --         end
-                        --     end
-                        -- end
-                        -- for c,d in pairs(bagData) do
-                        --     if bullets[c] then
-                        --         ARMAclient.notify(source, {'~r~Seized '..d.amount..'x '..c..'.'})
-                        --         bagData[c] = nil
-                        --     end
-                        -- end
-                        -- LootBagEntities[netid].Items = bagData
-                        -- ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
-                        LootBagEntities[netid].Items = {}
+                        local bagData = LootBagEntities[netid].Items
+                        if bagData == nil then return end
+                        for a,b in pairs(bagData) do
+                            if string.find(a, 'wbody|') then
+                                c = a:gsub('wbody|', '')
+                                bagData[c] = b
+                                bagData[a] = nil
+                            end
+                        end
+                        for k,v in pairs(a.weapons) do
+                            if bagData[k] ~= nil then
+                                if not v.policeWeapon then
+                                    ARMAclient.notify(source, {'~r~Seized v.'..v.name..' x'..bagData[k].amount..'.'})
+                                    bagData[k] = nil
+                                end
+                            end
+                        end
+                        for c,d in pairs(bagData) do
+                            if bullets[c] then
+                                ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
+                                bagData[c] = nil
+                            end
+                        end
+                        LootBagEntities[netid].Items = bagData
+                        ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
                         OpenInv(source, netid, LootBagEntities[netid].Items)

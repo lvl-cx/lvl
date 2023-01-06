@@ -712,14 +712,14 @@ AddEventHandler('ARMA:searchVehicle', function(entity, permid)
                     for k,v in pairs(cfg_weapons.weapons) do
                         if cdata[k] ~= nil then
                             if not v.policeWeapon then
-                                ARMAclient.notify(source, {'~r~Seized '..cdata[k].amount..'x '..v.name..'.'})
+                                ARMAclient.notify(source, {'~r~Seized v.'..v.name..' x'..cdata[k].amount..'.'})
                                 cdata[k] = nil
                             end
                         end
                     end
                     for c,d in pairs(cdata) do
                         if bullets[c] then
-                            ARMAclient.notify(source, {'~r~Seized '..d.amount..'x '..c..'.'})
+                            ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
                             cdata[c] = nil
                         end
                     end
