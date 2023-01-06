@@ -113,6 +113,8 @@ cfg.groups = {
         "group.remove",
         "admin.tickets",
         "cardev.menu"
+        "vip.gunstore",
+        "vip.garage",
     },
     ["Staff Manager"] = {
         "admin.managecommunitypot",
@@ -599,16 +601,20 @@ cfg.groups = {
     -- \_______/  \______/ \__|  \__|\__|  \__|  \__|    \______/ \__|  \__|
                                                                          
     ["Supporter"] = {
-        "vip.gunstore"
+        "vip.gunstore",
+        "vip.garage",
     },
     ["Platinum"] = {
-        "vip.gunstore"
+        "vip.gunstore",
+        "vip.garage",
     },
     ["Godfather"] = {
-        "vip.gunstore"
+        "vip.gunstore",
+        "vip.garage",
     },
     ["Underboss"] = {
-        "vip.gunstore"
+        "vip.gunstore",
+        "vip.garage",
     },
     
     -- $$\      $$\ $$$$$$\  $$$$$$\   $$$$$$\  
