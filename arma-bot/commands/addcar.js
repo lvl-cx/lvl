@@ -35,5 +35,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "addcar",
-    perm: 5
+    perm: 6
 }

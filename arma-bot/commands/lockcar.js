@@ -25,5 +25,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "lockcar",
-    perm: 6
+    perm: 7
 }

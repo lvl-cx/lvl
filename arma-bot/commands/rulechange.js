@@ -24,5 +24,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "rulechange",
-    perm: 5
+    perm: 6
 }

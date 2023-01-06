@@ -31,5 +31,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "vote",
-    perm: 6
+    perm: 7
 }

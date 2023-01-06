@@ -1,10 +1,11 @@
 exports.settings = {
     Level1Perm: "| Staff",
-    Level2Perm: "| Moderator", // Change these to the role names of the relevant permission!
-    Level3Perm: "| Senior Moderator",
-    Level4Perm: "| Administrator",
-    Level5Perm: "| Management",
-    Level6Perm: "| Founder",
+    Level2Perm: "| Support Team",
+    Level3Perm: "| Moderator",
+    Level4Perm: "| Senior Moderator",
+    Level5Perm: "| Administrator",
+    Level6Perm: "| Management",
+    Level7Perm: "| Founder",
     ip: "s1.armarp.co.uk", // ip of the server or domain!
     StatusEnabled: true, // Whether the status is enabled be sure to fill out the bottom too!
     GuildID: "975490533344559154", // Guild ID 

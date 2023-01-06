@@ -41,5 +41,5 @@ exports.runcmd = async(fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "reverify",
-    perm: 5
+    perm: 6
 }

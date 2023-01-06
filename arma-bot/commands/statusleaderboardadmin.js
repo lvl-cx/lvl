@@ -29,5 +29,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "leaderboardadmin",
-    perm: 6
+    perm: 7
 }

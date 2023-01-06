@@ -21,5 +21,5 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "clearwarnings",
-    perm: 5
+    perm: 6
 }
