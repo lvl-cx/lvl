@@ -149,12 +149,13 @@ local a = {
         name = "Weed",
         destination = {120}
     },
-    [122] = {
-        id = 122,
-        position = vector3(-754.46405029297, 5578.9555664063, 36.709617614746),
-        name = "Poseidon Casino",
-        destination = {123}
-    },
+    -- Add back when the interior is sorted
+    -- [122] = {
+    --     id = 122,
+    --     position = vector3(-754.46405029297, 5578.9555664063, 36.709617614746),
+    --     name = "Poseidon Casino",
+    --     destination = {123}
+    -- },
     [123] = {
         id = 123,
         position = vector3(-10.592629432678, 6726.248046875, -101.74806213379),
