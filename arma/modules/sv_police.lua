@@ -674,28 +674,25 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
       RemoveAllPedWeapons(GetPlayerPed(playerSrc), true)
       local player_id = ARMA.getUserId(playerSrc)
       local cdata = ARMA.getUserDataTable(player_id)
-      cdata = json.decode(cdata.inventory)
-      cdata = json.decode(cdata)
-      for a,b in pairs(cdata) do
+      for a,b in pairs(cdata.inventory) do
           if string.find(a, 'wbody|') then
               c = a:gsub('wbody|', '')
-              cdata[c] = b
-              cdata[a] = nil
+              cdata.inventory[c] = b
+              cdata.inventory[a] = nil
           end
       end
       for k,v in pairs(cfg_weapons.weapons) do
-          if cdata[k] ~= nil then
+          if cdata.inventory[k] ~= nil then
               if not v.policeWeapon then
-                  cdata[k] = nil
+                cdata.inventory[k] = nil
               end
           end
       end
-      for c,d in pairs(cdata) do
+      for c,d in pairs(cdata.inventory) do
           if bullets[c] then
-              cdata[c] = nil
+            cdata.inventory[c] = nil
           end
       end
-      cdata.inventory = json.encode(cdata)
       ARMAclient.notify(source, {'~r~Seized weapons.'})
     end
 end)
