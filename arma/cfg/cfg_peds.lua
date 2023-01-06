@@ -499,7 +499,7 @@ cfg.peds = {
         {"s_m_m_paramedic_01", "Male"}
     },
     ["LFB"] = {
-        ["config"] = {"NHS Peds", permissions = {"nhs.onduty.permission"}},
+        ["config"] = {"NHS Peds", permissions = {"lfb.onduty.permission"}},
         {"fireman_01", "Fireman 1"},
         {"fireman_02", "Fireman 2"},
         {"", "Fireman 3"},
@@ -511,7 +511,7 @@ cfg.peds = {
         {"mp_m_freemode_01", "Citizen"},
     },
     ["admin"] = {
-        ["config"] = {"Admin Peds", permissions = {"admin.tickets"}},
+        ["config"] = {"Admin Peds", permissions = {"admin.noclip"}},
         {"child", "Child"},
         {"batman", "Batman"},
         {"spiderman", "Spiderman"},
@@ -547,14 +547,6 @@ cfg.peds = {
         {"u_m_y_burgerdrug_01", "Burgershot Worker"},
         {"mp_m_freemode_01", "Male"},
         {"mp_f_freemode_01", "Female"},
-    },
-    ["Casino"] = {
-        ["config"] = {name = "Casino Peds", permissions = {"casino.whitelisted"}},
-        {"ig_tomcasino", "Casino Owner"},
-        {"s_m_y_westsec_01", "Casino Security"},
-        {"u_f_m_casinocash_01", "Casino Staff 1"},
-        {"s_m_y_casino_01", "Casino Staff 2"},
-        {"s_f_y_casino_01", "Casino Staff Female"},
     },
     ["Rebel"] = {
         ["config"] = {name = "Rebel Peds", permissions = {"rebellicense.whitelisted"}},
@@ -602,35 +594,25 @@ cfg.pedMenus = {
     {"Normal", vector3(617.30517578125,2775.0363769531,42.08810043335)},
     {"Normal", vector3(1197.654296875,2713.5983886719,38.222648620605)},
     {"Normal", vector3(-3178.5476074219,1035.8984375,20.863212585449)},
-    -- police
+    -- Police
     {"Police", vector3(459.01037597656, -992.32800292969, 30.689575195313)},
     {"Police", vector3(-452.82250976563, 6013.6669921875, 31.7164478302)}, -- paleto
     {"Police", vector3(1848.9777832031, 3695.291015625, 34.26704788208)}, --sandyPD
     {"Police", vector3(627.29937744141, 9.7512187957764, 44.394214630127)}, --vinewoodPD
     {"Police", vector3(-1096.6821289063,-833.90582275391,14.282992362976)}, --Vespucci
-
     -- NHS
     {"NHS", vector3(244.1099395752, -1382.8720703125, 39.534328460693)},
     {"NHS", vector3(301.64608764648,-599.02258300781,43.284015655518)},
     {"NHS", vector3(1841.1638183594,3686.5776367188,34.270011901855)},
     {"NHS", vector3(-256.32220458984,6310.2338867188,32.427242279053)},
-    --Royal Mail
+    -- Royal Mail
     {"RoyalMail", vector3(-18.047382354736, -686.1830444336, 32.338104248046)},
-
-    --Rebel
+    -- Rebel
     {"Rebel", vector3(1443.6340332031, 6333.9536132813, 23.84423828125)},
-
-    --Casino
-    {"Casino", vector3(1111.8088378906,264.40771484375,-45.840976715088)},
-
-    --AA
+    -- AA
     {"aa", vector3(398.4326171875, -1634.4913330078, 29.291942596436)},
-
-
+    -- Burgershot
     {"burgershot", vector3(-1202.0446777344,-889.06860351562,13.995126724243)},
-
-
-
 }
 
 return cfg
