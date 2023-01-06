@@ -100,6 +100,7 @@ AddEventHandler('ARMA:impoundVehicle', function(userid, name, spawncode, vehicle
         local A,B = GetVehicleColours(entitynetid)
         TriggerClientEvent('ARMA:impoundSuccess', source, entityid, vehiclename, GetPlayerName(ARMA.getUserSource(userid)), spawncode, A, B, GetEntityCoords(entitynetid), GetEntityHeading(entitynetid))
         ARMAclient.notifyPicture(ARMA.getUserSource(userid), {"polnotification","notification","Your "..vehiclename.." has been impounded by ~b~"..GetPlayerName(source).." \n\n~w~For more information please visit the impound.","Metropolitan Police","Impound",nil,nil})
+        tARMA.sendWebhook('impound', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Vehicle Name: **"..vehiclename.."**\n> Owner ID: **"..userid.."**")
     end
 end)
 
