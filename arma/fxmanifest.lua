@@ -135,7 +135,6 @@ server_scripts{
   "modules/survival.lua",
   "modules/player_state.lua",
   "modules/map.lua",
-  "modules/money.lua",
   "modules/inventory.lua",
   "modules/basic_items.lua",
   "modules/server_commands.lua",

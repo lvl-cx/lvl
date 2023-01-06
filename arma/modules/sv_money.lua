@@ -4,17 +4,9 @@ local lang = ARMA.lang
 -- The money is managed with direct SQL requests to prevent most potential value corruptions
 -- the wallet empty itself when respawning (after death)
 
-
-
 MySQL.createCommand("ARMA/money_init_user","INSERT IGNORE INTO arma_user_moneys(user_id,wallet,bank) VALUES(@user_id,@wallet,@bank)")
 MySQL.createCommand("ARMA/get_money","SELECT wallet,bank FROM arma_user_moneys WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/set_money","UPDATE arma_user_moneys SET wallet = @wallet, bank = @bank WHERE user_id = @user_id")
-
-
--- load config
-local cfg = module("cfg/money")
-
--- API
 
 -- get money
 -- cbreturn nil if error
@@ -140,9 +132,12 @@ function ARMA.tryFullPayment(user_id,amount)
   return false
 end
 
+local startingCash = 50000
+local startingBank = 100000000 --500000 (500k bank)
+
 -- events, init user account if doesn't exist at connection
 AddEventHandler("ARMA:playerJoin",function(user_id,source,name,last_login)
-  MySQL.query("ARMA/money_init_user", {user_id = user_id, wallet = cfg.open_wallet, bank = cfg.open_bank}, function(affected)
+  MySQL.query("ARMA/money_init_user", {user_id = user_id, wallet = startingCash, bank = startingBank}, function(affected)
     local tmp = ARMA.getUserTmpTable(user_id)
     if tmp then
       MySQL.query("ARMA/get_money", {user_id = user_id}, function(rows, affected)
