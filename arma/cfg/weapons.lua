@@ -18,7 +18,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_STUNGUN"] = {
         name = "Tazer",
@@ -26,7 +25,6 @@ cfg.weapons = {
         ammo = "modelammo",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_FLASHLIGHT"] = {
         name = "Flashlight",
@@ -34,7 +32,6 @@ cfg.weapons = {
         ammo = "modelammo",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_NIGHTSTICK"] = {
         name = "Police Baton",
@@ -42,7 +39,6 @@ cfg.weapons = {
         ammo = "modelammo",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_MJOLNIR"] = {
         name = "Mjolnir",
@@ -50,7 +46,6 @@ cfg.weapons = {
         ammo = "modelammo",
         policeWeapon = false,
         model = "w_me_mjolnir",
-        weight = 10,
     },
     ["WEAPON_MOLOTOV"] = {
         name = "Molotov",
@@ -65,7 +60,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_SNOWBALL"] = {
         name = "Snowball",
@@ -80,7 +74,6 @@ cfg.weapons = {
         ammo = "modelammo",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_STAFFGUN"] = {
         name = "ARMA Staff Gun",
@@ -88,7 +81,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_FORRESTAX"] = {
         name = "The Forrest Axe",
@@ -96,7 +88,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_forrestax",
-        weight = 1.0,
     },
     ["WEAPON_SKULLCLUB"] = {
         name = "Skull Club",
@@ -104,7 +95,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_skullclub",
-        weight = 1.0,
     },
     ["WEAPON_SLEDGESHAMMER"] = {
         name = "Sledges Hammer",
@@ -112,7 +102,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_sledgeshammer",
-        weight = 1.0,
     },
     ["WEAPON_CLIMBINGAXE"] = {
         name = "Climbing Axe",
@@ -120,7 +109,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_climbingaxe",
-        weight = 1.0,
     },
     ["WEAPON_CRAFTEDAXE"] = {
         name = "Crafted Axe",
@@ -128,7 +116,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_craftedaxe",
-        weight = 1.0,
     },
     ["WEAPON_BROOM"] = {
         name = "Broom",
@@ -136,7 +123,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_broom",
-        weight = 2.5,
     },
     ["WEAPON_CLEAVER"] = {
         name = "Cleaver",
@@ -144,7 +130,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_CRICKETBAT"] = {
         name = "Cricket Bat",
@@ -152,7 +137,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_cricketbat",
-        weight = 2.5,
     },
     ["WEAPON_DILDO"] = {
         name = "Pink Dildo",
@@ -160,7 +144,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_dildo",
-        weight = 2.5,
     },
     ["WEAPON_FIREAXE"] = {
         name = "Fireaxe",
@@ -168,7 +151,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_fireaxe",
-        weight = 2.5,
     },
     ["WEAPON_GUITAR"] = {
         name = "Guitar",
@@ -176,7 +158,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_guitar",
-        weight = 2.5,
     },
     ["WEAPON_KITCHENKNIFE"] = {
         name = "Kitchen Knife",
@@ -184,7 +165,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_SHANK"] = {
         name = "Wooden Shank",
@@ -192,7 +172,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_SHOVEL"] = {
         name = "Shovel",
@@ -200,7 +179,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_shovel",
-        weight = 2.5,
     },
     ["WEAPON_SLEDGEHAMMER"] = {
         name = "Sledgehammer",
@@ -208,7 +186,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_sledgehammer",
-        weight = 2.5,
     },
     ["WEAPON_TRAFFICSIGN"] = {
         name = "Traffic Sign",
@@ -216,7 +193,6 @@ cfg.weapons = {
         ammo = "",
         policeWeapon = false,
         model = "w_me_trafficsign",
-        weight = 2.5,
     },
     --? pistols
     ["WEAPON_PDGLOCK"] = {
@@ -225,7 +201,6 @@ cfg.weapons = {
         ammo = "Police Issued 9mm",
         policeWeapon = true,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_BERETTA"] = {
         name = "Berreta M9 Pistol",
@@ -233,7 +208,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_M1911"] = {
         name = "M1911 Pistol",
@@ -241,7 +215,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_PYTHON"] = {
         name = "Python",
@@ -249,7 +222,6 @@ cfg.weapons = {
         ammo = ".357 Bullets",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_TEC9"] = {
         name = "Tec-9",
@@ -257,7 +229,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
     },
     ["WEAPON_REVOLVER"] = {
         name = "Rebel Revolver",
@@ -265,7 +236,13 @@ cfg.weapons = {
         ammo = ".357 Bullets",
         policeWeapon = false,
         model = "",
-        weight = 2.5,
+    },
+    ["WEAPON_ROOK"] = {
+        name = "Rook 9mm",
+        class = "Pistol",
+        ammo = "9mm Bullets",
+        policeWeapon = false,
+        model = "",
     },
     --? ARs
     ["WEAPON_GOLDAK"] = {
@@ -274,7 +251,6 @@ cfg.weapons = {
         ammo = "7.62mm Bullets",
         policeWeapon = false,
         model = "w_ar_goldak",
-        weight = 7.5,
     },
     ["WEAPON_AKKAL"] = {
         name = "AK 200",
@@ -282,7 +258,6 @@ cfg.weapons = {
         ammo = "7.62mm Bullets",
         policeWeapon = false,
         model = "w_ar_akkal",
-        weight = 7.5,
     },
     ["WEAPON_SPAR16"] = {
         name = "Spar 16",
@@ -290,7 +265,6 @@ cfg.weapons = {
         ammo = "5.56mm NATO",
         policeWeapon = false,
         model = "w_ar_spar16",
-        weight = 7.5,
     },
     ["WEAPON_PDM4A1"] = {
         name = "M4A1",
@@ -298,7 +272,6 @@ cfg.weapons = {
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_m4a1",
-        weight = 7.5,
     },
     ["WEAPON_SIGMCX"] = {
         name = "SIG MCX",
@@ -306,7 +279,6 @@ cfg.weapons = {
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_sigmcx",
-        weight = 7.5,
     },
     ["WEAPON_SPAR17"] = {
         name = "Spar 17",
@@ -314,7 +286,6 @@ cfg.weapons = {
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_spar17",
-        weight = 7.5,
     },
     --?SMG
     ["WEAPON_MP5"] = {
@@ -323,7 +294,6 @@ cfg.weapons = {
         ammo = "Police Issued 9mm",
         policeWeapon = true,
         model = "w_sb_mp5",
-        weight = 5,
     },
     ["WEAPON_STING"] = {
         name = "Sting 9mm Bullets",
@@ -331,7 +301,6 @@ cfg.weapons = {
         ammo = "Police Issued 9mm",
         policeWeapon = true,
         model = "w_sb_sting",
-        weight = 5,
     },
     ["WEAPON_MPXC"] = {
         name = "MPX",
@@ -339,7 +308,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "w_sb_mpxc",
-        weight = 5,
     },
     ["WEAPON_UMP45"] = {
         name = "UMP-45",
@@ -347,7 +315,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "w_sb_ump45",
-        weight = 5,
     },
     ["WEAPON_MAC11"] = {
         name = "MAC11",
@@ -355,7 +322,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "w_sb_mac11",
-        weight = 5,
     },
     ["WEAPON_UZI"] = {
         name = "Uzi",
@@ -371,7 +337,6 @@ cfg.weapons = {
         ammo = "Police Issued 12 Gauge",
         policeWeapon = true,
         model = "w_sg_remington870",
-        weight = 7.5,
     },
     ["WEAPON_WINCHESTER12"] = {
         name = "Winchester 12",
@@ -379,7 +344,6 @@ cfg.weapons = {
         ammo = "12 Gauge Bullets",
         policeWeapon = false,
         model = "w_sg_winchester12",
-        weight = 7.5,
     },
     ["WEAPON_SPAZ"] = {
         name = "Spaz 12",
@@ -387,7 +351,6 @@ cfg.weapons = {
         ammo = "12 Gauge Bullets",
         policeWeapon = false,
         model = "w_sg_spaz",
-        weight = 7.5,
     },
     ["WEAPON_AA12"] = {
         name = "Assault A12 Shotgun",
@@ -395,7 +358,6 @@ cfg.weapons = {
         ammo = "12 Gauge Bullets",
         policeWeapon = false,
         model = "w_sg_aa12",
-        weight = 7.5,
     },
     ["WEAPON_OLYMPIA"] = {
         name = "Olympia Shotgun",
@@ -403,7 +365,6 @@ cfg.weapons = {
         ammo = "12 Gauge Bullets",
         policeWeapon = false,
         model = "w_sg_olympia",
-        weight = 7.5,
     },
     --? snipers
     ["WEAPON_DILDET"] = {
@@ -412,7 +373,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_ar_dildet",
-        weight = 10,
     },
     ["WEAPON_MANDO"] = {
         name = "Mandolorain Sniper",
@@ -420,7 +380,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_ar_mando",
-        weight = 10,
     },
     ["WEAPON_AX50"] = {
         name = "AX-50",
@@ -435,7 +394,6 @@ cfg.weapons = {
         ammo = "Police Issued .308 Sniper Rounds",
         policeWeapon = true,
         model = "w_sr_remington700",
-        weight = 10,
     },
     ["WEAPON_MOSIN"] = {
         name = "Mosin Nagant",
@@ -443,7 +401,6 @@ cfg.weapons = {
         ammo = "7.62mm Bullets",
         policeWeapon = false,
         model = "w_ar_mosin",
-        weight = 7.5,
     },
     ["WEAPON_SVD"] = {
         name = "Dragunov SV",
@@ -451,7 +408,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_sr_svd",
-        weight = 10,
     },
     ["WEAPON_BARRET"] = {
         name = "Barret",
@@ -459,7 +415,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_sr_barret",
-        weight = 10,
     },
     ["WEAPON_MK14"] = {
         name = "MK14",
@@ -467,7 +422,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_sr_mk14",
-        weight = 10,
     },
     ["WEAPON_STAC"] = {
         name = "Stac 33",
@@ -475,7 +429,6 @@ cfg.weapons = {
         ammo = "Police Issued .308 Sniper Rounds",
         policeWeapon = true,
         model = "w_sr_stac",
-        weight = 10,
     },
     ["WEAPON_G36"] = {
         name = "G36C",
@@ -483,7 +436,6 @@ cfg.weapons = {
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_g36",
-        weight = 10,
     },
 }
 
