@@ -10,7 +10,7 @@ end
 RMenu.Add("armawardrobe","mainmenu",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cstore"))
 RMenu:Get("armawardrobe", "mainmenu"):SetSubtitle("~b~HOME")
 RMenu.Add("armawardrobe","listoutfits",RageUI.CreateSubMenu(RMenu:Get("armawardrobe", "mainmenu"),"","~b~Wardrobe",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
-RMenu.Add("armawardrobe","equip",RageUI.CreateSubMenu(RMenu:Get("armawardrobe", "mainmenu"),"","~b~Wardrobe",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+RMenu.Add("armawardrobe","equip",RageUI.CreateSubMenu(RMenu:Get("armawardrobe", "listoutfits"),"","~b~Wardrobe",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('armawardrobe', 'mainmenu')) then
