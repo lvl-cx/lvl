@@ -97,7 +97,7 @@ RegisterNetEvent('ARMA:FetchTrunkInventory')
 AddEventHandler('ARMA:FetchTrunkInventory', function(spawnCode)
     local source = source
     local user_id = ARMA.getUserId({source})
-    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
+    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~Please wait before moving more items.'}) return end
     local carformat = "chest:u1veh_" .. spawnCode .. '|' .. user_id
     ARMA.getSData({carformat, function(cdata)
         local processedChest = {};
@@ -285,7 +285,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
     local source = source
     local UserId = ARMA.getUserId({source}) 
     local data = ARMA.getUserDataTable({UserId})
-    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
+    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~Please wait before moving more items.'}) return end
     if not itemId then  ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
@@ -471,7 +471,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
     local source = source
     local UserId = ARMA.getUserId({source}) 
     local data = ARMA.getUserDataTable({UserId})
-    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
+    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~Please wait before moving more items.'}) return end
     if not itemId then  ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
@@ -699,7 +699,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
     local UserId = ARMA.getUserId({source}) 
     local data = ARMA.getUserDataTable({UserId})
     if not itemId then  ARMAclient.notify(source, {'~r~You need to select an item, first!'}) return end
-    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~The server is still processing your request.'}) return end
+    if InventoryCoolDown[source] then ARMAclient.notify(source, {'~r~Please wait before moving more items.'}) return end
     if data and data.inventory then
         if inventoryInfo == nil then return end
         if inventoryType == "CarBoot" then
