@@ -450,7 +450,6 @@ cfg.simeonsInstances = {
             "Police Helicopters",
             "LFB Garage",
             "NHS Vehicles",
-            "MET Police Boats",
             "HMP Vehicles",
         }
     },
@@ -464,6 +463,7 @@ cfg.simeonsInstances = {
         permissionsTable={},
         categorys={
             "Boats",
+            "MET Police Boats",
         }
     }
 }
