@@ -296,7 +296,7 @@ cfg.weapons = {
         model = "w_sb_mp5",
     },
     ["WEAPON_STING"] = {
-        name = "Sting 9mm Bullets",
+        name = "Sting 9mm",
         class = "SMG",
         ammo = "Police Issued 9mm",
         policeWeapon = true,
