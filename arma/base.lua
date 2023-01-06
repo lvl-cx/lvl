@@ -48,16 +48,6 @@ local verify_card = {
             ["type"] = "ActionSet",
             ["actions"] = {
                 {
-                    ["type"] = "Action.Submit",
-                    ["title"] = "Enter ARMA",
-                    ["id"] = "attempt_connection"
-                }
-            }
-        },
-        {
-            ["type"] = "ActionSet",
-            ["actions"] = {
-                {
                     ["type"] = "Action.OpenUrl",
                     ["title"] = "Join Discord",
                     ["url"] = "https://discord.gg/armarp"

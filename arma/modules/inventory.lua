@@ -205,7 +205,9 @@ function ARMA.computeItemsWeight(items)
 
   for k,v in pairs(items) do
     local iweight = ARMA.getItemWeight(k)
-    weight = weight+iweight*v.amount
+    if iweight ~= nil then
+      weight = weight+iweight*v.amount
+    end
   end
 
   return weight
