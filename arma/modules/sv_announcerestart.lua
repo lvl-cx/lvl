@@ -1,4 +1,3 @@
-local restartTime = 0 -- 0-23 (24 hour format)
 RegisterCommand('restartserver', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
@@ -15,7 +14,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
         local time = os.date("*t")
-        if tonumber(time["hour"]) == restartTime and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
+        if tonumber(time["hour"]) == 0 and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then -- 0-23 (24 hour format)
             TriggerClientEvent('ARMA:announceRestart', -1, 60, true)
             TriggerEvent('ARMA:restartTime', 60)
         end
