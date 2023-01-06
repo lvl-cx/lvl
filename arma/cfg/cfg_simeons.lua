@@ -376,7 +376,6 @@ cfg.simeonsCategories = {
         ["npas"] = {"NPAS 1",0, "emergency"},
         ["npas2"] = {"NPAS 2",0, "emergency"},
         ["polbird"] = {"polbird",0, "emergency"},
-        ["npas4"] = {"NPAS 4",0, "emergency"},
     },
     ["NHS Helicopters"] = {
         ["_config"] = {permissionTable={"nhs.whitelisted"}},
@@ -387,7 +386,7 @@ cfg.simeonsCategories = {
     ["Rebel Garage"] = {
         ["_config"] = {permissionTable={"rebellicense.whitelisted"}},
         ["fordrat"] = {"Ford V8 ratrod",3000000, ""},
-        ["Z1000"] = {"Kawasaki Z1000",3000000, ""},
+        ["z1000"] = {"Kawasaki Z1000",3000000, ""},
         ["harleybobber"] = {"Harley Davidson Bobber",3000000, ""},
         ["harleyfatboy"] = {"Harley Davidson FatBoy",3000000, ""},
         ["hypermotard"] = {"Ducati Hypermotard",3000000, ""},
