@@ -636,8 +636,8 @@ AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
       local fine = speed*100
       ARMA.tryBankPayment(ARMA.getUserId(temp), fine)
       TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
-      TriggerClientEvent('ARMA:dvsaMessage', temp,"DVSA","UK Government","You were fined £"..fine.." for going "..speed.."MPH over the speed limit.")
-      ARMAclient.notify(source, { "~r~Fined "..GetPlayerName(temp).." £"..fine.." for going "..speed.."MPH over the speed limit."})
+      TriggerClientEvent('ARMA:dvsaMessage', temp,"DVSA","UK Government","You were fined £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit.")
+      ARMAclient.notify(source, { "~r~Fined "..GetPlayerName(temp).." £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit."})
     end
 end)
 
@@ -657,4 +657,100 @@ AddEventHandler('ARMA:breathalyserRequest', function(temp)
       TriggerClientEvent('ARMA:beingBreathalysed', temp)
       TriggerClientEvent('ARMA:breathTestResult', source, math.random(0, 100), GetPlayerName(temp))
     end
+end)
+
+local bullets = {
+  ['9mm Bullets'] = true,
+  ['7.62mm Bullets'] = true,
+  ['.357 Bullets'] = true,
+  ['12 Gauge Bullets'] = true,
+  ['.308 Sniper Rounds'] = true,
+}
+RegisterServerEvent('ARMA:seizeWeapons')
+AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      RemoveAllPedWeapons(GetPlayerPed(playerSrc), true)
+      local player_id = ARMA.getUserId(playerSrc)
+      local cdata = ARMA.getUserDataTable(player_id)
+      cdata = json.decode(cdata.inventory)
+      cdata = json.decode(cdata)
+      for a,b in pairs(cdata) do
+          if string.find(a, 'wbody|') then
+              c = a:gsub('wbody|', '')
+              cdata[c] = b
+              cdata[a] = nil
+          end
+      end
+      for k,v in pairs(cfg_weapons.weapons) do
+          if cdata[k] ~= nil then
+              if not v.policeWeapon then
+                  cdata[k] = nil
+              end
+          end
+      end
+      for c,d in pairs(cdata) do
+          if bullets[c] then
+              cdata[c] = nil
+          end
+      end
+      cdata.inventory = json.encode(cdata)
+      ARMAclient.notify(source, {'~r~Seized weapons.'})
+    end
+end)
+
+local drugs = {
+  ['Weed leaf'] = true,
+  ['Weed'] = true,
+  ['Coca leaf'] = true,
+  ['Cocaine'] = true,
+  ['Opium Poppy'] = true,
+  ['Heroin'] = true,
+  ['Ephedra'] = true,
+  ['Meth'] = true,
+  ['Frogs legs'] = true,
+  ['Lysergic Acid Amide'] = true,
+  ['LSD'] = true,
+}
+RegisterServerEvent('ARMA:seizeIllegals')
+AddEventHandler('ARMA:seizeIllegals', function(playerSrc)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      local player_id = ARMA.getUserId(playerSrc)
+      local cdata = ARMA.getUserDataTable(player_id)
+      cdata = json.decode(cdata.inventory)
+      cdata = json.decode(cdata)
+      for a,b in pairs(cdata) do
+          for c,d in pairs(drugs) do
+              if a == c then
+                  cdata[a] = nil
+              end
+          end
+      end
+      cdata.inventory = json.encode(cdata)
+      ARMAclient.notify(source, {'~r~Seized illegals.'})
+    end
+end)
+
+RegisterServerEvent("ARMA:newPanic")
+AddEventHandler("ARMA:newPanic", function(a,b)
+	local source = source
+	local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') or ARMA.hasPermission(user_id, 'nhs.onduty.permission') or ARMA.hasPermission(user_id, 'lfb.onduty.permission') then
+        TriggerClientEvent("ARMA:returnPanic", -1, nil, a, b)
+        tARMA.sendWebhook(getPlayerFaction(user_id)..'-panic', 'ARMA Panic Logs', "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Location: **"..a.Location.."**")
+    end
+end)
+
+RegisterNetEvent("ARMA:flashbangThrown")
+AddEventHandler("ARMA:flashbangThrown", function(coords)   
+    TriggerClientEvent("ARMA:flashbangExplode", -1, coords)
+end)
+
+RegisterNetEvent("ARMA:updateSpotlight")
+AddEventHandler("ARMA:updateSpotlight", function(a)  
+  local source = source 
+  TriggerClientEvent("ARMA:updateSpotlight", -1, source, a)
 end)
