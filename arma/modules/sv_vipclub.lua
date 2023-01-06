@@ -176,13 +176,25 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
             if plathours >= 168 or plushours >= 168 then
                 if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) or user_id == 1 then
                     if plathours >= 168 then
-                        ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                        -- Pistol, Shotgun, SMG, AR, full armour, tacos & morphine.
+                        ARMA.giveInventoryItem(user_id, "Morphine", 5, true)
+                        ARMA.giveInventoryItem(user_id, "Taco", 15, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_M1911'})
+                        GiveWeaponToPed(source, 'WEAPON_M1911', 250, false, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_OLYMPIA'})
+                        GiveWeaponToPed(source, 'WEAPON_OLYMPIA', 250, false, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_UMP45'})
+                        GiveWeaponToPed(source, 'WEAPON_UMP45', 250, false, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_AKKAL'})
+                        GiveWeaponToPed(source, 'WEAPON_AKKAL', 250, false, true)
                         ARMAclient.setArmour(source, {100})
                         MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
                     elseif plushours >= 168 then
-                        ARMA.giveInventoryItem(user_id, "wbody|" .. 'WEAPON_M1911', 1, true)
-                        -- Pistol, SMG, full armour, tacos & morphine.
+                        ARMA.giveInventoryItem(user_id, "Morphine", 3, true)
+                        ARMA.giveInventoryItem(user_id, "Taco", 10, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_M1911'})
+                        GiveWeaponToPed(source, 'WEAPON_M1911', 250, false, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_UMP45'})
+                        GiveWeaponToPed(source, 'WEAPON_UMP45', 250, false, true)
                         ARMAclient.setArmour(source, {100})
                         MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
                     else
