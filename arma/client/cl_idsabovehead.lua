@@ -115,3 +115,15 @@ end)
 RegisterCommand("showids",function()
     d = true
 end)
+
+function tARMA.clientGetPlayerIsStaff(permid)
+    local currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')
+    if currentStaff then
+        for a,b in pairs(currentStaff) do
+            if b == permid then
+                return true
+            end
+        end
+        return false
+    end
+end

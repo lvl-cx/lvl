@@ -56,22 +56,9 @@ RegisterNetEvent("ARMA:stopSpectatePlayer",function()
     FreezeEntityPosition(m, false)
 end)
 
-function draw2dText(q, r, s, t, u, v, w, x, y, z, A)
-SetTextFont(0)
-SetTextProportional(0)
-SetTextScale(u, u)
-SetTextColour(w, x, y, z)
-SetTextDropshadow(0, 0, 0, 0, 255)
-SetTextEdge(1, 0, 0, 0, 255)
-SetTextDropShadow()
-if A then
-    SetTextOutline()
+local function q(r, s, t, u, v, w, x, y, z, A)
+    tARMA.DrawText(r - t / 2, s - u / 2 + 0.005, w, v, 0, 1, {x, y, z, A})
 end
-BeginTextCommandDisplayText("STRING")
-AddTextComponentSubstringPlayerName(v)
-EndTextCommandDisplayText(q - s / 2, r - t / 2 + 0.005)
-end
-
 Citizen.CreateThread(function()
     while true do
         Wait(0)
@@ -162,16 +149,4 @@ end
 tARMA.createThreadOnTick(X)
 function tARMA.isInSpectate()
     return a
-end
-
-function tARMA.clientGetPlayerIsStaff(j)
-    currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')
-    if currentStaff then
-        for a,b in pairs(currentStaff) do
-            if b == j then
-                return true
-            end
-        end
-        return false
-    end
 end
