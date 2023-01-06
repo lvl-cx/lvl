@@ -42,7 +42,6 @@ end
 Citizen.CreateThread(function()
     while true do 
         if tARMA.getArmour()>z then 
-            -- anticheat stuff for armour modify
             tARMA.setArmour(0)
         end
         Wait(0)
@@ -112,7 +111,8 @@ Citizen.CreateThread(function()
             if IsControlJustPressed(1,51)and not j then 
                 if tARMA.globalOnPoliceDuty() and not inOrganHeist then 
                     k()
-                else tARMA.notify("~r~This is only available to the MET Police only.")
+                else 
+                    tARMA.notify("~r~This is only available to the MET Police only.")
                 end 
             end 
         end

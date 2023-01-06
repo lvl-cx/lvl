@@ -80,23 +80,3 @@ Citizen.CreateThread(function()
         Wait(1000)
     end
 end)
-
-RegisterCommand('testdrop', function(source)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if user_id == 1 then
-        local crateID = math.random(1, #crateLocations)
-        local crateCoords = crateLocations[crateID]
-        local oilrig = false -- need to setup oil rig loot and coords
-        TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, oilrig)
-        table.insert(activeCrates, crateID)
-        TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
-        Wait(1000 * stayTime)
-        if activeCrates[crateID] ~= nil then
-            TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
-            table.remove(activeCrates, crateID)
-            TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
-        end
-        Wait(1000)
-    end
-end)

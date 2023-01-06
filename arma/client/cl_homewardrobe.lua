@@ -79,6 +79,7 @@ RageUI.CreateWhile(1.0, true, function()
 end)
 
 local function i()
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get('armawardrobe', 'mainmenu'), true)
 end
 local function j()

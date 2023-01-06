@@ -162,7 +162,7 @@ Citizen.CreateThread(function()
                             TriggerEvent("ARMA:startCombatTimer", false)
                             Wait(1000)
                         end
-                    elseif `xs_prop_arena_crate_01a` == entityModel then -- add crate drop code
+                    elseif `xs_prop_arena_crate_01a` == entityModel then
                         Crosshair(true)
                         if IsControlJustReleased(1, 38) then
                             local id = DecorGetInt(Entity,"lootid")
