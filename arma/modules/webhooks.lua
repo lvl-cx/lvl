@@ -1,7 +1,4 @@
 local webhooks = {
-
-    -- logs done (general, chat, developer, adminmenu, casino, anticheat, licenses, weaponshops)
-    -- logs to do (inventory, civ, vehicles, mpd, nhs)
     -- general
     ['join'] = 'https://discord.com/api/webhooks/991556621358596117/qBE4xyOVJ__KzEWwiqhttdNPE2eiSgjHCUMuAj17JGkY5cVSHtNbTZNM8JkgMSGzDMj2',
     ['leave'] = 'https://discord.com/api/webhooks/991556666095050803/cGTvcrMqB4wmub370MCRQHwW74tzLIHsmgkqXyNBqLPExMWNnB7lTXFRrcDmSNUYhAWQ',
@@ -16,15 +13,6 @@ local webhooks = {
     ['staff'] = 'https://discord.com/api/webhooks/991456198324916225/hMKyPEJZlhG2_ScGk6b_jLlnmU6wgd8L_a5mf5K4Gt72hEs1gp6ODaguxCwkCGRM_olj',
     ['gang'] = 'https://discord.com/api/webhooks/1050349210433757234/3U7I6KhpM2IdpsGLWITBtBJP1xF4gOe9ePSUwEQpLduRPrDWhicj_cg_KMxnOfO0In7p',
     ['anon'] = 'https://discord.com/api/webhooks/991455652524343416/S3vVK-a1pmRPVdYiF1fySi8JhL8wX-KY0OHNTEqsGV7OYeZrWmcN0V9lbQON5MMPPdnP',
-    -- inventory
-    ['give'] = 'https://discord.com/api/webhooks/991456286950559864/_-iG1kM7ZHybYpn8XfOznSz8VDrxJdakAoSWFBcbEqyGDpnr3JfzlckhUHzlt3YzE27a',
-    ['trash'] = 'https://discord.com/api/webhooks/991456316646236170/fjNOCbxBTKf2jjRQO5E4b37V0YbLf9RgJhB3fGn1t_pCEuINOqmuNoY5K0PmNo7CWl1A',
-    ['move-x'] = 'https://discord.com/api/webhooks/991456348548112524/VagESjovq2X810PRJ4ZlxhIozGyg-IaO20gqbbzVUv8kG2495P1jNFU2rN_p7Th4n6u6',
-    ['move-all'] = 'https://discord.com/api/webhooks/991456387324448789/_ZAqd2wM35esCRbUlEIiG0gQg0lxzd11ErWE3pvSeBTO8PpJRbJhEPYDS4UevNxzEKUY',
-    ['move-to-vehicle'] = 'https://discord.com/api/webhooks/991456419494764625/R1mTY9eVFXEJv2pvHVGZGwUO1D-3f8LkYmuXmkBhUKf6DRzzp-djSwDJ2_2ooJprHmmz',
-    ['move-to-house'] = 'https://discord.com/api/webhooks/991456454127132774/PHBmQEG1JAE-rKIPcCuictDdi98cFWuRb4Su2AvBKycRyqTkufRs_8SLWgg7Frxj0IeH',
-    ['move-from-vehicle'] = 'https://discord.com/api/webhooks/991456581562683434/BdOs9ThFs-JHtHH8FvMkce4watcUBeL57RYsRE9472Ucqq8kxxd3rmlR3xTLUAXd2KoH',
-    ['move-from-house'] = 'https://discord.com/api/webhooks/991456616354422954/vQbgVJkokcJ0UYdKr4Z37iZ-fVRYZjhNbq4mNWLPXMhWRMKATLDsWanh0t8uH0EpkH8J',
     -- admin menu
     ['kick-player'] = 'https://discord.com/api/webhooks/991456860869775452/IWFxWlgQ3rC9ztzBgcRAoYaiAqfa9VP8jAyTq1HE8S2Whj4qVaG5dQDd2H9Hwwou-KJe',
     ['ban-player'] = 'https://discord.com/api/webhooks/991456906818371735/iJ6RO_B3T-pvmeSFa5M8Jck8C5Cq1WsShX057QcK7b4Gu1nllpbt8Wf81W6-zdYhFbJ2',
@@ -45,11 +33,9 @@ local webhooks = {
     ['add-car'] = 'https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes',
     ['manage-balance'] = 'https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9',
     -- vehicles
-    ['spawn'] = 'https://discord.com/api/webhooks/1050351249440129056/DPnHZ_T-10ULTC24-EYc-jjvmBi0BKHELjFOnZ-z-HWhXyGkUViKagK_oo1vaZHoVsXd',
-    ['crush'] = 'https://discord.com/api/webhooks/1050351302015729714/h-CcvORewDCPeEZ8ED-l9M-lmk9omTw9uKWdjfFeDSfeh09YvnSJxn4yPcN4pHGWLRGs',
-    ['rent'] = 'https://discord.com/api/webhooks/1050351350455746650/kydxxOyZCEUbZMUJe4xag4fWIs26_LNWiim5579KWHnEAs5m25_0yc1hdZF8jkVt5TSs',
-    ['cancel-rent'] = 'https://discord.com/api/webhooks/1050351430642446346/tsDqIlxntaguV94ukIvC6jvl8RMm_n-t-3vZOuy2Wwb-J5ErIwwHe1Bc7yGB3hxGOThb',
-    ['sell'] = 'https://discord.com/api/webhooks/1050351477450870814/aRku5v0sDcF7mvg3yAQMOu_eFGx6gCAHAmzA9RAj4-E6tWjplk1ZNXqAnRkCW2uvwyYq',
+    ['crush-vehicle'] = 'https://discord.com/api/webhooks/1050351302015729714/h-CcvORewDCPeEZ8ED-l9M-lmk9omTw9uKWdjfFeDSfeh09YvnSJxn4yPcN4pHGWLRGs',
+    ['rent-vehicle'] = 'https://discord.com/api/webhooks/1050351350455746650/kydxxOyZCEUbZMUJe4xag4fWIs26_LNWiim5579KWHnEAs5m25_0yc1hdZF8jkVt5TSs',
+    ['sell-vehicle'] = 'https://discord.com/api/webhooks/1050351477450870814/aRku5v0sDcF7mvg3yAQMOu_eFGx6gCAHAmzA9RAj4-E6tWjplk1ZNXqAnRkCW2uvwyYq',
     -- mpd
     ['pd-clock'] = 'https://discord.com/api/webhooks/1056165736684474398/bWUtN88MrbTlFiPdBhMLdhvSF7s_r76Z6LAESdLf4uSPiWBVRx7NT1kL8rTGkmC4k1YA',
     ['pd-afk'] = 'https://discord.com/api/webhooks/1056165912501309480/kajjJF9qX9HpkDFJB0Wyb2u1LckDaynGtKMuF5qYbQfs6v8p8XTpqODXfNfwlHX_KIcC',

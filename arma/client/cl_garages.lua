@@ -545,7 +545,7 @@ RageUI.CreateWhile(1.0, true, function()
                             if result then 
                                 result = result
                                 if string.upper(result) == 'CONFIRM' then
-                                    TriggerServerEvent('ARMA:ScrapVehicle', e) 
+                                    TriggerServerEvent('ARMA:CrushVehicle', e) 
                                     Table_Type = nil
                                     RageUI.ActuallyCloseAll()
                                     RageUI.Visible(RMenu:Get('ARMAGarages', 'main'), true)  

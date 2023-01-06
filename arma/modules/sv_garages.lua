@@ -265,8 +265,8 @@ AddEventHandler('ARMA:BuyVehicle', function(vehicle)
     return ARMAclient.notify(source,{'~r~An error has occured please try again later.'})
 end)
 
-RegisterNetEvent('ARMA:ScrapVehicle')
-AddEventHandler('ARMA:ScrapVehicle', function(vehicle)
+RegisterNetEvent('ARMA:CrushVehicle')
+AddEventHandler('ARMA:CrushVehicle', function(vehicle)
     local source = source
     local user_id = ARMA.getUserId(source)
     if user_id then 
@@ -281,6 +281,7 @@ AddEventHandler('ARMA:ScrapVehicle', function(vehicle)
                     return
                 end
                 MySQL.execute('ARMA/remove_vehicle', {user_id = user_id, vehicle = vehicle})
+                tARMA.sendWebhook('crush-vehicle', "ARMA Crush Vehicle Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Vehicle: **"..vehicle.."**")
                 TriggerClientEvent('ARMA:CloseGarage', source)
             end)
         end)
@@ -316,7 +317,7 @@ AddEventHandler('ARMA:SellVehicle', function(veh)
                                                     ARMAclient.notify(player,{"~r~You cannot sell a rented vehicle!"})
                                                     return
                                                 else
-                                                    ARMA.request(target,GetPlayerName(player).." wants to sell: " ..name.. " Price: £"..amount, 10, function(target,ok)
+                                                    ARMA.request(target,GetPlayerName(player).." wants to sell: " ..name.. " Price: £"..getMoneyStringFormatted(amount), 10, function(target,ok)
                                                         if ok then
                                                             local pID = ARMA.getUserId(target)
                                                             amount = tonumber(amount)
@@ -326,8 +327,9 @@ AddEventHandler('ARMA:SellVehicle', function(veh)
                                                                     MySQL.execute("ARMA/sell_vehicle_player", {user_id = user_id, registration = "P "..identity.registration, oldUser = playerID, vehicle = name}) 
                                                                 end)
                                                                 ARMA.giveBankMoney(playerID, amount)
-                                                                ARMAclient.notify(player,{"~g~You have successfully sold the vehicle to ".. GetPlayerName(target).." for £"..amount.."!"})
-                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you the car for £"..amount.."!"})
+                                                                ARMAclient.notify(player,{"~g~You have successfully sold the vehicle to ".. GetPlayerName(target).." for £"..getMoneyStringFormatted(amount).."!"})
+                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully sold you the car for £"..getMoneyStringFormatted(amount).."!"})
+                                                                tARMA.sendWebhook('sell-vehicle', "ARMA Sell Vehicle Logs", "> Seller Name: **"..GetPlayerName(player).."**\n> Seller TempID: **"..player.."**\n> Seller PermID: **"..playerID.."**\n> Buyer Name: **"..GetPlayerName(target).."**\n> Buyer TempID: **"..target.."**\n> Buyer PermID: **"..user_id.."**\n> Amount: **£"..getMoneyStringFormatted(amount).."**")
                                                                 TriggerClientEvent('ARMA:CloseGarage', player)
                                                             else
                                                                 ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
@@ -391,10 +393,10 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                         if #pvehicles > 0 then 
                                                             return
                                                         else
-                                                            ARMA.prompt(player, "Please replace text with YES or NO to confirm", "Rent Details:\nVehicle: "..name.."\nRent Cost: "..amount.."\nDuration: "..rent.." hours\nRenting to player: "..GetPlayerName(target).."("..ARMA.getUserId(target)..")",function(player,details)
+                                                            ARMA.prompt(player, "Please replace text with YES or NO to confirm", "Rent Details:\nVehicle: "..name.."\nRent Cost: "..getMoneyStringFormatted(amount).."\nDuration: "..rent.." hours\nRenting to player: "..GetPlayerName(target).."("..ARMA.getUserId(target)..")",function(player,details)
                                                                 if string.upper(details) == 'YES' then
                                                                     ARMAclient.notify(player, {'~g~Rent offer sent!'})
-                                                                    ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: £"..amount .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
+                                                                    ARMA.request(target,GetPlayerName(player).." wants to rent: " ..name.. " Price: £"..getMoneyStringFormatted(amount) .. ' | for: ' .. rent .. 'hours', 10, function(target,ok)
                                                                         if ok then
                                                                             local pID = ARMA.getUserId(target)
                                                                             amount = tonumber(amount)
@@ -406,8 +408,9 @@ AddEventHandler('ARMA:RentVehicle', function(veh)
                                                                                     MySQL.execute("ARMA/rentedupdate", {user_id = playerID, veh = name, id = pID, rented = 1, rentedid = playerID, rentedunix =  rentedTime }) 
                                                                                 end)
                                                                                 ARMA.giveBankMoney(playerID, amount)
-                                                                                ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to "..GetPlayerName(target).." for £"..amount..' for ' ..rent.. 'hours'})
-                                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..amount..' for ' ..rent.. 'hours'})
+                                                                                ARMAclient.notify(player,{"~g~You have successfully rented the vehicle to "..GetPlayerName(target).." for £"..getMoneyStringFormatted(amount)..' for ' ..rent.. 'hours'})
+                                                                                ARMAclient.notify(target,{"~g~"..GetPlayerName(player).." has successfully rented you the car for £"..getMoneyStringFormatted(amount)..' for ' ..rent.. 'hours'})
+                                                                                tARMA.sendWebhook('rent-vehicle', "ARMA Rent Vehicle Logs", "> Renter Name: **"..GetPlayerName(player).."**\n> Renter TempID: **"..player.."**\n> Renter PermID: **"..playerID.."**\n> Rentee Name: **"..GetPlayerName(target).."**\n> Rentee TempID: **"..target.."**\n> Rentee PermID: **"..pID.."**\n> Amount: **£"..getMoneyStringFormatted(amount).."**\n> Duration: **"..rent.." hours**")
                                                                                 TriggerClientEvent('ARMA:CloseGarage', player)
                                                                             else
                                                                                 ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"})
