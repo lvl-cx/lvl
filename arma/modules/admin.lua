@@ -1011,10 +1011,10 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-        local deleteTime = 600000
-        TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "^3Vehicle cleanup in " .. math.floor((deleteTime/1000/60)) .. " minutes.", "alert")
-        Citizen.Wait(deleteTime)
-        TriggerClientEvent('chatMessage', -1, 'ARMA^7 │ ', {255, 255, 255}, "^3Vehicle cleanup completed.", "alert")
+        Citizen.Wait(590000)
+        TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0Vehicle cleanup in 10 seconds! All unoccupied vehicles will be deleted.", "alert")
+        Citizen.Wait(10000)
+        TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0Vehicle cleanup complete.", "alert")
         TriggerClientEvent('ARMA:clearVehicles', -1)
         TriggerClientEvent('ARMA:clearBrokenVehicles', -1)
 	end
