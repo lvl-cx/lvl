@@ -681,7 +681,7 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
               cdata.inventory[a] = nil
           end
       end
-      for k,v in pairs(cfg_weapons.weapons) do
+      for k,v in pairs(a.weapons) do
           if cdata.inventory[k] ~= nil then
               if not v.policeWeapon then
                 cdata.inventory[k] = nil
