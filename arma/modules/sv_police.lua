@@ -163,76 +163,6 @@ local choice_askid = {function(player,choice)
   end)
 end, lang.police.menu.askid.description()}
 
----- police check
-local choice_check = {function(player,choice)
-  ARMAclient.getNearestPlayer(player,{5},function(nplayer)
-    local nuser_id = ARMA.getUserId(nplayer)
-    if nuser_id ~= nil then
-      ARMAclient.notify(nplayer,{lang.police.menu.check.checked()})
-      ARMAclient.getWeapons(nplayer,{},function(weapons)
-        -- prepare display data (money, items, weapons)
-        local money = ARMA.getMoney(nuser_id)
-        local items = ""
-        local data = ARMA.getUserDataTable(nuser_id)
-        if data and data.inventory then
-          for k,v in pairs(data.inventory) do
-            local item = ARMA.items[k]
-            if item then
-              items = items.."<br />"..item.name.." ("..v.amount..")"
-            end
-          end
-        end
-
-        local weapons_info = ""
-        for k,v in pairs(weapons) do
-          weapons_info = weapons_info.."<br />"..k.." ("..v.ammo..")"
-        end
-
-        ARMAclient.setDiv(player,{"police_check",".div_police_check{ background-color: rgba(0,0,0,0.75); color: white; font-weight: bold; width: 500px; padding: 10px; margin: auto; margin-top: 150px; }",lang.police.menu.check.info({money,items,weapons_info})})
-        -- request to hide div
-        ARMA.request(player, lang.police.menu.check.request_hide(), 1000, function(player,ok)
-          ARMAclient.removeDiv(player,{"police_check"})
-        end)
-      end)
-    else
-      ARMAclient.notify(player,{lang.common.no_player_near()})
-    end
-  end)
-end, lang.police.menu.check.description()}
-
-local choice_seize_weapons = {function(player, choice)
-  local user_id = ARMA.getUserId(player)
-  if user_id ~= nil then
-    ARMAclient.getNearestPlayer(player, {5}, function(nplayer)
-      local nuser_id = ARMA.getUserId(nplayer)
-      if nuser_id ~= nil and ARMA.hasPermission(nuser_id, "police.seizable") then
-        ARMAclient.isHandcuffed(nplayer,{}, function(handcuffed)  -- check handcuffed
-          if handcuffed then
-            ARMAclient.getWeapons(nplayer,{},function(weapons)
-              for k,v in pairs(weapons) do -- display seized weapons
-                -- ARMAclient.notify(player,{lang.police.menu.seize.seized({k,v.ammo})})
-                -- convert weapons to parametric weapon items
-                ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                if v.ammo > 0 then
-                  ARMA.giveInventoryItem(user_id, "wammo|"..k, v.ammo, true)
-                end
-              end
-
-              -- clear all weapons
-              ARMAclient.giveWeapons(nplayer,{{},true})
-              ARMAclient.notify(nplayer,{lang.police.menu.seize.weapons.seized()})
-            end)
-          else
-            ARMAclient.notify(player,{lang.police.not_handcuffed()})
-          end
-        end)
-      else
-        ARMAclient.notify(player,{lang.common.no_player_near()})
-      end
-    end)
-  end
-end, lang.police.menu.seize.weapons.description()}
-
 local isStoring = {}
 local choice_store_weapons = function(player, choice)
     local user_id = ARMA.getUserId(player)
@@ -694,6 +624,7 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
           end
       end
       ARMAclient.notify(source, {'~r~Seized weapons.'})
+      ARMAclient.notify(playerSrc, {'~r~Your weapons have been seized.'})
     end
 end)
 
@@ -728,6 +659,7 @@ AddEventHandler('ARMA:seizeIllegals', function(playerSrc)
       end
       cdata.inventory = json.encode(cdata)
       ARMAclient.notify(source, {'~r~Seized illegals.'})
+      ARMAclient.notify(playerSrc, {'~r~Your illegals have been seized.'})
     end
 end)
 
