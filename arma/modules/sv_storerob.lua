@@ -121,9 +121,10 @@ AddEventHandler('ARMA:initiateStoreRobbery', function(store)
                         TriggerClientEvent('ARMA:beginStoreRobbingAnimations', -1, store)
                         TriggerClientEvent('ARMA:storeRobberyInProgress', source, true, store)
                         for a, b in pairs(ARMA.getUsers({})) do
-                            if ARMA.hasPermission(b, "police.onduty.permission") then
-                                TriggerClientEvent('chatMessage', -1, "^7Robbery in progress at ^2"..v.storename, { 128, 128, 128 }, message, "alert")
+                            if ARMA.hasPermission(a, "police.onduty.permission") then
+                                TriggerClientEvent('chatMessage', b, "^7Robbery in progress at ^2"..v.storename, { 128, 128, 128 }, message, "alert")
                             end
+                            -- make it add store robbery to call manager
                         end
                     else
                         TriggerClientEvent('chatMessage', source, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
