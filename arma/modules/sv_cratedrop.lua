@@ -2,7 +2,7 @@
 
 
 local crateLocations = {
-    vector3(1865.0517578125,294.37481689453,168.91744995117),
+    vector3(vector3(1875.281, 285.2199, 164.3051)),
     vector3(2945.5515136719,2795.4934082031,40.646308898926),
     vector3(-1627.5288085938,720.173828125,192.08515930176),
     vector3(-62.860485076904,-2493.8740234375,6.0251984596252),
@@ -16,7 +16,7 @@ local availableItems = {
     {"wbody|WEAPON_UMP45", 1},
     {"9mm Bullets", 250},
     {"wbody|WEAPON_MOSIN", 1},
-    {"wbody|WEAPON_AKKAL", 1},
+    {"wbody|WEAPON_AK200", 1},
     {"7.62mm Bullets", 250},
 }
 
