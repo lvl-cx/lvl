@@ -110,7 +110,10 @@ Citizen.CreateThread(function()
         local w=function()
             if IsControlJustPressed(1,51)and not j then 
                 if tARMA.globalOnPoliceDuty() and not inOrganHeist then 
-                    k()
+                    if tARMA.globalHorseTrained() or tARMA.getUserId()==1 then 
+                        k()
+                    else 
+                        tARMA.notify("~r~You do not have the [Horse Trained] whitelist.")
                 else 
                     tARMA.notify("~r~This is only available to the MET Police only.")
                 end 
@@ -124,12 +127,11 @@ Citizen.CreateThread(function()
 end)
 RegisterCommand("policehorse",function()
     if not j then 
-        if tARMA.globalOnPoliceDuty() or tARMA.getUserId()==1 then 
+        if tARMA.globalOnPoliceDuty() and not inOrganHeist then 
             if tARMA.globalHorseTrained() or tARMA.getUserId()==1 then 
                 k()
             else 
                 tARMA.notify("~r~You do not have the [Horse Trained] whitelist.")
-            end 
         else 
             tARMA.notify("~r~This is only available to the MET Police only.")
         end 
