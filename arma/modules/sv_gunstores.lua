@@ -87,8 +87,20 @@ cfg.GunStores={
     },
     ["Legion"]={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
-        ["WEAPON_BROOM"]={"Broom",1000,0,"N/A","prop_tool_broom"},
-        -- do the rest
+        ["WEAPON_BROOM"]={"Broom",2500,0,"N/A","w_me_broom"},
+        ["WEAPON_BASEBALLBAT"]={"Baseball Bat",2500,0,"N/A","w_me_baseballbat"},
+        ["WEAPON_CLEAVER"]={"Cleaver",7500,0,"N/A","w_me_cleaver"},
+        ["WEAPON_CRICKETBAT"]={"Cricket Bat",2500,0,"N/A","w_me_cricketbat"},
+        ["WEAPON_DILDO"]={"Dildo",2500,0,"N/A","w_me_dildo"},
+        ["WEAPON_FIREAXE"]={"Fireaxe",2500,0,"N/A","w_me_fireaxe"},
+        ["WEAPON_GUITAR"]={"Guitar",2500,0,"N/A","w_me_guitar"},
+        ["WEAPON_HAMAXEHAM"]={"Hammer Axe Hammer",2500,0,"N/A","w_me_hamaxeham"},
+        ["WEAPON_KITCHENKNIFE"]={"Kitchen Knife",7500,0,"N/A","w_me_kitchenknife"},
+        ["WEAPON_SHANK"]={"Shank",7500,0,"N/A","w_me_shank"},
+        ["WEAPON_SLEDGEHAMMER"]={"Sledge Hammer",2500,0,"N/A","w_me_sledgehammer"},
+        ["WEAPON_TOILETBRUSH"]={"Toilet Brush",2500,0,"N/A","w_me_toiletbrush"},
+        ["WEAPON_TRAFFICSIGN"]={"Traffic Sign",2500,0,"N/A","w_me_trafficsign"},
+        ["WEAPON_SHOVEL"]={"Shovel",2500,0,"N/A","w_me_shovel"},
     },
 }
 local organheist = module('cfg/cfg_organheist')
