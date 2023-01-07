@@ -61,6 +61,7 @@ AddEventHandler("ARMA:onClientSpawn",function(h, i)
         local j = function(k)
         end
         local l = function(k)
+            RageUI.ActuallyCloseAll()
             RageUI.Visible(RMenu:Get("plateshop", "main"), false)
         end
         local m = function(k)
