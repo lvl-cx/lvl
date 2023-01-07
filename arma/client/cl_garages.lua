@@ -39,18 +39,18 @@ local vehicleCannotBeRented = {
 }
 
 RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~ARMA Garages",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "garage"))
-RMenu.Add('ARMAGarages', 'owned_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
-RMenu.Add('ARMAGarages', 'rented_vehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_information',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_manage")))
-RMenu.Add('ARMAGarages', 'owned_vehicles_submenu',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
-RMenu.Add('ARMAGarages', 'owned_vehicles_submenu_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu")))
-RMenu.Add('ARMAGarages', 'scrap_vehicle_confirmation',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
-RMenu.Add('ARMAGarages', 'rented_vehicles_out_information',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage")))
-RMenu.Add('ARMAGarages', 'customfolders',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
-RMenu.Add('ARMAGarages', 'customfoldersvehicles',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "customfolders")))
-RMenu.Add('ARMAGarages', 'settings',  RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
+RMenu.Add('ARMAGarages', 'owned_vehicles', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
+RMenu.Add('ARMAGarages', 'rented_vehicles', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_manage', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_information', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_manage")))
+RMenu.Add('ARMAGarages', 'owned_vehicles_submenu', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
+RMenu.Add('ARMAGarages', 'owned_vehicles_submenu_manage', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu")))
+RMenu.Add('ARMAGarages', 'scrap_vehicle_confirmation', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_out_manage', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles")))
+RMenu.Add('ARMAGarages', 'rented_vehicles_out_information', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "rented_vehicles_out_manage")))
+RMenu.Add('ARMAGarages', 'customfolders', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "owned_vehicles")))
+RMenu.Add('ARMAGarages', 'customfoldersvehicles', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "customfolders")))
+RMenu.Add('ARMAGarages', 'settings', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
 RMenu:Get('ARMAGarages', 'owned_vehicles'):SetSubtitle("~b~Garage Mangement Menu")
 
 
@@ -474,7 +474,7 @@ RageUI.CreateWhile(1.0, true, function()
                                         e = E
                                         f = aT
                                         TriggerServerEvent("ARMA:getVehicleRarity", E)
-                                        RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle("~r~" .. aT)
+                                        RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle(aT)
                                     end
                                 end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
                             end
@@ -561,13 +561,13 @@ RageUI.CreateWhile(1.0, true, function()
                             if folders[folderName] ~= nil then
                                 if not table.find(folders[folderName], e) then
                                     table.insert(folders[folderName], e)
-                                    tARMA.notify("~g~"..f.." was added to "..folderName)
+                                    tARMA.notify("~g~Added vehicle to custom folder.")
                                     TriggerServerEvent("ARMA:updateFolders", folders)
                                 else
-                                    tARMA.notify("~r~This Car is already in "..folderName)
+                                    tARMA.notify("~r~Failed to add vehicle from folder, vehicle already in folder.")
                                 end
                             else
-                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
+                                tARMA.notify("~r~Failed to add vehicle to folder, folder does not exist?")
                             end
                         end
                     end
@@ -582,14 +582,14 @@ RageUI.CreateWhile(1.0, true, function()
                                         if folders[folderName][i] == e then
                                             table.remove(folders[folderName], i)
                                             TriggerServerEvent("ARMA:updateFolders", folders)
-                                            tARMA.notify("~g~"..f.." was removed from "..folderName)
+                                            tARMA.notify("~g~Removed vehicle from custom folder.")
                                         end
                                     end
                                 else
-                                    tARMA.notify("~r~"..f.." is not in "..folderName)
+                                    tARMA.notify("~r~Failed to remove vehicle from folder, vehicle not in folder.")
                                 end
                             else
-                                tARMA.notify("~r~Folder "..folderName.." does not exist.")
+                                tARMA.notify("~r~Failed to remove vehicle from folder, folder does not exist?")
                             end
                         end
                     end

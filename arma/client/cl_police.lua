@@ -368,42 +368,6 @@ RegisterNetEvent("ARMA:flashWarrantCard",function()
     Wait(3000)
     DeleteObject(Q)
 end)
-RMenu.Add("vehicleExtraMenu","main",RageUI.CreateMenu("Vehicle Extra Menu", "~b~Development", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RegisterCommand("extras",function(R, S)
-    local T = R
-    if tARMA.getStaffLevel() >= 11 then
-        RageUI.Visible(RMenu:Get("vehicleExtraMenu", "main"), true)
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('vehicleExtraMenu', 'main')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            local V = tARMA.getPlayerVehicle()
-            if V ~= 0 then
-                RMenu:Get("vehicleExtraMenu", "main"):SetSubtitle("Vehicle Model: " .. GetDisplayNameFromVehicleModel(GetEntityModel(V)))
-                for k = 1, 12 do
-                    if DoesExtraExist(V, k) then
-                        if IsVehicleExtraTurnedOn(V, k) then
-                            RageUI.Button("Disable Extra " .. k,nil,{RightLabel = tostring(k)},true,function(D, E, F)
-                                if F then
-                                    SetVehicleExtra(V, k, true)
-                                end
-                            end)
-                        else
-                            RageUI.Button("Enable Extra " .. k,nil,{RightLabel = tostring(k)},true,function(D, E, F)
-                                if F then
-                                    SetVehicleExtra(V, k, false)
-                                end
-                            end)
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
-
 
 RegisterNetEvent("ARMA:startSearchingSuspect",function()
     tARMA.setCanAnim(false)

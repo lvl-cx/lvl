@@ -1,17 +1,5 @@
 local tickets = {}
 local callID = 0
---table.insert(adminTickets, {name = 'Test', permID = 1, tempID = 1}) test case
-
--- local o, p, q, v, s, t, u = table.unpack(n)
--- o = coords
--- p = name
--- q = perm id
--- v = distance blah blah
--- s = reason
--- t = ticket type
--- u = time since
-
--- RegisterNetEvent("ARMA:addEmergencyCall",function(o, p, q, r, s, t)
 
 Citizen.CreateThread(function()
     while true do
@@ -23,8 +11,6 @@ Citizen.CreateThread(function()
         end
     end
 end)
-
-
 
 RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)

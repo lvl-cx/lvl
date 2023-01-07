@@ -393,6 +393,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.specialconstable",
+        "police.announce",
     },
     ["Special Constable"] = {
         "cop.whitelisted"
