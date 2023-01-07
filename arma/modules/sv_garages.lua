@@ -699,38 +699,40 @@ AddEventHandler('ARMA:searchVehicle', function(entity, permid)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        ARMAclient.getNetworkedVehicleInfos(ARMA.getUserSource(permid), {entity}, function(owner, spawncode)
-            if spawncode and owner == permid then
-                local vehformat = 'chest:u1veh_'..spawncode..'|'..permid
-                ARMA.getSData(vehformat, function(cdata)
-                    if cdata == nil then return end
-                    cdata = json.decode(cdata)
-                    for a,b in pairs(cdata) do
-                        if string.find(a, 'wbody|') then
-                            c = a:gsub('wbody|', '')
-                            cdata[c] = b
-                            cdata[a] = nil
-                        end
-                    end
-                    for k,v in pairs(cfg_weapons.weapons) do
-                        if cdata[k] ~= nil then
-                            if not v.policeWeapon then
-                                ARMAclient.notify(source, {'~r~Seized v.'..v.name..' x'..cdata[k].amount..'.'})
-                                cdata[k] = nil
+        if ARMA.getUserSource(permid) ~= nil then
+            ARMAclient.getNetworkedVehicleInfos(ARMA.getUserSource(permid), {entity}, function(owner, spawncode)
+                if spawncode and owner == permid then
+                    local vehformat = 'chest:u1veh_'..spawncode..'|'..permid
+                    ARMA.getSData(vehformat, function(cdata)
+                        if cdata == nil then return end
+                        cdata = json.decode(cdata)
+                        for a,b in pairs(cdata) do
+                            if string.find(a, 'wbody|') then
+                                c = a:gsub('wbody|', '')
+                                cdata[c] = b
+                                cdata[a] = nil
                             end
                         end
-                    end
-                    for c,d in pairs(cdata) do
-                        if bullets[c] then
-                            ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
-                            cdata[c] = nil
+                        for k,v in pairs(cfg_weapons.weapons) do
+                            if cdata[k] ~= nil then
+                                if not v.policeWeapon then
+                                    ARMAclient.notify(source, {'~r~Seized v.'..v.name..' x'..cdata[k].amount..'.'})
+                                    cdata[k] = nil
+                                end
+                            end
                         end
-                    end
-                    ARMA.setSData(vehformat, json.encode(cdata))
-                    tARMA.sendWebhook('seize-boot', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Owner ID: **"..permid.."**")
-                end)
-            end
-        end)
+                        for c,d in pairs(cdata) do
+                            if bullets[c] then
+                                ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
+                                cdata[c] = nil
+                            end
+                        end
+                        ARMA.setSData(vehformat, json.encode(cdata))
+                        tARMA.sendWebhook('seize-boot', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Owner ID: **"..permid.."**")
+                    end)
+                end
+            end)
+        end
     end
 end)
 
