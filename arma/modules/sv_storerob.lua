@@ -126,7 +126,7 @@ AddEventHandler('ARMA:initiateStoreRobbery', function(store)
                             end
                         end
                     else
-                        TriggerClientEvent('chatMessage', -1, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
+                        TriggerClientEvent('chatMessage', source, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
                     end
                 end
             end
