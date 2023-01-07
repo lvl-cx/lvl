@@ -765,7 +765,7 @@ end)
 RegisterServerEvent("ARMA:flagVehicleAnpr")
 AddEventHandler("ARMA:flagVehicleAnpr", function(plate, reason)
     local source = source
-    local user_id = ARMA.getUSerId(source)
+    local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
         flaggedVehicles[plate] = reason
         TriggerClientEvent('ARMA:setFlagVehicles', -1, flaggedVehicles)
