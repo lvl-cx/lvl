@@ -174,20 +174,12 @@ RegisterCommand('unjail', function(source)
         ARMA.prompt(source,"Enter Temp ID:","",function(source,player) 
             local player = tonumber(player)
             if player ~= nil then
-                MySQL.query("ARMA/get_prison_time", {user_id = ARMA.getUserId(player)}, function(prisontime)
-                    if prisontime ~= nil then 
-                        if prisontime[1].prison_time > 0 then
-                            MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = 0})
-                            TriggerClientEvent('ARMA:prisonStopClientTimer', player)
-                            TriggerClientEvent('ARMA:prisonReleased', player)
-                            TriggerClientEvent('ARMA:forcePlayerInPrison', player, false)
-                            ARMAclient.setHandcuffed(player, {false})
-                            ARMAclient.notify(source, {"~g~Target will be released soon."})
-                        else
-                            ARMAclient.notify(source, {"~r~Player is not in prison."})
-                        end
-                    end
-                end)
+                MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = 0})
+                TriggerClientEvent('ARMA:prisonStopClientTimer', player)
+                TriggerClientEvent('ARMA:prisonReleased', player)
+                TriggerClientEvent('ARMA:forcePlayerInPrison', player, false)
+                ARMAclient.setHandcuffed(player, {false})
+                ARMAclient.notify(source, {"~g~Target will be released soon."})
             else
                 ARMAclient.notify(source, {"~r~Invalid ID."})
             end

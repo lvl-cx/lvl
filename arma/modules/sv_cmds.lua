@@ -63,8 +63,8 @@ RegisterCommand("ooc", function(source, args, raw)
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^4 Administrator ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")		
 				ChatCooldown = 3			
 			elseif ARMA.hasGroup(user_id, "Senior Mod") then
-					TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Senior Mod ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
-					ChatCooldown = 3
+				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Senior Mod ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
+				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Moderator") then
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Moderator ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
 				ChatCooldown = 3
