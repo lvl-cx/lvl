@@ -735,14 +735,14 @@ function ARMA.ban(adminsource,permid,time,reason,baninfo)
             ARMA.setBanned(permid,true,"perm",reason,GetPlayerName(adminsource),baninfo)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. GetPlayerName(adminsource) .. "\nAppeal @ discord.gg/armarp") 
         end
-        ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+        ARMAclient.notify(adminsource,{"~g~Success banned! User PermID: " .. permid})
     else 
         if tonumber(time) then 
             ARMA.setBanned(permid,true,time,reason,GetPlayerName(adminsource),baninfo)
         else 
             ARMA.setBanned(permid,true,"perm",reason,GetPlayerName(adminsource),baninfo)
         end
-        ARMAclient.notify(adminsource,{"~g~Success banned! User PermID:" .. permid})
+        ARMAclient.notify(adminsource,{"~g~Success banned! User PermID: " .. permid})
     end
 end
 
@@ -787,7 +787,6 @@ function ARMA.banDiscord(permid,time,reason,adminPermID)
             ARMA.kick(getBannedPlayerSrc,"[ARMA] Permanent Ban\nYour ID is: "..permid.."\nReason: " .. reason .. "\nBanned by " .. adminPermID .. "\nAppeal @ discord.gg/armarp") 
         end
     end
-    print("~g~Success banned! User PermID:" .. permid)
 end
 
 -- To use token banning you need the latest artifacts.
