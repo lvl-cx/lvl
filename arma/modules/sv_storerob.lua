@@ -178,6 +178,10 @@ Citizen.CreateThread(function()
         for k,v in pairs(stores) do
             if v.cooldown > 0 then
                 v.cooldown = v.cooldown - 1
+                if v.cooldown == 0 then
+                    v.beingrobbed = false
+                    TriggerClientEvent('ARMA:updateStoreRobBlips', -1, stores)
+                end
             end
         end
         Citizen.Wait(1000)
