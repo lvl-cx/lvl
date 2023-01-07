@@ -101,7 +101,7 @@ RegisterCommand("betawipe", function(source, args)
         exports["ghmattimysql"]:execute("SELECT * FROM arma_user_vehicles", {}, function(rows, affected)
             if #rows > 0 then
                 for k,v in pairs(rows) do
-                    if v.user_id ~= 1 and v.user_id ~= 2 and v.user_id ~= 3 then
+                    if v.user_id ~= 1 and v.user_id ~= 2 and v.user_id ~= 3 and (v.vehicle == 'm2varis' or v.vehicle == 'ventsraid' or v.vehicle == 'fordconnect') then
                         print('Deleted vehicle: ' .. v.vehicle .. ' from PermID: ' .. v.user_id)
                         exports["ghmattimysql"]:execute("DELETE FROM arma_user_vehicles WHERE user_id = @user_id and vehicle = @vehicle", {user_id = v.user_id, vehicle = v.vehicle})
                     end
