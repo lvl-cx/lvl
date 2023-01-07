@@ -809,6 +809,18 @@ AddEventHandler('ARMA:CheckIdRegister', function()
     TriggerEvent('playerSpawned')
 end)
 
+function tARMA.clientGetPlayerIsStaff(permid)
+  local currentStaff = tARMA.getCurrentPlayerInfo('currentStaff')
+  if currentStaff then
+      for a,b in pairs(currentStaff) do
+          if b == permid then
+              return true
+          end
+      end
+      return false
+  end
+end
+
 local baseplayers = {}
 
 function tARMA.setBasePlayers(players)
