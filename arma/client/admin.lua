@@ -337,23 +337,3 @@ RegisterNetEvent("ARMA:deathSound",function(E)
         SendNUIMessage({transactionType = tARMA.getDeathSound()})
     end
 end)
-
-RegisterCommand('tpm', function(source)
-    if tARMA.getUserId() == 109 then
-        local WaypointHandle = GetFirstBlipInfoId(8)
-        if DoesBlipExist(WaypointHandle) then
-            local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
-            for height = 1, 1000 do
-                SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
-                local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
-                if foundGround then
-                    SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
-                    break
-                end
-                Citizen.Wait(5)
-            end
-        else
-            tARMA.notify("~r~You do not have a waypoint set")
-        end
-    end
-end)

@@ -17,8 +17,7 @@ RegisterCommand("anon", function(source, args, raw)
 	tARMA.sendWebhook('anon', "ARMA Chat Logs", "```"..message.."```".."\n> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Player TempID: **"..source.."**")
 	Wait(100)
 	if ChatCooldown == 0 then 
-		TriggerClientEvent('chatMessage', -1, "^4Twitter @^1Anonymous: ", { 255, 0, 0 }, message)
-		
+		TriggerClientEvent('chatMessage', -1, "^4Twitter @^1Anonymous: ", { 128, 128, 128 }, message, "ooc")
 		ChatCooldown = 3
 	end
 end)

@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
     Wait(30000)
     while true do
         Wait(5000)
-        if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then -- and not tARMA.isInPaintball()
+        if not tARMA.isInHouse() and not inOrganHeist and not tARMA.isPlayerInRedZone() and not tARMA.isInSpectate() then
           tARMA.updatePos()
         end
         if not tARMA.isStaffedOn() and not customizationSaveDisabled and not spawning and not tARMA.isPlayerInAnimalForm() then
