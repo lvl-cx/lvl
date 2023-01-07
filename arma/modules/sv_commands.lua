@@ -34,36 +34,21 @@ RegisterCommand("a", function(source,args, rawCommand)
 end)
 
 RegisterCommand("p", function(source,args, rawCommand)
+    if #args <= 0 then return end
     local source = source
     local user_id = ARMA.getUserId(source)   
-    if not ARMA.hasPermission(user_id, "police.onduty.permission") then
-        return 
-    end
-    local msg = rawCommand:sub(2)
-    local callsign = ""
-    local discord_id = exports['arma']:Get_Client_Discord_ID(source)
-    if discord_id then
-        local guilds_info = exports['arma']:Get_Guilds()
-        for guild_name, guild_id in pairs(guilds_info) do
-            if guild_name == guildType then
-                local nick_name = exports['arma']:Get_Guild_Nickname(guild_id, discord_id)
-                if nick_name then
-                    local open_bracket = string.find(nick_name, '[', nil, true) -- Extra Params to toggle pattern matching
-                    local closed_bracket = string.find(nick_name, ']', nil, true) -- Extra Params to toggle pattern matching
-                    if open_bracket and closed_bracket then
-                        local callsign_value = string.sub(nick_name, open_bracket + 1, closed_bracket - 1)
-                        callsign = callsign_value
-                    end
-                end
+    local message = table.concat(args, " ")
+    if ARMA.hasPermission(user_id, "police.onduty.permission") then
+        local callsign = ""
+        if getCallsign('MPD', source, user_id, 'police') then
+            callsign = "["..getCallsign('MPD', source, user_id, 'police').."]"
+        end
+        local playerName =  "^4Police Chat | "..callsign.." "..GetPlayerName(source)..": "
+        for k, v in pairs(ARMA.getUsers({})) do
+            if ARMA.hasPermission(k, 'police.onduty.permission') then
+                TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, message, "ooc")
             end
         end
-    end
-    local playerName =  "^5Police Chat | "..callsign.." "..GetPlayerName(source)..": "
-    local players = GetPlayers()
-    for i,v in pairs(ARMA.getUsersByPermission('police.onduty.permission')) do 
-        name = GetPlayerName(v)
-        user_id = ARMA.getUserId(v)   
-        TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, msg, "ooc")
     end
 end)
 

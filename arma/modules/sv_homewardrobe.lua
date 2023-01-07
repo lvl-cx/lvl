@@ -85,3 +85,11 @@ AddEventHandler("ARMA:applyOutfitCode", function(outfitCode)
         ARMAclient.notify(source, {"~r~Outfit code not found."})
     end
 end)
+
+RegisterCommand('wardrobe', function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if user_id == 1 then
+        TriggerClientEvent("ARMA:openOutfitMenu", source)
+    end
+end)
