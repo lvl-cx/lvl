@@ -252,7 +252,7 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_ar_goldak",
     },
-    ["WEAPON_AKKAL"] = {
+    ["WEAPON_AK200"] = {
         name = "AK 200",
         class = "AR",
         ammo = "7.62mm Bullets",
@@ -423,12 +423,12 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_sr_mk14",
     },
-    ["WEAPON_G36"] = {
-        name = "G36C",
+    ["WEAPON_G36K"] = {
+        name = "G36K",
         class = "AR",
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
-        model = "w_ar_g36",
+        model = "w_ar_g36k",
     },
 }
 
