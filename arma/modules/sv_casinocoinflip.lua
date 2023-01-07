@@ -28,6 +28,7 @@ AddEventHandler('playerDropped', function (reason)
     for k,v in pairs(coinflipTables) do
         if v == source then
             coinflipTables[k] = false
+            coinflipGameData[k] = nil
         end
     end
 end)
@@ -49,7 +50,7 @@ AddEventHandler("ARMA:requestSitAtCoinflipTable", function(chairId)
             end
         end
         coinflipTables[chairId] = source
-        currentBetForThatTable = coinflipGameData[chairId]
+        local currentBetForThatTable = coinflipGameData[chairId]
         TriggerClientEvent("ARMA:sendCoinflipTableData",-1,coinflipTables)
         TriggerClientEvent("ARMA:sitAtCoinflipTable",source,chairId,currentBetForThatTable)
     end
@@ -62,6 +63,7 @@ AddEventHandler("ARMA:leaveCoinflipTable", function(chairId)
         for k,v in pairs(coinflipTables) do 
             if v == source then 
                 coinflipTables[k] = false
+                coinflipGameData[k] = nil
             end
         end
         TriggerClientEvent("ARMA:sendCoinflipTableData",-1,coinflipTables)
