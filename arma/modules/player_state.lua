@@ -193,8 +193,5 @@ RegisterNetEvent('ARMA:forceStoreWeapons')
 AddEventHandler('ARMA:forceStoreWeapons', function()
     local source = source 
     local user_id = ARMA.getUserId(source)
-	local data = ARMA.getUserDataTable(user_id)
-    if data ~= nil then
-        data.weapons = {}
-    end
+    ARMA.clearInventory(user_id) 
 end)
