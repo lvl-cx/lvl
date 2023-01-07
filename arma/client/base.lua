@@ -39,7 +39,6 @@ end
 function tARMA.checkWeapon(name)
   if allowedWeapons[name] == nil then
     RemoveWeaponFromPed(PlayerPedId(), GetHashKey(name))
-    TriggerServerEvent("ARMA:acType2", name)
     return
   end
 end

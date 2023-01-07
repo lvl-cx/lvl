@@ -430,13 +430,6 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_ar_g36",
     },
-    ["WEAPON_M4A1"] = {
-        name = "M4 Carbine",
-        class = "AR",
-        ammo = "Police Issued 5.56mm",
-        policeWeapon = true,
-        model = "w_ar_m4a1",
-    },
 }
 
 
