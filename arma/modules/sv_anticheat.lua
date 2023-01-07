@@ -234,6 +234,18 @@ AddEventHandler("ARMA:acType15", function()
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
 end)
 
+-- Screenshot-basic check
+
+RegisterServerEvent("ARMA:failedKeepAlive")
+AddEventHandler("ARMA:failedKeepAlive", function()
+    local user_id = ARMA.getUserId(source)
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
+end)
+
+-- Anticheat Ban
+
 RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
@@ -259,15 +271,6 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
         end
     end
 end)
-
-RegisterServerEvent("ARMA:failedKeepAlive")
-AddEventHandler("ARMA:failedKeepAlive", function()
-    local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
-	local name = GetPlayerName(source)
-    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
-end)
-
 
 Citizen.CreateThread(function()
     Wait(2500)
