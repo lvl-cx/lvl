@@ -39,7 +39,11 @@ AddEventHandler('ARMA:fetchInfoForVehicleToImpound', function(userid, spawncode,
                     vehicle_name = b[1]
                     owner_id = userid
                     vehiclenetid = entityid
-                    owner_name = GetPlayerName(ARMA.getUserSource(userid)) or 'Unknown'
+                    if ARMA.getUserSource(userid) ~= nil then
+                        owner_name = GetPlayerName(ARMA.getUserSource(userid))
+                    else
+                        owner_name = 'Unknown'
+                    end
                     TriggerClientEvent('ARMA:receiveInfoForVehicleToImpound', source, owner_id, owner_name, vehicle, vehicle_name, vehiclenetid)
                 end
             end
