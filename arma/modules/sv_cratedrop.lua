@@ -71,7 +71,7 @@ Citizen.CreateThread(function()
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, oilrig)
         table.insert(activeCrates, crateID)
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
-        Wait(1000 * stayTime)
+        Wait(stayTime * 1000)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
             table.remove(activeCrates, crateID)

@@ -648,16 +648,13 @@ AddEventHandler('ARMA:seizeIllegals', function(playerSrc)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
       local player_id = ARMA.getUserId(playerSrc)
       local cdata = ARMA.getUserDataTable(player_id)
-      cdata = json.decode(cdata.inventory)
-      cdata = json.decode(cdata)
-      for a,b in pairs(cdata) do
+      for a,b in pairs(cdata.inventory) do
           for c,d in pairs(drugs) do
               if a == c then
-                  cdata[a] = nil
+                cdata.inventory[a] = nil
               end
           end
       end
-      cdata.inventory = json.encode(cdata)
       ARMAclient.notify(source, {'~r~Seized illegals.'})
       ARMAclient.notify(playerSrc, {'~r~Your illegals have been seized.'})
     end
