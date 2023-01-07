@@ -196,7 +196,7 @@ function ARMA.getItemWeight(idname)
   local args = ARMA.parseItem(idname)
   local item = ARMA.items[args[1]]
   if item ~= nil then return ARMA.computeItemWeight(item,args) end
-  return 0
+  return 1
 end
 
 -- compute weight of a list of items (in inventory/chest format)

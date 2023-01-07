@@ -329,6 +329,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
         elseif inventoryType == "LootBag" then    
             if LootBagEntities[inventoryInfo].Items[itemId] then 
                 local weightCalculation = ARMA.getInventoryWeight({UserId})+ARMA.getItemWeight({itemId})
+                if weightCalculation == nil then return end
                 if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                     if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > 1 then
                         LootBagEntities[inventoryInfo].Items[itemId].amount = LootBagEntities[inventoryInfo].Items[itemId].amount - 1 
@@ -359,6 +360,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     cdata = json.decode(cdata) or {}
                     if cdata[itemId] and cdata[itemId].amount >= 1 then
                         local weightCalculation = ARMA.getInventoryWeight({UserId})+ARMA.getItemWeight({itemId})
+                        if weightCalculation == nil then return end
                         if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                             if cdata[itemId].amount > 1 then
                                 cdata[itemId].amount = cdata[itemId].amount - 1; 
@@ -392,6 +394,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount >= 1 then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+ARMA.getItemWeight({itemId})
+                                if weightCalculation == nil then return end
                                 local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, 1, true}) then
@@ -424,6 +427,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount >= 1 then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+ARMA.getItemWeight({itemId})
+                                if weightCalculation == nil then return end
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, 1, true}) then
@@ -488,6 +492,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                         cdata = json.decode(cdata) or {}
                         if cdata[itemId] and Quantity <= cdata[itemId].amount  then
                             local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation == nil then return end
                             if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                                 if cdata[itemId].amount > Quantity then
                                     cdata[itemId].amount = cdata[itemId].amount - Quantity; 
@@ -527,6 +532,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                     TriggerClientEvent('ARMA:ToggleNUIFocus', source, true)
                     if Quantity then
                         local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * Quantity)
+                        if weightCalculation == nil then return end
                         if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                             if Quantity <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
                                 if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > Quantity then
@@ -568,6 +574,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                         cdata = json.decode(cdata) or {}
                         if cdata[itemId] and Quantity <= cdata[itemId].amount  then
                             local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * Quantity)
+                            if weightCalculation == nil then return end
                             if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                                 if cdata[itemId].amount > Quantity then
                                     cdata[itemId].amount = cdata[itemId].amount - Quantity; 
@@ -609,6 +616,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                                     cdata = json.decode(cdata) or {}
                                     if data.inventory[itemId] and Quantity <= data.inventory[itemId].amount  then
                                         local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * Quantity)
+                                        if weightCalculation == nil then return end
                                         local maxVehKg = Housing.chestsize[houseName] or 500
                                         if weightCalculation <= maxVehKg then
                                             if ARMA.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
@@ -650,6 +658,7 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                                     cdata = json.decode(cdata) or {}
                                     if data.inventory[itemId] and Quantity <= data.inventory[itemId].amount  then
                                         local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * Quantity)
+                                        if weightCalculation == nil then return end
                                         local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                         if weightCalculation <= maxVehKg then
                                             if ARMA.tryGetInventoryItem({UserId, itemId, Quantity, true}) then
@@ -712,6 +721,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
                     local weightCalculation = ARMA.getInventoryWeight({user_id})+(ARMA.getItemWeight({itemId}) * cdata[itemId].amount)
+                    if weightCalculation == nil then return end
                     if weightCalculation <= ARMA.getInventoryMaxWeight({user_id}) then
                         ARMA.giveInventoryItem({user_id, itemId, cdata[itemId].amount, true})
                         cdata[itemId] = nil;
@@ -736,6 +746,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
         elseif inventoryType == "LootBag" then    
             if LootBagEntities[inventoryInfo].Items[itemId] then 
                 local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) *  LootBagEntities[inventoryInfo].Items[itemId].amount)
+                if weightCalculation == nil then return end
                 if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                     if  LootBagEntities[inventoryInfo].Items[itemId].amount <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
                         ARMA.giveInventoryItem({UserId, itemId, LootBagEntities[inventoryInfo].Items[itemId].amount, true})
@@ -763,6 +774,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                 cdata = json.decode(cdata) or {}
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
                     local weightCalculation = ARMA.getInventoryWeight({UserId})+(ARMA.getItemWeight({itemId}) * cdata[itemId].amount)
+                    if weightCalculation == nil then return end
                     if weightCalculation <= ARMA.getInventoryMaxWeight({UserId}) then
                         ARMA.giveInventoryItem({UserId, itemId, cdata[itemId].amount, true})
                         cdata[itemId] = nil;
@@ -790,6 +802,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount <= data.inventory[itemId].amount  then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * data.inventory[itemId].amount)
+                                if weightCalculation == nil then return end
                                 local maxVehKg = Housing.chestsize[houseName] or 500
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then
@@ -822,6 +835,7 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                             cdata = json.decode(cdata) or {}
                             if data.inventory[itemId] and data.inventory[itemId].amount <= data.inventory[itemId].amount  then
                                 local weightCalculation = ARMA.computeItemsWeight({cdata})+(ARMA.getItemWeight({itemId}) * data.inventory[itemId].amount)
+                                if weightCalculation == nil then return end
                                 local maxVehKg = Inventory.vehicle_chest_weights[inventoryInfo] or Inventory.default_vehicle_chest_weight
                                 if weightCalculation <= maxVehKg then
                                     if ARMA.tryGetInventoryItem({UserId, itemId, data.inventory[itemId].amount, true}) then

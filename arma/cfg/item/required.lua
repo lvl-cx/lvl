@@ -69,6 +69,8 @@ local wbody_weight = function(args)
           return 10.00
         elseif v.class == "Heavy" then
           return 15.00
+        else
+          return 1.00
         end
       end
     end
