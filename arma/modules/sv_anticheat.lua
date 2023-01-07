@@ -234,26 +234,6 @@ AddEventHandler("ARMA:acType15", function()
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
 end)
 
-
-
-RegisterServerEvent("ARMA:getAnticheatData")
-AddEventHandler("ARMA:getAnticheatData",function()
-    local source = source
-    user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'Developer') then
-        local bannedplayerstable = {}
-        exports['ghmattimysql']:execute("SELECT * FROM `arma_anticheat`", {}, function(result)
-            if result ~= nil then
-                for k,v in pairs(result) do
-                    bannedplayerstable[v.user_id] = {v.ban_id, v.user_id, v.username, v.reason, v.extra}
-                end 
-                TriggerClientEvent("ARMA:sendAnticheatData", source, bannedplayerstable, #result, actypes)
-            end
-        end)
-    end
-end)
-
-
 RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
@@ -280,22 +260,14 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     end
 end)
 
-RegisterServerEvent("ARMA:acUnban")
-AddEventHandler("ARMA:acUnban",function(permid)
-    local source = source
+RegisterServerEvent("ARMA:failedKeepAlive")
+AddEventHandler("ARMA:failedKeepAlive", function()
     local user_id = ARMA.getUserId(source)
-    local playerName = GetPlayerName(source)
-    if ARMA.hasGroup(user_id, 'Developer') then
-        ARMAclient.notify(source,{'~g~AC Unbanned ID: ' .. permid})
-        tARMA.sendWebhook('anticheat', 'Anticheat Unban', "> Admin Name: **"..playerName.."**\n> Admin Perm ID: **"..user_id.."**\n> Players Perm ID: **"..permid.."**")
-        ARMA.setBanned(permid,false)
-    else
-        local player = ARMA.getUserSource(user_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 11, name, player, 'Attempted to AC Unban Someone')
-    end
+	local player = ARMA.getUserSource(user_id)
+	local name = GetPlayerName(source)
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
 end)
+
 
 Citizen.CreateThread(function()
     Wait(2500)
