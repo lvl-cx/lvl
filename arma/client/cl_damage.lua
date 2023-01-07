@@ -100,7 +100,7 @@ function GameEventTriggered(i, j)
         end
     end
 end
-AddEventHandler("entityDamaged",function(w, x)
+AddEventHandler("entityDamaged",function(w, x, n, y)
     local z = PlayerPedId()
     if x == z and w ~= z and IsEntityAPed(w) and GetEntityHealth(w) > 105 and not IsEntityDead(w) then
         Citizen.Wait(0)
@@ -148,11 +148,4 @@ CreateThread(function()
         end
         Wait(100)
     end
-end)
-
-RegisterNetEvent("arma:PlaySound")
-AddEventHandler("arma:PlaySound", function(soundname)
-    SendNUIMessage({
-        transactionType = soundname,
-    })
 end)
