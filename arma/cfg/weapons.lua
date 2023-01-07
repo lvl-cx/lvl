@@ -266,7 +266,7 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_ar_spar16",
     },
-    ["WEAPON_PDM4A1"] = {
+    ["WEAPON_M4A1"] = {
         name = "M4A1",
         class = "AR",
         ammo = "Police Issued 5.56mm",
@@ -430,7 +430,7 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_ar_g36",
     },
-    ["WEAPON_PDM4A1"] = {
+    ["WEAPON_M4A1"] = {
         name = "M4 Carbine",
         class = "AR",
         ammo = "Police Issued 5.56mm",
