@@ -79,16 +79,26 @@ AddEventHandler('ARMA:requestDrugPriceUpdate', function()
     defaultPrices['Diamond'])
 end)
 
+local function checkTraderBucket(source)
+    if GetPlayerRoutingBucket(source) ~= 0 then
+        ARMAclient.notify(source, {'~r~You cannot sell drugs in this dimension.'})
+        return false
+    end
+    return true
+end
+
 RegisterNetEvent('ARMA:sellCopper')
 AddEventHandler('ARMA:sellCopper', function()
     local source = source
 	local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Copper') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Copper', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Copper for £'..getMoneyStringFormatted(defaultPrices['Copper'])})
-        ARMA.giveBankMoney(user_id, defaultPrices['Copper'])
-    else
-        ARMAclient.notify(source, {'~r~You do not have Copper.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Copper') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Copper', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Copper for £'..getMoneyStringFormatted(defaultPrices['Copper'])})
+            ARMA.giveBankMoney(user_id, defaultPrices['Copper'])
+        else
+            ARMAclient.notify(source, {'~r~You do not have Copper.'})
+        end
     end
 end)
 
@@ -96,12 +106,14 @@ RegisterNetEvent('ARMA:sellLimestone')
 AddEventHandler('ARMA:sellLimestone', function()
     local source = source
 	local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Limestone') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Limestone', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Limestone for £'..getMoneyStringFormatted(defaultPrices['Limestone'])})
-        ARMA.giveBankMoney(user_id, defaultPrices['Limestone'])
-    else
-        ARMAclient.notify(source, {'~r~You do not have Limestone.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Limestone') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Limestone', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Limestone for £'..getMoneyStringFormatted(defaultPrices['Limestone'])})
+            ARMA.giveBankMoney(user_id, defaultPrices['Limestone'])
+        else
+            ARMAclient.notify(source, {'~r~You do not have Limestone.'})
+        end
     end
 end)
 
@@ -109,12 +121,14 @@ RegisterNetEvent('ARMA:sellGold')
 AddEventHandler('ARMA:sellGold', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Gold') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Gold', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Gold for £'..getMoneyStringFormatted(defaultPrices['Gold'])})
-        ARMA.giveBankMoney(user_id, defaultPrices['Gold'])
-    else
-        ARMAclient.notify(source, {'~r~You do not have Gold.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Gold') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Gold', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Gold for £'..getMoneyStringFormatted(defaultPrices['Gold'])})
+            ARMA.giveBankMoney(user_id, defaultPrices['Gold'])
+        else
+            ARMAclient.notify(source, {'~r~You do not have Gold.'})
+        end
     end
 end)
 
@@ -122,12 +136,14 @@ RegisterNetEvent('ARMA:sellDiamond')
 AddEventHandler('ARMA:sellDiamond', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Diamond') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Diamond', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Diamond for £'..getMoneyStringFormatted(defaultPrices['Diamond'])})
-        ARMA.giveBankMoney(user_id, defaultPrices['Diamond'])
-    else
-        ARMAclient.notify(source, {'~r~You do not have Diamond.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Diamond') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Diamond', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Diamond for £'..getMoneyStringFormatted(defaultPrices['Diamond'])})
+            ARMA.giveBankMoney(user_id, defaultPrices['Diamond'])
+        else
+            ARMAclient.notify(source, {'~r~You do not have Diamond.'})
+        end
     end
 end)
 
@@ -135,13 +151,15 @@ RegisterNetEvent('ARMA:sellWeed')
 AddEventHandler('ARMA:sellWeed', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Weed') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Weed', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Weed for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Weed'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Weed'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Weed'), 'Weed')
-    else
-        ARMAclient.notify(source, {'~r~You do not have Weed.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Weed') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Weed', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Weed for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Weed'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Weed'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Weed'), 'Weed')
+        else
+            ARMAclient.notify(source, {'~r~You do not have Weed.'})
+        end
     end
 end)
 
@@ -149,13 +167,15 @@ RegisterNetEvent('ARMA:sellCocaine')
 AddEventHandler('ARMA:sellCocaine', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Cocaine') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Cocaine', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Cocaine for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Cocaine'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Cocaine'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Cocaine'), 'Cocaine')
-    else
-        ARMAclient.notify(source, {'~r~You do not have Cocaine.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Cocaine') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Cocaine', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Cocaine for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Cocaine'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Cocaine'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Cocaine'), 'Cocaine')
+        else
+            ARMAclient.notify(source, {'~r~You do not have Cocaine.'})
+        end
     end
 end)
 
@@ -163,13 +183,15 @@ RegisterNetEvent('ARMA:sellMeth')
 AddEventHandler('ARMA:sellMeth', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Meth') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Meth', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Meth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Meth'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Meth'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Meth'), 'Meth')
-    else
-        ARMAclient.notify(source, {'~r~You do not have Meth.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Meth') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Meth', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Meth for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Meth'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Meth'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Meth'), 'Meth')
+        else
+            ARMAclient.notify(source, {'~r~You do not have Meth.'})
+        end
     end
 end)
 
@@ -177,13 +199,15 @@ RegisterNetEvent('ARMA:sellHeroin')
 AddEventHandler('ARMA:sellHeroin', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'Heroin') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'Heroin', 1, false)
-        ARMAclient.notify(source, {'~g~Sold Heroin for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Heroin'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Heroin'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Heroin'), 'Heroin')
-    else
-        ARMAclient.notify(source, {'~r~You do not have Heroin.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'Heroin') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Heroin', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Heroin for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('Heroin'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('Heroin'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('Heroin'), 'Heroin')
+        else
+            ARMAclient.notify(source, {'~r~You do not have Heroin.'})
+        end
     end
 end)
 
@@ -191,13 +215,15 @@ RegisterNetEvent('ARMA:sellLSDNorth')
 AddEventHandler('ARMA:sellLSDNorth', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
-        ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDNorth'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDNorth'), 'LSDNorth')
-    else
-        ARMAclient.notify(source, {'~r~You do not have LSD.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
+            ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDNorth'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDNorth'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDNorth'), 'LSDNorth')
+        else
+            ARMAclient.notify(source, {'~r~You do not have LSD.'})
+        end
     end
 end)
 
@@ -205,13 +231,15 @@ RegisterNetEvent('ARMA:sellLSDSouth')
 AddEventHandler('ARMA:sellLSDSouth', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
-        ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
-        ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
-        ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDSouth'))
-        ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDSouth'), 'LSDSouth')
-    else
-        ARMAclient.notify(source, {'~r~You do not have LSD.'})
+    if checkTraderBucket(source) then
+        if ARMA.getInventoryItemAmount(user_id, 'LSD') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'LSD', 1, false)
+            ARMAclient.notify(source, {'~g~Sold LSD for £'..getMoneyStringFormatted(ARMA.getCommissionPrice('LSDSouth'))})
+            ARMA.giveMoney(user_id, ARMA.getCommissionPrice('LSDSouth'))
+            ARMA.turfSaleToGangFunds(ARMA.getCommissionPrice('LSDSouth'), 'LSDSouth')
+        else
+            ARMAclient.notify(source, {'~r~You do not have LSD.'})
+        end
     end
 end)
 
@@ -219,12 +247,14 @@ RegisterNetEvent('ARMA:sellAll')
 AddEventHandler('ARMA:sellAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    for k,v in pairs(defaultPrices) do
-        if ARMA.getInventoryItemAmount(user_id, k) > 0 then
-            local amount = ARMA.getInventoryItemAmount(user_id, k)
-            ARMA.tryGetInventoryItem(user_id, k, amount, false)
-            ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
-            ARMA.giveBankMoney(user_id, defaultPrices[k]*amount)
+    if checkTraderBucket(source) then
+        for k,v in pairs(defaultPrices) do
+            if ARMA.getInventoryItemAmount(user_id, k) > 0 then
+                local amount = ARMA.getInventoryItemAmount(user_id, k)
+                ARMA.tryGetInventoryItem(user_id, k, amount, false)
+                ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
+                ARMA.giveBankMoney(user_id, defaultPrices[k]*amount)
+            end
         end
     end
 end)
