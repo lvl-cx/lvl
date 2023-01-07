@@ -1,7 +1,7 @@
 local cfg = module("cfg/cfg_radios")
 
-local function getRadioType(userid)
-    if ARMA.hasPermission(userid, "police.onduty.permission") then
+local function getRadioType(user_id)
+    if ARMA.hasPermission(user_id, "police.onduty.permission") then
         return "Police"
     elseif ARMA.hasPermission(user_id, "nhs.onduty.permission") then
         return "NHS"
@@ -20,8 +20,8 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local user_id = ARMA.getUserId(source)
     local radioType = getRadioType(user_id)
     if radioType then
-        TriggerClientEvent('ARMA:radiosAddPlayer', -1, radioType, source)
-        TriggerClientEvent('ARMA:radiosCreateChannel', source, name, players, first_spawn)
+        TriggerClientEvent('ARMA:radiosAddPlayer', -1, 1, source, {name = GetPlayerName(source), sortOrder = 1})
+        TriggerClientEvent('ARMA:radiosCreateChannel', source, 1, GetPlayerName(source), ARMA.getUsersByPermission('police.onduty.permission'))
     end
 end)
 
