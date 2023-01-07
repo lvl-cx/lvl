@@ -79,9 +79,9 @@ end)
 
 
 RegisterCommand('testad', function(source)
-    for k,v in pairs(ARMA.getUsers()) do
-        if ARMA.hasPermission(k, 'police.onduty.permission') then
-            TriggerClientEvent('ARMA:notifyAD', v, 'Phase 3 Firearms', 'Red Vauxhall Corsa')
-        end
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if user_id == 1 then
+        TriggerClientEvent('ARMA:notifyAD', source, 'Phase 3 Firearms', 'Red Vauxhall Corsa')
     end
 end)

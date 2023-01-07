@@ -65,7 +65,7 @@ AddEventHandler('ARMA:gangDefenseLocationUpdate', function(turfname, atkdfnd, tr
 		if trueorfalse then
 			turfData[turfID].beingCaptured = false
 			turfData[turfID].timeLeft = 300
-			TriggerClientEvent('chatMessage', -1, "^2"..turfData[turfID].name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
+			TriggerClientEvent('chatMessage', -1, "The "..turfData[turfID].name.." trader is no longer being captured.", { 128, 128, 128 }, message, "alert")
 		end
 	elseif atkdfnd == 'Defenders' then
 		if trueorfalse then
@@ -75,7 +75,7 @@ AddEventHandler('ARMA:gangDefenseLocationUpdate', function(turfname, atkdfnd, tr
 		else
 			turfData[turfID].beingCaptured = false
 			turfData[turfID].timeLeft = 300
-			TriggerClientEvent('chatMessage', -1, "^2"..turfData[turfID].name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
+			TriggerClientEvent('chatMessage', -1, "The "..turfData[turfID].name.." is no longer being captured.", { 128, 128, 128 }, message, "alert")
 		end
 	end
 	
@@ -100,7 +100,7 @@ AddEventHandler('ARMA:initiateGangCapture', function(x,y)
 							if tostring(user_id) == I then
 								TriggerClientEvent('ARMA:initiateGangCaptureCheck', source, y, true)
 								turfData[x].beingCaptured = true 
-								TriggerClientEvent('chatMessage', -1, "^2"..turfData[x].name.." ^1is being captured.", { 128, 128, 128 }, message, "alert")
+								TriggerClientEvent('chatMessage', -1, "The "..turfData[x].name.." trader is being attacked by "..V.gangname..".", { 128, 128, 128 }, message, "alert")
 								if turfData[x].gangOwner ~= 'N/A' then
 									exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
 										for K,V in pairs(gotGangs) do
@@ -136,7 +136,7 @@ AddEventHandler('ARMA:gangCaptureSuccess', function(turfname)
 					for K,V in pairs(gotGangs) do
 						for I,L in pairs(json.decode(V.gangmembers)) do
 							if tostring(user_id) == I then
-								TriggerClientEvent('chatMessage', -1, "^2"..v.name.." ^1has been captured.", { 128, 128, 128 }, message, "alert")
+								TriggerClientEvent('chatMessage', -1, "The "..v.name.." trader has been captured by "..v.gangname..".", { 128, 128, 128 }, message, "alert")
 								for a,b in pairs(json.decode(V.gangmembers)) do
 									turfData[k].gangOwner = V.gangname
 									turfData[k].commission = V.commission
@@ -166,7 +166,7 @@ AddEventHandler('ARMA:gangDefenseSuccess', function(turfname)
 					if tostring(user_id) == I then
 						for a,b in pairs(turfData) do
 							if b.name == turfname then
-								TriggerClientEvent('chatMessage', -1, "^2"..b.name.." ^1is no longer being captured.", { 128, 128, 128 }, message, "alert")
+								TriggerClientEvent('chatMessage', -1, "The "..b.name.." trader is no longer being attacked.", { 128, 128, 128 }, message, "alert")
 								turfData[a] = {ownership = true, gangOwner = V.gangname, commission = b.commission, cooldown = 300}
 								TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 								return
@@ -189,7 +189,7 @@ AddEventHandler('ARMA:setNewWeedPrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[1].gangOwner then
 						turfData[1].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2Weed ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "Weed trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
@@ -210,7 +210,7 @@ AddEventHandler('ARMA:setNewCocainePrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[2].gangOwner then
 						turfData[2].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2Cocaine ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "Cocaine trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
@@ -231,7 +231,7 @@ AddEventHandler('ARMA:setNewMethPrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[3].gangOwner then
 						turfData[3].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2Meth ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "Meth trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
@@ -252,7 +252,7 @@ AddEventHandler('ARMA:setNewHeroinPrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[4].gangOwner then
 						turfData[4].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2Heroin ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "Heroin trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
@@ -273,7 +273,7 @@ AddEventHandler('ARMA:setNewLargeArmsCommission', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[5].gangOwner then
 						turfData[5].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2Large Arms ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "Large Arms trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						TriggerClientEvent('ARMA:recalculateLargeArms', -1, price)
@@ -295,7 +295,7 @@ AddEventHandler('ARMA:setNewLSDNorthPrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[6].gangOwner then
 						turfData[6].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2LSD North ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "LSD North trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
@@ -316,7 +316,7 @@ AddEventHandler('ARMA:setNewLSDSouthPrice', function(price)
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[7].gangOwner then
 						turfData[6].commission = price
-						TriggerClientEvent('chatMessage', -1, "^2LSD South ^1commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
+						TriggerClientEvent('chatMessage', -1, "LSD South trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 						return
