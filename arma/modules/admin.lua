@@ -800,24 +800,26 @@ end)
 RegisterServerEvent("ARMA:Teleport2AdminIsland")
 AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
     local admin = source
-    local admin_id = ARMA.getUserId(admin)
-    local admin_name = GetPlayerName(admin)
-    local player_id = ARMA.getUserId(id)
-    local player_name = GetPlayerName(id)
-    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
-        local playerName = GetPlayerName(source)
-        local playerOtherName = GetPlayerName(id)
-        tARMA.sendWebhook('tp-to-admin-zone', 'ARMA Teleport Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..player_name.."**\n> Player TempID: **"..id.."**\n> Player PermID: **"..player_id.."**")
-        local ped = GetPlayerPed(source)
-        local ped2 = GetPlayerPed(id)
-        SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
-        ARMAclient.notify(ARMA.getUserSource(player_id),{'~g~You are now in an admin situation, do not leave the game.'})
-        ARMAclient.setPlayerCombatTimer(id, {0})
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone to Admin Island')
+    if id ~= nil then
+        local admin_id = ARMA.getUserId(admin)
+        local admin_name = GetPlayerName(admin)
+        local player_id = ARMA.getUserId(id)
+        local player_name = GetPlayerName(id)
+        if ARMA.hasPermission(admin_id, 'admin.tp2player') then
+            local playerName = GetPlayerName(source)
+            local playerOtherName = GetPlayerName(id)
+            tARMA.sendWebhook('tp-to-admin-zone', 'ARMA Teleport Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..player_name.."**\n> Player TempID: **"..id.."**\n> Player PermID: **"..player_id.."**")
+            local ped = GetPlayerPed(source)
+            local ped2 = GetPlayerPed(id)
+            SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
+            ARMAclient.notify(ARMA.getUserSource(player_id),{'~g~You are now in an admin situation, do not leave the game.'})
+            ARMAclient.setPlayerCombatTimer(id, {0})
+        else
+            local player = ARMA.getUserSource(admin_id)
+            local name = GetPlayerName(source)
+            Wait(500)
+            TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone to Admin Island')
+        end
     end
 end)
 
@@ -825,15 +827,17 @@ RegisterServerEvent("ARMA:TeleportBackFromAdminZone")
 AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeAdminZone)
     local admin = source
     local admin_id = ARMA.getUserId(admin)
-    if ARMA.hasPermission(admin_id, 'admin.tp2player') then
-        local ped = GetPlayerPed(id)
-        SetEntityCoords(ped, savedCoordsBeforeAdminZone)
-        tARMA.sendWebhook('tp-back-from-admin-zone', 'ARMA Teleport Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..GetPlayerName(id).."**\n> Player TempID: **"..id.."**\n> Player PermID: **"..ARMA.getUserId(id).."**")
-    else
-        local player = ARMA.getUserSource(admin_id)
-        local name = GetPlayerName(source)
-        Wait(500)
-        TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone Back from Admin Zone')
+    if id ~= nil then
+        if ARMA.hasPermission(admin_id, 'admin.tp2player') then
+            local ped = GetPlayerPed(id)
+            SetEntityCoords(ped, savedCoordsBeforeAdminZone)
+            tARMA.sendWebhook('tp-back-from-admin-zone', 'ARMA Teleport Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..GetPlayerName(id).."**\n> Player TempID: **"..id.."**\n> Player PermID: **"..ARMA.getUserId(id).."**")
+        else
+            local player = ARMA.getUserSource(admin_id)
+            local name = GetPlayerName(source)
+            Wait(500)
+            TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Teleport Someone Back from Admin Zone')
+        end
     end
 end)
 
@@ -850,17 +854,17 @@ AddEventHandler('ARMA:AddCar', function()
                 if car == "" then return end
                 local car = car
                 ARMA.prompt(source,"Locked:","",function(source, locked) 
-                if locked == '0' or locked == '1' then
-                    if permid and car ~= "" then  
-                        exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
-                        ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
-                    else 
-                        ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
+                    if locked == '0' or locked == '1' then
+                        if permid and car ~= "" then  
+                            exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
+                            ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
+                            tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
+                        else 
+                            ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
+                        end
+                    else
+                        ARMAclient.notify(source,{'~g~Locked must be either 1 or 0'}) 
                     end
-                else
-                    ARMAclient.notify(source,{'~g~Locked must be either 1 or 0'}) 
-                end
                 end)
             end)
         end)
