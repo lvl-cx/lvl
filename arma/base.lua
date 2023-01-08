@@ -1085,6 +1085,7 @@ AddEventHandler("playerDropped",function(reason)
     end
     ARMAclient.removeBasePlayer(-1,{source})
     ARMAclient.removePlayer(-1,{source})
+    ARMAclient.notify(source,{"~r~"..GetPlayerName(source).." ~w~disconnected."})
 end)
 
 MySQL.createCommand("ARMA/setusername","UPDATE arma_users SET username = @username WHERE id = @user_id")
@@ -1112,6 +1113,7 @@ AddEventHandler("ARMAcli:playerSpawned", function()
         end
         TriggerEvent("ARMA:playerSpawn",user_id,player,first_spawn)
         TriggerClientEvent("ARMA:onClientSpawn",player,user_id,first_spawn)
+        ARMAclient.notify(source,{"~g~"..GetPlayerName(source).." ~w~connected"})
     end
     Debug.pend()
 end)
