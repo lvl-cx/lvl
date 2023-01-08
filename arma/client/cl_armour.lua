@@ -48,7 +48,7 @@ Citizen.CreateThread(function()
     end 
 end)
 
-
+local savedArmour = 0
 local j=false
 function tARMA.isPlayerInAnimalForm()
     return j 
@@ -56,6 +56,7 @@ end
 local function k()
     local l=GetEntityModel(PlayerPedId())
     if l==GetHashKey('mp_m_freemode_01') or l==GetHashKey('mp_f_freemode_01') then 
+        savedArmour = tARMA.getArmour()
         local m=tARMA.loadModel("a_c_deer")
         local n=tARMA.getPlayerCoords()
         local o=ClonePed(PlayerPedId(),true,true,true)
@@ -96,6 +97,7 @@ local function k()
         DeleteEntity(o)
         DetachEntity(PlayerPedId())
         tARMA.setCustomization(p)
+        tARMA.setArmour(savedArmour)
     else 
         tARMA.notify("~r~Custom peds cannot be used with horses.")
     end 
