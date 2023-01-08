@@ -205,7 +205,7 @@ Citizen.CreateThread(function()
 end)
 
 function tARMA.checkForRole(user_id, role_id)
-	local discord_id = 	exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = user_id})[1].discord_id
+	local discord_id = exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = user_id})[1].discord_id
 	if not discord_id then
 		return false
 	end
