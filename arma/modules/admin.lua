@@ -633,6 +633,7 @@ AddEventHandler('ARMA:RevivePlayer', function(admin, targetid, reviveall)
     if target ~= nil then
         if ARMA.hasPermission(admin_id, "admin.revive") then
             ARMAclient.RevivePlayer(target, {})
+            ARMAclient.setPlayerCombatTimer(target, {0})
             if not reviveall then
                 local playerName = GetPlayerName(source)
                 local playerOtherName = GetPlayerName(target)
