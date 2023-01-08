@@ -309,6 +309,11 @@ function RageUI.Visible(Menu, Value)
                     Menu.Open = Value
                     menuOpen = true
                 else
+                    if RageUI.CurrentMenu == Menu then
+                        menuOpen = false
+                        RageUI.CurrentMenu = nil
+                        ResetScriptGfxAlign()
+                    end
                     Menu.Open = Value
                     menuOpen = false
                     RageUI.CurrentMenu = nil
