@@ -589,7 +589,7 @@ AddEventHandler('ARMA:breathalyserRequest', function(temp)
     end
 end)
 
-local bullets = {
+seizeBullets = {
   ['9mm Bullets'] = true,
   ['7.62mm Bullets'] = true,
   ['.357 Bullets'] = true,
@@ -619,7 +619,7 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
           end
       end
       for c,d in pairs(cdata.inventory) do
-          if bullets[c] then
+          if seizeBullets[c] then
             cdata.inventory[c] = nil
           end
       end
@@ -629,7 +629,7 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
     end
 end)
 
-local drugs = {
+seizeDrugs = {
   ['Weed leaf'] = true,
   ['Weed'] = true,
   ['Coca leaf'] = true,
@@ -650,7 +650,7 @@ AddEventHandler('ARMA:seizeIllegals', function(playerSrc)
       local player_id = ARMA.getUserId(playerSrc)
       local cdata = ARMA.getUserDataTable(player_id)
       for a,b in pairs(cdata.inventory) do
-          for c,d in pairs(drugs) do
+          for c,d in pairs(seizeDrugs) do
               if a == c then
                 cdata.inventory[a] = nil
               end
