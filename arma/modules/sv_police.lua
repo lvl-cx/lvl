@@ -623,6 +623,7 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
             cdata.inventory[c] = nil
           end
       end
+      TriggerEvent('ARMA:RefreshInventory', playerSrc)
       ARMAclient.notify(source, {'~r~Seized weapons.'})
       ARMAclient.notify(playerSrc, {'~r~Your weapons have been seized.'})
     end
@@ -655,6 +656,7 @@ AddEventHandler('ARMA:seizeIllegals', function(playerSrc)
               end
           end
       end
+      TriggerEvent('ARMA:RefreshInventory', playerSrc)
       ARMAclient.notify(source, {'~r~Seized illegals.'})
       ARMAclient.notify(playerSrc, {'~r~Your illegals have been seized.'})
     end
