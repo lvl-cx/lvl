@@ -114,6 +114,7 @@ Citizen.CreateThread(function()
                         k()
                     else 
                         tARMA.notify("~r~You do not have the [Horse Trained] whitelist.")
+                    end
                 else 
                     tARMA.notify("~r~This is only available to the MET Police only.")
                 end 
@@ -132,6 +133,7 @@ RegisterCommand("policehorse",function()
                 k()
             else 
                 tARMA.notify("~r~You do not have the [Horse Trained] whitelist.")
+            end
         else 
             tARMA.notify("~r~This is only available to the MET Police only.")
         end 
