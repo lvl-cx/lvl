@@ -55,6 +55,8 @@ Citizen.CreateThread(function()
 		if(IsPedInAnyVehicle(Ped)) then
 			local PedCar = GetVehiclePedIsIn(Ped, false)
 			if PedCar and GetPedInVehicleSeat(PedCar, -1) == Ped then
+
+
 				SendNUIMessage({
 					showfuel = true,
 					fuel = GetFuel(PedCar)

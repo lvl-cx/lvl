@@ -84,4 +84,9 @@ $(document).ready(function(){
 
     html.text(value);
   }
+
+  // setProgress(input.value,element);
+  // setProgressFuel(85,'.progress-fuel');
+  // setProgressSpeed(124,'.progress-speed');
+
 });

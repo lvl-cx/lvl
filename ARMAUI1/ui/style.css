@@ -60,6 +60,7 @@ body {
   transform-origin: 50% 50%; }
 
 .huds {
+  display: none;
   height: 100%;
   width: 100%; }
   .huds .hud.dashboard {
