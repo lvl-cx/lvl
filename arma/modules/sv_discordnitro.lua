@@ -4,14 +4,9 @@ RegisterCommand('craftbmx', function(source)
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         TriggerClientEvent("ARMA:spawnNitroBMX", source)
     else
-        exports["discordroles"]:isRolePresent(source, {'975543463808487465'}, function(hasRole, roles)
-            if (not roles) then 
-                ARMAclient.notify(source,{"~r~It seems you don't have discord running or installed try restart fivem if this issue persists /calladmin."})
-            end
-            if hasRole then
-                TriggerClientEvent("ARMA:spawnNitroBMX", source)
-            end
-        end)
+        if ARMA.checkForRole(user_id, '975543463808487465') then
+            TriggerClientEvent("ARMA:spawnNitroBMX", source)
+        end
     end
 end)
 

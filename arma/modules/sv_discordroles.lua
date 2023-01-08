@@ -39,12 +39,13 @@ local function GetIdentifier(source, id_type)
 end
 
 local function Get_Client_Discord_ID(source)
-	local discord_id = GetIdentifier(source, 'discord')
-	if discord_id then
-		return discord_id:gsub('discord:', '')
-	else
-		return exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = ARMA.getUserId(source)})[1].discord_id
-	end
+	-- local discord_id = GetIdentifier(source, 'discord')
+	-- if discord_id then
+	-- 	return discord_id:gsub('discord:', '')
+	-- else
+	-- 	return exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = ARMA.getUserId(source)})[1].discord_id
+	-- end
+	return exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = ARMA.getUserId(source)})[1].discord_id
 end
 
 local function Client_Has_Role(roles_table, role_id)
@@ -202,3 +203,20 @@ Citizen.CreateThread(function()
 		Get_Guild_Status(guild)
 	end
 end)
+
+function tARMA.checkForRole(user_id, role_id)
+	local discord_id = 	exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = user_id})[1].discord_id
+	if not discord_id then
+		return false
+	end
+	local endpoint = ("guilds/%s/members/%s"):format(cfg.Guild_ID, discord_id)
+	local member = DiscordRequest("GET", endpoint, {})
+	if member.code == 200 then
+		local data = json.decode(member.data)
+		if data then
+			local has_role = Client_Has_Role(data.roles, role_id)
+			return has_role
+		end
+	end
+	return false
+end
