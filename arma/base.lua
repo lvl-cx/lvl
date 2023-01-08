@@ -861,7 +861,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
     local source = source
     Debug.pbegin("playerConnecting")
     local ids = GetPlayerIdentifiers(source)
-    
     if ids ~= nil and #ids > 0 then
         deferrals.update("[ARMA] Checking identifiers...")
         ARMA.getUserIdByIdentifiers(ids, function(user_id)
@@ -880,6 +879,11 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
             end)
             -- if user_id ~= nil and ARMA.rusers[user_id] == nil then -- check user validity and if not already connected (old way, disabled until playerDropped is sure to be called)
             if user_id ~= nil then -- check user validity 
+                deferrals.update("[ARMA] Checking discord verification...")
+                if not tARMA.checkForRole(user_id, '975490533344559161') then
+                    deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
+                    return
+                end
                 deferrals.update("[ARMA] Fetching Tokens...")
                 ARMA.StoreTokens(source, user_id) 
                 deferrals.update("[ARMA] Checking banned...")
