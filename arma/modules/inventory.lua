@@ -103,18 +103,30 @@ function ch_trash(idname, player, choice)
   if user_id ~= nil then
     -- prompt number
     TriggerClientEvent('ARMA:ToggleNUIFocus', player, false)
-    ARMA.prompt(player,lang.inventory.trash.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
-      local amount = parseInt(amount)
-      if ARMA.tryGetInventoryItem(user_id,idname,amount,false) then
+    if ARMA.getInventoryItemAmount(user_id,idname) > 1 then 
+      ARMA.prompt(player,lang.inventory.trash.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
+        local amount = parseInt(amount)
+        if ARMA.tryGetInventoryItem(user_id,idname,amount,false) then
+          TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+          TriggerEvent('ARMA:RefreshInventory', player)
+          ARMAclient.notify(player,{lang.inventory.trash.done({ARMA.getItemName(idname),amount})})
+          ARMAclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
+        else
+          TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
+          ARMAclient.notify(player,{lang.common.invalid_value()})
+        end
+      end)
+    else
+      if ARMA.tryGetInventoryItem(user_id,idname,1,false) then
         TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
         TriggerEvent('ARMA:RefreshInventory', player)
-        ARMAclient.notify(player,{lang.inventory.trash.done({ARMA.getItemName(idname),amount})})
+        ARMAclient.notify(player,{lang.inventory.trash.done({ARMA.getItemName(idname),1})})
         ARMAclient.playAnim(player,{true,{{"pickup_object","pickup_low",1}},false})
       else
         TriggerClientEvent('ARMA:ToggleNUIFocus', player, true)
         ARMAclient.notify(player,{lang.common.invalid_value()})
       end
-    end)
+    end
   end
 end
 
