@@ -686,13 +686,6 @@ AddEventHandler("ARMA:getGarageFolders",function()
 end)
 
 local cfg_weapons = module("cfg/weapons")
-local bullets = {
-    ['9mm Bullets'] = true,
-    ['7.62mm Bullets'] = true,
-    ['.357 Bullets'] = true,
-    ['12 Gauge Bullets'] = true,
-    ['.308 Sniper Rounds'] = true,
-}
 
 RegisterServerEvent("ARMA:searchVehicle")
 AddEventHandler('ARMA:searchVehicle', function(entity, permid)
@@ -704,31 +697,38 @@ AddEventHandler('ARMA:searchVehicle', function(entity, permid)
                 if spawncode and owner == permid then
                     local vehformat = 'chest:u1veh_'..spawncode..'|'..permid
                     ARMA.getSData(vehformat, function(cdata)
-                        if cdata == nil then return end
-                        cdata = json.decode(cdata)
-                        for a,b in pairs(cdata) do
-                            if string.find(a, 'wbody|') then
-                                c = a:gsub('wbody|', '')
-                                cdata[c] = b
-                                cdata[a] = nil
-                            end
-                        end
-                        for k,v in pairs(cfg_weapons.weapons) do
-                            if cdata[k] ~= nil then
-                                if not v.policeWeapon then
-                                    ARMAclient.notify(source, {'~r~Seized v.'..v.name..' x'..cdata[k].amount..'.'})
-                                    cdata[k] = nil
+                        if cdata ~= nil then
+                            cdata = json.decode(cdata)
+                            for a,b in pairs(cdata) do
+                                if string.find(a, 'wbody|') then
+                                    c = a:gsub('wbody|', '')
+                                    cdata[c] = b
+                                    cdata[a] = nil
                                 end
                             end
-                        end
-                        for c,d in pairs(cdata) do
-                            if bullets[c] then
-                                ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
-                                cdata[c] = nil
+                            for k,v in pairs(cfg_weapons.weapons) do
+                                if cdata[k] ~= nil then
+                                    if not v.policeWeapon then
+                                        ARMAclient.notify(source, {'~r~Seized '..v.name..' x'..cdata[k].amount..'.'})
+                                        cdata[k] = nil
+                                    end
+                                end
                             end
+                            for c,d in pairs(cdata) do
+                                if seizeBullets[c] then
+                                    ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
+                                    cdata[c] = nil
+                                end
+                                if seizeDrugs[c] then
+                                    ARMAclient.notify(source, {'~r~Seized '..c..' x'..d.amount..'.'})
+                                    cdata[c] = nil
+                                end
+                            end
+                            ARMA.setSData(vehformat, json.encode(cdata))
+                            tARMA.sendWebhook('seize-boot', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Owner ID: **"..permid.."**")
+                        else
+                            ARMAclient.notify(source, {'~r~This vehicle is empty.'})
                         end
-                        ARMA.setSData(vehformat, json.encode(cdata))
-                        tARMA.sendWebhook('seize-boot', 'ARMA Seize Boot Logs', "> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Vehicle: **"..spawncode.."**\n> Owner ID: **"..permid.."**")
                     end)
                 end
             end)
