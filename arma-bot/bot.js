@@ -218,7 +218,7 @@ client.on('message', (message) => {
                 }
             }
             else if (message.channel.name.includes('auction-')){
-                if (message.channel.name == '│auction-room'){
+                if (message.channel.name == '・auction-room'){
                     return
                 }
                 else{
