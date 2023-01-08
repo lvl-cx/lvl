@@ -48,6 +48,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         if killer ~= nil then
             weaponhash = getWeaponName(weaponhash)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(killer), GetPlayerName(source), weaponhash, suicide, distance, killedgroup, killergroup)
+            ARMAclient.notify(source,{"~o~"..GetPlayerName(killer).." ~w~killed ~o~"..GetPlayerName(source).."."})
             TriggerEvent('ARMA:checkOrganHeistKill', source, killer)
             local embed = {
                 {
@@ -98,6 +99,7 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         else
             TriggerEvent('ARMA:checkOrganHeistKill', source)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(source), GetPlayerName(source), 'suicide', suicide, distance, killedgroup, killergroup)
+            ARMAclient.notify(source,{"~o~"..GetPlayerName(source).." ~w~died."})
         end
     elseif killtype == 'finished off' and killer ~= nil then
         weaponhash = getWeaponName(weaponhash)
