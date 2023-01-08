@@ -209,83 +209,92 @@ client.getPerms = function(msg) {
 }
 
 client.on('message', (message) => {
-    if (!message.guild.id === settingsjson.settings.GuildID) return;
-    if (!message.author.bot){
-        if (message.content.includes('discord.gg/')){
-            if (!message.content.includes('discord.gg/armarp')){
-                message.delete()
-                return
+    if (message.guild.id === settingsjson.settings.GuildID) {
+        if (!message.author.bot){
+            if (message.content.includes('discord.gg/')){
+                if (!message.content.includes('discord.gg/armarp')){
+                    message.delete()
+                    return
+                }
             }
-        }
-        else if (message.channel.name.includes('auction-')){
-            if (message.channel.name == '│auction-room'){
-                return
-            }
-            else{
-                if (!message.content.includes(`${process.env.PREFIX}bid`)){
-                    if (!message.content.includes(`${process.env.PREFIX}auction`) && !message.content.includes(`${process.env.PREFIX}houseauction`) && !message.content.includes(`${process.env.PREFIX}embed`)){
-                        message.delete()
-                        return
+            else if (message.channel.name.includes('auction-')){
+                if (message.channel.name == '│auction-room'){
+                    return
+                }
+                else{
+                    if (!message.content.includes(`${process.env.PREFIX}bid`)){
+                        if (!message.content.includes(`${process.env.PREFIX}auction`) && !message.content.includes(`${process.env.PREFIX}houseauction`) && !message.content.includes(`${process.env.PREFIX}embed`)){
+                            message.delete()
+                            return
+                        }
                     }
                 }
+            }else if (message.channel.name.includes('verify')){
+                if (!message.content.includes(`${process.env.PREFIX}verify`)){
+                    message.delete()
+                    return
+                }
             }
-        }else if (message.channel.name.includes('verify')){
-            if (!message.content.includes(`${process.env.PREFIX}verify`)){
+        }
+        let client = message.client;
+        if (message.author.bot) return;
+        if (!message.content.startsWith(process.env.PREFIX)) return;
+        let command = message.content.split(' ')[0].slice(process.env.PREFIX.length).toLowerCase();
+        let params = message.content.split(' ').slice(1);
+        let cmd;
+        console.log(message.guild.id)
+        let permissions = client.getPerms(message)
+        if (client.commands.has(command)) {
+            cmd = client.commands.get(command);
+        }
+        if (cmd) {
+            if (!message.channel.name.includes('bot') && cmd.conf.name === 'leaderboard') {
                 message.delete()
-                return
+                message.reply('Please use bot commands for this command.').then(msg => {
+                    msg.delete(5000)
+                })
+            }else if (!message.channel.name.includes('verify') && cmd.conf.name === 'verify'){
+                message.delete()
+                message.reply('Please use #verify for this command.').then(msg => {
+                    msg.delete(5000)
+                })
             }
-        }
-    }
-    let client = message.client;
-    if (message.author.bot) return;
-    if (!message.content.startsWith(process.env.PREFIX)) return;
-    let command = message.content.split(' ')[0].slice(process.env.PREFIX.length).toLowerCase();
-    let params = message.content.split(' ').slice(1);
-    let cmd;
-    let permissions = client.getPerms(message)
-    if (client.commands.has(command)) {
-        cmd = client.commands.get(command);
-    }
-    if (cmd) {
-        if (!message.channel.name.includes('bot') && cmd.conf.name === 'leaderboard') {
-            message.delete()
-            message.reply('Please use bot commands for this command.').then(msg => {
-                msg.delete(5000)
-            })
-        }else if (!message.channel.name.includes('verify') && cmd.conf.name === 'verify'){
-            message.delete()
-            message.reply('Please use #verify for this command.').then(msg => {
-                msg.delete(5000)
-            })
-        }
-        else {
-            if (permissions < cmd.conf.perm) return;
-            try {
-                cmd.runcmd(exports, client, message, params, permissions);
-                if (cmd.conf.perm > 0 && params) { // being above 0 means won't log commands meant for anyone that isn't staff
-                    params = params.join('\n ');
-                    if (params != '') {
-                        let { Webhook, MessageBuilder } = require('discord-webhook-node');
-                        let hook = new Webhook(settingsjson.settings.botLogWebhook);
-                        let embed = new MessageBuilder()
-                        .setTitle('Bot Command Log')
-                        .addField('Command Used:', `${cmd.conf.name}`)
-                        .addField('Parameters:', `${params}`)
-                        .addField('Admin:', `${message.author.username} - <@${message.author.id}>`)
-                        .setColor('16448403')
-                        .setFooter('Rebel Deathmatch')
-                        .setTimestamp();
-                        hook.send(embed);
+            else {
+                if (permissions < cmd.conf.perm) return;
+                try {
+                    cmd.runcmd(exports, client, message, params, permissions);
+                    if (cmd.conf.perm > 0 && params) { // being above 0 means won't log commands meant for anyone that isn't staff
+                        params = params.join('\n ');
+                        if (params != '') {
+                            let { Webhook, MessageBuilder } = require('discord-webhook-node');
+                            let hook = new Webhook(settingsjson.settings.botLogWebhook);
+                            let embed = new MessageBuilder()
+                            .setTitle('Bot Command Log')
+                            .addField('Command Used:', `${cmd.conf.name}`)
+                            .addField('Parameters:', `${params}`)
+                            .addField('Admin:', `${message.author.username} - <@${message.author.id}>`)
+                            .setColor('16448403')
+                            .setFooter('ARMA RP')
+                            .setTimestamp();
+                            hook.send(embed);
+                        }
                     }
+                } catch (err) {
+                    let embed = {
+                        "title": "Error Occured!",
+                        "description": "\nAn error occured. Contact <@609044650019258407> about the issue:\n\n```" + err.message + "\n```",
+                        "color": 13632027
+                    }
+                    message.channel.send({ embed })
                 }
-            } catch (err) {
-                let embed = {
-                    "title": "Error Occured!",
-                    "description": "\nAn error occured. Contact <@609044650019258407> about the issue:\n\n```" + err.message + "\n```",
-                    "color": 13632027
-                }
-                message.channel.send({ embed })
             }
+        }
+    } else {
+        if (!message.author.bot && message.content.startsWith(process.env.PREFIX)){
+            message.reply('Commands for this bot are intended to be used in the main Discord, discord.gg/armarp').then(msg => {
+                msg.delete(5000)
+            })
+            return;
         }
     }
 });
