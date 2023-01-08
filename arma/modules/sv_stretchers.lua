@@ -38,7 +38,6 @@ RegisterServerEvent("ARMA:removeStretcher")
 AddEventHandler('ARMA:removeStretcher', function(stretcher)
     local source = source
     local user_id = ARMA.getUserId(source)
-    print(stretcher)
     if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
         TriggerClientEvent('ARMA:deletePropClient', -1, stretcher)
     end
