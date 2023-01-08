@@ -267,7 +267,7 @@ cfg.weapons = {
         model = "w_ar_akkal",
     },
     ["WEAPON_AKM"] = {
-        name = "AKM,
+        name = "AKM",
         class = "AR",
         ammo = "7.62mm Bullets",
         policeWeapon = false,
