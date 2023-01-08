@@ -52,6 +52,7 @@ AddEventHandler("ARMA:trainingWorldRemove", function(world)
                 TriggerClientEvent('ARMA:setBucket', memberSource, 0)
                 ARMAclient.notify(memberSource, {"~b~The training world you were in was deleted, you have been returned to the main dimension."})
             end
+            trainingWorlds[world] = nil
         end
     end
 end)
