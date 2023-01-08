@@ -19,6 +19,10 @@ local SettingsButton = {
 function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
     ---@type table
     local CurrentMenu = RageUI.CurrentMenu;
+    if not Enabled then
+        Style.RightBadge = RageUI.BadgeStyle.Lock
+        Style.RightLabel = ""
+    end
 
     if CurrentMenu ~= nil then
         if CurrentMenu() then
@@ -32,6 +36,9 @@ function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
                 local Selected = CurrentMenu.Index == Option
 
                 RageUI.ItemsSafeZone(CurrentMenu)
+
+                local haveLeftBadge = Style.LeftBadge and Style.LeftBadge ~= RageUI.BadgeStyle.None
+                local haveRightBadge = (Style.RightBadge and Style.RightBadge ~= RageUI.BadgeStyle.None) or (not Enabled and Style.LockBadge ~= RageUI.BadgeStyle.None)
 
                 local LeftBadgeOffset = ((Style.LeftBadge == RageUI.BadgeStyle.None or tonumber(Style.LeftBadge) == nil) and 0 or 27)
                 local RightBadgeOffset = ((Style.RightBadge == RageUI.BadgeStyle.None or tonumber(Style.RightBadge) == nil) and 0 or 32)
