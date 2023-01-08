@@ -219,7 +219,7 @@ RegisterNetEvent("ARMA:recieveFilteredGunStoreData")
 AddEventHandler("ARMA:recieveFilteredGunStoreData",function(F)
     i=F 
     for k,v in pairs(F) do
-        if o["WEAPON_MP5TAZER"] then
+        if v["WEAPON_MP5TAZER"] then
             G = true
         end
     end
