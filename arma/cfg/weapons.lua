@@ -180,19 +180,26 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_me_shovel",
     },
-    ["WEAPON_SLEDGEHAMMER"] = {
-        name = "Sledgehammer",
-        class = "Melee",
-        ammo = "",
-        policeWeapon = false,
-        model = "w_me_sledgehammer",
-    },
     ["WEAPON_TRAFFICSIGN"] = {
         name = "Traffic Sign",
         class = "Melee",
         ammo = "",
         policeWeapon = false,
-        model = "w_me_trafficsign",
+        model = "",
+    },
+    ["WEAPON_HAMAXEHAM"] = {
+        name = "Hammer Axe Hammer",
+        class = "Melee",
+        ammo = "",
+        policeWeapon = false,
+        model = "w_me_hamaxeham",
+    },
+    ["WEAPON_TOILETBRUSH"] = {
+        name = "Toilet Brush",
+        class = "Melee",
+        ammo = "",
+        policeWeapon = false,
+        model = "w_me_toiletbrush",
     },
     --? pistols
     ["WEAPON_PDGLOCK"] = {
@@ -258,6 +265,13 @@ cfg.weapons = {
         ammo = "7.62mm Bullets",
         policeWeapon = false,
         model = "w_ar_akkal",
+    },
+    ["WEAPON_AKM"] = {
+        name = "AKM,
+        class = "AR",
+        ammo = "7.62mm Bullets",
+        policeWeapon = false,
+        model = "w_ar_akm",
     },
     ["WEAPON_SPAR16"] = {
         name = "Spar 16",
