@@ -45,6 +45,7 @@ function ARMA.removeAllJobs(user_id)
             elseif i ~= 'default' and ARMA.hasGroup(user_id, v[1]..' Clocked') then
                 ARMA.removeUserGroup(user_id, v[1]..' Clocked')
                 RemoveAllPedWeapons(GetPlayerPed(source), true)
+                ARMAclient.setArmour(source, {0})
             end
         end
     end
