@@ -120,7 +120,7 @@ AddEventHandler("ARMA:onClientSpawn",function(i, j)
         end
         for n, o in pairs(a) do
             tARMA.createArea("pdelevator_" .. n, o.coords, 1.5, 6, k, l, m)
-            tvRP.addMarker(o.coords.x,o.coords.y,o.coords.z - 0.98,1.0001,1.0001,0.5001,255,255,255,200,20.0,27,true,false,false,nil,nil,0.0,0.0,0.0)
+            tARMA.addMarker(o.coords.x,o.coords.y,o.coords.z - 0.98,1.0001,1.0001,0.5001,255,255,255,200,20.0,27,true,false,false,nil,nil,0.0,0.0,0.0)
         end
     end
 end)
