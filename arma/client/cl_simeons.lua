@@ -31,6 +31,7 @@ local function p(q)
     RageUI.Visible(RMenu:Get("cardealer", "mainmenu"), true)
 end
 local function r(q)
+    RageUI.ActuallyCloseAll()
     RageUI.Visible(RMenu:Get("cardealer", "mainmenu"), false)
     d = nil
 end

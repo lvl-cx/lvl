@@ -242,7 +242,6 @@ client.on('message', (message) => {
         let command = message.content.split(' ')[0].slice(process.env.PREFIX.length).toLowerCase();
         let params = message.content.split(' ').slice(1);
         let cmd;
-        console.log(message.guild.id)
         let permissions = client.getPerms(message)
         if (client.commands.has(command)) {
             cmd = client.commands.get(command);
