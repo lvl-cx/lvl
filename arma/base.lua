@@ -879,11 +879,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
             end)
             -- if user_id ~= nil and ARMA.rusers[user_id] == nil then -- check user validity and if not already connected (old way, disabled until playerDropped is sure to be called)
             if user_id ~= nil then -- check user validity 
-                deferrals.update("[ARMA] Checking discord verification...")
-                if not tARMA.checkForRole(user_id, '975490533344559161') then
-                    deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
-                    return
-                end
                 deferrals.update("[ARMA] Fetching Tokens...")
                 ARMA.StoreTokens(source, user_id) 
                 deferrals.update("[ARMA] Checking banned...")
@@ -915,6 +910,11 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 if verified_code == true then
                                                     if ARMA.CheckTokens(source, user_id) then 
                                                         deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                                    end
+                                                    deferrals.update("[ARMA] Checking discord verification...")
+                                                    if not tARMA.checkForRole(user_id, '975490533344559161') then
+                                                        deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
+                                                        return
                                                     end
                                                     ARMA.users[ids[1]] = user_id
                                                     ARMA.rusers[user_id] = ids[1]
