@@ -37,11 +37,13 @@ AddEventHandler('ARMA:getPoliceLoadouts', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     local loadoutsTable = {}
-    for k,v in pairs(loadouts) do
-        v.hasPermission = ARMA.hasPermission(user_id, v.permission) 
-        loadoutsTable[k] = v
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+        for k,v in pairs(loadouts) do
+            v.hasPermission = ARMA.hasPermission(user_id, v.permission) 
+            loadoutsTable[k] = v
+        end
+        TriggerClientEvent('ARMA:gotLoadouts', source, loadoutsTable)
     end
-    TriggerClientEvent('ARMA:gotLoadouts', source, loadoutsTable)
 end)
 
 RegisterNetEvent('ARMA:selectLoadout')
@@ -50,7 +52,7 @@ AddEventHandler('ARMA:selectLoadout', function(loadout)
     local user_id = ARMA.getUserId(source)
     for k,v in pairs(loadouts) do
         if k == loadout then
-            if ARMA.hasPermission(user_id, v.permission) then
+            if ARMA.hasPermission(user_id, 'police.onduty.permission') and ARMA.hasPermission(user_id, v.permission) then
                 for a,b in pairs(v.weapons) do
                     ARMAclient.allowWeapon(source, {b})
                     GiveWeaponToPed(GetPlayerPed(source), b, 250, false, false)
