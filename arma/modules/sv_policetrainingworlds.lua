@@ -27,12 +27,14 @@ AddEventHandler("ARMA:trainingWorldCreate", function()
                     end
                 end
             end
-            trainingWorlds[trainingWorldsCount] = {name = worldname, ownerName = GetPlayerName(source), ownerUserId = user_id, bucket = trainingWorldsCount, members = {}}
-            table.insert(trainingWorlds[trainingWorldsCount].members, user_id)
-            SetPlayerRoutingBucket(source, trainingWorldsCount)
-            TriggerClientEvent('ARMA:setBucket', source, trainingWorldsCount)
-            TriggerClientEvent('ARMA:trainingWorldSend', -1, trainingWorldsCount, trainingWorlds[trainingWorldsCount])
-            ARMAclient.notify(source, {'~g~Training World Created!'})
+            ARMA.prompt(source,"World Password:","",function(player,password) 
+                trainingWorlds[trainingWorldsCount] = {name = worldname, ownerName = GetPlayerName(source), ownerUserId = user_id, bucket = trainingWorldsCount, members = {}, password = password}
+                table.insert(trainingWorlds[trainingWorldsCount].members, user_id)
+                SetPlayerRoutingBucket(source, trainingWorldsCount)
+                TriggerClientEvent('ARMA:setBucket', source, trainingWorldsCount)
+                TriggerClientEvent('ARMA:trainingWorldSend', -1, trainingWorldsCount, trainingWorlds[trainingWorldsCount])
+                ARMAclient.notify(source, {'~g~Training World Created!'})
+            end)
         else
             ARMAclient.notify(source, {"~r~Invalid World Name."})
         end
@@ -61,10 +63,17 @@ RegisterNetEvent("ARMA:trainingWorldJoin")
 AddEventHandler("ARMA:trainingWorldJoin", function(world)
     local source = source
     local user_id = ARMA.getUserId(source)
-    SetPlayerRoutingBucket(source, world)
-    TriggerClientEvent('ARMA:setBucket', source, world)
-    table.insert(trainingWorlds[world].members, user_id)
-    ARMAclient.notify(source, {"~b~You have joined training world "..trainingWorlds[world].name..' owned by '..trainingWorlds[world].ownerName..'.'})
+    ARMA.prompt(source,"Enter Password:","",function(player,password) 
+        if password ~= trainingWorlds[world].password then
+            ARMAclient.notify(source, {"~r~Invalid Password."})
+            return
+        else
+            SetPlayerRoutingBucket(source, world)
+            TriggerClientEvent('ARMA:setBucket', source, world)
+            table.insert(trainingWorlds[world].members, user_id)
+            ARMAclient.notify(source, {"~b~You have joined training world "..trainingWorlds[world].name..' owned by '..trainingWorlds[world].ownerName..'.'})
+        end
+    end)
 end)
 
 RegisterNetEvent("ARMA:trainingWorldLeave")
