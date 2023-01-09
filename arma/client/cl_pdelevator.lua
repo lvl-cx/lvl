@@ -91,7 +91,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for c = 1, #a[b].otherLocs, 1 do
                 local d = a[b].otherLocs[c]
-                RageUI.Button(a[d].name,a[d].desc,{RightLabel = "→→"},function(e, f, g)
+                RageUI.Button(a[d].name,a[d].desc,{RightLabel = "→→"},true,function(e, f, g)
                     if g then
                         local h = tARMA.getPlayerPed()
                         DoScreenFadeOut(500)
@@ -106,7 +106,7 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
 end)
-AddEventHandler("CMG:onClientSpawn",function(i, j)
+AddEventHandler("ARMA:onClientSpawn",function(i, j)
     if j then
         local k = function()
             RageUI.Visible(RMenu:Get("armapdelevators", "main"), true)
