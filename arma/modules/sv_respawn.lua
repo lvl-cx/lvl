@@ -22,6 +22,7 @@ AddEventHandler("ARMA:SendSpawnMenu",function()
             end
             TriggerClientEvent("ARMA:OpenSpawnMenu",source,spawnTable)
             ARMA.clearInventory(user_id) 
+            ARMAclient.setPlayerCombatTimer(target, {0})
         end
     end)
 end)
