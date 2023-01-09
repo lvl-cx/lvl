@@ -182,7 +182,7 @@ AddEventHandler('ARMA:giveCashToPlayer', function(nplayer)
             ARMA.giveMoney(nuser_id,amount)
             ARMAclient.notify(source,{lang.money.given({getMoneyStringFormatted(math.floor(amount))})})
             ARMAclient.notify(nplayer,{lang.money.received({getMoneyStringFormatted(math.floor(amount))})})
-            tARMA.sendWebhook('give-cash', "ARMA Give Cash Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(nplayer).."**\n> Target PermID: **"..nuser_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
+            tARMA.sendWebhook('give-cash', "ARMA Give Cash Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(nplayer).."**\n> Target PermID: **"..nuser_id.."**\n> Amount: **£"..getMoneyStringFormatted(amount).."**")
           else
             ARMAclient.notify(source,{lang.money.not_enough()})
           end
@@ -231,7 +231,7 @@ AddEventHandler("ARMA:bankTransfer", function(id, amount)
         TriggerClientEvent("arma:PlaySound", source, "apple")
         TriggerClientEvent("arma:PlaySound", ARMA.getUserSource(id), "apple")
         ARMA.giveBankMoney(id, amount)
-        tARMA.sendWebhook('bank-transfer', "ARMA Bank Transfer Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Target PermID: **"..id.."**\n> Amount: **"..amount.."**")
+        tARMA.sendWebhook('bank-transfer', "ARMA Bank Transfer Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player PermID: **"..user_id.."**\n> Target Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Target PermID: **"..id.."**\n> Amount: **£"..amount.."**")
       else
         ARMAclient.notify(source,{'~r~You do not have enough money.'})
       end
