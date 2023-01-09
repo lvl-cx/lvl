@@ -50,9 +50,11 @@ AddEventHandler("ARMA:trainingWorldRemove", function(world)
             TriggerClientEvent('ARMA:trainingWorldRemove', -1, world)
             for k,v in pairs(trainingWorlds[world].members) do
                 local memberSource = ARMA.getUserSource(v)
-                SetPlayerRoutingBucket(memberSource, 0)
-                TriggerClientEvent('ARMA:setBucket', memberSource, 0)
-                ARMAclient.notify(memberSource, {"~b~The training world you were in was deleted, you have been returned to the main dimension."})
+                if memberSource ~= nil then
+                    SetPlayerRoutingBucket(memberSource, 0)
+                    TriggerClientEvent('ARMA:setBucket', memberSource, 0)
+                    ARMAclient.notify(memberSource, {"~b~The training world you were in was deleted, you have been returned to the main dimension."})
+                end
             end
             trainingWorlds[world] = nil
         end
