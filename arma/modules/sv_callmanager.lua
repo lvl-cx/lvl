@@ -105,6 +105,7 @@ RegisterCommand("return", function(source)
             SetPlayerRoutingBucket(source, savedPositions[user_id].bucket)
             ARMAclient.teleport(source, {table.unpack(savedPositions[user_id].coords)})
             ARMAclient.notify(source, {'~g~Returned to position.'})
+            savedPositions[user_id] = nil
         else
             ARMAclient.notify(source, {"~r~Unable to find last location."})
         end
