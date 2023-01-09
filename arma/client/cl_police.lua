@@ -95,11 +95,15 @@ RegisterNetEvent("ARMA:addS60",function(r, s, t)
 end)
 
 RegisterNetEvent("ARMA:removeS60",function(t)
-    local z = q[t]
-    local u = z[2]
-    local s = z[1]
-    RemoveBlip(u)
-    RemoveBlip(s)
+    if q[t] == nil then
+        return
+    else
+        local z = q[t]
+        local u = z[2]
+        local s = z[1]
+        RemoveBlip(u)
+        RemoveBlip(s)
+    end
 end)
 
 Citizen.CreateThread(function()
