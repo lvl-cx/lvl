@@ -137,7 +137,7 @@ RegisterNetEvent("ARMA:sendFarBlips",function(w)
     if not u and a then
         g()
         for e,x in pairs(w)do 
-            if x.source~=v and GetPlayerFromServerId(x.source)==-1 then 
+            if x.source~=v and GetPlayerFromServerId(x.source)== -1 and x.bucket == tARMA.getPlayerBucket() then 
                 m(x.position,x.dead,x.colour)
             end 
         end 
