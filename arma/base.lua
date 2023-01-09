@@ -891,13 +891,16 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                 if ARMA.rusers[user_id] == nil then -- not present on the server, init
                                     ::try_verify::
                                     local verified = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
-                                    if #verified > 0 then
+                                    if #verified > 0 then 
                                         if verified[1]["verified"] == 0 then
                                             local code = nil
                                             local data_code = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
                                             code = data_code[1]["code"]
                                             if code == nil then
                                                 code = math.random(100000, 999999)
+                                                if #exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code}) > 0 then
+                                                    goto try_verify
+                                                end
                                             end
                                             exports["ghmattimysql"]:executeSync("UPDATE arma_verification SET code = @code WHERE user_id = @user_id", {user_id = user_id, code = code})
                                             local function show_auth_card(code, deferrals, callback)
