@@ -1,5 +1,5 @@
-local killlogs = 'webhook here'
-local damagelogs = 'webhook here'
+local killlogs = 'https://discord.com/api/webhooks/1061534881450045480/feT4_E2xz-PlyPYPwYDalZkCSgX6Nr2Fq27zZ78h2sMXYeoQqVHveK8cWI4fpCC2tAL6'
+local damagelogs = 'https://discord.com/api/webhooks/1061534924072570972/hkQKFWvKIiLBFWeXkbdr44CQAmeG3mSZfCBQZarM-Zr33jofnK-LZKkwW-sHthRu5vX9'
 
 local f = module("cfg/weapons")
 f=f.weapons
@@ -48,7 +48,6 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         if killer ~= nil then
             weaponhash = getWeaponName(weaponhash)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(killer), GetPlayerName(source), weaponhash, suicide, distance, killedgroup, killergroup)
-            ARMAclient.notify(source,{"~o~"..GetPlayerName(killer).." ~w~killed ~o~"..GetPlayerName(source).."."})
             TriggerEvent('ARMA:checkOrganHeistKill', source, killer)
             local embed = {
                 {
@@ -99,7 +98,6 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
         else
             TriggerEvent('ARMA:checkOrganHeistKill', source)
             TriggerClientEvent('ARMA:newKillFeed', -1, GetPlayerName(source), GetPlayerName(source), 'suicide', suicide, distance, killedgroup, killergroup)
-            ARMAclient.notify(source,{"~o~"..GetPlayerName(source).." ~w~died."})
         end
     elseif killtype == 'finished off' and killer ~= nil then
         weaponhash = getWeaponName(weaponhash)

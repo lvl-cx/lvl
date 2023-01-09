@@ -244,7 +244,7 @@ local savedBoot
 function openBoot(entityId)
     savedBoot = entityId
     SetVehicleDoorOpen(entityId, 5, true)
-    ExecuteCommand('inventory')
+    TriggerEvent("ARMA:clOpenTrunk")
     trunkStatus = true
     SendNUIMessage({
         closeMenu = true

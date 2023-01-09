@@ -223,7 +223,7 @@ RegisterCommand('handbook', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        TriggerClientEvent('ARMA:toggleHandbook', source)
+      TriggerClientEvent('ARMA:toggleHandbook', source)
     end
 end)
 
