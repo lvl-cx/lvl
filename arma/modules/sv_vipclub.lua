@@ -147,13 +147,17 @@ Citizen.CreateThread(function()
                     local user_id = v.user_id
                     local user = ARMA.getUserSource(user_id)
                     if plushours >= 1/60 then
+                        ARMA.updateInvCap(user_id, 40)
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
                     else
+                        ARMA.updateInvCap(user_id, 30)
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = 0})
                     end
                     if plathours >= 1/60 then
+                        ARMA.updateInvCap(user_id, 50)
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
                     else
+                        ARMA.updateInvCap(user_id, 30)
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = 0})
                     end
                     if user ~= nil then
@@ -228,7 +232,7 @@ end)
 RegisterCommand('redeem', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.checkForRole(user_id, '975543463808487465') then
+    if tARMA.checkForRole(user_id, '975543463808487465') then
         MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
             if #rows > 0 then
                 local redeemed = rows[1].redeemed

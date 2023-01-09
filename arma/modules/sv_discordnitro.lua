@@ -4,7 +4,7 @@ RegisterCommand('craftbmx', function(source)
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         TriggerClientEvent("ARMA:spawnNitroBMX", source)
     else
-        if ARMA.checkForRole(user_id, '975543463808487465') then
+        if tARMA.checkForRole(user_id, '975543463808487465') then
             TriggerClientEvent("ARMA:spawnNitroBMX", source)
         end
     end
