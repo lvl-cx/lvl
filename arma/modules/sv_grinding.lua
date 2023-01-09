@@ -70,6 +70,10 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
     local source = source
     local user_id = ARMA.getUserId(source)
     local delay = 10000
+    if GetPlayerRoutingBucket(source) ~= 0 then
+        ARMAclient.notify(source, {"~r~You cannot grind in this bucket."})
+        return
+    end
     for k,v in pairs(grindingData) do
         if k == drug then
             if ARMA.hasGroup(user_id, v.license) then
