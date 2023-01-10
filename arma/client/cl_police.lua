@@ -480,7 +480,7 @@ local function af()
         local ag = GetSelectedPedWeapon(a2)
         local ah, ai = GetMaxAmmo(a2, ag)
         local aj = GetWeapontypeGroup(ag)
-        if ai >= 1 and aj ~= "GROUP_MELEE" and aj ~= "GROUP_THROWN" then
+        if ai >= 1 and aj ~= GetHashKey("GROUP_MELEE") and aj ~= GetHashKey("GROUP_THROWN") then
             ae = GetGameTimer()
         end
     elseif GetEntityHealth(a2) <= 102 and ae ~= 0 then
