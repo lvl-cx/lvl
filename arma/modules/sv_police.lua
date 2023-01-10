@@ -607,10 +607,13 @@ RegisterCommand('wc', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-    if getCallsign('MPD', source, user_id, 'police') then
-      callsign = "["..getCallsign('MPD', source, user_id, 'police').."]"
-
-    end
+    ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
+      ARMAclient.getPoliceCallsign(source, {}, function(callsign)
+        ARMAclient.getPoliceRank(source, {}, function(rank)
+          ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank.."\n~b~Name: ~w~"..GetPlayerName(source),"Metropolitan Police","Warrant Card",nil,nil})
+        end)
+      end)
+    end)
   end
 end)
 
@@ -618,8 +621,12 @@ RegisterCommand('wca', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-    if getCallsign('MPD', source, user_id, 'police') then
-      callsign = "["..getCallsign('MPD', source, user_id, 'police').."]"
-    end
+    ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
+      ARMAclient.getPoliceCallsign(source, {}, function(callsign)
+        ARMAclient.getPoliceRank(source, {}, function(rank)
+          ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank,"Metropolitan Police","Warrant Card",nil,nil})
+        end)
+      end)
+    end)
   end
 end)
