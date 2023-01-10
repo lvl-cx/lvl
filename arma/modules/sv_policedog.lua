@@ -40,3 +40,12 @@ AddEventHandler("ARMA:policeDogSniffPlayer", function(playerSrc)
         end
     end
 end)
+
+RegisterNetEvent("ARMA:performDogLog")
+AddEventHandler("ARMA:performDogLog", function(text)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasGroup(user_id, 'K9 Trained') then
+        tARMA.sendWebhook('police-k9', 'ARMA Police Dog Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Info: **"..text.."**")
+    end
+end)

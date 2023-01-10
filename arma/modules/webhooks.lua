@@ -45,6 +45,7 @@ local webhooks = {
     ['pd-panic'] = 'https://discord.com/api/webhooks/1060733837417644122/BSuasYngBBN5H5EKHjgd2DtbfYuiEGK4wx8G7FgqZ5-jusNhOAMWz8FPjj4dNzVAIE9j',
     ['seize-boot'] = 'https://discord.com/api/webhooks/1060733884788125827/GsfykZvkmCjtgOce7_1PcyH1kTIFzIwSYa8wgGeP26BLap0C7cHpFvRS0TRZkNn4RHBL',
     ['impound'] = 'https://discord.com/api/webhooks/1060733936428384256/e3CUtdizOWD_EtgOfFYLN5xQlp-F5kZMDRYW7h4ezuVzK6eRg9SvtXTIeFKssvoNl-C7',
+    ['police-k9'] = 'https://discord.com/api/webhooks/1062516761666265170/nAJ0RQzpOyCvPFwQyk2YscRgdK4aA68VP_ZaM5FVwcHNOlmGnMFY0umDcdu2FZfNaOvy',
     -- nhs
     ['nhs-clock'] = '',
     ['cpr'] = '',
