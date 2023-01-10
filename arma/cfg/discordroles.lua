@@ -32,6 +32,9 @@ cfg.Guild_Roles = {
 		['Large Arms Access'] = 991813471475859538,
 		['Police Horse Trained'] = 991813474667737088,
 		['Drone Trained'] = 1060270118229254235,
+		['NPAS'] = 991815823779975168,
+		['Trident Officer'] = 991819633097183322,
+		['Trident Command'] = 991809551802310767,
 	}
 
 	-- ['NHS'] = {
