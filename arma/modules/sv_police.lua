@@ -520,12 +520,15 @@ RegisterCommand('wc', function(source, args)
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, 'police.onduty.permission') then
     ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
-      ARMAclient.getPoliceCallsign(source, {}, function(callsign)
-        ARMAclient.getPoliceRank(source, {}, function(rank)
-          ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank.."\n~b~Name: ~w~"..GetPlayerName(source),"Metropolitan Police","Warrant Card",nil,nil})
-          TriggerClientEvent('ARMA:flashWarrantCard', source)
+      if nplayer ~= nil then
+        ARMAclient.getPoliceCallsign(source, {}, function(callsign)
+          ARMAclient.getPoliceRank(source, {}, function(rank)
+            ARMAclient.playAnim(source,{true,{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1},false})
+            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank.."\n~b~Name: ~w~"..GetPlayerName(source),"Metropolitan Police","Warrant Card",nil,nil})
+            TriggerClientEvent('ARMA:flashWarrantCard', source)
+          end)
         end)
-      end)
+      end
     end)
   end
 end)
@@ -535,12 +538,15 @@ RegisterCommand('wca', function(source, args)
   local user_id = ARMA.getUserId(source)
   if ARMA.hasPermission(user_id, 'police.onduty.permission') then
     ARMAclient.getNearestPlayer(source, {2}, function(nplayer)
-      ARMAclient.getPoliceCallsign(source, {}, function(callsign)
-        ARMAclient.getPoliceRank(source, {}, function(rank)
-          ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank,"Metropolitan Police","Warrant Card",nil,nil})
-          TriggerClientEvent('ARMA:flashWarrantCard', source)
+      if nplayer ~= nil then
+        ARMAclient.getPoliceCallsign(source, {}, function(callsign)
+          ARMAclient.getPoliceRank(source, {}, function(rank)
+            ARMAclient.playAnim(source,{true,{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1},false})
+            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank,"Metropolitan Police","Warrant Card",nil,nil})
+            TriggerClientEvent('ARMA:flashWarrantCard', source)
+          end)
         end)
-      end)
+      end
     end)
   end
 end)
