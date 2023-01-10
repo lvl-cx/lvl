@@ -1,57 +1,76 @@
 local a = false
-local b = false
-local c = nil
-local d = false
+local b = nil
+local c = false
+local d = nil
 local e = false
-
-function tARMA.putInNearestVehicleAsPassenger(i)
-    local j = tARMA.getNearestVehicle(i)
-    if IsEntityAVehicle(j) then
-        for k = 1, math.max(GetVehicleMaxNumberOfPassengers(j), 3) do
-            if IsVehicleSeatFree(j, k) then
-                SetPedIntoVehicle(tARMA.getPlayerPed(), j, k)
+local f = false
+function tARMA.isKnockedOut()
+    return a
+end
+function tARMA.putInNearestVehicleAsPassenger(j)
+    local k = tARMA.getClosestVehicle(j)
+    if IsEntityAVehicle(k) then
+        for l = 1, math.max(GetVehicleMaxNumberOfPassengers(k), 3) do
+            if IsVehicleSeatFree(k, l) then
+                SetPedIntoVehicle(tARMA.getPlayerPed(), k, l)
                 return true
             end
         end
     end
     return false
 end
-function tARMA.putInNetVehicleAsPassenger(l)
-    local j = tARMA.getObjectId(l)
-    if IsEntityAVehicle(j) then
-        for k = 1, GetVehicleMaxNumberOfPassengers(j) do
-            if IsVehicleSeatFree(j, k) then
-                SetPedIntoVehicle(tARMA.getPlayerPed(), j, k)
+function tARMA.putInNetVehicleAsPassenger(m)
+    local k = tARMA.getObjectId(m)
+    if IsEntityAVehicle(k) then
+        for l = 1, GetVehicleMaxNumberOfPassengers(k) do
+            if IsVehicleSeatFree(k, l) then
+                SetPedIntoVehicle(tARMA.getPlayerPed(), k, l)
                 return true
             end
         end
     end
 end
-function tARMA.putInVehiclePositionAsPassenger(m, n, o)
-    local j = tARMA.getVehicleAtPosition(m, n, o)
-    if IsEntityAVehicle(j) then
-        for k = 1, GetVehicleMaxNumberOfPassengers(j) do
-            if IsVehicleSeatFree(j, k) then
-                SetPedIntoVehicle(tARMA.getPlayerPed(), j, k)
+function tARMA.putInVehiclePositionAsPassenger(n, o, p)
+    local k = tARMA.getVehicleAtPosition(n, o, p)
+    if IsEntityAVehicle(k) then
+        for l = 1, GetVehicleMaxNumberOfPassengers(k) do
+            if IsVehicleSeatFree(k, l) then
+                SetPedIntoVehicle(tARMA.getPlayerPed(), k, l)
                 return true
             end
         end
     end
+end
+local q = {{"switch@franklin@bed", "sleep_loop"}, {"switch@trevor@bed", "bed_sleep_floyd"}}
+local function r()
+    return q[math.random(1, #q)]
 end
 RegisterNetEvent("ARMA:knockOut",function()
-    a = true
+    if not a then
+        tARMA.setCanAnim(false)
+        a = true
+        b = r()
+    end
 end)
 RegisterNetEvent("ARMA:knockOutDisable",function()
-    a = false
+    if a then
+        local s = PlayerPedId()
+        SetEntityCollision(s, true, true)
+        FreezeEntityPosition(s, false)
+        StopAnimTask(s, b[1], b[2], 1.0)
+        tARMA.setCanAnim(true)
+        a = false
+        b = nil
+    end
 end)
 RegisterNetEvent("ARMA:drag")
-AddEventHandler("ARMA:drag",function(p)
-    c = p
-    d = not d
+AddEventHandler("ARMA:drag",function(t)
+    d = t
+    e = not e
 end)
 RegisterNetEvent("ARMA:undrag")
-AddEventHandler("ARMA:undrag",function(p)
-    d = false
+AddEventHandler("ARMA:undrag",function(t)
+    e = false
 end)
 RegisterNetEvent("ARMA:clearPoliceStuff",function()
     stopAutoClosingInventory = false
@@ -65,25 +84,25 @@ RegisterNetEvent("ARMA:clearPoliceStuff",function()
 end)
 
 TriggerEvent("chat:addSuggestion","/s60","Authorise a new Section 60 order",{{name = "Radius", help = "In metres"}, {name = "Duration", help = "In Minutes"}})
-local q = {}
-RegisterNetEvent("ARMA:addS60",function(r, s, t)
-    local u = AddBlipForCoord(r.x, r.y, r.z)
-    local v = AddBlipForRadius(r.x, r.y, r.z, s + .0)
-    local w = 61
-    SetBlipSprite(u, 526)
-    SetBlipColour(u, w)
-    SetBlipScale(u, 1.0)
+local u = {}
+RegisterNetEvent("ARMA:addS60",function(v, w, x)
+    local y = AddBlipForCoord(v.x, v.y, v.z)
+    local z = AddBlipForRadius(v.x, v.y, v.z, w + .0)
+    local A = 61
+    SetBlipSprite(y, 526)
+    SetBlipColour(y, A)
+    SetBlipScale(y, 1.0)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentSubstringPlayerName("Section 60")
-    EndTextCommandSetBlipName(u)
-    SetBlipAlpha(v, 80)
-    SetBlipColour(v, w)
-    q[t] = {v, u}
-    local x = GetStreetNameAtCoord(r.x, r.y, r.z)
-    local y = GetStreetNameFromHashKey(x)
+    EndTextCommandSetBlipName(y)
+    SetBlipAlpha(z, 80)
+    SetBlipColour(z, A)
+    u[x] = {z, y}
+    local B = GetStreetNameAtCoord(v.x, v.y, v.z)
+    local C = GetStreetNameFromHashKey(B)
     TriggerEvent("ARMA:showNotification",
     {
-        text = "Metropolitan Police: <br/>A Section 60 has been authorised for the area of " .. y .. ".<br/><br/>This gives officers the power to search any person or vehicle in the area, without any grounds. <br/><br/>This has been authorised in line with legislation.",
+        text = "Metropolitan Police: <br/>A Section 60 has been authorised for the area of " .. C .. ".<br/><br/>This gives officers the power to search any person or vehicle in the area, without any grounds. <br/><br/>This has been authorised in line with legislation.",
         height = "auto",
         width = "auto",
         colour = "#FFF",
@@ -94,58 +113,57 @@ RegisterNetEvent("ARMA:addS60",function(r, s, t)
     100000)
 end)
 
-RegisterNetEvent("ARMA:removeS60",function(t)
-    if q[t] == nil then
+RegisterNetEvent("ARMA:removeS60",function(x)
+    if u[t] == nil then
         return
     else
-        local z = q[t]
-        local u = z[2]
-        local s = z[1]
-        RemoveBlip(u)
-        RemoveBlip(s)
+        local D = u[x]
+        local y = D[2]
+        local w = D[1]
+        RemoveBlip(y)
+        RemoveBlip(w)
     end
 end)
 
 Citizen.CreateThread(function()
-    tARMA.loadAnimDict("mp_arresting")
-    tARMA.loadAnimDict("random@arrests")
-    tARMA.loadAnimDict("missminuteman_1ig_2")
     while true do
-        if d and c ~= nil then
+        if e and d ~= nil then
             DisableControlAction(0, 21, true)
-            local A = GetPlayerPed(GetPlayerFromServerId(c))
-            local B = tARMA.getPlayerPed()
-            AttachEntityToEntity(B, A, 4103, 11816, 0.48, 0.00, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2)
-            e = true
+            local E = GetPlayerPed(GetPlayerFromServerId(d))
+            local F = tARMA.getPlayerPed()
+            AttachEntityToEntity(F, E, 4103, 11816, 0.48, 0.00, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2)
+            f = true
         else
-            if e then
+            if f then
                 DetachEntity(tARMA.getPlayerPed(), true, false)
-                e = false
+                f = false
             end
         end
         if IsControlPressed(0, 323) or IsControlPressed(0, 27) and not IsUsingKeyboard(2) then
-            if not globalSurrenderring and not tARMA.isInComa() and not tARMA.isHandcuffed() and tARMA.canAnim() then
+            if not globalSurrenderring and not tARMA.isInComa() and not tARMA.isHandcuffed() and (tARMA.canAnim() or tARMA.isTazedByRevive()) then
                 DisablePlayerFiring(tARMA.getPlayerPed(), true)
                 DisableControlAction(0, 22, true)
                 DisableControlAction(0, 25, true)
                 DisableControlAction(0, 154, true)
                 if not IsEntityDead(tARMA.getPlayerPed()) then
-                    if not b and not GetIsTaskActive(tARMA.getPlayerPed(), 298) then
-                        b = true
+                    if not c and not GetIsTaskActive(tARMA.getPlayerPed(), 298) then
+                        c = true
+                        tARMA.loadAnimDict("missminuteman_1ig_2")    
                         TaskPlayAnim(tARMA.getPlayerPed(),"missminuteman_1ig_2","handsup_enter",7.0,1.0,-1,50,0,false,false,false)
+                        RemoveAnimDict("missminuteman_1ig_2")
                     end
                 end
             end
         end
         if (IsControlJustReleased(1, 323) or IsControlJustReleased(1, 27)) and not globalSurrenderring and b and not tARMA.isInComa() and not tARMA.isHandcuffed() and tARMA.canAnim() then
-            b = false
+            c = false
             CreateThread(function()
-                local C = false
+                local G = false
                 CreateThread(function()
                     Wait(1000)
-                    C = true
+                    G = true
                 end)
-                while not C do
+                while not G do
                     DisablePlayerFiring(tARMA.getPlayerPed(), true)
                     Wait(1)
                 end
@@ -155,22 +173,35 @@ Citizen.CreateThread(function()
             ClearPedTasks(tARMA.getPlayerPed())
         end
         if a then
-            SetPedToRagdoll(tARMA.getPlayerPed(), 1000, 1000, 0, 0, 0, 0)
-            tARMA.notify("~r~You have been knocked out!")
+            if tARMA.isStaffedOn() then
+                TriggerEvent("ARMA:knockOutDisable")
+            elseif not tARMA.isInComa() then
+                local s = PlayerPedId()
+                if not IsEntityPlayingAnim(s, b[1], b[2], 3) then
+                    tARMA.loadAnimDict(b[1])
+                    local v = GetEntityCoords(s, true)
+                    SetEntityCollision(s, false, false)
+                    FreezeEntityPosition(s, true)
+                    local H, I = GetGroundZFor_3dCoord(v.x, v.y, v.z)
+                    if H then
+                        v = vector3(v.x, v.y, I + 0.3)
+                    end
+                    TaskPlayAnimAdvanced(s, b[1], b[2], v.x, v.y, v.z, 0.0, 0.0, 0.0, 3.0, 1.0, -1, 1, 0.0, 0, 0)
+                    RemoveAnimDict(b[1])
+                end
+                tARMA.notify("~r~You have been knocked out!")
+            end
         end
         Wait(0)
     end
 end)
-function tARMA.isBeingDragged()
-    return d
-end
 
 RMenu.Add("policehandbook","main",RageUI.CreateMenu("Police Handbook", "~b~Officer Handbook", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('policehandbook', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Button("Arrest",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Arrest",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "The time now is ___. <br/>You are currently under arrest on suspision of ___. <br/>You do not have to say anything. But, it may harm your defence if you do not mention when questioned something which you later rely on in court. <br/>Anything you do say may be given in evidence. <br/>Do you understand?. <br/>The necessities for your arrest are to ___.",
@@ -184,8 +215,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Search - GOWISELY",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Search - GOWISELY",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "Before you stop and search someone you must remember GO-WISELY. <br/>You do not have to use this after arrest. <br/>Grounds: for the search. <br/>Object: of the search. <br/>Warrant card: If not in uniform. <br/>Identity: I am PC ___. <br/>Station: attached to ___ Police Station. <br/>Entitlement: Entitled to a copy of this search up to ___ months. <br/>Legal power: Searching under s1 PACE (1984) / s23 MODA (1971). <br/>You: You are currently detained for the purpose of a search.",
@@ -199,8 +230,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("PACE - Key Legislation",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("PACE - Key Legislation",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "Police and Criminal Evidence Act 1984  - PACE.<br/> Section 1 - Stop and search (Stolen property, prohibited articles, weapons, articles used to commit an offence.<br/>Section 17 - Entry for the purpose of life and arrest<br/> Section 18 - Entry to search after an arrest <br/>Section 19 - Power of seizure<br/> Section 24 - Power of arrest <br/> Section 32 - Search after an arrest",
@@ -214,8 +245,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Identify Codes",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Identify Codes",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "IC1:~s~ White - North European. <br/>IC2: White - South European. <br/>IC3: Black. <br/>IC4: Asian. <br/>IC5: Chinese, Japanese or other South East Asian. <br/>IC6: Arabic or North African. <br/>IC9: Unknown",
@@ -229,8 +260,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Traffic Offence Report",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Traffic Offence Report",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "I am reporting you for consideration of the question of prosecuting you for the offence(s) of ___. <br/><br/>You do not have to say anything but it may harm your defence if you do not mention NOW something which you may later rely on in court. Anything you do say may be given in evidence. <br/><br/>You are not under arrest - you are entitled to legal advice and you are not obliged to remain with me.",
@@ -244,8 +275,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Initial Phase Pursuit",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Initial Phase Pursuit",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "VEHICLE DESCRIPTION: MAKE/MODEL/VRM. <br/>LOCATION & DIRECTION: ___. <br/>SPEED: ___. <br/>VEHICLE DENSITY: LOW/MED/HIGH. <br/>PEDESTRIAN DENSITY: LOW/MED/HIGH. <br/>ROAD CONDITIONS: WET/DRY/DIRT. <br/>WEATHER: CLEAR/LIGHT/DARK. <br/>VISIBILITY: CLEAR/MED/LOW. <br/>DRIVER CLASSIFICATION: IPP/ADV/TPAC. <br/>POLICE VEHICLE: MARKED/UNMARKED",
@@ -259,8 +290,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Warning Markers",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Warning Markers",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "FI: FIREARMS. <br/>WE: WEAPONS. <br/>XP: EXPLOSIVES. <br/>VI: VIOLENT. <br/>CO: CONTAGIOUS. <br/>ES: ESCAPER. <br/>AG: ALLEGES. <br/>AT: AILMENT. <br/>SU: SUICIDAL. <br/>MH: MENTAL HEALTH. <br/>DR: DRUGS. <br/>IM: MALE IMPERSONATOR. <br/>IF: FEMALE IMPERSONATOR",
@@ -274,8 +305,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("s136 - Mental Healt Act",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("s136 - Mental Healt Act",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "A constable may take a person to (or keep at) a place of a safety. <br/>This can be done without a warrant if: The individual appears to have a mental disorder, and they are in any place other than a house, flat or room where a person is living, or garden or garage that only one household has access to, and they are in need of immediate care or control. <br/><br/>A registered medical practitioner/healthcare professional must be consulted if practicable to do so.",
@@ -289,8 +320,8 @@ RageUI.CreateWhile(1.0, true, function()
                     100000)
                 end
             end)
-            RageUI.Button("Arrest Necessities",nil,{},true,function(D, E, F)
-                if F then
+            RageUI.Button("Arrest Necessities",nil,{},true,function(J, K, L)
+                if L then
                     TriggerEvent("ARMA:showNotification",
                     {
                         text = "You require at least two of the following necessities to arrest a suspect: <br/><br/>Investigation: conduct a prompt and effective. <br/>Disappearance: prevent the prosecution being hindered. <br/>Child or Vulnerable person: to protect a. <br/>Obstruction: of the highway unlawfully (preventing). <br/>Physical Injury: prevent to themselves or other person. <br/>Public Decency: prevent an offence being committed against. <br/>Loss or Damage: prevent to property. <br/>Address: enable to be ascertained (not readily available). <br/>Name: enable to be ascertained (not readily available).",
@@ -311,18 +342,18 @@ TriggerEvent("chat:addSuggestion", "/handbook", "Toggle the Police Handbook")
 RegisterNetEvent("ARMA:toggleHandbook",function()
     RageUI.Visible(RMenu:Get("policehandbook", "main"), true)
 end)
-RegisterNetEvent("playBreathalyserSound",function(r)
+RegisterNetEvent("playBreathalyserSound",function(v)
     Citizen.SetTimeout(10000,function()
-        local g = tARMA.getPlayerCoords()
-        local h = #(g - r)
-        if h <= 15 then
+        local h = tARMA.getPlayerCoords()
+        local i = #(h - v)
+        if i <= 15 then
             SendNUIMessage({transactionType = "breathalyser"})
         end
     end)
 end)
 TriggerEvent("chat:addSuggestion", "/breathalyse", "Breathalyse the nearest person")
-RegisterNetEvent("ARMA:breathTestResult",function(G, H)
-    local I = H
+RegisterNetEvent("ARMA:breathTestResult",function(M,N)
+    local O = N
     RequestAnimDict("weapons@first_person@aim_rng@generic@projectile@shared@core")
     while not HasAnimDictLoaded("weapons@first_person@aim_rng@generic@projectile@shared@core") do
         Wait(0)
@@ -330,10 +361,10 @@ RegisterNetEvent("ARMA:breathTestResult",function(G, H)
     TaskPlayAnim(tARMA.getPlayerPed(),"weapons@first_person@aim_rng@generic@projectile@shared@core","idlerng_med",1.0,-1,10000,50,0,false,false,false)
     RageUI.Text({message = "~w~You are now ~b~breathalysing ~b~" .. I .. "~w~, please wait for the results."})
     Citizen.SetTimeout(10000,function()
-        if G < 36 then
-            RageUI.Text({message = "~w~The suspect has provided a legal breathalyser sample of ~b~" ..G .. " ~w~µg/100ml."})
+        if M < 36 then
+            RageUI.Text({message = "~w~The suspect has provided a legal breathalyser sample of ~b~" ..M .. " ~w~µg/100ml."})
         else
-            RageUI.Text({message = "~w~The suspect has provided an illegal breathalyser sample of ~b~" ..G .. " ~w~µg/100ml."})
+            RageUI.Text({message = "~w~The suspect has provided an illegal breathalyser sample of ~b~" ..M .. " ~w~µg/100ml."})
         end
     end)
 end)
@@ -341,17 +372,17 @@ RegisterNetEvent("ARMA:beingBreathalysed",function()
     RageUI.Text({message = "~w~You are currently being ~b~breathalysed ~w~by a police officer."})
 end)
 RegisterNetEvent("ARMA:breathalyserCommand",function()
-    local A = tARMA.getPlayerPed()
-    if not IsPedInAnyVehicle(A, true) then
-        local r = GetEntityCoords(A)
-        local J = GetActivePlayers()
-        for K, L in pairs(J) do
-            if GetPlayerPed(L) ~= A then
-                local M = GetEntityCoords(GetPlayerPed(L))
-                local N = #(r - M)
-                if N < 3.0 then
-                    local O = GetPlayerServerId(L)
-                    TriggerServerEvent("ARMA:breathalyserRequest", O)
+    local E = tARMA.getPlayerPed()
+    if not IsPedInAnyVehicle(E, true) then
+        local v = GetEntityCoords(E)
+        local P = GetActivePlayers()
+        for Q, R in pairs(P) do
+            if GetPlayerPed(R) ~= E then
+                local S = GetEntityCoords(GetPlayerPed(R))
+                local T = #(v - S)
+                if T < 3.0 then
+                    local U = GetPlayerServerId(R)
+                    TriggerServerEvent("CMG:breathalyserRequest", U)
                     break
                 end
             end
@@ -361,16 +392,17 @@ end)
 TriggerEvent("chat:addSuggestion", "/wc", "Flash your police warrant card.")
 TriggerEvent("chat:addSuggestion", "/wca", "Flash your police warrant card anonymously.")
 RegisterNetEvent("ARMA:flashWarrantCard",function()
-    local A = PlayerPedId()
-    local P = tARMA.loadModel("prop_fib_badge")
-    local Q = CreateObject(P, 0, 0, 0, true, true, true)
-    while not DoesEntityExist(Q) do
+    local E = PlayerPedId()
+    local V = tARMA.loadModel("prop_fib_badge")
+    local W = CreateObject(V, 0, 0, 0, true, true, true)
+    while not DoesEntityExist(W) do
         Wait(0)
     end
-    FreezeEntityPosition(Q)
-    AttachEntityToEntity(Q,A,GetPedBoneIndex(A, 58866),0.03,-0.05,-0.044,0.0,90.0,25.0,true,true,false,true,1,true)
+    SetModelAsNoLongerNeeded(V)
+    FreezeEntityPosition(W)
+    AttachEntityToEntity(W,E,GetPedBoneIndex(E, 58866),0.03,-0.05,-0.044,0.0,90.0,25.0,true,true,false,true,1,true)
     Wait(3000)
-    DeleteObject(Q)
+    DeleteObject(W)
 end)
 
 RegisterNetEvent("ARMA:startSearchingSuspect",function()
@@ -378,118 +410,122 @@ RegisterNetEvent("ARMA:startSearchingSuspect",function()
     tARMA.loadAnimDict("custom@police")
     TaskPlayAnim(PlayerPedId(), "custom@police", "police", 8.0, 8.0, -1, 0, 0.0, false, false, false)
     RemoveAnimDict("custom@police")
-    local Y = GetGameTimer()
-    while GetGameTimer() - Y < 10000 do
+    local a3 = GetGameTimer()
+    while GetGameTimer() - a3 < 10000 do
         if IsDisabledControlJustPressed(0, 73) then
-            TriggerServerEvent("ARMA:cancelPlayerSearch")
+            TriggerServerEvent("CMG:cancelPlayerSearch")
             return
         end
         Citizen.Wait(0)
     end
     tARMA.setCanAnim(true)
 end)
-local Z = false
+local a4 = false
 RegisterNetEvent("ARMA:startBeingSearching",function(_)
-    local a0 = GetPlayerFromServerId(_)
-    if a0 == -1 then
+    local a6 = GetPlayerFromServerId(a5)
+    if a6 == -1 then
         return
     end
-    local a1 = GetPlayerPed(a0)
-    if a1 == 0 then
+    local a7 = GetPlayerPed(a6)
+    if a7 == 0 then
         return
     end
-    Z = true
+    a4 = true
     tARMA.setCanAnim(false)
     tARMA.loadAnimDict("custom@suspect")
-    local a2 = tARMA.getPlayerPed()
-    AttachEntityToEntity(a2, a1, -1, -0.05, 0.5, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, false)
-    TaskPlayAnim(a2, "custom@suspect", "suspect", 8.0, 8.0, -1, 2, 0.0, false, false, false)
+    local s = tARMA.getPlayerPed()
+    AttachEntityToEntity(s, a7, -1, -0.05, 0.5, 0.0, 0.0, 0.0, 0.0, false, false, false, false, 2, false)
+    TaskPlayAnim(s, "custom@suspect", "suspect", 8.0, 8.0, -1, 2, 0.0, false, false, false)
     RemoveAnimDict("custom@suspect")
-    local Y = GetGameTimer()
-    while GetGameTimer() - Y < 10000 do
-        if not Z then
+    local a3 = GetGameTimer()
+    while GetGameTimer() - a3 < 10000 do
+        if not a4 then
             return
         end
         Citizen.Wait(0)
     end
-    Z = false
+    a4 = false
     tARMA.setCanAnim(true)
-    DetachEntity(a2)
-    ClearPedTasks(a2)
+    DetachEntity(s)
+    ClearPedTasks(s)
 end)
 RegisterNetEvent("ARMA:cancelPlayerSearch",function()
-    Z = false
+    a4 = false
     tARMA.setCanAnim(true)
-    local a2 = tARMA.getPlayerPed()
-    DetachEntity(a2)
-    ClearPedTasks(a2)
+    local s = tARMA.getPlayerPed()
+    DetachEntity(s)
+    ClearPedTasks(s)
 end)
-local a3 = ""
-local a4 = ""
-local a5 = ""
-local a6 = false
-local a7 = ""
 local a8 = ""
 local a9 = ""
-local aa = false
-RegisterNetEvent("ARMA:receivePoliceCallsign",function(ab, ac, ad)
-    a3 = ac; a4 = ab; a5 = ad; a6 = true
-    print("Your PD rank is: " .. a3 .. "\nYour callsign is: " .. a4)
+local aa = ""
+local ab = false
+local ac = ""
+local ad = ""
+local ae = ""
+local af = false
+RegisterNetEvent("ARMA:receivePoliceCallsign",function(ag, ah, ai)
+    a8 = ah
+    a9 = ag
+    aa = ai
+    ab = true
+    print("Your PD rank is: " .. a8 .. "\nYour callsign is: " .. a9)
 end)
-RegisterNetEvent("ARMA:receiveHmpCallsign",function(ab, ac, ad)
-    a7 = ac; a8 = ab; a9 = ad; aa = true
-    print("Your HMP rank is: " .. a9 .. "\nYour callsign is: " .. a8)
+RegisterNetEvent("ARMA:receiveHmpCallsign",function(ag, ah, ai)
+    ac = ah
+    ad = ag
+    ae = ai
+    af = true
+    print("Your HMP rank is: " .. ae .. "\nYour callsign is: " .. ad)
 end)
 function tARMA.getPoliceCallsign()
-    return a4
-end
-function tARMA.getPoliceRank()
-    return a3
-end
-function tARMA.getPoliceName()
-    return a5
-end
-function tARMA.hasPoliceCallsign()
-    return a6
-end
-function tARMA.getHmpCallsign()
-    return a8
-end
-function tARMA.getHmpRank()
-    return a7
-end
-function tARMA.getHmpName()
     return a9
 end
-function tARMA.hasHmpCallsign()
+function tARMA.getPoliceRank()
+    return a8
+end
+function tARMA.getPoliceName()
     return aa
 end
+function tARMA.hasPoliceCallsign()
+    return ab
+end
+function tARMA.getHmpCallsign()
+    return ad
+end
+function tARMA.getHmpRank()
+    return ac
+end
+function tARMA.getHmpName()
+    return ae
+end
+function tARMA.hasHmpCallsign()
+    return af
+end
 function func_drawCallsign()
-    if a4 ~= "" and globalOnPoliceDuty then
-        DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, a4, 255, 255, 255, 255, 0, 0)
+    if a9 ~= "" and globalOnPoliceDuty then
+        DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, a9, 255, 255, 255, 255, 0, 0)
     end
-    if a8 ~= "" and globalOnPrisonDuty then
-        DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, a8, 255, 255, 255, 255, 0, 0)
+    if ad ~= "" and globalOnPrisonDuty then
+        DrawAdvancedText(1.064, 0.972, 0.005, 0.0028, 0.4, ad, 255, 255, 255, 255, 0, 0)
     end
 end
 tARMA.createThreadOnTick(func_drawCallsign)
-local ae = 0
-local function af()
-    local a2 = tARMA.getPlayerPed()
-    if IsPedShooting(a2) then
-        local ag = GetSelectedPedWeapon(a2)
-        local ah, ai = GetMaxAmmo(a2, ag)
-        local aj = GetWeapontypeGroup(ag)
-        if ai >= 1 and aj ~= GetHashKey("GROUP_MELEE") and aj ~= GetHashKey("GROUP_THROWN") then
-            ae = GetGameTimer()
+local aj = 0
+local function ak()
+    local s = tARMA.getPlayerPed()
+    if IsPedShooting(s) then
+        local al = GetSelectedPedWeapon(s)
+        local am, an = GetMaxAmmo(s, al)
+        local ao = GetWeapontypeGroup(al)
+        if an >= 1 and ao ~= GetHashKey("GROUP_MELEE") and ao ~= GetHashKey("GROUP_THROWN") then
+            aj = GetGameTimer()
         end
-    elseif GetEntityHealth(a2) <= 102 and ae ~= 0 then
-        ae = 0
     end
 end
-tARMA.createThreadOnTick(af)
+tARMA.createThreadOnTick(ak)
 function tARMA.hasRecentlyShotGun()
-    return ae ~= 0 and GetGameTimer() - ae < 600000
+    return aj ~= 0 and GetGameTimer() - aj < 600000
 end
 
 AddEventHandler("ARMA:onClientSpawn",function()
