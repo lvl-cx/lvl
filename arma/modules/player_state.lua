@@ -189,9 +189,9 @@ AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
     end)
 end)
 
-RegisterNetEvent('ARMA:forceStoreWeapons')
-AddEventHandler('ARMA:forceStoreWeapons', function()
-    local source = source 
-    local user_id = ARMA.getUserId(source)
-    ARMA.clearInventory(user_id) 
-end)
+-- RegisterNetEvent('ARMA:forceStoreWeapons')
+-- AddEventHandler('ARMA:forceStoreWeapons', function()
+--     local source = source 
+--     local user_id = ARMA.getUserId(source)
+--     ARMA.clearInventory(user_id) 
+-- end)

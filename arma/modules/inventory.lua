@@ -357,7 +357,6 @@ function ARMA.getInventoryWeight(user_id)
   if data and data.inventory then
     return ARMA.computeItemsWeight(data.inventory)
   end
-
   return 0
 end
 

@@ -59,6 +59,7 @@ end, lang.police.menu.askid.description()}
 local isStoring = {}
 local choice_store_weapons = function(player, choice)
     local user_id = ARMA.getUserId(player)
+    local data = ARMA.getUserDataTable(user_id)
     ARMAclient.getWeapons(player,{},function(weapons)
       if not isStoring[player] then
           isStoring[player] = true
@@ -79,7 +80,7 @@ local choice_store_weapons = function(player, choice)
               ARMAclient.notify(player,{"~g~Weapons Stored"})
               TriggerEvent('ARMA:RefreshInventory', source)
               SetTimeout(3000,function()
-                    isStoring[player] = nil 
+                  isStoring[player] = nil 
               end)
             end)
           else
