@@ -1,8 +1,8 @@
 local cfg = {}
 
 cfg.metPoliceRanks = {
-    {"CID Constable", 30000, "police.cidconstable.whitelisted"},
-    {"CID Sergeant", 40000, "police.cidsergeant.whitelisted"},
+    {"Trident Officer", 30000, "police.trident.whitelisted"},
+    {"Trident Command", 40000, "police.tridentcommand.whitelisted"},
     {"Special Constable", 55000, "police.specialconstable.whitelisted"},
     {"NPAS", 45000, "police.npas.whitelisted"},
     {"Custody Sergeant", 20000, "police.custodysergeant.whitelisted"},
