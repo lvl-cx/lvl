@@ -320,6 +320,32 @@ cfg.groups = {
     }, 
     ["Police Horse Trained"] = {}, 
     ["Drone Trained"] = {},
+    ["NPAS Clocked"] = {
+        "cop.whitelisted",
+        "police.onduty.permission",
+        "police.armoury",
+    },
+    ["NPAS"] = {
+        "cop.whitelisted"
+    },
+    ["CID Sergeant Clocked"] = {
+        "cop.whitelisted",
+        "police.onduty.permission",
+        "police.armoury",
+        "police.undercover",
+    },
+    ["CID Sergeant"] = {
+        "cop.whitelisted"
+    },
+    ["CID Constable Clocked"] = {
+        "cop.whitelisted",
+        "police.onduty.permission",
+        "police.armoury",
+        "police.undercover",
+    },
+    ["CID Constable"] = {
+        "cop.whitelisted"
+    },
     ["Commissioner Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
@@ -350,14 +376,14 @@ cfg.groups = {
     ["Assistant Commissioner"] = {
         "cop.whitelisted"
     },
-    ["Deputy Assistant Commissioner Clocked"] = {
+    ["Dep. Asst. Commissioner Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
         "police.announce",
         "police.deputyassistantcommissioner",
     },
-    ["Deputy Assistant Commissioner"] = {
+    ["Dep. Asst. Commissioner"] = {
         "cop.whitelisted"
     },
     ["Commander Clocked"] = {
@@ -434,13 +460,13 @@ cfg.groups = {
     ["Senior Constable"] = {
         "cop.whitelisted"
     },
-    ["Police Constable Clocked"] = {
+    ["PC Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
         "police.constable",
     },
-    ["Police Constable"] = {
+    ["PC"] = {
         "cop.whitelisted"
     },
     ["PCSO Clocked"] = {
