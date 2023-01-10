@@ -60,10 +60,20 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
                         ["name"] = "Killer Name",
                         ["value"] = GetPlayerName(killer),
                         ["inline"] = true
+                    }, 
+                    {
+                        ["name"] = "Killer ID",
+                        ["value"] = ARMA.getUserId(killer),
+                        ["inline"] = true
                     },
                     {
                         ["name"] = "Victim Name",
                         ["value"] = GetPlayerName(source),
+                        ["inline"] = true
+                    },
+                    {
+                        ["name"] = "Victim ID",
+                        ["value"] = ARMA.getUserId(source),
                         ["inline"] = true
                     },
                     {
@@ -74,16 +84,6 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
                     {
                         ["name"] = "Distance",
                         ["value"] = distance..'m',
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Killer Group",
-                        ["value"] = killergroup,
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Victim Group",
-                        ["value"] = killedgroup,
                         ["inline"] = true
                     },
                     {
