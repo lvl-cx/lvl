@@ -10,11 +10,20 @@ AddEventHandler("playerJoining", function()
     MySQL.execute("subscription/add_id", {user_id = user_id})
 end)
 
+function tARMA.getSubscriptions(user_id,cb)
+    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
+        if #rows > 0 then
+           cb(true, rows[1].plushours, rows[1].plathours)
+        else
+            cb(false)
+        end
+    end)
+end
+
 RegisterNetEvent("ARMA:setPlayerSubscription")
 AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
-
     if ARMA.hasGroup(user_id, 'Developer') then
         ARMA.prompt(player,"Number of hours ","",function(player, hours)
             if tonumber(hours) and tonumber(hours) >= 0 then
@@ -38,20 +47,18 @@ AddEventHandler("ARMA:getPlayerSubscription", function(playerid)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     if playerid ~= nil then
-        MySQL.query("subscription/get_subscription", {user_id = playerid}, function(rows, affected)
-            if #rows > 0 then
-                local plushours = rows[1].plushours
-                local plathours = rows[1].plathours
+        tARMA.getSubscriptions(playerid, function(cb, plushours, plathours)
+            if cb then
                 TriggerClientEvent('ARMA:getUsersSubscription', player, playerid, plushours, plathours)
             else
                 ARMAclient.notify(player, {"~r~Player not found."})
             end
         end)
     else
-        MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
-            local plushours = rows[1].plushours
-            local plathours = rows[1].plathours
-            TriggerClientEvent('ARMA:setVIPClubData', player, plushours, plathours)
+        tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+            if cb then
+                TriggerClientEvent('ARMA:setVIPClubData', player, plushours, plathours)
+            end
         end)
     end
 end)
@@ -147,17 +154,15 @@ Citizen.CreateThread(function()
                     local user_id = v.user_id
                     local user = ARMA.getUserSource(user_id)
                     if plushours >= 1/60 then
-                        ARMA.updateInvCap(user_id, 40)
+                        ARMA.updateInvCap(user_id, ARMA.getInventoryMaxWeight(user_id)+10)
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours-1/60})
                     else
-                        ARMA.updateInvCap(user_id, 30)
                         MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = 0})
                     end
                     if plathours >= 1/60 then
-                        ARMA.updateInvCap(user_id, 50)
+                        ARMA.updateInvCap(user_id, ARMA.getInventoryMaxWeight(user_id)+20)
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours-1/60})
                     else
-                        ARMA.updateInvCap(user_id, 30)
                         MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = 0})
                     end
                     if user ~= nil then
@@ -173,10 +178,8 @@ RegisterNetEvent("ARMA:claimWeeklyKit") -- need to add a thing for restricting t
 AddEventHandler("ARMA:claimWeeklyKit", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
-        if #rows > 0 then
-            local plushours = rows[1].plushours
-            local plathours = rows[1].plathours
+    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+        if cb then
             if plathours >= 168 or plushours >= 168 then
                 if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) or user_id == 1 then
                     if plathours >= 168 then
@@ -208,8 +211,6 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
                     ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})
                 end
             end
-        else
-            ARMAclient.notify(player, {"~r~Player not found."})
         end
     end)
 end)
@@ -218,12 +219,14 @@ RegisterNetEvent("ARMA:fuelAllVehicles")
 AddEventHandler("ARMA:fuelAllVehicles", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
-        if rows[1].plushours > 0 or rows[1].plathours > 0 then
-            if ARMA.tryFullPayment(user_id,25000) then
-                exports["ghmattimysql"]:execute("UPDATE arma_user_vehicles SET fuel_level = 100 WHERE user_id = @user_id", {user_id = user_id}, function() end)
-                TriggerClientEvent("arma:PlaySound", source, "money")
-                ARMAclient.notify(source,{"~g~Vehicles Refueled."})
+    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+        if cb then
+            if plushours > 0 or plathours > 0 then
+                if ARMA.tryFullPayment(user_id,25000) then
+                    exports["ghmattimysql"]:execute("UPDATE arma_user_vehicles SET fuel_level = 100 WHERE user_id = @user_id", {user_id = user_id}, function() end)
+                    TriggerClientEvent("arma:PlaySound", source, "money")
+                    ARMAclient.notify(source,{"~g~Vehicles Refueled."})
+                end
             end
         end
     end)
