@@ -13,8 +13,8 @@ RegisterNetEvent("ARMA:enterDiamondCasino")
 AddEventHandler("ARMA:enterDiamondCasino", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    SetPlayerRoutingBucket(source, 50)
-    TriggerClientEvent('ARMA:setBucket', source, 50)
+    SetPlayerRoutingBucket(source, 777)
+    TriggerClientEvent('ARMA:setBucket', source, 777)
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
             TriggerClientEvent('ARMA:setDisplayChips', source, rows[1].chips)
