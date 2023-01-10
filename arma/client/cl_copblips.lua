@@ -101,6 +101,10 @@ Citizen.CreateThread(function()
                                 if a then
                                     if s=="metpd"then 
                                         h(i,j,3)
+                                    elseif s=="cid"then 
+                                        h(i,j,27)
+                                    elseif s=="npas"then 
+                                        h(i,j,5)
                                     elseif s=="hmp"then 
                                         h(i,j,29)
                                     elseif s=="lfb"then
