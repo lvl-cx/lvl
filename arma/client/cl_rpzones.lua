@@ -156,23 +156,23 @@ end)
 local function t(g,u)
     local v=tARMA.getPlayerPed()
     local w=GetWeapontypeGroup(u)
-    if not g.weapons.melee and w=='GROUP_MELEE'then 
+    if not g.weapons.melee and w==GetHashKey('GROUP_MELEE')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.throwable and w=='GROUP_THROWN'then 
+    elseif not g.weapons.throwable and w==GetHashKey('GROUP_THROWN')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.pistol and w=='GROUP_PISTOL'then 
+    elseif not g.weapons.pistol and w==GetHashKey('GROUP_PISTOL')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.shotgun and w=='GROUP_SHOTGUN'then 
+    elseif not g.weapons.shotgun and w==GetHashKey('GROUP_SHOTGUN')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.mg and w=='GROUP_MG'then 
+    elseif not g.weapons.mg and w==GetHashKey('GROUP_MG')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.smg and w=='GROUP_SMG'then 
+    elseif not g.weapons.smg and w==GetHashKey('GROUP_SMG')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.rifle and w=='GROUP_RIFLE'then 
+    elseif not g.weapons.rifle and w==GetHashKey('GROUP_RIFLE')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.sniper and w=='GROUP_SNIPER'then 
+    elseif not g.weapons.sniper and w==GetHashKey('GROUP_SNIPER')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
-    elseif not g.weapons.heavy and w=='GROUP_HEAVY'then 
+    elseif not g.weapons.heavy and w==GetHashKey('GROUP_HEAVY')then 
         tARMA.setWeapon(v,'WEAPON_UNARMED')
     end 
 end
