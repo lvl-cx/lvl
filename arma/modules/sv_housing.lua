@@ -346,24 +346,19 @@ AddEventHandler('ARMAHousing:Rent', function(house)
     end)
 end)
 
-
---Chest
-
 RegisterNetEvent("ARMAHousing:OpenChest")
 AddEventHandler("ARMAHousing:OpenChest", function(house)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     getUserByAddress(house, 1, function(huser_id)
         if huser_id == user_id then
-            TriggerClientEvent("ARMA:OpenHomeStorage", player, true, house) --JamesUK inventory modified by me
+            TriggerClientEvent("ARMA:OpenHomeStorage", player, house)
         else
             ARMAclient.notify(player,{"~r~You do not own this house!"})
         end
     end)
 end)
 
-
---Blips
 
 AddEventHandler("ARMA:playerSpawn",function(user_id, source, first_spawn)
     for k, v in pairs(cfg.homes) do
