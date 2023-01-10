@@ -584,7 +584,7 @@ RegisterServerEvent("ARMA:getNotes")
 AddEventHandler("ARMA:getNotes",function(player)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(admin_id, 'admin.spectate') then
+    if ARMA.hasPermission(admin_id, 'admin.tickets') then
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
             if result ~= nil then
                 TriggerClientEvent('ARMA:sendNotes', source, result[1].info)
@@ -597,7 +597,7 @@ RegisterServerEvent("ARMA:updatePlayerNotes")
 AddEventHandler("ARMA:updatePlayerNotes",function(player, notes)
     local source = source
     local admin_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(admin_id, 'admin.spectate') then
+    if ARMA.hasPermission(admin_id, 'admin.tickets') then
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_notes WHERE user_id = @user_id", {user_id = player}, function(result) 
             if result ~= nil then
                 exports['ghmattimysql']:execute("UPDATE arma_user_notes SET info = @info WHERE user_id = @user_id", {user_id = player, info = json.encode(notes)})
