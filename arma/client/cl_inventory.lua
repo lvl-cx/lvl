@@ -39,7 +39,6 @@ Citizen.CreateThread(function()
                 if not closeToRestart then
                     drawInventoryUI = not drawInventoryUI
                     if drawInventoryUI then
-                        print("Opening Inventory")
                         setCursor(1)
                     else
                         setCursor(0)
@@ -84,7 +83,6 @@ AddEventHandler("ARMA:OpenHomeStorage", function(houseName)
     TriggerServerEvent('ARMA:FetchHouseInventory', houseName)
 end)
 RegisterNetEvent("ARMA:FetchPersonalInventory",function(inventory, weight, maxWeight)
-    print('Fetching Personal Inventory '..weight, maxWeight)
     ARMAItemList = inventory
     currentInventoryWeight = weight
     currentInventoryMaxWeight = maxWeight
