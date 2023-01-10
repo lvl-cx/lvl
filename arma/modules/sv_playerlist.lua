@@ -78,7 +78,10 @@ local defaultGroups = {
     ["Taco Seller"] = true,
     ["Burger Shot Cook"] = true,
 }
-
+local tridentGroups = {
+    ["Trident Officer Clocked"] = true,
+    ["Trident Command Clocked"] = true,
+}
 function getGroupInGroups(id, type)
     if type == 'staff' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
@@ -174,6 +177,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
     TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
+    TriggerClientEvent('ARMA:gotJobTypes', source, nhsGroups, pdGroups, lfbGroups, hmpGroups, tridentGroups, npasGroups)
 end)
 
 

@@ -5,6 +5,7 @@ function func_playerlistControl()
         if IsControlJustPressed(0, 212) then
             a = not a
             TriggerServerEvent("ARMA:getPlayerListData")
+            Wait(100)
             sendFullPlayerListData()
             SetNuiFocus(true, true)
             SendNUIMessage({showPlayerList = true})
