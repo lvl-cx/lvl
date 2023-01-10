@@ -126,7 +126,7 @@ local function n()
             local s = GetPlayerServerId(r)
             local t = tARMA.clientGetUserIdFromSource(s)
             local u = tARMA.getJobType(t)
-            if u ~= "metpd" and u ~= "hmp" then
+            if u ~= "metpd" and u ~= "hmp" and u ~= "npas" then
                 local v = GetEntityCoords(GetPlayerPed(r), true)
                 local w = #(v - tARMA.getPlayerCoords())
                 if w < o then
@@ -149,7 +149,7 @@ function func_tackleManagement()
     if h then
         SetPedToRagdoll(tARMA.getPlayerPed(), 1000, 1000, 0, 0, 0, 0)
     end
-    if globalOnPoliceDuty or x() or globalOnPrisonDuty and globalPlayerInPrisonZone then
+    if globalOnPoliceDuty or x() or tARMA.isStaffedOn() or globalOnPrisonDuty and globalPlayerInPrisonZone then
         if IsControlPressed(0, a["LEFTSHIFT"]) and IsControlPressed(0, a["G"]) then
             if not b and GetGameTimer() - g > 10 * 1000 and GetEntityHealth(PlayerPedId()) > 102 and not tARMA.isKnockedOut() then
                 local y = n()
