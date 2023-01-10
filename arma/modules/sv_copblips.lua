@@ -16,10 +16,10 @@ Citizen.CreateThread(function()
                 end
                 if ARMA.hasPermission(a, 'police.onduty.permission') then
                   colour = 3
-                  table.insert(emergencyblips, {source = b, position = GetEntityCoords(GetPlayerPed(b)), dead = dead, colour = colour, bucket = GetEntityRoutingBucket(b)})
+                  table.insert(emergencyblips, {source = b, position = GetEntityCoords(GetPlayerPed(b)), dead = dead, colour = colour, bucket = GetPlayerRoutingBucket(b)})
                 elseif ARMA.hasPermission(a, 'nhs.onduty.permission') then
                   colour = 2
-                  table.insert(emergencyblips, {source = b, position = GetEntityCoords(GetPlayerPed(b)), dead = dead, colour = colour, bucket = GetEntityRoutingBucket(b)})
+                  table.insert(emergencyblips, {source = b, position = GetEntityCoords(GetPlayerPed(b)), dead = dead, colour = colour, bucket = GetPlayerRoutingBucket(b)})
                 end
               end
             end
