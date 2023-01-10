@@ -48,6 +48,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 TriggerServerEvent("ARMA:jobSelector", q, t[1])
                                 SetTimeout(1000,function()
                                     TriggerServerEvent("ARMA:refreshGaragePermissions")
+                                    ExecuteCommand("blipson")
                                 end)
                             end
                         end)
