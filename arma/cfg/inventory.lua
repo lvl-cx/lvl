@@ -9,6 +9,15 @@ cfg.vehicle_chest_weights = {
     ["m977t"] = 200,
     ["Brickade"] = 100,
     ["fordconnect"] = 300,
+    ["demonhawkk"] = 300,
+    ["rhys"] = 300,
+    ["rs3keyvany"] = 100,
+    ["abfrover"] = 100,
+    ["rsq8mans"] = 100,
+    ["customx6m"] = 100,
+    ["pdcustomx6m"] = 100,
+    ["RSQR8"] = 100,
+    ["rsq8"] = 100,
 }
 
 return cfg
