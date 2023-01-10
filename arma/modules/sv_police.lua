@@ -39,6 +39,7 @@ local choice_askid = {function(player,choice)
                   local content = lang.police.identity.info({name,firstname,age,registration,phone,bname,bcapital,home,number})
                   ARMAclient.setDiv(player,{"police_identity",".div_police_identity{ background-color: rgba(0,0,0,0.75); color: white; font-weight: bold; width: 500px; padding: 10px; margin: auto; margin-top: 150px; }",content})
                   -- request to hide div
+                  TriggerClientEvent('ARMA:setNameFields', player, name, firstname)
                   ARMA.request(player, lang.police.menu.askid.request_hide(), 1000, function(player,ok)
                     ARMAclient.removeDiv(player,{"police_identity"})
                   end)
