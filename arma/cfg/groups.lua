@@ -328,22 +328,22 @@ cfg.groups = {
     ["NPAS"] = {
         "cop.whitelisted"
     },
-    ["CID Sergeant Clocked"] = {
+    ["Trident Command Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
         "police.undercover",
     },
-    ["CID Sergeant"] = {
+    ["Trident Command"] = {
         "cop.whitelisted"
     },
-    ["CID Constable Clocked"] = {
+    ["Trident Officer Clocked"] = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
         "police.undercover",
     },
-    ["CID Constable"] = {
+    ["Trident Officer"] = {
         "cop.whitelisted"
     },
     ["Commissioner Clocked"] = {
