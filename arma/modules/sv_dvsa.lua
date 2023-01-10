@@ -230,3 +230,16 @@ RegisterServerEvent("ARMA:speedCameraFlashServer",function(speed)
         return
     end
 end)
+
+RegisterServerEvent('ARMA:speedGunFinePlayer')
+AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+      local fine = speed*100
+      ARMA.tryBankPayment(ARMA.getUserId(temp), fine)
+      TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
+      TriggerClientEvent('ARMA:dvsaMessage', temp,"DVSA","UK Government","You were fined £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit.")
+      ARMAclient.notify(source, { "~r~Fined "..GetPlayerName(temp).." £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit."})
+    end
+end)

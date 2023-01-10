@@ -389,62 +389,6 @@ RegisterCommand('drone', function(source, args)
   end
 end)
 
-RegisterServerEvent('ARMA:playTaserSound')
-AddEventHandler('ARMA:playTaserSound', function(coords, sound)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-        TriggerClientEvent('playTaserSoundClient', -1, coords, sound)
-    end
-end)
-
-RegisterServerEvent('ARMA:reactivatePed')
-AddEventHandler('ARMA:reactivatePed', function(id)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-      TriggerClientEvent('ARMA:receiveActivation', id)
-    end
-end)
-
-RegisterServerEvent('ARMA:arcTaser')
-AddEventHandler('ARMA:arcTaser', function()
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-      ARMAclient.getNearestPlayer(source, {3}, function(nplayer)
-        local nuser_id = ARMA.getUserId(nplayer)
-        if nuser_id ~= nil then
-            TriggerClientEvent('ARMA:receiveBarbs', nplayer, source)
-        end
-      end)
-    end
-end)
-
-RegisterServerEvent('ARMA:barbsNoLongerServer')
-AddEventHandler('ARMA:barbsNoLongerServer', function(id)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-      TriggerClientEvent('ARMA:barbsNoLonger', id)
-    end
-end)
-
-RegisterServerEvent('ARMA:barbsRippedOutServer')
-AddEventHandler('ARMA:barbsRippedOutServer', function(id)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    TriggerClientEvent('ARMA:barbsRippedOut', id)
-end)
-
-RegisterCommand('rt', function(source, args)
-  local source = source
-  local user_id = ARMA.getUserId(source)
-  if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-      TriggerClientEvent('ARMA:reloadTaser', source)
-  end
-end)
-
 RegisterCommand('trafficmenu', function(source, args)
   local source = source
   local user_id = ARMA.getUserId(source)
@@ -457,19 +401,6 @@ RegisterServerEvent('ARMA:startThrowSmokeGrenade')
 AddEventHandler('ARMA:startThrowSmokeGrenade', function(name)
     local source = source
     TriggerClientEvent('ARMA:displaySmokeGrenade', -1, name, GetEntityCoords(GetPlayerPed(source)))
-end)
-
-RegisterServerEvent('ARMA:speedGunFinePlayer')
-AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-      local fine = speed*100
-      ARMA.tryBankPayment(ARMA.getUserId(temp), fine)
-      TriggerClientEvent('ARMA:speedGunPlayerFined', temp)
-      TriggerClientEvent('ARMA:dvsaMessage', temp,"DVSA","UK Government","You were fined £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit.")
-      ARMAclient.notify(source, { "~r~Fined "..GetPlayerName(temp).." £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit."})
-    end
 end)
 
 RegisterCommand('breathalyse', function(source, args)
@@ -582,26 +513,6 @@ RegisterNetEvent("ARMA:updateSpotlight")
 AddEventHandler("ARMA:updateSpotlight", function(a)  
   local source = source 
   TriggerClientEvent("ARMA:updateSpotlight", -1, source, a)
-end)
-
-local flaggedVehicles = {}
-
-AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
-    if first_spawn then
-        if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-            TriggerClientEvent('ARMA:setFlagVehicles', source, flaggedVehicles)
-        end
-    end
-end)
-
-RegisterServerEvent("ARMA:flagVehicleAnpr")
-AddEventHandler("ARMA:flagVehicleAnpr", function(plate, reason)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        flaggedVehicles[plate] = reason
-        TriggerClientEvent('ARMA:setFlagVehicles', -1, flaggedVehicles)
-    end
 end)
 
 RegisterCommand('wc', function(source, args)
