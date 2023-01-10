@@ -1,10 +1,10 @@
 RMenu.Add("policedog","main",RageUI.CreateMenu("Dog Support Unit", "~b~Dog Management", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-AddEventHandler("ARMAUI5:globalOnPoliceDuty",function(a)
+AddEventHandler("ARMA:setPoliceOnDuty",function(a)
     if a then
         RegisterKeyMapping("k9attack", "Police Dog Attack", "keyboard", "INSERT")
     end
 end)
-AddEventHandler("ARMAUI5:globalOnPrisonDuty",function(b)
+AddEventHandler("ARMA:setPrisonGuardOnDuty",function(b)
     if b then
         RegisterKeyMapping("k9attack", "Police Dog Attack", "keyboard", "INSERT")
     end
@@ -420,7 +420,7 @@ function performSearchNearby()
     end
 end
 function putInVehicle()
-    local a2 = tvRP.getNearestVehicle(7.0)
+    local a2 = tARMA.getNearestVehicle(7.0)
     Citizen.Trace(a2)
     if a2 ~= -1 and a2 ~= nil and a2 ~= 0 then
         ClearPedTasks(f.handle)
