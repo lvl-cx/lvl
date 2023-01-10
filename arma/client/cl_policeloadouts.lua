@@ -44,13 +44,14 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
         local r = function(s)
         end
         local t = function(s)
+            selectedLoadout = nil
             RageUI.Visible(RMenu:Get("policeloadouts", "main"), false)
             RageUI.ActuallyCloseAll()
         end
         local u = function(s)
             if IsControlJustPressed(1, 38) then
-                TriggerServerEvent('ARMA:getPoliceLoadouts')
                 selectedLoadout = nil
+                TriggerServerEvent('ARMA:getPoliceLoadouts')
                 RageUI.Visible(RMenu:Get("policeloadouts", "main"), not RageUI.Visible(RMenu:Get("policeloadouts", "main")))
             end
             local v, w, x = table.unpack(GetFinalRenderedCamCoord())
