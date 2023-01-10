@@ -115,6 +115,9 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
     end
 end)
 
+RegisterNetEvent("ARMA:setPrisonGuardOnDuty",function(E)
+    globalOnPrisonDuty=E 
+end)
 RegisterNetEvent("ARMA:forcePlayerInPrison",function(E)
     b = E
     globalInPrison = E
