@@ -26,6 +26,7 @@ local pdGroups = {
     ["PC Clocked"]=true,
     ["PCSO Clocked"]=true,
     ["Special Constable Clocked"]=true,
+    ["NPAS Clocked"]=true,
 }
 local nhsGroups = {
     ["NHS Trainee Paramedic Clocked"] = true,
@@ -157,7 +158,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
             if ARMA.hasPermission(k, 'admin.tickets') then
                 staff[k] = {name = name, rank = getGroupInGroups(k, 'staff'), hours = hours}
             end
-            if ARMA.hasPermission(k, 'police.onduty.permission') and not ARMA.hasPermission('police.undercover') then
+            if ARMA.hasPermission(k, 'police.onduty.permission') and not ARMA.hasPermission(k, 'police.undercover') then
                 police[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
             elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
                 nhs[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
@@ -166,7 +167,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
             elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
                 hmp[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
             end
-            if (not ARMA.hasPermission(k, "police.onduty.permission") or ARMA.hasPermission(user_id, 'police.undercover')) and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
+            if (not ARMA.hasPermission(k, "police.onduty.permission") or ARMA.hasPermission(k, 'police.undercover')) and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
                 civillians[k] = {name = name, rank = getGroupInGroups(k, 'default'), hours = hours}
             end
         end
