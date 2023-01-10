@@ -82,6 +82,9 @@ local e = "mic_2_ig_11_intro_goon"
 local f = "mic_2_ig_11_intro_p_one"
 local g = 0
 local h = false
+RegisterNetEvent("ARMA:setPoliceOnDuty",function(i)
+    globalOnPoliceDuty = i
+end)
 RegisterNetEvent("ARMA:getTackled",function(k)
     c = true
     TriggerEvent("ARMA:startCombatTimer", false)
@@ -101,7 +104,6 @@ RegisterNetEvent("ARMA:getTackled",function(k)
     h = false
     c = false
 end)
-
 function tARMA.isPedBeingTackled()
     return h
 end
@@ -136,19 +138,26 @@ local function n()
     end
     return p
 end
+local function x()
+    if globalOnCasinoDuty then
+        return IsEntityInArea(PlayerPedId(),820.3699,-95.55496,69.97881,1009.161,88.39021,125.1955,false,false,0) or tARMA.getPlayerBucket() == 777
+    else
+        return false
+    end
+end
 function func_tackleManagement()
     if h then
         SetPedToRagdoll(tARMA.getPlayerPed(), 1000, 1000, 0, 0, 0, 0)
     end
-    if tARMA.globalOnPoliceDuty() or tARMA.globalOnPrisonDuty() or tARMA.isStaffedOn() then
+    if globalOnPoliceDuty or x() or globalOnPrisonDuty and globalPlayerInPrisonZone then
         if IsControlPressed(0, a["LEFTSHIFT"]) and IsControlPressed(0, a["G"]) then
-            if not b and GetGameTimer() - g > 10 * 1000 then
-                local x = n()
-                if x then
-                    if not b and not c and not IsPedInAnyVehicle(tARMA.getPlayerPed()) and not IsPedInAnyVehicle(GetPlayerPed(x)) then
+            if not b and GetGameTimer() - g > 10 * 1000 and GetEntityHealth(PlayerPedId()) > 102 and not tARMA.isKnockedOut() then
+                local y = n()
+                if y then
+                    if not b and not c and not IsPedInAnyVehicle(tARMA.getPlayerPed()) and not IsPedInAnyVehicle(GetPlayerPed(y)) then
                         b = true
                         g = GetGameTimer()
-                        TriggerServerEvent("ARMA:tryTackle", x)
+                        TriggerServerEvent("ARMA:tryTackle", y)
                     end
                 end
             end
