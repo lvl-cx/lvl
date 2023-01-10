@@ -35,6 +35,7 @@ cfg.Guild_Roles = {
 		['NPAS'] = 991815823779975168,
 		['Trident Officer'] = 991819633097183322,
 		['Trident Command'] = 991809551802310767,
+		['K9 Trained'] = 991813474906820629,
 	}
 
 	-- ['NHS'] = {
