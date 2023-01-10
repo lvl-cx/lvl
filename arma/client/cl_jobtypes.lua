@@ -33,7 +33,7 @@ local e={
     ["Commissioner Clocked"]=true,
     ["Deputy Commissioner Clocked"] =true,
     ["Assistant Commissioner Clocked"]=true,
-    ["Deputy Assistant Commissioner Clocked"] =true,
+    ["Dep. Asst. Commissioner Clocked"] =true,
     ["Commander Clocked"]=true,
     ["Chief Superintendent Clocked"]=true,
     ["Superintendent Clocked"]=true,
@@ -41,7 +41,7 @@ local e={
     ["Inspector Clocked"]=true,
     ["Sergeant Clocked"]=true,
     ["Senior Constable Clocked"]=true,
-    ["Police Constable Clocked"]=true,
+    ["PC Clocked"]=true,
     ["PCSO Clocked"]=true,
     ["Special Constable Clocked"]=true,
 }
@@ -57,12 +57,20 @@ local f={
     ["Prison Officer"]=true,
     ["Trainee Prison Officer"]=true
 }
+local g={
+    ["NPAS"] = true,
+}
+local h={
+    ["CID Constable"] = true,
+    ["CID Sergeant"] = true,
+}
 
-function tARMA.getJobType(h)
+
+function tARMA.getJobType(i)
     jobGroups = tARMA.getCurrentPlayerInfo('jobs')
     if jobGroups then
         for a,b in pairs(jobGroups) do
-            if b.user_id == h then
+            if b.user_id == i then
                 for k,v in pairs(b.jobs) do
                     if c[k] then 
                         return "nhs"
@@ -70,6 +78,10 @@ function tARMA.getJobType(h)
                         return "metpd"
                     elseif f[k] then
                         return "hmp"
+                    elseif g[k] then
+                        return "cid"
+                    elseif h[k] then
+                        return "npas"
                     end 
                 end
                 return ""
