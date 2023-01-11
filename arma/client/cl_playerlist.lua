@@ -103,3 +103,18 @@ function sendFullPlayerListData()
         SendNUIMessage({appendToContentPlayerList = '<span class="username">' ..tostring(sortedPlayersCivillians[S].name) ..'</span><span class="job">' ..tostring(sortedPlayersCivillians[S].rank) .. '</span><span class="playtime">' .. tostring(sortedPlayersCivillians[S].hours) .. "hrs</span><br/>"})
     end
 end
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(5000)
+        if u ~= nil and v ~= nil and x ~= nil then
+            SetDiscordAppId(970724996223746149)
+            SetDiscordRichPresenceAsset('mainlogo') 
+            SetDiscordRichPresenceAssetText("discord.gg/armarp") 
+            SetDiscordRichPresenceAssetSmall('mainlogo')
+            SetDiscordRichPresenceAssetSmallText('ARMA')
+            SetRichPresence("[ID:" .. tostring(tARMA.getUserId()) .. "] | " .. tostring(v) .. "/" .. tostring(x))
+        end
+        Wait(15000)
+    end
+end)
