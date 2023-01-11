@@ -633,17 +633,16 @@ Citizen.CreateThread(function()
     end
 end)
 
+
 RegisterNetEvent('ARMA:InventoryOpen')
 AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag, bagid)
     IsLootBagOpening = lootbag
     LootBagIDNew = bagid
     if IsLootBagOpening then
-        TriggerEvent("arma:PlaySound", "zipper")
-        tARMA.loadAnimDict('amb@medic@standing@kneel@base')
-        tARMA.loadAnimDict('anim@gangops@facility@servers@bodysearch@')
-        TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
-        TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
-        LootBagCrouchLoop = true
+        tARMA.loadAnimDict("amb@medic@standing@kneel@base")
+        tARMA.loadAnimDict("anim@gangops@facility@servers@bodysearch@")
+        TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base", "base", 5.0, 1.0, -1, 48, 0, 0, 0, 0)
+        TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@", "player_search", 5.0, 1.0, -1, 48, 0, 0, 0, 0)
     end
     if toggle then
         drawInventoryUI = true
@@ -652,6 +651,8 @@ AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag, bagid)
         setCursor(0)
         inGUIARMA = false
         inventoryType = nil
-        LootBagCrouchLoop = false
+        ClearPedTasks(PlayerPedId())
+        RemoveAnimDict("amb@medic@standing@kneel@base")
+        RemoveAnimDict("anim@gangops@facility@servers@bodysearch@")
     end
 end)
