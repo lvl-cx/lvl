@@ -148,7 +148,7 @@ AddEventHandler('ARMA:searchPlayer', function(playersrc)
                             FormattedSecondaryInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
                         end
                         if ARMA.getMoney(their_id) > 0 then
-                            FormattedSecondaryInventoryData['cash'] = {amount = '£'..getMoneyStringFormatted(ARMA.getMoney(their_id)), ItemName = 'Cash'}
+                            FormattedSecondaryInventoryData['cash'] = {amount = ARMA.getMoney(their_id), ItemName = 'Cash'}
                         end
                         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedSecondaryInventoryData, ARMA.computeItemsWeight(their_data.inventory), 200)
                     end
