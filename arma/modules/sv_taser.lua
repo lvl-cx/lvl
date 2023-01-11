@@ -13,6 +13,7 @@ AddEventHandler('ARMA:reactivatePed', function(id)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') or ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
       TriggerClientEvent('ARMA:receiveActivation', id)
+      TriggerClientEvent('TriggerTazer', id)
     end
 end)
 
@@ -25,6 +26,7 @@ AddEventHandler('ARMA:arcTaser', function()
         local nuser_id = ARMA.getUserId(nplayer)
         if nuser_id ~= nil then
             TriggerClientEvent('ARMA:receiveBarbs', nplayer, source)
+            TriggerClientEvent('TriggerTazer', id)
         end
       end)
     end

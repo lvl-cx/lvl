@@ -379,8 +379,7 @@ end
 
 local a0 = false
 function tARMA.isTazed(a1)
-    return a0 or IsPedBeingStunned(PlayerPedId(), 0) or tARMA.isPedBeingTackled() or
-        isInGreenzone and not globalOnPoliceDuty and not a1
+    return a0 or IsPedBeingStunned(PlayerPedId(), 0) or tARMA.isPedBeingTackled() or isInGreenzone and not globalOnPoliceDuty and not a1
 end
 function tARMA.isTazedByRevive()
     return a0
