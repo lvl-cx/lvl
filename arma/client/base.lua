@@ -961,7 +961,7 @@ end)
 
 function tARMA.getHairAndTats()
   TriggerServerEvent('ARMA:changeHairstyle')
-  TriggerServerEvent('ARMA:changeTattoos')
+  TriggerServerEvent('ARMA:getPlayerTattoos')
 end
 
 local blipscfg = module("cfg/blips_markers")
