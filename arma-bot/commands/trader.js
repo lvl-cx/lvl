@@ -4,8 +4,8 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     let embed = {
-        "title": "ARMA Support Discord",
-        "description": `https://discord.gg/mg5UcRkXHP`,
+        "title": "ARMA Trader Discord",
+        "description": `https://discord.gg/X5hV8E39Sf`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
@@ -16,6 +16,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 }
 
 exports.conf = {
-    name: "support",
+    name: "trader",
     perm: 0
 }
