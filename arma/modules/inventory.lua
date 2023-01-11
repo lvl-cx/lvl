@@ -41,7 +41,6 @@ function ch_give(idname, player, choice)
   if user_id ~= nil then
     ARMAclient.getNearestPlayers(player,{15},function(nplayers) --get nearest players
       usrList = ""
-      if #nplayers > 1 then
       for k, v in pairs(nplayers) do
           usrList = usrList .. "[" .. k .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
       end
