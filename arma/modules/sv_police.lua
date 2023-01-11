@@ -241,7 +241,7 @@ RegisterServerEvent('ARMA:dragPlayer')
 AddEventHandler('ARMA:dragPlayer', function(playersrc)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if user_id ~= nil and ARMA.hasPermission(user_id, "police.onduty.permission") then
+    if user_id ~= nil and (ARMA.hasPermission(user_id, "police.onduty.permission") or ARMA.hasPermission(user_id, "prisonguard.onduty.permission")) then
       if playersrc ~= nil then
         local nuser_id = ARMA.getUserId(playersrc)
           if nuser_id ~= nil then
