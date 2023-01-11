@@ -81,6 +81,7 @@ function tARMA.sendWebhook(webhook, name, message)
                 }
         }
         }}), { ["Content-Type"] = "application/json" })
+        Wait(1000)
     end
 end
 
