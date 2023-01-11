@@ -319,6 +319,7 @@ function RageUI.Visible(Menu, Value)
                     RageUI.CurrentMenu = nil
                     RageUI.Options = 0
                     RageUI.ItemOffset = 0
+                    RageUI.LastControl = false
                 end
             else
                 return Menu.Open

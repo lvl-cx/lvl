@@ -1,3 +1,6 @@
+---@type table
+RageUI.LastControl = false
+
 ---IsMouseInBounds
 ---@param X number
 ---@param Y number
@@ -61,6 +64,7 @@ function RageUI.GoUp(Options)
 
                 local Audio = RageUI.Settings.Audio
                 RageUI.PlaySound(Audio[Audio.Use].UpDown.audioName, Audio[Audio.Use].UpDown.audioRef)
+                RageUI.LastControl = true
             else
                 local Audio = RageUI.Settings.Audio
                 RageUI.PlaySound(Audio[Audio.Use].Error.audioName, Audio[Audio.Use].Error.audioRef)
@@ -103,6 +107,7 @@ function RageUI.GoDown(Options)
                 end
                 local Audio = RageUI.Settings.Audio
                 RageUI.PlaySound(Audio[Audio.Use].UpDown.audioName, Audio[Audio.Use].UpDown.audioRef)
+                RageUI.LastControl = false
             else
                 local Audio = RageUI.Settings.Audio
                 RageUI.PlaySound(Audio[Audio.Use].Error.audioName, Audio[Audio.Use].Error.audioRef)
