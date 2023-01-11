@@ -301,6 +301,14 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_ar_spar17",
     },
+    
+    ["WEAPON_G36K"] = {
+        name = "G36K",
+        class = "AR",
+        ammo = "Police Issued 5.56mm",
+        policeWeapon = true,
+        model = "w_ar_g36k",
+    },
     --?SMG
     ["WEAPON_MP5"] = {
         name = "MP5",
@@ -329,13 +337,6 @@ cfg.weapons = {
         ammo = "9mm Bullets",
         policeWeapon = false,
         model = "w_sb_ump45",
-    },
-    ["WEAPON_MAC11"] = {
-        name = "MAC11",
-        class = "SMG",
-        ammo = "9mm Bullets",
-        policeWeapon = false,
-        model = "w_sb_mac11",
     },
     ["WEAPON_UZI"] = {
         name = "Uzi",
@@ -366,13 +367,6 @@ cfg.weapons = {
         policeWeapon = false,
         model = "w_sg_spaz",
     },
-    ["WEAPON_AA12"] = {
-        name = "Assault A12 Shotgun",
-        class = "Shotgun",
-        ammo = "12 Gauge Bullets",
-        policeWeapon = false,
-        model = "w_sg_aa12",
-    },
     ["WEAPON_OLYMPIA"] = {
         name = "Olympia Shotgun",
         class = "Shotgun",
@@ -381,20 +375,6 @@ cfg.weapons = {
         model = "w_sg_olympia",
     },
     --? snipers
-    ["WEAPON_DILDET"] = {
-        name = "Dildet",
-        class = "Shotgun",
-        ammo = ".308 Sniper Rounds",
-        policeWeapon = false,
-        model = "w_ar_dildet",
-    },
-    ["WEAPON_MANDO"] = {
-        name = "Mandolorain Sniper",
-        class = "Shotgun",
-        ammo = ".308 Sniper Rounds",
-        policeWeapon = false,
-        model = "w_ar_mando",
-    },
     ["WEAPON_AX50"] = {
         name = "AX-50",
         class = "Heavy",
@@ -422,27 +402,6 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_sr_svd",
-    },
-    ["WEAPON_BARRET"] = {
-        name = "Barret",
-        class = "Heavy",
-        ammo = ".308 Sniper Rounds",
-        policeWeapon = false,
-        model = "w_sr_barret",
-    },
-    ["WEAPON_MK14"] = {
-        name = "MK14",
-        class = "Heavy",
-        ammo = ".308 Sniper Rounds",
-        policeWeapon = false,
-        model = "w_sr_mk14",
-    },
-    ["WEAPON_G36K"] = {
-        name = "G36K",
-        class = "AR",
-        ammo = "Police Issued 5.56mm",
-        policeWeapon = true,
-        model = "w_ar_g36k",
     },
 }
 
