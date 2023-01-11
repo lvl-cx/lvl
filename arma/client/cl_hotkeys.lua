@@ -8,40 +8,47 @@ end
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,90) and tARMA.globalOnPoliceDuty() then -- LEFTALT + D
-			local closestPlayer = tARMA.GetClosestPlayer(3)
-			if closestPlayer then
-				targetSrc = GetPlayerServerId(closestPlayer)
-				if targetSrc then
-                    TriggerServerEvent('ARMA:dragPlayer', targetSrc)
+		if IsControlPressed(1, 19) and IsControlJustPressed(1, 90) then
+			local b = GetClosestPlayer(3)
+			if b then
+				targetSrc = GetPlayerServerId(b)
+				if targetSrc > 0 then
+					TriggerServerEvent("ARMA:dragPlayer", targetSrc)
 				end
-			end 
-            Wait(1000)
+			end
+			Wait(1000)
 		end
 	    if IsControlPressed(1, 19) and IsDisabledControlJustPressed(1,185) then -- LEFTALT + F
 			TriggerServerEvent('ARMA:ejectFromVehicle')
             Wait(1000)
 		end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1,58) and IsPedArmed(tARMA.getPlayerPed(), 7) and GetSelectedPedWeapon(tARMA.getPlayerPed()) ~= GetHashKey('WEAPON_SNOWBALL') then -- LEFTALT + G
-			TriggerServerEvent("ARMA:Knockout")
+		if IsControlPressed(1, 19) and IsControlJustPressed(1, 58) and IsPedArmed(CMG.getPlayerPed(), 7) then
+			local c = GetSelectedPedWeapon(tARMA.getPlayerPed())
+			if c ~= GetHashKey("WEAPON_UNARMED") then
+				local d = GetWeapontypeGroup(c)
+				if d ~= GetHashKey("GROUP_UNARMED") and d ~= GetHashKey("GROUP_MELEE") and d ~= GetHashKey("GROUP_THROWN") then
+					TriggerServerEvent("ARMA:Knockout")
+				end
+			end
 			Wait(1000)
-	    end
+		end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,74) and (tARMA.isDev()) then -- LEFTALT + H
-			local ad = "melee@unarmed@streamed_variations"
-			local anim = "plyr_takedown_front_headbutt"
-			local ped = tARMA.getPlayerPed()
-
-			if (DoesEntityExist(ped) and not IsEntityDead(ped)) then
-				loadAnimDict(ad)
-				if ( IsEntityPlayingAnim(ped, ad, anim, 3)) then 
-					TaskPlayAnim(ped, ad, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0)
-					ClearPedSecondaryTask(ped)
+			Wait(1000)
+			local e = "melee@unarmed@streamed_variations"
+			local f = "plyr_takedown_front_headbutt"
+			local g = tARMA.getPlayerPed()
+			if DoesEntityExist(g) and not IsEntityDead(g) then
+				loadAnimDict(e)
+				if IsEntityPlayingAnim(g, e, f, 3) then
+					TaskPlayAnim(g, e, "exit", 3.0, 1.0, -1, 0, 0, 0, 0, 0)
+					ClearPedSecondaryTask(g)
 				else
-					TaskPlayAnim(ped, ad, anim, 3.0, 1.0, -1, 0, 0, 0, 0, 0)
-				end       
+					TaskPlayAnim(g, e, f, 3.0, 1.0, -1, 0, 0, 0, 0, 0)
+				end
+				RemoveAnimDict(e)
 			end
 			TriggerServerEvent("ARMA:KnockoutNoAnim")
-            Wait(1000)
+			Wait(1000)
 		end
 		if IsControlPressed(1, 19) and IsControlJustPressed(1,32) then 
 			if not IsPauseMenuActive() and not IsPedInAnyVehicle(tARMA.getPlayerPed(), true) and not IsPedSwimming(tARMA.getPlayerPed()) and not IsPedSwimmingUnderWater(tARMA.getPlayerPed()) and not IsPedShooting(tARMA.getPlayerPed()) and not IsPedDiving(tARMA.getPlayerPed()) and not IsPedFalling(tARMA.getPlayerPed()) and GetEntityHealth(tARMA.getPlayerPed()) > 105 and not tARMA.isHandcuffed() then --and not tARMA.isInRadioChannel() then  remove when radios are fixed

@@ -155,7 +155,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
-        if (IsControlJustReleased(1, 323) or IsControlJustReleased(1, 27)) and not globalSurrenderring and b and not tARMA.isInComa() and not tARMA.isHandcuffed() and tARMA.canAnim() then
+        if (IsControlJustReleased(1, 323) or IsControlJustReleased(1, 27)) and not globalSurrenderring and c and not tARMA.isInComa() and not tARMA.isHandcuffed() and tARMA.canAnim() then
             c = false
             CreateThread(function()
                 local G = false
