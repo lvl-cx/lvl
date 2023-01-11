@@ -35,6 +35,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
     if #(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0 then
+        table.remove(activeCrates, crateID)
         FreezeEntityPosition(GetPlayerPed(source), true)
         ARMAclient.startCircularProgressBar(source, {"", 15000, nil})
         local anims = {
@@ -58,7 +59,6 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
         FreezeEntityPosition(GetPlayerPed(source), false)
         TriggerClientEvent("ARMA:removeLootcrate", crateID)
         TriggerClientEvent("ARMA:removeCrateRedzone", -1)
-        table.remove(activeCrates, crateID)
     end
 end)
 
