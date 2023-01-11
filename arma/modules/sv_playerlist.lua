@@ -91,7 +91,7 @@ function getGroupInGroups(id, type)
         end
     elseif type == 'police' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
-            if pdGroups[k] then 
+            if pdGroups[k] or tridentGroups[k] then 
                 return k
             end 
         end
