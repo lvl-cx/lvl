@@ -619,7 +619,7 @@ Citizen.CreateThread(function()
             end
         end
         if inventoryOpen then
-            if tARMA.isInComa({}) then
+            if tARMA.isInComa() then
                 drawInventoryUI = false
                 inventoryType = nil;
                 if BootCar then
