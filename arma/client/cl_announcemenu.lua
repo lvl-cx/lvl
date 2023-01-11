@@ -14,6 +14,10 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
+RegisterNetEvent("ARMA:serviceAnnounceCl",function(h, i)
+    tARMA.announce(h, i)
+end)
+
 RegisterNetEvent("ARMA:buildAnnounceMenu",function(g)
     a = g
     RageUI.Visible(RMenu:Get("armaannouncements", "main"), not RageUI.Visible(RMenu:Get("armaannouncements", "main")))

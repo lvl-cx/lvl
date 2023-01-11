@@ -30,7 +30,7 @@ AddEventHandler("ARMA:serviceAnnounce", function(announceType)
             if ARMA.hasPermission(user_id, v.permission) or ARMA.hasGroup(user_id, 'Founder') then
                 if ARMA.tryFullPayment(user_id, v.info.price) then
                     ARMA.prompt(source,"Input text to announce","",function(source,data) 
-                        ARMAclient.announce(-1, {v.image, data})
+                        TriggerClientEvent('ARMA:serviceAnnounceCl', -1, v.image, data)
                         if v.info.price > 0 then
                             ARMAclient.notify(source, {"~g~Purchased a "..v.info.name.." for £"..v.info.price.." with content ~b~"..data})
                         else
