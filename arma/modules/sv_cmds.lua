@@ -140,7 +140,7 @@ RegisterCommand("/", function(source, args, raw)
 			elseif ARMA.hasGroup(user_id, "Moderator") then
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Moderator ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")				
 				ChatCooldown = 3
-			elseif ARMA.hasGroup(user_id, "Suport Team") then
+			elseif ARMA.hasGroup(user_id, "Support Team") then
 				TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^2 Support Team ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 				ChatCooldown = 3
 			elseif ARMA.hasGroup(user_id, "Trial Staff") then
@@ -175,8 +175,6 @@ RegisterCommand('cc', function(source, args, rawCommand)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.ban') then
         TriggerClientEvent('chat:clear',-1)             
-    else
-        ARMAclient.notify(source,{"~r~You do not have permission to use this command."})
     end
 end, false)
 
