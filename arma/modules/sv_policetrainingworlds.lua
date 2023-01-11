@@ -30,8 +30,7 @@ AddEventHandler("ARMA:trainingWorldCreate", function()
             ARMA.prompt(source,"World Password:","",function(player,password) 
                 trainingWorlds[trainingWorldsCount] = {name = worldname, ownerName = GetPlayerName(source), ownerUserId = user_id, bucket = trainingWorldsCount, members = {}, password = password}
                 table.insert(trainingWorlds[trainingWorldsCount].members, user_id)
-                SetPlayerRoutingBucket(source, trainingWorldsCount)
-                TriggerClientEvent('ARMA:setBucket', source, trainingWorldsCount)
+                tARMA.setBucket(source, trainingWorldsCount)
                 TriggerClientEvent('ARMA:trainingWorldSend', -1, trainingWorldsCount, trainingWorlds[trainingWorldsCount])
                 ARMAclient.notify(source, {'~g~Training World Created!'})
             end)
@@ -51,8 +50,7 @@ AddEventHandler("ARMA:trainingWorldRemove", function(world)
             for k,v in pairs(trainingWorlds[world].members) do
                 local memberSource = ARMA.getUserSource(v)
                 if memberSource ~= nil then
-                    SetPlayerRoutingBucket(memberSource, 0)
-                    TriggerClientEvent('ARMA:setBucket', memberSource, 0)
+                    tARMA.setBucket(memberSource, 0)
                     ARMAclient.notify(memberSource, {"~b~The training world you were in was deleted, you have been returned to the main dimension."})
                 end
             end
@@ -70,8 +68,7 @@ AddEventHandler("ARMA:trainingWorldJoin", function(world)
             ARMAclient.notify(source, {"~r~Invalid Password."})
             return
         else
-            SetPlayerRoutingBucket(source, world)
-            TriggerClientEvent('ARMA:setBucket', source, world)
+            tARMA.setBucket(source, world)
             table.insert(trainingWorlds[world].members, user_id)
             ARMAclient.notify(source, {"~b~You have joined training world "..trainingWorlds[world].name..' owned by '..trainingWorlds[world].ownerName..'.'})
         end
@@ -82,8 +79,7 @@ RegisterNetEvent("ARMA:trainingWorldLeave")
 AddEventHandler("ARMA:trainingWorldLeave", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    SetPlayerRoutingBucket(source, 0)
-    TriggerClientEvent('ARMA:setBucket', source, 0)
+    tARMA.setBucket(source, 0)
     ARMAclient.notify(source, {"~b~You have left the training world."})
 end)
 

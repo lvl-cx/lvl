@@ -125,8 +125,7 @@ AddEventHandler("ARMA:spectatePlayer", function(id)
     if ARMA.hasPermission(user_id, "admin.spectate") then
         if playerssource ~= nil then
             spectatingPositions[user_id] = {coords = GetEntityCoords(GetPlayerPed(source)), bucket = GetPlayerRoutingBucket(source)}
-            SetPlayerRoutingBucket(source, GetPlayerRoutingBucket(playerssource))
-            TriggerClientEvent('ARMA:setBucket', source, GetPlayerRoutingBucket(playerssource))
+            tARMA.setBucket(source, GetPlayerRoutingBucket(playerssource))
             TriggerClientEvent("ARMA:spectatePlayer",source, playerssource, GetEntityCoords(GetPlayerPed(playerssource)))
             tARMA.sendWebhook('spectate',"ARMA Spectate Logs", "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(playerssource).."**\n> Player PermID: **"..id.."**\n> Player TempID: **"..playerssource.."**")
         else
@@ -144,8 +143,7 @@ AddEventHandler("ARMA:stopSpectatePlayer", function()
             if k == ARMA.getUserId(source) then
                 TriggerClientEvent("ARMA:stopSpectatePlayer",source,v.coords,v.bucket)
                 SetEntityCoords(GetPlayerPed(source),v.coords)
-                SetPlayerRoutingBucket(source,v.bucket)
-                TriggerClientEvent('ARMA:setBucket', source, v.bucket)
+                tARMA.setBucket(source, v.bucket)
                 spectatingPositions[k] = nil
             end
         end
@@ -691,8 +689,7 @@ AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
         local adminbucket = GetPlayerRoutingBucket(source)
         local playerbucket = GetPlayerRoutingBucket(newtarget)
         if adminbucket ~= playerbucket then
-            SetPlayerRoutingBucket(source, playerbucket)
-            TriggerClientEvent('ARMA:setBucket', source, playerbucket)
+            tARMA.setBucket(source, playerbucket)
             ARMAclient.notify(source, {'~g~Player was in another bucket, you have been set into their bucket.'})
         end
         ARMAclient.teleport(source, coords)
@@ -735,8 +732,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
             local adminbucket = GetPlayerRoutingBucket(source)
             local playerbucket = GetPlayerRoutingBucket(id)
             if adminbucket ~= playerbucket then
-                SetPlayerRoutingBucket(id, adminbucket)
-                TriggerClientEvent('ARMA:setBucket', id, adminbucket)
+                tARMA.setBucket(id, adminbucket)
                 ARMAclient.notify(source, {'~g~Player was in another bucket, they have been set into your bucket.'})
             end
         else 
@@ -813,6 +809,7 @@ AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
             local ped = GetPlayerPed(source)
             local ped2 = GetPlayerPed(id)
             SetEntityCoords(ped2, 3490.0769042969,2585.4392089844,14.149716377258)
+            tARMA.setBucket(id, 0)
             ARMAclient.notify(ARMA.getUserSource(player_id),{'~g~You are now in an admin situation, do not leave the game.'})
             ARMAclient.setPlayerCombatTimer(id, {0})
         else
@@ -1036,8 +1033,7 @@ RegisterCommand("setbucket", function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.managecommunitypot') then
-        SetPlayerRoutingBucket(source, tonumber(args[1]))
-        TriggerClientEvent('ARMA:setBucket', source, tonumber(args[1]))
+        tARMA.setBucket(source, tonumber(args[1]))
         ARMAclient.notify(source, {'~g~You are now in Bucket: '..GetPlayerRoutingBucket(source)})
     end 
 end)

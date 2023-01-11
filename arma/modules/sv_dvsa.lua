@@ -99,14 +99,12 @@ AddEventHandler("ARMA:dvsaBucket", function(bool)
         currenttests[user_id] = {
             ["bucket"] = highestcount
         }
-        SetPlayerRoutingBucket(source,currenttests[user_id].bucket)
-        TriggerClientEvent('ARMA:setBucket', source, currenttests[user_id].bucket)
+        tARMA.setBucket(source, currenttests[user_id].bucket)
     elseif not bool then
         if currenttests[user_id] ~= nil then
             currenttests[user_id] = nil
         end
-        SetPlayerRoutingBucket(source,0)
-        TriggerClientEvent('ARMA:setBucket', source, 0)
+        tARMA.setBucket(source, 0)
     end
 end)
 

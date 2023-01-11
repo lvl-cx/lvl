@@ -102,7 +102,7 @@ RegisterCommand("return", function(source)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.tickets') then
         if savedPositions[user_id] then
-            SetPlayerRoutingBucket(source, savedPositions[user_id].bucket)
+            tARMA.setBucket(source, savedPositions[user_id].bucket)
             ARMAclient.teleport(source, {table.unpack(savedPositions[user_id].coords)})
             ARMAclient.notify(source, {'~g~Returned to position.'})
             savedPositions[user_id] = nil
@@ -130,8 +130,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                             local playerbucket = GetPlayerRoutingBucket(v.tempID)
                             savedPositions[user_id] = {bucket = adminbucket, coords = GetEntityCoords(GetPlayerPed(admin_source))}
                             if adminbucket ~= playerbucket then
-                                SetPlayerRoutingBucket(admin_source, playerbucket)
-                                TriggerClientEvent('ARMA:setBucket', admin_source, playerbucket)
+                                tARMA.setBucket(admin_source, playerbucket)
                                 ARMAclient.notify(admin_source, {'~g~Player was in another bucket, you have been set into their bucket.'})
                             end
                             ARMAclient.getPosition(v.tempID, {}, function(coords)

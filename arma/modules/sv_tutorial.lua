@@ -4,7 +4,7 @@ AddEventHandler('ARMA:checkTutorial', function()
     local user_id = ARMA.getUserId(source)
     if not ARMA.hasGroup(user_id, 'TutorialDone') then
         TriggerClientEvent('ARMA:playTutorial', source)
-        SetPlayerRoutingBucket(source, user_id)
+        tARMA.setBucket(source, user_id)
         TriggerClientEvent('ARMA:setBucket', source, user_id)
     end
 end)
@@ -15,7 +15,7 @@ AddEventHandler('ARMA:setCompletedTutorial', function()
     local user_id = ARMA.getUserId(source)
     if not ARMA.hasGroup(user_id, 'TutorialDone') then
         ARMA.addUserGroup(user_id, 'TutorialDone')
-        SetPlayerRoutingBucket(source, 0)
+        tARMA.setBucket(source, 0)
         TriggerClientEvent('ARMA:setBucket', source, 0)
     end
 end)

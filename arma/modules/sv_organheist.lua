@@ -25,8 +25,7 @@ AddEventHandler("ARMA:joinOrganHeist",function()
                 TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[math.random(2)], timeTillOrgan, 'civ', 2)
                 ARMAclient.giveWeapons(source, {{['WEAPON_M1911'] = {ammo = 250}}, false})
             end
-            SetPlayerRoutingBucket(source, 15)
-            TriggerClientEvent('ARMA:setBucket', source, 15)
+            tARMA.setBucket(source, 15)
             ARMAclient.setArmour(source, {100, true})
         else
             ARMAclient.notify(source, {'~r~The organ heist has already started.'})
@@ -45,7 +44,7 @@ AddEventHandler("ARMA:checkOrganHeistKill",function(killed, killer)
         end
         TriggerClientEvent('ARMA:endOrganHeist', killed)
         TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
-        SetPlayerRoutingBucket(killed, 0)
+        tARMA.setBucket(killed, 0)
         playersInOrganHeist[killedID] = nil
         ARMAclient.setDeathInOrganHeist(killed, {})
     end
@@ -87,7 +86,7 @@ Citizen.CreateThread(function()
                         TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
                     end
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                    SetPlayerRoutingBucket(ARMA.getUserSource(k), 0)
+                    tARMA.setBucket(ARMA.getUserSource(k), 0)
                     ARMA.giveBankMoney(k, 250000)
                 end
                 playersInOrganHeist = {}
@@ -108,7 +107,7 @@ Citizen.CreateThread(function()
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
                     ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
                     SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
-                    SetPlayerRoutingBucket(ARMA.getUserSource(k), 0)
+                    tARMA.setBucket(ARMA.getUserSource(k), 0)
                 end
             end
         end

@@ -159,6 +159,13 @@ function ARMA.updateInvCap(user_id, invcap)
     end
 end
 
+function tARMA.setBucket(source, bucket)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    SetPlayerRoutingBucket(source, bucket)
+    TriggerClientEvent('ARMA:setBucket', source, bucket)
+end
+
 local isStoring = {}
 AddEventHandler('ARMA:StoreWeaponsRequest', function(source)
     local player = source 

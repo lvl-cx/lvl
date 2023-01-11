@@ -60,7 +60,7 @@ AddEventHandler("ARMA:prisonArrivedForJail", function()
     MySQL.query("ARMA/get_prison_time", {user_id = user_id}, function(prisontime)
         if prisontime ~= nil then 
             if prisontime[1].prison_time > 0 then
-                SetPlayerRoutingBucket(source, 0)
+                tARMA.setBucket(source, 0)
                 TriggerClientEvent('ARMA:forcePlayerInPrison', source, true)
                 TriggerClientEvent('ARMA:prisonCreateBreakOutAreas', source)
                 TriggerClientEvent('ARMA:prisonUpdateClientTimer', source, prisontime[1].prison_time)
@@ -119,7 +119,7 @@ AddEventHandler("ARMA:jailPlayer", function(player)
                                                 lastCellUsed = 0
                                             end
                                             TriggerClientEvent('ARMA:prisonTransportWithBus', player, lastCellUsed+1)
-                                            SetPlayerRoutingBucket(player, lastCellUsed+1)
+                                            tARMA.setBucket(player, lastCellUsed+1)
                                             local prisonItemsTable = {}
                                             for k,v in pairs(cfg.prisonItems) do
                                                 local item = math.random(1, #prisonItems)
