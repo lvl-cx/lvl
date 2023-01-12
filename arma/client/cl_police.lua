@@ -382,7 +382,7 @@ RegisterNetEvent("ARMA:breathalyserCommand",function()
                 local T = #(v - S)
                 if T < 3.0 then
                     local U = GetPlayerServerId(R)
-                    TriggerServerEvent("CMG:breathalyserRequest", U)
+                    TriggerServerEvent("ARMA:breathalyserRequest", U)
                     break
                 end
             end
