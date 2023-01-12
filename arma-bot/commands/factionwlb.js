@@ -1,0 +1,33 @@
+var AsciiTable = require('ascii-table');
+const resourcePath = global.GetResourcePath ?
+    global.GetResourcePath(global.GetCurrentResourceName()) : global.__dirname
+const settingsjson = require(resourcePath + '/settings.js')
+
+exports.runcmd = (fivemexports, client, message, params) => {
+    fivemexports.ghmattimysql.execute("SELECT * FROM arma_police_hours ORDER BY weekly_hours DESC", [], (result) => {
+        var policeHoursLB = []
+        if (result) {
+            for (i = 0; i < result.length; i++) {
+                if (i < 10) {
+                    policeHoursLB.push(`\n${result[i].username}(${result[i].user_id}) - ${Math.round(result[i].weekly_hours)} hours`)
+                }
+            }
+            let embed = {
+                "title": `Police Weekly Hours Leaderboard`,
+                "description": '```'+policeHoursLB.join('').replace(',', '')+'```',
+                "color": settingsjson.settings.botColour,
+                "footer": {
+                    "text": ""
+                },
+                "timestamp": new Date()
+            }
+            message.channel.send({embed})
+        }
+    })
+}
+
+exports.conf = {
+    name: "wlb",
+    perm: 0,
+    guild: "991799285681233930"
+}
