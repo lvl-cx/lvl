@@ -96,6 +96,7 @@ end)
 
 RegisterServerEvent("ARMA:CheckPov")
 AddEventHandler("ARMA:CheckPov",function(userperm)
+    local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "admin.tickets") then
         if ARMA.hasPermission(userperm, 'pov.list') then
@@ -165,6 +166,7 @@ end)
 
 RegisterServerEvent("ARMA:GiveWeaponToPlayer")
 AddEventHandler("ARMA:GiveWeaponToPlayer",function()
+    local source = source
     local admin = source
     local admin_id = ARMA.getUserId(admin)
     local admin_name = GetPlayerName(admin)
@@ -206,6 +208,7 @@ end)
 
 RegisterServerEvent("ARMA:AddGroup")
 AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
+    local source = source
     local admin_temp = source
     local admin_perm = ARMA.getUserId(admin_temp)
     local user_id = ARMA.getUserId(source)
@@ -250,6 +253,7 @@ end)
 
 RegisterServerEvent("ARMA:RemoveGroup")
 AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
+    local source = source
     local user_id = ARMA.getUserId(source)
     local admin_temp = source
     local permsource = ARMA.getUserSource(perm)
@@ -420,6 +424,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
 end)
 
 AddEventHandler("playerJoining", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
     for k,v in pairs(bans) do
         defaultBans[v.id] = 0
@@ -473,6 +478,7 @@ end)
 
 RegisterServerEvent('ARMA:RequestScreenshot')
 AddEventHandler('ARMA:RequestScreenshot', function(admin,target)
+    local source = source
     local target_id = ARMA.getUserId(target)
     local target_name = GetPlayerName(target)
     local admin_id = ARMA.getUserId(admin)
@@ -490,6 +496,7 @@ end)
 
 RegisterServerEvent('ARMA:RequestVideo')
 AddEventHandler('ARMA:RequestVideo', function(admin,target)
+    local source = source
     local target_id = ARMA.getUserId(target)
     local target_name = GetPlayerName(target)
     local admin_id = ARMA.getUserId(admin)
@@ -559,6 +566,7 @@ end)
 
 RegisterServerEvent("ARMA:Unban")
 AddEventHandler("ARMA:Unban",function()
+    local source = source
     local admin_id = ARMA.getUserId(source)
     playerName = GetPlayerName(source)
     if ARMA.hasPermission(admin_id, 'admin.unban') then
@@ -607,6 +615,7 @@ end)
 
 RegisterServerEvent('ARMA:SlapPlayer')
 AddEventHandler('ARMA:SlapPlayer', function(admin, target)
+    local source = source
     local admin_id = ARMA.getUserId(admin)
     local player_id = ARMA.getUserId(target)
     if ARMA.hasPermission(admin_id, "admin.slap") then
@@ -625,6 +634,7 @@ end)
 
 RegisterServerEvent('ARMA:RevivePlayer')
 AddEventHandler('ARMA:RevivePlayer', function(admin, targetid, reviveall)
+    local source = source
     local admin_id = ARMA.getUserId(admin)
     local player_id = targetid
     local target = ARMA.getUserSource(player_id)
@@ -653,6 +663,7 @@ frozenplayers = {}
 
 RegisterServerEvent('ARMA:FreezeSV')
 AddEventHandler('ARMA:FreezeSV', function(admin, newtarget, isFrozen)
+    local source = source
     local admin_id = ARMA.getUserId(admin)
     local player_id = ARMA.getUserId(newtarget)
     if ARMA.hasPermission(admin_id, 'admin.freeze') then
@@ -680,6 +691,7 @@ end)
 
 RegisterServerEvent('ARMA:TeleportToPlayer')
 AddEventHandler('ARMA:TeleportToPlayer', function(source, newtarget)
+    local source = source
     local coords = GetEntityCoords(GetPlayerPed(newtarget))
     local user_id = ARMA.getUserId(source)
     local player_id = ARMA.getUserId(newtarget)
@@ -796,6 +808,7 @@ end)
 
 RegisterServerEvent("ARMA:Teleport2AdminIsland")
 AddEventHandler("ARMA:Teleport2AdminIsland",function(id)
+    local source = source
     local admin = source
     if id ~= nil then
         local admin_id = ARMA.getUserId(admin)
@@ -823,6 +836,7 @@ end)
 
 RegisterServerEvent("ARMA:TeleportBackFromAdminZone")
 AddEventHandler("ARMA:TeleportBackFromAdminZone",function(id, savedCoordsBeforeAdminZone)
+    local source = source
     local admin = source
     local admin_id = ARMA.getUserId(admin)
     if id ~= nil then
