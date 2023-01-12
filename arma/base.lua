@@ -1094,9 +1094,9 @@ MySQL.createCommand("ARMA/setusername","UPDATE arma_users SET username = @userna
 
 RegisterServerEvent("ARMAcli:playerSpawned")
 AddEventHandler("ARMAcli:playerSpawned", function()
-    TriggerClientEvent('gettingUserId', source, ARMA.getUserId(source), GetConvarInt("sv_maxclients",64))
     Debug.pbegin("playerSpawned")
     -- register user sources and then set first spawn to false
+    local source = source
     local user_id = ARMA.getUserId(source)
     local player = source
     ARMAclient.addBasePlayer(-1, {player, user_id})
