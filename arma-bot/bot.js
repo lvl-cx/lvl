@@ -209,44 +209,47 @@ client.getPerms = function(msg) {
 }
 
 client.on('message', (message) => {
-    if (message.guild.id === settingsjson.settings.GuildID) {
-        if (!message.author.bot){
-            if (message.content.includes('discord.gg/')){
-                if (!message.content.includes('discord.gg/armarp')){
-                    message.delete()
-                    return
-                }
+    if (!message.author.bot){
+        if (message.content.includes('discord.gg/')){
+            if (!message.content.includes('discord.gg/armarp')){
+                message.delete()
+                return
             }
-            else if (message.channel.name.includes('auction-')){
-                if (message.channel.name == '・auction-room'){
-                    return
-                }
-                else{
-                    if (!message.content.includes(`${process.env.PREFIX}bid`)){
-                        if (!message.content.includes(`${process.env.PREFIX}auction`) && !message.content.includes(`${process.env.PREFIX}houseauction`) && !message.content.includes(`${process.env.PREFIX}embed`)){
-                            message.delete()
-                            return
-                        }
+        }
+        else if (message.channel.name.includes('auction-')){
+            if (message.channel.name == '・auction-room'){
+                return
+            }
+            else{
+                if (!message.content.includes(`${process.env.PREFIX}bid`)){
+                    if (!message.content.includes(`${process.env.PREFIX}auction`) && !message.content.includes(`${process.env.PREFIX}houseauction`) && !message.content.includes(`${process.env.PREFIX}embed`)){
+                        message.delete()
+                        return
                     }
                 }
-            }else if (message.channel.name.includes('verify')){
-                if (!message.content.includes(`${process.env.PREFIX}verify`)){
-                    message.delete()
-                    return
-                }
+            }
+        }else if (message.channel.name.includes('verify')){
+            if (!message.content.includes(`${process.env.PREFIX}verify`)){
+                message.delete()
+                return
             }
         }
-        let client = message.client;
-        if (message.author.bot) return;
-        if (!message.content.startsWith(process.env.PREFIX)) return;
-        let command = message.content.split(' ')[0].slice(process.env.PREFIX.length).toLowerCase();
-        let params = message.content.split(' ').slice(1);
-        let cmd;
-        let permissions = client.getPerms(message)
-        if (client.commands.has(command)) {
-            cmd = client.commands.get(command);
-        }
-        if (cmd) {
+    }
+    let client = message.client;
+    if (message.author.bot) return;
+    if (!message.content.startsWith(process.env.PREFIX)) return;
+    let command = message.content.split(' ')[0].slice(process.env.PREFIX.length).toLowerCase();
+    let params = message.content.split(' ').slice(1);
+    let cmd;
+    let permissions = 0
+    if (message.guild.id === settingsjson.settings.GuildID) {
+        permissions = client.getPerms(message)
+    }
+    if (client.commands.has(command)) {
+        cmd = client.commands.get(command);
+    }
+    if (cmd) {
+        if (message.guild.id === cmd.conf.guild) {
             if (!message.channel.name.includes('bot') && cmd.conf.name === 'leaderboard') {
                 message.delete()
                 message.reply('Please use bot commands for this command.').then(msg => {
@@ -287,10 +290,8 @@ client.on('message', (message) => {
                     message.channel.send({ embed })
                 }
             }
-        }
-    } else {
-        if (!message.author.bot && message.content.startsWith(process.env.PREFIX)){
-            message.reply('Commands for this bot are intended to be used in the main Discord, discord.gg/armarp').then(msg => {
+        } else {
+            message.reply('This command is expected to be used within another guild.').then(msg => {
                 msg.delete(5000)
             })
             return;
