@@ -46,6 +46,7 @@ function ARMA.removeAllJobs(user_id)
                 ARMA.removeUserGroup(user_id, v[1]..' Clocked')
                 RemoveAllPedWeapons(GetPlayerPed(source), true)
                 ARMAclient.setArmour(source, {0})
+                TriggerEvent('ARMA:clockedOffRemoveRadio', source)
             end
         end
     end
@@ -135,6 +136,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
                 TriggerClientEvent('ARMA:setOnPilotDuty', source, true)
             end
         end
+        TriggerEvent('ARMA:clockedOnCreateRadio', source)
         ARMA.updateCurrentPlayerInfo()
     end
 end)
