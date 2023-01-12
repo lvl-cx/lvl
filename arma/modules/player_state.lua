@@ -143,6 +143,10 @@ function tARMA.UpdatePlayTime()
                 data.PlayerTime = 1
             end
         end
+        if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+            local lastClockedRank = string.gsub(getGroupInGroups(user_id, 'police'), ' Clocked', '')
+            exports['ghmattimysql']:execute("INSERT INTO arma_police_hours (user_id, username, weekly_hours, total_hours, last_clocked_rank, last_clocked_date, total_players_fined, total_players_jailed) VALUES (@user_id, @username, @weekly_hours, @total_hours, @last_clocked_rank, @last_clocked_date, @total_players_fined, @total_players_jailed) ON DUPLICATE KEY UPDATE weekly_hours = weekly_hours + 1/60, total_hours = total_hours + 1/60, username = @username, last_clocked_rank = @last_clocked_rank, last_clocked_date = @last_clocked_date, total_players_fined = @total_players_fined, total_players_jailed = @total_players_jailed", {user_id = user_id, username = GetPlayerName(source), weekly_hours = 1/60, total_hours = 1/60, last_clocked_rank = lastClockedRank, last_clocked_date = os.date("%d/%m/%Y"), total_players_fined = 0, total_players_jailed = 0})
+        end
     end
 end
 
