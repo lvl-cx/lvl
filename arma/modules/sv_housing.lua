@@ -100,7 +100,7 @@ AddEventHandler("ARMAHousing:Buy", function(house)
                             ARMAclient.notify(player,{"~g~You bought "..k.."!"}) --notify
                             for a,b in pairs(ARMA.getUsers({})) do
                                 local x,y,z = table.unpack(v.entry_point)
-                                ARMAclient.removeHouseBlip(b,{x,y,z})
+                                ARMAclient.removeBlipAtCoords(b,{x,y,z})
                                 if user_id == a then
                                     ARMAclient.addBlip(b,{x,y,z,374,1,house})
                                 end
