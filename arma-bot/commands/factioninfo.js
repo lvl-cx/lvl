@@ -7,43 +7,47 @@ exports.runcmd = (fivemexports, client, message, params) => {
         return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'info [permid]')
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_police_hours` WHERE user_id = ?", [params[0]], (result) => {
-        let embed = {
-            "title": `**Met Police statistics for ${result[0].username}(${result[0].user_id})**`,
-            "color": 0x3498db,
-            "fields": [
-                {
-                    name: '**Total hours:**',
-                    value: `${result[0].total_hours.toFixed(2)}`,
-                    inline: true,
-                },
-                {
-                    name: '**Total hours this week:**',
-                    value: `${result[0].weekly_hours.toFixed(2)}`,
-                    inline: true,
-                },
-                {
-                    name: '**Last clocked on as:**',
-                    value: `${result[0].last_clocked_rank}`,
-                    inline: true,
-                },
-                {
-                    name: '**Last clocked on date:**',
-                    value: `${result[0].last_clocked_date}`,
-                    inline: true,
-                },
-                {
-                    name: '**Total players jailed this week:**',
-                    value: `${result[0].total_players_fined}`,
-                    inline: true,
-                },
-                {
-                    name: '**Total players fined this week:**',
-                    value: `${result[0].total_players_jailed}`,
-                    inline: true,
-                },
-            ],
+        if (result.length > 0) {
+            let embed = {
+                "title": `**Met Police statistics for ${result[0].username}(${result[0].user_id})**`,
+                "color": 0x3498db,
+                "fields": [
+                    {
+                        name: '**Total hours:**',
+                        value: `${result[0].total_hours.toFixed(2)}`,
+                        inline: true,
+                    },
+                    {
+                        name: '**Total hours this week:**',
+                        value: `${result[0].weekly_hours.toFixed(2)}`,
+                        inline: true,
+                    },
+                    {
+                        name: '**Last clocked on as:**',
+                        value: `${result[0].last_clocked_rank}`,
+                        inline: true,
+                    },
+                    {
+                        name: '**Last clocked on date:**',
+                        value: `${result[0].last_clocked_date}`,
+                        inline: true,
+                    },
+                    {
+                        name: '**Total players jailed this week:**',
+                        value: `${result[0].total_players_fined}`,
+                        inline: true,
+                    },
+                    {
+                        name: '**Total players fined this week:**',
+                        value: `${result[0].total_players_jailed}`,
+                        inline: true,
+                    },
+                ],
+            }
+            message.channel.send({ embed })
+        } else {
+            message.reply('No Met Police statistics for this user.')
         }
-        message.channel.send({ embed })
     })
 }
 
