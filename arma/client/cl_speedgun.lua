@@ -1,4 +1,4 @@
-local a='WEAPON_STAFFGUN'
+local a=GetHashKey('WEAPON_STAFFGUN')
 local b=false
 local c=false
 local d=101
@@ -39,7 +39,7 @@ tARMA.createThreadOnTick(func_drawRadar)
 Citizen.CreateThread(function()
     while true do 
         if tARMA.globalOnPoliceDuty() and not usingDelgun then
-            if GetSelectedPedWeapon(tARMA.getPlayerPed())==GetHashKey(a) then 
+            if GetSelectedPedWeapon(tARMA.getPlayerPed())==a then 
                 b=true 
             else 
                 b=false 

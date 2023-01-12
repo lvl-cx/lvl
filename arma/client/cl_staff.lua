@@ -1,4 +1,5 @@
 usingDelgun = false
+local a = false
 local c = function(d)
     local e = {}
     local f = GetGameTimer() / 200
@@ -11,7 +12,7 @@ RegisterCommand("delgun",function()
     if tARMA.getStaffLevel() > 0 then
         usingDelgun = not usingDelgun
         local g = tARMA.getPlayerPed()
-        local h = "WEAPON_STAFFGUN"
+        local h = GetHashKey("WEAPON_STAFFGUN")
         if usingDelgun then
             a = HasPedGotWeapon(g, h, false)
             tARMA.allowWeapon(h)
