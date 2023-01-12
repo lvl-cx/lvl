@@ -241,3 +241,12 @@ AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
       ARMAclient.notify(source, { "~r~Fined "..GetPlayerName(temp).." £"..getMoneyStringFormatted(fine).." for going "..speed.."MPH over the speed limit."})
     end
 end)
+
+RegisterCommand('setup', function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'police.onduty.permission') then
+        local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(source)))
+        ARMAclient.addBlip(source,{x,y,z,419,0,"Speed Camera",2.5})
+    end
+end)
