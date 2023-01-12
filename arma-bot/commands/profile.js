@@ -102,7 +102,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
                                         }, 
                                     ],
                                     "footer": {
-                                        "text": ""
+                                        "text": `Requested by ${message.author.username}`
                                     },
                                     "timestamp": new Date()
                                 }
@@ -118,5 +118,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "profile",
-    perm: 6
+    perm: 6,
+    guild: "975490533344559154"
 }

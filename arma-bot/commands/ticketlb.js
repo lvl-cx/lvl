@@ -28,5 +28,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "ticketlb",
-    perm: 1
+    perm: 1,
+    guild: "975490533344559154"
 }

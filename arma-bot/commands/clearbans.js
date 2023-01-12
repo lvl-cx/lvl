@@ -24,5 +24,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "clearbans",
-    perm: 7
+    perm: 7,
+    guild: "975490533344559154"
 }

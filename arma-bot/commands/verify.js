@@ -73,5 +73,6 @@ exports.runcmd = async(fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "verify",
-    perm: 0
+    perm: 0,
+    guild: "975490533344559154"
 }

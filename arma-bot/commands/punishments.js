@@ -23,5 +23,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "punishments",
-    perm: 7
+    perm: 7,
+    guild: "975490533344559154"
 }

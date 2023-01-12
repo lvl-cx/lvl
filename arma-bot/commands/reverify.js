@@ -41,5 +41,6 @@ exports.runcmd = async(fivemexports, client, message, params) => {
 
 exports.conf = {
     name: "reverify",
-    perm: 6
+    perm: 6,
+    guild: "975490533344559154"
 }
