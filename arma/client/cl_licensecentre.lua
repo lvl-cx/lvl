@@ -7,7 +7,7 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('LicenseCentre', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             for i , p in pairs(licensecentre.licenses) do 
-                RageUI.Button(p.name..' (£'..tostring(getMoneyStringFormatted(p.price))..')', nil, {RightBadge = "→→→"}, p.notOwned, function(Hovered, Active, Selected)
+                RageUI.Button(p.name..' (£'..tostring(getMoneyStringFormatted(p.price))..')', nil, p.notOwned and {RightLabel = "→→→"} or {RightLabel = ""}, p.notOwned, function(Hovered, Active, Selected)
                     if Selected then
                         cGroup = p.group
                         cName = p.name
