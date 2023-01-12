@@ -143,7 +143,7 @@ local function a1()
         if m then
             SetTimecycleModifier("heliGunCam")
             SetTimecycleModifierStrength(0.3)
-            n = RequestScaleformMovie("WESCAM_INTERFACE")
+            n = RequestScaleformMovie("HELI_CAM") --RequestScaleformMovie("WESCAM_INTERFACE")
             while not HasScaleformMovieLoaded(n) do
                 Citizen.Wait(0)
             end
