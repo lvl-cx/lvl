@@ -8,9 +8,8 @@ exports.runcmd = (fivemexports, client, message, params) => {
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [params[0]], (result) => {
         if (result.length > 0) {
-            hours = JSON.stringify(JSON.parse(result[0].dvalue).PlayerTime/60)
             let embed = {
-                "description": `**${hours.toFixed(2)}** hours`,
+                "description": `**${(JSON.parse(result[0].dvalue).PlayerTime/60).toFixed(2)}** hours`,
                 "color": settingsjson.settings.botColour,
             }
             message.channel.send({ embed })
