@@ -9,17 +9,13 @@ exports.runcmd = (fivemexports, client, message, params) => {
         if (result) {
             for (i = 0; i < result.length; i++) {
                 if (i < 10) {
-                    policeHoursLB.push(`\n${result[i].username}(${result[i].user_id}) - ${Math.round(result[i].weekly_hours)} hours`)
+                    policeHoursLB.push(`\n${i+1}. ${result[i].username}(${result[i].user_id}) - ${result[i].weekly_hours.toFixed(2)} hours`)
                 }
             }
             let embed = {
-                "title": `Police Weekly Hours Leaderboard`,
+                "title": `Met Police Weekly Leaderboard`,
                 "description": '```'+policeHoursLB.join('').replace(',', '')+'```',
-                "color": settingsjson.settings.botColour,
-                "footer": {
-                    "text": ""
-                },
-                "timestamp": new Date()
+                "color": 0x3498db,
             }
             message.channel.send({embed})
         }
