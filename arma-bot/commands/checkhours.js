@@ -10,7 +10,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         if (result.length > 0) {
             hours = JSON.stringify(JSON.parse(result[0].dvalue).PlayerTime/60)
             let embed = {
-                "description": `**${Math.round(hours)}** hours`,
+                "description": `**${hours.toFixed(2)}** hours`,
                 "color": settingsjson.settings.botColour,
             }
             message.channel.send({ embed })
