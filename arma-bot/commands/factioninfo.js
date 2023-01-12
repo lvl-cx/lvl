@@ -8,30 +8,40 @@ exports.runcmd = (fivemexports, client, message, params) => {
     }
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_police_hours` WHERE user_id = ?", [params[0]], (result) => {
         let embed = {
-            "title": `**Info**`,
-            "description": `Police Hour Information regarding Perm ID: **${params[0]}**`,
-            "color": settingsjson.settings.botColour,
+            "title": `**Met Police statistics for ${result[0].username}(${result[0].user_id})**`,
+            "color": 0x3498db,
             "fields": [
                 {
-                    name: '**Perm ID:**',
-                    value: `${result[0].user_id}`,
-                    inline: true,
-                },
-                {
-                    name: '**Hours this week:**',
-                    value: `${result[0].weekly_hours}`,
-                    inline: true,
-                },
-                {
                     name: '**Total hours:**',
-                    value: `${result[0].total_hours}`,
+                    value: `${result[0].total_hours.toFixed(2)}`,
+                    inline: true,
+                },
+                {
+                    name: '**Total hours this week:**',
+                    value: `${result[0].weekly_hours.toFixed(2)}`,
+                    inline: true,
+                },
+                {
+                    name: '**Last clocked on as:**',
+                    value: `${result[0].last_clocked_rank}`,
+                    inline: true,
+                },
+                {
+                    name: '**Last clocked on date:**',
+                    value: `${result[0].last_clocked_date}`,
+                    inline: true,
+                },
+                {
+                    name: '**Total players jailed this week:**',
+                    value: `${result[0].total_players_fined}`,
+                    inline: true,
+                },
+                {
+                    name: '**Total players fined this week:**',
+                    value: `${result[0].total_players_jailed}`,
                     inline: true,
                 },
             ],
-            "footer": {
-                "text": `Requested by ${message.author.username}`
-            },
-            "timestamp": new Date()
         }
         message.channel.send({ embed })
     })
