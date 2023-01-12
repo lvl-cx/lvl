@@ -242,11 +242,20 @@ AddEventHandler('ARMA:speedGunFinePlayer', function(temp, speed)
     end
 end)
 
+local speedTraps = {}
 RegisterCommand('setup', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(source)))
-        ARMAclient.addBlip(source,{x,y,z,419,0,"Speed Camera",2.5})
+        if speedTraps[user_id] then
+            ARMAclient.removeBlipAtCoords(-1,speedTraps[user_id])
+            speedTraps[user_id] = nil
+            ARMAclient.notify(source,{'~r~Speed Trap Removed.'})
+        else
+            local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(source)))
+            ARMAclient.addBlip(-1,{x,y,z,419,0,"Speed Camera",2.5})
+            speedTraps[user_id] = {x,y,z}
+            ARMAclient.notify(source,{'~g~Speed Trap Setup.'})
+        end
     end
 end)
