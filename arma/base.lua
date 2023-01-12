@@ -383,9 +383,13 @@ Citizen.CreateThread(function()
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_police_hours (
     user_id INT(11),
-    weekly_hours INT(11) NOT NULL DEFAULT 0,
-    total_hours INT(11) NOT NULL DEFAULT 0,
+    weekly_hours FLOAT(10) NOT NULL DEFAULT 0,
+    total_hours FLOAT(10) NOT NULL DEFAULT 0,
     username VARCHAR(100) NOT NULL,
+    last_clocked_date VARCHAR(100) NOT NULL,
+    last_clocked_rank VARCHAR(100) NOT NULL,
+    total_players_fined INT(11) NOT NULL DEFAULT 0,
+    total_players_jailed INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (user_id)
     );
     ]])
