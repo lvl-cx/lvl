@@ -297,11 +297,11 @@ AddEventHandler("ARMA:kickMemberFromGang", function(gangid,member)
                     local memberrank = array[tostring(member)].rank
                     local rank = array[tostring(user_id)].rank
                     if tonumber(member) == tonumber(user_id) then
-                        ARMAclient.notify(source,{"~r~You cannot kick yourself!"})
+                        ARMAclient.notify(source,{"~r~You cannot kick yourself."})
                         return
                     end
-                    if tonumber(memberrank) >= 3 then
-                        ARMAclient.notify(source,{"~r~You do not have permission to kick another Lieutenant!"})
+                    if tonumber(memberrank) >= rank then
+                        ARMAclient.notify(source,{"~r~You do not have permission to kick this member from the gang."})
                         return
                     end
                     array[tostring(member)] = nil
