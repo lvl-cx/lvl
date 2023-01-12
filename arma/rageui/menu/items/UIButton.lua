@@ -21,7 +21,7 @@ function RageUI.Button(Label, Description, Style, Enabled, Callback, Submenu)
     local CurrentMenu = RageUI.CurrentMenu;
     if not Enabled then
         Style.RightBadge = RageUI.BadgeStyle.Lock
-        Style.RightLabel = ""
+        --Style.RightLabel = ""
     end
 
     if CurrentMenu ~= nil then
