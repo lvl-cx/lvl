@@ -3,7 +3,7 @@ local lastmsg = nil
 
 Citizen.CreateThread(function()
 	Citizen.Wait(3000)
-	for k,v in pairs(chatCooldowns) do
+	for k,v in pairs(chatCooldown) do
 		chatCooldown[k] = nil
 	end
 end)
