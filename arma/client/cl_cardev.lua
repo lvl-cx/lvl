@@ -742,11 +742,11 @@ local function a8()
         return 
     end
     E()
-    local a9=6
+    local a9=tARMA.getFontId("Akrobat-ExtraBold")
     local aa=C and 0.345 or 0.505
-    DrawAdvancedTextNoOutline(aa,0.055,0.005,0.02,0.45,string.format("Top Speed: %.5f",D.speedDisplay),255,255,255,255,a9,1)
-    DrawAdvancedTextNoOutline(aa,0.075,0.005,0.02,0.45,string.format("Top Acceleration: %.5f",D.accelDisplay),255,255,255,255,a9,1)
-    DrawAdvancedTextNoOutline(aa,0.095,0.005,0.02,0.45,string.format("Top Deacceleration: %.5f",D.decelDisplay),255,255,255,255,a9,1)
+    DrawAdvancedTextNoOutline(aa,0.055,0.005,0.02,0.35,string.format("Top Speed: %.5f",D.speedDisplay),255,255,255,255,a9,1)
+    DrawAdvancedTextNoOutline(aa,0.075,0.005,0.02,0.35,string.format("Top Acceleration: %.5f",D.accelDisplay),255,255,255,255,a9,1)
+    DrawAdvancedTextNoOutline(aa,0.095,0.005,0.02,0.35,string.format("Top Deacceleration: %.5f",D.decelDisplay),255,255,255,255,a9,1)
     local s=getPlayerVehicle()
     DisableControlAction(0,19,true)
     if s~=0 and IsDisabledControlJustPressed(0,19)then 
@@ -762,8 +762,8 @@ local function a8()
         local ac=0.14+(K-ab*23)*0.0215
         local ad=CursorInArea(0.25+ab*0.27,0.5+ab*0.27,ac,ac+0.0215)
         local ae=ad and 100 or 255
-        DrawAdvancedTextNoOutline(0.345+ab*0.27,ac,0.005,0.02,0.45,O.name,ae,ae,255,255,a9,1)
-        DrawAdvancedTextNoOutline(0.516+ab*0.231,ac+0.001,0.005,0.02,0.45,N(O),ae,ae,255,255,a9,1)
+        DrawAdvancedTextNoOutline(0.345+ab*0.27,ac,0.005,0.02,0.35,O.name,ae,ae,255,255,a9,1)
+        DrawAdvancedTextNoOutline(0.516+ab*0.231,ac+0.001,0.005,0.02,0.35,N(O),ae,ae,255,255,a9,1)
         if ad and IsDisabledControlJustPressed(0,24)then 
             Citizen.CreateThreadNow(function()
                 U(O)
