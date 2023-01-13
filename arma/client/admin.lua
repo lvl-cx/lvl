@@ -250,15 +250,6 @@ AddEventHandler('ARMA:sendTicketInfo', function(permid, name)
 end)
 
 
-function drawNativeText(V)
-    if not globalHideUi then
-        BeginTextCommandPrint("STRING")
-        AddTextComponentSubstringPlayerName(V)
-        EndTextCommandPrint(100, 1)
-    end
-end
-
-
 RegisterCommand("fix", function()
     if tARMA.isStaffedOn() or tARMA.getStaffLevel() >= 6 then
         TriggerServerEvent( "wk:fixVehicle")

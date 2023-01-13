@@ -767,6 +767,21 @@ function tARMA.drawTxt(L, M, N, D, E, O, P, Q, R, S)
   EndTextCommandDisplayText(D, E)
 end
 
+function drawNativeText(V)
+  if not globalHideUi then
+      BeginTextCommandPrint("STRING")
+      AddTextComponentSubstringPlayerName(V)
+      EndTextCommandPrint(100, 1)
+  end
+end
+
+function clearNativeText()
+  BeginTextCommandPrint("STRING")
+  AddTextComponentSubstringPlayerName("")
+  EndTextCommandPrint(1, true)
+end
+
+
 function tARMA.announceClient(d)
     if d~=nil then 
         CreateThread(function()
