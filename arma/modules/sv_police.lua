@@ -3,60 +3,6 @@
 local lang = ARMA.lang
 local a = module("cfg/weapons")
 
----- askid
-local choice_askid = {function(player,choice)
-  ARMAclient.getNearestPlayer(player,{10},function(nplayer)
-    local nuser_id = ARMA.getUserId(nplayer)
-    if nuser_id ~= nil then
-      ARMAclient.notify(player,{lang.police.menu.askid.asked()})
-      ARMA.request(nplayer,lang.police.menu.askid.request(),15,function(nplayer,ok)
-        if ok then
-          ARMA.getUserIdentity(nuser_id, function(identity)
-            if identity then
-              -- display identity and business
-              local name = identity.name
-              local firstname = identity.firstname
-              local age = identity.age
-              local phone = identity.phone
-              local registration = identity.registration
-              local bname = ""
-              local bcapital = 0
-              local home = ""
-              local number = ""
-
-              ARMA.getUserBusiness(nuser_id, function(business)
-                if business then
-                  bname = business.name
-                  bcapital = business.capital
-                end
-
-                ARMA.getUserAddress(nuser_id, function(address)
-                  if address then
-                    home = address.home
-                    number = address.number
-                  end
-
-                  local content = lang.police.identity.info({name,firstname,age,registration,phone,bname,bcapital,home,number})
-                  ARMAclient.setDiv(player,{"police_identity",".div_police_identity{ background-color: rgba(0,0,0,0.75); color: white; font-weight: bold; width: 500px; padding: 10px; margin: auto; margin-top: 150px; }",content})
-                  -- request to hide div
-                  TriggerClientEvent('ARMA:setNameFields', player, name, firstname)
-                  ARMA.request(player, lang.police.menu.askid.request_hide(), 1000, function(player,ok)
-                    ARMAclient.removeDiv(player,{"police_identity"})
-                  end)
-                end)
-              end)
-            end
-          end)
-        else
-          ARMAclient.notify(player,{lang.common.request_refused()})
-        end
-      end)
-    else
-      ARMAclient.notify(player,{lang.common.no_player_near()})
-    end
-  end)
-end, lang.police.menu.askid.description()}
-
 local isStoring = {}
 local choice_store_weapons = function(player, choice)
     local user_id = ARMA.getUserId(player)
