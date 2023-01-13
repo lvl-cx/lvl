@@ -636,17 +636,30 @@ cfg.groups = {
         "vip.gunstore",
         "vip.garage",
     },
-    ["Platinum"] = {
+    ["Premium"] = {
         "vip.gunstore",
         "vip.garage",
+        "vip.aircraft",
     },
-    ["Godfather"] = {
+    ["Supreme"] = {
         "vip.gunstore",
         "vip.garage",
+        "vip.aircraft",
     },
-    ["Underboss"] = {
+    ["Kingpin"] = {
         "vip.gunstore",
         "vip.garage",
+        "vip.aircraft",
+    },
+    ["Rainmaker"] = {
+        "vip.gunstore",
+        "vip.garage",
+        "vip.aircraft",
+    },
+    ["Baller"] = {
+        "vip.gunstore",
+        "vip.garage",
+        "vip.aircraft",
     },
     
     -- $$\      $$\ $$$$$$\  $$$$$$\   $$$$$$\  
