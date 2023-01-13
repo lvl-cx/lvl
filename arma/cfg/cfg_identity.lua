@@ -5,7 +5,7 @@ local cfg = {}
 cfg.new_identity_cost = 5000
 
 -- phone format (max: 20 chars, use D for a random digit)
-cfg.phone_format = "07DDDDDDDD"
+cfg.phone_format = "07DDDDDDDDD"
 
 
 -- config the random name generation (first join identity)
