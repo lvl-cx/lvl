@@ -620,8 +620,14 @@ AddEventHandler("ARMA:refreshGaragePermissions",function()
     for k,v in pairs(cfg.garages) do
         for a,b in pairs(v) do
             if a == "_config" then
-                if b.permissions[1] ~= nil then
-                    if ARMA.hasPermission(ARMA.getUserId(source),b.permissions[1])then
+                if json.encode(b.permissions) ~= '[""]' then
+                    local hasPermissions = 0
+                    for c,d in pairs(b.permissions) do
+                        if ARMA.hasPermission(user_id, d) then
+                            hasPermissions = hasPermissions + 1
+                        end
+                    end
+                    if hasPermissions == #b.permissions then
                         table.insert(garageTable, k)
                     end
                 else
