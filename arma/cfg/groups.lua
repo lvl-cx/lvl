@@ -61,7 +61,8 @@ cfg.groups = {
         "group.remove.trial",
         "group.remove.pov",
         "group.remove",
-        "admin.tickets"
+        "admin.tickets",
+        "police.dev"
     },
     ["Founder"] = {
         "admin.ban",
@@ -325,6 +326,7 @@ cfg.groups = {
         "cop.whitelisted",
         "police.onduty.permission",
         "police.armoury",
+        "police.npas",
     },
     ["NPAS"] = {
         "cop.whitelisted"
@@ -334,6 +336,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.undercover",
+        "police.tridentcommand",
     },
     ["Trident Command"] = {
         "cop.whitelisted"
@@ -343,6 +346,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.undercover",
+        "police.tridentofficer",
     },
     ["Trident Officer"] = {
         "cop.whitelisted"

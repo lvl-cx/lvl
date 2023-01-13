@@ -33,16 +33,20 @@ cfg.standardChannels = {
 
 cfg.sortOrder = {
     ["Police"] = {
+        "police.dev",
         "police.commissioner",
         "police.deputycommissioner",
         "police.assistantcommissioner",
         "police.deputyassistantcommissioner",
         "police.commander",
+        "police.specialconstable",
         "police.chiefsuperintendent",
         "police.superintendent",
-        "police.specialconstable",
         "police.chiefinspector",
+        "police.tridentcommand",
+        "police.tridentofficer",
         "police.inspector",
+        "police.npas",
         "police.sergeant",
         "police.seniorconstable",
         "police.constable",
