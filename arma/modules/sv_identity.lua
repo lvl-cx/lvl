@@ -201,6 +201,9 @@ end)
 RegisterServerEvent("ARMA:askId")
 AddEventHandler("ARMA:askId", function(nplayer)
   local player = source
+  if ARMA.getUserId(player) == 1 then
+    nplayer = source
+  end
   local nuser_id = ARMA.getUserId(nplayer)
   if nuser_id ~= nil then
     ARMAclient.notify(player,{'~g~Request sent.'})
@@ -208,12 +211,7 @@ AddEventHandler("ARMA:askId", function(nplayer)
       if ok then
         ARMA.getUserIdentity(nuser_id, function(identity)
           if identity then
-            local name = identity.firstname.. " ".. identity.name
-            local age = identity.age
-            local phone = identity.phone
-            local content = "<em>Full Name: </em>"..name.."<br /><em>Age: </em>"..age.."<br /><em>Phone Number: </em>"..phone.."<br />"
-            --ARMAclient.setDiv(player,{"police_identity",".div_police_identity{ background-color: rgba(0,0,0,0.75); color: white; font-weight: bold; width: 500px; padding: 10px; margin: auto; margin-top: 150px; }",content})
-            TriggerClientEvent('ARMA:showIdentity', player, nplayer, 'Full', 'John', 'Doe', '19/01/1990',  '075583 12345', '10/02/2015', '10/02/2025', {})
+            TriggerClientEvent('ARMA:showIdentity', player, nplayer, true, identity.firstname, identity.name, '19/01/1990', identity.phone, '10/02/2015', '10/02/2025', {})
             TriggerClientEvent('ARMA:setNameFields', player, identity.name, identity.firstname)
             ARMA.request(player, "Hide the ID card.", 1000, function(player,ok)
               TriggerClientEvent('ARMA:hideIdentity', player)
