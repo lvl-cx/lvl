@@ -31,15 +31,8 @@ cfg.standardChannels = {
     }
 }
 
-cfg.checkChannelPermissionGroups = {
-    ["police"] = true,
-    ["nhs"] = true,
-    ["prisonguard"] = true,
-    ["lfb"] = true
-}
-
 cfg.sortOrder = {
-    ["police"] = {
+    ["Police"] = {
         "police.commissioner",
         "police.deputycommissioner",
         "police.assistantcommissioner",
@@ -55,7 +48,7 @@ cfg.sortOrder = {
         "police.constable",
         "police.pcso"
     },
-    ["nhs"] = {
+    ["NHS"] = {
         "nhs.headchief",
         "nhs.assistantchief",
         "nhs.deputychief",
@@ -69,7 +62,7 @@ cfg.sortOrder = {
         "nhs.paramedic",
         "nhs.traineeparamedic"
     },
-    ["prisonguard"] = {
+    ["HMP"] = {
         "hmp.governor",
         "hmp.deputygovernor",
         "hmp.divisionalcommander",

@@ -56,7 +56,7 @@ RegisterNetEvent("ARMA:radiosClearAll",function()
     b = {}
 end)
 RegisterNetEvent("pma-voice:setTalkingOnRadio",function(j, n)
-    print("pma-voice:setTalkingOnRadio", j, n)
+    --print("pma-voice:setTalkingOnRadio", j, n)
     m(j, n)
 end)
 AddEventHandler("pma-voice:radioActive",function(n)

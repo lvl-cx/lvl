@@ -36,63 +36,59 @@ local radioChannels = {
     },
 }
 
-
-RegisterServerEvent("ARMA:clockedOnCreateRadio")
-AddEventHandler("ARMA:clockedOnCreateRadio", function(source)
+function createRadio(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     local radioType = getRadioType(user_id)
     if radioType then
-        for k,v in pairs(cfg.sortOrder[radiotype]) do
+        for k,v in pairs(cfg.sortOrder[radioType]) do
             if ARMA.hasPermission(user_id, v) then
                 local sortOrder = k
-                table.insert(radioChannels[radioType]['players'], {name = GetPlayerName(source), sortOrder = sortOrder, playerSrc = source})
+                local name = GetPlayerName(source)
+                if getCallsign('MPD', source, user_id, 'police') ~= nil then
+                    name = name.." ["..getCallsign('MPD', source, user_id, 'police').."]"
+                end
+                radioChannels[radioType]['players'][source] = {name = name, sortOrder = sortOrder}
                 TriggerClientEvent('ARMA:radiosCreateChannel', source, radioChannels[radioType].channel, radioChannels[radioType].name, radioChannels[radioType].players, true)
+                TriggerClientEvent('ARMA:radiosAddPlayer', -1, radioChannels[radioType].channel, source, {name = name, sortOrder = sortOrder})
             end
         end
     end
+end
+
+function removeRadio(source)
+    for a,b in pairs(radioChannels) do
+        if next(radioChannels[a]['players']) then
+            for k,v in pairs(radioChannels[a]['players']) do
+                if k == source then
+                    TriggerClientEvent('ARMA:radiosRemovePlayer', -1, radioChannels[a].channel, k)
+                    radioChannels[a]['players'][source] = nil
+                end
+            end
+        end
+    end
+end
+
+RegisterServerEvent("ARMA:clockedOnCreateRadio")
+AddEventHandler("ARMA:clockedOnCreateRadio", function(source)
+    local source = source
+    createRadio(source)
 end)
 
 RegisterServerEvent("ARMA:clockedOffRemoveRadio")
 AddEventHandler("ARMA:clockedOffRemoveRadio", function(source)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    for a,b in pairs(radioChannels) do
-        for k,v in pairs(radioChannels[a]['players']) do
-            if v.playerSrc == source then
-                TriggerClientEvent('ARMA:radiosRemovePlayer', -1, radioChannels[a].channel, k)
-            end
-        end
-    end
+    removeRadio(source)
 end)
 
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    local radioType = getRadioType(user_id)
-    if radioType then
-        for k,v in pairs(cfg.sortOrder.police) do
-            if ARMA.hasPermission(user_id, v) then
-                local sortOrder = k
-                table.insert(radioChannels[radioType]['players'], {name = GetPlayerName(source), sortOrder = sortOrder, playerSrc = source})
-                TriggerClientEvent('ARMA:radiosCreateChannel', source, radioChannels[radioType].channel, radioChannels[radioType].name, radioChannels[radioType].players, first_spawn)
-                TriggerClientEvent('ARMA:radiosAddPlayer', -1, radioChannels[radioType].channel, source, {name = GetPlayerName(source), sortOrder = sortOrder, playerSrc = source})
-            end
-        end
-    end
+    createRadio(source)
 end)
 
 AddEventHandler('playerDropped', function(reason)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    local radioType = getRadioType(user_id)
-    if radioType then
-        for k,v in pairs(radioChannels[radioType]['players']) do
-            if v.playerSrc == source then
-                TriggerClientEvent('ARMA:radiosRemovePlayer', -1, radioChannels[radioType].channel, k)
-            end
-        end
-    end
+    removeRadio(source)
 end)
 
 RegisterServerEvent("ARMA:radiosSetIsMuted")
@@ -102,7 +98,7 @@ AddEventHandler("ARMA:radiosSetIsMuted", function(mutedState)
     local radioType = getRadioType(user_id)
     if radioType then
         for k,v in pairs(radioChannels[radioType]['players']) do
-            if v.user_id == user_id then
+            if k == source then
                 TriggerClientEvent('ARMA:radiosSetPlayerIsMuted', -1, radioChannels[radioType].channel, k, mutedState)
             end
         end
