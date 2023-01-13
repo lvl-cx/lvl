@@ -1,38 +1,23 @@
-RMenu.Add('CARDEV', 'main', RageUI.CreateMenu("","~r~Main Menu",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cardev"))
-RMenu.Add('CARDEV','vehiclestats',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle Statistics",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RMenu.Add('CARDEV','vehiclemods',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle Mods",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RMenu.Add('CARDEV','vehiclemodindexes',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclemods'),"","~r~Vehicle Mod Indexes",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RMenu.Add('CARDEV','vehiclelist',RageUI.CreateSubMenu(RMenu:Get('CARDEV','main'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RMenu.Add('CARDEV','vehiclelistmain',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelist'),"","~r~Vehicle List",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-RMenu.Add('CARDEV','vehiclelistspawn',RageUI.CreateSubMenu(RMenu:Get('CARDEV','vehiclelistmain'),"","~r~Vehicle Spawn",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
-
-local garages = module("arma-vehicles", "garages")
-garages=garages.garages
-local garageCategorySelected
-local veh
+RMenu.Add("cardev","mainmenu",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "cardev"))
+RMenu:Get("cardev", "mainmenu"):SetSubtitle("~b~Car Dev Menu")
+RMenu.Add("cardev","vehiclemods",RageUI.CreateSubMenu(RMenu:Get("cardev", "mainmenu"),"","~b~Vehicle Mods",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+RMenu.Add("cardev","vehiclemodindexes",RageUI.CreateSubMenu(RMenu:Get("cardev", "vehiclemods"),"","~b~Vehicle Mod Indexes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+RMenu.Add("cardev","extras",RageUI.CreateSubMenu(RMenu:Get("cardev", "mainmenu"),"","~b~Extras",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+RMenu.Add("cardev","colours",RageUI.CreateSubMenu(RMenu:Get("cardev", "mainmenu"),"","~b~Colours",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
+local a = false
 local b = false
-local function j()
-    return {
-        speedBuffer = {},
-        speed = 0.0,
-        speedDisplay = 0.0,
-        accel = 0.0,
-        accelDisplay = 0.0,
-        decel = 0.0,
-        decelDisplay = 0.0
-    }
-end
-local m = 0
-local n = 0
-local o = j()
-local q = {"Speed", "Drift", "Handling", "City", "Airport"}
-local r = {
+local c = {"speed", "drift", "handling", "city", "airport"}
+local d = {
     vector3(2370.8, 2856.58, 40.46),
     vector3(974.58, -3006.6, 5.9),
     vector3(1894.57, 3823.71, 31.98),
     vector3(-482.63, -664.24, 32.74),
     vector3(-1728.25, -2894.99, 13.94)
 }
+local e = 1
+function tARMA.isCarDev()
+    return a
+end
 local f = {
     [0] = "VMT_SPOILER",
     [1] = "VMT_BUMPER_F",
@@ -85,342 +70,229 @@ local f = {
     [48] = "VMT_LIVERY_MOD",
     [49] = "VMT_LIGHTBAR"
 }
-local s = 1
-local savedCoords = nil
-
-local function ak()
-    local al = GetEntitySpeed(GetVehiclePedIsIn(PlayerPedId(), false))
-    table.insert(o.speedBuffer, al)
-    if #o.speedBuffer > 100 then
-        table.remove(o.speedBuffer, 1)
-    end
-    local am = 0.0
-    local an = 0.0
-    local ao = 0
-    local ap = 0
-    for aq, ar in ipairs(o.speedBuffer) do
-        if aq > 1 then
-            local as = ar - o.speedBuffer[aq - 1]
-            if as > 0.0 then
-                am = am + as
-                ao = ao + 1
-            else
-                an = am + as
-                ap = ap + 1
-            end
-        end
-    end
-    am = am / ao
-    an = an / ap
-    o.speed = math.max(o.speed, al)
-    o.speedDisplay = o.speed * 2.236936
-    o.accel = math.max(o.accel, am)
-    o.accelDisplay = o.accel * 60.0 * 2.236936
-    o.decel = math.min(o.decel, an)
-    o.decelDisplay = math.abs(o.decel) * 60.0 * 2.236936
-end
-
-local viewingVehicleStats = false
-
-local function ay()
-    if viewingVehicleStats then
-        DisableControlAction(0, 23, true)
-        DisableControlAction(0, 75, true)
-        local vehicle, az = tARMA.getPlayerVehicle()
-        if (vehicle ~= l or not az) and DoesEntityExist(l) then
-            SetPedIntoVehicle(PlayerPedId(), l, -1)
-        end
-        if n == 0 then
-            subtitleText("~y~Press [E] to stop recording stats")
-            ak()
-            if IsControlJustPressed(0, 51) then
-                n = GetGameTimer()
-            end
-        else
-            subtitleText("~y~Press [E] to start recording stats")
-            if IsControlJustPressed(0, 51) then
-                o = j()
-                m = GetGameTimer()
-                n = 0
-            end
-        end
-    end
-end
-tARMA.createThreadOnTick(ay)
-
-
+local g = {
+    {name = "Black", colorindex = 0},
+    {name = "White", colorindex = 112},
+    {name = "Red", colorindex = 27},
+    {name = "Orange", colorindex = 38},
+    {name = "Yellow", colorindex = 88},
+    {name = "Green", colorindex = 92},
+    {name = "Blue", colorindex = 64},
+    {name = "Pink", colorindex = 135},
+    {name = "Purple", colorindex = 142}
+}
 RageUI.CreateWhile(1.0, true, function()
-    if RageUI.Visible(RMenu:Get('CARDEV', 'main')) then
+    if RageUI.Visible(RMenu:Get('cardev', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                RageUI.ButtonWithStyle("Spawn Vehicle (No mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        tARMA.clientPrompt("Spawncode:","",function(result)
-                            if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
-                                veh = result
-                                local k=tARMA.loadModel(result)
-                                local coords = GetEntityCoords(PlayerPedId())
-                                local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
-                                DecorSetInt(nveh, "ARMAACVeh", 955)
-                                SetVehicleOnGroundProperly(nveh)
-                                SetEntityInvincible(nveh,false)
-                                SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
-                                SetModelAsNoLongerNeeded(k)
-                                SetVehRadioStation(nveh,"OFF")
+            if b and tARMA.getPlayerBucket() == 333 then
+                RageUI.ButtonWithStyle("Spawn Vehicle (No Mods)","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        tARMA.clientPrompt("Spawncode:","",function(k)
+                            if k ~= "" and tARMA.getPlayerBucket() == 333 then
+                                local l = tARMA.loadModel(k)
+                                TriggerServerEvent("ARMA:logVehicleSpawn", k, "/cardev")
+                                local m = tARMA.getPlayerCoords()
+                                local n =
+                                    tARMA.spawnVehicle(
+                                    l,
+                                    m.x,
+                                    m.y,
+                                    m.z,
+                                    GetEntityHeading(tARMA.getPlayerPed()),
+                                    true,
+                                    true,
+                                    true
+                                )
+                                DecorSetInt(n, "ARMAACVeh", 955)
+                                SetVehicleOnGroundProperly(n)
+                                SetEntityInvincible(n, false)
+                                SetPedIntoVehicle(tARMA.getPlayerPed(), n, -1)
+                                SetModelAsNoLongerNeeded(l)
+                                SetVehRadioStation(n, "OFF")
                                 Wait(500)
-                                SetVehRadioStation(nveh,"OFF")          
-                            end 
-                        end)
-                    end
-                end)
-                RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        tARMA.clientPrompt("Spawncode:","",function(result)
-                            if result~="" and (tARMA.isCarDev() or tARMA.isDev()) then 
-                                veh = result
-                                local k=tARMA.loadModel(result)
-                                local coords = GetEntityCoords(PlayerPedId())
-                                local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
-                                DecorSetInt(nveh, "ARMAACVeh", 955)
-                                SetVehicleOnGroundProperly(nveh)
-                                SetEntityInvincible(nveh,false)
-                                SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
-                                SetModelAsNoLongerNeeded(k)
-                                applymods(nveh)
-                                SetVehRadioStation(nveh,"OFF")
-                                Wait(500)
-                                SetVehRadioStation(nveh,"OFF")          
+                                SetVehRadioStation(n, "OFF")
                             end
                         end)
                     end
                 end)
-                RageUI.ButtonWithStyle("Fix Vehicle" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then 
-                        FixVehicle()
+                RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        tARMA.clientPrompt(
+                            "Spawncode:",
+                            "",
+                            function(k)
+                                if k ~= "" and tARMA.getPlayerBucket() == 333 then
+                                    local l = tARMA.loadModel(k)
+                                    TriggerServerEvent("ARMA:logVehicleSpawn", k, "/cardev")
+                                    local m = tARMA.getPlayerCoords()
+                                    local n = tARMA.spawnVehicle(l,m.x,m.y,m.z,GetEntityHeading(tARMA.getPlayerPed()),true,true,true)
+                                    DecorSetInt(n, "ARMAACVeh", 955)
+                                    SetVehicleOnGroundProperly(n)
+                                    SetEntityInvincible(n, false)
+                                    SetVehicleModKit(n, 0)
+                                    SetVehicleMod(n, 11, 2, false)
+                                    SetVehicleMod(n, 13, 2, false)
+                                    SetVehicleMod(n, 12, 2, false)
+                                    SetVehicleMod(n, 15, 3, false)
+                                    ToggleVehicleMod(n, 18, true)
+                                    SetPedIntoVehicle(tARMA.getPlayerPed(), n, -1)
+                                    SetModelAsNoLongerNeeded(l)
+                                    SetVehRadioStation(n, "OFF")
+                                    Wait(500)
+                                    SetVehRadioStation(n, "OFF")
+                                end
+                            end
+                        )
                     end
                 end)
-                RageUI.ButtonWithStyle("Clean Vehicle" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then 
-                        cleanveh()
-                    end
-                end)
-                RageUI.List("Teleport to ",q,s,nil,{},true,function(x, y, z, N)
-                    s = N
-                    if z then   
-                        if IsPedInAnyVehicle(PlayerPedId(), true) then
-                            ped = GetVehiclePedIsIn(PlayerPedId(), true)
+                RageUI.ButtonWithStyle("Delete Vehicle","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        local o = GetVehiclePedIsIn(tARMA.getPlayerPed(), false)
+                        if NetworkGetEntityIsNetworked(o) then
+                            local p = NetworkGetNetworkIdFromEntity(o)
+                            if p ~= 0 then
+                                DeleteEntity(aT)
+                                --TriggerServerEvent("ARMA:cardevDeleteVehicle", p)
+                            end
                         else
-                            ped = GetPlayerPed(-1)
+                            DeleteEntity(o)
                         end
-                        SetEntityCoords(ped, vector3(r[s]), true,false,false,false)
                     end
-                end,
-                function()
                 end)
-                RageUI.ButtonWithStyle("Cycle through seats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then 
-                        local p = GetPlayerPed(-1)
-                        if IsPedInAnyVehicle(p) then
-                            local s = GetVehiclePedIsIn(p)
-                            local t = GetVehicleModelNumberOfSeats(GetEntityModel(s))
-                            for u = -1, t - 2 do
-                                if IsVehicleSeatFree(s, u) then
-                                    TaskWarpPedIntoVehicle(p, s, u)
+                RageUI.ButtonWithStyle("Fix Vehicle","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        local q = tARMA.getPlayerPed()
+                        if IsPedInAnyVehicle(q) then
+                            local r = GetVehiclePedIsIn(q)
+                            SetVehicleEngineHealth(r, 9999)
+                            SetVehiclePetrolTankHealth(r, 9999)
+                            SetVehicleFixed(r)
+                        end
+                    end
+                end)
+                RageUI.List("Teleport",c,e,nil,{},true,function(h, i, j, s)
+                    e = s
+                    if j then
+                        tARMA.teleport(d[e], true)
+                    end
+                end,function()end)
+                RageUI.ButtonWithStyle("Cycle through seats","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        local q = tARMA.getPlayerPed()
+                        if IsPedInAnyVehicle(q) then
+                            local t = GetVehiclePedIsIn(q)
+                            local u = GetVehicleModelNumberOfSeats(GetEntityModel(t))
+                            for v = -1, u - 2 do
+                                if IsVehicleSeatFree(t, v) then
+                                    TaskWarpPedIntoVehicle(q, t, v)
                                     Wait(2000)
                                 end
                             end
                         else
-                            tARMA.notify("~r~Not in a vehicle.")
+                            tvRP.notify("~r~Not in a vehicle.")
                         end
                     end
                 end)
-                if GetNumVehicleMods(tARMA.getPlayerVehicle(), v) > 0 then
-                    RageUI.ButtonWithStyle("Vehicle Mods" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                        if Selected then 
-                            if i then
-                                local p = tARMA.getPlayerPed()
-                                if IsPedInAnyVehicle(p) then
-                                    local s = GetVehiclePedIsIn(p)
-                                else
-                                    tARMA.notify("~r~Not in a vehicle.")
-                                end
-                            end
+                RageUI.ButtonWithStyle("Vehicle Mods","",{RightLabel = "→→→"},true,function(h, i, j)
+                    if j then
+                        local q = tARMA.getPlayerPed()
+                        if IsPedInAnyVehicle(q) then
+                            local t = GetVehiclePedIsIn(q)
+                        else
+                            tvRP.notify("~r~Not in a vehicle.")
                         end
-                    end, RMenu:Get("CARDEV", "vehiclemods"))
-                end
-                RageUI.ButtonWithStyle("Vehicle List",nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
-                end,RMenu:Get('CARDEV','vehiclelist'))
-                RageUI.ButtonWithStyle("Record Vehicle Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then
-                        viewingVehicleStats = true
                     end
-                end,RMenu:Get('CARDEV','vehiclestats'))
-                if b then
-                    RageUI.Checkbox("Return to normal Universe", "~r~Leave Car Dev Mode", b, {}, function(Hovered, Active, Selected, Checked)
-                        if Selected then
-                            DoScreenFadeOut(1000)
-                            NetworkFadeOutEntity(PlayerPedId(), true, false)
-                            Wait(1000)
-                            SetEntityCoords(PlayerPedId(), savedCoords)
-                            NetworkFadeInEntity(PlayerPedId(), 0)
-                            DoScreenFadeIn(1000)
-                            b=false
-                            TriggerServerEvent("ARMA:setCarDev",b)
-                        end
-                    end)
-                else
-                    RageUI.Checkbox("Teleport to Car Dev Universe", "~g~Enter Car Dev Mode", b, {}, function(Hovered, Active, Selected, Checked)
-                        if Selected then
-                            savedCoords = GetEntityCoords(PlayerPedId())
-                            DoScreenFadeOut(1000)
-                            NetworkFadeOutEntity(PlayerPedId(), true, false)
-                            Wait(1000)
-                            SetEntityCoords(PlayerPedId(), vector3(2370.8, 2856.58, 40.46))
-                            NetworkFadeInEntity(PlayerPedId(), 0)
-                            DoScreenFadeIn(1000)
-                            b=true
-                            TriggerServerEvent("ARMA:setCarDev",b)
-                        end
-                    end)
-                    RageUI.Separator("~g~Enter Car Dev Mode to see more options.")
-                end
+                end,RMenu:Get("cardev", "vehiclemods"))
+                RageUI.ButtonWithStyle("Vehicle Extras","",{RightLabel = "→→→"},true,function()
+                end,RMenu:Get("cardev", "extras"))
+                RageUI.ButtonWithStyle("Vehicle Colours","",{RightLabel = "→→→"},true,function()
+                end,RMenu:Get("cardev", "colours"))
+                RageUI.Checkbox("Return to normal Universe","",b,{},function()
+                end,function()
+                    b = true
+                    TriggerServerEvent("ARMA:setCarDevMode", b)
+                end,function()
+                    b = false
+                    TriggerServerEvent("ARMA:setCarDevMode", b)
+                end)
             else
-                RageUI.Checkbox("Teleport to Car Dev Universe", "~g~Enter Car Dev Mode", b, {}, function(Hovered, Active, Selected, Checked)
-                    if Selected then
-                        savedCoords = GetEntityCoords(PlayerPedId())
-                        DoScreenFadeOut(1000)
-                        NetworkFadeOutEntity(PlayerPedId(), true, false)
-                        Wait(1000)
-                        SetEntityCoords(PlayerPedId(), vector3(2370.8, 2856.58, 40.46))
-                        NetworkFadeInEntity(PlayerPedId(), 0)
-                        DoScreenFadeIn(1000)
-                        b=true
-                        TriggerServerEvent("ARMA:setCarDev",b)
-                    end
+                RageUI.Checkbox("Teleport to Car Dev Universe","",b,{},function()end,
+                function()
+                    b = true
+                    TriggerServerEvent("ARMA:setCarDevMode", b)
+                end,function()
+                    b = false
+                    TriggerServerEvent("ARMA:setCarDevMode", b)
                 end)
+                RageUI.Separator("~g~Enter the Car Dev Universe to see more menu options.")
             end
         end)
     end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclestats')) then
+    if RageUI.Visible(RMenu:Get('cardev', 'vehiclemods')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                local aw = 0
-                if n ~= 0 then
-                    aw = n - m
-                else
-                    aw = GetGameTimer() - m
-                end
-                RageUI.ButtonWithStyle("Time Elapsed","",{RightLabel = string.format("%.1fs", aw / 1000.0)},true,function()
-                end,nil)
-                RageUI.ButtonWithStyle("Top Speed","",{RightLabel = string.format("%.1f MPH", o.speedDisplay)},true,function()
-                end,nil)
-                RageUI.ButtonWithStyle("Top Acceleration","",{RightLabel = string.format("%.1f MPH", o.accelDisplay)},true,function()
-                end,nil)
-                RageUI.ButtonWithStyle("Top Deacceleration","",{RightLabel = string.format("%.1f MPH", o.decelDisplay)},true,function()
-                end,nil)
-                RageUI.ButtonWithStyle("Stop viewing Stats" , nil, { RightLabel = '→→→'}, true, function(Hovered, Active, Selected) 
-                    if Selected then
-                        viewingVehicleStats = false
-                    end
-                end,RMenu:Get('CARDEV','main'))
-            end
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclemods')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                for v, w in pairs(f) do
-                    if GetNumVehicleMods(tARMA.getPlayerVehicle(), v) > 0 then
-                        RageUI.ButtonWithStyle(w,"",{RightLabel = "→→→"},true,function(g, h, i)
-                            if i then
-                                selectedModType = v
-                            end
-                        end,RMenu:Get("CARDEV", "vehiclemodindexes"))
-                    end
-                end
-            end
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclemodindexes')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                if GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) == 0 then
-                    RageUI.Text("~r~No available mod indexes for this mod type for this vehicle.")
-                else
-                    for v = 0, GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) do
-                        RageUI.ButtonWithStyle("Mod " .. v,"",{RightLabel = "→→→"},true,function(g, h, i)
-                            if i then
-                                SetVehicleModKit(tARMA.getPlayerVehicle(), 0)
-                                SetVehicleMod(tARMA.getPlayerVehicle(), selectedModType, v)
-                            end
-                        end,RMenu:Get("CARDEV", "vehiclemodindexes"))
-                    end
-                end
-            end
-        end)
-    end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclelist')) then
-        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                for k,v in pairs(garages) do
-                    RageUI.ButtonWithStyle(k,nil,{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
-                        if Selected then
-                            garageCategorySelected=k
+            for w, x in pairs(f) do
+                if GetNumVehicleMods(tARMA.getPlayerVehicle(), w) > 0 then
+                    RageUI.ButtonWithStyle(x,"",{RightLabel = "→→→"},true,function(h, i, j)
+                        if j then
+                            selectedModType = w
                         end
-                    end,RMenu:Get('CARDEV','vehiclelistmain'))
+                    end,RMenu:Get("cardev", "vehiclemodindexes"))
                 end
             end
         end)
     end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclelistmain')) then
+    if RageUI.Visible(RMenu:Get('cardev', 'vehiclemodindexes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                for k,v in pairs(garages) do
-                    if k == garageCategorySelected then
-                        for a,l in pairs(v) do
-                            if a ~= "_config" then
-                                RageUI.ButtonWithStyle(a,""..l[1].."",{RightLabel="→→→"},true,function(Hovered, Active, Selected) 
-                                    if Selected then
-                                        veh=a
-                                    end
-                                end,RMenu:Get('CARDEV','vehiclelistspawn'))
-                            end
+            if GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) == 0 then
+                RageUI.Text({message = "~r~No available mod indexes for this mod type for this vehicle."})
+            else
+                for w = 0, GetNumVehicleMods(tARMA.getPlayerVehicle(), selectedModType) do
+                    RageUI.ButtonWithStyle("Mod " .. w,"",{RightLabel = "→→→"},true,function(h, i, j)
+                        if j then
+                            SetVehicleModKit(tARMA.getPlayerVehicle(), 0)
+                            SetVehicleMod(tARMA.getPlayerVehicle(), selectedModType, w)
+                        end
+                    end,RMenu:Get("cardev", "vehiclemodindexes"))
+                end
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('cardev', 'extras')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            local r = tARMA.getPlayerVehicle()
+            local y = false
+            if r ~= 0 then
+                for w = 1, 12 do
+                    if DoesExtraExist(r, w) then
+                        y = true
+                        if IsVehicleExtraTurnedOn(r, w) then
+                            RageUI.Button("Disable Extra " .. w,nil,{RightLabel = tostring(w)},function(h, i, j)
+                                if j then
+                                    SetVehicleExtra(r, w, true)
+                                end
+                            end)
+                        else
+                            RageUI.Button("Enable Extra " .. w,nil,{RightLabel = tostring(w)},function(h, i, j)
+                                if j then
+                                    SetVehicleExtra(r, w, false)
+                                    TriggerEvent("ARMA:staffFixVehicle")
+                                end
+                            end)
                         end
                     end
                 end
             end
+            if not y then
+                RageUI.Text({message = "~r~No available extras for this vehicle."})
+            end
         end)
     end
-    if RageUI.Visible(RMenu:Get('CARDEV', 'vehiclelistspawn')) then
+    if RageUI.Visible(RMenu:Get('cardev', 'extras')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if b then
-                RageUI.ButtonWithStyle("Spawn Vehicle (No mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        local k=tARMA.loadModel(veh)
-                        local coords = GetEntityCoords(PlayerPedId())
-                        local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
-                        SetVehicleOnGroundProperly(nveh)
-                        SetEntityInvincible(nveh,false)
-                        SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
-                        SetModelAsNoLongerNeeded(k)
-                        SetVehRadioStation(nveh,"OFF")
-                        Wait(500)
-                        SetVehRadioStation(nveh,"OFF")                                  
-                    end
-                end)
-                RageUI.ButtonWithStyle("Spawn Vehicle (Full Mods)", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        local k=tARMA.loadModel(veh)
-                        local coords = GetEntityCoords(PlayerPedId())
-                        local nveh=tARMA.spawnVehicle(k,coords.x, coords.y, coords.z,GetEntityHeading(GetPlayerPed(-1)),true,true,true)
-                        SetVehicleOnGroundProperly(nveh)
-                        SetEntityInvincible(nveh,false)
-                        SetPedIntoVehicle(GetPlayerPed(-1),nveh,-1)
-                        SetModelAsNoLongerNeeded(k)
-                        applymods(nveh)
-                        SetVehRadioStation(nveh,"OFF")
-                        Wait(500)
-                        SetVehRadioStation(nveh,"OFF")                       
+            for z, A in pairs(g) do
+                RageUI.Button(A.name,nil,true,function(h, i, j)
+                    if j then
+                        SetVehicleColours(tARMA.getPlayerVehicle(), A.colorindex, A.colorindex)
                     end
                 end)
             end
@@ -428,365 +300,465 @@ RageUI.CreateWhile(1.0, true, function()
     end
 end)
 
-
-
-
-RegisterCommand('cardev', function()
-    if tARMA.isCarDev() or tARMA.isDev() then
-        RageUI.Visible(RMenu:Get('CARDEV', 'main'), not RageUI.Visible(RMenu:Get('CARDEV', 'main')))
+local function B()
+    RageUI.Visible(RMenu:Get("cardev", "mainmenu"), not RageUI.Visible(RMenu:Get("cardev", "mainmenu")))
+end
+RegisterCommand("cardev",function(C)
+    if a then
+        B()
     end
 end)
-
-
-function FixVehicle(veh)
-    local p = GetPlayerPed(-1)
-    if IsPedInAnyVehicle(p) then
-    local q = GetVehiclePedIsIn(p)
-    SetVehicleEngineHealth(q, 9999)
-    SetVehiclePetrolTankHealth(q, 9999)
-    SetVehicleFixed(q)
-    tARMA.notify('~g~Fixed Vehicle')
+RegisterNetEvent("ARMA:setCarDev",function()
+    a = true
+end)
+RegisterNetEvent("ARMA:setBucket",function(D)
+    if b and D ~= 333 then
+        RageUI.ActuallyCloseAll()
+        b = false
     end
+end)
+local E = {
+    {name = "fMass", type = "float"},
+    {name = "fInitialDragCoeff", type = "float"},
+    {name = "fDownforceModifier", type = "float"},
+    {name = "fPercentSubmerged", type = "float"},
+    {name = "vecCentreOfMassOffset", type = "vector"},
+    {name = "vecInertiaMultiplier", type = "vector"},
+    {name = "fDriveBiasFront", type = "float"},
+    {name = "nInitialDriveGears", type = "integer"},
+    {name = "fInitialDriveForce", type = "float"},
+    {name = "fDriveInertia", type = "float"},
+    {name = "fClutchChangeRateScaleUpShift", type = "float"},
+    {name = "fClutchChangeRateScaleDownShift", type = "float"},
+    {name = "fInitialDriveMaxFlatVel", type = "float"},
+    {name = "fBrakeForce", type = "float"},
+    {name = "fBrakeBiasFront", type = "float"},
+    {name = "fHandBrakeForce", type = "float"},
+    {name = "fSteeringLock", type = "float"},
+    {name = "fTractionCurveMax", type = "float"},
+    {name = "fTractionCurveMin", type = "float"},
+    {name = "fTractionCurveLateral", type = "float"},
+    {name = "fTractionSpringDeltaMax", type = "float"},
+    {name = "fLowSpeedTractionLossMult", type = "float"},
+    {name = "fCamberStiffnesss", type = "float"},
+    {name = "fTractionBiasFront", type = "float"},
+    {name = "fTractionLossMult", type = "float"},
+    {name = "fSuspensionForce", type = "float"},
+    {name = "fSuspensionCompDamp", type = "float"},
+    {name = "fSuspensionReboundDamp", type = "float"},
+    {name = "fSuspensionUpperLimit", type = "float"},
+    {name = "fSuspensionLowerLimit", type = "float"},
+    {name = "fSuspensionRaise", type = "float"},
+    {name = "fSuspensionBiasFront", type = "float"},
+    {name = "fAntiRollBarForce", type = "float"},
+    {name = "fAntiRollBarBiasFront", type = "float"},
+    {name = "fRollCentreHeightFront", type = "float"},
+    {name = "fRollCentreHeightRear", type = "float"},
+    {name = "fCollisionDamageMult", type = "float"},
+    {name = "fWeaponDamageMult", type = "float"},
+    {name = "fDeformationDamageMult", type = "float"},
+    {name = "fEngineDamageMult", type = "float"},
+    {name = "fPetrolTankVolume", type = "float"},
+    {name = "fOilVolume", type = "float"},
+    {name = "fSeatOffsetDistX", type = "float"},
+    {name = "fSeatOffsetDistY", type = "float"},
+    {name = "fSeatOffsetDistZ", type = "float"},
+    {name = "nMonetaryValue", type = "integer"}
+}
+local F = {
+    ["CCarHandlingData"] = {
+        {name = "fBackEndPopUpCarImpulseMult", type = "float"},
+        {name = "fBackEndPopUpBuildingImpulseMult", type = "float"},
+        {name = "fBackEndPopUpMaxDeltaSpeed", type = "float"},
+        {name = "fToeFront", type = "float"},
+        {name = "fToeRear", type = "float"},
+        {name = "fCamberFront", type = "float"},
+        {name = "fCamberRear", type = "float"},
+        {name = "fCastor", type = "float"},
+        {name = "fEngineResistance", type = "float"},
+        {name = "fMaxDriveBiasTransfer", type = "float"},
+        {name = "fJumpForceScale", type = "float"},
+        {name = "fIncreasedRammingForceScale", type = "float"}
+    },
+    ["CTrailerHandlingData"] = {
+        {name = "fAttachLimitPitch", type = "float"},
+        {name = "fAttachLimitRoll", type = "float"},
+        {name = "fAttachLimitYaw", type = "float"},
+        {name = "fUprightSpringConstant", type = "float"},
+        {name = "fUprightDampingConstant", type = "float"},
+        {name = "fAttachedMaxDistance", type = "float"},
+        {name = "fAttachedMaxPenetration", type = "float"},
+        {name = "fAttachRaiseZ", type = "float"},
+        {name = "fPosConstraintMassRatio", type = "float"}
+    },
+    ["CBoatHandlingData"] = {
+        {name = "fBoxFrontMult", type = "float"},
+        {name = "fBoxRearMult", type = "float"},
+        {name = "fBoxSideMult", type = "float"},
+        {name = "fSampleTop", type = "float"},
+        {name = "fSampleBottom", type = "float"},
+        {name = "fSampleBottomTestCorrection", type = "float"},
+        {name = "fAquaplaneForce", type = "float"},
+        {name = "fAquaplanePushWaterMult", type = "float"},
+        {name = "fAquaplanePushWaterCap", type = "float"},
+        {name = "fAquaplanePushWaterApply", type = "float"},
+        {name = "fRudderForce", type = "float"},
+        {name = "fRudderOffsetSubmerge", type = "float"},
+        {name = "fRudderOffsetForce", type = "float"},
+        {name = "fRudderOffsetForceZMult", type = "float"},
+        {name = "fWaveAudioMult", type = "float"},
+        {name = "vecMoveResistance", type = "vector"},
+        {name = "vecTurnResistance", type = "vector"},
+        {name = "fLook_L_R_CamHeight", type = "float"},
+        {name = "fDragCoefficient", type = "float"},
+        {name = "fKeelSphereSize", type = "float"},
+        {name = "fPropRadius", type = "float"},
+        {name = "fLowLodAngOffset", type = "float"},
+        {name = "fLowLodDraughtOffset", type = "float"},
+        {name = "fImpellerOffset", type = "float"},
+        {name = "fImpellerForceMult", type = "float"},
+        {name = "fDinghySphereBuoyConst", type = "float"},
+        {name = "fProwRaiseMult", type = "float"},
+        {name = "fDeepWaterSampleBuoyancyMult", type = "float"},
+        {name = "fTransmissionMultiplier", type = "float"},
+        {name = "fTractionMultiplier", type = "float"}
+    },
+    ["CBikeHandlingData"] = {
+        {name = "fLeanFwdCOMMult", type = "float"},
+        {name = "fLeanFwdForceMult", type = "float"},
+        {name = "fLeanBakCOMMult", type = "float"},
+        {name = "fLeanBakForceMult", type = "float"},
+        {name = "fMaxBankAngle", type = "float"},
+        {name = "fFullAnimAngle", type = "float"},
+        {name = "fDesLeanReturnFrac", type = "float"},
+        {name = "fStickLeanMult", type = "float"},
+        {name = "fBrakingStabilityMult", type = "float"},
+        {name = "fInAirSteerMult", type = "float"},
+        {name = "fWheelieBalancePoint", type = "float"},
+        {name = "fStoppieBalancePoint", type = "float"},
+        {name = "fWheelieSteerMult", type = "float"},
+        {name = "fRearBalanceMult", type = "float"},
+        {name = "fFrontBalanceMult", type = "float"},
+        {name = "fBikeGroundSideFrictionMult", type = "float"},
+        {name = "fBikeWheelGroundSideFrictionMult", type = "float"},
+        {name = "fBikeOnStandLeanAngle", type = "float"},
+        {name = "fBikeOnStandSteerAngle", type = "float"},
+        {name = "fJumpForce", type = "float"}
+    },
+    ["CSubmarineHandlingData"] = {
+        {name = "vTurnRes", type = "vector"},
+        {name = "fMoveResXY", type = "float"},
+        {name = "fMoveResZ", type = "float"},
+        {name = "fPitchMult", type = "float"},
+        {name = "fPitchAngle", type = "float"},
+        {name = "fYawMult", type = "float"},
+        {name = "fDiveSpeed", type = "float"},
+        {name = "fRollMult", type = "float"},
+        {name = "fRollStab", type = "float"}
+    },
+    ["CSpecialFlightHandlingData"] = {
+        {name = "vecAngularDamping", type = "vector"},
+        {name = "vecAngularDampingMin", type = "vector"},
+        {name = "vecLinearDamping", type = "vector"},
+        {name = "vecLinearDampingMin", type = "vector"},
+        {name = "fLiftCoefficient", type = "float"},
+        {name = "fCriticalLiftAngle", type = "float"},
+        {name = "fInitialLiftAngle", type = "float"},
+        {name = "fMaxLiftAngle", type = "float"},
+        {name = "fDragCoefficient", type = "float"},
+        {name = "fBrakingDrag", type = "float"},
+        {name = "fMaxLiftVelocity", type = "float"},
+        {name = "fMinLiftVelocity", type = "float"},
+        {name = "fRollTorqueScale", type = "float"},
+        {name = "fMaxTorqueVelocity", type = "float"},
+        {name = "fMinTorqueVelocity", type = "float"},
+        {name = "fYawTorqueScale", type = "float"},
+        {name = "fSelfLevelingPitchTorqueScale", type = "float"},
+        {name = "fInitalOverheadAssist", type = "float"},
+        {name = "fMaxPitchTorque", type = "float"},
+        {name = "fMaxSteeringRollTorque", type = "float"},
+        {name = "fPitchTorqueScale", type = "float"},
+        {name = "fSteeringTorqueScale", type = "float"},
+        {name = "fMaxThrust", type = "float"},
+        {name = "fTransitionDuration", type = "float"},
+        {name = "fHoverVelocityScale", type = "float"},
+        {name = "fStabilityAssist", type = "float"},
+        {name = "fMinSpeedForThrustFalloff", type = "float"},
+        {name = "fBrakingThrustScale", type = "float"},
+        {name = "mode", type = "integer"}
+    },
+    ["CFlyingHandlingData"] = {
+        {name = "fThrust", type = "float"},
+        {name = "fThrustFallOff", type = "float"},
+        {name = "fThrustVectoring", type = "float"},
+        {name = "fInitialThrust", type = "float"},
+        {name = "fInitialThrustFallOff", type = "float"},
+        {name = "fYawMult", type = "float"},
+        {name = "fYawStabilise", type = "float"},
+        {name = "fSideSlipMult", type = "float"},
+        {name = "fInitialYawMult", type = "float"},
+        {name = "fRollMult", type = "float"},
+        {name = "fRollStabilise", type = "float"},
+        {name = "fInitialRollMult", type = "float"},
+        {name = "fPitchMult", type = "float"},
+        {name = "fPitchStabilise", type = "float"},
+        {name = "fFormLiftMult", type = "float"},
+        {name = "fAttackLiftMult", type = "float"},
+        {name = "fAttackDiveMult", type = "float"},
+        {name = "fGearDownDragV", type = "float"},
+        {name = "fGearDownLiftMult", type = "float"},
+        {name = "fWindMult", type = "float"},
+        {name = "fMoveRes", type = "float"},
+        {name = "vecTurnRes", type = "vector"},
+        {name = "vecSpeedRes", type = "vector"},
+        {name = "fGearDoorFrontOpen", type = "float"},
+        {name = "fGearDoorRearOpen", type = "float"},
+        {name = "fGearDoorRearOpen2", type = "float"},
+        {name = "fGearDoorRearMOpen", type = "float"},
+        {name = "fTurublenceMagnitudeMax", type = "float"},
+        {name = "fTurublenceForceMulti", type = "float"},
+        {name = "fTurublenceRollTorqueMulti", type = "float"},
+        {name = "fTurublencePitchTorqueMulti", type = "float"},
+        {name = "fBodyDamageControlEffectMult", type = "float"},
+        {name = "fInputSensitivityForDifficulty", type = "float"},
+        {name = "fOnGroundYawBoostSpeedPeak", type = "float"},
+        {name = "fOnGroundYawBoostSpeedCap", type = "float"},
+        {name = "fEngineOffGlideMulti", type = "float"},
+        {name = "fAfterburnerEffectRadius", type = "float"},
+        {name = "fAfterburnerEffectDistance", type = "float"},
+        {name = "fAfterburnerEffectForceMulti", type = "float"},
+        {name = "fSubmergeLevelToPullHeliUnderwater", type = "float"},
+        {name = "fExtraLiftWithRoll", type = "float"}
+    },
+    ["CSeaPlaneHandlingData"] = {
+        {name = "fLeftPontoonComponentId", type = "integer"},
+        {name = "fRightPontoonComponentId", type = "integer"},
+        {name = "fPontoonBuoyConst", type = "float"},
+        {name = "fPontoonSampleSizeFront", type = "float"},
+        {name = "fPontoonSampleSizeMiddle", type = "float"},
+        {name = "fPontoonSampleSizeRear", type = "float"},
+        {name = "fPontoonLengthFractionForSamples", type = "float"},
+        {name = "fPontoonDragCoefficient", type = "float"},
+        {name = "fPontoonVerticalDampingCoefficientUp", type = "float"},
+        {name = "fPontoonVerticalDampingCoefficientDown", type = "float"},
+        {name = "fKeelSphereSize", type = "float"}
+    }
+}
+local G = E
+local H = "CHandlingData"
+local function I()
+    return {
+        speedBuffer = {},
+        speed = 0.0,
+        speedDisplay = 0.0,
+        accel = 0.0,
+        accelDisplay = 0.0,
+        decel = 0.0,
+        decelDisplay = 0.0
+    }
 end
-
-function applymods(veh)
-    SetVehicleModKit(veh, 0)
-    Wait(1)
-    SetVehicleMod(veh, 11, 3) -- Engine
-    SetVehicleMod(veh, 12, 2) -- Brakes
-    SetVehicleMod(veh, 13, 2) -- Transmission
-    SetVehicleMod(veh, 15, 3) -- Suspension
-    SetVehicleMod(veh, 16, 4) -- Armour
-    ToggleVehicleMod(veh, 18, true)
-    SetVehicleWindowTint(veh, 1) -- Window Tint
-end
-
-function cleanveh()
-    local playerPed = GetPlayerPed(-1)
-	if IsPedInAnyVehicle(playerPed, false) then
-		local vehicle = GetVehiclePedIsIn(playerPed, false)
-		SetVehicleDirtLevel(vehicle, 0)
-		tARMA.notify("~b~Your vehicle has been cleaned!")
-	else
-		tARMA.notify("~o~You're not in a vehicle! There is no vehicle to clean!")
-	end
-end
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if TakingCarSS then
-            SetEntityInvincible(GetVehiclePedIsIn(GetPlayerPed(-1),false),true)
-            SetEntityProofs(GetVehiclePedIsIn(GetPlayerPed(-1),false),true,true,true,true,true,true,true,true)
-            SetEntityCanBeDamaged(GetVehiclePedIsIn(GetPlayerPed(-1),false),false)
-            SetEntityCanBeDamaged(GetPlayerPed(-1),false)
-            SetVehicleFixed(GetVehiclePedIsIn(PlayerPedId(), true))
-            SetVehicleDirtLevel(GetVehiclePedIsIn(PlayerPedId(), true),0.0)
-            ClearPedBloodDamage(GetPlayerPed(-1))
-            for i=0,360 do
-                DisableControlAction(1,i,true)
+local J = false
+local K = I()
+local function L()
+    local r = tARMA.getPlayerVehicle()
+    local M = GetEntitySpeed(r)
+    table.insert(K.speedBuffer, M)
+    if #K.speedBuffer > 100 then
+        table.remove(K.speedBuffer, 1)
+    end
+    local N = 0.0
+    local O = 0.0
+    local P = 0
+    local Q = 0
+    for R, S in ipairs(K.speedBuffer) do
+        if R > 1 then
+            local T = S - K.speedBuffer[R - 1]
+            if T > 0.0 then
+                N = N + T
+                P = P + 1
+            else
+                O = N + T
+                Q = Q + 1
             end
         end
     end
-end)
-
-function TakeVehScreenshot()
-    if GetVehiclePedIsIn(PlayerPedId(),false)==0 then
-        tARMA.notify("~r~You must be in a vehicle.")
-        return 
-    end
-    TakingCarSS = true
-    TriggerServerEvent('ARMAAntiCheat:setType6', false)
-    ExecuteCommand('hideui')
-    ped = GetVehiclePedIsIn(PlayerPedId(), true)
-    SetEntityCoords(ped, vector3(-921.20440673828,-3082.5627441406,12.557805664062))
-    SetEntityHeading(PlayerPedId(),100.0)
-    SetGameplayCamRelativePitch(7.5,1.0)
-    SetGameplayCamRelativeHeading(-180.0)
-    Wait(3000)
-    TriggerServerEvent('ARMA:takeCarScreenshot', veh, 'front')
-    Wait(5000)
-    SetGameplayCamRelativeHeading(0.8)
-    TriggerServerEvent('ARMA:takeCarScreenshot', veh, 'rear')
-    Wait(5000)
-    SetGameplayCamRelativeHeading(92.0)
-    TriggerServerEvent('ARMA:takeCarScreenshot', veh, 'side')
-    Wait(5000)
-    TakingCarSS = false
-    SetEntityInvincible(GetVehiclePedIsIn(GetPlayerPed(-1),false),false)
-    SetEntityProofs(GetVehiclePedIsIn(GetPlayerPed(-1),false),false,false,false,false,false,false,false,false)
-    SetEntityCanBeDamaged(GetVehiclePedIsIn(GetPlayerPed(-1),false),true)
-    SetEntityCanBeDamaged(GetPlayerPed(-1),true)
-    ExecuteCommand('showui')
-    TriggerServerEvent('ARMAAntiCheat:setType6', true)
+    N = N / P
+    O = O / Q
+    K.speed = math.max(K.speed, M)
+    K.speedDisplay = K.speed * 2.236936
+    K.accel = math.max(K.accel, N)
+    K.accelDisplay = K.accel * 60.0 * 2.236936
+    K.decel = math.min(K.decel, O)
+    K.decelDisplay = math.abs(K.decel) * 60.0 * 2.236936
 end
-
-
-local A={
-    {name="fMass",type="float"},
-    {name="fInitialDragCoeff",type="float"},
-    {name="fDownforceModifier",type="float"},
-    {name="fPercentSubmerged",type="float"},
-    {name="vecCentreOfMassOffset",type="vector"},
-    {name="vecInertiaMultiplier",type="vector"},
-    {name="fDriveBiasFront",type="float"},
-    {name="nInitialDriveGears",type="integer"},
-    {name="fInitialDriveForce",type="float"},
-    {name="fDriveInertia",type="float"},
-    {name="fClutchChangeRateScaleUpShift",type="float"},
-    {name="fClutchChangeRateScaleDownShift",type="float"},
-    {name="fInitialDriveMaxFlatVel",type="float"},
-    {name="fBrakeForce",type="float"},
-    {name="fBrakeBiasFront",type="float"},
-    {name="fHandBrakeForce",type="float"},
-    {name="fSteeringLock",type="float"},
-    {name="fTractionCurveMax",type="float"},
-    {name="fTractionCurveMin",type="float"},
-    {name="fTractionCurveLateral",type="float"},
-    {name="fTractionSpringDeltaMax",type="float"},
-    {name="fLowSpeedTractionLossMult",type="float"},
-    {name="fCamberStiffnesss",type="float"},
-    {name="fTractionBiasFront",type="float"},
-    {name="fTractionLossMult",type="float"},
-    {name="fSuspensionForce",type="float"},
-    {name="fSuspensionCompDamp",type="float"},
-    {name="fSuspensionReboundDamp",type="float"},
-    {name="fSuspensionUpperLimit",type="float"},
-    {name="fSuspensionLowerLimit",type="float"},
-    {name="fSuspensionRaise",type="float"},
-    {name="fSuspensionBiasFront",type="float"},
-    {name="fAntiRollBarForce",type="float"},
-    {name="fAntiRollBarBiasFront",type="float"},
-    {name="fRollCentreHeightFront",type="float"},
-    {name="fRollCentreHeightRear",type="float"},
-    {name="fCollisionDamageMult",type="float"},
-    {name="fWeaponDamageMult",type="float"},
-    {name="fDeformationDamageMult",type="float"},
-    {name="fEngineDamageMult",type="float"},
-    {name="fPetrolTankVolume",type="float"},
-    {name="fOilVolume",type="float"},
-    {name="fSeatOffsetDistX",type="float"},
-    {name="fSeatOffsetDistY",type="float"},
-    {name="fSeatOffsetDistZ",type="float"},
-    {name="nMonetaryValue",type="integer"}
-}
-local function B()
-    return{speedBuffer={},speed=0.0,speedDisplay=0.0,accel=0.0,accelDisplay=0.0,decel=0.0,decelDisplay=0.0}
+local function U(V)
+    local r = tARMA.getPlayerVehicle()
+    if r == 0 then
+        return "0.0"
+    end
+    if V.type == "float" then
+        local W = GetVehicleHandlingFloat(r, H, V.name)
+        return string.format("%.5f", W)
+    elseif V.type == "integer" then
+        local X = GetVehicleHandlingInt(r, H, V.name)
+        return tostring(X)
+    elseif V.type == "vector" then
+        local Y = GetVehicleHandlingVector(r, H, V.name)
+        return string.format("%.3f %.3f %.3f", Y.x, Y.y, Y.z)
+    end
+    return "INVALID"
 end
-local C=false
-local D=B()
-local function E()
-    local q=getPlayerVehicle()
-    local F=GetEntitySpeed(q)
-    table.insert(D.speedBuffer,F)
-    if#D.speedBuffer>100 then 
-        table.remove(D.speedBuffer,1)
-    end
-    local G=0.0
-    local H=0.0
-    local I=0
-    local J=0
-    for K,L in ipairs(D.speedBuffer)do 
-        if K>1 then 
-            local M=L-D.speedBuffer[K-1]
-            if M>0.0 then 
-                G=G+M
-                I=I+1 
-            else 
-                H=G+M
-                J=J+1 
-            end 
-        end 
-    end
-    G=G/I
-    H=H/J
-    D.speed=math.max(D.speed,F)
-    D.speedDisplay=D.speed*2.236936
-    D.accel=math.max(D.accel,G)
-    D.accelDisplay=D.accel*60.0*2.236936
-    D.decel=math.min(D.decel,H)
-    D.decelDisplay=math.abs(D.decel)*60.0*2.236936 
-end
-local function N(O)
-    local q=getPlayerVehicle()
-    if q==0 then 
-        return"0.0"
-    end
-    if O.type=="float"then 
-        local P=GetVehicleHandlingFloat(q,"CHandlingData",O.name)
-        return string.format("%.5f",P)
-    elseif O.type=="integer"then 
-        local Q=GetVehicleHandlingInt(q,"CHandlingData",O.name)
-        return tostring(Q)
-    elseif O.type=="vector"then 
-        local R=GetVehicleHandlingVector(q,"CHandlingData",O.name)
-        return string.format("%.3f %.3f %.3f",R.x,R.y,R.z)
-    end
-    return"INVALID"
-end
-local function S()
-    AddTextEntry("FMMC_MPM_NA","Enter Value")
-    DisplayOnscreenKeyboard(1,"FMMC_MPM_NA","Enter Value","","","","",30)
-    while UpdateOnscreenKeyboard()==0 do 
+local function Z()
+    AddTextEntry("FMMC_MPM_NA", "Enter Value")
+    DisplayOnscreenKeyboard(1, "FMMC_MPM_NA", "Enter Value", "", "", "", "", 30)
+    while UpdateOnscreenKeyboard() == 0 do
         DisableAllControlActions(0)
         Wait(0)
     end
-    if GetOnscreenKeyboardResult()then 
-        local T=GetOnscreenKeyboardResult()
-        if T then 
-            return T 
-        end 
-    end
-    return false 
-end
-local function stringsplit(input, seperator)
-	if seperator == nil then
-		seperator = '%s'
-	end
-	
-	local t={} ; i=1
-	
-	for str in string.gmatch(input, '([^'..seperator..']+)') do
-		t[i] = str
-		i = i + 1
-	end
-	
-	return t
-end
-local function U(O)
-    local V=S()
-    if not V then 
-        tARMA.notify("~r~Input cancelled.")
-        return 
-    end
-    local q=getPlayerVehicle()
-    if O.type=="float"then 
-        local W=tonumber(V)
-        if W then 
-            SetVehicleHandlingFloat(q,"CHandlingData",O.name,W+0.0)
-        else 
-            tARMA.notify("~r~Can not parse float.")
-        end 
-    elseif O.type=="integer"then 
-        local W=tonumber(V)
-        if W then 
-            SetVehicleHandlingInt(q,"CHandlingData",O.name,math.floor(W))
-        else 
-            tARMA.notify("~r~Can not parse integer.")
-        end 
-    elseif O.type=="vector"then 
-        local X=stringsplit(V," ")
-        if X and#X>=3 then 
-            local Y=tonumber(X[1])
-            local Z=tonumber(X[2])
-            local _=tonumber(X[3])
-            if Y and Z and _ then 
-                SetVehicleHandlingVector(q,"CHandlingData",O.name,vector3(Y+0.0,Z+0.0,_+0.0))
-            else 
-                tARMA.notify("~r~Can not parse vector.")
-            end 
-        else 
-            tARMA.notify("~r~Expected 3 floats.")
-        end 
-    end
-    ModifyVehicleTopSpeed(q,1.0)
-end
-local function a0(W)
-    W=W*10000.0
-    return(W%1.0>0.5 and math.ceil(W)or math.floor(W))/10000.0 
-end
-local function a1()
-    local a2=""
-    local function a3(a4)
-        if a2~=""then 
-            a2=a2 .."\n\t\t\t"
+    if GetOnscreenKeyboardResult() then
+        local _ = GetOnscreenKeyboardResult()
+        if _ then
+            return _
         end
-        a2=a2 ..a4 
     end
-    local q=getPlayerVehicle()
-    for a5,O in pairs(A)do 
-        if O.type=="float"then 
-            local W=GetVehicleHandlingFloat(q,"CHandlingData",O.name)
-            a3(string.format("<%s value=\"%s\" />",O.name,a0(W)))
-        elseif O.type=="integer"then 
-            local W=GetVehicleHandlingInt(q,"CHandlingData",O.name)
-            a3(string.format("<%s value=\"%s\" />",O.name,W))
-        elseif O.type=="vector"then 
-            local W=GetVehicleHandlingVector(q,"CHandlingData",O.name)
-            a3(string.format("<%s x=\"%s\" y=\"%s\" z=\"%s\" />",O.name,W.x,W.y,W.z))
-        end 
+    return false
+end
+local function a0(V)
+    local a1 = Z()
+    if not a1 then
+        notify("~r~Input cancelled.")
+        return
     end
-    tARMA.clientPrompt("Output (CTRL+A, CTRL+C)",a2,function()
-    end)
+    local r = tARMA.getPlayerVehicle()
+    if V.type == "float" then
+        local a2 = tonumber(a1)
+        if a2 then
+            SetVehicleHandlingFloat(r, H, V.name, a2 + 0.0)
+        else
+            notify("~r~Can not parse float.")
+        end
+    elseif V.type == "integer" then
+        local a2 = tonumber(a1)
+        if a2 then
+            SetVehicleHandlingInt(r, H, V.name, math.floor(a2))
+        else
+            notify("~r~Can not parse integer.")
+        end
+    elseif V.type == "vector" then
+        local a3 = stringsplit(a1, " ")
+        if a3 and #a3 >= 3 then
+            local a4 = tonumber(a3[1])
+            local a5 = tonumber(a3[2])
+            local a6 = tonumber(a3[3])
+            if a4 and a5 and a6 then
+                SetVehicleHandlingVector(r, H, V.name, vector3(a4 + 0.0, a5 + 0.0, a6 + 0.0))
+            else
+                notify("~r~Can not parse vector.")
+            end
+        else
+            notify("~r~Expected 3 floats.")
+        end
+    end
+    ModifyVehicleTopSpeed(r, 1.0)
 end
-local function a6(a7)
-    C=a7
-    setCursor(a7 and 1 or 0)
-end
-function DrawAdvancedTextNoOutline(v,w,x,y,z,A,B,C,D,E,F,G)
-    SetTextFont(F)
-    SetTextProportional(0)
-    SetTextScale(z,z)
-    N_0x4e096588b13ffeca(G)
-    SetTextColour(B,C,D,E)
-    SetTextDropShadow()
-    SetTextEntry("STRING")
-    AddTextComponentString(A)
-    DrawText(v-0.1+x,w-0.02+y)
+local function a7(a2)
+    a2 = a2 * 10000.0
+    return (a2 % 1.0 > 0.5 and math.ceil(a2) or math.floor(a2)) / 10000.0
 end
 local function a8()
-    if not b or TakingCarSS then 
-        if C then
-            a6(false)
+    local a9 = ""
+    local function aa(ab)
+        if a9 ~= "" then
+            a9 = a9 .. "\n\t\t\t"
         end
-        return 
+        a9 = a9 .. ab
     end
-    E()
-    local a9=tARMA.getFontId("Akrobat-ExtraBold")
-    local aa=C and 0.345 or 0.505
-    DrawAdvancedTextNoOutline(aa,0.055,0.005,0.02,0.35,string.format("Top Speed: %.5f",D.speedDisplay),255,255,255,255,a9,1)
-    DrawAdvancedTextNoOutline(aa,0.075,0.005,0.02,0.35,string.format("Top Acceleration: %.5f",D.accelDisplay),255,255,255,255,a9,1)
-    DrawAdvancedTextNoOutline(aa,0.095,0.005,0.02,0.35,string.format("Top Deacceleration: %.5f",D.decelDisplay),255,255,255,255,a9,1)
-    local s=getPlayerVehicle()
-    DisableControlAction(0,19,true)
-    if s~=0 and IsDisabledControlJustPressed(0,19)then 
-        a6(not C)
+    local r = tARMA.getPlayerVehicle()
+    for z, V in pairs(G) do
+        if V.type == "float" then
+            local a2 = GetVehicleHandlingFloat(r, H, V.name)
+            aa(string.format('<%s value="%s" />', V.name, a7(a2)))
+        elseif V.type == "integer" then
+            local a2 = GetVehicleHandlingInt(r, H, V.name)
+            aa(string.format('<%s value="%s" />', V.name, a2))
+        elseif V.type == "vector" then
+            local a2 = GetVehicleHandlingVector(r, H, V.name)
+            aa(string.format('<%s x="%s" y="%s" z="%s" />', V.name, a2.x, a2.y, a2.z))
+        end
     end
-    if not C then 
-        return 
-    elseif s==0 then 
-        a6(false)
-    end
-    for K,O in pairs(A)do 
-        local ab=K>23 and 1 or 0
-        local ac=0.14+(K-ab*23)*0.0215
-        local ad=CursorInArea(0.25+ab*0.27,0.5+ab*0.27,ac,ac+0.0215)
-        local ae=ad and 100 or 255
-        DrawAdvancedTextNoOutline(0.345+ab*0.27,ac,0.005,0.02,0.35,O.name,ae,ae,255,255,a9,1)
-        DrawAdvancedTextNoOutline(0.516+ab*0.231,ac+0.001,0.005,0.02,0.35,N(O),ae,ae,255,255,a9,1)
-        if ad and IsDisabledControlJustPressed(0,24)then 
-            Citizen.CreateThreadNow(function()
-                U(O)
-            end)
-        end 
-    end
-    DrawRect(0.465,0.415,0.09,0.495,0,0,0,100)
-    DrawRect(0.695,0.415,0.09,0.495,0,0,0,100)
-    DrawRect(0.278,0.14,0.055,0.02,255,255,255,230)
-    DrawAdvancedTextNoOutline(0.346,0.129,0.005,0.02,0.24,"Copy Handling",0,0,0,255,0,1)
-    if CursorInArea(0.25,0.31,0.12,0.15) and IsDisabledControlJustPressed(0,24) then 
-        a1()
-    end
-    DrawRect(0.338,0.14,0.055,0.02,255,255,255,230)
-    DrawAdvancedTextNoOutline(0.41,0.129,0.005,0.02,0.24,"Reset Stats",0,0,0,255,0,1)
-    if CursorInArea(0.31,0.37,0.12,0.15) and IsDisabledControlJustPressed(0,24) then 
-        D=B()
-    end 
+    tARMA.clientPrompt(
+        "Output (CTRL+A, CTRL+C)",
+        a9,
+        function()
+        end
+    )
 end
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        a8()
-        inVehDebug = C
+local function ac(ad)
+    J = ad
+    setCursor(ad and 1 or 0)
+    inGUICMG = ad
+end
+local function ae()
+    if not b or tARMA.getPlayerBucket() ~= 333 then
+        if J then
+            ac(false)
+        end
+        return
     end
-end)
+    L()
+    local af = tARMA.getFontId("Akrobat-ExtraBold")
+    local ag = J and 0.345 or 0.505
+    DrawAdvancedTextNoOutline(ag,0.055,0.005,0.02,0.35,string.format("Top Speed: %.5f", K.speedDisplay),255,255,255,255,af,1)
+    DrawAdvancedTextNoOutline(ag,0.075,0.005,0.02,0.35,string.format("Top Acceleration: %.5f", K.accelDisplay),255,255,255,255,af,1)
+    DrawAdvancedTextNoOutline(ag,0.095,0.005,0.02,0.35,string.format("Top Deacceleration: %.5f", K.decelDisplay),255,255,255,255,af,1)
+    local t = tARMA.getPlayerVehicle()
+    DisableControlAction(0, 19, true)
+    if t ~= 0 and IsDisabledControlJustPressed(0, 19) then
+        ac(not J)
+    end
+    if not J then
+        return
+    elseif t == 0 then
+        ac(false)
+    end
+    for R, V in pairs(G) do
+        local ah = R > 23 and 1 or 0
+        local ai = 0.14 + (R - ah * 23) * 0.0215
+        local aj = CursorInArea(0.25 + ah * 0.27, 0.5 + ah * 0.27, ai, ai + 0.0215)
+        local ak = aj and 100 or 255
+        DrawAdvancedTextNoOutline(0.345 + ah * 0.27, ai, 0.005, 0.02, 0.35, V.name, ak, ak, 255, 255, af, 1)
+        DrawAdvancedTextNoOutline(0.516 + ah * 0.231, ai + 0.001, 0.005, 0.02, 0.35, U(V), ak, ak, 255, 255, af, 1)
+        if aj and IsDisabledControlJustPressed(0, 24) then
+            Citizen.CreateThreadNow(function()
+                a0(V)
+            end)
+        end
+    end
+    DrawRect(0.465, 0.415, 0.09, 0.495, 0, 0, 0, 100)
+    DrawRect(0.695, 0.415, 0.09, 0.495, 0, 0, 0, 100)
+    DrawRect(0.278, 0.14, 0.055, 0.02, 255, 255, 255, 230)
+    DrawAdvancedTextNoOutline(0.346, 0.129, 0.005, 0.02, 0.24, "Copy Handling", 0, 0, 0, 255, 0, 1)
+    if CursorInArea(0.25, 0.31, 0.12, 0.15) and IsDisabledControlJustPressed(0, 24) then
+        a8()
+    end
+    DrawRect(0.338, 0.14, 0.055, 0.02, 255, 255, 255, 230)
+    DrawAdvancedTextNoOutline(0.41, 0.129, 0.005, 0.02, 0.24, "Reset Stats", 0, 0, 0, 255, 0, 1)
+    if CursorInArea(0.31, 0.37, 0.12, 0.15) and IsDisabledControlJustPressed(0, 24) then
+        K = I()
+        G = E
+        H = "CHandlingData"
+    end
+    local R = 0
+    for al, am in pairs(F) do
+        local ah = R >= 4 and 1 or 0
+        local ai = (R - ah * 4) * 0.125
+        DrawRect(0.308 + ai, 0.685 + 0.05 * ah, 0.115, 0.02, 255, 255, 255, 230)
+        DrawAdvancedTextNoOutline(0.403 + ai, 0.675 + 0.05 * ah, 0.005, 0.02, 0.24, al, 0, 0, 0, 255, 0, 0)
+        if CursorInArea(0.2505 + ai, 0.3655 + ai, 0.665 + ah * 0.05, 0.705 + ah * 0.05) and IsDisabledControlJustPressed(0, 24) then
+            G = am
+            H = al
+        end
+        R = R + 1
+    end
+end
+tARMA.createThreadOnTick(ae)

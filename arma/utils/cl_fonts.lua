@@ -21,11 +21,9 @@ local b={
 CreateThread(function()
     for c,d in pairs(a)do 
         RegisterFontFile(d)
-        print("Registering font: "..d)
     end
     for e in pairs(b)do 
         b[e]=RegisterFontId(e)
-        print("Registering font id: "..e)
     end 
 end)
 function tARMA.getFontId(e)
