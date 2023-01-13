@@ -851,7 +851,6 @@ function tARMA.removeBasePlayer(player)
 end
 
 local isDev = false
-local carDev = false
 local user_id = nil
 local stafflevel = 0
 globalOnPoliceDuty = false
@@ -898,12 +897,6 @@ function tARMA.setDev()
 end
 function tARMA.isDev()
     return isDev
-end
-function tARMA.setCarDev()
-  carDev = true
-end
-function tARMA.isCarDev()
-  return carDev
 end
 function tARMA.setUserID(a)
   user_id = a
