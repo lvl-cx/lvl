@@ -210,37 +210,32 @@ RegisterServerEvent("ARMA:AddGroup")
 AddEventHandler("ARMA:AddGroup",function(perm, selgroup)
     local source = source
     local admin_temp = source
-    local admin_perm = ARMA.getUserId(admin_temp)
     local user_id = ARMA.getUserId(source)
     local permsource = ARMA.getUserSource(perm)
     local playerName = GetPlayerName(source)
     local povName = GetPlayerName(permsource)
     if ARMA.hasPermission(user_id, "group.add") then
-        if selgroup == "Founder" and not ARMA.hasPermission(admin_perm, "group.add.founder") then
+        if selgroup == "Founder" and not ARMA.hasPermission(user_id, "group.add.founder") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.add.operationsmanager") then
+        elseif selgroup == "Staff Manager" and not ARMA.hasPermission(user_id, "group.add.staffmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "staffmanager" and not ARMA.hasPermission(admin_perm, "group.add.staffmanager") then
+        elseif selgroup == "Community Manager" and not ARMA.hasPermission(user_id, "group.add.commanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "commanager" and not ARMA.hasPermission(admin_perm, "group.add.commanager") then
+        elseif selgroup == "Head Admin" and not ARMA.hasPermission(user_id, "group.add.headadmin") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "headadmin" and not ARMA.hasPermission(admin_perm, "group.add.headadmin") then
-            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "senioradmin" and not ARMA.hasPermission(admin_perm, "group.add.senioradmin") then
+        elseif selgroup == "Senior Admin" and not ARMA.hasPermission(user_id, "group.add.senioradmin") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "administrator" and not ARMA.hasPermission(admin_perm, "group.add.administrator") then
+        elseif selgroup == "Admin" and not ARMA.hasPermission(user_id, "group.add.administrator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "srmoderator" and not ARMA.hasPermission(admin_perm, "group.add.srmoderator") then
+        elseif selgroup == "Senior Mod" and not ARMA.hasPermission(user_id, "group.add.srmoderator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "moderator" and not ARMA.hasPermission(admin_perm, "group.add.moderator") then
+        elseif selgroup == "Moderator" and not ARMA.hasPermission(user_id, "group.add.moderator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "supportteam" and not ARMA.hasPermission(admin_perm, "group.add.supportteam") then
+        elseif selgroup == "Support Team" and not ARMA.hasPermission(user_id, "group.add.supportteam") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "trialstaff" and not ARMA.hasPermission(admin_perm, "group.add.trial") then
+        elseif selgroup == "Trial Staff" and not ARMA.hasPermission(user_id, "group.add.trial") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "vip" and not ARMA.hasPermission(admin_perm, "group.add.vip") then
-            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "pov" and not ARMA.hasGroup(perm, "group.add.pov") then
+        elseif selgroup == "pov" and not ARMA.hasPermission(user_id, "group.add.pov") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         else
             ARMA.addUserGroup(perm, selgroup)
@@ -262,29 +257,25 @@ AddEventHandler("ARMA:RemoveGroup",function(perm, selgroup)
     if ARMA.hasPermission(user_id, "group.remove") then
         if selgroup == "Founder" and not ARMA.hasPermission(user_id, "group.remove.founder") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "operationsmanager" and not ARMA.hasPermission(user_id, "group.remove.operationsmanager") then
+        elseif selgroup == "Staff Manager" and not ARMA.hasPermission(user_id, "group.remove.staffmanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "staffmanager" and not ARMA.hasPermission(user_id, "group.remove.staffmanager") then
+        elseif selgroup == "Community Manager" and not ARMA.hasPermission(user_id, "group.remove.commanager") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "commanager" and not ARMA.hasPermission(user_id, "group.remove.commanager") then
+        elseif selgroup == "Head Admin" and not ARMA.hasPermission(user_id, "group.remove.headadmin") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "headadmin" and not ARMA.hasPermission(user_id, "group.remove.headadmin") then
-            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"}) 
-        elseif selgroup == "senioradmin" and not ARMA.hasPermission(user_id, "group.remove.senioradmin") then
+        elseif selgroup == "Senior Admin" and not ARMA.hasPermission(user_id, "group.remove.senioradmin") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "administrator" and not ARMA.hasPermission(user_id, "group.remove.administrator") then
+        elseif selgroup == "Admin" and not ARMA.hasPermission(user_id, "group.remove.administrator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "srmoderator" and not ARMA.hasPermission(user_id, "group.remove.srmoderator") then
+        elseif selgroup == "Senior Mod" and not ARMA.hasPermission(user_id, "group.remove.srmoderator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "moderator" and not ARMA.hasPermission(user_id, "group.remove.moderator") then
+        elseif selgroup == "Moderator" and not ARMA.hasPermission(user_id, "group.remove.moderator") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "supportteam" and not ARMA.hasPermission(user_id, "group.remove.supportteam") then
+        elseif selgroup == "Support Team" and not ARMA.hasPermission(user_id, "group.remove.supportteam") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "trialstaff" and not ARMA.hasPermission(user_id, "group.remove.trial") then
+        elseif selgroup == "Trial Staff" and not ARMA.hasPermission(user_id, "group.remove.trial") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "vip" and not ARMA.hasPermission(user_id, "group.remove.vip") then
-            ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
-        elseif selgroup == "pov" and not ARMA.hasGroup(perm, "group.remove.pov") then
+        elseif selgroup == "pov" and not ARMA.hasPermission(user_id, "group.remove.pov") then
             ARMAclient.notify(admin_temp, {"~r~You don't have permission to do that"})
         else
             ARMA.removeUserGroup(perm, selgroup)
