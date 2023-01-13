@@ -81,3 +81,72 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
 end)
+
+local o = false
+local function p(q)
+    local r = GetPlayerFromServerId(q)
+    if r == -1 then
+        return "CHAR_BLOCKED", nil
+    end
+    local s = GetPlayerPed(r)
+    if s == 0 then
+        return "CHAR_BLOCKED", nil
+    end
+    local t = RegisterPedheadshotTransparent(s)
+    local u = GetGameTimer()
+    while not IsPedheadshotReady(t) do
+        if GetGameTimer() - u > 2500 or not IsPedheadshotValid(t) then
+            UnregisterPedheadshot(t)
+            return "CHAR_BLOCKED", nil
+        end
+        Citizen.Wait(0)
+    end
+    return GetPedheadshotTxdString(t), t
+end
+-- v = their id
+-- w = their license type
+-- x = their first name
+-- y = their last name
+-- z = their date of birth
+-- A = ?
+-- B = license start
+-- C = license expire
+-- D = ?
+
+RegisterCommand('testid', function(source, args)
+    TriggerServerEvent('ARMA:askId')
+end)
+
+RegisterNetEvent("ARMA:showIdentity",function(v, w, x, y, z, A, B, C, D)
+    o = true
+    RequestStreamedTextureDict("driving_licence")
+    while not HasStreamedTextureDictLoaded("driving_licence") do
+        Citizen.Wait(0)
+    end
+    local E, F = p(v)
+    local G = w and "full" or "provisional"
+    local H = tARMA.getFontId("Akrobat-ExtraLight")
+    x = string.upper(x)
+    y = string.upper(y)
+    while o do
+        DrawSprite("driving_licence", G, 0.15, 0.5, 0.3, 0.3, 0.0, 255, 255, 255, 255)
+        DrawSprite(E, E, 0.05, 0.5, 0.07, 0.1, 0.0, 255, 255, 255, 255)
+        DrawAdvancedTextNoOutline(0.2, 0.413, 0.005, 0.0028, 0.25, x, 70, 70, 71, 255, H, 1)
+        DrawAdvancedTextNoOutline(0.2, 0.426, 0.005, 0.0028, 0.25, y, 70, 70, 71, 255, H, 1)
+        DrawAdvancedTextNoOutline(0.2,0.456,0.005,0.0028,0.25,string.format("%s ENGLAND", z),70,70,71,255,H,1)
+        DrawAdvancedTextNoOutline(0.2, 0.470, 0.005, 0.0028, 0.25, B, 70, 70, 71, 255, H, 1)
+        DrawAdvancedTextNoOutline(0.2, 0.484, 0.005, 0.0028, 0.25, C, 70, 70, 71, 255, H, 1)
+        DrawAdvancedTextNoOutline(0.2, 0.510, 0.005, 0.0028, 0.35, A, 70, 70, 71, 255, H, 1)
+        for I, J in pairs(D) do
+            DrawAdvancedTextNoOutline(0.2, 0.534 + I * 0.018, 0.005, 0.0028, 0.25, J, 70, 70, 71, 255, H, 1)
+        end
+        Citizen.Wait(0)
+    end
+    SetStreamedTextureDictAsNoLongerNeeded("driving_licence")
+    if F then
+        UnregisterPedheadshot(F)
+    end
+end)
+RegisterNetEvent("ARMA:hideIdentity",function()
+    o = false
+end)
