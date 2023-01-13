@@ -2,7 +2,6 @@ window.addEventListener("load", function() {
     errdiv = document.createElement("div");
 
     //init dynamic menu
-    var ogrpMenu = new Menu();
     var wprompt = new WPrompt();
     var requestmgr = new RequestManager();
     var announcemgr = new AnnounceManager();
@@ -15,40 +14,12 @@ window.addEventListener("load", function() {
         $.post("https://arma/request", JSON.stringify({ act: "response", id: id, ok: ok }));
     };
 
-    ogrpMenu.onClose = function() {
-        $.post("https://arma/menu", JSON.stringify({ act: "close", id: ogrpMenu.id }));
-    };
-
-    ogrpMenu.onValid = function(choice, mod) {
-        $.post("https://arma/menu", JSON.stringify({ act: "valid", id: ogrpMenu.id, choice: choice, mod: mod }));
-    };
-
-    //request config
-    $.post("https://arma/cfg", "");
-
-    //var current_menu = dynamic_menu;
-    var pbars = {}
     var divs = {}
 
-    //progress bar ticks (25fps)
-    setInterval(function() {
-        for (var k in pbars) {
-            pbars[k].frame(1 / 25.0 * 1000);
-        }
-
-    }, 1 / 25.0 * 1000);
 
     //MESSAGES
     window.addEventListener("message", function(evt) { //lua actions
         var data = evt.data;
-        if (data.act == "cfg") {
-            cfg = data.cfg
-        } else if (data.act == "open_menu") { //OPEN DYNAMIC MENU
-            ogrpMenu.open(data);
-            ogrpMenu.id = data.menudata.id;
-        } else if (data.act == "close_menu") { //CLOSE MENU
-            ogrpMenu.close();
-        }
         // copy to clipboard
         if (data.copytoboard) {
             var node = document.createElement('textarea');
@@ -67,29 +38,6 @@ window.addEventListener("load", function() {
         // open links
         else if (data.act == "openurl") {
             window.invokeNative('openUrl', data.url)
-        }
-        // PROGRESS BAR
-        else if (data.act == "set_pbar") {
-            var pbar = pbars[data.pbar.name];
-            if (pbar)
-                pbar.removeDom();
-
-            pbars[data.pbar.name] = new ProgressBar(data.pbar);
-            pbars[data.pbar.name].addDom();
-        } else if (data.act == "set_pbar_val") {
-            var pbar = pbars[data.name];
-            if (pbar)
-                pbar.setValue(data.value);
-        } else if (data.act == "set_pbar_text") {
-            var pbar = pbars[data.name];
-            if (pbar)
-                pbar.setText(data.text);
-        } else if (data.act == "remove_pbar") {
-            var pbar = pbars[data.name]
-            if (pbar) {
-                pbar.removeDom();
-                delete pbars[data.name];
-            }
         }
         // PROMPT
         else if (data.act == "prompt") {
@@ -148,12 +96,6 @@ window.addEventListener("load", function() {
 			else if (data.event == "requestDeny") {
 				requestmgr.respond(false);
 			}
-        }
-        if (data.openNUI == true) {
-            $(".headbag").css("display", "block");
-        }
-        if (data.openNUI == false) {
-            $(".headbag").css("display", "none");
         }
     });
 });

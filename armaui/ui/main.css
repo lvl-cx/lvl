@@ -376,7 +376,7 @@ body {
 
 @font-face {
     font-family: "Akrobat-Bold";
-    src: url("https://cdn.cmg.city/content/fonts/Akrobat-Bold.otf") format("opentype");
+    src: url("Akrobat-Bold.otf") format("opentype");
     font-weight: normal;
     font-style: normal; 
 }

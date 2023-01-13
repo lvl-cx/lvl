@@ -482,7 +482,7 @@ document.onreadystatechange = () => {
                 clearSelectedPerson()
                 pnc.searchPersonPageMessage = ""
                 for(u of item.user){
-                    console.log(JSON.stringify(u))
+                    //console.log(JSON.stringify(u))
                     pnc.searchedPersons.push({fName: u.firstname, warning_markers: u.warning_markers, points:u.points, licence: u.licence, lName:u.lastname, id: u.user_id, age: u.age, notes: u.notes, vehicles: u.vehicles, warrants: u.warrants, home: u.playerhome, phone: u.phone, isActive: false})
                 }
 

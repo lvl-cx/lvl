@@ -26,10 +26,10 @@ function WPrompt()
   this.opened = false;
 }
 
-WPrompt.prototype.open = function(title,text)
+WPrompt.prototype.open = function(title,text, type)
 {
   this.close(); 
-
+  this.type = type;
   this.div_title.innerHTML = title;
   this.div_area.value = text;
   this.opened = true;
@@ -46,7 +46,7 @@ WPrompt.prototype.close = function()
   if(this.opened){
     this.result = this.div_area.value;
     if(this.onClose)
-      this.onClose();
+      this.onClose(this.type);
 
     this.div_area.blur();
     this.opened = false;

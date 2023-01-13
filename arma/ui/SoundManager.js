@@ -149,24 +149,57 @@ const audio = [
 ]
 
 var audioPlayer = null;
-  
-window.addEventListener('message', function (event) {
-    if (findAudioToPlay(event.data.transactionType)) {
-      let audio = findAudioToPlay(event.data.transactionType)
-      if (audioPlayer != null) {
-        audioPlayer.pause();
+    var bankAudioPlayer = null;
+    // Listen for NUI Messages.
+    window.addEventListener('message', function (event) {
+      // Check for playSound transaction
+      if (event.data.PayloadType == "Panic") {
+        var Panics = [];
+        if (!Panics[event.data.Payload]) {
+          Panics[event.data.Payload] = new Audio("./sounds/panic.mp3");
+          Panics[event.data.Payload].volume = 0.08;
+          Panics[event.data.Payload].play();
+          Panics[event.data.Payload].addEventListener("ended", function () {
+            Panics[event.data.Payload] = null;
+          });
+        }
+        }
+        if (findAudioToPlay(event.data.transactionType)) {
+            let audio = findAudioToPlay(event.data.transactionType)
+            if (audioPlayer != null) {
+                audioPlayer.pause();
+            }
+            audioPlayer = new Audio("./sounds/" + audio.file);
+            audioPlayer.volume = audio.volume;
+			audioPlayer.play().then(null).catch((e) => {
+              //console.log("caught a fat e" + e);
+            })
+        }
+
+      if (event.data.transactionType == "bankalarm") {
+
+        if (bankAudioPlayer != null) {
+          bankAudioPlayer.pause();
+        }
+
+        bankAudioPlayer = new Audio("./sounds/bankalarm.ogg");
+        bankAudioPlayer.volume = 0.4;
+        bankAudioPlayer.play();
       }
-      audioPlayer = new Audio("./sounds/" + audio.file);
-      audioPlayer.volume = audio.volume;
-      audioPlayer.play();
-    }
-});
+      if (event.data.openNUI == true) {
+        $(".headbag").css("display", "block");
+      }
+      if (event.data.openNUI == false) {
+        $(".headbag").css("display", "none");
+      }
+
+    });
 
 function findAudioToPlay(name) {
     for (a of audio) {
-      if (a.name == name) {
-        return a
-      }
+        if (a.name == name) {
+            return a
+        }
     }
     return false
 }

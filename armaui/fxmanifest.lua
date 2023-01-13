@@ -16,6 +16,7 @@ client_scripts{
 -- client files
 files{
     "ui/*.ttf",
+    "ui/*.otf",
     "ui/*.woff",
     "ui/*.woff2",
     "ui/*.css",
