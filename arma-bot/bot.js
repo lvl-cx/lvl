@@ -54,7 +54,7 @@ if (settingsjson.settings.StatusEnabled) {
             else
                 onlinePD = result.length
         })
-        exports.arma.armabot('getUsersByPermission', ['nhs perm'], function(result) {
+        exports.arma.armabot('getUsersByPermission', ['nhs.onduty.permission'], function(result) {
             if (!result.length)
                 onlineNHS = 0
             else
