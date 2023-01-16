@@ -83,37 +83,37 @@ local tridentGroups = {
     ["Trident Command Clocked"] = true,
 }
 function getGroupInGroups(id, type)
-    if type == 'staff' then
+    if type == 'Staff' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if staffGroups[k] then 
                 return k
             end 
         end
-    elseif type == 'police' then
+    elseif type == 'Police' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if pdGroups[k] or tridentGroups[k] then 
                 return k
             end 
         end
-    elseif type == 'nhs' then
+    elseif type == 'NHS' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if nhsGroups[k] then 
                 return k
             end 
         end
-    elseif type == 'lfb' then
+    elseif type == 'LFB' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if lfbGroups[k] then 
                 return k
             end 
         end
-    elseif type == 'hmp' then
+    elseif type == 'HMP' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if hmpGroups[k] then 
                 return k
             end 
         end
-    elseif type == 'default' then
+    elseif type == 'Default' then
         for k,v in pairs(ARMA.getUserGroups(id)) do
             if defaultGroups[k] then 
                 return k
@@ -160,24 +160,24 @@ AddEventHandler('ARMA:getPlayerListData', function()
             local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
             local hours = math.floor(minutesPlayed/60)
             if ARMA.hasPermission(k, 'admin.tickets') then
-                staff[k] = {name = name, rank = getGroupInGroups(k, 'staff'), hours = hours}
+                staff[k] = {name = name, rank = getGroupInGroups(k, 'Staff'), hours = hours}
             end
             if ARMA.hasPermission(k, 'police.onduty.permission') and not ARMA.hasPermission(k, 'police.undercover') then
-                police[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'police'), ' Clocked', ''), hours = hours}
+                police[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'Police'), ' Clocked', ''), hours = hours}
             elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
-                nhs[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', ''), hours = hours}
+                nhs[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'NHS'), ' Clocked', ''), hours = hours}
             elseif ARMA.hasPermission(k, 'lfb.onduty.permission') then
-                lfb[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', ''), hours = hours}
+                lfb[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'LFB'), ' Clocked', ''), hours = hours}
             elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
-                hmp[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', ''), hours = hours}
+                hmp[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'HMP'), ' Clocked', ''), hours = hours}
             end
             if (not ARMA.hasPermission(k, "police.onduty.permission") or ARMA.hasPermission(k, 'police.undercover')) and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
-                civillians[k] = {name = name, rank = getGroupInGroups(k, 'default'), hours = hours}
+                civillians[k] = {name = name, rank = getGroupInGroups(k, 'Default'), hours = hours}
             end
         end
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
-    TriggerClientEvent('ARMA:gotJobTypes', source, nhsGroups, pdGroups, lfbGroups, hmpGroups, tridentGroups, npasGroups)
+    TriggerClientEvent('ARMA:gotJobTypes', source, nhsGroups, pdGroups, lfbGroups, hmpGroups, tridentGroups)
 end)
 
 
@@ -197,25 +197,25 @@ Citizen.CreateThread(function()
         for k,v in pairs(ARMA.getUsers()) do
             if ARMA.hasPermission(k, "police.onduty.permission") then
                 for a,b in pairs(paycheckscfg.metPoliceRanks) do
-                    if b[1] == string.gsub(getGroupInGroups(k, 'police'), ' Clocked', '') then
+                    if b[1] == string.gsub(getGroupInGroups(k, 'Police'), ' Clocked', '') then
                         paycheck(v, k, b[2])
                     end
                 end
             elseif ARMA.hasPermission(k, "nhs.onduty.permission") then
                 for a,b in pairs(paycheckscfg.nhsRanks) do
-                    if b[1] == string.gsub(getGroupInGroups(k, 'nhs'), ' Clocked', '') then
+                    if b[1] == string.gsub(getGroupInGroups(k, 'NHS'), ' Clocked', '') then
                         paycheck(v, k, b[2])
                     end
                 end
-            elseif ARMA.hasPermission(k, "lfb perm") then
+            elseif ARMA.hasPermission(k, "lfb.onduty.permission") then
                 for a,b in pairs(paycheckscfg.lfbRanks) do
-                    if b[1] == string.gsub(getGroupInGroups(k, 'lfb'), ' Clocked', '') then
+                    if b[1] == string.gsub(getGroupInGroups(k, 'LFB'), ' Clocked', '') then
                         paycheck(v, k, b[2])
                     end
                 end
             elseif ARMA.hasPermission(k, "prisonguard.onduty.permission") then
                 for a,b in pairs(paycheckscfg.hmpRanks) do
-                    if b[1] == string.gsub(getGroupInGroups(k, 'hmp'), ' Clocked', '') then
+                    if b[1] == string.gsub(getGroupInGroups(k, 'HMP'), ' Clocked', '') then
                         paycheck(v, k, b[2])
                     end
                 end
