@@ -24,7 +24,7 @@ RegisterNetEvent("ARMA:setPlayerSubscription")
 AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
-    if ARMA.hasGroup(user_id, 'Developer') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         ARMA.prompt(player,"Number of hours ","",function(player, hours)
             if tonumber(hours) and tonumber(hours) >= 0 then
                 if subtype == "Plus" then
