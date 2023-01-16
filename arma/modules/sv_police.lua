@@ -9,8 +9,8 @@ local choice_store_weapons = function(player, choice)
     local data = ARMA.getUserDataTable(user_id)
     ARMAclient.getWeapons(player,{},function(weapons)
       if not isStoring[player] then
-          isStoring[player] = true
           if ARMA.getInventoryWeight(user_id) <= 25 then
+            isStoring[player] = true
             ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
               for k,v in pairs(weapons) do
                 if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_SMOKEGRENADE' and k~= 'WEAPON_FLASHBANG' then
@@ -18,6 +18,9 @@ local choice_store_weapons = function(player, choice)
                   if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
                     for i,c in pairs(a.weapons) do
                       if i == k and c.class ~= 'Melee' then
+                        if v.ammo > 250 then
+                          v.ammo = 250
+                        end
                         ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
                       end   
                     end
@@ -29,6 +32,7 @@ local choice_store_weapons = function(player, choice)
               SetTimeout(3000,function()
                   isStoring[player] = nil 
               end)
+              ARMAclient.ClearWeapons(player,{})
             end)
           else
             ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
@@ -46,6 +50,7 @@ AddEventHandler("ARMA:forceStoreSingleWeapon",function(model)
         for k,v in pairs(weapons) do
           if k == model then
             RemoveWeaponFromPed(GetPlayerPed(source), k)
+            ARMAclient.removeWeapon(source,{k})
             ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
             if v.ammo > 0 then
               for i,c in pairs(a.weapons) do
@@ -469,8 +474,8 @@ RegisterCommand('wc', function(source, args)
       if nplayer ~= nil then
         ARMAclient.getPoliceCallsign(source, {}, function(callsign)
           ARMAclient.getPoliceRank(source, {}, function(rank)
-            ARMAclient.playAnim(source,{true,{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1},false})
-            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank.."\n~b~Name: ~w~"..GetPlayerName(source),"Metropolitan Police","Warrant Card",nil,nil})
+            ARMAclient.playAnim(source,{true,{{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1}},false})
+            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank.."\n~b~Name: ~w~"..GetPlayerName(source),"Metropolitan Police","Warrant Card",false,nil})
             TriggerClientEvent('ARMA:flashWarrantCard', source)
           end)
         end)
@@ -487,8 +492,8 @@ RegisterCommand('wca', function(source, args)
       if nplayer ~= nil then
         ARMAclient.getPoliceCallsign(source, {}, function(callsign)
           ARMAclient.getPoliceRank(source, {}, function(rank)
-            ARMAclient.playAnim(source,{true,{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1},false})
-            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank,"Metropolitan Police","Warrant Card",nil,nil})
+            ARMAclient.playAnim(source,{true,{{'paper_1_rcm_alt1-9', 'player_one_dual-9', 1}},false})
+            ARMAclient.notifyPicture(nplayer, {"polnotification","notification","~b~Callsign: ~w~"..callsign.."\n~b~Rank: ~w~"..rank,"Metropolitan Police","Warrant Card",false,nil})
             TriggerClientEvent('ARMA:flashWarrantCard', source)
           end)
         end)
