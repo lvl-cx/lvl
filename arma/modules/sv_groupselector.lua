@@ -138,6 +138,7 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
         end
         TriggerEvent('ARMA:clockedOnCreateRadio', source)
         TriggerClientEvent('ARMA:radiosClearAll', source)
+        TriggerClientEvent('ARMA:refreshGunStorePermissions', source)
         ARMA.updateCurrentPlayerInfo()
     end
 end)
