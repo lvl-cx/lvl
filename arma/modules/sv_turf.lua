@@ -136,7 +136,7 @@ AddEventHandler('ARMA:gangCaptureSuccess', function(turfname)
 					for K,V in pairs(gotGangs) do
 						for I,L in pairs(json.decode(V.gangmembers)) do
 							if tostring(user_id) == I then
-								TriggerClientEvent('chatMessage', -1, "^0The "..v.name.." trader has been captured by "..v.gangname..".", { 128, 128, 128 }, message, "alert")
+								TriggerClientEvent('chatMessage', -1, "^0The "..v.name.." trader has been captured by "..V.gangname..".", { 128, 128, 128 }, message, "alert")
 								for a,b in pairs(json.decode(V.gangmembers)) do
 									turfData[k].gangOwner = V.gangname
 									turfData[k].commission = V.commission
