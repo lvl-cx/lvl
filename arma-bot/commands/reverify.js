@@ -19,7 +19,7 @@ exports.runcmd = async(fivemexports, client, message, params) => {
         })
     }
     else{
-        fivemexports.ghmattimysql.execute("UPDATE `arma_verification` SET discord_id = ? WHERE user_id = ?", [params[1], params[0]], async (result) => {
+        fivemexports.ghmattimysql.execute("UPDATE `arma_verification` SET discord_id = ?, verified = 1 WHERE user_id = ?", [params[1], params[0]], async (result) => {
             if (result) {
                 let embed = {
                     "title": "Verify",

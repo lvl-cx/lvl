@@ -6,7 +6,7 @@ let descriptionText = ''
 
 exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'co [spawn code]')
+        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'gco [spawn code]')
     }
     let count = 0
     fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_vehicles` WHERE vehicle = ?", [params[0]], (result) => {

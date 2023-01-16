@@ -38,7 +38,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         }
         }
         else{
-            message.reply(`You have no rented vehicles.`)
+            message.reply(`ID ${owner} has no rented vehicles.`)
         }
     });
 }
