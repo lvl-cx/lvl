@@ -67,22 +67,36 @@ local webhooks = {
     ['ban-evaders'] = 'https://discord.com/api/webhooks/1053360388034547794/0xWb4TXG9CCJbybss9b5YalTSm1FMlyHgetGnGhV23KAieWUk7FmMI4_NS6Un3945tjO',
 }
 
-function tARMA.sendWebhook(webhook, name, message)
-    if webhooks[webhook] ~= nil then
-        PerformHttpRequest(webhooks[webhook], function(err, text, headers) 
-        end, "POST", json.encode({username = "ARMA Logs", avatar_url = 'https://cdn.discordapp.com/avatars/988120850546962502/50ca540f28908bf89c1f8af3bea62025.webp?size=2048', embeds = {
-            {
-                ["color"] = 16448403,
-                ["title"] = name,
-                ["description"] = message,
-                ["footer"] = {
-                    ["text"] = "ARMA - "..os.date("%c"),
-                    ["icon_url"] = "",
-                }
-        }
-        }}), { ["Content-Type"] = "application/json" })
-        Wait(1000)
+local webhookQueue = {}
+Citizen.CreateThread(function()
+    while true do
+        if next(webhookQueue) then
+            for k,v in pairs(webhookQueue) do
+                Citizen.Wait(100)
+                if webhooks[v.webhook] ~= nil then
+                    PerformHttpRequest(webhooks[v.webhook], function(err, text, headers) 
+                    end, "POST", json.encode({username = "ARMA Logs", avatar_url = 'https://cdn.discordapp.com/avatars/988120850546962502/50ca540f28908bf89c1f8af3bea62025.webp?size=2048', embeds = {
+                        {
+                            ["color"] = 16448403,
+                            ["title"] = v.name,
+                            ["description"] = v.message,
+                            ["footer"] = {
+                                ["text"] = "ARMA - "..v.time,
+                                ["icon_url"] = "",
+                            }
+                    }
+                    }}), { ["Content-Type"] = "application/json" })
+                end
+                webhookQueue[k] = nil
+            end
+        end
+        Citizen.Wait(0)
     end
+end)
+local webhookID = 1
+function tARMA.sendWebhook(webhook, name, message)
+    webhookID = webhookID + 1
+    webhookQueue[webhookID] = {webhook = webhook, name = name, message = message, time = os.date("%c")}
 end
 
 function ARMA.sendWebhook(webhook, name, message) -- used for other resources to send through webhook logs 
