@@ -103,6 +103,8 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
                 local cprChance = math.random(1,8)
                 if cprChance == 1 then
                     ARMAclient.RevivePlayer(playersrc, {})
+                    ARMAclient.notify(playersrc, {"~b~Your life has been saved."})
+                    ARMAclient.notify(source, {"~b~You have saved this Person's Life."})
                 else
                     ARMAclient.notify(source, {'~r~Failed to CPR.'})
                 end
