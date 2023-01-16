@@ -111,17 +111,23 @@ RegisterNetEvent('ARMA:FetchHouseInventory')
 AddEventHandler('ARMA:FetchHouseInventory', function(nameHouse)
     local source = source
     local user_id = ARMA.getUserId(source)
-    inHouse[user_id] = nameHouse
-    local homeformat = "chest:u" .. user_id .. "home" ..inHouse[user_id]
-    ARMA.getSData(homeformat, function(cdata)
-        local processedChest = {};
-        cdata = json.decode(cdata) or {}
-        local FormattedInventoryData = {}
-        for i, v in pairs(cdata) do
-            FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
+    getUserByAddress(nameHouse, 1, function(huser_id)
+        if huser_id == user_id then
+            inHouse[user_id] = nameHouse
+            local homeformat = "chest:u" .. user_id .. "home" ..inHouse[user_id]
+            ARMA.getSData(homeformat, function(cdata)
+                local processedChest = {};
+                cdata = json.decode(cdata) or {}
+                local FormattedInventoryData = {}
+                for i, v in pairs(cdata) do
+                    FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
+                end
+                local maxVehKg = Housing.chestsize[inHouse[user_id]] or 500
+                TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(cdata), maxVehKg)
+            end)
+        else
+            ARMAclient.notify(player,{"~r~You do not own this house!"})
         end
-        local maxVehKg = Housing.chestsize[inHouse[user_id]] or 500
-        TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(cdata), maxVehKg)
     end)
 end)
 
@@ -148,7 +154,7 @@ AddEventHandler('ARMA:searchPlayer', function(playersrc)
                             FormattedSecondaryInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
                         end
                         if ARMA.getMoney(their_id) > 0 then
-                            FormattedSecondaryInventoryData['cash'] = {amount = ARMA.getMoney(their_id), ItemName = 'Cash'}
+                            FormattedSecondaryInventoryData['cash'] = {amount = ARMA.getMoney(their_id), ItemName = 'Cash', Weight = 0.00}
                         end
                         TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedSecondaryInventoryData, ARMA.computeItemsWeight(their_data.inventory), 200)
                     end
@@ -724,29 +730,31 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                     ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
                 end
             end)
-        elseif inventoryType == "LootBag" then    
-            if LootBagEntities[inventoryInfo].Items[itemId] then 
-                local weightCalculation = ARMA.getInventoryWeight(UserId)+(ARMA.getItemWeight(itemId) *  LootBagEntities[inventoryInfo].Items[itemId].amount)
-                if weightCalculation == nil then return end
-                if weightCalculation <= ARMA.getInventoryMaxWeight(UserId) then
-                    if  LootBagEntities[inventoryInfo].Items[itemId].amount <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
-                        ARMA.giveInventoryItem(UserId, itemId, LootBagEntities[inventoryInfo].Items[itemId].amount, true)
-                        LootBagEntities[inventoryInfo].Items[itemId] = nil;
-                        local FormattedInventoryData = {}
-                        for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
-                            FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
-                        end
-                        local maxVehKg = 200
-                        TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(LootBagEntities[inventoryInfo].Items), maxVehKg)                
-                        TriggerEvent('ARMA:RefreshInventory', source)
-                        if not next(LootBagEntities[inventoryInfo].Items) then
-                            CloseInv(source)
-                        end
+        elseif inventoryType == "LootBag" then
+            if itemId ~= nil then    
+                if LootBagEntities[inventoryInfo].Items[itemId] then 
+                    local weightCalculation = ARMA.getInventoryWeight(UserId)+(ARMA.getItemWeight(itemId) *  LootBagEntities[inventoryInfo].Items[itemId].amount)
+                    if weightCalculation == nil then return end
+                    if weightCalculation <= ARMA.getInventoryMaxWeight(UserId) then
+                        if  LootBagEntities[inventoryInfo].Items[itemId].amount <= LootBagEntities[inventoryInfo].Items[itemId].amount then 
+                            ARMA.giveInventoryItem(UserId, itemId, LootBagEntities[inventoryInfo].Items[itemId].amount, true)
+                            LootBagEntities[inventoryInfo].Items[itemId] = nil;
+                            local FormattedInventoryData = {}
+                            for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
+                                FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
+                            end
+                            local maxVehKg = 200
+                            TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(LootBagEntities[inventoryInfo].Items), maxVehKg)                
+                            TriggerEvent('ARMA:RefreshInventory', source)
+                            if not next(LootBagEntities[inventoryInfo].Items) then
+                                CloseInv(source)
+                            end
+                        else 
+                            ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
+                        end 
                     else 
-                        ARMAclient.notify(source, {'~r~You are trying to move more then there actually is!'})
-                    end 
-                else 
-                    ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
+                        ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
+                    end
                 end
             end
         elseif inventoryType == "Housing" then

@@ -201,9 +201,6 @@ end)
 RegisterServerEvent("ARMA:askId")
 AddEventHandler("ARMA:askId", function(nplayer)
   local player = source
-  if ARMA.getUserId(player) == 1 then
-    nplayer = source
-  end
   local nuser_id = ARMA.getUserId(nplayer)
   if nuser_id ~= nil then
     ARMAclient.notify(player,{'~g~Request sent.'})
