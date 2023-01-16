@@ -232,39 +232,6 @@ AddEventHandler('ARMA:FetchCars', function(type)
     end
 end)
 
-RegisterNetEvent('ARMA:BuyVehicle')
-AddEventHandler('ARMA:BuyVehicle', function(vehicle)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    for i, v in pairs(vehicle_groups) do
-        local config = vehicle_groups[i]._config
-        local perm = config.permissions or nil
-        if perm then
-            for i, v in pairs(perm) do
-                if not ARMA.hasPermission(user_id, v) then
-                    break
-                end
-            end
-        end
-        for a, z in pairs(v) do
-            if a ~= "_config" and a == vehicle then
-                if ARMA.tryFullPayment(user_id,z[2]) then 
-                    ARMAclient.notify(source,{'~g~You have purchased: ' .. z[1] .. ' for: £' .. z[2]})
-                    ARMA.getUserIdentity(user_id, function(identity)					
-                        MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
-                    end)
-                    return 
-                else 
-                    ARMAclient.notify(source,{'~r~You do not have enough money to purchase this vehicle! It costs: £' .. z[2]})
-                    TriggerClientEvent('ARMA:CloseGarage', source)
-                    return 
-                end
-            end
-        end
-    end
-    return ARMAclient.notify(source,{'~r~An error has occured please try again later.'})
-end)
-
 RegisterNetEvent('ARMA:CrushVehicle')
 AddEventHandler('ARMA:CrushVehicle', function(vehicle)
     local source = source
