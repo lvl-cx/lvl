@@ -84,6 +84,11 @@ AddEventHandler("ARMA:dvsaBucket", function(bool)
     local user_id = ARMA.getUserId(source)
     if bool then
         if currenttests[user_id] ~= nil then
+            currenttests[user_id] = nil
+        end
+        tARMA.setBucket(source, 0)
+    elseif not bool then
+        if currenttests[user_id] ~= nil then
             ARMAclient.notify(source,{'~r~You already have a test in progress.'})
             return
         end
@@ -100,11 +105,6 @@ AddEventHandler("ARMA:dvsaBucket", function(bool)
             ["bucket"] = highestcount
         }
         tARMA.setBucket(source, currenttests[user_id].bucket)
-    elseif not bool then
-        if currenttests[user_id] ~= nil then
-            currenttests[user_id] = nil
-        end
-        tARMA.setBucket(source, 0)
     end
 end)
 
