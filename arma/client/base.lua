@@ -84,9 +84,9 @@ function tARMA.teleport2(l,m)
   local k=PlayerPedId()
   NetworkFadeOutEntity(k,true,false)
   if tARMA.getPlayerVehicle()==0 or not m then 
-      SetEntityCoords(tARMA.getPlayerPed(),l.x,l.y,l.z,1,0,0,1)
+    SetEntityCoords(tARMA.getPlayerPed(),l.x,l.y,l.z,1,0,0,1)
   else 
-      SetEntityCoords(tARMA.getPlayerVehicle(),l.x,l.y,l.z,1,0,0,1)
+    SetEntityCoords(tARMA.getPlayerVehicle(),l.x,l.y,l.z,1,0,0,1)
   end
   Wait(500)
   NetworkFadeInEntity(k,0)
@@ -201,6 +201,29 @@ function tARMA.getNearestPlayer(radius)
   end
 
   return p
+end
+
+function tARMA.getNearestPlayersFromPosition(coords, radius)
+  local r = {}
+
+  local ped = GetPlayerPed(i)
+  local pid = PlayerId()
+  local px,py,pz = table.unpack(coords)
+
+  for k,v in pairs(players) do
+    local player = GetPlayerFromServerId(k)
+
+    if v and player ~= pid and NetworkIsPlayerConnected(player) then
+      local oped = GetPlayerPed(player)
+      local x,y,z = table.unpack(GetEntityCoords(oped,true))
+      local distance = GetDistanceBetweenCoords(x,y,z,px,py,pz,true)
+      if distance <= radius then
+        r[GetPlayerServerId(player)] = distance
+      end
+    end
+  end
+
+  return r
 end
 
 function tARMA.notify(msg)
