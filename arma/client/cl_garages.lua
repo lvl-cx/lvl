@@ -191,10 +191,10 @@ local function ar(as)
     SetBlipAsShortRange(at, true)
 end
 
-local fuel_level
+local fuelLevels = {}
 RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, plate, fuel)
     X()
-    fuel_level = fuel
+    fuelLevels[E] = fuel
     if GetVehiclePedIsIn(tARMA.getPlayerPed(), false) == d then
         DeleteEntity(d)
     end
@@ -235,7 +235,7 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, pl
                 DecorSetInt(as, "vRP_vmodel", E)
                 SetVehicleNumberPlateText(as, plate)
                 globalVehicleOwnership[E] = {E, as}
-                setVehicleFuel(as, fuel_level)
+                setVehicleFuel(as, fuelLevels[E])
                 while tARMA.getPlayerVehicle() ~= as do
                     Wait(100)
                 end
@@ -252,7 +252,7 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, pl
             DecorSetInt(as, "vRP_vmodel", E)
             SetVehicleNumberPlateText(as, plate)
             globalVehicleOwnership[E] = {E, as}
-            setVehicleFuel(as, fuel_level)
+            setVehicleFuel(as, fuelLevels[E])
             TriggerServerEvent("LSC:applyModifications", E, as)
             TriggerServerEvent("ARMA:PayVehicleTax")
             TriggerServerEvent("ARMA:spawnVehicleCallback", av, VehToNet(as))
@@ -276,15 +276,16 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, pl
                 ResetEntityAlpha(as)
             end)
         end
+        SetModelAsNoLongerNeeded(ak)
         while DoesEntityExist(as) do
             local aI = GetFuel(as)
-            if fuel_level ~= aI then
+            if fuelLevels[E] ~= aI then
                 TriggerServerEvent("ARMA:updateFuel", E, math.floor(aI * 1000) / 1000)
-                fuel_level = aI
+                fuelLevels[E] = aI
                 SetEntityInvincible(as, false)
                 SetEntityCanBeDamaged(as, true)
             end
-            Wait(10000)
+            Wait(60000)
         end
     else
         tARMA.notify("This vehicle is already out.")
