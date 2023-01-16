@@ -40,7 +40,7 @@ end)
 
 RegisterNetEvent('ARMA:purchaseCarDealerVehicle')
 AddEventHandler('ARMA:purchaseCarDealerVehicle', function(vehicleclass, vehicle)
-    local player = source
+    local source = source
     local user_id = ARMA.getUserId(source)
     local playerName = GetPlayerName(source)   
     for k,v in pairs(cfg.simeonsCategories[vehicleclass]) do
@@ -49,17 +49,18 @@ AddEventHandler('ARMA:purchaseCarDealerVehicle', function(vehicleclass, vehicle)
             local vehicle_price = v[2]
             MySQL.query("ARMA/get_vehicle", {user_id = user_id, vehicle = vehicle}, function(pvehicle, affected)
                 if #pvehicle > 0 then
-                    ARMAclient.notify(player,{"~r~Vehicle already owned."})
+                    ARMAclient.notify(source,{"~r~Vehicle already owned."})
                 else
                     if ARMA.tryFullPayment(user_id, vehicle_price) then
-                        ARMA.getUserIdentity(user_id, function(identity)
-                            MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = "P "..identity.registration})
+                        ARMAclient.generateUUID(source, {"plate", 5, "alphanumeric"}, function(uuid)
+                            local uuid = string.upper(uuid)
+                            MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = vehicle, registration = 'P'..uuid})
+                            ARMAclient.notify(source,{"~g~You paid £"..vehicle_price.." for "..vehicle_name.."."})
+                            TriggerClientEvent("arma:PlaySound", source, 1)
                         end)
-                        ARMAclient.notify(player,{"~g~You paid £"..vehicle_price.." for "..vehicle_name.."."})
-                        TriggerClientEvent("arma:PlaySound", player, 1)
                     else
-                        ARMAclient.notify(player,{"~r~Not enough money."})
-                        TriggerClientEvent("arma:PlaySound", player, 2)
+                        ARMAclient.notify(source,{"~r~Not enough money."})
+                        TriggerClientEvent("arma:PlaySound", source, 2)
                     end
                 end
             end)
