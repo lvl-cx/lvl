@@ -31,8 +31,6 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                         TriggerClientEvent('ARMA:setDailyRewardInfo', source, streak, x,y)
                         return
                     end)
-                else
-
                 end
             end
         end)
@@ -51,11 +49,13 @@ AddEventHandler("ARMA:claimNextLoginReward", function()
         end
         for k,v in pairs(cfg.rewards) do
             if v.day == streak then
-                MySQL.execute("dailyrewards/set_reward_streak", {user_id = user_id, streak = streak})
-                MySQL.execute("dailyrewards/set_reward_time", {user_id = user_id, last_reward = os.time()})
                 ARMA.giveBankMoney(user_id, v.amount)
-                return
+            else
+                ARMA.giveBankMoney(user_id, 150000)
             end
+            MySQL.execute("dailyrewards/set_reward_streak", {user_id = user_id, streak = streak})
+            MySQL.execute("dailyrewards/set_reward_time", {user_id = user_id, last_reward = os.time()})
+            return
         end
     end)
 end)
