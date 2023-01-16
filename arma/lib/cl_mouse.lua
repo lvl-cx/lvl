@@ -62,7 +62,7 @@ end)
 
 
 function func_disableGuiControls()
-    if inGUIARMA or inVehDebug then
+    if inGUIARMA then
         DisableControlAction(0, 1, true)
         DisableControlAction(0, 2, true)
         DisableControlAction(0, 25, true)
@@ -80,4 +80,25 @@ function func_disableGuiControls()
         DisableControlAction(0, 16, true)
         DisableControlAction(0, 17, true)
     end
+end
+
+function GetArea(f, h, j, k)
+    local l = f - j / 2
+    local g = f + j / 2
+    local m = h - k / 2
+    local i = h + k / 2
+    return l, g, m, i
+end
+Citizen.CreateThread(function()
+    while not tARMA.createThreadOnTick do
+        Wait(0)
+    end
+    tARMA.createThreadOnTick(func_disableGuiControls)
+end)
+function GetArea(f, h, j, k)
+    local l = f - j / 2
+    local g = f + j / 2
+    local m = h - k / 2
+    local i = h + k / 2
+    return l, g, m, i
 end
