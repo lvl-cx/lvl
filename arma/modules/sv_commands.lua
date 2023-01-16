@@ -40,8 +40,8 @@ RegisterCommand("p", function(source,args, rawCommand)
     local message = table.concat(args, " ")
     if ARMA.hasPermission(user_id, "police.onduty.permission") then
         local callsign = ""
-        if getCallsign('MPD', source, user_id, 'police') then
-            callsign = "["..getCallsign('MPD', source, user_id, 'police').."]"
+        if getCallsign('Police', source, user_id, 'Police') then
+            callsign = "["..getCallsign('Police', source, user_id, 'Police').."]"
         end
         local playerName =  "^4Police Chat | "..callsign.." "..GetPlayerName(source)..": "
         for k, v in pairs(ARMA.getUsers({})) do
