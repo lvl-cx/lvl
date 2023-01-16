@@ -29,7 +29,7 @@ local BootCar = nil
 local VehTypeC = nil
 local VehTypeA = nil
 local IsLootBagOpening = false
-local inventoryType = nil
+inventoryType = nil
 local LootBagCrouchLoop = false
 Citizen.CreateThread(function()
     while true do
@@ -76,12 +76,6 @@ function tARMA.getSpaceInSecondChest()
         return e - m
     end
 end
-RegisterNetEvent("ARMA:OpenHomeStorage")
-AddEventHandler("ARMA:OpenHomeStorage", function(houseName)
-    TriggerServerEvent('ARMA:FetchPersonalInventory')
-    inventoryType = 'Housing'
-    TriggerServerEvent('ARMA:FetchHouseInventory', houseName)
-end)
 RegisterNetEvent("ARMA:FetchPersonalInventory",function(inventory, weight, maxWeight)
     ARMAItemList = inventory
     currentInventoryWeight = weight
@@ -633,16 +627,22 @@ Citizen.CreateThread(function()
     end
 end)
 
+function LoadAnimDict(dict)
+    while (not HasAnimDictLoaded(dict)) do
+      RequestAnimDict(dict)
+      Citizen.Wait(5)
+    end
+end
 
 RegisterNetEvent('ARMA:InventoryOpen')
 AddEventHandler('ARMA:InventoryOpen', function(toggle, lootbag, bagid)
     IsLootBagOpening = lootbag
     LootBagIDNew = bagid
     if IsLootBagOpening then
-        tARMA.loadAnimDict("amb@medic@standing@kneel@base")
-        tARMA.loadAnimDict("anim@gangops@facility@servers@bodysearch@")
-        TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base", "base", 5.0, 1.0, -1, 48, 0, 0, 0, 0)
-        TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@", "player_search", 5.0, 1.0, -1, 48, 0, 0, 0, 0)
+        LoadAnimDict('amb@medic@standing@kneel@base')
+        LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+        TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+        TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
     end
     if toggle then
         drawInventoryUI = true

@@ -87,11 +87,14 @@ Citizen.CreateThread(function()
                 if isInArea(v.chest_point, 0.8) and tARMA.isInHouse() then
                     alert("~y~Press ~INPUT_VEH_HORN~ To Open House Chest!")
                     if IsControlJustPressed(0, 51) then
-                        TriggerServerEvent("ARMAHousing:OpenChest", currentHome)
+                        TriggerServerEvent('ARMA:FetchPersonalInventory')
+                        inventoryType = 'Housing'
+                        TriggerServerEvent('ARMA:FetchHouseInventory', currentHome)
                     end
                 end
                 -- Wardrobe
                 if tARMA.isInHouse() then
+                    --tARMA.addMarker(v.wardrobe_point.x,v.wardrobe_point.y,v.wardrobe_point.z,0.6,0.6,0.6,10,255,81,170,50,9,false,false,true,"dp_clothing","top",90.0,90.0,0.0)
                     DrawMarker(9, v.wardrobe_point, 0.0, 0.0, 0.0, 90.0, 0.0, 0.0, 0.5, 0.5, 0.5, 0, 0, 255, 60, false, true, 2, false, "clothing", "clothing", false)
                 end
                 if isInArea(v.wardrobe_point, 0.8) and isInWardrobeMenu == false and tARMA.isInHouse() then

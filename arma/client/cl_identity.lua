@@ -113,10 +113,6 @@ end
 -- C = license expire
 -- D = ?
 
-RegisterCommand('testid', function(source, args)
-    TriggerServerEvent('ARMA:askId')
-end)
-
 RegisterNetEvent("ARMA:showIdentity",function(v, w, x, y, z, A, B, C, D)
     o = true
     RequestStreamedTextureDict("driving_licence")
