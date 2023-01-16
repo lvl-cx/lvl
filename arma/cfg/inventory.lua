@@ -18,6 +18,8 @@ cfg.vehicle_chest_weights = {
     ["pdcustomx6m"] = 100,
     ["RSQR8"] = 100,
     ["rsq8"] = 100,
+    ["abhawk"] = 100,
+    ["RSQ8offroad"] = 100,
 }
 
 return cfg
