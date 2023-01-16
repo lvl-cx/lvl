@@ -1,7 +1,7 @@
 RegisterCommand('restartserver', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasGroup(user_id, 'Founder') or ARMA.hasGroup(user_id, 'Developer') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         if args[1] ~= nil then
             timeLeft = args[1]
             TriggerClientEvent('ARMA:announceRestart', -1, tonumber(timeLeft), false)
