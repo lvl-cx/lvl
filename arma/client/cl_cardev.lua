@@ -92,17 +92,7 @@ RageUI.CreateWhile(1.0, true, function()
                                 local l = tARMA.loadModel(k)
                                 TriggerServerEvent("ARMA:logVehicleSpawn", k, "/cardev")
                                 local m = tARMA.getPlayerCoords()
-                                local n =
-                                    tARMA.spawnVehicle(
-                                    l,
-                                    m.x,
-                                    m.y,
-                                    m.z,
-                                    GetEntityHeading(tARMA.getPlayerPed()),
-                                    true,
-                                    true,
-                                    true
-                                )
+                                local n = tARMA.spawnVehicle(l,m.x,m.y,m.z,GetEntityHeading(tARMA.getPlayerPed()),true,true,true)
                                 DecorSetInt(n, "ARMAACVeh", 955)
                                 SetVehicleOnGroundProperly(n)
                                 SetEntityInvincible(n, false)
@@ -173,7 +163,7 @@ RageUI.CreateWhile(1.0, true, function()
                 RageUI.List("Teleport",c,e,nil,{},true,function(h, i, j, s)
                     e = s
                     if j then
-                        tARMA.teleport(d[e], true)
+                        tARMA.teleport2(d[e], true)
                     end
                 end,function()end)
                 RageUI.ButtonWithStyle("Cycle through seats","",{RightLabel = "→→→"},true,function(h, i, j)
@@ -266,13 +256,13 @@ RageUI.CreateWhile(1.0, true, function()
                     if DoesExtraExist(r, w) then
                         y = true
                         if IsVehicleExtraTurnedOn(r, w) then
-                            RageUI.Button("Disable Extra " .. w,nil,{RightLabel = tostring(w)},function(h, i, j)
+                            RageUI.Button("Disable Extra " .. w,nil,{RightLabel = tostring(w)},true,function(h, i, j)
                                 if j then
                                     SetVehicleExtra(r, w, true)
                                 end
                             end)
                         else
-                            RageUI.Button("Enable Extra " .. w,nil,{RightLabel = tostring(w)},function(h, i, j)
+                            RageUI.Button("Enable Extra " .. w,nil,{RightLabel = tostring(w)},true,function(h, i, j)
                                 if j then
                                     SetVehicleExtra(r, w, false)
                                     TriggerEvent("ARMA:staffFixVehicle")
@@ -287,10 +277,10 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-    if RageUI.Visible(RMenu:Get('cardev', 'extras')) then
+    if RageUI.Visible(RMenu:Get('cardev', 'colours')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for z, A in pairs(g) do
-                RageUI.Button(A.name,nil,true,function(h, i, j)
+                RageUI.Button(A.name,nil,{},true,function(h, i, j)
                     if j then
                         SetVehicleColours(tARMA.getPlayerVehicle(), A.colorindex, A.colorindex)
                     end
@@ -696,7 +686,7 @@ end
 local function ac(ad)
     J = ad
     setCursor(ad and 1 or 0)
-    inGUICMG = ad
+    inGUIARMA = ad
 end
 local function ae()
     if not b or tARMA.getPlayerBucket() ~= 333 then
