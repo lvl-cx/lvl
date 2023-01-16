@@ -15,13 +15,9 @@ Citizen.CreateThread(function()
 	PerformInitialisation()
 	while true do
 		CurrentTime = GetGameTimer()
-
 		ProcessCurrentVehicle()
-
 		CheckVehicleStates()
-
 		ProcessVehicleLights()
-		
 		Citizen.Wait(0)
 	end
 end)
@@ -80,7 +76,7 @@ function PerformInitialisation()
 end
 
 function WriteLoadError(name, message)
-	print(string.format("[ARMA ELS] Unable to load VCF for %s. %s.", name, message))
+	--print(string.format("[ARMA ELS] Unable to load VCF for %s. %s.", name, message))
 end
 
 function ProcessCurrentVehicle()
