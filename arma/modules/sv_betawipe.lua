@@ -16,6 +16,9 @@ RegisterCommand("betawipe", function(source, args)
                             if jsoninv["invcap"] then 
                                 jsoninv["invcap"] = 30
                             end
+                            if jsoninv["groups"] then 
+                                jsoninv["groups"] = {}
+                            end
                             jsoninv["health"] = 200
                             jsoninv["armour"] = 0
                             print('Reset Inventory, Weapons, Invcap, Health and Armour for PermID: ' .. rows[i].user_id..'.')
@@ -100,16 +103,6 @@ RegisterCommand("betawipe", function(source, args)
                     if v.user_id ~= 1 and v.user_id ~= 2 and v.user_id ~= 3 and (v.vehicle == 'm2varis' or v.vehicle == 'ventsraid' or v.vehicle == 'fordconnect') then
                         print('Deleted vehicle: ' .. v.vehicle .. ' from PermID: ' .. v.user_id)
                         exports["ghmattimysql"]:execute("DELETE FROM arma_user_vehicles WHERE user_id = @user_id and vehicle = @vehicle", {user_id = v.user_id, vehicle = v.vehicle})
-                    end
-                end
-            end
-        end)
-        Wait(5000)
-        exports["ghmattimysql"]:execute("SELECT * FROM arma_weapon_whitelists", {}, function(rows, affected)
-            if #rows > 0 then
-                for k,v in pairs(rows) do
-                    if v.id ~= 1 then
-                        exports["ghmattimysql"]:execute("DELETE FROM arma_weapon_whitelists WHERE user_id = @user_id", {user_id = v.user_id})
                     end
                 end
             end
