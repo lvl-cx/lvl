@@ -4,23 +4,40 @@ const settingsjson = require(resourcePath + '/settings.js')
 
 exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'ch [permid]')
-    }
-    fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [params[0]], (result) => {
-        if (result.length > 0) {
-            let embed = {
-                "description": `**${(JSON.parse(result[0].dvalue).PlayerTime/60).toFixed(2)}** hours`,
-                "color": settingsjson.settings.botColour,
+        fivemexports.ghmattimysql.execute("SELECT user_id FROM `arma_verification` WHERE discord_id = ?", [message.author.id], (discord) => {
+            if (discord.length > 0) {
+                fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [discord[0].user_id], (result) => {
+                    if (result.length > 0) {
+                        let embed = {
+                            "description": `**${(JSON.parse(result[0].dvalue).PlayerTime/60).toFixed(2)}** hours`,
+                            "color": settingsjson.settings.botColour,
+                        }
+                        message.reply({ embed })
+                    } else {
+                        message.reply('No hours for this user.')
+                    }
+                });
+            } else {
+                message.reply('No Perm ID linked to your discord.')
             }
-            message.channel.send({ embed })
-        } else {
-            message.reply('No hours for this user.')
-        }
-    });
+        });
+    } else {
+        fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [params[0]], (result) => {
+            if (result.length > 0) {
+                let embed = {
+                    "description": `**${(JSON.parse(result[0].dvalue).PlayerTime/60).toFixed(2)}** hours`,
+                    "color": settingsjson.settings.botColour,
+                }
+                message.reply({ embed })
+            } else {
+                message.reply('No hours for this user.')
+            }
+        });
+    }
 }
 
 exports.conf = {
     name: "ch",
-    perm: 1,
+    perm: 0,
     guild: "975490533344559154"
 }
