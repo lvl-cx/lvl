@@ -23,13 +23,13 @@ local actypes = {
 
 RegisterServerEvent("ARMA:acType1")
 AddEventHandler("ARMA:acType1", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
     if not ARMA.hasPermission(user_id, "admin.noclip") then -- give this group to users you do want getting banned for No-Clipping
-        if not table.includes(carrying, player) then
+        if not table.includes(carrying, source) then
             Wait(500)
-            TriggerEvent("ARMA:acBan", user_id, 1, name, player)
+            TriggerEvent("ARMA:acBan", user_id, 1, name, source)
         end
     end
 end)
@@ -47,12 +47,12 @@ end
 
 RegisterServerEvent("ARMA:acType2") -- Player Spawned Weapon!
 AddEventHandler("ARMA:acType2", function(theweapon)
+    local source = source
 	local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     if theweapon ~= 'GADGET_PARACHUTE' then
-        TriggerEvent("ARMA:acBan", user_id, 2, name, player, theweapon)
+        TriggerEvent("ARMA:acBan", user_id, 2, name, source, theweapon)
     end
 end)
 
@@ -62,15 +62,15 @@ local BlockedExplosions = {--0,
 5, --25, 
 32, 33, 35, 35, 36, 37, 38, 45}
 AddEventHandler('explosionEvent', function(source, ev)
+    local source = source
     local user_id = ARMA.getUserId(source)
-    local player = ARMA.getUserSource(user_id)
     local name = GetPlayerName(source)
     for k, v in ipairs(BlockedExplosions) do 
         if ev.explosionType == v then
             ev.damagescale = 0.0
             CancelEvent()
             Wait(500)
-            TriggerEvent("ARMA:acBan", user_id, 3, name, player, 'Explosion Type: '..ev.explosionType)
+            TriggerEvent("ARMA:acBan", user_id, 3, name, source, 'Explosion Type: '..ev.explosionType)
         end
     end
 end)
@@ -99,11 +99,11 @@ local BlacklistedEvents = {
 for i, eventName in ipairs(BlacklistedEvents) do
     RegisterNetEvent(eventName)
     AddEventHandler(eventName, function()
+        local source = source
         local user_id = ARMA.getUserId(source)
-        local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
         Wait(500)
-        TriggerEvent("ARMA:acBan", user_id, 4, name, player, 'Event: '..eventName)
+        TriggerEvent("ARMA:acBan", user_id, 4, name, source, 'Event: '..eventName)
     end)
 end
 
@@ -111,123 +111,120 @@ AddEventHandler('removeWeaponEvent', function(pedid, weaponType)
     CancelEvent()
     local source = pedid
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id) 
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 5, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 5, name, source)
 end)
 
 AddEventHandler("giveWeaponEvent", function(source)
     CancelEvent()
     local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 5, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 5, name, source)
 end)
 
 AddEventHandler("removeAllWeaponsEvent", function(source)
     CancelEvent()
     local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 5, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 5, name, plasourceyer)
 end)
 
 RegisterServerEvent("ARMA:acType6")
 AddEventHandler("ARMA:acType6", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 6, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 6, name, source)
 end)
 
 RegisterServerEvent("ARMA:acType7")
 AddEventHandler("ARMA:acType7", function(modmenu)
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 7, name, player, modmenu)
+    TriggerEvent("ARMA:acBan", user_id, 7, name, source, modmenu)
 end)
 
 RegisterServerEvent("ARMA:acType8")
 AddEventHandler("ARMA:acType8", function(extra)
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 8, name, player, extra)
+    TriggerEvent("ARMA:acBan", user_id, 8, name, source, extra)
 end)
 
 RegisterServerEvent("ARMA:acType9")
 AddEventHandler("ARMA:acType9", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 9, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 9, name, source)
 end)
 
 RegisterServerEvent("ARMA:acType10")
 AddEventHandler("ARMA:acType10", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 10, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 10, name, source)
 end)
 
 RegisterServerEvent("ARMA:acType11")
 AddEventHandler("ARMA:acType11", function(extra)
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 11, name, player, extra)
+    TriggerEvent("ARMA:acBan", user_id, 11, name, source, extra)
 end)
 
 RegisterServerEvent("ARMA:acType12")
 AddEventHandler("ARMA:acType12", function(extra)
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 12, name, player, extra)
+    TriggerEvent("ARMA:acBan", user_id, 12, name, source, extra)
 end)
 
 RegisterServerEvent("ARMA:acType13")
 AddEventHandler("ARMA:acType13", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 13, name, player)
+    TriggerEvent("ARMA:acBan", user_id, 13, name, source)
 end)
 
 RegisterServerEvent("ARMA:acType14")
 AddEventHandler("ARMA:acType14", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
-    --TriggerEvent("ARMA:acBan", user_id, 14, name, player)
+    --TriggerEvent("ARMA:acBan", user_id, 14, name, source)
 end)
 
 local godmodeVid = false
 RegisterServerEvent("ARMA:acType15")
 AddEventHandler("ARMA:acType15", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     Wait(500)
     if not godmodeVid then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
-        Wait(30000)
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", source, tARMA.getWebhook('anticheat'))
+        Wait(25000)
         godmodeVid = true
     end
     godmodeVid = false
@@ -238,8 +235,8 @@ end)
 
 RegisterServerEvent("ARMA:failedKeepAlive")
 AddEventHandler("ARMA:failedKeepAlive", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
-	local player = ARMA.getUserSource(user_id)
 	local name = GetPlayerName(source)
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
 end)
@@ -262,7 +259,7 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
             end
             gettingVideo = true
             TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
-            Wait(30000)
+            Wait(25000)
             gettingVideo = false
             tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
             TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
