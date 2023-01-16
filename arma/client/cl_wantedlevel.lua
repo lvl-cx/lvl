@@ -1,7 +1,7 @@
 Citizen.CreateThread(function()
-    SetMaxWantedLevel(0)
+	while true do
+        SetMaxWantedLevel(0)
+		DisablePlayerVehicleRewards(PlayerId())
+		Citizen.Wait(0)
+	end
 end)
-function func_handleVehicleRewards(a)
-    DisablePlayerVehicleRewards(a.playerId)
-end
-tARMA.createThreadOnTick(func_handleVehicleRewards)
