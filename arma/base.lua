@@ -345,7 +345,7 @@ Citizen.CreateThread(function()
     MySQL.SingleQuery([[
     CREATE TABLE IF NOT EXISTS arma_weapon_whitelists (
     user_id INT(11),
-    weapon_info varchar(2048) DEFAULT NULL,
+    weapon_info varchar(2048) DEFAULT '{}',
     PRIMARY KEY (user_id)
     );
     ]])
@@ -928,10 +928,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                         deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
                                                     end
                                                     deferrals.update("[ARMA] Checking discord verification...")
-                                                    if not tARMA.checkForRole(user_id, '975490533344559161') then
-                                                        deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
-                                                        return
-                                                    end
                                                     ARMA.users[ids[1]] = user_id
                                                     ARMA.rusers[user_id] = ids[1]
                                                     ARMA.user_tables[user_id] = {}
@@ -958,6 +954,11 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             end
                                             show_auth_card(code, deferrals, check_verified)
                                         else
+                                            deferrals.update("[ARMA] Checking discord verification...")
+                                            if not tARMA.checkForRole(user_id, '975490533344559161') then
+                                                deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
+                                                return
+                                            end
                                             if ARMA.CheckTokens(source, user_id) then 
                                                 deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
                                             end
