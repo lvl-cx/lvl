@@ -22,11 +22,12 @@ RegisterServerEvent("ARMA:getCallsign")
 AddEventHandler("ARMA:getCallsign", function(type)
     local source = source
     local user_id = ARMA.getUserId(source)
+    Wait(1000)
     if type == 'police' and ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        TriggerClientEvent("ARMA:receivePoliceCallsign", source, getCallsign('MPD', source, user_id, 'police'))
+        TriggerClientEvent("ARMA:receivePoliceCallsign", source, getCallsign('Police', source, user_id, 'Police'))
         TriggerClientEvent("ARMA:setPoliceOnDuty", source, true)
     elseif type == 'prison' and ARMA.hasPermission(user_id, 'prisonguard.onduty.permission') then
-        TriggerClientEvent("ARMA:receiveHmpCallsign", source, getCallsign('HMP', source, user_id, 'hmp'))
+        TriggerClientEvent("ARMA:receiveHmpCallsign", source, getCallsign('HMP', source, user_id, 'HMP'))
         TriggerClientEvent("ARMA:setPrisonGuardOnDuty", source, true)
     end
 end)
