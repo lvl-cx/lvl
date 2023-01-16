@@ -61,15 +61,7 @@ AddEventHandler("ARMA:onClientSpawn",function(m, n)
             DoorSystemSetDoorState(b[q].doorHash, a[b[q].doorHash], false, false)
         end
         local r = function()
-            a = tARMA.TriggerServerCallback("ARMA:enterPoliceSyncDoors")
-            for s, t in pairs(a) do
-                DoorSystemSetDoorState(s, t, false, false)
-                if t == 0 or t == 5 then
-                    DoorSystemSetHoldOpen(s, true)
-                else
-                    DoorSystemSetHoldOpen(s, false)
-                end
-            end
+            TriggerServerEvent("ARMA:enterPoliceSyncDoors")
         end
         for q = 1, #c do
             tARMA.createArea("policeSyncDoorsOnAreaEnter",c[q],250,250,r,function()end,function()end,{})
@@ -85,5 +77,17 @@ RegisterNetEvent("ARMA:policeSyncDoor",function(u, v)
     end
     if a and a[u] ~= nil then
         a[u] = v
+    end
+end)
+
+RegisterNetEvent("ARMA:gotAllDoorStates",function(doorStates)
+    a = doorStates
+    for s, t in pairs(a) do
+        DoorSystemSetDoorState(s, t, false, false)
+        if t == 0 or t == 5 then
+            DoorSystemSetHoldOpen(s, true)
+        else
+            DoorSystemSetHoldOpen(s, false)
+        end
     end
 end)
