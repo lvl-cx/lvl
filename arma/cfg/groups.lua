@@ -15,7 +15,6 @@ cfg.groups = {
         "dev.menu",
         "cardev.menu",
         "admin.addcar",
-        "admin.spawnGun",
         "admin.ban",
         "admin.unban",
         "admin.kick",
@@ -62,7 +61,6 @@ cfg.groups = {
         "group.remove.pov",
         "group.remove",
         "admin.tickets",
-        "police.dev"
     },
     ["Founder"] = {
         "admin.ban",
@@ -80,7 +78,6 @@ cfg.groups = {
         "admin.tp2coords",
         "admin.removewarn",
         "admin.noclip",
-        "admin.spawnGun",
         "admin.addcar",
         "admin.managecommunitypot",
         "admin.moneymenu",
@@ -116,6 +113,7 @@ cfg.groups = {
         "cardev.menu",
         "vip.gunstore",
         "vip.garage",
+        "police.dev"
     },
     ["Staff Manager"] = {
         "admin.managecommunitypot",

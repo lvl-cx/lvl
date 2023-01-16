@@ -278,8 +278,8 @@ cfg.simeonsCategories = {
         ["dawn"] = {"Rolls Royce Dawn",5000000},
         ["havok"] = {"Havok (100kg)",5000000},
         ["microlight"] = {"MicroLight (100kg)",5000000},
-      },
-      ["MET Police Vehicles"] = {
+    },
+    ["MET Police Vehicles"] = {
         ["_config"] = {permissionTable={"police.onduty.permission"}},
         ["riotvan"] = {"Mercedes Sprinter Marked",0},
         ["jagrsmarked"] = {"Jaguar XF-RS Marked",0},
@@ -321,7 +321,6 @@ cfg.simeonsCategories = {
         ["poldefender"] = {"Land Rover Defender Marked",0,""},
         ["policeb"] = {"Police Bike",0,""},
     },
-
     ["MET Police Boats"] = {
         ["_config"] = {permissionTable={"police.onduty.permission"}},
         ["polboat"] = {"MET Boat",0, ""},
