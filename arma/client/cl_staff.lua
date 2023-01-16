@@ -12,7 +12,7 @@ RegisterCommand("delgun",function()
     if tARMA.getStaffLevel() > 0 then
         usingDelgun = not usingDelgun
         local g = tARMA.getPlayerPed()
-        local h = GetHashKey("WEAPON_STAFFGUN")
+        local h = "WEAPON_STAFFGUN"
         if usingDelgun then
             a = HasPedGotWeapon(g, h, false)
             tARMA.allowWeapon(h)
