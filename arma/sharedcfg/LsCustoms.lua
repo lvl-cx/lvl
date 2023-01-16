@@ -205,7 +205,7 @@ LSC_Config.prices = {
 	wheelaccessories = {
 		{ name = "Stock Tires", price = 20000},
 		{ name = "Custom Tires", price = 20000},
-		{ name = "Bulletproof Tires", price = 50000},
+		{ name = "Bulletproof Tires", price = 2500000},
 		{ name = "White Tire Smoke",smokecolor = {254,254,254}, price = 20000},
 		{ name = "Black Tire Smoke", smokecolor = {1,1,1}, price = 20000},
 		{ name = "Blue Tire Smoke", smokecolor = {0,150,255}, price = 20000},
@@ -567,30 +567,30 @@ LSC_Config.prices = {
 ---------Headlights---------
 	[22] = {
 		{name = "Stock Lights", mod = 0, price = 0},
-		{name = "Xenon Lights", mod = 1, price = 1625},
+		{name = "Xenon Lights", mod = 1, price = 100000},
 	},
 	
 ----------Turbo---------
 	[18] = {
 		{ name = "None", mod = 0, price = 0},
-		{ name = "Turbo Tuning", mod = 1, price = 100000},
+		{ name = "Turbo Tuning", mod = 1, price = 500000},
 	},
 	
 -----------Armor-------------
 	[16] = {
-		{name = "Armor Upgrade 20%",modtype = 16, mod = 0, price = 25000},
-		{name = "Armor Upgrade 40%",modtype = 16, mod = 1, price = 40000},
-		{name = "Armor Upgrade 60%",modtype = 16, mod = 2, price = 70000},
-		{name = "Armor Upgrade 80%",modtype = 16, mod = 3, price = 100000},
-		{name = "Armor Upgrade 100%",modtype = 16, mod = 4, price = 120000},
+		{name = "Armor Upgrade 20%",modtype = 16, mod = 0, price = 100000},
+		{name = "Armor Upgrade 40%",modtype = 16, mod = 1, price = 250000},
+		{name = "Armor Upgrade 60%",modtype = 16, mod = 2, price = 500000},
+		{name = "Armor Upgrade 80%",modtype = 16, mod = 3, price = 1000000},
+		{name = "Armor Upgrade 100%",modtype = 16, mod = 4, price = 2000000},
 	},
 
 ---------Suspension-----------
 	[15] = {
-		{name = "Lowered Suspension",mod = 0, price = 25000},
-		{name = "Street Suspension",mod = 1, price = 45000},
-		{name = "Sport Suspension",mod = 2, price = 55000},
-		{name = "Competition Suspension",mod = 3, price = 65000},
+		{name = "Lowered Suspension",mod = 0, price = 100000},
+		{name = "Street Suspension",mod = 1, price = 200000},
+		{name = "Sport Suspension",mod = 2, price = 350000},
+		{name = "Competition Suspension",mod = 3, price = 400000},
 	},
 
 -----------Horn----------
@@ -634,23 +634,23 @@ LSC_Config.prices = {
 
 ----------Transmission---------
 	[13] = {
-		{name = "Street Transmission", mod = 0, price = 25000},
-		{name = "Sports Transmission", mod = 1, price = 40000},
-		{name = "Race Transmission", mod = 2, price = 65000},
+		{name = "Street Transmission", mod = 0, price = 100000},
+		{name = "Sports Transmission", mod = 1, price = 250000},
+		{name = "Race Transmission", mod = 2, price = 500000},
 	},
 	
 -----------Brakes-------------
 	[12] = {
-		{name = "Street Brakes", mod = 0, price = 45000},
-		{name = "Sport Brakes", mod = 1, price = 75000},
-		{name = "Race Brakes", mod = 2, price = 95000},
+		{name = "Street Brakes", mod = 0, price = 100000},
+		{name = "Sport Brakes", mod = 1, price = 250000},
+		{name = "Race Brakes", mod = 2, price = 500000},
 	},
 	
 ------------Engine----------
 	[11] = {
-		{name = "EMS Upgrade, Level 2", mod = 0, price = 30000},
-		{name = "EMS Upgrade, Level 3", mod = 1, price = 65000},
-		{name = "EMS Upgrade, Level 4", mod = 2, price = 100000},
+		{name = "EMS Upgrade, Level 2", mod = 0, price = 100000},
+		{name = "EMS Upgrade, Level 3", mod = 1, price = 250000},
+		{name = "EMS Upgrade, Level 4", mod = 2, price = 500000},
 	},
 	
 -------------Roof----------
