@@ -45,12 +45,12 @@ end)
 
 
 RegisterNetEvent("ARMA:GetNearbyPlayers")
-AddEventHandler("ARMA:GetNearbyPlayers", function(dist)
+AddEventHandler("ARMA:GetNearbyPlayers", function(coords, dist)
     local source = source
     local user_id = ARMA.getUserId(source)
     local plrTable = {}
     if ARMA.hasPermission(user_id, 'admin.tickets') then
-        ARMAclient.getNearestPlayers(source, {dist}, function(nearbyPlayers)
+        ARMAclient.getNearestPlayersFromPosition(source, {coords, dist}, function(nearbyPlayers)
             for k, v in pairs(nearbyPlayers) do
                 data = ARMA.getUserDataTable(ARMA.getUserId(k))
                 playtime = data.PlayerTime or 0
@@ -712,6 +712,7 @@ AddEventHandler('ARMA:Teleport2Legion', function(newtarget)
     if ARMA.hasPermission(user_id, 'admin.tp2player') then
         ARMAclient.teleport(newtarget, vector3(152.66354370117,-1035.9771728516,29.337995529175))
         ARMAclient.notify(newtarget, {'~g~You have been teleported to Legion by an admin.'})
+        ARMAclient.setPlayerCombatTimer(newtarget, {0})
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
@@ -738,6 +739,7 @@ AddEventHandler('ARMA:BringPlayer', function(id)
                 tARMA.setBucket(id, adminbucket)
                 ARMAclient.notify(source, {'~g~Player was in another bucket, they have been set into your bucket.'})
             end
+            ARMAclient.setPlayerCombatTimer(id, {0})
         else 
             ARMAclient.notify(source,{"~r~This player may have left the game."})
         end
@@ -859,9 +861,19 @@ AddEventHandler('ARMA:AddCar', function()
                 ARMA.prompt(source,"Locked:","",function(source, locked) 
                     if locked == '0' or locked == '1' then
                         if permid and car ~= "" then  
-                            exports['ghmattimysql']:execute("INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)", {user_id = permid, vehicle = car, registration = 'ARMA', locked = locked})
-                            ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
-                            tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
+                            ARMAclient.generateUUID(source, {"plate", 5, "alphanumeric"}, function(uuid)
+                                local uuid = string.upper(uuid)
+                                exports['ghmattimysql']:execute("SELECT * FROM `arma_user_vehicles` WHERE vehicle_plate = @plate", {plate = uuid}, function(result)
+                                    if #result > 0 then
+                                        ARMAclient.notify(source, {'~r~Error adding car, please try again.'})
+                                        return
+                                    else
+                                        MySQL.execute("ARMA/add_vehicle", {user_id = permid, vehicle = car, registration = uuid, locked = locked})
+                                        ARMAclient.notify(source,{'~g~Successfully added Player\'s car'})
+                                        tARMA.sendWebhook('add-car', 'ARMA Add Car To Player Logs', "> Admin Name: **"..admin_name.."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player PermID: **"..permid.."**\n> Spawncode: **"..car.."**")
+                                    end
+                                end)
+                            end)
                         else 
                             ARMAclient.notify(source,{'~r~Failed to add Player\'s car'})
                         end
@@ -954,16 +966,13 @@ RegisterServerEvent('ARMA:getAdminLevel')
 AddEventHandler('ARMA:getAdminLevel', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-
-    if ARMA.hasGroup(user_id, 'Developer') then
-        ARMAclient.setDev(source, {})
-    end
-        
     local adminlevel = 0
-    if ARMA.hasGroup(user_id,"Developer") then
+    if ARMA.hasGroup(user_id,"Founder") then
         adminlevel = 12
-    elseif ARMA.hasGroup(user_id,"Founder") then
+        ARMAclient.setDev(source, {})
+    elseif ARMA.hasGroup(user_id,"Developer") then
         adminlevel = 11
+        ARMAclient.setDev(source, {})
     elseif ARMA.hasGroup(user_id,"Staff Manager") then    
         adminlevel = 9
     elseif ARMA.hasGroup(user_id,"Community Manager") then
@@ -994,7 +1003,7 @@ AddEventHandler('ARMA:zapPlayer', function(A)
     if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         for k,v in pairs(ARMA.getUsers()) do
-            TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))
+            TriggerClientEvent("ARMA:useTheForceSync", v, source, GetEntityCoords(GetPlayerPed(v)))
         end
     end
 end)

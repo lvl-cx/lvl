@@ -26,6 +26,7 @@ local k = {}
 local o = ''
 local tt= ''
 local a10
+local requestedVideo = false
 
 admincfg = {}
 
@@ -121,6 +122,33 @@ local groups = {
 }
 
 
+RegisterNetEvent("ARMA:ReturnNearbyPlayers")
+AddEventHandler("ARMA:ReturnNearbyPlayers", function(table)
+    playersNearby = table
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if hoveredPlayer ~= nil then
+            local playerCoords = GetEntityCoords(tARMA.getPlayerPed())
+            if tARMA.isInSpectate() then
+                playerCoords = GetFinalRenderedCamCoord()
+            end
+            TriggerServerEvent("ARMA:GetNearbyPlayers", playerCoords, 250)
+            Citizen.Wait(2500)
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        if hoveredPlayer ~= nil then
+            local hoveredPedCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(hoveredPlayer)))
+            DrawMarker(2, hoveredPedCoords.x, hoveredPedCoords.y, hoveredPedCoords.z + 1.1,0.0,0.0,0.0,0.0,-180.0,0.0,0.4,0.4,0.4,255,255,0,125,false,true,2, false)
+        end
+    end
+end)
 
 RageUI.CreateWhile(1.0, true, function()
     if tARMA.getStaffLevel() >= 1 then
@@ -131,7 +159,11 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'players'))
                 RageUI.ButtonWithStyle("Nearby Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        TriggerServerEvent("ARMA:GetNearbyPlayers", 250)
+                        local playerCoords = GetEntityCoords(tARMA.getPlayerPed())
+                        if tARMA.isInSpectate() then
+                            playerCoords = GetFinalRenderedCamCoord()
+                        end
+                        TriggerServerEvent("ARMA:GetNearbyPlayers", playerCoords, 250)
                     end
                 end, RMenu:Get('adminmenu', 'closeplayers'))
                 RageUI.ButtonWithStyle("Search Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -179,22 +211,6 @@ RageUI.CreateWhile(1.0, true, function()
         end)
     end
 end)
-
-RegisterNetEvent("ARMA:ReturnNearbyPlayers")
-AddEventHandler("ARMA:ReturnNearbyPlayers", function(table)
-    playersNearby = table
-end)
-
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(0)
-        if hoveredPlayer ~= nil then
-            local hoveredPedCoords = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(hoveredPlayer)))
-            DrawMarker(2, hoveredPedCoords.x, hoveredPedCoords.y, hoveredPedCoords.z + 1.1,0.0,0.0,0.0,0.0,-180.0,0.0,0.4,0.4,0.4,255,255,0,125,false,true,2, false)
-        end
-    end
-end)
-
 
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchoptions')) then
@@ -456,7 +472,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'communitypot')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            RageUI.Separator("Community Pot Balance: ~g~£"..getMoneyStringFormatted(a))
+            RageUI.Separator("Community Pot Balance: ~g~£"..getMoneyStringFormatted(communityPot))
             RageUI.ButtonWithStyle("Deposit","",{RightLabel="→→→"},true,function(e,f,g)
                 if g then 
                     tARMA.clientPrompt("Enter Amount:","",function(d)
@@ -735,10 +751,14 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if tARMA.getStaffLevel() >= 4 then
-                RageUI.ButtonWithStyle("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                RageUI.ButtonWithStyle("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], requestedVideo and {RightLabel = ""} or {RightLabel = "→→→"}, not requestedVideo, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
-                        TriggerServerEvent('ARMA:RequestVideo', uid , SelectedPlayer[2])
+                        TriggerServerEvent('ARMA:RequestVideo', uid, SelectedPlayer[2])
+                        requestedVideo = true
+                        SetTimeout(15000, function()
+                            requestedVideo = false
+                        end)
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
@@ -755,7 +775,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,RMenu:Get("adminmenu", "groups"))
             end
-            if tARMA.getStaffLevel() >= 11 then
+            if tARMA.getStaffLevel() >= 12 then
                 RageUI.ButtonWithStyle("Commit Godly Wrath on Player","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         TriggerServerEvent("ARMA:zapPlayer", SelectedPlayer[2])
