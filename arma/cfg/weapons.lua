@@ -301,13 +301,19 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_ar_spar17",
     },
-    
     ["WEAPON_G36K"] = {
         name = "G36K",
         class = "AR",
         ammo = "Police Issued 5.56mm",
         policeWeapon = true,
         model = "w_ar_g36k",
+    },
+    ["WEAPON_MK18V2"] = {
+        name = "MK18 V2",
+        class = "AR",
+        ammo = "Police Issued 5.56mm",
+        policeWeapon = true,
+        model = "w_ar_mk18v2",
     },
     --?SMG
     ["WEAPON_MP5"] = {
@@ -402,6 +408,13 @@ cfg.weapons = {
         ammo = ".308 Sniper Rounds",
         policeWeapon = false,
         model = "w_sr_svd",
+    },
+    ["WEAPON_AMELIV"] = {
+        name = "CETME Ameli",
+        class = "Heavy",
+        ammo = "5.56mm NATO",
+        policeWeapon = false,
+        model = "w_mg_ameliv",
     },
 }
 
