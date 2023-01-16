@@ -111,7 +111,9 @@ RegisterCommand("return", function(source)
         end
         TriggerClientEvent('ARMA:sendTicketInfo', source)
         ARMAclient.staffMode(source, {false})
-        ARMAclient.setPlayerCombatTimer(source, {0})
+        SetTimeout(1000, function() 
+            ARMAclient.setPlayerCombatTimer(source, {0})
+        end)
     end
 end)
 
