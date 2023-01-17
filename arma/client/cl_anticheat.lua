@@ -28,12 +28,26 @@ Citizen.CreateThread(function()
     Wait(1000)
     local oldPos = GetEntityCoords(PlayerPedId())
     while true do
-        local playerPed = PlayerPedId()
-        local newPos = GetEntityCoords(playerPed)
+        local i = PlayerPedId()
+        local newPos = GetEntityCoords(i)
         local dist = #(oldPos-newPos)
         oldPos = newPos
-        if dist > 6 and not IsPedFalling(playerPed) and not IsPedInParachuteFreeFall(playerPed) and not IsPedRagdoll(playerPed) and not tARMA.isPlayerHidingInBoot() and not noclipActive and not tARMA.isInSpectate() then
-            if not IsPedInAnyVehicle(playerPed, 1) then
+        if dist > 6 and not IsPedFalling(i)
+		and tARMA.getStaffLevel() < 2 
+		and not IsPedInParachuteFreeFall(i) 
+		and not IsPedRagdoll(i) 
+		and not tARMA.isPlayerHidingInBoot() 
+		and not noclipActive 
+		and not tARMA.isInSpectate() 
+		and not carryingBackInProgress 
+		and not tARMA.takeHostageInProgress() 
+		and not GetPedParachuteState(i) <= 0 
+		and not IsPedRunning(i)
+		and not tARMA.isPlayerRappeling()
+		and not tARMA.isPlayerAboveGround()
+		and not tARMA.isPlayerHidingInBoot()
+		then
+            if not IsPedInAnyVehicle(i, 1) then
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 18 then
                     TriggerServerEvent("ARMA:acType1")
