@@ -20,6 +20,7 @@ cfg.vehicle_chest_weights = {
     ["rsq8"] = 100,
     ["abhawk"] = 100,
     ["RSQ8offroad"] = 100,
+    ["salimraptor"] = 100,
 }
 
 return cfg
