@@ -3,6 +3,7 @@ RMenu.Add("emotesmenu","mainmenu",RageUI.CreateMenu("","Main Menu",tARMA.getRage
 RMenu.Add("emotesmenu","emotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","danceemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Dance Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","customemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Custom Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","gunemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Gun Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","propemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Prop Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","sharedemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Shared Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","walkingstyles",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Walking Styles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
@@ -302,12 +303,14 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             RageUI.Button("🕺 Dance Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "danceemotes"))
-            --[[ RageUI.Button("🛠️ Custom Emotes","",true,function()
-            end,RMenu:Get("emotesmenu", "customemotes")) ]]
+            RageUI.Button("🛠️ Custom Emotes","",true,function()
+            end,RMenu:Get("emotesmenu", "customemotes"))
             RageUI.Button("📦 Prop Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "propemotes"))
             RageUI.Button("👫 Shared Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "sharedemotes"))
+            RageUI.Button("🔫 Gun Emotes",,"",{},true,function()
+            end,RMenu:Get("emotesmenu", "gunemotes"))
             for aB, E in aw(a.emotes) do
                 RageUI.Button(E[3],"/e (" .. aB .. ")",{},not a6(E),function(ay, az, aA)
                     if aA then
@@ -331,6 +334,17 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('emotesmenu', 'customemotes')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for aB, E in aw(a.custom) do
+                RageUI.Button(E[3],"/e (" .. aB .. ")",{},not a6(E),function(ay, az, aA)
+                    if aA then
+                        a7(E)
+                    end
+                end)
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('emotesmenu', 'gunemotes')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            for aB, E in aw(a.guns) do
                 RageUI.Button(E[3],"/e (" .. aB .. ")",{},not a6(E),function(ay, az, aA)
                     if aA then
                         a7(E)
@@ -422,6 +436,8 @@ local function aF(aC, aD, aE)
         a7(a.custom[ah])
     elseif a.props[ah] then
         a7(a.props[ah])
+    elseif a.guns[ah] then
+        a7(a.guns[ah])
     else
         tARMA.notify("~r~Invalid emote name was specified.")
     end
@@ -546,6 +562,8 @@ function tARMA.playEmote(ah)
         a7(a.custom[ah])
     elseif a.props[ah] then
         a7(a.props[ah])
+    elseif a.guns[ah] then
+        a7(a.guns[ah])
     end
 end
 tARMA.cancelEmote = p
