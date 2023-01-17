@@ -28,15 +28,6 @@ local function j()
     end
 end
 
--- local o, p, q, v, s, t, u = table.unpack(n)
--- o = coords
--- p = name
--- q = perm id
--- v = distance blah blah
--- s = reason
--- t = ticket type
--- u = time since
-
 RegisterNetEvent("ARMA:addEmergencyCall",function(o, p, q, r, s, t)
     local u = 0
     if t == "admin" and tARMA.getStaffLevel() > 0 then
@@ -208,10 +199,69 @@ Citizen.CreateThread(function()
                 DrawRect(0.444, 0.96, 0.037, 0.03, 0, 0, 0, 150)
             end
             DrawAdvancedText(0.453, 0.964, 0.005, 0.0028, 0.4, b .. " / " .. c - 1, 255, 255, 255, 255, 6, 0)
-            DrawAdvancedText(0.369, 0.963, 0.005, 0.0028, 0.4, "Deny", 255, 0, 0, 255, 4, 0)
+            DrawAdvancedText(0.369, 0.963, 0.005, 0.0028, 0.4, "Deny (-)", 255, 0, 0, 255, 4, 0)
             DrawAdvancedText(0.423, 0.963, 0.005, 0.0028, 0.4, "Previous", 255, 255, 255, 255, 4, 0)
             DrawAdvancedText(0.485, 0.963, 0.005, 0.0028, 0.4, "Next", 255, 255, 255, 255, 4, 0)
-            DrawAdvancedText(0.539, 0.963, 0.005, 0.0028, 0.4, "Accept", 12, 255, 26, 255, 4, 0)
+            DrawAdvancedText(0.539, 0.963, 0.005, 0.0028, 0.4, "Accept (=)", 12, 255, 26, 255, 4, 0)
+            if IsDisabledControlJustPressed(1, 84) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                if d[h] ~= nil then
+                    for m, n in pairs(d) do
+                        if n[1] == h then
+                            table.remove(d, m)
+                        end
+                    end
+                    j()
+                else
+                    local B = false
+                    for m, n in pairs(d) do
+                        if not B then
+                            table.remove(d, m)
+                            B = true
+                        end
+                    end
+                    j()
+                end
+            end
+            if IsDisabledControlJustPressed(1, 83) then
+                PlaySound(-1, "SELECT", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0, 0, 1)
+                if h ~= nil then
+                    TriggerServerEvent("ARMA:TakeTicket", h)
+                    a = not a
+                    TriggerEvent("ARMA:showHUD", true)
+                    globalHideEmergencyCallUI = false
+                    SetBigmapActive(false, false)
+                    setCursor(0)
+                    inGUIARMA = false
+                    for m,n in pairs(globalBlips)do 
+                        SetBlipAlpha(n,255)
+                    end 
+                else
+                    local B = false
+                    local C
+                    for m, n in pairs(d) do
+                        if not B then
+                            C = n[1]
+                            B = true
+                        end
+                    end
+                    if C ~= nil then
+                        TriggerServerEvent("ARMA:TakeTicket", C)
+                        a = not a
+                        SetNewWaypoint(e[h].x, e[h].y)
+                        TriggerEvent("ARMA:showHUD", true)
+                        globalHideEmergencyCallUI = false
+                        SetBigmapActive(false, false)
+                        setCursor(0)
+                        inGUIARMA = false
+                        for m,n in pairs(globalBlips)do 
+                            SetBlipAlpha(n,255)
+                        end 
+                    else
+                        tARMA.notify("~r~No calls available.")
+                    end
+                end
+            end
         end
         Wait(0)
     end
