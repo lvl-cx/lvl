@@ -131,17 +131,29 @@ AddEventHandler('ARMA:FetchHouseInventory', function(nameHouse)
     end)
 end)
 
--- rob player with the second inventory data
+local currentlySearching = {}
+
+RegisterNetEvent('ARMA:cancelPlayerSearch')
+AddEventHandler('ARMA:cancelPlayerSearch', function(playersrc)
+    local source = source
+    local user_id = ARMA.getUserId(source) 
+    TriggerClientEvent('ARMA:cancelPlayerSearch', currentlySearching[user_id])
+end)
+
+
 RegisterNetEvent('ARMA:searchPlayer')
 AddEventHandler('ARMA:searchPlayer', function(playersrc)
     local source = source
-    if not InventorySpamTrack[source] then
-        InventorySpamTrack[source] = true;
-        local user_id = ARMA.getUserId(source) 
-        local data = ARMA.getUserDataTable(user_id)
-        local their_id = ARMA.getUserId(playersrc) 
-        local their_data = ARMA.getUserDataTable(their_id)
-        if data and data.inventory then
+    local user_id = ARMA.getUserId(source) 
+    local data = ARMA.getUserDataTable(user_id)
+    local their_id = ARMA.getUserId(playersrc) 
+    local their_data = ARMA.getUserDataTable(their_id)
+    if data and data.inventory and not currentlySearching[user_id] then
+        currentlySearching[user_id] = playersrc
+        TriggerClientEvent('ARMA:startSearchingSuspect', source)
+        TriggerClientEvent('ARMA:startBeingSearching', playersrc, source)
+        Wait(10000)
+        if currentlySearching[user_id] then
             local FormattedInventoryData = {}
             for i,v in pairs(data.inventory) do
                 FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
@@ -166,14 +178,13 @@ AddEventHandler('ARMA:searchPlayer', function(playersrc)
                         TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id))
                     end
                     TriggerClientEvent('ARMA:InventoryOpen', source, true)
-                    InventorySpamTrack[source] = false;
+                    currentlySearching[user_id] = nil
                 end
             end)
-        else 
-            print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
         end
     end
 end)
+
 
 -- rob player where it gives you their inventory
 RegisterNetEvent('ARMA:robPlayer')

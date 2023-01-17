@@ -413,7 +413,7 @@ RegisterNetEvent("ARMA:startSearchingSuspect",function()
     local a3 = GetGameTimer()
     while GetGameTimer() - a3 < 10000 do
         if IsDisabledControlJustPressed(0, 73) then
-            TriggerServerEvent("CMG:cancelPlayerSearch")
+            TriggerServerEvent("ARMA:cancelPlayerSearch")
             return
         end
         Citizen.Wait(0)
@@ -421,7 +421,7 @@ RegisterNetEvent("ARMA:startSearchingSuspect",function()
     tARMA.setCanAnim(true)
 end)
 local a4 = false
-RegisterNetEvent("ARMA:startBeingSearching",function(_)
+RegisterNetEvent("ARMA:startBeingSearching",function(a5)
     local a6 = GetPlayerFromServerId(a5)
     if a6 == -1 then
         return
