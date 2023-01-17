@@ -23,6 +23,7 @@ cfg.weapons = {
 	[`WEAPON_SPAR17`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_spar17`},
 	[`WEAPON_G36K`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_g36k`},
 	[`WEAPON_REMINGTON870`] = {bone = 24818, offset = vector3(-0.12, -0.12, -0.13), rotation = vector3(100.0, -3.0, 5.0), model = `w_sg_remington870`, components = {`COMPONENT_REMINGTON870_CLIP_01`, `COMPONENT_REMINGTON870_TUBE_01`, `COMPONENT_REMINGTON870_STOCK_01`, `COMPONENT_REMINGTON870_SCOPE_01`}, removeComponents = {`COMPONENT_REMINGTON870_FLSH_01`}},
+	[`WEAPON_NOVESKENSR9`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_noveskensr9`},
 
 	--?Mosin
 	[`WEAPON_MOSIN`] = {bone = 24818, offset = vector3(-0.12, -0.12, -0.13), rotation = vector3(100.0, -3.0, 5.0), model = `w_ar_mosin`},
