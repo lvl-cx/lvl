@@ -1,6 +1,6 @@
 local loadouts = {}
 local selectedLoadout = nil
-local weapons = module("cfg/weapons")
+local weapons = module("arma-weapons", "cfg/weapons")
 
 RMenu.Add("policeloadouts","main",RageUI.CreateMenu("","Please Select Division",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","gunstore"))
 RMenu.Add("policeloadouts","confirm",RageUI.CreateSubMenu(RMenu:Get("policeloadouts", "main"),"","Confirm Selection",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))

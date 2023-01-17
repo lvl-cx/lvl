@@ -1,4 +1,4 @@
-local a = module("cfg/weapons")
+local a = module("arma-weapons", "cfg/weapons")
 Citizen.CreateThread(function()
     for b,c in pairs(a.weapons)do 
         AddTextEntry(b,c.name)

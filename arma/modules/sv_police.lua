@@ -1,7 +1,7 @@
 
 -- this module define some police tools and functions
 local lang = ARMA.lang
-local a = module("cfg/weapons")
+local a = module("arma-weapons", "cfg/weapons")
 
 local isStoring = {}
 local choice_store_weapons = function(player, choice)

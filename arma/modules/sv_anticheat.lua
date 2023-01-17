@@ -1,4 +1,4 @@
-local f = module("cfg/weapons")
+local f = module("arma-weapons", "cfg/weapons")
 f=f.weapons
 
 local gettingVideo = false

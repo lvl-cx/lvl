@@ -1,5 +1,5 @@
 local cfg = module("cfg/player_state")
-local a = module("cfg/weapons")
+local a = module("arma-weapons", "cfg/weapons")
 local lang = ARMA.lang
 
 baseplayers = {}

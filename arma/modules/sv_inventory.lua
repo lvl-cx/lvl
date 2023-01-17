@@ -5,7 +5,7 @@ local Housing = module("arma", "cfg/cfg_housing")
 local InventorySpamTrack = {}
 local LootBagEntities = {}
 local InventoryCoolDown = {}
-local a = module("cfg/weapons")
+local a = module("arma-weapons", "cfg/weapons")
 
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     if first_spawn then

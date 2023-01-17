@@ -1,4 +1,4 @@
-local weapons = module("cfg/weapons")
+local weapons = module("arma-weapons", "cfg/weapons")
 local a=false
 local b
 local c

@@ -1,5 +1,5 @@
-local a = module("cfg/cfg_weaponsonback")
-local b = module("cfg/weapons")
+local a = module("arma-weapons", "cfg/cfg_weaponsonback")
+local b = module("arma-weapons", "cfg/weapons")
 Citizen.CreateThread(function()
     for c, d in pairs(b.weapons) do
         if not a.weapons[d.hash] then

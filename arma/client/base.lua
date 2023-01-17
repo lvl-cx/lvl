@@ -16,7 +16,7 @@ Proxy.addInterface("ARMA",tARMA)
 -- ac shite
 
 allowedWeapons = {}
-weapons = module("cfg/weapons")
+weapons = module("arma-weapons", "cfg/weapons")
 function tARMA.allowWeapon(name)
   if allowedWeapons[name] then
     return
