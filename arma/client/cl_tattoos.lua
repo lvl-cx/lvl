@@ -136,6 +136,7 @@ Citizen.CreateThread(function()
 end)
 RegisterNetEvent("ARMA:setTattoos",function(Q)
     Citizen.Wait(500)
+    if Q == nil then return end
     local R = Q
     for H = 1, #R, 1 do
         for S = 1, #d, 1 do
