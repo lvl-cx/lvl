@@ -129,13 +129,14 @@ end)
 
 Citizen.CreateThread(function()
     while true do
+        Citizen.Wait(0)
         if hoveredPlayer ~= nil then
             local playerCoords = GetEntityCoords(tARMA.getPlayerPed())
             if tARMA.isInSpectate() then
                 playerCoords = GetFinalRenderedCamCoord()
             end
             TriggerServerEvent("ARMA:GetNearbyPlayers", playerCoords, 250)
-            Citizen.Wait(2500)
+            Citizen.Wait(1000)
         end
     end
 end)
