@@ -49,14 +49,17 @@ AddEventHandler("ARMA:forceStoreSingleWeapon",function(model)
       ARMAclient.getWeapons(source,{},function(weapons)
         for k,v in pairs(weapons) do
           if k == model then
-            RemoveWeaponFromPed(GetPlayerPed(source), k)
-            ARMAclient.removeWeapon(source,{k})
-            ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-            if v.ammo > 0 then
-              for i,c in pairs(a.weapons) do
-                if i == model and c.class ~= 'Melee' then
-                  ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
-                end   
+            local new_weight = ARMA.getInventoryWeight(user_id)+ARMA.getItemWeight(model)
+            if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
+              RemoveWeaponFromPed(GetPlayerPed(source), k)
+              ARMAclient.removeWeapon(source,{k})
+              ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+              if v.ammo > 0 then
+                for i,c in pairs(a.weapons) do
+                  if i == model and c.class ~= 'Melee' then
+                    ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
+                  end   
+                end
               end
             end
           end
