@@ -927,7 +927,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                     if ARMA.CheckTokens(source, user_id) then 
                                                         deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
                                                     end
-                                                    deferrals.update("[ARMA] Checking discord verification...")
                                                     ARMA.users[ids[1]] = user_id
                                                     ARMA.rusers[user_id] = ids[1]
                                                     ARMA.user_tables[user_id] = {}

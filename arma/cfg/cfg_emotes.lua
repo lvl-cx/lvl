@@ -4711,4 +4711,146 @@ cfg.custom = {
     }}
 }
 
+cfg.guns = {
+    -- Pack 1
+    ["riflerelaxed"] = {"anim@fog_rifle_relaxed", "rifle_relaxed_clip", "Rifle Relaxed", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["riflehighlean"] = {"anim@highlow_high_lean", "high_lean_clip", "Rifle High Lean", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["riflelowlean"] = {"anim@highlow_low_lean", "low_lean_clip", "Rifle Low Lean", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["stackpointman"] = {"anim@stack_pointman", "pointman_clip", "Stack Pointman", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["stacktwoman"] = {"anim@stack_two_man", "two_man_clip", "Stack Two Man", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["stackthreeman"] = {"anim@stack_three_man", "three_man_clip", "Stack Three Man", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    -- Pack 2
+    ["tacticallowready"] = {"anim@male_tactical_collapsed_lowready", "collapsed_lowready_clip", "Tactical Low Ready", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticalhighready"] = {"anim@male_tactical_highready_relaxed", "highready_relaxed_clip", "Tactical High Ready", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticalhighlean"] = {"anim@tactical_highlow_high_leftlean", "high_leftlean_clip", "Tactical High Lean", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticallowlean"] = {"anim@tactical_highlow_low_leftlean", "low_leftlean_clip", "Tactical Low Lean", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticalkneelaiming"] = {"anim@tactical_kneel_aiming", "kneel_aiming_clip", "Tactical Kneel Aiming", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticalkneelwalkie"] = {"anim@tactical_kneel_walkie", "kneel_walkie_clip", "Tactical Kneel Walkie", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    -- Pack 3
+    ["holdingsidevest"] = {"anim@holding_side_vest", "holding_side_vest_clip", "Holding Side Vest", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingsiegevest"] = {"anim@holding_siege_vest_side", "holding_siege_vest_side_clip", "Holding Siege Vest", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["aimweapon"] = {"anim@male@aim_weapon", "aim_weapon_clip", "Aim Weapon", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingradio"] = {"anim@male@holding_radio", "holding_radio_clip", "Holding Radio", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingvest"] = {"anim@male@holding_vest", "holding_vest_clip", "Holding Vest", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingvest2"] = {"anim@male@holding_vest_2", "holding_vest_2_clip", "Holding Vest 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingvestseige"] = {"anim@male@holding_vest_siege", "holding_vest_siege_clip", "Holding Vest Siege", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingvestseige2"] = {"anim@male@holding_vest_siege_2", "holding_vest_siege_2_clip", "Holding Vest Siege 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingweapon2"] = {"anim@male@holding_weapon_2", "holding_weapon_2_clip", "Holding Weapon 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingweapon4"] = {"anim@male@holding_weapon_4", "holding_weapon_4_clip", "Holding Weapon 4", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingweaponkneel"] = {"anim@male@holding_weapon_kneel", "anim@male@holding_weapon_kneel_clip", "Holding Weapon Kneel", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingweaponnvg"] = {"anim@male@holding_weapon_nvg", "holding_weapon_nvg_clip", "Holding Weapon NVG", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["holdingweaponnvg2"] = {"anim@male@holding_weapon_nvg_2", "holding_weapon_nvg_2_clip", "Holding Weapon NVG 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["hugweapon"] = {"anim@male@hug_weapon", "hug_weapon_clip", "Hug Weapon", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["hugweapon2"] = {"anim@male@hug_weapon_2", "hug_weapon_2_clip", "Hug Weapon 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["poseweapon"] = {"anim@male@pose_weapon", "pose_weapon_clip", "Pose Weapon", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["poseweapon2"] = {"anim@male@pose_weapon_2", "pose_weapon_2_clip", "Pose Weapon 2", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["poseweapon3"] = {"anim@male@pose_weapon_3", "pose_weapon_3_clip", "Pose Weapon 3", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["preaimweapon"] = {"anim@male@preaim_weapon", "preaim_weapon_clip", "Preaim weapon", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["runweapon"] = {"anim@male@run_weapon", "run_weapon_clip", "Run Weapon", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["tacticalkneel"] = {"anim@male@tactical_kneel", "tactical_kneel_clip", "Tactical Kneel", animationOptions =
+    {
+        emoteLoop = true
+    }},
+    ["radioleft"] = {"anim@radio_left", "radio_left_clip", "Radio Left", animationOptions =
+    {
+        emoteLoop = true
+    }},
+}
+
 return cfg
