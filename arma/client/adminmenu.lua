@@ -752,7 +752,7 @@ RageUI.CreateWhile(1.0, true, function()
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
             if tARMA.getStaffLevel() >= 4 then
-                RageUI.ButtonWithStyle("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], requestedVideo and {RightLabel = ""} or {RightLabel = "→→→"}, not requestedVideo, function(Hovered, Active, Selected)
+                RageUI.Button("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], requestedVideo and {RightLabel = ""} or {RightLabel = "→→→"}, not requestedVideo, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RequestVideo', uid, SelectedPlayer[2])
