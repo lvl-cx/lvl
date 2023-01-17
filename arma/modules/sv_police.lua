@@ -294,11 +294,11 @@ RegisterServerEvent("ARMA:requestPlaceBagOnHead")
 AddEventHandler('ARMA:requestPlaceBagOnHead', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.getInventoryItemAmount(user_id, 'headbag') >= 1 then
+    if ARMA.getInventoryItemAmount(user_id, 'Headbag') >= 1 then
       ARMAclient.getNearestPlayer(source, {10}, function(nplayer)
           local nuser_id = ARMA.getUserId(nplayer)
           if nuser_id ~= nil then
-              ARMA.tryGetInventoryItem(user_id, 'headbag', 1, true)
+              ARMA.tryGetInventoryItem(user_id, 'Headbag', 1, true)
               TriggerClientEvent('ARMA:placeHeadBag', nplayer)
           end
       end)
