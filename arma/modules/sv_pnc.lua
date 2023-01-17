@@ -59,6 +59,10 @@ AddEventHandler('ARMA:finePlayer', function(id, charges, amount, notes)
         amount = 250000
     end
     if next(charges) then
+        local chargesList = ""
+        for k,v in pairs(charges) do
+            chargesList = chargesList.."\n> - **"..v.fine.."**"
+        end
         if ARMA.hasPermission(user_id, 'police.onduty.permission') then
             if id == user_id then
                 TriggerClientEvent('ARMA:verifyFineSent', source, false, "Can't fine yourself!")
@@ -70,7 +74,7 @@ AddEventHandler('ARMA:finePlayer', function(id, charges, amount, notes)
                 ARMAclient.notify(source, {'~g~You have received £'..getMoneyStringFormatted(math.floor(amount*0.1))..' for fining '..GetPlayerName(ARMA.getUserSource(id))..'.'})
                 TriggerEvent('ARMA:addToCommunityPot', tonumber(amount))
                 TriggerClientEvent('ARMA:verifyFineSent', source, true)
-                tARMA.sendWebhook('fine-player', 'ARMA Fine Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Criminal Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Criminal PermID: **"..id.."**\n> Criminal TempID: **"..ARMA.getUserSource(id).."**\n> Amount: **£"..amount.."**\n> Charges: **"..charges.."**\n> Notes: **"..notes.."**")
+                tARMA.sendWebhook('fine-player', 'ARMA Fine Logs',"> Officer Name: **"..GetPlayerName(source).."**\n> Officer TempID: **"..source.."**\n> Officer PermID: **"..user_id.."**\n> Criminal Name: **"..GetPlayerName(ARMA.getUserSource(id)).."**\n> Criminal PermID: **"..id.."**\n> Criminal TempID: **"..ARMA.getUserSource(id).."**\n> Amount: **£"..amount.."**\n> Charges: "..chargesList)--.."\n> Notes: **"..notes.."**")
                 -- do notes later
             else
                 TriggerClientEvent('ARMA:verifyFineSent', source, false, 'The player does not have enough money.')
