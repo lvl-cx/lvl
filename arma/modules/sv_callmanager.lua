@@ -148,7 +148,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                     if result ~= nil then 
                                         for k,v in pairs(result) do
                                             if v.user_id == user_id then
-                                                exports['ghmattimysql']:execute("UPDATE arma_staff_tickets SET ticket_count = @ticket_count WHERE user_id = @user_id", {user_id = user_id, ticket_count = v.ticket_count + 1}, function() end)
+                                                exports['ghmattimysql']:execute("UPDATE arma_staff_tickets SET ticket_count = @ticket_count, username = @username WHERE user_id = @user_id", {user_id = user_id, ticket_count = v.ticket_count + 1, username = GetPlayerName(admin_source)}, function() end)
                                                 return
                                             end
                                         end
