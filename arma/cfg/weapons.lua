@@ -330,6 +330,13 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_sb_mp5",
     },
+    ["WEAPON_NONMP5"] = {
+        name = "MP5 Tazer",
+        class = "SMG",
+        ammo = "Police Issued 9mm",
+        policeWeapon = true,
+        model = "w_sb_nonmp5",
+    },
     ["WEAPON_STING"] = {
         name = "Sting 9mm",
         class = "SMG",
