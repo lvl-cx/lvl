@@ -1,237 +1,234 @@
------------------------------------------------------------------
---TakeHostage by Robbster, do not redistrbute without permission--
-------------------------------------------------------------------
-
-local takeHostage = {
-	allowedWeapons = {
-		'WEAPON_M1911',
-		--etc add guns you want
-	},
-	InProgress = false,
-	type = "",
-	targetSrc = -1,
-	agressor = {
-		animDict = "anim@gangops@hostage@",
-		anim = "perp_idle",
-		flag = 49,
-	},
-	hostage = {
-		animDict = "anim@gangops@hostage@",
-		anim = "victim_idle",
-		attachX = -0.24,
-		attachY = 0.11,
-		attachZ = 0.0,
-		flag = 49,
-	}
+local a = {
+    allowedWeapons = {},
+    InProgress = false,
+    startTime = 0,
+    type = "",
+    targetSrc = -1,
+    agressor = {animDict = "anim@gangops@hostage@", anim = "perp_idle", flag = 49},
+    hostage = {
+        animDict = "anim@gangops@hostage@",
+        anim = "victim_idle",
+        attachX = -0.24,
+        attachY = 0.11,
+        attachZ = 0.0,
+        flag = 49
+    }
 }
+local b = module("arma-weapons", "cfg/weapons")
+Citizen.CreateThread(function()
+    for c, d in pairs(b.weapons) do
+        if d.class == "Pistol" then
+            table.insert(a.allowedWeapons, d.hash)
+        end
+    end
+end)
 
-local function drawNativeNotification(text)
-    SetTextComponentFormat("STRING")
-    AddTextComponentString(text)
-    DisplayHelpTextFromStringLabel(0, 0, 1, -1)
-end
-
-local function GetClosestPlayer(radius)
-    local players = GetActivePlayers()
-    local closestDistance = -1
-    local closestPlayer = -1
-    local playerPed = PlayerPedId()
-    local playerCoords = GetEntityCoords(playerPed)
-
-    for _,playerId in ipairs(players) do
-        local targetPed = GetPlayerPed(playerId)
-        if targetPed ~= playerPed then
-            local targetCoords = GetEntityCoords(targetPed)
-            local distance = #(targetCoords-playerCoords)
-            if closestDistance == -1 or closestDistance > distance then
-                closestPlayer = playerId
-                closestDistance = distance
+local function e(f)
+    local g = GetActivePlayers()
+    local h = -1
+    local i = -1
+    local j = PlayerPedId()
+    local k = GetEntityCoords(j)
+    for l, m in ipairs(g) do
+        local n = GetPlayerPed(m)
+        if n ~= j then
+            local o = GetEntityCoords(n)
+            local p = #(o - k)
+            if h == -1 or h > p then
+                i = m
+                h = p
             end
         end
     end
-	if closestDistance ~= -1 and closestDistance <= radius then
-		return closestPlayer
-	else
-		return nil
-	end
-end
-
-local function ensureAnimDict(animDict)
-    if not HasAnimDictLoaded(animDict) then
-        RequestAnimDict(animDict)
-        while not HasAnimDictLoaded(animDict) do
-            Wait(0)
-        end        
+    if h ~= -1 and h <= f then
+        return i
+    else
+        return nil
     end
-    return animDict
 end
-
-local function drawNativeText(str)
-	SetTextEntry_2("STRING")
-	AddTextComponentString(str)
-	EndTextCommandPrint(1000, 1)
+local function q(r)
+    if not HasAnimDictLoaded(r) then
+        RequestAnimDict(r)
+        while not HasAnimDictLoaded(r) do
+            Wait(0)
+        end
+    end
+    return r
 end
-
+local function s(t)
+    BeginTextCommandPrint("STRING")
+    AddTextComponentSubstringPlayerName(t)
+    EndTextCommandPrint(1000, 1)
+end
 RegisterCommand("takehostage",function()
-	callTakeHostage()
+    callTakeHostage()
 end)
 
 RegisterCommand("th",function()
-	callTakeHostage()
+    callTakeHostage()
 end)
 
 function callTakeHostage()
-	ClearPedSecondaryTask(PlayerPedId())
-	DetachEntity(PlayerPedId(), true, false)
-
-	local canTakeHostage = false
-	for i=1, #takeHostage.allowedWeapons do
-		if HasPedGotWeapon(PlayerPedId(), takeHostage.allowedWeapons[i], false) then
-			if GetAmmoInPedWeapon(PlayerPedId(), takeHostage.allowedWeapons[i]) > 0 then
-				canTakeHostage = true 
-				foundWeapon = takeHostage.allowedWeapons[i]
-				break
-			end 					
-		end
-	end
-
-	if not canTakeHostage then 
-		drawNativeNotification("You need a pistol with ammo to take a hostage at gunpoint!")
-	end
-
-	if not takeHostage.InProgress and canTakeHostage then			
-		local closestPlayer = GetClosestPlayer(3)
-		if closestPlayer then
-			local targetSrc = GetPlayerServerId(closestPlayer)
-			if targetSrc ~= -1 then
-				SetCurrentPedWeapon(PlayerPedId(), foundWeapon, true)
-				takeHostage.InProgress = true
-				takeHostage.targetSrc = targetSrc
-				TriggerServerEvent("TakeHostage:sync",targetSrc)
-				ensureAnimDict(takeHostage.agressor.animDict)
-				takeHostage.type = "agressor"
-			else
-				drawNativeNotification("~r~No one nearby to take as hostage!")
-			end
-		else
-			drawNativeNotification("~r~No one nearby to take as hostage!")
-		end
-	end
-end 
-
-RegisterNetEvent("TakeHostage:syncTarget")
-AddEventHandler("TakeHostage:syncTarget", function(target)
-	local targetPed = GetPlayerPed(GetPlayerFromServerId(target))
-	takeHostage.InProgress = true
-	ensureAnimDict(takeHostage.hostage.animDict)
-	AttachEntityToEntity(PlayerPedId(), targetPed, 0, takeHostage.hostage.attachX, takeHostage.hostage.attachY, takeHostage.hostage.attachZ, 0.5, 0.5, 0.0, false, false, false, false, 2, false)
-	takeHostage.type = "hostage" 
+    if isInGreenzone then
+        return
+    end
+    ClearPedSecondaryTask(PlayerPedId())
+    DetachEntity(PlayerPedId(), true, false)
+    local u = false
+    for v = 1, #a.allowedWeapons do
+        if HasPedGotWeapon(PlayerPedId(), a.allowedWeapons[v], false) then
+            if GetAmmoInPedWeapon(PlayerPedId(), a.allowedWeapons[v]) > 0 then
+                u = true
+                foundWeapon = a.allowedWeapons[v]
+                break
+            end
+        end
+    end
+    if not u then
+        drawNativeNotification("You need a pistol with ammo to take a hostage at gunpoint!")
+    end
+    if not a.InProgress and u then
+        local i = e(3)
+        if i then
+            local w = GetPlayerServerId(i)
+            if w ~= -1 then
+                local x = IsEntityPlayingAnim(GetPlayerPed(i), "missminuteman_1ig_2", "handsup_enter", 3)
+                if x then
+                    tARMA.setWeapon(PlayerPedId(), foundWeapon, true)
+                    a.InProgress = true
+                    a.startTime = GetGameTimer()
+                    a.targetSrc = w
+                    TriggerServerEvent("ARMA:takeHostageSync", w)
+                    a.type = "agressor"
+                else
+                    drawNativeNotification("Player must have his hands up!")
+                end
+            else
+                drawNativeNotification("~r~No one nearby to take as hostage!")
+            end
+        else
+            drawNativeNotification("~r~No one nearby to take as hostage!")
+        end
+    end
+end
+RegisterNetEvent("ARMA:takeHostageSyncTarget",function(y)
+    local n = GetPlayerPed(GetPlayerFromServerId(y))
+    a.InProgress = true
+    AttachEntityToEntity(PlayerPedId(),n,0,a.hostage.attachX,a.hostage.attachY,a.hostage.attachZ,0.5,0.5,0.0,false,false,false,false,2,false)
+    a.type = "hostage"
 end)
 
-RegisterNetEvent("TakeHostage:releaseHostage")
-AddEventHandler("TakeHostage:releaseHostage", function()
-	takeHostage.InProgress = false 
-	takeHostage.type = ""
-	DetachEntity(PlayerPedId(), true, false)
-	ensureAnimDict("reaction@shove")
-	TaskPlayAnim(PlayerPedId(), "reaction@shove", "shoved_back", 8.0, -8.0, -1, 0, 0, false, false, false)
-	Wait(250)
-	ClearPedSecondaryTask(PlayerPedId())
+RegisterNetEvent("ARMA:takeHostageReleaseHostage",function()
+    a.InProgress = false
+    a.type = ""
+    DetachEntity(PlayerPedId(), true, false)
+    q("reaction@shove")
+    TaskPlayAnim(PlayerPedId(), "reaction@shove", "shoved_back", 8.0, -8.0, -1, 0, 0, false, false, false)
+    RemoveAnimDict("reaction@shove")
+    Wait(250)
+    ClearPedSecondaryTask(PlayerPedId())
 end)
 
-RegisterNetEvent("TakeHostage:killHostage")
-AddEventHandler("TakeHostage:killHostage", function()
-	takeHostage.InProgress = false 
-	takeHostage.type = ""
-	SetEntityHealth(PlayerPedId(),0)
-	DetachEntity(PlayerPedId(), true, false)
-	ensureAnimDict("anim@gangops@hostage@")
-	TaskPlayAnim(PlayerPedId(), "anim@gangops@hostage@", "victim_fail", 8.0, -8.0, -1, 168, 0, false, false, false)
+RegisterNetEvent("ARMA:takeHostageKillHostage",function()
+    a.InProgress = false
+    a.type = ""
+    SetEntityHealth(PlayerPedId(), 0)
+    DetachEntity(PlayerPedId(), true, false)
+    q("anim@gangops@hostage@")
+    TaskPlayAnim(PlayerPedId(), "anim@gangops@hostage@", "victim_fail", 8.0, -8.0, -1, 168, 0, false, false, false)
+    RemoveAnimDict("anim@gangops@hostage@")
 end)
 
-RegisterNetEvent("TakeHostage:cl_stop")
-AddEventHandler("TakeHostage:cl_stop", function()
-	takeHostage.InProgress = false
-	takeHostage.type = "" 
-	ClearPedSecondaryTask(PlayerPedId())
-	DetachEntity(PlayerPedId(), true, false)
-end)
-
-Citizen.CreateThread(function()
-	while true do
-		if takeHostage.type == "agressor" then
-			if not IsEntityPlayingAnim(PlayerPedId(), takeHostage.agressor.animDict, takeHostage.agressor.anim, 3) then
-				TaskPlayAnim(PlayerPedId(), takeHostage.agressor.animDict, takeHostage.agressor.anim, 8.0, -8.0, 100000, takeHostage.agressor.flag, 0, false, false, false)
-			end
-		elseif takeHostage.type == "hostage" then
-			if not IsEntityPlayingAnim(PlayerPedId(), takeHostage.hostage.animDict, takeHostage.hostage.anim, 3) then
-				TaskPlayAnim(PlayerPedId(), takeHostage.hostage.animDict, takeHostage.hostage.anim, 8.0, -8.0, 100000, takeHostage.hostage.flag, 0, false, false, false)
-			end
-		end
-		Wait(0)
-	end
+RegisterNetEvent("ARMA:takeHostageCl_stop",function()
+    a.InProgress = false
+    a.type = ""
+    ClearPedSecondaryTask(PlayerPedId())
+    DetachEntity(PlayerPedId(), true, false)
 end)
 
 Citizen.CreateThread(function()
-	while true do 
-		if takeHostage.type == "agressor" then
-			DisableControlAction(0,24,true) -- disable attack
-			DisableControlAction(0,25,true) -- disable aim
-			DisableControlAction(0,47,true) -- disable weapon
-			DisableControlAction(0,58,true) -- disable weapon
-			DisableControlAction(0,21,true) -- disable sprint
-			DisablePlayerFiring(PlayerPedId(),true)
-			drawNativeText("Press [G] to release, [H] to kill")
-
-			if IsEntityDead(PlayerPedId()) then	
-				takeHostage.type = ""
-				takeHostage.InProgress = false
-				ensureAnimDict("reaction@shove")
-				TaskPlayAnim(PlayerPedId(), "reaction@shove", "shove_var_a", 8.0, -8.0, -1, 168, 0, false, false, false)
-				TriggerServerEvent("TakeHostage:releaseHostage", takeHostage.targetSrc)
-			end 
-
-			if IsDisabledControlJustPressed(0,47) then --release	
-				takeHostage.type = ""
-				takeHostage.InProgress = false 
-				ensureAnimDict("reaction@shove")
-				TaskPlayAnim(PlayerPedId(), "reaction@shove", "shove_var_a", 8.0, -8.0, -1, 168, 0, false, false, false)
-				TriggerServerEvent("TakeHostage:releaseHostage", takeHostage.targetSrc)
-			elseif IsDisabledControlJustPressed(0,74) then --kill 			
-				takeHostage.type = ""
-				takeHostage.InProgress = false 		
-				ensureAnimDict("anim@gangops@hostage@")
-				TaskPlayAnim(PlayerPedId(), "anim@gangops@hostage@", "perp_fail", 8.0, -8.0, -1, 168, 0, false, false, false)
-				TriggerServerEvent("TakeHostage:killHostage", takeHostage.targetSrc)
-				TriggerServerEvent("TakeHostage:stop",takeHostage.targetSrc)
-				Wait(100)
-				SetPedShootsAtCoord(PlayerPedId(), 0.0, 0.0, 0.0, 0)
-			end
-		elseif takeHostage.type == "hostage" then 
-			DisableControlAction(0,21,true) -- disable sprint
-			DisableControlAction(0,24,true) -- disable attack
-			DisableControlAction(0,25,true) -- disable aim
-			DisableControlAction(0,47,true) -- disable weapon
-			DisableControlAction(0,58,true) -- disable weapon
-			DisableControlAction(0,263,true) -- disable melee
-			DisableControlAction(0,264,true) -- disable melee
-			DisableControlAction(0,257,true) -- disable melee
-			DisableControlAction(0,140,true) -- disable melee
-			DisableControlAction(0,141,true) -- disable melee
-			DisableControlAction(0,142,true) -- disable melee
-			DisableControlAction(0,143,true) -- disable melee
-			DisableControlAction(0,75,true) -- disable exit vehicle
-			DisableControlAction(27,75,true) -- disable exit vehicle  
-			DisableControlAction(0,22,true) -- disable jump
-			DisableControlAction(0,32,true) -- disable move up
-			DisableControlAction(0,268,true)
-			DisableControlAction(0,33,true) -- disable move down
-			DisableControlAction(0,269,true)
-			DisableControlAction(0,34,true) -- disable move left
-			DisableControlAction(0,270,true)
-			DisableControlAction(0,35,true) -- disable move right
-			DisableControlAction(0,271,true)
-		end
-		Wait(0)
-	end
+    while true do
+        if a.type == "agressor" then
+            if not IsEntityPlayingAnim(PlayerPedId(), a.agressor.animDict, a.agressor.anim, 3) then
+                q(a.agressor.animDict)
+                TaskPlayAnim(PlayerPedId(),a.agressor.animDict,a.agressor.anim,8.0,-8.0,100000,a.agressor.flag,0,false,false,false)
+                RemoveAnimDict(a.agressor.animDict)
+            end
+        elseif a.type == "hostage" then
+            if not IsEntityPlayingAnim(PlayerPedId(), a.hostage.animDict, a.hostage.anim, 3) then
+                q(a.hostage.animDict)
+                TaskPlayAnim(PlayerPedId(),a.hostage.animDict,a.hostage.anim,8.0,-8.0,100000,a.hostage.flag,0,false,false,false)
+                RemoveAnimDict(a.hostage.animDict)
+            end
+        end
+        Wait(0)
+    end
 end)
+
+Citizen.CreateThread(function()
+    while true do
+        if a.type == "agressor" then
+            DisableControlAction(0, 24, true)
+            DisableControlAction(0, 25, true)
+            DisableControlAction(0, 47, true)
+            DisableControlAction(0, 58, true)
+            DisableControlAction(0, 21, true)
+            DisablePlayerFiring(PlayerPedId(), true)
+            s("Press [G] to release, [H] to kill")
+            if IsEntityDead(PlayerPedId()) then
+                a.type = ""
+                a.InProgress = false
+                q("reaction@shove")
+                TaskPlayAnim(PlayerPedId(),"reaction@shove","shove_var_a",8.0,-8.0,-1,168,0,false,false,false)
+                RemoveAnimDict("reaction@shove")
+                TriggerServerEvent("ARMA:takeHostageReleaseHostage", a.targetSrc)
+            end
+            if IsDisabledControlJustPressed(0, 47) then
+                a.type = ""
+                a.InProgress = false
+                q("reaction@shove")
+                TaskPlayAnim(PlayerPedId(),"reaction@shove","shove_var_a",8.0,-8.0,-1,168,0,false,false,false)
+                RemoveAnimDict("reaction@shove")
+                TriggerServerEvent("ARMA:takeHostageReleaseHostage", a.targetSrc)
+            elseif IsDisabledControlJustPressed(0, 74) and GetGameTimer() - a.startTime > 4000 then
+                a.type = ""
+                a.InProgress = false
+                q("anim@gangops@hostage@")
+                TaskPlayAnim(PlayerPedId(),"anim@gangops@hostage@","perp_fail",8.0,-8.0,-1,168,0,false,false,false)
+                RemoveAnimDict("anim@gangops@hostage@")
+                TriggerServerEvent("ARMA:takeHostageKillHostage", a.targetSrc)
+                TriggerServerEvent("ARMA:takeHostageStop", a.targetSrc)
+                Wait(100)
+                SetPedShootsAtCoord(PlayerPedId(), 0.0, 0.0, 0.0, 0)
+            end
+        elseif a.type == "hostage" then
+            DisableControlAction(0, 21, true)
+            DisableControlAction(0, 24, true)
+            DisableControlAction(0, 25, true)
+            DisableControlAction(0, 47, true)
+            DisableControlAction(0, 58, true)
+            DisableControlAction(0, 263, true)
+            DisableControlAction(0, 264, true)
+            DisableControlAction(0, 257, true)
+            DisableControlAction(0, 140, true)
+            DisableControlAction(0, 141, true)
+            DisableControlAction(0, 142, true)
+            DisableControlAction(0, 143, true)
+            DisableControlAction(0, 75, true)
+            DisableControlAction(27, 75, true)
+            DisableControlAction(0, 22, true)
+            DisableControlAction(0, 32, true)
+            DisableControlAction(0, 268, true)
+            DisableControlAction(0, 33, true)
+            DisableControlAction(0, 269, true)
+            DisableControlAction(0, 34, true)
+            DisableControlAction(0, 270, true)
+            DisableControlAction(0, 35, true)
+            DisableControlAction(0, 271, true)
+        end
+        Wait(0)
+    end
+end)
+function tARMA.takeHostageInProgress()
+    return a.InProgress
+end
