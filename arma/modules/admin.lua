@@ -1003,7 +1003,7 @@ AddEventHandler('ARMA:zapPlayer', function(A)
     if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:useTheForceTarget", A)
         for k,v in pairs(ARMA.getUsers()) do
-            TriggerClientEvent("ARMA:useTheForceSync", v, source, GetEntityCoords(GetPlayerPed(v)))
+            TriggerClientEvent("ARMA:useTheForceSync", v, GetEntityCoords(GetPlayerPed(A)), GetEntityCoords(GetPlayerPed(v)))
         end
     end
 end)
