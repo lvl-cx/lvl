@@ -8,9 +8,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         var tickets = []
         if (result) {
             for (i = 0; i < result.length; i++) {
-                if (i < 10) {
-                    tickets.push(`\n${result[i].username}(${result[i].user_id}) - ${result[i].ticket_count}`)
-                }
+                tickets.push(`\n${result[i].username}(${result[i].user_id}) - ${result[i].ticket_count}`)
             }
             let embed = {
                 "title": `Ticket Leaderboard`,
