@@ -299,5 +299,16 @@ client.on('message', (message) => {
     }
 });
 
+client.on("guildMemberAdd", function (member) {
+    try {
+        exports.ghmattimysql.execute("SELECT * FROM `arma_verification` WHERE discord_id = ? AND verified = 1", [member.id], (result) => {
+            if (result.length > 0){
+                let role = member.guild.roles.find(r => r.name === '| Verified');
+                member.addRole(role);
+            }
+        });
+       
+    } catch (error) {}
+});
 
 client.login(process.env.TOKEN)
