@@ -17,6 +17,7 @@ cfg.weapons = {
 	--?PD SMGs/Rifles
 	[`WEAPON_STING`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_sb_sting`},
 	[`WEAPON_MP5`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_sb_mp5`},
+	[`WEAPON_NONMP5`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_sb_nonmp5`},
 	[`WEAPON_M4A1`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_m4a1`},
 	[`WEAPON_SIGMCX`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_sigmcx`},
 	[`WEAPON_SIGMPX`] = {bone = 24818, offset = vector3(0.0, 0.18, 0.0), rotation = vector3(180.0, 148.0, 0.0), model = `w_ar_sigmpx`},
