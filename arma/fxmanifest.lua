@@ -80,6 +80,7 @@ files{
 	'audio/sfx/dlc_vinewood/casino_slot_machines_02.awc',
 	'audio/sfx/dlc_vinewood/casino_slot_machines_03.awc',
 	'audio/sfx/dlc_vinewood/*.awc',
+  'cfg/hashes.json',
 }
 
 
