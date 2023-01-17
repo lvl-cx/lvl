@@ -315,6 +315,13 @@ cfg.weapons = {
         policeWeapon = true,
         model = "w_ar_mk18v2",
     },
+    ["WEAPON_NOVESKENSR9"] = {
+        name = "Noveske NSR-9",
+        class = "AR",
+        ammo = "Police Issued 5.56mm",
+        policeWeapon = true,
+        model = "w_ar_noveskensr9",
+    },
     --?SMG
     ["WEAPON_MP5"] = {
         name = "MP5",
