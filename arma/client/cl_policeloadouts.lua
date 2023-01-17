@@ -46,11 +46,11 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
         local t = function(s)
             selectedLoadout = nil
             RageUI.Visible(RMenu:Get("policeloadouts", "main"), false)
+            RageUI.Visible(RMenu:Get("policeloadouts", "confirm"), false)
             RageUI.ActuallyCloseAll()
         end
         local u = function(s)
             if IsControlJustPressed(1, 38) then
-                selectedLoadout = nil
                 TriggerServerEvent('ARMA:getPoliceLoadouts')
                 RageUI.Visible(RMenu:Get("policeloadouts", "main"), not RageUI.Visible(RMenu:Get("policeloadouts", "main")))
             end

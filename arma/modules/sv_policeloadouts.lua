@@ -29,6 +29,12 @@ loadouts = {
             "WEAPON_REMINGTON700",
         },
     }
+    ['MP5 Tazer'] = {
+        permission = "police.announce",
+        weapons = {
+            "WEAPON_NONMP5",
+        },
+    }
 }
 
 
