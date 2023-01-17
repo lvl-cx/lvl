@@ -62,7 +62,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
                                         },
                                         {
                                             name: '**Balance:**',
-                                            value: `Wallet: ${(money[0].wallet).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nBank: ${(money[0].bank).toLocaleString('en-US', {style: 'currency',currency: 'GBP'})}\nChips: ${(chips[0].chips).toLocaleString('en-US')}`,
+                                            value: `Wallet: £${money[0].wallet.toLocaleString()}\nBank: £${money[0].bank.toLocaleString()}\nChips: ${chips[0].chips.toLocaleString()}`,
                                             inline: true,
                                         }, 
                                         {
