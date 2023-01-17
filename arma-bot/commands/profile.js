@@ -21,7 +21,7 @@ var banned = false
 var discord = 'None'
 exports.runcmd = (fivemexports, client, message, params) => {
     if (!params[0]) {
-        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'groups [permid]')
+        return message.reply('Invalid args! Correct term is: ' + process.env.PREFIX + 'profile [permid]')
     }
     fivemexports.arma.getConnected([parseInt(params[0])], function(connected) {
         userConnected = connected
