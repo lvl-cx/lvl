@@ -109,6 +109,8 @@ Citizen.CreateThread(function()
                                         h(i,j,29)
                                     elseif s=="lfb"then
                                         h(i,j,1)
+                                    elseif s=="hems"then 
+                                        h(i,j,44)
                                     elseif s=="nhs"then 
                                         h(i,j,2)
                                     end
