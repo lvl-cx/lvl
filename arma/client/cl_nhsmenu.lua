@@ -391,19 +391,19 @@ RegisterNetEvent("ARMA:returnRevive",function()
 end)
 
 local B = {
-    [GetHashKey("WEAPON_SNOWBALL")] = true,
-    [GetHashKey("WEAPON_HOSE")] = true,
-    [GetHashKey("WEAPON_THROWBAG")] = true,
-    [GetHashKey("WEAPON_PETROLCAN")] = true,
-    [GetHashKey("WEAPON_FIREEXTINGUISHER")] = true,
-    [GetHashKey("GADGET_PARACHUTE")] = true,
-    [GetHashKey("WEAPON_STAFFGUN")] = true,
+    GetHashKey("WEAPON_SNOWBALL") = true,
+    GetHashKey("WEAPON_HOSE") = true,
+    GetHashKey("WEAPON_THROWBAG") = true,
+    GetHashKey("WEAPON_PETROLCAN") = true,
+    GetHashKey("WEAPON_FIREEXTINGUISHER") = true,
+    GetHashKey("GADGET_PARACHUTE") = true,
+    GetHashKey("WEAPON_STAFFGUN") = true,
 }
 local function C()
     if globalNHSOnDuty or globalLFBOnDuty then
         local D = PlayerPedId()
         local E = GetSelectedPedWeapon(D)
-        if E ~= GetHashKey("WEAPON_UNARMED") and not B[E] and not tARMA.getUserId() == 1 then
+        if E ~= GetHashKey("WEAPON_UNARMED") and not B[E]then
             tARMA.setWeapon(D, "WEAPON_UNARMED", true)
         end
     end
