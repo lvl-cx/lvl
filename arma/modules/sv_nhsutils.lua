@@ -85,8 +85,10 @@ AddEventHandler('ARMA:nhsRevive', function(playersrc)
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
         ARMAclient.isInComa(playersrc, {}, function(in_coma)
-            TriggerClientEvent('ARMA:beginRevive', source, in_coma, ARMA.getUserId(playersrc), playersrc, GetPlayerName(playersrc))
-            lifePaksConnected[user_id] = {permid = ARMA.getUserId(playersrc)} 
+            if in_coma then
+                TriggerClientEvent('ARMA:beginRevive', source, in_coma, ARMA.getUserId(playersrc), playersrc, GetPlayerName(playersrc))
+                lifePaksConnected[user_id] = {permid = ARMA.getUserId(playersrc)} 
+            end
         end)
     else
         TriggerEvent("ARMA:acBan", user_id, 11, GetPlayerName(source), source, 'Trigger NHS Revive')
