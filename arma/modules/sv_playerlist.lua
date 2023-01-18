@@ -40,7 +40,7 @@ local nhsGroups = {
     ["NHS Captain Clocked"] = true,
     ["NHS Deputy Chief Clocked"] = true,
     ["NHS Assistant Chief Clocked"] = true,
-    ["NHS Head Chief Clocked"] = true
+    ["NHS Head Chief Clocked"] = true,
     ["HEMS Clocked"]=true,
 }
 local lfbGroups = {
