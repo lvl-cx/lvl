@@ -555,7 +555,6 @@ cfg.groups = {
         "nhs.whitelisted",
     },
     ["NHS Doctor Clocked"] = {
-        "nhs.whitelisted",
         "nhs.onduty.permission",
         "nhs.whitelisted",
         "nhs.doctor",
