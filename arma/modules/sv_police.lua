@@ -151,6 +151,29 @@ RegisterCommand('frontcuff', function(source, args)
   end)
 end)
 
+function ARMA.handcuffKeys(source)
+  local source = source
+  local user_id = ARMA.getUserId(source)
+  if ARMA.getInventoryItemAmount(user_id, 'handcuffkeys') >= 1 then
+    ARMAclient.getNearestPlayer(source,{5},function(nplayer)
+      if nplayer ~= nil then
+        local nplayer_id = ARMA.getUserId(nplayer)
+        ARMAclient.isHandcuffed(nplayer,{},function(handcuffed)
+          if handcuffed then
+            ARMA.tryGetInventoryItem(user_id, 'handcuffkeys', 1)
+            TriggerClientEvent('ARMA:uncuffAnim', source, nplayer, false)
+            TriggerClientEvent('ARMA:unHandcuff', source, false)
+            TriggerClientEvent('ARMA:toggleHandcuffs', nplayer, false)
+            TriggerClientEvent('ARMA:playHandcuffSound', -1, GetEntityCoords(GetPlayerPed(source)))
+          end
+        end)
+      else
+        ARMAclient.notify(source,{lang.common.no_player_near()})
+      end
+    end)
+  end
+end
+
 local section60s = {}
 RegisterCommand('s60', function(source, args)
     local source = source
