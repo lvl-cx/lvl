@@ -20,7 +20,6 @@ Citizen.CreateThread(function()
             if IsPlayerFreeAiming(PlayerId()) then         
                 local entity = getEntity(PlayerId())     
                 local model = GetEntityModel(entity)        
-
                 if hashes[tostring(model)] then                 
                     modelText = hashes[tostring(model)]        
                 else                
@@ -35,7 +34,8 @@ end)
 
 function getEntity(player)                                          
     local result, entity = GetEntityPlayerIsFreeAimingAt(player)   
-return entity                                                    
+    return entity        
+end                                            
 
 function DrawInfos(...)
     local args = {...}
