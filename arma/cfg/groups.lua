@@ -490,8 +490,14 @@ cfg.groups = {
     -- $$ |\$$$ |$$ |  $$ |$$\   $$ |
     -- $$ | \$$ |$$ |  $$ |\$$$$$$  |
     -- \__|  \__|\__|  \__| \______/ 
-                                                        
-    
+    ["HEMS Clocked"] = {
+        "nhs.whitelisted",
+        "nhs.onduty.permission",
+        "nhs.hems",
+    },
+    ["HEMS"] = {
+        "nhs.whitelisted"
+    },                                               
     ["NHS Head Chief Clocked"] = {
         "nhs.onduty.permission",
         "nhs.whitelisted",
