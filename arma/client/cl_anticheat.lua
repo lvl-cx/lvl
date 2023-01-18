@@ -41,10 +41,9 @@ Citizen.CreateThread(function()
 		and not tARMA.isInSpectate() 
 		and not carryingBackInProgress 
 		and not tARMA.takeHostageInProgress() 
-		and not GetPedParachuteState(i) <= 0 
+		and GetPedParachuteState(i) <= 0 
 		and not IsPedRunning(i)
 		and not tARMA.isPlayerRappeling()
-		and not tARMA.isPlayerAboveGround()
 		and not tARMA.isPlayerHidingInBoot()
 		then
             if not IsPedInAnyVehicle(i, 1) then
