@@ -35,7 +35,6 @@ AddEventHandler("ARMA:getJobSelectors",function()
     ARMA.getJobSelectors(source)
 end)
 
-
 function ARMA.removeAllJobs(user_id)
     local source = ARMA.getUserSource(user_id)
     for i,j in pairs(cfg.selectorTypes) do

@@ -47,7 +47,9 @@ local webhooks = {
     ['impound'] = 'https://discord.com/api/webhooks/1060733936428384256/e3CUtdizOWD_EtgOfFYLN5xQlp-F5kZMDRYW7h4ezuVzK6eRg9SvtXTIeFKssvoNl-C7',
     ['police-k9'] = 'https://discord.com/api/webhooks/1062516761666265170/nAJ0RQzpOyCvPFwQyk2YscRgdK4aA68VP_ZaM5FVwcHNOlmGnMFY0umDcdu2FZfNaOvy',
     -- nhs
-    ['nhs-clock'] = '',
+    ['nhs-clock'] = 'https://discord.com/api/webhooks/1065311932682350592/ldJGbotpbTTGvScSeR_kZ9VUjd5qIxq5SbvomsBcamnd50jMGw0dbkITEVW6vbnGqyCY',
+    ['nhs-panic'] = 'https://discord.com/api/webhooks/1065312006166548532/T-4e2NGh45cok2O_0O91lO7yNUTcKyVzGOkCAFLFUNYOwwSd32pgsF2q3nKa69nrny2v',
+    ['nhs-afk'] = 'https://discord.com/api/webhooks/1065312445360509059/4lVrq229SBYhpcldpKzqZd7kjpQpuCAAHB19lAjCVHNRAQAIMcnsV9dNJahVuZ4WCCtZ',
     ['cpr'] = '',
     -- licenses
     ['purchases'] = 'https://discord.com/api/webhooks/1050352635095556157/0cQl-CYhatzE2v9VUx_yQKNY10cD8x-PV8oMkQJHcQizJneqeg5pdPsFlkErlV1nQ8Pc',
