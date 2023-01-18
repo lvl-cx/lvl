@@ -61,6 +61,7 @@ cfg.sortOrder = {
         "nhs.specialist",
         "nhs.seniordoctor",
         "nhs.doctor",
+        "nhs.hems",
         "nhs.juniordoctor",
         "nhs.criticalcare",
         "nhs.paramedic",
