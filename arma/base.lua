@@ -911,9 +911,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             code = data_code[1]["code"]
                                             if code == nil then
                                                 code = math.random(100000, 999999)
-                                                if #exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code}) > 0 then
-                                                    goto try_verify
-                                                end
                                             end
                                             exports["ghmattimysql"]:executeSync("UPDATE arma_verification SET code = @code WHERE user_id = @user_id", {user_id = user_id, code = code})
                                             local function show_auth_card(code, deferrals, callback)
@@ -956,7 +953,6 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             deferrals.update("[ARMA] Checking discord verification...")
                                             if not tARMA.checkForRole(user_id, '975490533344559161') then
                                                 deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
-                                                return
                                             end
                                             if ARMA.CheckTokens(source, user_id) then 
                                                 deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
