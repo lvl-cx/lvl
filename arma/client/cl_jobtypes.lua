@@ -16,7 +16,9 @@ function tARMA.getJobType(i)
         for a,b in pairs(jobGroups) do
             if b.user_id == i then
                 for k,v in pairs(b.jobs) do
-                    if c[k] then 
+                    if c[k] and k == "HEMS Clocked" then 
+                        return "hems"
+                    elseif c[k] then
                         return "nhs"
                     elseif d[k] and k == "NPAS Clocked" then
                         return "npas" 
