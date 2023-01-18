@@ -502,6 +502,7 @@ cfg.groups = {
         "nhs.onduty.permission",
         "nhs.whitelisted",
         "nhs.headchief",
+        "nhs.announce",
     },
     ["NHS Head Chief"] = {
         "nhs.whitelisted",
@@ -510,6 +511,7 @@ cfg.groups = {
         "nhs.onduty.permission",
         "nhs.whitelisted",
         "nhs.assistantchief",
+        "nhs.announce",
     },
     ["NHS Assistant Chief"] = {
         "nhs.whitelisted",
@@ -518,6 +520,7 @@ cfg.groups = {
         "nhs.onduty.permission",
         "nhs.whitelisted",
         "nhs.deputychief",
+        "nhs.announce",
     },
     ["NHS Deputy Chief"] = {
         "nhs.whitelisted",
@@ -525,6 +528,7 @@ cfg.groups = {
     ["NHS Captain Clocked"] = {
         "nhs.onduty.permission",
         "nhs.whitelisted",
+        "nhs.announce",
     },
     ["NHS Captain"] = {
         "nhs.whitelisted",
