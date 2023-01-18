@@ -447,6 +447,7 @@ AddEventHandler("ARMA:BanPlayer", function(PlayerID, Duration, BanMessage, BanPo
             end
             if Duration == -1 then
                 banDuration = "perm"
+                BanPoints = 0
             else
                 banDuration = CurrentTime + (60 * 60 * tonumber(Duration))
             end
