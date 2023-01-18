@@ -52,7 +52,7 @@ cfg.Guild_Roles = {
 		['Trident Officer'] = 991819633097183322,
 		['Trident Command'] = 991809551802310767,
 		['K9 Trained'] = 991813474906820629,
-	}
+	},
 
 	['NHS'] = {
 		['NHS Head Chief'] = 1062753858419441664,
