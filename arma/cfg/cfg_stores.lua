@@ -29,6 +29,7 @@ cfg.shopItems = {
     {name = "Lockpick", itemID = "lockpick", price = 25000,},
     {name = "Shaver", itemID = "Shaver", price = 250000},
     {name = "Head Bag", itemID = "Headbag", price = 10000},
+    {name = "Handcuff Keys", itemID = "handcuffkeys", price = 10000},
 }
 
 return cfg
