@@ -309,7 +309,7 @@ RageUI.CreateWhile(1.0, true, function()
             end,RMenu:Get("emotesmenu", "propemotes"))
             RageUI.Button("👫 Shared Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "sharedemotes"))
-            RageUI.Button("🔫 Gun Emotes",,"",{},true,function()
+            RageUI.Button("🔫 Gun Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "gunemotes"))
             for aB, E in aw(a.emotes) do
                 RageUI.Button(E[3],"/e (" .. aB .. ")",{},not a6(E),function(ay, az, aA)
