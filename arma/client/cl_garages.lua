@@ -280,6 +280,7 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, pl
         while DoesEntityExist(as) do
             local aI = GetFuel(as)
             if fuelLevels[E] ~= aI then
+                print('Setting fuel level to '..aI)
                 TriggerServerEvent("ARMA:updateFuel", E, math.floor(aI * 1000) / 1000)
                 fuelLevels[E] = aI
                 SetEntityInvincible(as, false)

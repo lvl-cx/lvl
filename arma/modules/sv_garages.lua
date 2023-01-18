@@ -143,7 +143,6 @@ RegisterServerEvent("ARMA:updateFuel")
 AddEventHandler('ARMA:updateFuel', function(vehicle, fuel_level)
     local source = source
     local user_id = ARMA.getUserId(source)
-    print('ID: '..user_id..' Spawncode: '..vehicle..' Fuel Level: '..fuel_level)
     exports["ghmattimysql"]:execute("UPDATE arma_user_vehicles SET fuel_level = @fuel_level WHERE user_id = @user_id AND vehicle = @vehicle", {fuel_level = fuel_level, user_id = user_id, vehicle = vehicle}, function() end)
 end)
 
