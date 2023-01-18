@@ -4,7 +4,7 @@ cfg = {
   	Guilds = {
 		['Main'] = '975490533344559154', 
 		['Police'] = '991799285681233930', 
-		-- ['NHS'] = '1005632218133180487',
+		['NHS'] = '1062753698528382976',
 		-- ['HMP'] = '1016844313591812128',
 		-- ['LFB'] = '1016858643293024308',
   	},
@@ -54,20 +54,21 @@ cfg.Guild_Roles = {
 		['K9 Trained'] = 991813474906820629,
 	}
 
-	-- ['NHS'] = {
-	-- 	['NHS Head Chief'] = 1013072143208157234,
-	-- 	['NHS Assistant Chief'] = 1013072231695388743,
-	-- 	['NHS Deputy Chief'] = 1013072284061270127,
-	-- 	['NHS Captain'] = 1017618355047383141,
-	-- 	['NHS Specialist'] = 1017618411284615260,
-	-- 	['NHS Senior Doctor'] = 1017618467731554364,
-	-- 	['NHS Doctor'] = 1017618570940780576,
-	-- 	['NHS Junior Doctor'] = 1017618604541362277,
-	-- 	['NHS Critical Care Paramedic'] = 1017618670559698995,
-	-- 	['NHS Paramedic'] = 1017618728348811306,
-	-- 	['NHS Trainee Paramedic'] = 1017618794333614140,
-	-- 	['Drone Trained'] = 1022642333696675840,
-	-- },
+	['NHS'] = {
+		['NHS Head Chief'] = 1062753858419441664,
+		['NHS Assistant Chief'] = 1062753858910167072,
+		['NHS Deputy Chief'] = 1062753859950362684,
+		['NHS Captain'] = 1062753860432699432,
+		['NHS Consultant'] = 1062753873682518039,
+		['NHS Specialist'] = 1062753874781405184,
+		['NHS Senior Doctor'] = 1062753878975729744,
+		['NHS Doctor'] = 1062753879877484565,
+		['NHS Junior Doctor'] = 1062753880481472602,
+		['NHS Critical Care Paramedic'] = 1062753881072869526,
+		['NHS Paramedic'] = 1062753887917965372,
+		['NHS Trainee Paramedic'] = 1062753888572280882,
+		['Drone Trained'] = 1065226113158234134,
+	},
 
 	-- ['HMP'] = {
 	-- 	['Governor'] = 1017619823804547113,
