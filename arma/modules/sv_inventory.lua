@@ -275,6 +275,8 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
                     TriggerClientEvent('ARMA:boughtBackpack', source, 5, 90, 0,250000,70, 'Rebel Backpack (+70kg)')
                 elseif itemId == "Shaver" then 
                     ARMA.ShaveHead(source)
+                elseif itemId == "handcuffkeys" then 
+                    ARMA.handcuffKeys(source)
                 end
                 TriggerEvent('ARMA:RefreshInventory', source)
             end
