@@ -461,7 +461,7 @@ RageUI.CreateWhile(1.0, true, function()
                                     b0 = "~g~"
                                 end
                                 if tARMA.isVehicleImpounded(E) then
-                                    aT = aT .. " ~r~(IMPOUNDED)"
+                                    aT = aT .. " ~r~(IMPOUNDED)~w~"
                                 end
                                 RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
                                     if aP then
