@@ -9,18 +9,6 @@ local globalOnPrisonDuty = false
 local hideHud = false
 local draggedPed = 0
 
-RegisterNetEvent("ARMAUI5:globalOnPoliceDuty")
-AddEventHandler("ARMAUI5:globalOnPoliceDuty",function(a)
-    globalOnPoliceDuty = a
-end)
-RegisterNetEvent("ARMAUI5:globalOnNHSDuty")
-AddEventHandler("ARMAUI5:globalOnNHSDuty",function(b)
-    globalOnNHSDuty = b
-end)
-RegisterNetEvent("ARMAUI5:globalOnPrisonDuty")
-AddEventHandler("ARMAUI5:globalOnPrisonDuty",function(c)
-    globalOnPrisonDuty = c
-end)
 RegisterNetEvent("ARMA:showHUD")
 AddEventHandler("ARMA:showHUD",function(flag)
     hideHud = not flag
@@ -111,6 +99,7 @@ Citizen.CreateThread(function()
                 closeMenu = true
             })
         end
+
         if EntityType then
             if playerIsAlive() and playerVehicle == 0 then
                 if EntityType == 1 and Entity ~= playerPed and IsPedAPlayer(Entity) then
@@ -177,6 +166,8 @@ Citizen.CreateThread(function()
             else
                 Crosshair(false)
             end
+        else
+            Crosshair(false)
         end
 
         if not crosshairStatus and draggedPed ~= 0 and IsControlPressed(0, 19) and IsControlJustPressed(0, 38) then -- INPUT_CHARACTER_WHEEL (LEFT ALT) + INPUT_PICKUP (E)
@@ -529,6 +520,19 @@ RegisterNUICallback("radialClick", function(data)
     elseif menu == "seizeillegals" then
         seizeillegals(entityId)
     end
+end)
+
+RegisterNetEvent("ARMAUI5:globalOnPoliceDuty")
+AddEventHandler("ARMAUI5:globalOnPoliceDuty",function(a)
+    globalOnPoliceDuty = a
+end)
+RegisterNetEvent("ARMAUI5:globalOnNHSDuty")
+AddEventHandler("ARMAUI5:globalOnNHSDuty",function(b)
+    globalOnNHSDuty = b
+end)
+RegisterNetEvent("ARMAUI5:globalOnPrisonDuty")
+AddEventHandler("ARMAUI5:globalOnPrisonDuty",function(c)
+    globalOnPrisonDuty = c
 end)
 
 function GetPlayerByEntityID(i)
