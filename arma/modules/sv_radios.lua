@@ -18,6 +18,7 @@ local radioChannels = {
         name = 'Police',
         players = {},
         channel = 1,
+        callsign = true,
     },
     ['NHS'] = {
         name = 'NHS',
@@ -46,7 +47,9 @@ function createRadio(source)
             if ARMA.hasPermission(user_id, v) then
                 local sortOrder = k
                 local name = GetPlayerName(source)
-                name = name.." ["..getCallsign(radioType, source, user_id, radioType).."]"
+                if radioChannels[radioType].callsign then
+                    name = name.." ["..getCallsign(radioType, source, user_id, radioType).."]"
+                end
                 radioChannels[radioType]['players'][source] = {name = name, sortOrder = sortOrder}
                 TriggerClientEvent('ARMA:radiosCreateChannel', source, radioChannels[radioType].channel, radioChannels[radioType].name, radioChannels[radioType].players, true)
                 TriggerClientEvent('ARMA:radiosAddPlayer', -1, radioChannels[radioType].channel, source, {name = name, sortOrder = sortOrder})
