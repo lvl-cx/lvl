@@ -143,7 +143,7 @@ function tARMA.getFactionGroups(source)
 			Discord_Sources[discord_id] = {user_source = source, user_id = user_id}
 			Modify_Client_Roles('Main', discord_id, user_id)
 			Modify_Client_Roles('Police', discord_id, user_id)
-			-- Modify_Client_Roles('NHS', discord_id, user_id)
+			Modify_Client_Roles('NHS', discord_id, user_id)
 			-- Modify_Client_Roles('HMP', discord_id, user_id)
             -- Modify_Client_Roles('LFB', discord_id, user_id)
 		end
