@@ -386,8 +386,6 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                             PlayerBanCachedDuration[PlayerID] = PlayerBanCachedDuration[PlayerID] + bans[a].durations[PlayerOffenses[PlayerID][k]]
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] ~= -1 then
                                 points = points + bans[a].durations[PlayerOffenses[PlayerID][k]]/24
-                            else
-                                points = 10
                             end
                             table.insert(PlayerCacheBanMessage, bans[a].name)
                             if bans[a].durations[PlayerOffenses[PlayerID][k]] == -1 then
