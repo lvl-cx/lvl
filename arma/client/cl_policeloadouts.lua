@@ -1,6 +1,12 @@
 local loadouts = {}
 local selectedLoadout = nil
 local weapons = module("arma-weapons", "cfg/weapons")
+local loadoutCoords = {
+    vector3(457.0222, -983.0001, 30.68948), -- mission row
+    vector3(1844.323, 3692.164, 34.26707), -- sandy
+    vector3(-448.0566, 6018.454, 31.71638), -- paleto
+    vector3(-1106.505, -826.4623, 14.2828), -- vespucci
+}
 
 RMenu.Add("policeloadouts","main",RageUI.CreateMenu("","Please Select Division",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","gunstore"))
 RMenu.Add("policeloadouts","confirm",RageUI.CreateSubMenu(RMenu:Get("policeloadouts", "main"),"","Confirm Selection",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight()))
@@ -55,8 +61,10 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
                 RageUI.Visible(RMenu:Get("policeloadouts", "main"), not RageUI.Visible(RMenu:Get("policeloadouts", "main")))
             end
             local v, w, x = table.unpack(GetFinalRenderedCamCoord())
-            DrawText3D(457.0222, -983.0001, 30.68948,"Press [E] to open Police Loadouts",v,w,x)
+            DrawText3D(loadoutCoords[s.locationId].x,loadoutCoords[s.locationId].y,loadoutCoords[s.locationId].z,"Press [E] to open Police Loadouts",v,w,x)
         end
-        tARMA.createArea("police_loadouts", vector3(457.0222, -983.0001, 30.68948), 1.5, 6, r, t, u, {})
+        for k,v in pairs(loadoutCoords) do
+            tARMA.createArea("police_loadouts_"..k, v, 1.5, 6, r, t, u, {locationId = k})
+        end
     end
 end)
