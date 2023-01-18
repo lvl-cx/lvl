@@ -68,6 +68,7 @@ cfg.Guild_Roles = {
 		['NHS Paramedic'] = 1062753887917965372,
 		['NHS Trainee Paramedic'] = 1062753888572280882,
 		['Drone Trained'] = 1065226113158234134,
+		['HEMS'] = 1065228761198493726,
 	},
 
 	-- ['HMP'] = {
