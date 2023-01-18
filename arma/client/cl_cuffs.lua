@@ -134,6 +134,7 @@ local function q()
         DisableControlAction(0, 35, true)
         DisableControlAction(0, 271, true)
         DisableControlAction(0, 170, true)
+        tARMA.setWeapon(tARMA.getPlayerPed(), "WEAPON_UNARMED", true)
         SetPedStealthMovement(tARMA.getPlayerPed(),true,"")
         if not f then
             if b then
