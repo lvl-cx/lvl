@@ -16,7 +16,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
         .addField('Spawncode', `${params[0]}`)
         .addField('Issue', `${params.join(' ').replace(params[0], '')}`)
         .addField('From', `${message.author.username} - <@${message.author.id}>`)
-        .setColor('#ffcece')
+        .setColor(settingsjson.settings.botColour)
         .setFooter('⚙️ ARMA')
         .setTimestamp();
     
