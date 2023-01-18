@@ -140,7 +140,6 @@ AddEventHandler('ARMA:cancelPlayerSearch', function(playersrc)
     TriggerClientEvent('ARMA:cancelPlayerSearch', currentlySearching[user_id])
 end)
 
-
 RegisterNetEvent('ARMA:searchPlayer')
 AddEventHandler('ARMA:searchPlayer', function(playersrc)
     local source = source
@@ -194,8 +193,8 @@ AddEventHandler('ARMA:robPlayer', function(playersrc)
         InventorySpamTrack[source] = true;
         local user_id = ARMA.getUserId(source) 
         local data = ARMA.getUserDataTable(user_id)
-        local their_id = ARMA.getUserId({playersrc}) 
-        local their_data = ARMA.getUserDataTable({their_id})
+        local their_id = ARMA.getUserId(playersrc) 
+        local their_data = ARMA.getUserDataTable(their_id)
         if data and data.inventory then
             local FormattedInventoryData = {}
             for i,v in pairs(data.inventory) do
