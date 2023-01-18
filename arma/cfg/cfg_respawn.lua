@@ -32,7 +32,7 @@ cfg.spawnLocations = {
     ["VIP Island"] = {
         name = "VIP Island",
         coords = vector3(-2168.3569335938,5137.6884765625,2.8299977779388),
-        permission = {"vip.gunstore"},
+        permission = {"vip.aircraft"},
         image = "https://cdn.cmg.city/content/fivem/houses/vipisland.png",
         price = 0
     },
