@@ -25,6 +25,7 @@ AddEventHandler('LicenseCentre:BuyGroup', function(job, name)
                         tARMA.sendWebhook('purchases',"ARMA License Centre Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Purchased: **"..name.."**")
                         TriggerClientEvent("arma:PlaySound", source, 1)
                         TriggerClientEvent("ARMA:gotOwnedLicenses", source, getLicenses(user_id))
+                        TriggerClientEvent("ARMA:refreshGunStorePermissions", source)
                     else 
                         ARMAclient.notify(source, {"~r~You do not have enough money to purchase this license!"})
                         TriggerClientEvent("arma:PlaySound", source, 2)
