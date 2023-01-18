@@ -5,6 +5,7 @@ local a = module("arma-weapons", "cfg/weapons")
 items["repairkit"] = {"Repair Kit","Used to repair vehicles.",nil,0.5}
 items["Headbag"] = {"Head Bag","Used to cover someone's head.",nil,0.5}
 items["Shaver"] = {"Shaver","Used to shave someone's head.",nil,0.5}
+items["handcuffkeys"] = {"Handcuff Keys","Used to uncuff someone.",nil,0.5}
 
 -- give "wbody|WEAPON_PISTOL" and "wammo|WEAPON_PISTOL" to have pistol body and pistol bullets
 
