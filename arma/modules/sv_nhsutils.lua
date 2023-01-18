@@ -3,7 +3,10 @@ local bodyBags = {}
 RegisterServerEvent("ARMA:requestBodyBag")
 AddEventHandler('ARMA:requestBodyBag', function(playerToBodyBag)
     local source = source
-    TriggerClientEvent('ARMA:placeBodyBag', playerToBodyBag)
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission('nhs.onduty.permission') then
+        TriggerClientEvent('ARMA:placeBodyBag', playerToBodyBag)
+    end
 end)
 
 RegisterServerEvent("ARMA:removeBodybag")
