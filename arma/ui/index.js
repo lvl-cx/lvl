@@ -171,6 +171,7 @@ window.addEventListener("message", function(event){
 });
 
 function djMusic(song, volume) {
+    console.log($("#dj"))
     try {
         var vid = song
         var skip = false

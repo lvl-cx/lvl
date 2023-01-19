@@ -136,6 +136,12 @@ AddEventHandler("fuel:startFuelUpTick",function(y, s, j)
 	if y then
 		TriggerServerEvent("ARMA:takeAmount", math.floor(g))
 	end
+	local G = GetEntityModel(j)
+	local H = tARMA.getVehicleIdFromHash(G)
+	if H then
+		local I = GetFuel(j)
+		TriggerServerEvent("ARMA:updateFuel", H, math.floor(I * 1000) / 1000)
+	end
 	g = 0.0
 end)
 AddEventHandler("fuel:refuelFromPump",function(y, s, j)
