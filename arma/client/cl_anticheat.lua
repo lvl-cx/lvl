@@ -44,7 +44,6 @@ Citizen.CreateThread(function()
 		and GetPedParachuteState(i) <= 0 
 		and not IsPedRunning(i)
 		and not tARMA.isPlayerRappeling()
-		and not tARMA.isPlayerHidingInBoot()
 		then
             if not IsPedInAnyVehicle(i, 1) then
                 speedWarnings = speedWarnings + 1
@@ -258,7 +257,7 @@ Citizen.CreateThread(function()
 		if j ~= 0 then
 			local E = GetVehicleTopSpeedModifier(j)
 			if E > 1.0 then
-				TriggerServerEvent("ARMA:acType8", "GetVehicleTopSpeedModifier "..D)
+				TriggerServerEvent("ARMA:acType8", "GetVehicleTopSpeedModifier "..E)
 			end
 		end
 		local F = GetWeaponDamageModifier(GetCurrentPedWeapon(i))
@@ -284,11 +283,11 @@ Citizen.CreateThread(function()
 			Wait(30000)
 		end
 		if F > 1.0 then
-			TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..D)
+			TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..F)
 			Wait(30000)
 		end
 		if G > 1.0 then
-			TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..D)
+			TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..G)
 			Wait(30000)
 		end
 		RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
