@@ -1,5 +1,5 @@
 local lang = ARMA.lang
-local cfg = module("cfg/inventory")
+local cfg = module("arma-vehicles", "inventory")
 
 -- this module define the player inventory (lost after respawn, as wallet)
 

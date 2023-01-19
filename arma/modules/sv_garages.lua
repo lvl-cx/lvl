@@ -1,6 +1,6 @@
 local lang = ARMA.lang
 local cfg = module("arma-vehicles", "garages")
-local cfg_inventory = module("cfg/inventory")
+local cfg_inventory = module("arma-vehicles", "inventory")
 local vehicle_groups = cfg.garages
 local limit = cfg.limit or 100000000
 MySQL.createCommand("ARMA/add_vehicle","INSERT IGNORE INTO arma_user_vehicles(user_id,vehicle,vehicle_plate,locked) VALUES(@user_id,@vehicle,@registration,@locked)")

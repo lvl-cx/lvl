@@ -1,6 +1,6 @@
 MySQL = module("modules/MySQL")
 
-local Inventory = module("arma", "cfg/inventory")
+local Inventory = module("arma-vehicles", "inventory")
 local Housing = module("arma", "cfg/cfg_housing")
 local InventorySpamTrack = {}
 local LootBagEntities = {}

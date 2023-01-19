@@ -1,5 +1,5 @@
 local cfg=module("cfg/cfg_simeons")
-local inventory=module("cfg/inventory")
+local inventory=module("arma-vehicles", "inventory")
 
 
 RegisterNetEvent("ARMA:refreshSimeonsPermissions")
