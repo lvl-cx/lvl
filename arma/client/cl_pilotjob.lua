@@ -31,7 +31,7 @@ local B = {x = z.x, y = z.y - z.height / 2, width = z.width, height = 0.002}
 local C = {x = z.x, y = z.y + z.height / 2, width = z.width, height = B.height}
 local D = {x = z.x - z.width / 2, y = z.y, width = B.height / 2, height = z.height + B.height}
 local E = {x = z.x + z.width / 2, y = z.y, width = B.height / 2, height = z.height + B.height}
-RMenu.Add("ARMApilotjob","atcMenu",RageUI.CreateMenu("","Air Traffic Communications",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"arna_pilotjob","arna_pilotjob"))
+RMenu.Add("ARMApilotjob","atcMenu",RageUI.CreateMenu("","Air Traffic Communications",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"arma_pilotjob","arma_pilotjob"))
 AddEventHandler("ARMA:onClientSpawn",function(F, G)
     local H = a.startJobLocs
     if G then
