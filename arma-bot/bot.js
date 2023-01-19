@@ -91,16 +91,6 @@ if (settingsjson.settings.StatusEnabled) {
                         "value": `${onlineNHS}`,
                         "inline": true
                     },                      
-                    /* {
-                        "name": "Server Status:",
-                        "value": `${serverStatus}`,
-                        "inline": true
-                    }, */
-                    /* {
-                        "name": "🌎 Players Since Release:",
-                        "value": `${playersSinceRelease}`,
-                        "inline": true
-                    }, */
                     {
                         "name": "💻 How do I connect?",
                         "value": '``F8 -> connect s1.armarp.co.uk``',
@@ -116,7 +106,7 @@ if (settingsjson.settings.StatusEnabled) {
             }
             msg.edit({ embed: status }) // uncomment when not using testing bot
         }).catch(err => {
-            channelid.send('Status Page JamesUK#6793 Starting..').then(id => {
+            channelid.send('Status Page CNR MADE THIS FUCKING BOT Starting..').then(id => {
                 settingsjsons.messageid = id.id
                 fs.writeFile(`${resourcePath}/params.json`, JSON.stringify(settingsjsons), function(err) {});
                 return
