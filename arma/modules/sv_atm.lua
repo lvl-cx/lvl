@@ -33,6 +33,7 @@ local atms = {
     vector3(-95.58767, 6457.443, 31.46226),
     vector3(4475.221, -4469.465, 4.355662),
     vector3(4476.03, -4469.141, 4.355018),
+    vector3(315.2366, -593.7623, 43.28407),
 }
 local organheist = module('cfg/cfg_organheist') 
 
