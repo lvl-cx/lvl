@@ -908,9 +908,15 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                         if verified[1]["verified"] == 0 then
                                             local code = nil
                                             local data_code = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE user_id = @user_id", {user_id = user_id})
+                                            ::regen_code::
                                             code = data_code[1]["code"]
                                             if code == nil then
                                                 code = math.random(100000, 999999)
+                                            end
+                                            local codeExists = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code})
+                                            if codeExists.length > 0 then
+                                                print('Code already existed: '..code..' currently used by '..codeExists[0].user_id..' regenerating now for '..user_id)
+                                                goto regen_code
                                             end
                                             exports["ghmattimysql"]:executeSync("UPDATE arma_verification SET code = @code WHERE user_id = @user_id", {user_id = user_id, code = code})
                                             local function show_auth_card(code, deferrals, callback)
