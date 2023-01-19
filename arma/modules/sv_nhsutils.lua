@@ -4,7 +4,7 @@ RegisterServerEvent("ARMA:requestBodyBag")
 AddEventHandler('ARMA:requestBodyBag', function(playerToBodyBag)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission('nhs.onduty.permission') then
+    if ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
         TriggerClientEvent('ARMA:placeBodyBag', playerToBodyBag)
     end
 end)
