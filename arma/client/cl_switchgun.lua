@@ -103,7 +103,7 @@ Citizen.CreateThread(function()
 								timeout(3500,"~r~Do not change weapons to equip quicker! Your weapons have been holstered for 3.5s")
 							else
 								a = false
-								if o == "WEAPON_GLOCKCMG" and GetPedDrawableVariation(n, 7) == 187 then
+								if o == "WEAPON_PDGLOCK" and GetPedDrawableVariation(n, 7) == 187 then
 									tARMA.loadCustomisationPreset("TaserInHolster")
 								end
 								if not d then
