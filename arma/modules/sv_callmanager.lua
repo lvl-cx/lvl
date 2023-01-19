@@ -200,12 +200,29 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
     end         
 end)
 
+RegisterNetEvent("ARMA:PDRobberyCall")
+AddEventHandler("ARMA:PDRobberyCall", function(source)
+    local source = source
+    local user_id = ARMA.getUserSource(source)
+    local reason = 'Store Robbery'
+    callID = callID + 1
+    tickets[callID] = {
+        name = GetPlayerName(source),
+        permID = user_id,
+        tempID = source,
+        reason = reason,
+        type = 'met'
+    }
+    for k, v in pairs(ARMA.getUsers({})) do
+        TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(source), user_id, GetEntityCoords(GetPlayerPed(source)), reason, 'met')
+    end
+end)
 
 RegisterNetEvent("ARMA:NHSComaCall")
 AddEventHandler("ARMA:NHSComaCall", function()
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    reason = 'Immediate Attention'
+    local reason = 'Immediate Attention'
     callID = callID + 1
     tickets[callID] = {
         name = GetPlayerName(user_source),
