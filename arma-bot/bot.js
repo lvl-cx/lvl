@@ -293,7 +293,9 @@ client.on('message', (message) => {
             }
         } else {
             if (cmd.conf.support && message.guild.id === "991500085672288308"){
-                cmd.runcmd(exports, client, message, params, permissions);
+                if (message.member.roles.has("1064295533751050351")){
+                    cmd.runcmd(exports, client, message, params, permissions);
+                }
             } else {
                 message.reply('This command is expected to be used within another guild.').then(msg => {
                     msg.delete(5000)
