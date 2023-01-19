@@ -52,6 +52,21 @@ RegisterCommand("p", function(source,args, rawCommand)
     end
 end)
 
+RegisterCommand("n", function(source,args, rawCommand)
+    if #args <= 0 then return end
+    local source = source
+    local user_id = ARMA.getUserId(source)   
+    local message = table.concat(args, " ")
+    if ARMA.hasPermission(user_id, "nhs.onduty.permission") then
+        local playerName =  "^2NHS Chat | "..GetPlayerName(source)..": "
+        for k, v in pairs(ARMA.getUsers({})) do
+            if ARMA.hasPermission(k, 'nhs.onduty.permission') then
+                TriggerClientEvent('chatMessage', v, playerName , { 128, 128, 128 }, message, "ooc")
+            end
+        end
+    end
+end)
+
 RegisterCommand("g", function(source,args, rawCommand)
     local source = source
     local user_id = ARMA.getUserId(source)   
