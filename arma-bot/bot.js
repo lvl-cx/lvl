@@ -292,24 +292,30 @@ client.on('message', (message) => {
                 }
             }
         } else {
-            message.reply('This command is expected to be used within another guild.').then(msg => {
-                msg.delete(5000)
-            })
-            return;
+            if (cmd.conf.support && message.guild.id === "991500085672288308"){
+                cmd.runcmd(exports, client, message, params, permissions);
+            } else {
+                message.reply('This command is expected to be used within another guild.').then(msg => {
+                    msg.delete(5000)
+                })
+                return;
+            }
         }
     }
 });
 
 client.on("guildMemberAdd", function (member) {
-    try {
-        exports.ghmattimysql.execute("SELECT * FROM `arma_verification` WHERE discord_id = ? AND verified = 1", [member.id], (result) => {
-            if (result.length > 0){
-                let role = member.guild.roles.find(r => r.name === '| Verified');
-                member.addRole(role);
-            }
-        });
-       
-    } catch (error) {}
+    if (member.guild.id === settingsjson.settings.GuildID){
+        try {
+            exports.ghmattimysql.execute("SELECT * FROM `arma_verification` WHERE discord_id = ? AND verified = 1", [member.id], (result) => {
+                if (result.length > 0){
+                    let role = member.guild.roles.find(r => r.name === '| Verified');
+                    member.addRole(role);
+                }
+            });
+        
+        } catch (error) {}
+    }
 });
 
 client.login(process.env.TOKEN)
