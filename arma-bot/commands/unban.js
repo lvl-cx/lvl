@@ -23,5 +23,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 exports.conf = {
     name: "unban",
     perm: 5,
-    guild: "975490533344559154"
+    guild: "975490533344559154",
+    support: true,
 }
