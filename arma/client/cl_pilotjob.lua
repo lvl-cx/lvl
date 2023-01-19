@@ -31,7 +31,7 @@ local B = {x = z.x, y = z.y - z.height / 2, width = z.width, height = 0.002}
 local C = {x = z.x, y = z.y + z.height / 2, width = z.width, height = B.height}
 local D = {x = z.x - z.width / 2, y = z.y, width = B.height / 2, height = z.height + B.height}
 local E = {x = z.x + z.width / 2, y = z.y, width = B.height / 2, height = z.height + B.height}
-RMenu.Add("ARMApilotjob","atcMenu",RageUI.CreateMenu("","Air Traffic Communications",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_pilotjob","cmg_pilotjob"))
+RMenu.Add("ARMApilotjob","atcMenu",RageUI.CreateMenu("","Air Traffic Communications",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"arna_pilotjob","arna_pilotjob"))
 AddEventHandler("ARMA:onClientSpawn",function(F, G)
     local H = a.startJobLocs
     if G then
@@ -516,7 +516,7 @@ function fuelPlane(af)
         Citizen.Wait(0)
     end
     local aj = tARMA.spawnVehicle("hauler", b[af].pedCoords.x, b[af].pedCoords.y, b[af].pedCoords.z, b[af].h, false, false)
-    local ak = tARMA.spawnVehicle("cmgtankert",b[af].pedCoords.x - 3.5,b[af].pedCoords.y - 5.5,b[af].pedCoords.z,b[af].h,false,false)
+    local ak = tARMA.spawnVehicle("armatankert",b[af].pedCoords.x - 3.5,b[af].pedCoords.y - 5.5,b[af].pedCoords.z,b[af].h,false,false)
     Citizen.Wait(500)
     SetEntityInvincible(aj, true)
     SetEntityInvincible(ak, true)
@@ -590,7 +590,7 @@ function createPeds(ap, aq)
         SetEntityInvincible(g, true)
         SetVehicleColours(g, 89, 0)
         local at = GetOffsetFromEntityInWorldCoords(g, 0.0, -4.0, 0.0)
-        local au = tARMA.spawnVehicle("cmgtugt", at.x, at.y, at.z, aq.tugCoords.w, false, false, false)
+        local au = tARMA.spawnVehicle("armatugt", at.x, at.y, at.z, aq.tugCoords.w, false, false, false)
         local ag = "s_m_y_airworker"
         AttachVehicleToTrailer(g, au, 10)
         Wait(1000)

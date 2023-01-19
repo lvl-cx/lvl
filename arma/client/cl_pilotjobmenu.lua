@@ -6,7 +6,7 @@ local e
 local f = 0
 local g = ""
 local h
-RMenu.Add("ARMApilotjob","mainMenu",RageUI.CreateMenu("","Pilot Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"cmg_pilotjob","cmg_pilotjob"))
+RMenu.Add("ARMApilotjob","mainMenu",RageUI.CreateMenu("","Pilot Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"arma_pilotjob","arma_pilotjob"))
 RegisterNetEvent("ARMA:updateClientPilotLevel",function(i)
     if i then
         f = i
