@@ -14,7 +14,6 @@ RegisterNetEvent("ARMA:spectatePlayer",function(k, l)
     FreezeEntityPosition(m, true)
     SetEntityCollision(m, false, false)
     SetEntityVisible(m, false, 0)
-    SetEntityInvincible(m, true)
     local n = math.random(7500, 8900)
     local o = math.random(7500, 8900)
     local p = math.random(1, 2) == 2
@@ -40,6 +39,7 @@ RegisterNetEvent("ARMA:spectatePlayer",function(k, l)
         Citizen.Wait(0)
     end
     a = true
+    SetEntityInvincible(m, true)
 end)
 RegisterNetEvent("ARMA:stopSpectatePlayer",function()
     a = false
