@@ -828,6 +828,10 @@ function tARMA.announceClient(d)
     end 
 end
 
+AddEventHandler("mumbleDisconnected",function(f)
+    tARMA.notify("~r~[ARMA] Lost connection to voice server, you may need to toggle voice chat.")
+end)
+
 RegisterNetEvent("arma:PlaySound")
 AddEventHandler("arma:PlaySound", function(soundname)
     SendNUIMessage({
