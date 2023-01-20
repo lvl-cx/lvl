@@ -135,8 +135,10 @@ AddEventHandler("ARMA:requestCurrentProgress",function(s,coords)
 end)
 RegisterNetEvent("ARMA:toggleDjMenu")
 AddEventHandler("ARMA:toggleDjMenu",function()
-    RageUI.Visible(RMenu:Get('ARMADJ','main'),true)
-    h=true 
+    if not inOrganHeist then
+        RageUI.Visible(RMenu:Get('ARMADJ','main'),true)
+        h=true 
+    end
 end)
 RegisterNetEvent("ARMA:toggleDjAdminMenu")
 AddEventHandler("ARMA:toggleDjAdminMenu",function(x)
