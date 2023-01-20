@@ -955,7 +955,6 @@ AddEventHandler('ARMA:LootBag', function(netid)
                         end
                         LootBagEntities[netid].Items = bagData
                         ARMAclient.notify(source,{"~r~You have seized " .. LootBagEntities[netid].name .. "'s items"})
-                        OpenInv(source, netid, LootBagEntities[netid].Items)
                     else
                         OpenInv(source, netid, LootBagEntities[netid].Items)
                     end  
