@@ -60,7 +60,7 @@ RegisterCommand("anon", function(source, args, raw)
 	end
 end)
 
-tARMA.ooc(source, args, raw)
+function tARMA.ooc(source, args, raw)
 	if #args <= 0 then 
 		return 
 	end
