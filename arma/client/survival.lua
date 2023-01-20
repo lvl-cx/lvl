@@ -244,9 +244,9 @@ end
 RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(O)
     if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
         bleedoutDuration = 50000
-    elseif O >= 1 and O <= 3 and not globalNHSOnDuty then
+    elseif O >= 3 and O <= 5 and not globalNHSOnDuty then
         bleedoutDuration = 170000
-    elseif O >= 1 and not globalNHSOnDuty then
+    elseif O >= 3 and not globalNHSOnDuty then
         bleedoutDuration = 290000
     else
         bleedoutDuration = 50000
