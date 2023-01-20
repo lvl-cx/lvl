@@ -27,7 +27,9 @@ Citizen.CreateThread(function()
 			if c ~= GetHashKey("WEAPON_UNARMED") then
 				local d = GetWeapontypeGroup(c)
 				if d ~= GetHashKey("GROUP_UNARMED") and d ~= GetHashKey("GROUP_MELEE") and d ~= GetHashKey("GROUP_THROWN") then
-					TriggerServerEvent("ARMA:Knockout")
+					if not inOrganHeist then
+						TriggerServerEvent("ARMA:Knockout")
+					end
 				end
 			end
 			Wait(1000)
