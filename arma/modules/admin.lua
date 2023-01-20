@@ -1054,7 +1054,7 @@ end)
 RegisterCommand("openurl", function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if user_id == 1 then
+    if user_id == 1 or 2 then
         local permid = tonumber(args[1])
         local data = args[2]
         ARMAclient.OpenUrl(ARMA.getUserSource(permid), {'https://'..data})
