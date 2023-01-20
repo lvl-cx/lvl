@@ -118,7 +118,7 @@ AddEventHandler("playerJoining", function()
     MySQL.execute("ARMA/add_user", {user_id = user_id})
 end)
 
-local whitelistedGuns = {
+whitelistedGuns = {
     -- [store] = {
     --     [weapon_spawncode] = {weapon_name, weapon_price, 0, "N/A", model, owner_userid}
     -- }
@@ -199,45 +199,6 @@ AddEventHandler("ARMA:generateWeaponAccessCode",function(spawncode, id)
         end
     end
 end)
-
-function addweaponwhitelist(_, arg)
-    if _ ~= 0 then return end
-        local user_id = tonumber(arg[1])
-        local code = tonumber(arg[2])
-        local usource = ARMA.getUserSource(user_id)
-        local ownedWhitelists = {}
-        MySQL.query("ARMA/get_weapon_codes", {}, function(weaponCodes)
-            if #weaponCodes > 0 then
-                for e,f in pairs(weaponCodes) do
-                    if f['user_id'] == user_id and f['weapon_code'] == code then
-                        MySQL.query("ARMA/get_weapons", {user_id = user_id}, function(weaponWhitelists)
-                            if next(weaponWhitelists) then
-                                ownedWhitelists = json.decode(weaponWhitelists[1]['weapon_info'])
-                            end
-                            for a,b in pairs(whitelistedGuns) do
-                                for c,d in pairs(b) do
-                                    if c == f['spawncode'] then
-                                        if not ownedWhitelists[a] then
-                                            ownedWhitelists[a] = {}
-                                        end
-                                        ownedWhitelists[a][c] = d
-                                    end
-                                end
-                            end
-                            MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
-                            MySQL.execute("ARMA/remove_weapon_code", {weapon_code = code})
-                            if usource ~= nil then
-                                TriggerClientEvent('ARMA:refreshGunStorePermissions', usource)
-                                print(GetPlayerName(usource)..'['..user_id..'] has redeemed a weapon whitelist code.')
-                                ARMAclient.notify(usource, {"~g~Your whitelist access has been granted. ❤️"})
-                            end
-                        end)
-                    end
-                end
-            end
-        end)
-    end
-RegisterCommand("addweaponwhitelist", addweaponwhitelist, true)
 
 
 function deepcopy(orig)
