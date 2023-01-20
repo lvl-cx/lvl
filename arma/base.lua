@@ -913,8 +913,9 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                             if code == nil then
                                                 code = math.random(100000, 999999)
                                             end
-                                            if exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code}) ~= nil then
-                                                if exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code}).length > 0 then
+                                            local checkCode = exports["ghmattimysql"]:executeSync("SELECT * FROM arma_verification WHERE code = @code", {code = code})
+                                            if checkCode ~= nil then
+                                                if #checkCode > 0 then
                                                     goto regen_code
                                                 end
                                             end
