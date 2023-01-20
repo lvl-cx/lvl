@@ -203,7 +203,7 @@ end)
 RegisterNetEvent("ARMA:PDRobberyCall")
 AddEventHandler("ARMA:PDRobberyCall", function(source)
     local source = source
-    local user_id = ARMA.getUserSource(source)
+    local user_id = ARMA.getUserId(source)
     local reason = 'Store Robbery'
     callID = callID + 1
     tickets[callID] = {
