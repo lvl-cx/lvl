@@ -1337,3 +1337,38 @@ function setVehicleIdBiometricLock(bj, cB)
         DecorSetBool(bj, "biometricLock", true)
     end
 end
+
+
+local engineSounds = {
+    [0] = "",
+    [1] = "",
+    [2] = "",
+    [3] = "",
+    [4] = "",
+    [5] = "",
+    [6] = "bnr34ffeng",
+    [7] = "ta028viper",
+    [8] = "rotary7",
+    [9] = "lgcy12ferf40",
+    [10] = "v6audiea839",
+    [11] = "n55b30t0",
+    [12] = "fordvoodoo",
+    [13] = "ta103ninjah2r"
+}
+function getVehicleSoundNameFromId(bw)
+    return engineSounds[bw]
+end
+local cF = {}
+Citizen.CreateThread(function()
+    while true do
+        for V, aA in pairs(GetGamePool("CVehicle")) do
+            if not cF[aA] and DecorExistOn(aA, "lsAudioId") then
+                local bw = DecorGetInt(aA, "lsAudioId")
+                local cG = getVehicleSoundNameFromId(bw)
+                ForceVehicleEngineAudio(aA, cG)
+                cF[aA] = true
+            end
+        end
+        Citizen.Wait(2000)
+    end
+end)

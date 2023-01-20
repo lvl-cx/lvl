@@ -95,6 +95,18 @@ LSC_Config.prices = {
 		{ name = "Green", tint = 5, price = 25000},
 	},
 
+	engineSounds = {
+		{name = "Default", soundId = "", mod = 0, price = 0},
+		{name = "Nissan Skyline", soundId = "bnr34ffeng",  mod = 6, price = 250000},
+		{name = "Dodge Viper V10", soundId = "ta028viper",  mod = 7, price = 250000},
+		{name = "Mazda Rotary 13B", soundId = "rotary7",  mod = 8, price = 250000},
+		{name = "Ferrari F40", soundId = "lgcy12ferf40",  mod = 9, price = 250000},
+		{name = "Audi EA839", soundId = "v6audiea839",  mod = 10, price = 250000},
+		{name = "BMW N55", soundId = "n55b30t0",  mod = 11, price = 250000},
+		{name = "Ford Voodoo", soundId = "fordvoodoo",  mod = 12, price = 250000},
+		{name = "Kawasaki Ninja H2R", soundId = "ta103ninjah2r",  mod = 13, price = 250000},
+	},
+	
 -------Respray--------
 ----Primary color---
 	--Chrome 

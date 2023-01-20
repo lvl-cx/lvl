@@ -587,6 +587,11 @@ local function DriveInGarage()
 			local btn = m:addPurchase(mod.name,mod.price)btn.mod = mod.mod
 		end
 
+		m = LSCMenu.categories:addSubMenu("CUSTOM EXHAUSTS", "Custom Exhausts", "Get a custom exhaust to get a custom vehicle sound.",true)
+		for n, mod in pairs(LSC_Config.prices.engineSounds) do
+			local btn = m:addPurchase(mod.name,mod.price)btn.mod = mod.mod
+		end
+
 		Citizen.CreateThread(function()
 			FadeOutLocalPlayer(1)
 			SetEntityCoordsNoOffset(veh,pos.driveIn.position)
@@ -1017,6 +1022,10 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
 			myveh.securityBiometricLock = button.mod
 		end
+	elseif mname == "custom exhausts" then
+		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
+			myveh.engineSounds = button.mod
+		end
 	elseif mname == "sport" or mname == "muscle" or mname == "lowrider" or mname == "back wheel" or mname == "front wheel" or mname == "highend" or mname == "suv" or mname == "offroad" or mname == "tuner" then
 		if button.purchased or CanPurchase(price, canpurchase) then
 			myveh.wheeltype = button.wtype
@@ -1101,6 +1110,7 @@ AddEventHandler("LSC:applyModifications", function(vehicle, modifications)
 		DecorSetBool(vehicle, "dashcam", modifications.dashcam)
 		DecorRegister("vehicleblip", 2)
 		DecorSetBool(vehicle, "vehicleblip", modifications.remoteblips)
+		DecorSetBool(vehicle, "lsAudioId", modifications.customExhausts)
 		for k, v in pairs(modifications.mods) do
 			k = tonumber(k)
 			if k == 18 or k == 22 then
@@ -1401,6 +1411,18 @@ function CheckPurchases(m)
 		for i,b in pairs(m.buttons) do
 			if myveh.securityBiometricLock ~= nil then
 				if myveh.securityBiometricLock == b.mod then
+					purchased = true
+					b.sprite = "garage"
+				else
+					purchased = false
+					b.sprite = nil
+				end
+			end
+		end
+	elseif name == "custom exhausts" then
+		for i,b in pairs(m.buttons) do
+			if myveh.customExhausts ~= nil then
+				if myveh.customExhausts == b.mod then
 					purchased = true
 					b.sprite = "garage"
 				else
