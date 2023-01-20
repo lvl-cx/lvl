@@ -972,9 +972,9 @@ AddEventHandler('ARMA:getAdminLevel', function()
     elseif ARMA.hasGroup(user_id,"Developer") then
         adminlevel = 11
         ARMAclient.setDev(source, {})
-    elseif ARMA.hasGroup(user_id,"Staff Manager") then    
-        adminlevel = 9
     elseif ARMA.hasGroup(user_id,"Community Manager") then
+        adminlevel = 9
+    elseif ARMA.hasGroup(user_id,"Staff Manager") then    
         adminlevel = 8
     elseif ARMA.hasGroup(user_id,"Head Admin") then
         adminlevel = 7
