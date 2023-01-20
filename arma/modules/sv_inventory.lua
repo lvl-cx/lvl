@@ -151,6 +151,7 @@ AddEventHandler('ARMA:searchPlayer', function(playersrc)
         currentlySearching[user_id] = playersrc
         TriggerClientEvent('ARMA:startSearchingSuspect', source)
         TriggerClientEvent('ARMA:startBeingSearching', playersrc, source)
+        ARMAclient.notify(playersrc, {'~b~You are being searched.'})
         Wait(10000)
         if currentlySearching[user_id] then
             local FormattedInventoryData = {}
