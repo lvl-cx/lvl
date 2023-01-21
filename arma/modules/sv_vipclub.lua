@@ -13,7 +13,7 @@ end)
 function tARMA.getSubscriptions(user_id,cb)
     MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
-           cb(true, rows[1].plushours, rows[1].plathours)
+           cb(true, rows[1].plushours, rows[1].plathours, rows[1].last_used)
         else
             cb(false)
         end
@@ -176,10 +176,10 @@ RegisterNetEvent("ARMA:claimWeeklyKit") -- need to add a thing for restricting t
 AddEventHandler("ARMA:claimWeeklyKit", function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours, last_used)
         if cb then
             if plathours >= 168 or plushours >= 168 then
-                if rows[1].last_used == '' or (os.time() >= tonumber(rows[1].last_used+24*60*60*7)) or user_id == 1 then
+                if last_used == '' or (os.time() >= tonumber(last_used+24*60*60*7)) or user_id == 1 then
                     if plathours >= 168 then
                         ARMA.giveInventoryItem(user_id, "Morphine", 5, true)
                         ARMA.giveInventoryItem(user_id, "Taco", 5, true)
