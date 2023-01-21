@@ -171,25 +171,26 @@ AddEventHandler('ARMA:getPlayerListData', function()
     local hmp = {}
     local civillians = {}
     for k,v in pairs(ARMA.getUsers()) do
-        if hiddenUsers[k] then return end
-        local name = GetPlayerName(v)
-        if name ~= nil then
-            local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
-            local hours = math.floor(minutesPlayed/60)
-            if ARMA.hasPermission(k, 'admin.tickets') then
-                staff[k] = {name = name, rank = getGroupInGroups(k, 'Staff'), hours = hours}
-            end
-            if ARMA.hasPermission(k, 'police.onduty.permission') and not ARMA.hasPermission(k, 'police.undercover') then
-                police[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'Police'), ' Clocked', ''), hours = hours}
-            elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
-                nhs[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'NHS'), ' Clocked', ''), hours = hours}
-            elseif ARMA.hasPermission(k, 'lfb.onduty.permission') then
-                lfb[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'LFB'), ' Clocked', ''), hours = hours}
-            elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
-                hmp[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'HMP'), ' Clocked', ''), hours = hours}
-            end
-            if (not ARMA.hasPermission(k, "police.onduty.permission") or ARMA.hasPermission(k, 'police.undercover')) and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
-                civillians[k] = {name = name, rank = getGroupInGroups(k, 'Default'), hours = hours}
+        if not hiddenUsers[k] then
+            local name = GetPlayerName(v)
+            if name ~= nil then
+                local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0
+                local hours = math.floor(minutesPlayed/60)
+                if ARMA.hasPermission(k, 'admin.tickets') then
+                    staff[k] = {name = name, rank = getGroupInGroups(k, 'Staff'), hours = hours}
+                end
+                if ARMA.hasPermission(k, 'police.onduty.permission') and not ARMA.hasPermission(k, 'police.undercover') then
+                    police[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'Police'), ' Clocked', ''), hours = hours}
+                elseif ARMA.hasPermission(k, 'nhs.onduty.permission') then
+                    nhs[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'NHS'), ' Clocked', ''), hours = hours}
+                elseif ARMA.hasPermission(k, 'lfb.onduty.permission') then
+                    lfb[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'LFB'), ' Clocked', ''), hours = hours}
+                elseif ARMA.hasPermission(k, 'prisonguard.onduty.permission') then
+                    hmp[k] = {name = name, rank = string.gsub(getGroupInGroups(k, 'HMP'), ' Clocked', ''), hours = hours}
+                end
+                if (not ARMA.hasPermission(k, "police.onduty.permission") or ARMA.hasPermission(k, 'police.undercover')) and not ARMA.hasPermission(k, "nhs.onduty.permission") and not ARMA.hasPermission(k, "lfb.onduty.permission") and not ARMA.hasPermission(k, "prisonguard.onduty.permission") then
+                    civillians[k] = {name = name, rank = getGroupInGroups(k, 'Default'), hours = hours}
+                end
             end
         end
     end
