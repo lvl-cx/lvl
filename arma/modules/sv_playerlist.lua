@@ -123,6 +123,20 @@ function getGroupInGroups(id, type)
     end
 end
 
+local hiddenUsers = {}
+RegisterNetEvent("ARMA:setUserHidden")
+AddEventHandler("ARMA:setUserHidden",function(state)
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if user_id == 1 then
+        if state then
+            hiddenUsers[user_id] = true
+        else
+            hiddenUsers[user_id] = nil
+        end
+    end
+end)
+
 local uptime = 0
 local function playerListMetaUpdates()
     local uptimemessage = ''
@@ -142,20 +156,6 @@ Citizen.CreateThread(function()
         TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
         TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
         Citizen.Wait(1000)
-    end
-end)
-
-local hiddenUsers = {}
-RegisterNetEvent("ARMA:setUserHidden")
-AddEventHandler("ARMA:setUserHidden",function(state)
-    local source=source
-    local user_id=ARMA.getUserId(source)
-    if user_id == 1 then
-        if state then
-            hiddenUsers[user_id] = true
-        else
-            hiddenUsers[user_id] = nil
-        end
     end
 end)
 
