@@ -45,8 +45,7 @@ Citizen.CreateThread(function()
 		and GetPedParachuteState(i) <= 0 
 		and not IsPedRunning(i)
 		and not tARMA.isPlayerRappeling()
-		then
-            if not IsPedInAnyVehicle(i, 1) then
+		then if not IsPedInAnyVehicle(i, 1) then
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 18 then
                     TriggerServerEvent("ARMA:acType1")
@@ -296,6 +295,21 @@ Citizen.CreateThread(function()
 	end
 end)
 
+Citizen.CreateThread(function()
+    while true do 
+        Wait(5000)
+        if GetPedArmour(PlayerPedId()) > 100 then 
+			TriggerServerEvent("ARMA:acType9", 'More than 100 Armour')
+        elseif GetEntityHealth(PlayerPedId()) > 200 then 
+			TriggerServerEvent("ARMA:acType10", 'More than 200 Health')
+		elseif GetAmmoInPedWeapon(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
+			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Weapon')
+		elseif GetWeaponClipSize(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
+			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Clip')
+		end
+    end
+end)
+
 local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
 CreateThread(function()
 	while true do
@@ -326,7 +340,7 @@ local b = {
 Citizen.CreateThread(function()
 	while true do
 		local f = tARMA.getPlayerVehicle()
-		if GetVehicleHasParachute(f) then
+		if GetVehicleHasParachute(f) or GetCanVehicleJump(f) or GetHasRocketBoost(f) then
 			local be = GetEntityModel(f)
 			if not table.has(b, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
