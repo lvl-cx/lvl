@@ -347,31 +347,33 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                 end
             end)
-        elseif inventoryType == "LootBag" then    
-            if LootBagEntities[inventoryInfo].Items[itemId] then 
-                local weightCalculation = ARMA.getInventoryWeight(UserId)+ARMA.getItemWeight(itemId)
-                if weightCalculation == nil then return end
-                if weightCalculation <= ARMA.getInventoryMaxWeight(UserId) then
-                    if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > 1 then
-                        LootBagEntities[inventoryInfo].Items[itemId].amount = LootBagEntities[inventoryInfo].Items[itemId].amount - 1 
-                        ARMA.giveInventoryItem(UserId, itemId, 1, true)
+        elseif inventoryType == "LootBag" then  
+            if itemId ~= nil then  
+                if LootBagEntities[inventoryInfo].Items[itemId] then 
+                    local weightCalculation = ARMA.getInventoryWeight(UserId)+ARMA.getItemWeight(itemId)
+                    if weightCalculation == nil then return end
+                    if weightCalculation <= ARMA.getInventoryMaxWeight(UserId) then
+                        if LootBagEntities[inventoryInfo].Items[itemId] and LootBagEntities[inventoryInfo].Items[itemId].amount > 1 then
+                            LootBagEntities[inventoryInfo].Items[itemId].amount = LootBagEntities[inventoryInfo].Items[itemId].amount - 1 
+                            ARMA.giveInventoryItem(UserId, itemId, 1, true)
+                        else 
+                            LootBagEntities[inventoryInfo].Items[itemId] = nil;
+                            ARMA.giveInventoryItem(UserId, itemId, 1, true)
+                        end
+                        local FormattedInventoryData = {}
+                        for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
+                            FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
+                        end
+                        local maxVehKg = 200
+                        TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(LootBagEntities[inventoryInfo].Items), maxVehKg)                
+                        TriggerEvent('ARMA:RefreshInventory', source)
+                        InventoryCoolDown[source] = false
+                        if not next(LootBagEntities[inventoryInfo].Items) then
+                            CloseInv(source)
+                        end
                     else 
-                        LootBagEntities[inventoryInfo].Items[itemId] = nil;
-                        ARMA.giveInventoryItem(UserId, itemId, 1, true)
+                        ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                     end
-                    local FormattedInventoryData = {}
-                    for i, v in pairs(LootBagEntities[inventoryInfo].Items) do
-                        FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
-                    end
-                    local maxVehKg = 200
-                    TriggerClientEvent('ARMA:SendSecondaryInventoryData', source, FormattedInventoryData, ARMA.computeItemsWeight(LootBagEntities[inventoryInfo].Items), maxVehKg)                
-                    TriggerEvent('ARMA:RefreshInventory', source)
-                    InventoryCoolDown[source] = false
-                    if not next(LootBagEntities[inventoryInfo].Items) then
-                        CloseInv(source)
-                    end
-                else 
-                    ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                 end
             end
         elseif inventoryType == "Housing" then
