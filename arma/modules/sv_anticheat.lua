@@ -15,7 +15,7 @@ local actypes = {
     {type = 9, desc = 'Armour Modifier'},
     {type = 10, desc = 'Health Modifier'},
     {type = 11, desc = 'Server Trigger'},
-    {type = 12, desc = 'Vehicle Parachute'},
+    {type = 12, desc = 'Vehicle Modifications'},
     {type = 13, desc = 'Night Vision'},
     {type = 14, desc = 'Model Dimensions'},
     {type = 15, desc = 'Godmoding'},
