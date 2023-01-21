@@ -15,7 +15,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
                             let dvalue = JSON.parse(result[0].dvalue)
                             let groups = dvalue.groups
                             groups['Supporter'] = true;
-                            fivemexports.ghmattimysql.execute("UPDATE `arma_user_data` SET dvalue = ? WHERE user_id = ?", [JSON.stringify(dvalue), permid])
+                            fivemexports.ghmattimysql.execute("UPDATE `arma_user_data` SET dvalue = ? WHERE user_id = ? and dkey = 'ARMA:datatable'", [JSON.stringify(dvalue), permid])
                             message.reply('You have received Supporter rank for BETA only. After beta to access VIP garages it will be a required purchase on the store.')
                         }
                     })
