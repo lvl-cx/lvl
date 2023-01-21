@@ -297,7 +297,7 @@ Citizen.CreateThread(function()
                     local blip = GetBlipFromEntity(I)
                     local T = GetPlayerServerId(R)
                     local U = tARMA.clientGetUserIdFromSource(T)
-                    if not DoesBlipExist(blip) then
+                    if not DoesBlipExist(blip) and not tARMA.isUserHidden(U) then
                         blip = AddBlipForEntity(I)
                         SetBlipSprite(blip, 1)
                         ShowHeadingIndicatorOnBlip(blip, true)

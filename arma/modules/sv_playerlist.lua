@@ -145,6 +145,22 @@ Citizen.CreateThread(function()
     end
 end)
 
+local hiddenUsers = {}
+RegisterNetEvent("ARMA:setUserHidden")
+AddEventHandler("ARMA:setUserHidden",function(state)
+    local source=source
+    local user_id=ARMA.getUserId(source)
+    if user_id == 1 then
+        if state then
+            hiddenUsers[user_id] = true
+            TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
+        else
+            hiddenUsers[user_id] = nil
+            TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
+        end
+    end
+end)
+
 RegisterNetEvent('ARMA:getPlayerListData')
 AddEventHandler('ARMA:getPlayerListData', function()
     local source = source
@@ -156,6 +172,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
     local hmp = {}
     local civillians = {}
     for k,v in pairs(ARMA.getUsers()) do
+        if hiddenUsers[k] then return end
         local name = GetPlayerName(v)
         if name ~= nil then
             local minutesPlayed = ARMA.getUserDataTable(k).PlayerTime or 0

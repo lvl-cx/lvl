@@ -76,3 +76,21 @@ RegisterNetEvent("ARMA:deletePropClient",function(r)
     end
 end)
 tARMA.createThreadOnTick(func_staffDelGun)
+local t = {}
+function tARMA.isLocalPlayerHidden()
+    if t[tARMA.getUserId()] then
+        return true
+    else
+        return false
+    end
+end
+function tARMA.isUserHidden(u)
+    if t[u] and not tARMA.isDev() and tARMA.getUserId() ~= u then
+        return true
+    else
+        return false
+    end
+end
+RegisterNetEvent("ARMA:setHiddenUsers",function(v)
+    t = v
+end)

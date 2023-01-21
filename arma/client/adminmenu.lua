@@ -176,19 +176,18 @@ RageUI.CreateWhile(1.0, true, function()
             end)
         end
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'players')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k, v in pairs(players) do
-                RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                    if Selected then
-                        SelectedPlayer = players[k]
-                        SelectedPerm = v[3]
-                        TriggerServerEvent("ARMA:CheckPov",v[3])
-                    end
-                end, RMenu:Get('adminmenu', 'submenu'))
+                if not tARMA.isUserHidden(v[3]) then
+                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                        if Selected then
+                            SelectedPlayer = players[k]
+                            SelectedPerm = v[3]
+                            TriggerServerEvent("ARMA:CheckPov",v[3])
+                        end
+                    end, RMenu:Get('adminmenu', 'submenu'))
+                end
             end
         end)
     end
@@ -196,24 +195,23 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if next(playersNearby) then
                 for i, v in pairs(playersNearby) do
-                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then 
-                            SelectedPlayer = playersNearby[i]
-                            SelectedPerm = v[3]
-                        end
-                        if Active then 
-                            hoveredPlayer = v[2]
-                        end
-                    end, RMenu:Get("adminmenu", "submenu"))
+                    if not tARMA.isUserHidden(v[3]) then
+                        RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                            if Selected then 
+                                SelectedPlayer = playersNearby[i]
+                                SelectedPerm = v[3]
+                            end
+                            if Active then 
+                                hoveredPlayer = v[2]
+                            end
+                        end, RMenu:Get("adminmenu", "submenu"))
+                    end
                 end
             else
                 RageUI.Separator("No players nearby!")
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchoptions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             foundMatch = false
@@ -227,10 +225,6 @@ RageUI.CreateWhile(1.0, true, function()
             end, RMenu:Get('adminmenu', 'searchhistory'))
         end)
     end
-end)
-
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'functions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.getStaffLevel() >= 1 then
@@ -372,12 +366,15 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:AddCar')
                     end
                 end, RMenu:Get('adminmenu', 'functions'))
+                RageUI.Checkbox("Set Globally Hidden","",tARMA.isLocalPlayerHidden(),{},function()
+                end,function()
+                    TriggerServerEvent("ARMA:setUserHidden", true)
+                end,function()
+                    TriggerServerEvent("ARMA:setUserHidden", false)
+                end)
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'moneymenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if a10 ~= nil and sn ~= nil and sc ~= nil and sb ~= nil and sw ~= nil and sch ~= nil then
@@ -498,10 +495,6 @@ RageUI.CreateWhile(1.0, true, function()
             end)
         end)
     end
-end)
-
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'devfunctions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.isDev() or tARMA.getStaffLevel() >= 10 then
@@ -518,9 +511,6 @@ RageUI.CreateWhile(1.0, true, function()
             end        
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchpermid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
@@ -532,22 +522,21 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[3],searchforPermID) then
-                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            SelectedPlayer = players[k]
-                            TriggerServerEvent("ARMA:CheckPov",v[3])
-                            g = v[3]
-                            h[i] = g
-                            i = i + 1
-                        end
-                    end, RMenu:Get('adminmenu', 'submenu'))
+                    if not tARMA.isUserHidden(v[3]) then
+                        RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                            if Selected then
+                                SelectedPlayer = players[k]
+                                TriggerServerEvent("ARMA:CheckPov",v[3])
+                                g = v[3]
+                                h[i] = g
+                                i = i + 1
+                            end
+                        end, RMenu:Get('adminmenu', 'submenu'))
+                    end
                 end
              end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchtempid')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
@@ -559,22 +548,21 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(v[2], searchid) then
-                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            SelectedPlayer = players[k]
-                            TriggerServerEvent("ARMA:CheckPov",v[3])
-                            g = v[2]
-                            h[i] = g
-                            i = i + 1
-                        end
-                    end, RMenu:Get('adminmenu', 'submenu'))
+                    if not tARMA.isUserHidden(v[3]) then
+                        RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                            if Selected then
+                                SelectedPlayer = players[k]
+                                TriggerServerEvent("ARMA:CheckPov",v[3])
+                                g = v[2]
+                                h[i] = g
+                                i = i + 1
+                            end
+                        end, RMenu:Get('adminmenu', 'submenu'))
+                    end
                 end
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchname')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if foundMatch == false then
@@ -586,22 +574,21 @@ RageUI.CreateWhile(1.0, true, function()
             for k, v in pairs(players) do
                 foundMatch = true
                 if string.find(string.lower(v[1]), string.lower(SearchName)) then
-                    RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
-                        if Selected then
-                            SelectedPlayer = players[k]
-                            TriggerServerEvent("ARMA:CheckPov",v[3])
-                            g = v[1]
-                            h[i] = g
-                            i = i + 1
-                        end
-                    end, RMenu:Get('adminmenu', 'submenu'))
+                    if not tARMA.isUserHidden(v[3]) then
+                        RageUI.ButtonWithStyle(v[1] .." ["..v[2].."]", v[1] .. " ("..v[4].." hours) PermID: " .. v[3] .. " TempID: " .. v[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                            if Selected then
+                                SelectedPlayer = players[k]
+                                TriggerServerEvent("ARMA:CheckPov",v[3])
+                                g = v[1]
+                                h[i] = g
+                                i = i + 1
+                            end
+                        end, RMenu:Get('adminmenu', 'submenu'))
+                    end
                 end
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchhistory')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             for k, v in pairs(players) do
@@ -622,9 +609,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             hoveredPlayer = nil
@@ -785,16 +769,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-end)
-    
-RegisterNetEvent('ARMA:ReturnPov')
-AddEventHandler('ARMA:ReturnPov', function(pov)
-    povlist = pov
-end)
-
-
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'notespreviewban')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.getStaffLevel() >= 2 then
@@ -902,9 +876,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'notesub')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if noteslist == nil then
@@ -970,18 +941,6 @@ RageUI.CreateWhile(1.0, true, function()
             end
         end)
     end
-end)
-
-RegisterNetEvent("ARMA:sendNotes",function(a7)
-    a7 = json.decode(a7)
-    if a7 == nil then
-        noteslist = {}
-    else
-        noteslist = a7
-    end
-end)
-
-RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'groups')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             if tARMA.getStaffLevel() >= 7 then
@@ -1060,6 +1019,20 @@ RegisterNetEvent("ARMA:Freeze",function()
     end
 end)
 
+
+RegisterNetEvent("ARMA:sendNotes",function(a7)
+    a7 = json.decode(a7)
+    if a7 == nil then
+        noteslist = {}
+    else
+        noteslist = a7
+    end
+end)
+
+RegisterNetEvent('ARMA:ReturnPov')
+AddEventHandler('ARMA:ReturnPov', function(pov)
+    povlist = pov
+end)
 
 RegisterNetEvent("ARMA:GotGroups")
 AddEventHandler("ARMA:GotGroups",function(gotGroups)
