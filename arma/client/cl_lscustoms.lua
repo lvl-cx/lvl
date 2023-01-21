@@ -1024,8 +1024,8 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 			myveh.securityBiometricLock = button.mod
 		end
 	elseif mname == "custom exhausts" then
-		if button.name == "None" or button.purchased or CanPurchase(price, canpurchase) then
-			myveh.engineSounds = button.mod
+		if button.name == "Default" or button.purchased or CanPurchase(price, canpurchase) then
+			myveh.engineSounds = button.soundId
 		end
 	elseif mname == "sport" or mname == "muscle" or mname == "lowrider" or mname == "back wheel" or mname == "front wheel" or mname == "highend" or mname == "suv" or mname == "offroad" or mname == "tuner" then
 		if button.purchased or CanPurchase(price, canpurchase) then
@@ -1423,7 +1423,7 @@ function CheckPurchases(m)
 	elseif name == "custom exhausts" then
 		for i,b in pairs(m.buttons) do
 			if myveh.engineSounds ~= nil then
-				if myveh.engineSounds == b.mod then
+				if myveh.engineSounds == b.soundId then
 					purchased = true
 					b.sprite = "garage"
 				else
