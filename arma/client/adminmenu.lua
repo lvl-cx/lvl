@@ -611,6 +611,9 @@ RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('adminmenu', 'submenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
             hoveredPlayer = nil
+            if tARMA.isUserHidden(SelectedPlayer[3]) then
+                RageUI.ActuallyCloseAll()
+            end
             if povlist == nil then
                 RageUI.Separator("~y~Player must provide POV on request: Loading...")
             elseif povlist == true then
