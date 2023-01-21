@@ -295,21 +295,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-Citizen.CreateThread(function()
-    while true do 
-        Wait(5000)
-        if GetPedArmour(PlayerPedId()) > 100 then 
-			TriggerServerEvent("ARMA:acType9", 'More than 100 Armour')
-        elseif GetEntityHealth(PlayerPedId()) > 200 then 
-			TriggerServerEvent("ARMA:acType10", 'More than 200 Health')
-		elseif GetAmmoInPedWeapon(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
-			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Weapon')
-		elseif GetWeaponClipSize(PlayerPedId(), GetSelectedPedWeapon(PlayerPedId())) > 250 then
-			TriggerServerEvent("ARMA:acType8", 'More than 250 Bullets in Clip')
-		end
-    end
-end)
-
 local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
 CreateThread(function()
 	while true do
