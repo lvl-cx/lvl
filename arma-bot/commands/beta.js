@@ -6,13 +6,19 @@ exports.runcmd = (fivemexports, client, message, params) => {
     fivemexports.ghmattimysql.execute("SELECT user_id FROM `arma_verification` WHERE discord_id = ?", [message.author.id], (verification) => {
         if (verification.length > 0) {
             let permid = verification[0].user_id
-            fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [permid], (result) => {
-                if (result.length > 0) {
-                    let dvalue = JSON.parse(result[0].dvalue)
-                    let groups = dvalue.groups
-                    groups['Supporter'] = true;
-                    fivemexports.ghmattimysql.execute("UPDATE `arma_user_data` SET dvalue = ? WHERE user_id = ?", [JSON.stringify(dvalue), params[0]])
-                    message.reply('You have received Supporter rank for BETA only. After beta to access VIP garages it will be a required purchase on the store.')
+            fivemexports.arma.getConnected([permid], function(connected) {
+                if (connected === 'connected') {
+                    message.reply('Please log off the server before attempting this command.')
+                } else {
+                    fivemexports.ghmattimysql.execute("SELECT * FROM `arma_user_data` WHERE user_id = ?", [permid], (result) => {
+                        if (result.length > 0) {
+                            let dvalue = JSON.parse(result[0].dvalue)
+                            let groups = dvalue.groups
+                            groups['Supporter'] = true;
+                            fivemexports.ghmattimysql.execute("UPDATE `arma_user_data` SET dvalue = ? WHERE user_id = ?", [JSON.stringify(dvalue), permid])
+                            message.reply('You have received Supporter rank for BETA only. After beta to access VIP garages it will be a required purchase on the store.')
+                        }
+                    })
                 }
             })
         } else {
