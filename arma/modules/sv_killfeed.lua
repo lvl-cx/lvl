@@ -3,6 +3,7 @@ local damagelogs = 'https://discord.com/api/webhooks/1061534924072570972/hkQKFWv
 
 local f = module("arma-weapons", "cfg/weapons")
 f=f.weapons
+illegalWeapons = f.nativeWeaponModelsToNames
 
 local function getWeaponName(weapon)
     for k,v in pairs(f) do
@@ -147,7 +148,12 @@ AddEventHandler('ARMA:onPlayerKilled', function(killtype, killer, weaponhash, su
 end)
 
 AddEventHandler('weaponDamageEvent', function(sender, ev)
+    local user_id = ARMA.getUserId(sender)
+    local name = GetPlayerName(sender)
 	if ev.weaponDamage ~= 0 then
+        if ev.weaponType == 3218215474 or (ev.weaponType == 911657153 and not ARMA.hasPermission(user_id, 'police.onduty.permission')) then
+            TriggerEvent("ARMA:acBan", user_id, 8, name, sender, ev.weaponType)
+        end
         local embed = {
             {
               ["color"] = "16448403",
@@ -157,7 +163,7 @@ AddEventHandler('weaponDamageEvent', function(sender, ev)
               ["fields"] = {
                 {
                     ["name"] = "Player Name",
-                    ["value"] = GetPlayerName(sender),
+                    ["value"] = name,
                     ["inline"] = true
                 },
                 {
@@ -167,7 +173,7 @@ AddEventHandler('weaponDamageEvent', function(sender, ev)
                 },
                 {
                     ["name"] = "Player Perm ID",
-                    ["value"] = ARMA.getUserId(sender),
+                    ["value"] = user_id,
                     ["inline"] = true
                 },
                 {
