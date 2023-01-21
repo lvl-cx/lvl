@@ -86,6 +86,7 @@ function ch_give(idname, player, choice)
       else
         ARMAclient.getNearestPlayer(player,{15},function(nplayer)
           if nplayer then
+            local nuser_id = ARMA.getUserId(nplayer)
               ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
                 local amount = parseInt(amount)
                 -- weight check
