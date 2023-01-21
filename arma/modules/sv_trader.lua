@@ -137,9 +137,9 @@ AddEventHandler('ARMA:sellDiamond', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if checkTraderBucket(source) then
-        if ARMA.getInventoryItemAmount(user_id, 'Diamond') > 0 then
-            ARMA.tryGetInventoryItem(user_id, 'Diamond', 1, false)
-            ARMAclient.notify(source, {'~g~Sold Diamond for £'..getMoneyStringFormatted(defaultPrices['Diamond'])})
+        if ARMA.getInventoryItemAmount(user_id, 'Processed Diamond') > 0 then
+            ARMA.tryGetInventoryItem(user_id, 'Processed Diamond', 1, false)
+            ARMAclient.notify(source, {'~g~Sold Processed Diamond for £'..getMoneyStringFormatted(defaultPrices['Diamond'])})
             ARMA.giveBankMoney(user_id, defaultPrices['Diamond'])
         else
             ARMAclient.notify(source, {'~r~You do not have Diamond.'})
