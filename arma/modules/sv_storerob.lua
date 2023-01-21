@@ -126,7 +126,7 @@ AddEventHandler('ARMA:initiateStoreRobbery', function(store)
                             end
                             -- make it add store robbery to call manager
                         end
-                        TriggerEvent('ARMA:PDRobberyCall', source)
+                        TriggerEvent('ARMA:PDRobberyCall', source, v.storename, v.position)
                     else
                         TriggerClientEvent('chatMessage', source, "^7OOC ^1Store Robbery ^7 - Store was robbed too recently, "..v.cooldown.." seconds remaining.", { 128, 128, 128 }, message, "ooc")
                     end

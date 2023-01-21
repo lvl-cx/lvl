@@ -173,7 +173,9 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                 elseif tickets[ticketID].type == 'met' and ARMA.hasPermission(user_id, "police.onduty.permission") then
                     if ARMA.getUserSource(v.permID) ~= nil then
                         if user_id ~= v.permID then
-                            ARMAclient.notify(v.tempID,{"~b~Your MET Police call has been accepted!"})
+                            if v.tempID ~= nil then
+                                ARMAclient.notify(v.tempID,{"~b~Your MET Police call has been accepted!"})
+                            end
                             tickets[ticketID] = nil
                             TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                         else
@@ -201,20 +203,19 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
 end)
 
 RegisterNetEvent("ARMA:PDRobberyCall")
-AddEventHandler("ARMA:PDRobberyCall", function(source)
+AddEventHandler("ARMA:PDRobberyCall", function(source, store, position)
     local source = source
     local user_id = ARMA.getUserId(source)
-    local reason = 'Store Robbery'
     callID = callID + 1
     tickets[callID] = {
-        name = GetPlayerName(source),
-        permID = user_id,
-        tempID = source,
-        reason = reason,
+        name = 'Store Robbery',
+        permID = 999,
+        tempID = nil,
+        reason = 'Robbery in progress at '..store,
         type = 'met'
     }
     for k, v in pairs(ARMA.getUsers({})) do
-        TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(source), user_id, GetEntityCoords(GetPlayerPed(source)), reason, 'met')
+        TriggerClientEvent("ARMA:addEmergencyCall", v, callID, 'Store Robbery', 999, position, 'Robbery in progress at '..store, 'met')
     end
 end)
 
