@@ -61,7 +61,6 @@ function ARMA.removeAllJobs(user_id)
     TriggerClientEvent('ARMA:radiosClearAll', source)
     -- toggle all main jobs to false
     TriggerClientEvent('ARMA:toggleTacoJob', source, false)
-    TriggerClientEvent('ARMA:setOnPilotDuty', source, false)
 end
 
 RegisterNetEvent("ARMA:jobSelector")
@@ -130,9 +129,6 @@ AddEventHandler("ARMA:jobSelector",function(a,b)
             TriggerClientEvent('ARMA:jobInstructions',source,b)
             if b == 'Taco Seller' then
                 TriggerClientEvent('ARMA:toggleTacoJob', source, true)
-            end
-            if b == 'Pilot' then
-                TriggerClientEvent('ARMA:setOnPilotDuty', source, true)
             end
         end
         TriggerEvent('ARMA:clockedOnCreateRadio', source)

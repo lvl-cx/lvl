@@ -11,7 +11,6 @@ cfg.selectorTypes = {
             {"Bus Driver", 0},
             {"Deliveroo", 0},
             {"Scuba Diver",  0},
-            {"Pilot", 0},
             {"G4S Driver", 0},
             {"Taco Seller", 0},
             {"Burger Shot Cook", 0},

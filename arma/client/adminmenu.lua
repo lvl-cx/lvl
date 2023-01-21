@@ -114,7 +114,6 @@ local groups = {
     ["Bus Driver"] = "Bus Driver",
     ["Deliveroo"] = "Deliveroo",
     ["Scuba Diver"] = "Scuba Diver",
-    ["Pilot"] = "Pilot",
     ["G4S Driver"] = "G4S Driver",
     ["Taco Seller"] = "Taco Seller",
     ["Burger Shot Cook"] = "Burger Shot Cook",

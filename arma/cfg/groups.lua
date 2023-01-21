@@ -695,7 +695,6 @@ cfg.groups = {
     ["Bus Driver"] = {},
     ["Deliveroo"] = {},
     ["Scuba Diver"] = {},
-    ["Pilot"] = {},
     ["G4S Driver"] = {},
     ["Taco Seller"] = {},
     ["Burger Shot Cook"] = {},

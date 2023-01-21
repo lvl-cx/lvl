@@ -74,7 +74,6 @@ local defaultGroups = {
     ["Bus Driver"] = true,
     ["Deliveroo"] = true,
     ["Scuba Diver"] = true,
-    ["Pilot"] = true,
     ["G4S Driver"] = true,
     ["Taco Seller"] = true,
     ["Burger Shot Cook"] = true,

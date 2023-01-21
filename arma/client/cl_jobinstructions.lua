@@ -7,8 +7,6 @@ RegisterNetEvent("ARMA:jobInstructions",function(a) -- send this when selecting 
         deliverooInstructions()
     elseif a == "Scuba Diver" then
         scubaDivingInstructions()
-    elseif a == "Pilot" then
-        pilotInstructions()
     elseif a == "G4S Driver" then
         G4SInstructions()
     elseif a == "Taco Seller" then
@@ -42,11 +40,6 @@ function scubaDivingInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
     initializeInstructionalJobScaleform("Scuba Diving","I have set a waypoint to the Scuba Diving shop where you'll start your first job.")
     SetNewWaypoint(-2195.6926269531, -394.82040405273)
-end
-function pilotInstructions()
-    PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
-    initializeInstructionalJobScaleform("Pilot","I have set a waypoint to the Airport where your career will take off from.")
-    SetNewWaypoint(-981.72332763672, -2956.2905273438)
 end
 function G4SInstructions()
     PlaySound(-1, "CHECKPOINT_BEHIND", "HUD_MINI_GAME_SOUNDSET", 0, 0, 1)
