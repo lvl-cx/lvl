@@ -140,6 +140,7 @@ Citizen.CreateThread(function()
     while true do
         uptime = uptime + 1
         TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
+        TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
         Citizen.Wait(1000)
     end
 end)
@@ -194,7 +195,6 @@ AddEventHandler('ARMA:getPlayerListData', function()
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
     TriggerClientEvent('ARMA:gotJobTypes', source, nhsGroups, pdGroups, lfbGroups, hmpGroups, tridentGroups)
-    TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
 end)
 
 
