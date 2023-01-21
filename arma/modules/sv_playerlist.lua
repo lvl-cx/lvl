@@ -152,10 +152,8 @@ AddEventHandler("ARMA:setUserHidden",function(state)
     if user_id == 1 then
         if state then
             hiddenUsers[user_id] = true
-            TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
         else
             hiddenUsers[user_id] = nil
-            TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
         end
     end
 end)
@@ -196,6 +194,7 @@ AddEventHandler('ARMA:getPlayerListData', function()
     end
     TriggerClientEvent('ARMA:gotFullPlayerListData', source, staff, police, nhs, lfb, hmp, civillians)
     TriggerClientEvent('ARMA:gotJobTypes', source, nhsGroups, pdGroups, lfbGroups, hmpGroups, tridentGroups)
+    TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
 end)
 
 
