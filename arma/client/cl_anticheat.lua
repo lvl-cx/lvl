@@ -325,8 +325,8 @@ local b = {
 Citizen.CreateThread(function()
 	while true do
 		local f = tARMA.getPlayerVehicle()
-		if GetVehicleHasParachute(f) or GetCanVehicleJump(f) or GetHasRocketBoost(f) then
-			local be = GetEntityModel(f)
+		local be = GetEntityModel(f)
+		if GetVehicleHasParachute(f) or GetCanVehicleJump(f) or (GetHasRocketBoost(f) and be ~= GetHashKey("voltic2")) then
 			if not table.has(b, be) then
 				TriggerServerEvent("ARMA:acType12", globalVehicleModelHashMapping[be])
 			end
