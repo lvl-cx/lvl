@@ -259,5 +259,6 @@ RegisterCommand('beta', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     ARMA.addUserGroup(user_id, 'Supporter')
-    ARMAclient.notify(source, {'~g~You have received Supporter rank for BETA only. After beta to access VIP garages it will be a required purchase on the store.'})
+    ARMAclient.notify(source, {'~g~You have received Supporter rank for BETA only.'})
+    ARMAclient.notify(source, {'~g~After beta to access VIP garages it will be a required purchase on the store..'})
 end)
