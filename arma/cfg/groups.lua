@@ -116,7 +116,6 @@ cfg.groups = {
         "police.dev"
     },
     ["Staff Manager"] = {
-        "admin.managecommunitypot",
         "admin.ban",
         "admin.unban",
         "admin.kick",
@@ -160,6 +159,7 @@ cfg.groups = {
         "admin.tickets"
     },
     ["Community Manager"] = {
+        "admin.managecommunitypot",
         "admin.ban",
         "admin.unban",
         "admin.kick",
