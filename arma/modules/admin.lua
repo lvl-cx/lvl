@@ -405,7 +405,7 @@ AddEventHandler("ARMA:GenerateBan", function(PlayerID, RulesBroken)
                 if PermOffense then 
                     PlayerBanCachedDuration[PlayerID] = -1
                 end
-                Wait(1500)
+                Wait(100)
                 TriggerClientEvent("ARMA:RecieveBanPlayerData", source, PlayerBanCachedDuration[PlayerID], table.concat(PlayerCacheBanMessage, ", "), separatormsg, math.floor(points))
             end
         end)
