@@ -699,8 +699,8 @@ end
 
 function calculateTimeRemaining(expireTime)
     local datetime = ''
-    local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(v.expireTime))
-    local hoursLeft = ((tonumber(v.expireTime)-os.time()))/3600
+    local expiry = os.date("%d/%m/%Y at %H:%M", tonumber(expireTime))
+    local hoursLeft = ((tonumber(expireTime)-os.time()))/3600
     local minutesLeft = nil
     if hoursLeft < 1 then
         minutesLeft = hoursLeft * 60
