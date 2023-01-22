@@ -68,7 +68,7 @@ local wbody_weight = function(args)
           return 7.50
         elseif v.class == "AR" then
           return 10.00
-        elseif v.class == "Heavy" then
+        elseif v.class == "Heavy" or v.class == "LMG" then
           return 15.00
         else
           return 1.00

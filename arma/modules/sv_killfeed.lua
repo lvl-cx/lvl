@@ -15,13 +15,7 @@ local function getWeaponName(weapon)
             return 'Explode'
         end
         if v.name == weapon then
-            if v.class == 'AR' then
-                return 'Assault-Rifle'
-            elseif v.class == 'Heavy' then
-                return 'Sniper'
-            else
-                return v.class
-            end
+            return v.class
         end
     end
     return "Unknown"

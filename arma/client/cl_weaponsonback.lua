@@ -7,7 +7,7 @@ Citizen.CreateThread(function()
                 a.weapons[d.hash] = {bone = 58271,offset = vector3(-0.01, 0.1, -0.07),rotation = vector3(-55.0, 0.10, 0.0),model = GetHashKey(d.model),type = "SMG"}
             elseif d.class == "AR" then
                 a.weapons[d.hash] = {bone = 24818,offset = vector3(-0.12, -0.12, -0.13),rotation = vector3(100.0, -3.0, 5.0),model = GetHashKey(d.model),type = "AR"}
-            elseif d.class == "Heavy" then
+            elseif d.class == "Heavy" or d.class == "LMG" then
                 a.weapons[d.hash] = {bone = 24818,offset = vector3(-0.12, -0.12, -0.13),rotation = vector3(100.0, -3.0, 5.0),model = GetHashKey(d.model),type = "Heavy"}
             elseif d.class == "Melee" then
                 a.weapons[d.hash] = {bone = 24818,offset = vector3(0.32, -0.15, 0.13),rotation = vector3(0.0, -90.0, 0.0),model = GetHashKey(d.model),type = "Melee"}
