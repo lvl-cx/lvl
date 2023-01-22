@@ -133,9 +133,7 @@ whitelistedGuns = {
     -- ["LFB"]={},
     -- ["VIP"]={},
     -- ["Rebel"]={},
-    ["LargeArmsDealer"] = {
-        ["WEAPON_AMELIV"]={"CETME Ameli",2000000,0,"N/A","w_mg_ameliv",3},
-    },
+    -- ["LargeArmsDealer"] = {},
     -- ["SmallArmsDealer"] = {},
     -- ["Legion"] = {},
 }
