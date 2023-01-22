@@ -66,13 +66,14 @@ local organHeistTime = 19 -- 0-23 (24 hour format)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        if timeTillOrgan >0 then
+        if timeTillOrgan > 0 and not inGameStage then
             timeTillOrgan = timeTillOrgan - 1
         end
         local time = os.date("*t")
         if inGameStage then
             local policeAlive = 0
             local civAlive = 0
+            local timeTillOrgan = 600
             for k,v in pairs(playersInOrganHeist) do
                 if v.type == 'police' then
                     policeAlive = policeAlive + 1
@@ -104,6 +105,7 @@ Citizen.CreateThread(function()
             if civsInGame > 0 and policeInGame > 0 then
                 TriggerClientEvent('ARMA:startOrganHeist', -1)
                 inGameStage = true
+                inWaitingStage = false
             else
                 for k,v in pairs(playersInOrganHeist) do
                     TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
