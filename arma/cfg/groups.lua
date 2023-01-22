@@ -280,8 +280,10 @@ cfg.groups = {
         "admin.tp2player",
         "admin.freeze",
         "admin.screenshot",
+        "admin.video",
         "admin.spectate",
         "admin.tickets",
+        "admin.revive",
     },
     ["Support Team"] = {
         "admin.kick",
@@ -290,14 +292,14 @@ cfg.groups = {
         "admin.freeze",
         "admin.tickets",
         "admin.screenshot",
-        "admin.ban",
+        "admin.video",
+        "admin.revive",
     },
     ["Trial Staff"] = {
         "admin.kick",
         "admin.tp2player",
         "admin.freeze",
         "admin.tickets",
-        "admin.screenshot",
     },
     ["cardev"] = {
         "cardev.menu"
