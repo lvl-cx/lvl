@@ -126,6 +126,7 @@ whitelistedGuns = {
         ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50",1},
         ["WEAPON_MK18V2"]={"MK18 V2",0,0,"N/A","w_ar_mk18v2",33},
         ["WEAPON_NOVESKENSR9"]={"Noveske NSR-9",0,0,"N/A","w_ar_noveskensr9",1},
+        ["WEAPON_TYLON"]={"M4A1 Custom",0,0,"N/A","w_ar_tylon",163},
     },
     -- ["policeSmallArms"]={},
     -- ["prisonArmoury"]={},
