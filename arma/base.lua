@@ -143,7 +143,7 @@ Citizen.CreateThread(function()
     rentedid varchar(200) NOT NULL DEFAULT '',
     rentedtime varchar(2048) NOT NULL DEFAULT '',
     locked BOOLEAN NOT NULL DEFAULT 0,
-    fuel_level INT NOT NULL DEFAULT 100,
+    fuel_level FLOAT NOT NULL DEFAULT 100,
     impounded BOOLEAN NOT NULL DEFAULT 0,
     impound_info varchar(2048) NOT NULL DEFAULT '',
     impound_time VARCHAR(100) NOT NULL DEFAULT '',
