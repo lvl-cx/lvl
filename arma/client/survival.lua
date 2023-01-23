@@ -447,10 +447,10 @@ Citizen.CreateThread(function()
                 a7 = NetworkGetPlayerIndexFromPed(GetPedInVehicleSeat(aa, -1))
             end
             local ab = tARMA.getPedServerId(aa)
-            -- if inOrganHeist then
-            --     TriggerServerEvent("ARMA:diedInOrganHeist", ab)
-            --     tARMA.setDeathInOrganHeist()
-            -- end
+            if inOrganHeist then
+                TriggerServerEvent("ARMA:diedInOrganHeist", ab)
+                tARMA.setDeathInOrganHeist()
+            end
             local ac = false
             local ad = 0
             if a7 == PlayerId() or a7 == nil then

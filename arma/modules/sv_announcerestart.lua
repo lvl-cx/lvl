@@ -13,10 +13,13 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        local time = os.date("*t")
-        if tonumber(time["hour"]) == 0 and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then -- 0-23 (24 hour format)
-            TriggerClientEvent('ARMA:announceRestart', -1, 60, true)
-            TriggerEvent('ARMA:restartTime', 60)
+        local time = os.date("*t") -- 0-23 (24 hour format)
+        local hour = tonumber(time["hour"])
+        if hour == 0 or hour == 6 or hour == 12 or hour == 18 then
+            if tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
+                TriggerClientEvent('ARMA:announceRestart', -1, 60, true)
+                TriggerEvent('ARMA:restartTime', 60)
+            end
         end
     end
 end)

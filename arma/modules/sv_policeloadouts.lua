@@ -27,6 +27,7 @@ loadouts = {
             "WEAPON_PDGLOCK",
             "WEAPON_SPAR17",
             "WEAPON_REMINGTON700",
+            "WEAPON_FLASHBANG",
         },
     },
     ['MP5 Tazer'] = {

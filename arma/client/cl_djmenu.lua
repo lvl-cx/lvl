@@ -17,7 +17,9 @@ TriggerEvent('chat:addSuggestion','/djadmin','Administrate the use of the DJ Mix
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('ARMADJ', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
-            if not a.active then 
+            if inOrganHeist then
+                return
+            elseif not a.active then 
                 if h then 
                     RageUI.Button("Start Session", "Start a new DJ Session", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then 
@@ -135,10 +137,8 @@ AddEventHandler("ARMA:requestCurrentProgress",function(s,coords)
 end)
 RegisterNetEvent("ARMA:toggleDjMenu")
 AddEventHandler("ARMA:toggleDjMenu",function()
-    if not inOrganHeist then
-        RageUI.Visible(RMenu:Get('ARMADJ','main'),true)
-        h=true 
-    end
+    RageUI.Visible(RMenu:Get('ARMADJ','main'),true)
+    h=true 
 end)
 RegisterNetEvent("ARMA:toggleDjAdminMenu")
 AddEventHandler("ARMA:toggleDjAdminMenu",function(x)

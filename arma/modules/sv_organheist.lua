@@ -1,7 +1,7 @@
 local playersInOrganHeist = {}
 local timeTillOrgan = 0
 local inWaitingStage = false
-local inGameStage = false
+local inGamePhase = false
 local policeInGame = 0
 local civsInGame = 0
 local cfg = module('cfg/cfg_organheist')
@@ -25,7 +25,7 @@ AddEventHandler("ARMA:joinOrganHeist",function()
                 civsInGame = civsInGame+1
                 TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, user_id, 'civ')
                 TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[math.random(2)], timeTillOrgan, 'civ', 2)
-                ARMAclient.giveWeapons(source, {{['WEAPON_M1911'] = {ammo = 250}}, false})
+                ARMAclient.giveWeapons(source, {{['WEAPON_ROOK'] = {ammo = 250}}, false})
             end
             tARMA.setBucket(source, 15)
             ARMAclient.setArmour(source, {100, true})
@@ -35,20 +35,20 @@ AddEventHandler("ARMA:joinOrganHeist",function()
     end
 end)
 
-RegisterNetEvent("ARMA:checkOrganHeistKill")
-AddEventHandler("ARMA:checkOrganHeistKill",function(killed, killer)
-    local killedID = ARMA.getUserId(killed)
-    if playersInOrganHeist[killedID] then
-        if killer ~= nil then
+RegisterNetEvent("ARMA:diedInOrganHeist")
+AddEventHandler("ARMA:diedInOrganHeist",function(killer)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if playersInOrganHeist[user_id] then
+        if ARMA.getUserId(killer) ~= nil then
             local killerID = ARMA.getUserId(killer)
             ARMA.giveBankMoney(killerID, 25000)
-            TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(killed))
+            TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(source))
         end
-        TriggerClientEvent('ARMA:endOrganHeist', killed)
+        TriggerClientEvent('ARMA:endOrganHeist', source)
         TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
-        tARMA.setBucket(killed, 0)
+        tARMA.setBucket(source, 0)
         playersInOrganHeist[killedID] = nil
-        ARMAclient.setDeathInOrganHeist(killed, {})
     end
 end)
 
@@ -66,11 +66,11 @@ local organHeistTime = 19 -- 0-23 (24 hour format)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        if timeTillOrgan > 0 and not inGameStage then
+        if timeTillOrgan > 0 and not inGamePhase then
             timeTillOrgan = timeTillOrgan - 1
         end
         local time = os.date("*t")
-        if inGameStage then
+        if inGamePhase then
             local policeAlive = 0
             local civAlive = 0
             local timeTillOrgan = 600
@@ -94,7 +94,7 @@ Citizen.CreateThread(function()
                 end
                 playersInOrganHeist = {}
                 inWaitingStage = false
-                inGameStage = false
+                inGamePhase = false
             end
         end
         if tonumber(time["hour"]) == (organHeistTime-1) and tonumber(time["min"]) >= 50 and tonumber(time["sec"]) == 0 then
@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
         elseif tonumber(time["hour"]) == organHeistTime and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
             if civsInGame > 0 and policeInGame > 0 then
                 TriggerClientEvent('ARMA:startOrganHeist', -1)
-                inGameStage = true
+                inGamePhase = true
                 inWaitingStage = false
             else
                 for k,v in pairs(playersInOrganHeist) do

@@ -850,6 +850,82 @@ AddEventHandler("ARMA:searchClient",function(c9)
     end
 end)
 
+-- local ce = {}
+-- RegisterNetEvent("ARMA:lockpickClient",function(c9, cf)
+--     FreezeEntityPosition(tARMA.getPlayerPed(), true)
+--     RequestAnimDict("anim@amb@clubhouse@tutorial@bkr_tut_ig3@")
+--     while not HasAnimDictLoaded("anim@amb@clubhouse@tutorial@bkr_tut_ig3@") do
+--         Citizen.Wait(0)
+--     end
+--     local cg = true
+--     local ch = false
+--     local ci = GetGameTimer()
+--     tARMA.notify("~g~Lock Picking in progress, you can cancel by pressing [E].")
+--     Citizen.CreateThread(function()
+--         while cg do
+--             if not IsEntityPlayingAnim(tARMA.getPlayerPed(),"anim@amb@clubhouse@tutorial@bkr_tut_ig3@","machinic_loop_mechandplayer",3) then
+--                 TaskPlayAnim(tARMA.getPlayerPed(),"anim@amb@clubhouse@tutorial@bkr_tut_ig3@","machinic_loop_mechandplayer",8.0,-8.0,-1,1,0,false,false,false)
+--             end
+--             local cj = math.floor((GetGameTimer() - ci) / 60000 * 100)
+--             drawNativeText("~b~Lock Picking - " .. cj .. "%")
+--             if IsControlJustPressed(0, 38) then
+--                 tARMA.notify("~b~Lock Picking cancelled.")
+--                 cg = false
+--                 ch = true
+--                 ClearPedTasks(tARMA.getPlayerPed())
+--                 FreezeEntityPosition(tARMA.getPlayerPed(), false)
+--             end
+--             Wait(0)
+--         end
+--         RemoveAnimDict("anim@amb@clubhouse@tutorial@bkr_tut_ig3@")
+--     end)
+--     Wait(60000)
+--     FreezeEntityPosition(tARMA.getPlayerPed(), false)
+--     ClearPedTasks(tARMA.getPlayerPed())
+--     cg = false
+--     if cf and not ch then
+--         ce[c9] = true
+--         local y = tonumber(DecorGetInt(c9, "vRP_owner"))
+--         if y > 0 then
+--             TriggerServerEvent("ARMA:lockpickVehicle", GetEntityModel(c9), y)
+--         else
+--             tARMA.notify("~r~Vehicle is not owned by anyone")
+--         end
+--         local ck = NetworkGetNetworkIdFromEntity(c9)
+--         if ck ~= 0 then
+--             TriggerServerEvent("ARMA:setVehicleLock", ck, false)
+--             tARMA.notify("Vehicle unlocked.")
+--         end
+--     else
+--         tARMA.notify("~r~Failed to lockpick vehicle.")
+--     end
+-- end)
+
+-- RegisterNetEvent("ARMA:playLockpickAlarm",function(cl)
+--     local N = NetToVeh(cl)
+--     if N then
+--         local bt = GetSoundId()
+--         PlaySoundFromEntity(bt, "ALARM_ONE", N, "DLC_ALARM_SOUNDSET", 0, 0)
+--         SetTimeout(60000,function()
+--             StopSound(bt)
+--             ReleaseSoundId(bt)
+--         end)
+--     end
+-- end)
+
+-- AddEventHandler("ARMA:verifyLockpick",function(c9)
+--     local y = tonumber(DecorGetInt(c9, "vRP_owner"))
+--     if y > 0 then
+--         if ce[c9] then
+--             TriggerServerEvent("ARMA:lockpickVehicle", GetEntityModel(c9), y)
+--         else
+--             TriggerServerEvent("ARMA:attemptLockpick", c9, VehToNet(c9))
+--         end
+--     else
+--         tARMA.notify("~r~Vehicle owner is not online.")
+--     end
+-- end)
+
 function canVehicleBeSold(car)
     return not vehicleCannotBeSold[string.lower(car)]
 end

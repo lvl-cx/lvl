@@ -137,7 +137,7 @@ const init = async() => {
 
 setInterval(function(){
     promotionDetection();
-  }, 60*1000); // 60 * 1000 milsec
+}, 60*1000); // 60 * 1000 milsec
 
 function promotionDetection(){
   client.users.forEach(user =>{ //iterate over each user
@@ -149,12 +149,10 @@ function promotionDetection(){
         }
         if(Object.entries(user.presence.activities).length > 0 && typeof(user.presence.activities[0].state) === 'string' && user.presence.activities[0].state.includes('discord.gg/armarp') ){ //check if they have a status
             statusLeaderboard['leaderboard'][user.id] += 1;
-            //console.log(`Added 1 minute to ${user.id}'s profile`)
             fs.writeFileSync(`${resourcePath}/statusleaderboard.json`, JSON.stringify(statusLeaderboard), function(err) {});
         }
     }
   })
-  //console.log(userProfiles); //visually see it for debugging purposes
 }
 
 client.getPerms = function(msg) {
@@ -246,7 +244,7 @@ client.on('message', (message) => {
                     msg.delete(5000)
                 })
                 return
-            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify')) {
+            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify') && !message.author.id === "609044650019258407") {
                 message.delete()
                 message.reply('Please use bot commands for this command.').then(msg => {
                     msg.delete(5000)
@@ -308,6 +306,25 @@ client.on("guildMemberAdd", function (member) {
         
         } catch (error) {}
     }
+});
+
+exports('dmUser', (source, args) => {
+    let discordid = args[0].trim()
+    let verifycode = args[1]
+    let permid = args[2]
+    const guild = client.guilds.get(settingsjson.settings.GuildID);
+    const member = guild.members.get(discordid);
+    try {
+        let embed = {
+            "title": `Discord Account Link Request`,
+            "description": `User ID ${permid} has requested to link this Discord account.\n\nThe code to link is **${verifycode}**\nThis code will expire in 5 minutes.\n\nIf you have not requested this then you can safely ignore the message. Do **NOT** share this message or code with anyone else.`,
+            "color": settingsjson.settings.botColour,
+            "thumbnail": {
+                "url": "https://cdn.discordapp.com/icons/975490533344559154/719d25a3f8b4852159905244bfed520b.webp?size=2048",
+            },
+        }
+        member.send({embed})
+    } catch (error) {}
 });
 
 client.login(process.env.TOKEN)

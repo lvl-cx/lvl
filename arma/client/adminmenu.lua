@@ -507,6 +507,11 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
+                RageUI.ButtonWithStyle("Armour", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        tARMA.setArmour(100)
+                    end
+                end, RMenu:Get('adminmenu', 'devfunctions'))
             end        
         end)
     end
@@ -634,7 +639,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if tARMA.getStaffLevel() >= 2 then
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Ban Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         banningPermID = SelectedPlayer[3]
@@ -647,8 +652,6 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
-            end
-            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Spectate Player", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if tonumber(SelectedPlayer[2]) ~= GetPlayerServerId(PlayerId()) then
@@ -666,7 +669,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
             end
-            if tARMA.getStaffLevel() >= 4 then
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Revive", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
@@ -730,14 +733,14 @@ RageUI.CreateWhile(1.0, true, function()
                         ExecuteCommand("sw " .. SelectedPlayer[3])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
+            end
+            if tARMA.getStaffLevel() >= 2 then
                 RageUI.ButtonWithStyle("Take Screenshot", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())
                         TriggerServerEvent('ARMA:RequestScreenshot', uid , SelectedPlayer[2])
                     end
                 end, RMenu:Get('adminmenu', 'submenu'))
-            end
-            if tARMA.getStaffLevel() >= 4 then
                 RageUI.Button("Take Video", SelectedPlayer[1] .. " Perm ID: " .. SelectedPlayer[3] .. " Temp ID: " .. SelectedPlayer[2], requestedVideo and {RightLabel = ""} or {RightLabel = "→→→"}, not requestedVideo, function(Hovered, Active, Selected)
                     if Selected then
                         local uid = GetPlayerServerId(PlayerId())

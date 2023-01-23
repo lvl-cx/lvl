@@ -12,3 +12,7 @@ server_scripts {
     "@arma/lib/utils.lua",
     "bot.js"
 }
+
+server_exports {
+    'dmUser',
+}
