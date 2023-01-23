@@ -1,5 +1,6 @@
 RMenu.Add('SettingsMenu', 'MainMenu', RageUI.CreateMenu("", "~b~Settings Menu", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners","settings")) 
 RMenu.Add("SettingsMenu", "graphicpresets", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Graphics Presets',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
+RMenu.Add("SettingsMenu", "changediscord", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Link Discord',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "killeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Kill Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "bloodeffects", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Blood Effects',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
 RMenu.Add("SettingsMenu", "weaponswhitelist", RageUI.CreateSubMenu(RMenu:Get("SettingsMenu", "MainMenu"), "", '~b~Custom Weapons Owned',tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(),"banners","settings"))
@@ -344,8 +345,6 @@ RageUI.CreateWhile(1.0, true, function()
                 drawNativeNotification("Press ~INPUT_REPLAY_START_STOP_RECORDING_SECONDARY~ to toggle the Settings Menu.")
             end
             RageUI.List("Render Distance Modifier",m,n,"~g~Lowering this will increase your FPS!",{},true,function(a0, a1, a2, a3)
-                if a2 then
-                end
                 n = a3
             end,function()end,nil)
             local function a4()
@@ -433,16 +432,36 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Checkbox("Cinematic Black Bars","",e,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
+            RageUI.ButtonWithStyle("Change Linked Discord","Begins the process of changing your linked Discord. Your linked discord is used to sync roles with the server.",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                if a2 then
+                    TriggerServerEvent('ARMA:changeLinkedDiscord')
+                end
+            end)
             RageUI.ButtonWithStyle("Crosshair","Create a custom built-in crosshair here.",{RightLabel = "→→→"},true,function(a0, a1, a2)
             end,RMenu:Get("crosshair", "main"))
             RageUI.ButtonWithStyle("Scope Settings","Add a toggleable range finder when using sniper scopes.",{RightLabel = "→→→"},true,function(a0, a1, a2)
             end,RMenu:Get("scope", "main"))
-            -- RageUI.ButtonWithStyle("Graphic Presets","View a list of preconfigured graphic settings.",{RightLabel = "→→→"},true,function()
-            -- end,RMenu:Get("SettingsMenu", "graphicpresets"))
+            RageUI.ButtonWithStyle("Graphic Presets","View a list of preconfigured graphic settings.",{RightLabel = "→→→"},true,function()
+            end,RMenu:Get("SettingsMenu", "graphicpresets"))
             RageUI.ButtonWithStyle("Kill Effects","Toggle effects that occur on killing a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "killeffects"))
             RageUI.ButtonWithStyle("Blood Effects","Toggle effects that occur when damaging a player.",{RightLabel = "→→→"},true,function()
             end,RMenu:Get("SettingsMenu", "bloodeffects"))
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('SettingsMenu', 'changediscord')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            RageUI.Separator('~g~A code has been messaged to the Discord account')
+            RageUI.Separator('-----')
+            RageUI.Separator('~y~If you have not received a message verify:')
+            RageUI.Separator('~y~1. Your direct messages are open.')
+            RageUI.Separator('~y~2. The account you provided was correct.')
+            RageUI.Separator('-----')
+            RageUI.ButtonWithStyle("Enter Code","",{RightLabel = "→→→"},true,function(a0, a1, a2)
+                if a2 then
+                    TriggerServerEvent('ARMA:enterDiscordCode')
+                end
+            end)
         end)
     end
     if RageUI.Visible(RMenu:Get('SettingsMenu', 'weaponswhitelist')) then
@@ -908,4 +927,9 @@ AddEventHandler("ARMA:onPlayerDamagePed",function(az)
         end
         tARMA.addBloodEffect(aE, ax, az)
     end
+end)
+
+RegisterNetEvent("ARMA:gotDiscord")
+AddEventHandler("ARMA:gotDiscord",function()
+    RageUI.Visible(RMenu:Get('SettingsMenu', 'changediscord'), true)
 end)

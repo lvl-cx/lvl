@@ -8,15 +8,6 @@ RegisterCommand("getmytempid", function(source)
 	TriggerClientEvent('chatMessage', source, "^1[ARMA]^1", {255, 255, 255}, " Your Temp ID: " .. source, "alert")
 end)
 
-
-RegisterCommand("checkverified", function(source)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    local discord_id = exports['ghmattimysql']:executeSync("SELECT discord_id FROM `arma_verification` WHERE user_id = @user_id", {user_id = user_id})[1].discord_id
-    TriggerClientEvent('chatMessage', source, "^1[ARMA]^1", {255, 255, 255}, " Your Perm ID is connected to Discord ID: " .. discord_id, "alert")
-end)
-
-
 RegisterCommand("a", function(source,args, rawCommand)
     if #args <= 0 then return end
 	local name = GetPlayerName(source)
