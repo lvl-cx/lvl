@@ -507,6 +507,11 @@ RageUI.CreateWhile(1.0, true, function()
                         TriggerServerEvent('ARMA:GiveWeaponToPlayer')
                     end
                 end, RMenu:Get('adminmenu', 'devfunctions'))
+                RageUI.ButtonWithStyle("Armour", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
+                    if Selected then
+                        tARMA.setArmour(100)
+                    end
+                end, RMenu:Get('adminmenu', 'devfunctions'))
             end        
         end)
     end
