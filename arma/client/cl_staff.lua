@@ -85,7 +85,7 @@ function tARMA.isLocalPlayerHidden()
     end
 end
 function tARMA.isUserHidden(u)
-    if t[u] and not tARMA.isDev() and tARMA.getUserId() ~= u then
+    if t[u] and tARMA.getUserId() ~= u then
         return true
     else
         return false
