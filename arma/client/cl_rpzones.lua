@@ -35,6 +35,7 @@ local function h()
         TriggerServerEvent("ARMA:removeRPZone",i)
     end 
 end
+local inRPZone = false
 RMenu.Add("rpzones","mainmenu",RageUI.CreateMenu("","~b~Main Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("rpzones","weapons",RageUI.CreateSubMenu(RMenu:Get("rpzones","mainmenu"),"","~b~Weapons",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","admin"))
 RMenu.Add("rpzones","vehicles",RageUI.CreateSubMenu(RMenu:Get("rpzones","mainmenu"),"","~b~Vehicles",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners","admin"))
@@ -231,6 +232,7 @@ local function D(E)
     ClearPedBloodDamage(v)
     ResetPedVisibleDamage(v)
     ClearPedLastWeaponDamage(v)
+    inRPZone = E
 end
 local function G(g)
     local l,u=GetCurrentPedWeapon(tARMA.getPlayerPed())
@@ -295,4 +297,8 @@ function tARMA.GetRPZoneInfo()
         end
     end
     return nil
+end
+
+function tARMA.getInRPZone()
+   return inRPZone
 end

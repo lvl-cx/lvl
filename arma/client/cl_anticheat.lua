@@ -382,7 +382,7 @@ end)
 Citizen.CreateThread(function()
 	Wait(10000)
 	while true do
-		if GetPlayerInvincible(PlayerId()) and not isInGreenzone and not tARMA.isInsideLsCustoms() and not tARMA.isStaffedOn() and not noclipActive and not tARMA.isInComa() and not tARMA.isInSpectate() then
+		if GetPlayerInvincible(PlayerId()) and not isInGreenzone and not tARMA.isInsideLsCustoms() and not tARMA.isStaffedOn() and not noclipActive and not tARMA.isInComa() and not tARMA.isInSpectate() and not tARMA.getInRPZone() then
 			TriggerServerEvent("ARMA:acType15")
 			Citizen.Wait(60000)
 		end
