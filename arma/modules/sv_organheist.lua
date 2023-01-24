@@ -39,16 +39,16 @@ RegisterNetEvent("ARMA:diedInOrganHeist")
 AddEventHandler("ARMA:diedInOrganHeist",function(killer)
     local source = source
     local user_id = ARMA.getUserId(source)
-    local killerID = ARMA.getUserId(killer)
     if playersInOrganHeist[user_id] then
         if ARMA.getUserId(killer) ~= nil then
+            local killerID = ARMA.getUserId(killer)
             ARMA.giveBankMoney(killerID, 25000)
             TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(source))
         end
         TriggerClientEvent('ARMA:endOrganHeist', source)
         TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
         tARMA.setBucket(source, 0)
-        playersInOrganHeist[killedID] = nil
+        playersInOrganHeist[user_id] = nil
     end
 end)
 
@@ -95,11 +95,11 @@ Citizen.CreateThread(function()
             if timeTillOrgan > 0 then
                 timeTillOrgan = timeTillOrgan - 1
             end
-            if tonumber(time["hour"]) == 20 and tonumber(time["min"]) >= 20 and tonumber(time["sec"]) == 0 then
+            if tonumber(time["hour"]) == 18 and tonumber(time["min"]) >= 50 and tonumber(time["sec"]) == 0 then
                 inWaitingStage = true
-                timeTillOrgan = ((30-tonumber(time["min"]))*60)
+                timeTillOrgan = ((60-tonumber(time["min"]))*60)
                 TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..math.floor((timeTillOrgan/60)).." minutes.", { 128, 128, 128 }, message, "alert")
-            elseif tonumber(time["hour"]) == 20 and tonumber(time["min"]) == 30 and tonumber(time["sec"]) == 0 then
+            elseif tonumber(time["hour"]) == 19 and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
                 if civsInGame > 0 and policeInGame > 0 then
                     TriggerClientEvent('ARMA:startOrganHeist', -1)
                     inGamePhase = true
