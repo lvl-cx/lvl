@@ -2,6 +2,8 @@
 local inside = false
 local currentpos = nil
 local currentgarage = 0
+DecorRegister("dashcam", 2)
+DecorRegister("vehicleblip", 2)
 
 local garages = { 
 	[1] = { 
@@ -1107,9 +1109,7 @@ AddEventHandler("LSC:applyModifications", function(vehicle, modifications)
 		SetVehicleWindowTint(vehicle, modifications.windowTint)
 		SetVehicleNumberPlateTextIndex(vehicle, modifications.plateIndex)
 		setVehicleIdBiometricLock(vehicle, modifications.biometric)
-		DecorRegister("dashcam", 2)
 		DecorSetBool(vehicle, "dashcam", modifications.dashcam)
-		DecorRegister("vehicleblip", 2)
 		DecorSetBool(vehicle, "vehicleblip", modifications.remoteblips)
 		DecorSetInt(vehicle, "lsAudioId", modifications.customexhausts)
 		for k, v in pairs(modifications.mods) do

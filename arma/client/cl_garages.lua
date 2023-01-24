@@ -1410,7 +1410,7 @@ end)
 
 function setVehicleIdBiometricLock(bj, cB)
     if cB then
-        DecorSetBool(bj, "biometricLock", true)
+        DecorSetBool(bj, "biometricLock", cB)
     end
 end
 
