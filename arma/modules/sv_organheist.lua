@@ -62,18 +62,13 @@ AddEventHandler('playerDropped', function(reason)
 end)
 
 
-local organHeistTime = 19 -- 0-23 (24 hour format)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)
-        if timeTillOrgan > 0 and not inGamePhase then
-            timeTillOrgan = timeTillOrgan - 1
-        end
         local time = os.date("*t")
         if inGamePhase then
             local policeAlive = 0
             local civAlive = 0
-            local timeTillOrgan = 600
             for k,v in pairs(playersInOrganHeist) do
                 if v.type == 'police' then
                     policeAlive = policeAlive + 1
@@ -96,22 +91,26 @@ Citizen.CreateThread(function()
                 inWaitingStage = false
                 inGamePhase = false
             end
-        end
-        if tonumber(time["hour"]) == (organHeistTime-1) and tonumber(time["min"]) >= 50 and tonumber(time["sec"]) == 0 then
-            inWaitingStage = true
-            timeTillOrgan = ((60-tonumber(time["min"]))*60)
-            TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..math.floor((timeTillOrgan/60)).." minutes.", { 128, 128, 128 }, message, "alert")
-        elseif tonumber(time["hour"]) == organHeistTime and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
-            if civsInGame > 0 and policeInGame > 0 then
-                TriggerClientEvent('ARMA:startOrganHeist', -1)
-                inGamePhase = true
-                inWaitingStage = false
-            else
-                for k,v in pairs(playersInOrganHeist) do
-                    TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                    ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
-                    SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
-                    tARMA.setBucket(ARMA.getUserSource(k), 0)
+        else
+            if timeTillOrgan > 0 then
+                timeTillOrgan = timeTillOrgan - 1
+            end
+            if tonumber(time["hour"]) == 18 and tonumber(time["min"]) >= 50 and tonumber(time["sec"]) == 0 then
+                inWaitingStage = true
+                timeTillOrgan = ((60-tonumber(time["min"]))*60)
+                TriggerClientEvent('chatMessage', -1, "^7Organ Heist starts in ^1"..math.floor((timeTillOrgan/60)).." minutes.", { 128, 128, 128 }, message, "alert")
+            elseif tonumber(time["hour"]) == 19 and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
+                if civsInGame > 0 and policeInGame > 0 then
+                    TriggerClientEvent('ARMA:startOrganHeist', -1)
+                    inGamePhase = true
+                    inWaitingStage = false
+                else
+                    for k,v in pairs(playersInOrganHeist) do
+                        TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
+                        ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
+                        SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
+                        tARMA.setBucket(ARMA.getUserSource(k), 0)
+                    end
                 end
             end
         end
