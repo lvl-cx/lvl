@@ -511,7 +511,7 @@ cfg.peds = {
         {"mp_m_freemode_01", "Citizen"},
     },
     ["admin"] = {
-        ["config"] = {"Admin Peds", permissions = {"admin.noclip"}},
+        ["config"] = {"Admin Peds", permissions = {"group.remove"}},
         {"child", "Child"},
         {"batman", "Batman"},
         {"spiderman", "Spiderman"},
