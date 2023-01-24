@@ -293,7 +293,7 @@ local function DriveInGarage()
 		myveh.remoteDashcams = DecorGetBool(veh, "dashcam")
 		myveh.remoteVehicleBlips = DecorGetBool(veh, "vehicleblip")
 		myveh.securityBiometricLock = DecorGetBool(veh, "biometricLock")
-		myveh.engineSounds = DecorGetBool(veh, "lsAudioId")
+		myveh.engineSounds = DecorGetInt(veh, "lsAudioId")
 		for i = 0, 48 do
 			myveh.mods[i] = {mod = nil}
 		end
@@ -1025,7 +1025,7 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 		end
 	elseif mname == "custom exhausts" then
 		if button.name == "Default" or button.purchased or CanPurchase(price, canpurchase) then
-			myveh.engineSounds = button.soundId
+			myveh.engineSounds = button.mod
 		end
 	elseif mname == "sport" or mname == "muscle" or mname == "lowrider" or mname == "back wheel" or mname == "front wheel" or mname == "highend" or mname == "suv" or mname == "offroad" or mname == "tuner" then
 		if button.purchased or CanPurchase(price, canpurchase) then
@@ -1111,7 +1111,7 @@ AddEventHandler("LSC:applyModifications", function(vehicle, modifications)
 		DecorSetBool(vehicle, "dashcam", modifications.dashcam)
 		DecorRegister("vehicleblip", 2)
 		DecorSetBool(vehicle, "vehicleblip", modifications.remoteblips)
-		DecorSetBool(vehicle, "lsAudioId", modifications.customexhausts)
+		DecorSetInt(vehicle, "lsAudioId", modifications.customexhausts)
 		for k, v in pairs(modifications.mods) do
 			k = tonumber(k)
 			if k == 18 or k == 22 then
@@ -1423,7 +1423,7 @@ function CheckPurchases(m)
 	elseif name == "custom exhausts" then
 		for i,b in pairs(m.buttons) do
 			if myveh.engineSounds ~= nil then
-				if myveh.engineSounds == b.soundId then
+				if myveh.engineSounds == b.mod then
 					purchased = true
 					b.sprite = "garage"
 				else
