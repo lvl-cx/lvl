@@ -144,7 +144,9 @@ AddEventHandler('ARMA:gangCaptureSuccess', function(turfname)
 									local data = turfData
 									data[k].ownership = true
 									TriggerClientEvent('ARMA:updateTurfOwner', -1, k, V.gangname)
-									TriggerClientEvent('ARMA:gotTurfOwnershipData', ARMA.getUserSource(tonumber(a)), data)
+									if ARMA.getUserSource(tonumber(a)) ~= nil then
+										TriggerClientEvent('ARMA:gotTurfOwnershipData', ARMA.getUserSource(tonumber(a)), data)
+									end
 								end
 							end
 						end

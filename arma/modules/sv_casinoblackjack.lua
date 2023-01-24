@@ -140,7 +140,7 @@ end)
 RegisterNetEvent("Blackjack:standBlackjack")
 AddEventHandler("Blackjack:standBlackjack",function(gameId,nextCardCount)
     local source = source
-    if source ~= nil then 
+    if source ~= nil and gameId ~= nil and nextCardCount ~= nil then 
         blackjackGameData[gameId][source][2][nextCardCount] = false
     end
 end)
