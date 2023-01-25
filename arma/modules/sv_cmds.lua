@@ -144,6 +144,10 @@ RegisterCommand("/", function(source, args, raw)
     tARMA.ooc(source, args, raw)
 end)
 
+function ARMA.ooc(source, args) -- ooc from chat with //
+	args[1] = args[1]:sub(2)
+	tARMA.ooc(source, args)
+end
 
 
 RegisterCommand('cc', function(source, args, rawCommand)
