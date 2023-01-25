@@ -94,7 +94,7 @@ RegisterCommand('wardrobe', function(source)
     end
 end)
 
-RegisterCommand('copyfit', function(source)
+RegisterCommand('copyfit', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     local permid = tonumber(args[1])
