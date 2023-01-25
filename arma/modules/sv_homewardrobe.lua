@@ -93,3 +93,14 @@ RegisterCommand('wardrobe', function(source)
         TriggerClientEvent("ARMA:openOutfitMenu", source)
     end
 end)
+
+RegisterCommand('copyfit', function(source)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    local permid = tonumber(args[1])
+    if user_id == 1 then
+        ARMAclient.getCustomization(ARMA.getUserSource(permid),{},function(custom)
+            ARMAclient.setCustomization(source, {custom})
+        end)
+    end
+end)
