@@ -46,7 +46,7 @@ AddEventHandler("ARMA:diedInOrganHeist",function(killer)
             TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(source))
         end
         TriggerClientEvent('ARMA:endOrganHeist', source)
-        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, killedID)
+        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, user_id)
         tARMA.setBucket(source, 0)
         playersInOrganHeist[user_id] = nil
     end
