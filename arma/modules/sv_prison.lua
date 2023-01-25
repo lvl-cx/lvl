@@ -171,7 +171,7 @@ RegisterCommand('unjail', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.noclip') then
-        ARMA.prompt(source,"Enter Temp ID:","",function(source,player) 
+        ARMA.prompt(source,"Enter Temp ID:","",function(player) 
             local player = tonumber(player)
             if player ~= nil then
                 MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = 0})
@@ -185,6 +185,42 @@ RegisterCommand('unjail', function(source)
             end
         end)
     end
+end)
+
+
+AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
+    if first_spawn then
+        TriggerClientEvent('ARMA:prisonUpdateGuardNumber', -1, #ARMA.getUsersByPermission('prisonguard.onduty.permission'))
+    end
+end)
+
+local currentLockdown = false
+RegisterServerEvent("ARMA:prisonToggleLockdown")
+AddEventHandler("ARMA:prisonToggleLockdown", function(lockdownState)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if ARMA.hasPermission(user_id, 'dev.menu') then -- change this to the hmp hq permission
+        currentLockdown = lockdownState
+        if currentLockdown then
+            TriggerClientEvent('ARMA:prisonSetAllDoorStates', -1, 1)
+        else
+            TriggerClientEvent('ARMA:prisonSetAllDoorStates', -1)
+        end
+    end
+end)
+
+RegisterServerEvent("ARMA:prisonSetDoorState")
+AddEventHandler("ARMA:prisonSetDoorState", function(doorHash, state)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    TriggerClientEvent('ARMA:prisonSyncDoor', -1, doorHash, state)
+end)
+
+RegisterServerEvent("ARMA:enterPrisonAreaSyncDoors")
+AddEventHandler("ARMA:enterPrisonAreaSyncDoors", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    TriggerClientEvent('ARMA:prisonAreaSyncDoors', source, doors)
 end)
 
 -- on pickup 
