@@ -4,6 +4,9 @@ local crateLocations = {
     vector3(-1627.5288085938,720.173828125,192.08515930176),
     vector3(-62.860485076904,-2493.8740234375,6.0251984596252),
 }
+local rigLocations = {
+    vector3(-1716.5004882812,8886.94921875,27.144144058228),
+}
 local activeCrates = {}
 local spawnTime = 20*60 -- Time between each airdrop
 
@@ -29,7 +32,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local source = source
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
-    if #(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0 then
+    if #(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0 or #(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0  then
         TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         FreezeEntityPosition(GetPlayerPed(source), true)
         ARMAclient.startCircularProgressBar(source, {"", 15000, nil})
@@ -82,8 +85,8 @@ end)
 Citizen.CreateThread(function()
     while true do
         Wait(3*60*60*1000)
-        local crateID = math.random(1, #crateLocations)
-        local crateCoords = crateLocations[crateID]
+        local crateID = math.random(1, #rigLocations)
+        local crateCoords = rigLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, true)
         activeCrates[crateID] = {oilrig = true}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
