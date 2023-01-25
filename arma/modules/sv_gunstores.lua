@@ -46,8 +46,6 @@ cfg.GunStores={
         ["WEAPON_MOLOTOV"]={"Molotov Cocktail",5000,0,"N/A","w_ex_molotov"},
         -- smoke grenade
         ["WEAPON_SNOWBALL"]={"Snowball",10000,0,"N/A","w_ex_snowball"},
-        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
     },
     ["Rebel"]={
         ["_config"]={{vector3(1545.2521972656,6331.5615234375,23.07857131958),vector3(4925.6259765625,-5243.0908203125,1.524599313736)},110,5,"Rebel Gun Store",{"rebellicense.whitelisted"},true},
@@ -76,14 +74,14 @@ cfg.GunStores={
     },
     ["SmallArmsDealer"]={
         ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1242.7232666016,-426.84201049805,67.913963317871),vector3(1242.791,-426.7525,67.93467)},110,1,"Small Arms Dealer",{""},true},
-        ["WEAPON_BERETTA"]={"Berreta M9 Pistol",60000/2,0,"N/A","w_pi_beretta"},
-        ["WEAPON_M1911"]={"M1911 Pistol",60000/2,0,"N/A","w_pi_m1911"},
-        ["WEAPON_MPX"]={"MPX",300000/2,0,"N/A","w_ar_mpx"},
-        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000/2,0,"N/A","w_pi_python"},
-        ["WEAPON_ROOK"]={"Rook 9mm",60000/2,0,"N/A","w_pi_rook"},
-        ["WEAPON_TEC9"]={"Tec-9",50000/2,0,"N/A","w_sb_tec9"},
-        ["WEAPON_UMP45"]={"UMP-45",300000/2,0,"N/A","w_sb_ump45"},
-        ["item1"]={"LVL 1 Armour",25000/2,0,"N/A","prop_armour_pickup"},
+        ["WEAPON_BERETTA"]={"Berreta M9 Pistol",60000,0,"N/A","w_pi_beretta"},
+        ["WEAPON_M1911"]={"M1911 Pistol",60000,0,"N/A","w_pi_m1911"},
+        ["WEAPON_MPX"]={"MPX",300000,0,"N/A","w_ar_mpx"},
+        ["WEAPON_PYTHON"]={"Python .357 Revolver",50000,0,"N/A","w_pi_python"},
+        ["WEAPON_ROOK"]={"Rook 9mm",60000,0,"N/A","w_pi_rook"},
+        ["WEAPON_TEC9"]={"Tec-9",50000,0,"N/A","w_sb_tec9"},
+        ["WEAPON_UMP45"]={"UMP-45",300000,0,"N/A","w_sb_ump45"},
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
     },
     ["Legion"]={
         ["_config"]={{vector3(-3171.5241699219,1087.5402832031,19.838747024536),vector3(-330.56484985352,6083.6059570312,30.454759597778),vector3(2567.6704101562,294.36923217773,107.70868457031)},154,1,"B&Q Tool Shop",{""},true},
@@ -101,6 +99,13 @@ cfg.GunStores={
         ["WEAPON_TOILETBRUSH"]={"Toilet Brush",2500,0,"N/A","w_me_toiletbrush"},
         ["WEAPON_TRAFFICSIGN"]={"Traffic Sign",2500,0,"N/A","w_me_trafficsign"},
         ["WEAPON_SHOVEL"]={"Shovel",2500,0,"N/A","w_me_shovel"},
+    },
+    ["VIPWithPlat"] = {
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
+        ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
+        ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
+        ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
     },
 }
 local organheist = module('cfg/cfg_organheist')
@@ -254,7 +259,14 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
                 gunstoreData[k] = nil
             end
         end
-        TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
+        tARMA.getSubscriptions(playerid, function(cb, plushours, plathours)
+            if plathours > 0 then
+                for k,v in pairs(gunstoreData["VIPWithPlat"]) do
+                    table.insert(gunstoreData["VIP"], v)
+                end
+            end
+            TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
+        end)
     end)
 end)
 
@@ -383,7 +395,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                             end
                                         end)
                                     elseif purchasetype == 'ammo' then
-                                        price = price/2
+                                        price = price
                                         if ARMA.tryPayment(user_id,price) then
                                             if price > 0 then
                                                 ARMAclient.notify(source, {'~g~You bought 250x Ammo for £'..getMoneyStringFormatted(price)..'.'})
