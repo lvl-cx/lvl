@@ -10,14 +10,16 @@ items["handcuffkeys"] = {"Handcuff Keys","Used to uncuff someone.",nil,0.5}
 -- give "wbody|WEAPON_PISTOL" and "wammo|WEAPON_PISTOL" to have pistol body and pistol bullets
 
 local get_wname = function(weapon_id)
-  local name = string.gsub(weapon_id,"WEAPON_","")
-  name = string.upper(string.sub(name,1,1))..string.lower(string.sub(name,2))
-  return name
+  for k,v in pairs(a.weapons) do
+    if k == weapon_id then
+      return v.name
+    end
+  end
 end
 
 --- weapon body
 local wbody_name = function(args)
-  return get_wname(args[2]).." body"
+  return get_wname(args[2])
 end
 
 local wbody_desc = function(args)
