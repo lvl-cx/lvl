@@ -134,10 +134,12 @@ end)
 local currentlySearching = {}
 
 RegisterNetEvent('ARMA:cancelPlayerSearch')
-AddEventHandler('ARMA:cancelPlayerSearch', function(playersrc)
+AddEventHandler('ARMA:cancelPlayerSearch', function()
     local source = source
     local user_id = ARMA.getUserId(source) 
-    TriggerClientEvent('ARMA:cancelPlayerSearch', currentlySearching[user_id])
+    if currentlySearching[user_id] ~= nil then
+        TriggerClientEvent('ARMA:cancelPlayerSearch', currentlySearching[user_id])
+    end
 end)
 
 RegisterNetEvent('ARMA:searchPlayer')
