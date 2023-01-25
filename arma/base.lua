@@ -950,7 +950,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                                 deferrals.done("[ARMA]: You are required to be verified within discord.gg/armarp to join the server. If you previously were verified, please contact management.")
                                             end
                                             if ARMA.CheckTokens(source, user_id) then 
-                                                deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                                deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. user_id)
                                             end
                                             ARMA.users[ids[1]] = user_id
                                             ARMA.rusers[user_id] = ids[1]
@@ -979,7 +979,7 @@ AddEventHandler("playerConnecting",function(name,setMessage, deferrals)
                                     end
                                 else -- already connected
                                     if ARMA.CheckTokens(source, user_id) then 
-                                        deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban.")
+                                        deferrals.done("[ARMA]: You are banned from this server, please do not try to evade your ban. If you believe this was an error quote your ID which is: " .. user_id)
                                     end
                                     print("[ARMA] "..name.." Reconnected | PermID: "..user_id)
                                     TriggerEvent("ARMA:playerRejoin", user_id, source, name)
