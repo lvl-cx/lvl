@@ -131,10 +131,10 @@ cfg.shared = {
     --    {
     --         syncOffsetFront = 1.14
     --}},
-    ["bro2"] = {"mp_ped_interaction", "hugs_guy_b", "Bro 2", "bro", animationOptions =
-    {
-        syncOffsetFront = 1.14
-    }},
+    -- ["bro2"] = {"mp_ped_interaction", "hugs_guy_b", "Bro 2", "bro", animationOptions =
+    -- {
+    --     syncOffsetFront = 1.14
+    -- }},
     ["give"] = {"mp_common", "givetake1_a", "Give", "give2", animationOptions =
     {
         emoteMoving = true,
@@ -1092,9 +1092,18 @@ cfg.emotes = {
         allowedPrison = true,
     }},
 
-    ["hug"] = {"mp_ped_interaction", "kisses_guy_a", "Hug"},
-    ["hug2"] = {"mp_ped_interaction", "kisses_guy_b", "Hug 2"},
-    ["hug3"] = {"mp_ped_interaction", "hugs_guy_a", "Hug 3"},
+    ["hug"] = {"mp_ped_interaction", "kisses_guy_a", "Hug", animationOptions =
+    {
+        allowedPrison = true,
+    }},
+    ["hug2"] = {"mp_ped_interaction", "kisses_guy_b", "Hug 2", animationOptions =
+    {
+        allowedPrison = true,
+    }},
+    ["hug3"] = {"mp_ped_interaction", "hugs_guy_a", "Hug 3", animationOptions =
+    {
+        allowedPrison = true,
+    }},
     ["inspect"] = {"random@train_tracks", "idle_e", "Inspect"},
     ["jazzhands"] = {"anim@mp_player_intcelebrationfemale@jazz_hands", "jazz_hands", "Jazzhands", animationOptions =
     {
@@ -1477,14 +1486,17 @@ cfg.emotes = {
     ["sitchair2"] = {"timetable@ron@ig_5_p3", "ig_5_p3_base", "Sit Chair 2", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["sitchair3"] = {"timetable@reunited@ig_10", "base_amanda", "Sit Chair 3", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     ["sitchair4"] = {"timetable@ron@ig_3_couch", "base", "Sit Chair 4", animationOptions =
     {
         emoteLoop = true,
+        allowedPrison = true,
     }},
     --    ["sitchair5"] = {"timetable@jimmy@mics3_ig_15@", "mics3_15_base_tracy", "Sit Chair 5", animationOptions =
     --    {
@@ -2260,7 +2272,10 @@ cfg.emotes = {
         --["bumsleep"] = {"Scenario", "WORLD_HUMAN_BUM_SLUMPED", "Bum Sleep"},
         ["cheer"] = {"Scenario", "WORLD_HUMAN_CHEERING", "Cheer"},
         ["chinup"] = {"Scenario", "PROP_HUMAN_MUSCLE_CHIN_UPS", "Chinup"},
-        ["clipboard2"] = {"MaleScenario", "WORLD_HUMAN_CLIPBOARD", "Clipboard 2"},
+        ["clipboard2"] = {"MaleScenario", "WORLD_HUMAN_CLIPBOARD", "Clipboard 2", animationOptions =
+        {
+            allowedPrison = true,
+        }},
         ["cop"] = {"Scenario", "WORLD_HUMAN_COP_IDLES", "Cop"},
         ["copbeacon"] = {"MaleScenario", "WORLD_HUMAN_CAR_PARK_ATTENDANT", "Cop Beacon"},
         ["filmshocking"] = {"Scenario", "WORLD_HUMAN_MOBILE_FILM_SHOCKING", "Film Shocking"},
@@ -2274,7 +2289,10 @@ cfg.emotes = {
         --["kneel"] = {"Scenario", "CODE_HUMAN_MEDIC_KNEEL", "Kneel"},
         ["leafblower"] = {"MaleScenario", "WORLD_HUMAN_GARDENER_LEAF_BLOWER", "Leafblower"},
         ["lean"] = {"Scenario", "WORLD_HUMAN_LEANING", "Lean"},
-        ["leanbar"] = {"Scenario", "PROP_HUMAN_BUM_SHOPPING_CART", "Lean Bar"},
+        ["leanbar"] = {"Scenario", "PROP_HUMAN_BUM_SHOPPING_CART", "Lean Bar", animationOptions =
+        {
+            allowedPrison = true,
+        }},
         ["lookout"] = {"Scenario", "CODE_HUMAN_CROSS_ROAD_WAIT", "Lookout"},
         ["maid"] = {"Scenario", "WORLD_HUMAN_MAID_CLEAN", "Maid"},
         --["medic"] = {"Scenario", "CODE_HUMAN_MEDIC_TEND_TO_DEAD", "Medic"},
@@ -2289,8 +2307,14 @@ cfg.emotes = {
         ["record"] = {"Scenario", "WORLD_HUMAN_MOBILE_FILM_SHOCKING", "Record"},
         -- Sitchair is a litte special, since you want the player to be seated correctly.
         -- So we set it as "ScenarioObject" and do TaskStartScenarioAtPosition() instead of "AtPlace"
-        ["sitchair"] = {"ScenarioObject", "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", "Sit Chair"},
-        ["smoke"] = {"Scenario", "WORLD_HUMAN_SMOKING", "Smoke"},
+        ["sitchair"] = {"ScenarioObject", "PROP_HUMAN_SEAT_CHAIR_MP_PLAYER", "Sit Chair", animationOptions =
+        {
+            allowedPrison = true,
+        }},
+        ["smoke"] = {"Scenario", "WORLD_HUMAN_SMOKING", "Smoke", animationOptions =
+        {
+            allowedPrison = true,
+        }},
         ["smokeweed"] = {"MaleScenario", "WORLD_HUMAN_DRUG_DEALER", "Smoke Weed (Male)"}, -- Male
         ["smokepot"] = {"Scenario", "WORLD_HUMAN_SMOKING_POT", "Smoke Weed (Female)"}, -- Female
         ["statue"] = {"Scenario", "WORLD_HUMAN_HUMAN_STATUE", "Statue"},
@@ -2298,7 +2322,10 @@ cfg.emotes = {
         --["sunbatheback"] = {"Scenario", "WORLD_HUMAN_SUNBATHE_BACK", "Sunbathe Back"},
         ["weld"] = {"Scenario", "WORLD_HUMAN_WELDING", "Weld"},
         ["windowshop"] = {"Scenario", "WORLD_HUMAN_WINDOW_SHOP_BROWSE", "Window Shop"},
-        ["yoga"] = {"Scenario", "WORLD_HUMAN_YOGA", "Yoga"},
+        ["yoga"] = {"Scenario", "WORLD_HUMAN_YOGA", "Yoga", animationOptions =
+        {
+            allowedPrison = true,
+        }},
         -- CASINO DLC EMOTES (STREAMED)
         ["karate"] = {"anim@mp_player_intcelebrationfemale@karate_chops", "karate_chops", "Karate"},
         ["karate2"] = {"anim@mp_player_intcelebrationmale@karate_chops", "karate_chops", "Karate 2"},
@@ -2436,6 +2463,7 @@ cfg.props = {
         -- The code then checks both values and sets the MovementType to the correct one
         emoteLoop = true,
         emoteMoving = true,
+        allowedPrison = true
     }},
     ["box"] = {"anim@heists@box_carry@", "idle", "Box", animationOptions =
     {
@@ -2781,7 +2809,8 @@ cfg.props = {
         propBone = 6286,
         propPlacement = {0.15, 0.03, -0.065, 0.0, 180.0, 90.0}, -- This positioning isnt too great, was to much of a hassle
         emoteMoving = true,
-        emoteLoop = true
+        emoteLoop = true,
+        allowedPrison = true
     }},
     ["bouquet"] = {"impexp_int-0", "mp_m_waremech_01_dual-0", "Bouquet", animationOptions =
     {
@@ -2813,7 +2842,8 @@ cfg.props = {
         propBone = 36029,
         propPlacement = {0.16, 0.08, 0.1, -130.0, -50.0, 0.0},
         emoteMoving = true,
-        emoteLoop = true
+        emoteLoop = true,
+        allowedPrison = true
     }},
     ["map"] = {"amb@world_human_tourist_map@male@base", "base", "Map", animationOptions =
     {
@@ -4708,7 +4738,177 @@ cfg.custom = {
         propPlacement = {0.1820, 0.2400, 0.0600, -69.3774235, 5.9142048, -13.9572354},
         emoteLoop = true,
         emoteMoving = true
-    }}
+    }},
+    ["relax"] = {"lying@on_grass", "base", "Relax ", animationOptions = {
+        emoteLoop = true
+    }},
+    ["relax2"] = {"lying@on_couch_legs_crossed", "base", "Relax ",animationOptions = {
+        emoteLoop = true
+    }},
+    ["uwu"] = {"uwu@egirl", "base", "uWu", animationOptions = {
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["guitarsit"] = {"misssnowie@gatlax", "base", "Guitar Sit And Play", animationOptions = {
+        prop = "prop_acc_guitar_01",
+        propBone = 24818,
+        propPlacement = {-0.0510, 0.2770, -0.0299, -140.3349, 166.3300, 29.7590},
+        emoteLoop = true
+    }},
+    ["megaphone"] = {"molly@megaphone", "megaphone_clip", "Megaphone", animationOptions = {
+        prop = "prop_megaphone_01",
+        propBone = 28422,
+        propPlacement = {0.0500, 0.0540, -0.0060, -71.8855, -13.0889, -16.0242},
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["selfiepeace"] = {"mirror_selfie@peace_sign", "base", "Selfie Peace", animationOptions = {
+        prop = "prop_phone_ing",
+        propBone = 57005,
+        propPlacement = {0.1700, 0.0299, -0.0159, -126.2687, -139.9058, 35.6203},
+        emoteLoop = true,
+        emoteMoving = true,
+        ptfxAsset = "scr_tn_meet",
+        ptfxName = "scr_tn_meet_phone_camera_flash",
+        ptfxPlacement = {-0.015, 0.0, 0.041, 0.0, 0.0, 0.0, 1.0},
+        ptfxInfo = "Press ~y~G~w~ to flash camera.",
+        ptfxWait = 200
+    }},
+    ["kneelthot"] = {"anim@model_kylie_insta", "kylie_insta_clip", "Kneel Thot Instagram", animationOptions = {
+        emoteLoop = true
+    }},
+    ["selfiefu"] = {"anim@fuck_you_selfie", "fuck_you_selfie_clip", "Selfie Middle Finger", animationOptions = {
+        prop = "prop_phone_ing",
+        propBone = 28422,
+        propPlacement = {0.1200, 0.0220, -0.0210, 98.6822, -4.9809, 109.6216},
+        emoteLoop = true,
+        emoteMoving = false,
+        ptfxAsset = "scr_tn_meet",
+        ptfxName = "scr_tn_meet_phone_camera_flash",
+        ptfxPlacement = {-0.015, 0.0, 0.041, 0.0, 0.0, 0.0, 1.0},
+        ptfxInfo = "Press ~y~G~w~ to flash camera.",
+        ptfxWait = 200
+    }},
+    ["selfiethot"] = {"anim@sitting_thot", "sitting_thot_clip", "Selfie Thot Instagram", animationOptions = {
+        prop = "prop_phone_ing",
+        propBone = 28422,
+        propPlacement = {0.1030, 0.0440, -0.0270, -160.2802, -99.4080, -3.4048},
+        emoteLoop = true,
+        emoteMoving = false,
+        ptfxAsset = "scr_tn_meet",
+        ptfxName = "scr_tn_meet_phone_camera_flash",
+        ptfxPlacement = {-0.015, 0.0, 0.041, 0.0, 0.0, 0.0, 1.0},
+        ptfxInfo = "Press ~y~G~w~ to flash camera.",
+        ptfxWait = 200
+    }},
+    ["bball"] = {"anim@male_bskball_hold", "bskball_hold_clip", "Basketball Hold", animationOptions = {
+        prop = "prop_bskball_01",
+        propBone = 28422,
+        propPlacement = {0.0600, 0.0400, -0.1200, 0.0, 0.0, 40.00},
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
+    ["bball2"] = {"anim@male_bskball_photo_pose", "photo_pose_clip", "Basketball Pose", animationOptions = {
+        prop = "prop_bskball_01",
+        propBone = 60309,
+        propPlacement = {-0.0100, 0.0200, 0.1300, 0.0, 0.0, 0.0},
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
+    ["wank"] = {"anim@mp_player_intselfiewank", "idle_a", "Wank", animationOptions = {
+        emoteMoving = true,
+        emoteLoop = true
+    }},
+    ["wank2"] = {"anim@mp_player_intupperwank", "idle_a", "Wank 2", animationOptions = {
+        emoteMoving = true,
+        emoteLoop = true,
+    }},
+    ["wank3"] = {"mp_player_int_upperwank", "mp_player_int_wank_02", "Wank 3", animationOptions = {
+        emoteMoving = true,
+        emoteLoop = true,
+    }},
+    ["wank4"] = {"mp_player_int_upperwank", "mp_player_int_wank_02_fp", "Wank 4",  animationOptions = {
+        emoteMoving = true,
+        emoteLoop = true,
+    }},
+    ["wank5"] = {"mp_player_intwank", "mp_player_int_wank", "Wank 5", animationOptions = {
+        emoteMoving = false,
+        emoteLoop = false,
+    }},
+    ["newspaper"] = {"amb@world_human_clipboard@male@idle_a", "idle_a", "Newspaper", animationOptions = {
+        prop = "prop_cliff_paper",
+        propBone = 60309,
+        propPlacement = {0.0970, -0.0280, -0.0170, 107.4008, 3.2712, -10.5080},
+        emoteMoving = true,
+        emoteLoop = true
+    }},
+    ["newspaper2"] = {"amb@world_human_clipboard@male@idle_a", "idle_a", "Newspaper 2", animationOptions = {
+        prop = "ng_proc_paper_news_quik",
+        propBone = 60309,
+        propPlacement = {0.1590, 0.0290, -0.0100, 90.9998, 0.0087, 0.5000},
+        emoteMoving = true,
+        emoteLoop = true
+    }},
+    ["newspaper3"] = {"amb@world_human_clipboard@male@idle_a", "idle_a", "Newspaper 3", animationOptions = {
+        prop = "ng_proc_paper_news_rag",
+        propBone = 60309,
+        propPlacement = {0.1760, -0.00070, 0.0200, 99.8306, 3.2841, -4.7185},
+        emoteMoving = true,
+        emoteLoop = true
+    }},
+    ["flex2"] = {"frabi@malepose@solo@firstsport", "pose_sport_002", "Flex 2", animationOptions = {
+        emoteLoop = true,
+        emoteMoving = true
+    }},
+    ["gympose"] = {"frabi@malepose@solo@firstsport", "pose_sport_001", "Gym Pose", animationOptions = {
+        emoteLoop = true
+    }},
+	["gympose2"] = {"frabi@malepose@solo@firstsport", "pose_sport_005", "Gym Pose 2 - One Handed Push Up", animationOptions = {
+        emoteLoop = true
+    }},
+    ["weights3"] = {"frabi@malepose@solo@firstsport", "pose_sport_004", "Weights 3 - Pose", animationOptions = {
+		prop = "prop_barbell_01",
+        propBone = 28422,
+        propPlacement = {0.0660, 0.0100, -0.0300, 90.0000, 90.0000, -79.9999},
+        emoteLoop = true
+    }},
+    ["weights4"] = {"frabi@malepose@solo@firstsport", "pose_sport_003", "Weights 4 - Pose", animationOptions = {
+		prop = "prop_barbell_01",
+        propBone = 60309,
+        propPlacement = {0.0520, -0.0010, 0.0131, 21.5428, 70.2098, 74.5019},
+        secondProp = "prop_barbell_01",
+        secondPropBone = 28422,
+        secondPropPlacement = {0.0660, 0.0100, -0.0300, 90.0000, 90.0000, -79.9999},
+        emoteLoop = true
+    }},
+    ["vape"] = { "amb@world_human_smoking@male@male_b@base", "base", "Vape", animationOptions = {
+        prop = 'ba_prop_battle_vape_01',
+        propBone = 28422,
+        propPlacement = {-0.0290, 0.0070, -0.0050, 91.0, 270.0, -360.0},
+        emoteMoving = true,
+        emoteLoop = true,
+        ptfxAsset = "core",
+        ptfxName = "exp_grd_bzgas_smoke",
+        ptfxNoProp = true,
+        ptfxPlacement = {-0.0100, 0.0600, 0.6600, 0.0, 0.0, 0.0, 2.0},
+        ptfxInfo = "Press ~y~G~w~ to vape.",
+        ptfxWait = 0,
+        ptfxCanHold = true
+    }},
+    ["weedbucket"] = {"anim@heists@box_carry@", "idle", "Weed Bucket", animationOptions = {
+        prop = "bkr_prop_weed_bucket_open_01a",
+        propBone = 28422,
+        propPlacement = {0.0, -0.1000, -0.1800, 0.0, 0.0, 0.0},
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
+    ["candyapple"] = {"anim@heists@humane_labs@finale@keycards", "ped_a_enter_loop", "Candy Apple", animationOptions = {
+        prop = "apple_1",
+        propBone = 18905,
+        propPlacement = {0.12, 0.15, 0.0, -100.0, 0.0, -12.0},
+        emoteLoop = true,
+        emoteMoving = true,
+    }},
 }
 
 cfg.guns = {
