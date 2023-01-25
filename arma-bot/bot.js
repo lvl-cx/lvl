@@ -198,7 +198,7 @@ client.getPerms = function(msg) {
 
 client.on('message', (message) => {
     if (!message.author.bot){
-        if (message.content.includes('discord.gg/') && !message.author.id === "609044650019258407"){
+        if (message.content.includes('discord.gg/')){
             if (!message.content.includes('discord.gg/armarp')){
                 message.delete()
                 return
