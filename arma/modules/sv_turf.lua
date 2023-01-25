@@ -338,6 +338,9 @@ function ARMA.turfSaleToGangFunds(amount, drugtype)
 						if drugtype ~= 'LargeArms' then
 							amount = amount*(v.commission/100)/(1-v.commission/100)
 						else
+							if v.commission == nil then
+								v.commission = 0
+							end
 							amount = amount/(1+v.commission)
 						end
 						exports['ghmattimysql']:execute('UPDATE arma_gangs SET funds = funds+@funds WHERE gangname = @gangname', {funds = amount, gangname = b.gangname})
