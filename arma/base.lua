@@ -552,6 +552,7 @@ end)
 
 RegisterNetEvent("ARMA:CheckID")
 AddEventHandler("ARMA:CheckID", function()
+    local source = source
     local user_id = ARMA.getUserId(source)
     if not user_id then
         ARMA.ReLoadChar(source)
