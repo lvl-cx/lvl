@@ -259,10 +259,12 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
                 gunstoreData[k] = nil
             end
         end
-        tARMA.getSubscriptions(playerid, function(cb, plushours, plathours)
-            if plathours > 0 then
-                for k,v in pairs(gunstoreData["VIPWithPlat"]) do
-                    table.insert(gunstoreData["VIP"], v)
+        tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+            if cb then
+                if plathours > 0 then
+                    for k,v in pairs(gunstoreData["VIPWithPlat"]) do
+                        table.insert(gunstoreData["VIP"], v)
+                    end
                 end
             end
             TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
