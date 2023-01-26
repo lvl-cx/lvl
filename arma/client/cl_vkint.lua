@@ -43,8 +43,8 @@ local a = {
     },
     [75] = {
         id = 75,
-        position = vector3(-746.84411621094, 5807.5966796875, 17.611439041138),
-        name = "Paleto Lodges",
+        position = vector3(-2335.204, 266.0559, 169.602),
+        name = "Kortz Center",
         destination = {74}
     },
     [95] = {
