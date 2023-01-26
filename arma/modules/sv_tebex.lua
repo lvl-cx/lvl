@@ -98,19 +98,17 @@ function addweaponwhitelist(_, arg)
     end)
 end
 
--- MySQL.createCommand("ARMA/update_user_identity","UPDATE arma_user_identities SET firstname = @firstname, name = @name, age = @age, registration = @registration, phone = @phone WHERE user_id = @user_id")
-
--- setphonenumber {userid} {number}
 function setphonenumber(_, arg)
     if _ ~= 0 then return end
     local user_id = tonumber(arg[1])
     local phone_number = tonumber(arg[2])
-    local usource = ARMA.getUserSource(user_id)
     MySQL.query("ARMA/get_userbyphone", {phone_number}, function(phoneNumberTaken)
         if #phoneNumberTaken > 0 then
-            ARMAclient.notify(usource, {'~r~The phone number you requested has already been taken. Please open a support ticket to choose an available one.'})
+            if ARMA.getUserSource(user_id) ~= nil then
+                ARMAclient.notify(usource, {'~r~The phone number you requested has already been taken. Please open a support ticket to choose an available one.'})
+            end
         else
-            MySQL.execute("ARMA/update_user_identity", {phone = phone_number})
+            MySQL.execute("ARMA/update_user_identity", {phone = phone_number, user_id = user_id})
         end
     end)
 end
