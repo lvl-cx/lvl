@@ -100,13 +100,6 @@ cfg.GunStores={
         ["WEAPON_TRAFFICSIGN"]={"Traffic Sign",2500,0,"N/A","w_me_trafficsign"},
         ["WEAPON_SHOVEL"]={"Shovel",2500,0,"N/A","w_me_shovel"},
     },
-    ["VIPWithPlat"] = {
-        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
-        ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
-        ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
-        ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
-    },
 }
 local organheist = module('cfg/cfg_organheist')
 
@@ -262,7 +255,14 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
         tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
             if cb then
                 if plathours > 0 then
-                    for k,v in pairs(gunstoreData["VIPWithPlat"]) do
+                    local VIPWithPlat = {
+                        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+                        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
+                        ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
+                        ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
+                        ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
+                    }
+                    for k,v in pairs(VIPWithPlat) do
                         table.insert(gunstoreData["VIP"], v)
                     end
                 end
