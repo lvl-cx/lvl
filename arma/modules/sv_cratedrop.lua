@@ -66,13 +66,13 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Wait(15*60*1000)
+        Wait(30*60*1000)
         local crateID = math.random(1, #crateLocations)
         local crateCoords = crateLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, false)
         activeCrates[crateID] = {oilrig = false}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
-        Wait(stayTime * 1000)
+        Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
             table.remove(activeCrates, crateID)
@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, true)
         activeCrates[crateID] = {oilrig = true}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
-        Wait(stayTime * 1000)
+        Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
             table.remove(activeCrates, crateID)
