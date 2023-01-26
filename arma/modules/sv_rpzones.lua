@@ -16,9 +16,11 @@ AddEventHandler("ARMA:removeRPZone", function(b)
 	local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'group.remove') then
         TriggerClientEvent('ARMA:removeRPZone', -1, b)
-        for k,v in pairs(rpZones) do
-            if v.uuid == b then
-                rpZones[k] = nil
+        if next(rpZones) then
+            for k,v in pairs(rpZones) do
+                if v.uuid == b then
+                    rpZones[k] = nil
+                end
             end
         end
     end
