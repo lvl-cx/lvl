@@ -1161,10 +1161,17 @@ local function ao()
                 an = GetGameTimer()
             end
         end)
-    else
-        TriggerServerEvent('ARMA:resourceState', ap)
     end
     if GetGameTimer() - an > 60000 then
-        TriggerServerEvent("ARMA:failedKeepAlive") -- need
+        TriggerServerEvent("ARMA:failedKeepAlive")
     end
 end
+AddEventHandler("ARMA:onClientSpawn",function(C, D)
+    if D then
+        an = GetGameTimer()
+        while true do
+            ao()
+            Citizen.Wait(5000)
+        end
+    end
+end)
