@@ -514,7 +514,7 @@ AddEventHandler('ARMA:KickPlayer', function(admin, target, tempid)
     if ARMA.hasPermission(admin_id, 'admin.kick') then
         ARMA.prompt(source,"Reason:","",function(source,Reason) 
             if Reason == "" then return end
-            tARMA.sendWebhook('kick', 'ARMA Kick Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..playerOtherName.."**\n> Player TempID: **"..target_id.."**\n> Player PermID: **"..target.."**\n> Kick Reason: **"..Reason.."**")
+            tARMA.sendWebhook('kick-player', 'ARMA Kick Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..admin_id.."**\n> Player Name: **"..playerOtherName.."**\n> Player TempID: **"..target_id.."**\n> Player PermID: **"..target.."**\n> Kick Reason: **"..Reason.."**")
             ARMA.kick(target_id, "ARMA You have been kicked | Your ID is: "..target.." | Reason: " ..Reason.." | Kicked by "..GetPlayerName(admin) or "No reason specified")
             ARMAclient.notify(admin, {'~g~Kicked Player.'})
         end)
