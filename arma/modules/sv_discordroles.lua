@@ -107,6 +107,7 @@ local function Modify_Client_Roles(guild_name, discord_id, user_id)
 			for k,v in pairs(cfg.Guild_Roles[guild_name]) do
                 if v == role_id and ARMA.hasGroup(user_id, k) then
                     ARMA.removeUserGroup(user_id, k)
+                    ARMA.removeUserGroup(user_id, k..' Clocked')
                 end
 			end
 		end
