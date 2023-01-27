@@ -74,3 +74,10 @@ AddEventHandler("LSC:applyModifications", function(model, vehicle)
 		end)
 	end
 end)
+
+RegisterServerEvent("ARMA:setBiometricUsersState")
+AddEventHandler("ARMA:setBiometricUsersState", function(entity, table)
+	local source = source
+	local user_id = ARMA.getUserId(source)
+	Entity(entity).state.biometricUsers = table
+end)
