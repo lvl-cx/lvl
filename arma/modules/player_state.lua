@@ -203,6 +203,6 @@ AddEventHandler('ARMA:forceStoreWeapons', function()
     local user_id = ARMA.getUserId(source)
     local data = ARMA.getUserDataTable(user_id)
     if data ~= nil then
-        data.weapons = {}
+        data.inventory = {}
     end
 end)
