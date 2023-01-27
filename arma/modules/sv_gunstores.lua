@@ -54,7 +54,8 @@ cfg.GunStores={
         ["WEAPON_AKM"]={"AKM",700000,0,"N/A","w_ar_akm"},
         ["WEAPON_REVOLVER"]={"Revolver",200000,0,"N/A","w_pi_revolver"},
         ["WEAPON_SPAZ"]={"Spaz 12",400000,0,"N/A","w_sg_spaz"},
-        ["WEAPON_SVD"]={"Dragunov SVD",2500000,0,"N/A","w_sr_svd"},
+        --["WEAPON_SVD"]={"Dragunov SVD",2500000,0,"N/A","w_sr_svd"},
+        ["WEAPON_STAC"]={"STAC",2500000,0,"N/A","w_sr_stac"},
         ["WEAPON_WINCHESTER12"]={"Winchester 12",350000,0,"N/A","w_sg_winchester12"},
         ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
         ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
@@ -137,6 +138,35 @@ whitelistedGuns = {
     -- ["Legion"] = {},
 }
 
+local VIPWithPlat = {
+    ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
+    ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
+    ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
+    ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
+    ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
+}
+
+local RebelWithAdvanced = {
+    -- mk1emr
+    ["WEAPON_MXM"]={"MXM",950000,0,"N/A","w_ar_mxm"},
+    ["WEAPON_SPAR16"]={"Spar 16",900000,0,"N/A","w_ar_spar16"},
+}
+
+
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
 
 RegisterNetEvent("ARMA:getCustomWeaponsOwned")
 AddEventHandler("ARMA:getCustomWeaponsOwned",function()
@@ -197,22 +227,6 @@ AddEventHandler("ARMA:generateWeaponAccessCode",function(spawncode, id)
     end
 end)
 
-
-function deepcopy(orig)
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            copy[deepcopy(orig_key)] = deepcopy(orig_value)
-        end
-        setmetatable(copy, deepcopy(getmetatable(orig)))
-    else -- number, string, boolean, etc
-        copy = orig
-    end
-    return copy
-end
-
 RegisterNetEvent("ARMA:requestNewGunshopData")
 AddEventHandler("ARMA:requestNewGunshopData",function()
     local source = source
@@ -255,16 +269,14 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
         tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
             if cb then
                 if plathours > 0 and ARMA.hasPermission(user_id, "vip.gunstore") then
-                    local VIPWithPlat = {
-                        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-                        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
-                        ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
-                        ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
-                        ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
-                    }
                     for k,v in pairs(VIPWithPlat) do
                         gunstoreData["VIP"][k] = v
                     end
+                end
+            end
+            if ARMA.hasPermission(user_id, 'advancedrebel.license') then
+                for k,v in pairs(RebelWithAdvanced) do
+                    gunstoreData["Rebel"][k] = v
                 end
             end
             TriggerClientEvent('ARMA:recieveFilteredGunStoreData', source, gunstoreData)
@@ -344,16 +356,14 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                 tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
                     if cb then
                         if plathours > 0 and ARMA.hasPermission(user_id, "vip.gunstore") then
-                            local VIPWithPlat = {
-                                ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup"},
-                                ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02"},
-                                ["item3"]={"LVL 3 Armour",75000,0,"N/A","prop_bodyarmour_03"},
-                                ["item4"]={"LVL 4 Armour",100000,0,"N/A","prop_bodyarmour_04"},
-                                ["item|fillUpArmour"]={"Replenish Armour",100000,0,"N/A","prop_armour_pickup"},
-                            }
                             for k,v in pairs(VIPWithPlat) do
                                 gunstoreData["VIP"][k] = v
                             end
+                        end
+                    end
+                    if ARMA.hasPermission(user_id, 'advancedrebel.license') then
+                        for k,v in pairs(RebelWithAdvanced) do
+                            gunstoreData["Rebel"][k] = v
                         end
                     end
                     for c,d in pairs(gunstoreData[weaponshop]) do
