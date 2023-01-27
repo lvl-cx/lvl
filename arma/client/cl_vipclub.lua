@@ -164,6 +164,7 @@ RageUI.CreateWhile(1.0, true, function()
                         permID = tARMA.KeyboardInput("Enter Perm ID", "", 10)
                         if permID == nil then 
                             tARMA.notify('~r~Invalid Perm ID')
+                            return
                         end
                         TriggerServerEvent('ARMA:getPlayerSubscription', permID)
                     end
