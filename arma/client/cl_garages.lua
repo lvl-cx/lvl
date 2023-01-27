@@ -1375,6 +1375,7 @@ RegisterNetEvent("ARMA:displayVehicleBlip",function(a9)
         SetBlipColour(cx, 2)
     end
 end)
+
 Citizen.CreateThread(function()
     DecorRegister("biometricLock", 2)
     while true do
@@ -1382,8 +1383,10 @@ Citizen.CreateThread(function()
         if aA ~= 0 and cy then
             local cz = DecorGetBool(aA, "biometricLock")
             if cz then
+                local y = tARMA.getUserId()
+                local biometricUsers = Entity(aA).state.biometricUsers
                 local cA = DecorGetInt(aA, "vRP_owner")
-                if tARMA.getUserId() ~= cA and not tARMA.isDev() then
+                if y ~= cA and not tARMA.isDev() and (not biometricUsers or not table.has(biometricUsers, y)) then
                     DisableControlAction(0, 32, true)
                     DisableControlAction(0, 33, true)
                     DisableControlAction(0, 34, true)
@@ -1408,9 +1411,20 @@ Citizen.CreateThread(function()
     end
 end)
 
-function setVehicleIdBiometricLock(bj, cB)
+function setVehicleIdBiometricLock(bj, cB, cD)
     if cB then
         DecorSetBool(bj, "biometricLock", cB)
+    end
+    if cD and #cD > 0 then
+        local cE = false
+        if not NetworkGetEntityIsNetworked(bj) or NetworkGetNetworkIdFromEntity(bj) == 0 then
+            cE = true
+        end
+        Citizen.CreateThread(function()
+            Citizen.Wait(cE and 2500 or 0)
+            local bV = NetworkGetNetworkIdFromEntity(bj)
+            TriggerServerEvent("ARMA:setBiometricUsersState", bV, cD)
+        end)
     end
 end
 
