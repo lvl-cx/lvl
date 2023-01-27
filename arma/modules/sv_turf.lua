@@ -317,7 +317,7 @@ AddEventHandler('ARMA:setNewLSDSouthPrice', function(price)
 			for K,V in pairs(gotGangs) do
 				for I,L in pairs(json.decode(V.gangmembers)) do
 					if tostring(user_id) == I and V.gangname == turfData[7].gangOwner then
-						turfData[6].commission = price
+						turfData[7].commission = price
 						TriggerClientEvent('chatMessage', -1, "^0LSD South trader commission set to "..price.."%", { 128, 128, 128 }, message, "alert")
 						ARMA.updateTraderInfo()
 						TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)

@@ -59,24 +59,7 @@ RegisterNetEvent('ARMA:requestDrugPriceUpdate')
 AddEventHandler('ARMA:requestDrugPriceUpdate', function()
     local source = source
 	local user_id = ARMA.getUserId(source)
-    TriggerClientEvent('ARMA:updateTraderCommissions', source, 
-    ARMA.getCommission('Weed'),
-    ARMA.getCommission('Cocaine'),
-    ARMA.getCommission('Meth'),
-    ARMA.getCommission('Heroin'),
-    ARMA.getCommission('LSDNorth'),
-    ARMA.getCommission('LSDSouth'))
-    TriggerClientEvent('ARMA:updateTraderPrices', source, 
-    ARMA.getCommissionPrice('Weed'), 
-    ARMA.getCommissionPrice('Cocaine'),
-    ARMA.getCommissionPrice('Meth'),
-    ARMA.getCommissionPrice('Heroin'),
-    ARMA.getCommissionPrice('LSDNorth'),
-    ARMA.getCommissionPrice('LSDSouth'),
-    defaultPrices['Copper'],
-    defaultPrices['Limestone'],
-    defaultPrices['Gold'],
-    defaultPrices['Diamond'])
+    ARMA.updateTraderInfo()
 end)
 
 local function checkTraderBucket(source)
