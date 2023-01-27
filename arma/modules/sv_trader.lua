@@ -16,6 +16,9 @@ local defaultPrices = {
 function ARMA.getCommissionPrice(drugtype)
     for k,v in pairs(turfData) do
         if v.name == drugtype then
+            if v.commission == nil then
+                v.commission = 0
+            end
             if v.commission == 0 then
                 return defaultPrices[drugtype]
             else
