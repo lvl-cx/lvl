@@ -1161,6 +1161,8 @@ local function ao()
                 an = GetGameTimer()
             end
         end)
+    else
+        TriggerServerEvent('ARMA:resourceState', ap)
     end
     if GetGameTimer() - an > 60000 then
         TriggerServerEvent("ARMA:failedKeepAlive") -- need

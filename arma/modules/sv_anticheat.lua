@@ -241,6 +241,14 @@ AddEventHandler("ARMA:failedKeepAlive", function()
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
 end)
 
+RegisterServerEvent("ARMA:resourceState")
+AddEventHandler("ARMA:resourceState", function(state)
+    local source = source
+    local user_id = ARMA.getUserId(source)
+	local name = GetPlayerName(source)
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Resource State: "..state.."**")
+end)
+
 -- Anticheat Ban
 
 RegisterServerEvent("ARMA:acBan")
