@@ -141,14 +141,14 @@ local l = {
     --     setBit = false,
     --     maxHeight = 210.0
     -- },
-    Kortz
+    -- Kortz
     {
         colour = 2,
         id = 1,
         pos = vector3(-2335.1215820313, 266.88153076172, 169.60194396973),
         dist = 50,
         nonRP = false,
-        setBit = false
+        setBit = false,
         maxHeight = 210.0
     }
 }
