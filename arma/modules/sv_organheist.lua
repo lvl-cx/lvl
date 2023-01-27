@@ -78,14 +78,16 @@ Citizen.CreateThread(function()
             end
             if policeAlive == 0 or civAlive == 0 then
                 for k,v in pairs(playersInOrganHeist) do
-                    if policeAlive == 0 then
-                        TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Civillians')
-                    elseif civAlive == 0 then
-                        TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
+                    if ARMA.getUserSource(k) ~= nil then
+                        if policeAlive == 0 then
+                            TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Civillians')
+                        elseif civAlive == 0 then
+                            TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
+                        end
+                        TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
+                        tARMA.setBucket(ARMA.getUserSource(k), 0)
+                        ARMA.giveBankMoney(k, 250000)
                     end
-                    TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                    tARMA.setBucket(ARMA.getUserSource(k), 0)
-                    ARMA.giveBankMoney(k, 250000)
                 end
                 playersInOrganHeist = {}
                 inWaitingStage = false
