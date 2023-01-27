@@ -75,7 +75,7 @@ Citizen.CreateThread(function()
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
-            table.remove(activeCrates, crateID)
+            activeCrates[crateID] = nil
             TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         end
         Wait(1000)
@@ -93,7 +93,7 @@ Citizen.CreateThread(function()
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
             TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "The airdrop has disappeared.", "alert")
-            table.remove(activeCrates, crateID)
+            activeCrates[crateID] = nil
             TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         end
         Wait(1000)
