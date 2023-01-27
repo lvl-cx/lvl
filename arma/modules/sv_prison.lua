@@ -171,7 +171,7 @@ RegisterCommand('unjail', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'admin.noclip') then
-        ARMA.prompt(source,"Enter Temp ID:","",function(player) 
+        ARMA.prompt(source,"Enter Temp ID:","",function(source, player) 
             local player = tonumber(player)
             if player ~= nil then
                 MySQL.execute("ARMA/set_prison_time", {user_id = ARMA.getUserId(player), prison_time = 0})
