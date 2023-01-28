@@ -1,6 +1,3 @@
--- Tebex functions need redoing to match
--- Supporter, Premium, Supreme, Kingpin, Rainmaker, Baller
-
 function rank(_, arg)
     if _ ~= 0 then return end
 	local user_id = tonumber(arg[1])
@@ -27,7 +24,7 @@ function plus(_, arg)
     if _ ~= 0 then return end
 	local user_id = tonumber(arg[1])
     local usource = ARMA.getUserSource(user_id)
-    local newhours = arg[2]
+    local newhours = tonumber(arg[2])
     tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
         if cb then
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Plus subscription.')
@@ -41,7 +38,7 @@ function platinum(_, arg)
     if _ ~= 0 then return end
 	local user_id = tonumber(arg[1])
     local usource = ARMA.getUserSource(user_id)
-    local newhours = arg[2]
+    local newhours = tonumber(arg[2])
     tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
         if cb then
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Platinum subscription.')
