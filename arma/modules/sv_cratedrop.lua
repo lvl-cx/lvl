@@ -7,6 +7,15 @@ local crateLocations = {
     vector3(36.50002, 4344.443, 41.47789), -- Large arms bridge
     vector3(499.4316, 5536.806, 777.696), -- mt chilliad
     vector3(-1518.191, 2140.92, 55.53791), -- wine mansion
+    vector3(-191.0104, 1477.419, 288.4325), -- Vinewood 1
+    vector3(828.4253, 1300.878, 363.6823), -- Vinewood sign
+    vector3(2348.622, 2138.061, 104.3607), -- wind turbines
+    vector3(1877.604, 352.0831, 162.9319), -- Vinewood lake
+    vector3(2836.016, -1447.626, 10.45845), -- island near lsd
+    vector3(2543.626, 3615.884, 96.89672), -- Youtool hill
+    vector3(2856.744, 4631.319, 48.39237), -- H Bunker
+    vector3(4784.917, -5530.945, 19.46264), -- Cayo Perico
+    vector3(254.3428, 3583.882, 33.73079), -- Biker city
 }
 local rigLocations = {
     vector3(-1716.5004882812,8886.94921875,27.144144058228),
