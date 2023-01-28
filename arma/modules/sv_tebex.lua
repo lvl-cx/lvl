@@ -9,6 +9,7 @@ function rank(_, arg)
     print(user_id.." has bought "..rank.."! ^7")
     print(GetPlayerName(usource)..'['..user_id..'] has bought '..rank)
     ARMAclient.notify(usource, {"~g~You have purchased the "..rank.." Rank! ❤️"})
+    TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought "..rank.."! ❤️", "alert")
     ARMA.addUserGroup(user_id,rank)    
 end
 
@@ -17,7 +18,8 @@ function moneybag(_, arg)
     user_id = tonumber(arg[1])
     usource = ARMA.getUserSource(user_id)
     print(GetPlayerName(usource)..'['..user_id..'] has bought a '..getMoneyStringFormatted(arg[2])..' Money Bag')
-    ARMAclient.notify(usource, {"~g~You have purchased " .. getMoneyStringFormatted(arg[2]) .. " Money! ❤️"})
+    ARMAclient.notify(usource, {"~g~You have purchased a £" .. getMoneyStringFormatted(arg[2]) .. " Money Bag! ❤️"})
+    TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a £" .. getMoneyStringFormatted(arg[2]) .. " Money Bag! ❤️", "alert")
     ARMA.giveBankMoney(user_id, tonumber(arg[2]))
 end
 
@@ -30,6 +32,7 @@ function plus(_, arg)
         if cb then
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Plus subscription.')
             MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours + newhours})
+            TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a Plus Subscription! ❤️", "alert")
         end
     end)
 end
@@ -43,19 +46,7 @@ function platinum(_, arg)
         if cb then
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Platinum subscription.')
             MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + newhours})
-        end
-    end)
-end
-
-function platinum(_, arg)
-    if _ ~= 0 then return end
-	local user_id = tonumber(arg[1])
-    local usource = ARMA.getUserSource(user_id)
-    local newhours = arg[2]
-    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
-        if cb then
-            print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Platinum subscription.')
-            MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + newhours})
+            TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a Platinum Subscription! ❤️", "alert")
         end
     end)
 end
