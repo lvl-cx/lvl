@@ -21,7 +21,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                 TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(UserId))
                 InventorySpamTrack[source] = false;
             else 
-                print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+                print('An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
             end
         end
     end
@@ -42,7 +42,7 @@ AddEventHandler('ARMA:FetchPersonalInventory', function()
             TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(UserId))
             InventorySpamTrack[source] = false;
         else 
-            print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+            print('An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
         end
     end
 end)
@@ -59,7 +59,7 @@ AddEventHandler('ARMA:RefreshInventory', function(source)
         TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(UserId))
         InventorySpamTrack[source] = false;
     else 
-        print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+        print('An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
 end)
 
@@ -228,7 +228,7 @@ AddEventHandler('ARMA:robPlayer', function(playersrc)
                 end
             end)
         else 
-            print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
+            print('An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
         end
     end
 end)
@@ -346,7 +346,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                     end
                 else 
                     InventoryCoolDown[source] = false;
-                    print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
+                    print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                 end
             end)
         elseif inventoryType == "LootBag" then  
@@ -407,7 +407,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                         ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                     end
                 else 
-                    print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
+                    print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
                 end
             end)
         elseif inventoryType == "Plr" then
@@ -442,7 +442,7 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                                     ARMAclient.notify(source, {'~r~You do not have enough inventory space.'})
                                 end
                             else 
-                                print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
+                                print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the home.')
                             end
                         end) --end of housing intergration (moveitem)
                     else
@@ -478,19 +478,19 @@ AddEventHandler('ARMA:MoveItem', function(inventoryType, itemId, inventoryInfo, 
                                 end
                             else 
                                 InventoryCoolDown[source] = nil;
-                                print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
+                                print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                             end
                         end)
                     end
                 else
                     InventoryCoolDown[source] = nil;
-                    print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
+                    print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                 end
             end
         end
     else 
         InventoryCoolDown[source] = nil;
-        print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+        print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
 end)
 
@@ -697,12 +697,12 @@ AddEventHandler('ARMA:MoveItemX', function(inventoryType, itemId, inventoryInfo,
                         end
                     end
                 else
-                    print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
+                    print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                 end
             end
         end
     else 
-        print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+        print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
 end)
 
@@ -875,13 +875,13 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                     end
                 else
                     InventoryCoolDown[source] = nil;
-                    print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
+                    print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This is usually caused by cheating as the item does not exist in the car boot.')
                 end
             end
         end
     else 
         InventoryCoolDown[source] = nil;
-        print('[^7JamesUKInventory]^1: An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+        print('An error has occured while trying to move an item. Inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
 end)
 
@@ -1021,7 +1021,7 @@ function OpenInv(source, netid, LootBagItems)
         TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(UserId))
         InventorySpamTrack[source] = false;
     else 
-        print('[^7JamesUKInventory]^1: An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
+        print('An error has occured while trying to fetch inventory data from: ' .. UserId .. ' This may be a saving / loading data error you will need to investigate this.')
     end
     TriggerClientEvent('ARMA:InventoryOpen', source, true, true, netid)
     local FormattedInventoryData = {}
