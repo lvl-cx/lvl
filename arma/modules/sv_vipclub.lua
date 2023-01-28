@@ -239,13 +239,8 @@ RegisterCommand('redeem', function(source)
                 local redeemed = rows[1].redeemed
                 if not redeemed then
                     exports["ghmattimysql"]:execute("UPDATE arma_subscriptions SET redeemed = 1 WHERE user_id = @user_id", {user_id = user_id}, function() end)
-                    ARMAclient.allowWeapon(source,{'WEAPON_UMP45'})
-                    GiveWeaponToPed(source, 'WEAPON_UMP45', 250, false, true)
-                    ARMAclient.allowWeapon(source,{'WEAPON_MOSIN'})
-                    GiveWeaponToPed(source, 'WEAPON_MOSIN', 250, false, true)
-                    ARMA.giveBankMoney(user_id, 250000)
-                    ARMAclient.notify(source, {'~g~You have redeemed your booster perks containing 1x UMP45, 1x Mosin Nagant,'})
-                    ARMAclient.notify(source, {'~g~£250,000 and 1 Week of Platinum Subscription.'})
+                    ARMA.giveBankMoney(user_id, 150000)
+                    ARMAclient.notify(source, {'~g~You have redeemed your perks of £150,000 and 1 Week of Platinum Subscription.'})
                     MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = rows[1].plathours + 168})
                 else
                     ARMAclient.notify(source, {'~r~You have already redeemed your subscription.'})
@@ -253,13 +248,4 @@ RegisterCommand('redeem', function(source)
             end
         end)
     end
-end)
-
-RegisterCommand('beta', function(source, args)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-    ARMA.addUserGroup(user_id, 'Supporter')
-    ARMA.addUserGroup(user_id, 'Premium')
-    ARMAclient.notify(source, {'~g~You have received Supporter rank for BETA only.'})
-    ARMAclient.notify(source, {'~g~After beta to access VIP garages it will be a required purchase on the store..'})
 end)
