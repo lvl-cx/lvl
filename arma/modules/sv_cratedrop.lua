@@ -57,7 +57,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
         Wait(15000)
         local lootAmount = nil
         if activeCrates[crateID].oilrig then
-            lootAmount = 6
+            lootAmount = 8
         else
             lootAmount = 3
         end
