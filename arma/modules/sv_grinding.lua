@@ -96,16 +96,15 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                             end
                         elseif grindingtype == 'processing' then
                             if ARMA.getInventoryItemAmount(user_id, v.firstItem) >= 4 then
+                                ARMA.tryGetInventoryItem(user_id, v.firstItem, 4, true)
                                 TriggerClientEvent('ARMA:playGrindingScenario', source, v.processingScenario, false)
                                 Citizen.Wait(delay)
                                 if ARMA.getInventoryWeight(user_id)+(4*1) > ARMA.getInventoryMaxWeight(user_id) then
                                     ARMAclient.notify(source,{"~r~Not enough space in inventory."})
                                 else   
                                     if drug == 'LSD' then 
-                                        ARMA.tryGetInventoryItem(user_id, v.firstItem, 4, true)
                                         ARMA.giveInventoryItem(user_id, v.secondItem, 4, true)
                                     else
-                                        ARMA.tryGetInventoryItem(user_id, v.firstItem, 4, true)
                                         ARMA.giveInventoryItem(user_id, v.secondItem, 1, true)
                                     end
                                 end
@@ -114,12 +113,12 @@ AddEventHandler('ARMA:requestGrinding', function(drug, grindingtype)
                             end
                         elseif grindingtype == 'refinery' then
                             if ARMA.getInventoryItemAmount(user_id, v.secondItem) >= 4 then
+                                ARMA.tryGetInventoryItem(user_id, v.secondItem, 4, true)
                                 TriggerClientEvent('ARMA:playGrindingScenario', source, 'WORLD_HUMAN_CLIPBOARD', false)
                                 Citizen.Wait(delay)
                                 if ARMA.getInventoryWeight(user_id)+(4*1) > ARMA.getInventoryMaxWeight(user_id) then
                                     ARMAclient.notify(source,{"~r~Not enough space in inventory."})
                                 else    
-                                    ARMA.tryGetInventoryItem(user_id, v.secondItem, 4, true)
                                     ARMA.giveInventoryItem(user_id, v.thirdItem, 1, true)
                                 end
                             else
