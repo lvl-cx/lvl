@@ -423,7 +423,7 @@ cfg.simeonsInstances = {
         markerColourTable={0,200,0},
         permissionsTable={},
         categorys={
-            "Beta Cars (Free)",
+            "Starter Cars",
             "Compacts",
             "Coupes",
             "Sports",
