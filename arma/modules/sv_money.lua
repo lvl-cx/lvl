@@ -133,7 +133,7 @@ function ARMA.tryFullPayment(user_id,amount)
 end
 
 local startingCash = 50000
-local startingBank = 100000000 --500000 (500k bank)
+local startingBank = 500000
 
 -- events, init user account if doesn't exist at connection
 AddEventHandler("ARMA:playerJoin",function(user_id,source,name,last_login)
