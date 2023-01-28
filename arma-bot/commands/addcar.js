@@ -36,5 +36,6 @@ exports.runcmd = (fivemexports, client, message, params) => {
 exports.conf = {
     name: "addcar",
     perm: 6,
-    guild: "975490533344559154"
+    guild: "975490533344559154",
+    support: true,
 }
