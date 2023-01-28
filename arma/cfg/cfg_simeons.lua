@@ -1,17 +1,11 @@
 local cfg = {}
 
 cfg.simeonsCategories = {
-    ["Beta Cars (Free)"] = {
+    ["Starter Cars"] = {
         ["_config"] = {permissionTable={}},
-        ["ventsraid"] = {"Off-Road Venatus",0},
-        ["m2varis"] = {"BMW M2 Varis",0},
-        ["fordconnect"] = {"Ford Connect(300kg)",0},
+        ["kamaz6396"] = {"Kamaz 6396",0},
+        ["italia458"] = {"Ferrari 458",0},
     },
-    -- ["Starter Cars"] = {
-    --     ["_config"] = {permissionTable={}},
-    --     some 200kg free
-    --     some ok car 150k
-    -- },
     ["Compacts"] = {
         ["_config"] = {permissionTable={}},
         ["blista"] = {"Dinka Blista",2000},
