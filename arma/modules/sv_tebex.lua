@@ -7,6 +7,7 @@ function rank(_, arg)
     print(GetPlayerName(usource)..'['..user_id..'] has bought '..rank)
     ARMAclient.notify(usource, {"~g~You have purchased the "..rank.." Rank! ❤️"})
     TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought "..rank.."! ❤️", "alert")
+    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **"..rank.."**")
     ARMA.addUserGroup(user_id,rank)    
 end
 
@@ -17,6 +18,7 @@ function moneybag(_, arg)
     print(GetPlayerName(usource)..'['..user_id..'] has bought a '..getMoneyStringFormatted(arg[2])..' Money Bag')
     ARMAclient.notify(usource, {"~g~You have purchased a £" .. getMoneyStringFormatted(arg[2]) .. " Money Bag! ❤️"})
     TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a £" .. getMoneyStringFormatted(arg[2]) .. " Money Bag! ❤️", "alert")
+    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **£"..getMoneyStringFormatted(arg[2]).." money bag**")
     ARMA.giveBankMoney(user_id, tonumber(arg[2]))
 end
 
@@ -30,6 +32,7 @@ function plus(_, arg)
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Plus subscription.')
             MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = plushours + newhours})
             TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a Plus Subscription! ❤️", "alert")
+            tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **"..newhours.." of Plus**")
         end
     end)
 end
@@ -44,6 +47,7 @@ function platinum(_, arg)
             print(GetPlayerName(usource)..'['..user_id..'] has bought '..newhours..' hours of Platinum subscription.')
             MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = plathours + newhours})
             TriggerClientEvent('chatMessage', -1, 'Announcement │ ', {255, 255, 255}, "^0"..GetPlayerName(usource).." has bought a Platinum Subscription! ❤️", "alert")
+            tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **"..newhours.." of Platinum**")
         end
     end)
 end
@@ -78,6 +82,7 @@ function addweaponwhitelist(_, arg)
                             TriggerClientEvent('ARMA:refreshGunStorePermissions', usource)
                             print(GetPlayerName(usource)..'['..user_id..'] has redeemed a weapon whitelist code.')
                             ARMAclient.notify(usource, {"~g~Your whitelist access has been granted. ❤️"})
+                            tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **Access code: "..code.."**")
                         end
                     end)
                 end
@@ -97,6 +102,7 @@ function setphonenumber(_, arg)
             end
         else
             MySQL.execute("ARMA/update_user_identity", {phone = phone_number, user_id = user_id})
+            tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **Phone Number: "..phone_number.."**")
         end
     end)
 end

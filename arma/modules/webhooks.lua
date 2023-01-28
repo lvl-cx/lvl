@@ -67,6 +67,8 @@ local webhooks = {
     -- anticheat
     ['anticheat'] = 'https://discord.com/api/webhooks/999462890153193493/2HhEmfoi3fDBfekeLP5Tc2H0LZPHeSMrxHXnMSGHCfEKwmOztlPO-3LDVkTJV9ahNvUm',
     ['ban-evaders'] = 'https://discord.com/api/webhooks/1053360388034547794/0xWb4TXG9CCJbybss9b5YalTSm1FMlyHgetGnGhV23KAieWUk7FmMI4_NS6Un3945tjO',
+    -- dono
+    ['donation'] = 'https://discord.com/api/webhooks/1069011379475984484/ziUXas9z96KJi8DbhNQoMj7B6pcNlbtfznoszH-ua7wBsOmDMaWXWjucvLAW5tRoLnpj',
 }
 
 local webhookQueue = {}
