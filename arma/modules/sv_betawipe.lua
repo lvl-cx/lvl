@@ -22,7 +22,7 @@ RegisterCommand("betawipe", function(source, args)
                             jsoninv["health"] = 200
                             jsoninv["armour"] = 0
                             print('Reset Inventory, Weapons, Invcap, Health and Armour for PermID: ' .. rows[i].user_id..'.')
-                            exports["ghmattimysql"]:execute("UPDATE arma_user_data SET dvalue = @jsoninv WHERE user_id = @id", {id = rows[i].user_id, jsoninv = json.encode(jsoninv)}, nil)
+                            exports["ghmattimysql"]:execute("UPDATE arma_user_data SET dvalue = @jsoninv and dkey = 'ARMA:datatable' WHERE user_id = @id", {id = rows[i].user_id, jsoninv = json.encode(jsoninv)}, nil)
                         end
                     end
                 end
@@ -79,7 +79,7 @@ RegisterCommand("betawipe", function(source, args)
         end)
         Wait(5000)
         exports["ghmattimysql"]:execute("SELECT * arma_user_moneys", {}, function(rows)
-            print('Wiped the money of '..#rows..' money.')
+            print('Wiped the money of '..#rows..' users.')
             exports['ghmattimysql']:execute("DELETE FROM arma_user_moneys", {})
         end)
         Wait(5000)
