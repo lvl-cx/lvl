@@ -234,12 +234,14 @@ AddEventHandler('ARMA:sellAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if checkTraderBucket(source) then
-        for k,v in pairs(defaultPrices) do
-            if ARMA.getInventoryItemAmount(user_id, k) > 0 then
-                local amount = ARMA.getInventoryItemAmount(user_id, k)
-                ARMA.tryGetInventoryItem(user_id, k, amount, false)
-                ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
-                ARMA.giveBankMoney(user_id, defaultPrices[k]*amount)
+        for k,v in pairs(legal) do
+            if k == 'Copper' or k == 'Limestone' or k == 'Gold' or k == 'Diamond' then
+                if ARMA.getInventoryItemAmount(user_id, k) > 0 then
+                    local amount = ARMA.getInventoryItemAmount(user_id, k)
+                    ARMA.tryGetInventoryItem(user_id, k, amount, false)
+                    ARMAclient.notify(source, {'~g~Sold '..k..' for £'..getMoneyStringFormatted(defaultPrices[k]*amount)})
+                    ARMA.giveBankMoney(user_id, defaultPrices[k]*amount)
+                end
             end
         end
     end
