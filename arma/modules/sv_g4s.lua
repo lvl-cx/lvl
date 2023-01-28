@@ -6,7 +6,7 @@ local collectFrom={
     },
     [2]={
         collectionName="LA | Fitness",
-        collectionPoint=vector3(259.08432006836,-269.02905273438,53.963539123535)
+        collectionPoint=vector3(256.7271, -257.4939, 54.03673)
     },
     [3]={
         collectionName="PFC Arena",
