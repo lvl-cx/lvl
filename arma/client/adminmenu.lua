@@ -204,6 +204,7 @@ RageUI.CreateWhile(1.0, true, function()
                             if Selected then 
                                 SelectedPlayer = playersNearby[i]
                                 SelectedPerm = v[3]
+                                TriggerServerEvent("ARMA:CheckPov",v[3])
                             end
                             if Active then 
                                 hoveredPlayer = v[2]

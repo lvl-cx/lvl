@@ -101,7 +101,7 @@ AddEventHandler("ARMA:CheckPov",function(userperm)
     if ARMA.hasPermission(user_id, "admin.tickets") then
         if ARMA.hasPermission(userperm, 'pov.list') then
             TriggerClientEvent('ARMA:ReturnPov', source, true)
-        elseif not ARMA.hasPermission(userperm, 'pov.list') then
+        else
             TriggerClientEvent('ARMA:ReturnPov', source, false)
         end
     end
