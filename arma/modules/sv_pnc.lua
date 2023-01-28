@@ -88,17 +88,17 @@ AddEventHandler('ARMA:addPoints', function(points, id)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-        ARMAclient.notify(ARMA.getUserSource(id), {'~r~You have received '..points..' on your licence.'})
-        exports['ghmattimysql']:execute("UPDATE arma_dvsa SET points = points+@newpoints WHERE user_id = @user_id", {user_id = id, newpoints = points})
-        exports['ghmattimysql']:execute('SELECT * FROM arma_dvsa WHERE user_id = @user_id', {user_id = user_id}, function(licenceInfo)
-            local licenceType = licenceInfo[1].licence
-            local points = json.decode(licenceInfo[1].points)
-            if (licenceType == "active" or licenceType == "full") and points > 12 then
-                exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = 'banned' WHERE user_id = @user_id", {user_id = id})
-                Wait(100)
-                dvsaUpdate(user_id)
-            end
-        end)
+        -- ARMAclient.notify(ARMA.getUserSource(id), {'~r~You have received '..points..' on your licence.'})
+        -- exports['ghmattimysql']:execute("UPDATE arma_dvsa SET points = points+@newpoints WHERE user_id = @user_id", {user_id = id, newpoints = points})
+        -- exports['ghmattimysql']:execute('SELECT * FROM arma_dvsa WHERE user_id = @user_id', {user_id = user_id}, function(licenceInfo)
+        --     local licenceType = licenceInfo[1].licence
+        --     local points = json.decode(licenceInfo[1].points)
+        --     if (licenceType == "active" or licenceType == "full") and points > 12 then
+        --         exports['ghmattimysql']:execute("UPDATE arma_dvsa SET licence = 'banned' WHERE user_id = @user_id", {user_id = id})
+        --         Wait(100)
+        --         dvsaUpdate(user_id)
+        --     end
+        -- end)
     end
 end)
 
