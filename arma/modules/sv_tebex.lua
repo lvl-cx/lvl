@@ -95,6 +95,7 @@ function setphonenumber(_, arg)
     if _ ~= 0 then return end
     local user_id = tonumber(arg[1])
     local phone_number = tonumber(arg[2])
+    local usource = ARMA.getUserSource(user_id)
     MySQL.query("ARMA/get_userbyphone", {phone_number}, function(phoneNumberTaken)
         if #phoneNumberTaken > 0 then
             if ARMA.getUserSource(user_id) ~= nil then
@@ -107,9 +108,22 @@ function setphonenumber(_, arg)
     end)
 end
 
+function vipcar(_, arg)
+    if _ ~= 0 then return end
+    local user_id = tonumber(arg[1])
+    local spawncode = arg[2]
+    local usource = ARMA.getUserSource(user_id)
+    ARMAclient.generateUUID(usource, {"plate", 5, "alphanumeric"}, function(uuid)
+        local uuid = string.upper(uuid)
+        MySQL.execute("ARMA/add_vehicle", {user_id = user_id, vehicle = spawncode, registration = 'P'..uuid})
+        tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player Name: **"..GetPlayerName(usource).."**\n> Player TempID: **"..usource.."**\n> Player PermID: **"..user_id.."**\n> Package: **VIP Car: "..spawncode.."**")
+    end)
+end
+
 RegisterCommand("rank", rank, true)
 RegisterCommand("moneybag", moneybag, true)
 RegisterCommand("plus", plus, true)
 RegisterCommand("platinum", platinum, true)
 RegisterCommand("addweaponwhitelist", addweaponwhitelist, true)
 RegisterCommand("setphonenumber", setphonenumber, true)
+RegisterCommand("vipcar", vipcar, true)
