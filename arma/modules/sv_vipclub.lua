@@ -25,8 +25,9 @@ AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
     local user_id = ARMA.getUserId(source)
     local player = ARMA.getUserSource(user_id)
     if ARMA.hasGroup(user_id, 'Founder') then
-        ARMA.prompt(player,"Number of hours ","",function(player, hours)
+        ARMA.prompt(player,"Number of days ","",function(player, hours)
             if tonumber(hours) and tonumber(hours) >= 0 then
+                hours = hours * 24
                 if subtype == "Plus" then
                     MySQL.execute("subscription/set_plushours", {user_id = playerid, plushours = hours})
                 elseif subtype == "Platinum" then
@@ -34,7 +35,7 @@ AddEventHandler("ARMA:setPlayerSubscription", function(playerid, subtype)
                 end
                 TriggerClientEvent('ARMA:userSubscriptionUpdated', player)
             else
-                ARMAclient.notify(player,{"~r~Number of hours must be a number."})
+                ARMAclient.notify(player,{"~r~Number of days must be a number."})
             end
         end)
     else
@@ -78,23 +79,24 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                 if target_id ~= nil and target_id ~= "" then --validation
                     local target = ARMA.getUserSource(tonumber(target_id)) --get source of the new owner id
                     if target ~= nil then
-                        ARMA.prompt(player,"Number of hours ","",function(player, hours) -- ask for number of hours
+                        ARMA.prompt(player,"Number of days ","",function(player, hours) -- ask for number of hours
                             if tonumber(hours) and tonumber(hours) > 0 then
+                                hours = hours * 24
                                 MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
                                     sellerplushours = rows[1].plushours
                                     sellerplathours = rows[1].plathours
                                     if (subtype == 'Plus' and sellerplushours >= tonumber(hours)) or (subtype == 'Platinum' and sellerplathours >= tonumber(hours)) then
                                         ARMA.prompt(player,"Price £: ","",function(player, amount) --ask for price
                                             if tonumber(amount) and tonumber(amount) > 0 then
-                                                ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " hours of "..subtype.." subscription for £"..getMoneyStringFormatted(amount), 30, function(target,ok) --request player if they want to buy sub
+                                                ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " days of "..subtype.." subscription for £"..getMoneyStringFormatted(amount), 30, function(target,ok) --request player if they want to buy sub
                                                     if ok then --bought
                                                         MySQL.query("subscription/get_subscription", {user_id = ARMA.getUserId(target)}, function(rows, affected)
                                                             if subtype == "Plus" then
                                                                 if ARMA.tryFullPayment(ARMA.getUserId(target),tonumber(amount)) then
                                                                     MySQL.execute("subscription/set_plushours", {user_id = ARMA.getUserId(target), plushours = rows[1].plushours + tonumber(hours)})
                                                                     MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = sellerplushours - tonumber(hours)})
-                                                                    ARMAclient.notify(player,{'~g~You have sold '..hours..' hours of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
-                                                                    ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' hours of '..subtype..' subscription to you for £'..amount})
+                                                                    ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
+                                                                    ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
@@ -104,8 +106,8 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                 if ARMA.tryFullPayment(ARMA.getUserId(target),tonumber(amount)) then
                                                                     MySQL.execute("subscription/set_plathours", {user_id = ARMA.getUserId(target), plathours = rows[1].plathours + tonumber(hours)})
                                                                     MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = sellerplathours - tonumber(hours)})
-                                                                    ARMAclient.notify(player,{'~g~You have sold '..hours..' hours of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
-                                                                    ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' hours of '..subtype..' subscription to you for £'..amount})
+                                                                    ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
+                                                                    ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
@@ -114,8 +116,8 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                             end
                                                         end)
                                                     else
-                                                        ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy " ..hours.. " of "..subtype.." subscription for £"..amount}) --notify owner that refused
-                                                        ARMAclient.notify(target,{"~r~You have refused to buy " ..hours.. " of "..subtype.." subscription for £"..amount}) --notify new owner that refused
+                                                        ARMAclient.notify(player,{"~r~"..GetPlayerName(target).." has refused to buy " ..hours.. " days of "..subtype.." subscription for £"..amount}) --notify owner that refused
+                                                        ARMAclient.notify(target,{"~r~You have refused to buy " ..hours.. " days of "..subtype.." subscription for £"..amount}) --notify new owner that refused
                                                     end
                                                 end)
                                             else
@@ -123,11 +125,11 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                             end
                                         end)
                                     else
-                                        ARMAclient.notify(player,{"~r~You do not have "..hours.." hours of "..subtype.."."})
+                                        ARMAclient.notify(player,{"~r~You do not have "..hours.." days of "..subtype.."."})
                                     end
                                 end)
                             else
-                                ARMAclient.notify(player,{"~r~Number of hours must be a number."})
+                                ARMAclient.notify(player,{"~r~Number of days must be a number."})
                             end
                         end)
                     else
