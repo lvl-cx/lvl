@@ -19,6 +19,7 @@ local actypes = {
     {type = 13, desc = 'Night Vision'},
     {type = 14, desc = 'Model Dimensions'},
     {type = 15, desc = 'Godmoding'},
+    {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -238,7 +239,7 @@ AddEventHandler("ARMA:failedKeepAlive", function()
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
-    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Failed Keep Alive**\n> Type Meaning: **User has screenshot basic disabled**")
+    TriggerEvent("ARMA:acBan", user_id, 16, name, source)
 end)
 
 RegisterServerEvent("ARMA:resourceState")
