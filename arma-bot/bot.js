@@ -135,6 +135,26 @@ const init = async() => {
     });
 }
 
+// setInterval(function(){
+//     promotionDetection();
+// }, 60*1000);
+
+function promotionDetection(){
+  client.users.forEach(user =>{ //iterate over each user
+    if(user.presence.status == "online" || user.presence.status == 'dnd' || user.presence.status == 'idle' && !user.bot){ //check if user is online and is not a bot
+        if(!statusLeaderboard['leaderboard'][user.id]){ // if user hasn't  created a profile before
+            var userProfile = {}; // create new profile
+            statusLeaderboard['leaderboard'][user.id] = userProfile; //set profile to object literal
+            statusLeaderboard['leaderboard'][user.id] = 0; //set minutes to 0
+        }
+        if(Object.entries(user.presence.activities).length > 0 && typeof(user.presence.activities[0].state) === 'string' && user.presence.activities[0].state.includes('discord.gg/armarp') ){ //check if they have a status
+            statusLeaderboard['leaderboard'][user.id] += 1;
+            fs.writeFileSync(`${resourcePath}/statusleaderboard.json`, JSON.stringify(statusLeaderboard), function(err) {});
+        }
+    }
+  })
+}
+
 client.getPerms = function(msg) {
 
     let settings = settingsjson.settings
