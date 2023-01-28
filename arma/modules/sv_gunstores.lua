@@ -134,7 +134,9 @@ whitelistedGuns = {
     -- ["VIP"]={},
     -- ["Rebel"]={},
     -- ["LargeArmsDealer"] = {},
-    -- ["SmallArmsDealer"] = {},
+    ["SmallArmsDealer"] = {
+        ["WEAPON_MP5TEMPER"]={"Tempered MP5",300000,0,"N/A","w_sb_mp5temper",929},
+    },
     -- ["Legion"] = {},
 }
 
