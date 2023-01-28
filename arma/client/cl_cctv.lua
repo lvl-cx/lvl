@@ -40,6 +40,7 @@ Citizen.CreateThread(function()
                     b=g
                     c=1
                     FreezeEntityPosition(GetPlayerPed(PlayerId()),true)
+                    DisablePlayerFiring(PlayerPedId(), true)
                 end 
             end
             if d~=0 then 
@@ -135,6 +136,7 @@ function CloseSecurityCamera()
         DisplayRadar(true)
     end
     FreezeEntityPosition(GetPlayerPed(PlayerId()),false)
+    DisablePlayerFiring(PlayerPedId(), false)
 end
 function cctvDraw3DText(z,A,B,E)
     local F,G,H=World3dToScreen2d(z,A,B)
