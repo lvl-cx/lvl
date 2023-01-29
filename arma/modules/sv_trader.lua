@@ -234,7 +234,7 @@ AddEventHandler('ARMA:sellAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if checkTraderBucket(source) then
-        for k,v in pairs(legal) do
+        for k,v in pairs(defaultPrices) do
             if k == 'Copper' or k == 'Limestone' or k == 'Gold' or k == 'Diamond' then
                 if ARMA.getInventoryItemAmount(user_id, k) > 0 then
                     local amount = ARMA.getInventoryItemAmount(user_id, k)
