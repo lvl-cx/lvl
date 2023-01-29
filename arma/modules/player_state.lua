@@ -15,6 +15,18 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         if data.customization == nil then
             data.customization = cfg.default_customization
         end
+        if data.invcap == nil then
+            data.invcap = 30
+        end
+        tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+            if cb then
+                if plathours > 0 and data.invcap < 50 then
+                    data.invcap = 50
+                elseif plushours > 0 and data.invcap < 40 then
+                    data.invcap = 40
+                end
+            end
+        end)  
         if data.position == nil and cfg.spawn_enabled then
             local x = cfg.spawn_position[1] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
             local y = cfg.spawn_position[2] + math.random() * cfg.spawn_radius * 2 - cfg.spawn_radius
