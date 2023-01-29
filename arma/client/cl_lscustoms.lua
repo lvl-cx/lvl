@@ -1062,10 +1062,10 @@ AddEventHandler("LSC:buttonSelected", function(name, button, canpurchase)
 			end
 		elseif button.name == "Bulletproof Tires" and  (button.purchased or CanPurchase(price, canpurchase)) then
 			if GetVehicleTyresCanBurst(myveh.vehicle) then
-				myveh.bulletProofTyres = false
+				myveh.bulletProofTyres = true
 				SetVehicleTyresCanBurst(veh,false)
 			else
-				myveh.bulletProofTyres = true
+				myveh.bulletProofTyres = false
 				SetVehicleTyresCanBurst(veh,true)
 			end
 		elseif button.smokecolor ~= nil  and  (button.purchased or CanPurchase(price, canpurchase)) then
