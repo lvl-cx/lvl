@@ -44,71 +44,43 @@ function ch_give(idname, player, choice)
       for k, v in pairs(nplayers) do
           usrList = usrList .. "[" .. k .. "]" .. GetPlayerName(k) .. " | " --add ids to usrList
       end
-      if #nplayers > 1 then
-        if usrList ~= "" then
-            ARMA.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, nplayer) --ask for id
-              nplayer = nplayer
-              if nplayer ~= nil and nplayer ~= "" then
-                if nplayers[tonumber(nplayer)] then
-                  local nuser_id = ARMA.getUserId(nplayer)
-                  if nuser_id ~= nil then
-                    ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
-                      local amount = parseInt(amount)
-                      -- weight check
-                      local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
-                      if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
-                        if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
-                          ARMA.giveInventoryItem(nuser_id,idname,amount,true)
-                          TriggerEvent('ARMA:RefreshInventory', player)
-                          TriggerEvent('ARMA:RefreshInventory', nplayer)
-                          ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
-                          ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
-                        else
-                          ARMAclient.notify(player,{lang.common.invalid_value()})
-                        end
-                      else
-                        ARMAclient.notify(player,{lang.inventory.full()})
-                      end
-                    end)
+      if usrList ~= "" then
+        ARMA.prompt(player,"Players Nearby: " .. usrList .. "","",function(player, nplayer) --ask for id
+          nplayer = nplayer
+          if nplayer ~= nil and nplayer ~= "" then
+            if nplayers[tonumber(nplayer)] then
+              local nuser_id = ARMA.getUserId(nplayer)
+              if nuser_id ~= nil then
+                ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
+                  local amount = parseInt(amount)
+                  -- weight check
+                  local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
+                  if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
+                    if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
+                      ARMA.giveInventoryItem(nuser_id,idname,amount,true)
+                      TriggerEvent('ARMA:RefreshInventory', player)
+                      TriggerEvent('ARMA:RefreshInventory', nplayer)
+                      ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
+                      ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
+                    else
+                      ARMAclient.notify(player,{lang.common.invalid_value()})
+                    end
                   else
-                      ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
+                    ARMAclient.notify(player,{lang.inventory.full()})
                   end
-                else
-                    ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
-                end
+                end)
               else
-                ARMAclient.notify(player,{lang.common.no_player_near()})
+                  ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
               end
-            end)
-        else
-          ARMAclient.notify(player,{"~r~No players nearby!"}) --no players nearby
-        end
-      else
-        ARMAclient.getNearestPlayer(player,{15},function(nplayer)
-          if nplayer then
-            local nuser_id = ARMA.getUserId(nplayer)
-              ARMA.prompt(player,lang.inventory.give.prompt({ARMA.getInventoryItemAmount(user_id,idname)}),"",function(player,amount)
-                local amount = parseInt(amount)
-                -- weight check
-                local new_weight = ARMA.getInventoryWeight(nuser_id)+ARMA.getItemWeight(idname)*amount
-                if new_weight <= ARMA.getInventoryMaxWeight(nuser_id) then
-                  if ARMA.tryGetInventoryItem(user_id,idname,amount,true) then
-                    ARMA.giveInventoryItem(nuser_id,idname,amount,true)
-                    TriggerEvent('ARMA:RefreshInventory', player)
-                    TriggerEvent('ARMA:RefreshInventory', nplayer)
-                    ARMAclient.playAnim(player,{true,{{"mp_common","givetake1_a",1}},false})
-                    ARMAclient.playAnim(nplayer,{true,{{"mp_common","givetake2_a",1}},false})
-                  else
-                    ARMAclient.notify(player,{lang.common.invalid_value()})
-                  end
-                else
-                  ARMAclient.notify(player,{lang.inventory.full()})
-                end
-              end)
+            else
+                ARMAclient.notify(player,{'~r~Invalid Temp ID.'})
+            end
           else
-              ARMAclient.notify(source, {"~r~No one nearby."})
+            ARMAclient.notify(player,{lang.common.no_player_near()})
           end
         end)
+      else
+        ARMAclient.notify(player,{"~r~No players nearby!"}) --no players nearby
       end
     end)
   end
