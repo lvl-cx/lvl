@@ -45,7 +45,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local source = source
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
-    if #(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0 or #(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0  then
+    if (#(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0) or (#(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0) then
         TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
         FreezeEntityPosition(GetPlayerPed(source), true)
         ARMAclient.startCircularProgressBar(source, {"", 15000, nil})
