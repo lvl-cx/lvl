@@ -245,7 +245,7 @@ client.on('message', (message) => {
                     msg.delete(5000)
                 })
                 return
-            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify') && !message.author.id === "609044650019258407") {
+            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify')) {
                 message.delete()
                 message.reply('Please use bot commands for this command.').then(msg => {
                     msg.delete(5000)
