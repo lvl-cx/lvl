@@ -15,16 +15,6 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
     while true do 
-        Citizen.Wait(0)
-        if a then
-            DisablePlayerFiring(PlayerPedId(), true)
-        else
-            DisablePlayerFiring(PlayerPedId(), false)
-        end
-    end 
-end)
-Citizen.CreateThread(function()
-    while true do 
         for g=1,#e.Locations do 
             local h=e.Locations[g].camBox.distance
             if e.DebugMode then 
@@ -50,7 +40,7 @@ Citizen.CreateThread(function()
                     b=g
                     c=1
                     FreezeEntityPosition(GetPlayerPed(PlayerId()),true)
-                    a = true
+                    DisablePlayerFiring(PlayerPedId(), true)
                 end 
             end
             if d~=0 then 
@@ -146,7 +136,7 @@ function CloseSecurityCamera()
         DisplayRadar(true)
     end
     FreezeEntityPosition(GetPlayerPed(PlayerId()),false)
-    a = false
+    DisablePlayerFiring(PlayerPedId(), false)
 end
 function cctvDraw3DText(z,A,B,E)
     local F,G,H=World3dToScreen2d(z,A,B)
