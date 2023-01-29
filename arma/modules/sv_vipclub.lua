@@ -81,11 +81,10 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                     if target ~= nil then
                         ARMA.prompt(player,"Number of days ","",function(player, hours) -- ask for number of hours
                             if tonumber(hours) and tonumber(hours) > 0 then
-                                hours = hours * 24
                                 MySQL.query("subscription/get_subscription", {user_id = user_id}, function(rows, affected)
                                     sellerplushours = rows[1].plushours
                                     sellerplathours = rows[1].plathours
-                                    if (subtype == 'Plus' and sellerplushours >= tonumber(hours)) or (subtype == 'Platinum' and sellerplathours >= tonumber(hours)) then
+                                    if (subtype == 'Plus' and sellerplushours >= tonumber(hours)*24) or (subtype == 'Platinum' and sellerplathours >= tonumber(hours)*24) then
                                         ARMA.prompt(player,"Price £: ","",function(player, amount) --ask for price
                                             if tonumber(amount) and tonumber(amount) > 0 then
                                                 ARMA.request(target,GetPlayerName(player).." wants to sell: " ..hours.. " days of "..subtype.." subscription for £"..getMoneyStringFormatted(amount), 30, function(target,ok) --request player if they want to buy sub
@@ -93,8 +92,8 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                         MySQL.query("subscription/get_subscription", {user_id = ARMA.getUserId(target)}, function(rows, affected)
                                                             if subtype == "Plus" then
                                                                 if ARMA.tryFullPayment(ARMA.getUserId(target),tonumber(amount)) then
-                                                                    MySQL.execute("subscription/set_plushours", {user_id = ARMA.getUserId(target), plushours = rows[1].plushours + tonumber(hours)})
-                                                                    MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = sellerplushours - tonumber(hours)})
+                                                                    MySQL.execute("subscription/set_plushours", {user_id = ARMA.getUserId(target), plushours = rows[1].plushours + tonumber(hours)*24})
+                                                                    MySQL.execute("subscription/set_plushours", {user_id = user_id, plushours = sellerplushours - tonumber(hours)*24})
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
@@ -104,8 +103,8 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                 end
                                                             elseif subtype == "Platinum" then
                                                                 if ARMA.tryFullPayment(ARMA.getUserId(target),tonumber(amount)) then
-                                                                    MySQL.execute("subscription/set_plathours", {user_id = ARMA.getUserId(target), plathours = rows[1].plathours + tonumber(hours)})
-                                                                    MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = sellerplathours - tonumber(hours)})
+                                                                    MySQL.execute("subscription/set_plathours", {user_id = ARMA.getUserId(target), plathours = rows[1].plathours + tonumber(hours)*24})
+                                                                    MySQL.execute("subscription/set_plathours", {user_id = user_id, plathours = sellerplathours - tonumber(hours)*24})
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
