@@ -32,6 +32,7 @@ local webhooks = {
     ['remove-warning'] = 'https://discord.com/api/webhooks/991476754126475454/r_GpM5RUqss3v7-RSDLwaMMejgMhwB4BRvqGRRITWXUO5LRaUoiq6QBZJwlKtRUuAzjZ',
     ['add-car'] = 'https://discord.com/api/webhooks/991456728405258390/oATyn3OMl6CuiXuy1odhaM4wOFKj0qo_hCyYy7dllfIpEa1ORXKT-CyWzONSn9RVIEes',
     ['manage-balance'] = 'https://discord.com/api/webhooks/991456757740212336/ACWBj05Gz2nU8Nb8znkJphEn7xVLu2OjExlvfR7gaeait2gElyKxQzbkPAWWQZ_Ynhu9',
+    ['ticket-logs'] = 'https://discord.com/api/webhooks/1069293871164575824/Ofg4OmLL7VMcNO18jzC6Te33lzTNNKP10m1nG0-SFhv-2uccn9xnJhhHEFYWEoZhBnBY',
     -- vehicles
     ['crush-vehicle'] = 'https://discord.com/api/webhooks/1050351302015729714/h-CcvORewDCPeEZ8ED-l9M-lmk9omTw9uKWdjfFeDSfeh09YvnSJxn4yPcN4pHGWLRGs',
     ['rent-vehicle'] = 'https://discord.com/api/webhooks/1050351350455746650/kydxxOyZCEUbZMUJe4xag4fWIs26_LNWiim5579KWHnEAs5m25_0yc1hdZF8jkVt5TSs',

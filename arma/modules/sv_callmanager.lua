@@ -7,6 +7,9 @@ Citizen.CreateThread(function()
         for k,v in pairs(tickets) do
             if tickets[k].type == 'admin' and tickets[k].cooldown > 0 then
                 tickets[k].cooldown = tickets[k].cooldown - 1
+                if tickets[k].cooldown == 0 then
+                    tickets[k] = nil
+                end
             end
         end
     end
@@ -159,8 +162,8 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 ARMAclient.notify(admin_source,{"~g~£"..getMoneyStringFormatted(ticketPay).." earned for being cute. ❤️"})
                                 ARMAclient.notify(v.tempID,{"~g~An admin has taken your ticket."})
                                 TriggerClientEvent('ARMA:smallAnnouncement', v.tempID, 'ticket accepted', "Your admin ticket has been accepted by "..GetPlayerName(admin_source), 33, 10000)
+                                tARMA.sendWebhook('ticket-logs',"ARMA Ticket Logs", "> Admin Name: **"..GetPlayerName(admin_source).."**\n> Admin TempID: **"..admin_source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..v.name.."**\n> Player PermID: **"..v.permID.."**\n> Player TempID: **"..v.tempID.."**\n> Reason: **"..v.reason.."**")
                                 ARMAclient.teleport(admin_source, {table.unpack(coords)})
-                                tickets[ticketID] = nil
                                 TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
                             end)
                         else
