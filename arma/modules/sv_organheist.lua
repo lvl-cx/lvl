@@ -14,16 +14,16 @@ AddEventHandler("ARMA:joinOrganHeist",function()
     if not playersInOrganHeist[user_id] then
         if inWaitingStage then
             if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-                playersInOrganHeist[user_id] = {type = 'police'}
+                playersInOrganHeist[source] = {type = 'police'}
                 policeInGame = policeInGame+1
-                TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, user_id, 'police')
+                TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, source, 'police')
                 TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[1].safePositions[math.random(2)], timeTillOrgan, 'police', 1)
             elseif ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
                 ARMAclient.notify(source, {'~r~You cannot enter Organ Heist whilst clocked on NHS.'})
             else
-                playersInOrganHeist[user_id] = {type = 'civ'}
+                playersInOrganHeist[source] = {type = 'civ'}
                 civsInGame = civsInGame+1
-                TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, user_id, 'civ')
+                TriggerClientEvent('ARMA:addOrganHeistPlayer', -1, source, 'civ')
                 TriggerClientEvent('ARMA:teleportToOrganHeist', source, cfg.locations[2].safePositions[math.random(2)], timeTillOrgan, 'civ', 2)
                 ARMAclient.giveWeapons(source, {{['WEAPON_ROOK'] = {ammo = 250}}, false})
             end
@@ -38,26 +38,24 @@ end)
 RegisterNetEvent("ARMA:diedInOrganHeist")
 AddEventHandler("ARMA:diedInOrganHeist",function(killer)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    if playersInOrganHeist[user_id] then
+    if playersInOrganHeist[source] then
         if ARMA.getUserId(killer) ~= nil then
             local killerID = ARMA.getUserId(killer)
             ARMA.giveBankMoney(killerID, 25000)
             TriggerClientEvent('ARMA:organHeistKillConfirmed', killer, GetPlayerName(source))
         end
         TriggerClientEvent('ARMA:endOrganHeist', source)
-        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, user_id)
+        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, source)
         tARMA.setBucket(source, 0)
-        playersInOrganHeist[user_id] = nil
+        playersInOrganHeist[source] = nil
     end
 end)
 
 AddEventHandler('playerDropped', function(reason)
     local source = source
-    local user_id = ARMA.getUserId(source)
-    if playersInOrganHeist[user_id] then
-        playersInOrganHeist[user_id] = nil
-        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, user_id)
+    if playersInOrganHeist[source] then
+        playersInOrganHeist[source] = nil
+        TriggerClientEvent('ARMA:removeFromOrganHeist', -1, source)
     end
 end)
 
@@ -78,16 +76,14 @@ Citizen.CreateThread(function()
             end
             if policeAlive == 0 or civAlive == 0 then
                 for k,v in pairs(playersInOrganHeist) do
-                    if ARMA.getUserSource(k) ~= nil then
-                        if policeAlive == 0 then
-                            TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Civillians')
-                        elseif civAlive == 0 then
-                            TriggerClientEvent('ARMA:endOrganHeistWinner', ARMA.getUserSource(k), 'Police')
-                        end
-                        TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                        tARMA.setBucket(ARMA.getUserSource(k), 0)
-                        ARMA.giveBankMoney(k, 250000)
+                    if policeAlive == 0 then
+                        TriggerClientEvent('ARMA:endOrganHeistWinner', k, 'Civillians')
+                    elseif civAlive == 0 then
+                        TriggerClientEvent('ARMA:endOrganHeistWinner', k, 'Police')
                     end
+                    TriggerClientEvent('ARMA:endOrganHeist', k)
+                    tARMA.setBucket(k, 0)
+                    ARMA.giveBankMoney(k, 250000)
                 end
                 playersInOrganHeist = {}
                 inWaitingStage = false
@@ -108,10 +104,10 @@ Citizen.CreateThread(function()
                     inWaitingStage = false
                 else
                     for k,v in pairs(playersInOrganHeist) do
-                        TriggerClientEvent('ARMA:endOrganHeist', ARMA.getUserSource(k))
-                        ARMAclient.notify(ARMA.getUserSource(k), {'~r~Organ Heist was cancelled as not enough players joined.'})
-                        SetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)), 240.31098937988, -1379.8699951172, 33.741794586182)
-                        tARMA.setBucket(ARMA.getUserSource(k), 0)
+                        TriggerClientEvent('ARMA:endOrganHeist', k)
+                        ARMAclient.notify(k, {'~r~Organ Heist was cancelled as not enough players joined.'})
+                        SetEntityCoords(GetPlayerPed(k), 240.31098937988, -1379.8699951172, 33.741794586182)
+                        tARMA.setBucket(k, 0)
                     end
                 end
             end
