@@ -135,11 +135,10 @@ whitelistedGuns = {
     -- ["Rebel"]={},
     ["LargeArmsDealer"] = {
         ["WEAPON_GALIL"]={"Galil",750000,0,"N/A","w_ar_galil",6},
-    },
-    ["SmallArmsDealer"] = {
         ["WEAPON_MP5TEMPER"]={"Tempered MP5",300000,0,"N/A","w_sb_mp5temper",929},
         ["WEAPON_TYLON2"]={"Tylon MP5",300000,0,"N/A","w_sb_tylon2",163},
     },
+    -- ["SmallArmsDealer"] = {},
     -- ["Legion"] = {},
 }
 
