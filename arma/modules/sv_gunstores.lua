@@ -249,27 +249,6 @@ AddEventHandler("ARMA:requestNewGunshopData",function()
                 end
             end
         end
-        for k,v in pairs(gunstoreData) do
-            local hasPerm = false
-            if v['_config'] then
-                if json.encode(v['_config'][5]) ~= '[""]' then
-                    local hasPermissions = 0
-                    for a,b in pairs(v['_config'][5]) do
-                        if ARMA.hasPermission(user_id, b) then
-                            hasPermissions = hasPermissions + 1
-                        end
-                    end
-                    if hasPermissions == #v['_config'][5] then
-                        hasPerm = true
-                    end
-                else
-                    hasPerm = true
-                end
-            end
-            if not hasPerm then
-                gunstoreData[k] = nil
-            end
-        end
         tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
             if cb then
                 if plathours > 0 and ARMA.hasPermission(user_id, "vip.gunstore") then
