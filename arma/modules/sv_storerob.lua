@@ -143,7 +143,7 @@ RegisterNetEvent('ARMA:completeSafeCracking')
 AddEventHandler('ARMA:completeSafeCracking', function(store)
     local source = source
     local user_id = ARMA.getUserId(source)
-    ARMA.giveMoney(user_id, math.random(85000, 100000))
+    ARMA.giveMoney(user_id, math.random(85000, 150000))
     TriggerClientEvent('ARMA:syncCloseSafeDoor', -1, store)
     TriggerClientEvent('ARMA:resetStorePed', -1, store)
     for k,v in pairs(stores) do
