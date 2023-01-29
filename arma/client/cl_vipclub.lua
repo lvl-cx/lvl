@@ -146,12 +146,12 @@ RageUI.CreateWhile(1.0, true, function()
                     RageUI.Separator('Days of Plus Remaining: '..colourCode..math.floor(z.hoursOfPlus/24*100)/100)
                     colourCode = getColourCode(z.hoursOfPlatinum)
                     RageUI.Separator('Days of Platinum Remaining: '..colourCode..math.floor(z.hoursOfPlatinum/24*100)/100)
-                    RageUI.ButtonWithStyle("Set Plus Days (in hours)","This has to be set in hours.",{RightLabel="→→→"},true,function(o,p,q)
+                    RageUI.ButtonWithStyle("Set Plus Days","",{RightLabel="→→→"},true,function(o,p,q)
                         if q then
                             TriggerServerEvent("ARMA:setPlayerSubscription", z.userid, "Plus")
                         end
                     end)
-                    RageUI.ButtonWithStyle("Set Platinum Days (in hours)","This has to be set in hours.",{RightLabel="→→→"},true,function(o,p,q)
+                    RageUI.ButtonWithStyle("Set Platinum Days","",{RightLabel="→→→"},true,function(o,p,q)
                         if q then
                             TriggerServerEvent("ARMA:setPlayerSubscription", z.userid, "Platinum")
                         end
