@@ -712,6 +712,7 @@ AddEventHandler('ARMA:Teleport2Legion', function(newtarget)
         ARMAclient.teleport(newtarget, vector3(152.66354370117,-1035.9771728516,29.337995529175))
         ARMAclient.notify(newtarget, {'~g~You have been teleported to Legion by an admin.'})
         ARMAclient.setPlayerCombatTimer(newtarget, {0})
+        tARMA.sendWebhook('tp-to-legion', 'ARMA Teleport Legion Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..GetPlayerName(newtarget).."**\n> Player TempID: **"..newtarget.."**\n> Player PermID: **"..ARMA.getUserId(newtarget).."**")
     else
         local player = ARMA.getUserSource(user_id)
         local name = GetPlayerName(source)
@@ -894,7 +895,7 @@ RegisterNetEvent('ARMA:CleanAll')
 AddEventHandler('ARMA:CleanAll', function()
     local source = source
     local user_id = ARMA.getUserId(source)
-    if ARMA.hasPermission(user_id, 'admin.tickets') then
+    if ARMA.hasPermission(user_id, 'admin.noclip') then
         for i,v in pairs(GetAllVehicles()) do 
             DeleteEntity(v)
         end

@@ -22,6 +22,7 @@ local webhooks = {
     ['tp-to-player'] = 'https://discord.com/api/webhooks/991476057393872966/TQBcjsriIZJIxdd4BCzC5mbL4uAfW7UKxA1sYJ8iWaFBQxymAtpxWpYmV1M_MsT4CwFn',
     ['tp-to-admin-zone'] = 'https://discord.com/api/webhooks/991476114688057384/o_HHxUAEBITN7ao61sxtHReWuSb-MIiaDbbrNXVAZuxnDpztKmr-3cLxf8PthFOHVwj7',
     ['tp-back-from-admin-zone'] = 'https://discord.com/api/webhooks/991476152818483281/_hS3k7xRxfAB-C_c0vNPt6HpwezrIEeWFTXi_FktX82sBvPgsmOKx7vJOo6k4eR5mBrO',
+    ['tp-to-legion'] = 'https://discord.com/api/webhooks/1069335747393499196/E9PlyQIRIkrjEw_aS2pa-iVU75YfrLq7NPNDpw1y6RdjHFic2BMwbatNdJ3xYkA6NoQE',
     ['freeze'] = 'https://discord.com/api/webhooks/991476216383148122/zz1KDN5VzkIQjTFOJ1hs1NAz-Nf7tFpo65ychqF8C7zZ8EL8Gl9guOqZHxhyI9omRtTN',
     ['slap'] = 'https://discord.com/api/webhooks/991476247660073040/XNH5g7OwPFDoCA4D1wqNo_HWrZD5EWNbb6QoYc2ducFjV2cPkryg8ACyFOj_ItKSOdSC',
     ['force-clock-off'] = 'https://discord.com/api/webhooks/991476290496503818/vOqaK1KdoP1k3iK0aHRZlVBRBCXuOs4UOpK-sMcI7XTWnOFfT_7pnwhDoA_Bx-ccEub4',
