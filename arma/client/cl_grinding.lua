@@ -137,6 +137,7 @@ AddEventHandler("ARMA:onClientSpawn",function(p, q)
                     if not a then
                         m()
                         TriggerServerEvent("ARMA:requestGrinding", s.drug, s.type)
+                        Wait(1000)
                     else
                         tARMA.notify("~r~Action in progress, please wait.")
                     end
