@@ -15,9 +15,9 @@ RegisterNetEvent("ARMA:saveClothingHairData") -- this updates hair from clothing
 AddEventHandler("ARMA:saveClothingHairData", function(hairtype, haircolour)
     local source = source
     local user_id = ARMA.getUserId({source})
-    facesavedata = {}
+    local facesavedata = {}
     ARMA.getUData({user_id, "ARMA:Face:Data", function(data)
-        if data ~= nil and hairtype ~= nil and haircolour ~= nil then
+        if data ~= nil and data ~= 0 and hairtype ~= nil and haircolour ~= nil then
             facesavedata = json.decode(data)
             if facesavedata == nil then
                 facesavedata = {}
@@ -34,7 +34,7 @@ AddEventHandler("ARMA:changeHairstyle", function()
     local source = source
     local user_id = ARMA.getUserId({source})
     ARMA.getUData({user_id, "ARMA:Face:Data", function(data)
-        if data ~= nil then
+        if data ~= nil and data ~= 0 then
             TriggerClientEvent("ARMA:setHairstyle", source, json.decode(data))
         end
     end})
@@ -45,7 +45,7 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
         local source = source
         local user_id = ARMA.getUserId({source})
         ARMA.getUData({user_id, "ARMA:Face:Data", function(data)
-            if data ~= nil then
+            if data ~= nil and data ~= 0 then
                 TriggerClientEvent("ARMA:setHairstyle", source, json.decode(data))
             end
         end})
