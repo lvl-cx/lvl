@@ -37,6 +37,7 @@ local vehicleCannotBeSold = {
 local vehicleCannotBeRented = {
     --["demonhawkk"] = true,
 }
+local garageSettings = {}
 
 RMenu.Add('ARMAGarages', 'main', RageUI.CreateMenu("", "~b~ARMA Garages",tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight(), "banners", "garage"))
 RMenu.Add('ARMAGarages', 'owned_vehicles', RageUI.CreateSubMenu(RMenu:Get("ARMAGarages", "main")))
@@ -280,7 +281,6 @@ RegisterNetEvent("ARMA:spawnPersonalVehicle",function(E, av, valetCalled, ax, pl
         while DoesEntityExist(as) do
             local aI = GetFuel(as)
             if fuelLevels[E] ~= aI then
-                print('Setting fuel level to '..aI)
                 TriggerServerEvent("ARMA:updateFuel", E, math.floor(aI * 1000) / 1000)
                 fuelLevels[E] = aI
                 SetEntityInvincible(as, false)
@@ -377,10 +377,20 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('ARMAGarages', 'settings')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Checkbox('Show Custom Folders In Garage Menu', "~y~This removes the [Custom Folders] menu item, and puts custom folders in the root garages menu.", displayCustomFoldersinOwned, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
+            RageUI.Checkbox('Hide custom folder vehicles', "This hides these vehicles from their original garage.", garageSettings.hideCustomFolderVehiclesFromOriginalGarages, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
                 if Selected then
-                    displayCustomFoldersinOwned = not displayCustomFoldersinOwned
-                    if displayCustomFoldersinOwned then
+                    garageSettings.hideCustomFolderVehiclesFromOriginalGarages = not garageSettings.hideCustomFolderVehiclesFromOriginalGarages
+                    if garageSettings.hideCustomFolderVehiclesFromOriginalGarages then
+                        SetResourceKvpInt('hideCustomFolderVehiclesFromOriginalGarages', 1)
+                    else
+                        SetResourceKvpInt('hideCustomFolderVehiclesFromOriginalGarages', 0)
+                    end
+                end
+            end)
+            RageUI.Checkbox('Show Custom Folders In Garage Menu', "~y~This removes the [Custom Folders] menu item, and puts custom folders in the root garages menu.", garageSettings.displayCustomFoldersinOwned, { RightLabel = "" }, function(Hovered, Active, Selected, Checked)
+                if Selected then
+                    garageSettings.displayCustomFoldersinOwned = not garageSettings.displayCustomFoldersinOwned
+                    if garageSettings.displayCustomFoldersinOwned then
                         SetResourceKvpInt('displayFoldersinOwned', 1)
                     else
                         SetResourceKvpInt('displayFoldersinOwned', 0)
@@ -393,7 +403,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             DeleteCar(veh)
             RentedVeh = false
-            if not displayCustomFoldersinOwned then
+            if not garageSettings.displayCustomFoldersinOwned then
                 RageUI.ButtonWithStyle("[Custom Folders]", nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then 
                         for i,v in pairs(VehiclesFetchedTable) do 
@@ -404,7 +414,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end, RMenu:Get("ARMAGarages", "customfolders"))
             end
-            if displayCustomFoldersinOwned then
+            if garageSettings.displayCustomFoldersinOwned then
                 for h,b in pairs(folders) do
                     RageUI.ButtonWithStyle(h , nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
@@ -451,34 +461,37 @@ RageUI.CreateWhile(1.0, true, function()
                         end
                         if E ~= "_config" then
                             if aZ then
-                                local a_ = math.floor((q[E] or 0) * 1000) / 1000
-                                local b0 = ""
-                                if a_ <= 20 then
-                                    b0 = "~r~"
-                                elseif a_ <= 50 then
-                                    b0 = "~y~"
-                                elseif a_ <= 100 then
-                                    b0 = "~g~"
-                                end
-                                if tARMA.isVehicleImpounded(E) then
-                                    aT = aT .. " ~r~(IMPOUNDED)~w~"
-                                end
-                                RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
-                                    if aP then
-                                        if (k == 0 or l ~= E) and not t then
-                                            DeleteVehicle(k)
-                                            t = true
-                                            aj(E)
-                                            l = E
+                                if garageSettings.hideCustomFolderVehiclesFromOriginalGarages and tARMA.isVehicleInAnyCustomFolder(E) then
+                                else
+                                    local a_ = math.floor((q[E] or 0) * 1000) / 1000
+                                    local b0 = ""
+                                    if a_ <= 20 then
+                                        b0 = "~r~"
+                                    elseif a_ <= 50 then
+                                        b0 = "~y~"
+                                    elseif a_ <= 100 then
+                                        b0 = "~g~"
+                                    end
+                                    if tARMA.isVehicleImpounded(E) then
+                                        aT = aT .. " ~r~(IMPOUNDED)~w~"
+                                    end
+                                    RageUI.ButtonWithStyle(aT, b0 .. "Fuel " .. tostring(a_) .. "%",{RightLabel = "→→→"},true,function(aO, aP, aQ)
+                                        if aP then
+                                            if (k == 0 or l ~= E) and not t then
+                                                DeleteVehicle(k)
+                                                t = true
+                                                aj(E)
+                                                l = E
+                                            end
                                         end
-                                    end
-                                    if aQ then
-                                        e = E
-                                        f = aT
-                                        TriggerServerEvent("ARMA:getVehicleRarity", E)
-                                        RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle(aT)
-                                    end
-                                end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
+                                        if aQ then
+                                            e = E
+                                            f = aT
+                                            TriggerServerEvent("ARMA:getVehicleRarity", E)
+                                            RMenu:Get('ARMAGarages', 'owned_vehicles_submenu_manage'):SetSubtitle(aT)
+                                        end
+                                    end,RMenu:Get("ARMAGarages", "owned_vehicles_submenu_manage"))
+                                end
                             end
                         end
                     end
@@ -934,13 +947,26 @@ function canVehicleBeRented(car)
     return not vehicleCannotBeRented[string.lower(car)]
 end
 
+function tARMA.isVehicleInAnyCustomFolder(F)
+    for a,b in pairs(folders) do
+        if table.has(b, F) then
+            return true
+        end
+    end
+    return false
+end
 RegisterNetEvent('ARMA:sendGarageSettings')
 AddEventHandler('ARMA:sendGarageSettings', function()
     TriggerServerEvent("ARMA:refreshSimeonsPermissions")
     if GetResourceKvpInt('displayFoldersinOwned') == 1 then
-        displayCustomFoldersinOwned = true
+        garageSettings.displayCustomFoldersinOwned = true
     else
-        displayCustomFoldersinOwned = false
+        garageSettings.displayCustomFoldersinOwned = false
+    end
+    if GetResourceKvpInt('hideCustomFolderVehiclesFromOriginalGarages') == 1 then
+        garageSettings.hideCustomFolderVehiclesFromOriginalGarages = true
+    else
+        garageSettings.hideCustomFolderVehiclesFromOriginalGarages = false
     end
 end)
 
