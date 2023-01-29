@@ -36,19 +36,20 @@ RegisterNetEvent('ARMA:checkTurfCapture')
 AddEventHandler('ARMA:checkTurfCapture', function(turfid)
     local source = source
 	local user_id = ARMA.getUserId(source)
-	if ARMA.hasGroup(user_id, 'Gang') then
-		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-			for K,V in pairs(gotGangs) do
-				local array = json.decode(V.gangmembers)
-				for I,L in pairs(array) do
-					if tostring(user_id) == I then
-						TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, (turfData[turfid].gangOwner == V.gangname), turfData[turfid].name)
-						return
+	exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+		for K,V in pairs(gotGangs) do
+			local array = json.decode(V.gangmembers)
+			for I,L in pairs(array) do
+				if tostring(user_id) == I then
+					if turfData[turfid].gangOwner == V.gangname then
+						TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, true, turfData[turfid].name)
+					else
+						TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, false, turfData[turfid].name)
 					end
 				end
 			end
-		end)
-	end
+		end
+	end)
 end)
 
 RegisterNetEvent('ARMA:gangDefenseLocationUpdate')
