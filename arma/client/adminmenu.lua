@@ -252,7 +252,7 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end)
             end
-            if tARMA.getStaffLevel() >= 2 then
+            if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
                         if foundMatch == false then
