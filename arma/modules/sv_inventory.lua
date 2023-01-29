@@ -192,45 +192,49 @@ end)
 RegisterNetEvent('ARMA:robPlayer')
 AddEventHandler('ARMA:robPlayer', function(playersrc)
     local source = source
-    if not InventorySpamTrack[source] then
-        InventorySpamTrack[source] = true;
-        local user_id = ARMA.getUserId(source) 
-        local data = ARMA.getUserDataTable(user_id)
-        local their_id = ARMA.getUserId(playersrc) 
-        local their_data = ARMA.getUserDataTable(their_id)
-        if data and data.inventory then
-            local FormattedInventoryData = {}
-            for i,v in pairs(data.inventory) do
-                FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
-            end
-            exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = user_id}, function(vipClubData)
-                if #vipClubData > 0 then
-                    if their_data and their_data.inventory then
-                        local FormattedSecondaryInventoryData = {}
-                        for i,v in pairs(their_data.inventory) do
-                            ARMA.giveInventoryItem(user_id, i, v.amount)
-                            ARMA.tryGetInventoryItem(their_id, i, v.amount)
+    ARMAclient.globalSurrenderring(playersrc, {}, function(is_surrendering) 
+        if is_surrendering then
+            if not InventorySpamTrack[source] then
+                InventorySpamTrack[source] = true;
+                local user_id = ARMA.getUserId(source) 
+                local data = ARMA.getUserDataTable(user_id)
+                local their_id = ARMA.getUserId(playersrc) 
+                local their_data = ARMA.getUserDataTable(their_id)
+                if data and data.inventory then
+                    local FormattedInventoryData = {}
+                    for i,v in pairs(data.inventory) do
+                        FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
+                    end
+                    exports['ghmattimysql']:execute("SELECT * FROM arma_subscriptions WHERE user_id = @user_id", {user_id = user_id}, function(vipClubData)
+                        if #vipClubData > 0 then
+                            if their_data and their_data.inventory then
+                                local FormattedSecondaryInventoryData = {}
+                                for i,v in pairs(their_data.inventory) do
+                                    ARMA.giveInventoryItem(user_id, i, v.amount)
+                                    ARMA.tryGetInventoryItem(their_id, i, v.amount)
+                                end
+                            end
+                            if ARMA.getMoney(their_id) > 0 then
+                                ARMA.giveMoney(user_id, ARMA.getMoney(their_id))
+                                ARMA.tryPayment(their_id, ARMA.getMoney(their_id))
+                            end
+                            if vipClubData[1].plathours > 0 then
+                                TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id)+20)
+                            elseif vipClubData[1].plushours > 0 then
+                                TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id)+10)
+                            else
+                                TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id))
+                            end
+                            TriggerClientEvent('ARMA:InventoryOpen', source, true)
+                            InventorySpamTrack[source] = false;
                         end
-                    end
-                    if ARMA.getMoney(their_id) > 0 then
-                        ARMA.giveMoney(user_id, ARMA.getMoney(their_id))
-                        ARMA.tryPayment(their_id, ARMA.getMoney(their_id))
-                    end
-                    if vipClubData[1].plathours > 0 then
-                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id)+20)
-                    elseif vipClubData[1].plushours > 0 then
-                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id)+10)
-                    else
-                        TriggerClientEvent('ARMA:FetchPersonalInventory', source, FormattedInventoryData, ARMA.computeItemsWeight(data.inventory), ARMA.getInventoryMaxWeight(user_id))
-                    end
-                    TriggerClientEvent('ARMA:InventoryOpen', source, true)
-                    InventorySpamTrack[source] = false;
+                    end)
+                else 
+                    --print('An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
                 end
-            end)
-        else 
-            --print('An error has occured while trying to fetch inventory data from: ' .. user_id .. ' This may be a saving / loading data error you will need to investigate this.')
+            end
         end
-    end
+    end)
 end)
 
 RegisterNetEvent('ARMA:UseItem')
