@@ -2204,6 +2204,14 @@ cfghomes.homes = {
         buy_price = 8000000,
         image = "https://cdn.cmg.city/content/fivem/houses/vespuccicanals.png",
     },
+    ["Mega Luxury n1"] = {
+        entry_point = vector3(-86.214714050293,834.58258056641,235.91981506348),
+        leave_point = vector3(-84.061630249023,834.86633300781,235.92176818848),
+        chest_point = vector3(-59.608486175537,834.04541015625,231.330078125),
+        wardrobe_point = vector3(-66.998863220215,827.96557617188,231.33004760742),
+        buy_price = 1000000000,
+        image = "https://cdn.cmg.city/content/fivem/houses/vinewoodhills.png",
+    },
     ["Mega Luxury n11"] = {
         entry_point = vector3(-930.20721435547, 19.26170539856, 48.52445602417),
         leave_point = vector3(-781.82586669922, 324.1789855957, 223.25756835938),
@@ -4032,6 +4040,7 @@ cfghomes.chestsize = {
     ["Paleto Bay Lodge 2"] = 1000,
     ["Paleto Bay Lodge 3"] = 1000,
     ["Paleto Bay Lodge 4"] = 1000,
+    ["Mega Luxury n1"] = 4000,
     ["Mega Luxury n11"] = 2000,
     ["Mega Luxury n12"] = 2000,
     ["Mega Luxury n13"] = 2000,
