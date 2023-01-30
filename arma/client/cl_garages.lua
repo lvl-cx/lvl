@@ -745,7 +745,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            if next(RentedVehiclesOut) then
+            if next(RentedVehiclesIn) then
                 for i,v in pairs(RentedVehiclesIn.vehicles) do
                     RageUI.ButtonWithStyle(v[1], nil, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                         if Selected then
@@ -760,7 +760,7 @@ RageUI.CreateWhile(1.0, true, function()
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
             Hovered_Vehicles = nil 
             DeleteCar(veh)
-            if next(RentedVehiclesOut) then
+            if next(RentedVehiclesIn) then
                 for i,v in pairs(RentedVehiclesIn.vehicles) do
                     if RentedVehicle == i then
                         RageUI.Separator("~g~Rent Info")
