@@ -56,7 +56,16 @@ exports.runcmd = (fivemexports, client, message, params) => {
             }
         }).catch(err => {
             console.log(err)
-            return message.reply({ embeds: [new EmbedBuilder().setColor("#a264f8").setDescription("> No purchase found with that ID.")] })
+            let embed = {
+                "title": `**Error**`,
+                "description": `> No purchase found with that ID.`,
+                "color": settingsjson.settings.botColour,
+                "footer": {
+                    "text": `Requested by ${message.author.username}`
+                },
+                "timestamp": new Date()
+            }
+            message.channel.send({embed})
         })
     }
 }
