@@ -8,7 +8,7 @@ function rank(_, arg)
         ARMA.addUserGroup(user_id,rank)  
     else
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_data WHERE user_id = @user_id", {user_id = user_id}, function(result) 
-            if result ~= nil then
+            if #result > 0 then
                 local dvalue = json.decode(result[0].dvalue)
                 local groups = dvalue.groups
                 groups[rank] = true
