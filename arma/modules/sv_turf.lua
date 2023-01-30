@@ -15,20 +15,21 @@ AddEventHandler('ARMA:refreshTurfOwnershipData', function()
 	local user_id = ARMA.getUserId(source)
 	local data = turfData
 	exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-		for K,V in pairs(gotGangs) do
-			for I,L in pairs(json.decode(V.gangmembers)) do
-				if tostring(user_id) == I then
-					for a,b in pairs(data) do
+		for a,b in pairs(data) do
+			data[a].ownership = false
+			for K,V in pairs(gotGangs) do
+				for I,L in pairs(json.decode(V.gangmembers)) do
+					if tostring(user_id) == I then
 						if b.gangOwner == V.gangname then
 							data[a].ownership = true
 						end
 						TriggerClientEvent('ARMA:updateTurfOwner', source, a, b.gangOwner)
 					end
-					TriggerClientEvent('ARMA:gotTurfOwnershipData', source, data)
-					ARMA.updateTraderInfo()
 				end
 			end
 		end
+		TriggerClientEvent('ARMA:gotTurfOwnershipData', source, data)
+		ARMA.updateTraderInfo()
 	end)
 end)
 
