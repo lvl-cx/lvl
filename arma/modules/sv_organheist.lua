@@ -83,7 +83,7 @@ Citizen.CreateThread(function()
                     end
                     TriggerClientEvent('ARMA:endOrganHeist', k)
                     tARMA.setBucket(k, 0)
-                    ARMA.giveBankMoney(k, 250000)
+                    ARMA.giveBankMoney(ARMA.getUserId(k), 250000)
                 end
                 playersInOrganHeist = {}
                 inWaitingStage = false
