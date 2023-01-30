@@ -31,6 +31,18 @@ local availableItems = {
     {"7.62mm Bullets", 250},
 }
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(60000)
+        for k,v in pairs(activeCrates) do
+            if activeCrates[k].timeTillOpen > 0 then
+                activeCrates[k].timeTillOpen = activeCrates[k].timeTillOpen - 1
+            end
+        end
+    end
+end)
+
+
 AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
     if first_spawn then
        if #activeCrates > 0 then
@@ -45,35 +57,39 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local source = source
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
-    if (#(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0) or (#(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0) then
-        TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
-        FreezeEntityPosition(GetPlayerPed(source), true)
-        ARMAclient.startCircularProgressBar(source, {"", 15000, nil})
-        local anims = {
-            {'amb@medic@standing@kneel@base', 'base', 1},
-            {'anim@gangops@facility@servers@bodysearch@', 'player_search', 1},
-        }
-        ARMAclient.playAnim(source,{true,anims,false})
-        Wait(15000)
-        local lootAmount = nil
-        if activeCrates[crateID].oilrig then
-            lootAmount = 8
-        else
-            lootAmount = 3
-        end
-        while lootAmount > 0 do
-            local randomItem = math.random(1, #availableItems)
-            for k,v in pairs(availableItems) do
-                if k == randomItem then
-                    ARMA.giveInventoryItem(user_id, v[1], v[2], true)
-                end
+    if activeCrates[crateID].timeTillOpen > 0 then
+        ARMAclient.notify(source, {'~r~Please wait to open the drop'})
+    else
+        if (#(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0) or (#(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0) then
+            TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
+            FreezeEntityPosition(GetPlayerPed(source), true)
+            ARMAclient.startCircularProgressBar(source, {"", 15000, nil})
+            local anims = {
+                {'amb@medic@standing@kneel@base', 'base', 1},
+                {'anim@gangops@facility@servers@bodysearch@', 'player_search', 1},
+            }
+            ARMAclient.playAnim(source,{true,anims,false})
+            Wait(15000)
+            local lootAmount = nil
+            if activeCrates[crateID].oilrig then
+                lootAmount = 8
+            else
+                lootAmount = 3
             end
-            lootAmount = lootAmount - 1
+            while lootAmount > 0 do
+                local randomItem = math.random(1, #availableItems)
+                for k,v in pairs(availableItems) do
+                    if k == randomItem then
+                        ARMA.giveInventoryItem(user_id, v[1], v[2], true)
+                    end
+                end
+                lootAmount = lootAmount - 1
+            end
+            activeCrates[crateID] = nil
+            ARMA.giveMoney(user_id,math.random(50000,150000))
+            TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "Crate drop has been looted.", "alert")
+            FreezeEntityPosition(GetPlayerPed(source), false)
         end
-        activeCrates[crateID] = nil
-        ARMA.giveMoney(user_id,math.random(50000,150000))
-        TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "Crate drop has been looted.", "alert")
-        FreezeEntityPosition(GetPlayerPed(source), false)
     end
 end)
 
@@ -83,7 +99,7 @@ Citizen.CreateThread(function()
         local crateID = math.random(1, #crateLocations)
         local crateCoords = crateLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, false)
-        activeCrates[crateID] = {oilrig = false}
+        activeCrates[crateID] = {oilrig = false, timeTillOpen = 5}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
@@ -101,7 +117,7 @@ Citizen.CreateThread(function()
         local crateID = math.random(1, #rigLocations)
         local crateCoords = rigLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, true)
-        activeCrates[crateID] = {oilrig = true}
+        activeCrates[crateID] = {oilrig = true, timeTillOpen = 5}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
