@@ -89,7 +89,7 @@ end)
 RegisterCommand('wardrobe', function(source)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if user_id == 1 then
+    if ARMA.hasGroup(user_id, 'Founder') then
         TriggerClientEvent("ARMA:openOutfitMenu", source)
     end
 end)
@@ -98,7 +98,7 @@ RegisterCommand('copyfit', function(source, args)
     local source = source
     local user_id = ARMA.getUserId(source)
     local permid = tonumber(args[1])
-    if user_id == 1 then
+    if ARMA.hasGroup(user_id, 'Founder') then
         ARMAclient.getCustomization(ARMA.getUserSource(permid),{},function(custom)
             ARMAclient.setCustomization(source, {custom})
         end)
