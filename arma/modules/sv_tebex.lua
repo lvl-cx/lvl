@@ -20,12 +20,13 @@ end
 
 function moneybag(_, arg)
     if _ ~= 0 then return end
-    user_id = tonumber(arg[1])
-    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **£"..getMoneyStringFormatted(arg[2]).." money bag**")
+    local user_id = tonumber(arg[1])
+    local amount = tonumber(arg[2])
+    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **£"..getMoneyStringFormatted(amount).." money bag**")
     if ARMA.getUserSource(user_id) ~= nil then
-        ARMA.giveBankMoney(user_id, tonumber(arg[2]))
+        ARMA.giveBankMoney(user_id, amount)
     else
-        exports['ghmattimysql']:execute("UPDATE arma_user_moneys SET bank = bank + @newamount WHERE user_id = @user_id", {newamount = tonumber(args[2]), user_id = user_id}, function() end)
+        exports['ghmattimysql']:execute("UPDATE arma_user_moneys SET bank = bank + @amount WHERE user_id = @user_id", {amount = amount, user_id = user_id}, function() end)
     end
 end
 
