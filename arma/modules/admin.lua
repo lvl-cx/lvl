@@ -549,7 +549,7 @@ AddEventHandler('ARMA:RemoveWarning', function(warningid)
             local player = ARMA.getUserSource(admin_id)
             local name = GetPlayerName(source)
             Wait(500)
-                TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Remove Warning')
+            TriggerEvent("ARMA:acBan", admin_id, 11, name, player, 'Attempted to Remove Warning')
         end
     end
 end)
