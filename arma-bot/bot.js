@@ -218,7 +218,7 @@ client.on('message', (message) => {
                 }
             }
         }else if (message.channel.name.includes('verify')){
-            if (!message.content.includes(`${process.env.PREFIX}verify`)){
+            if (!message.content.includes(`${process.env.PREFIX}verify `)){
                 message.delete()
                 return
             }
