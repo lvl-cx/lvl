@@ -78,16 +78,16 @@ RageUI.CreateWhile(1.0, true, function()
                     end
                 end,
                 RMenu:Get("trader", "seller"))
-                -- RageUI.ButtonWithStyle("Sell All","",{RightLabel = "→→→"},true,function(m, n, o)
-                --     if o then
-                --         if GetVehiclePedIsIn(tARMA.getPlayerPed(), false) == 0 then
-                --             TriggerServerEvent("ARMA:sellAll")
-                --         else
-                --             tARMA.notify("~r~Exit your vehicle.")
-                --         end
-                --     end
-                -- end,
-                -- RMenu:Get("trader", "seller"))
+                RageUI.ButtonWithStyle("Sell All","",{RightLabel = "→→→"},true,function(m, n, o)
+                    if o then
+                        if GetVehiclePedIsIn(tARMA.getPlayerPed(), false) == 0 then
+                            TriggerServerEvent("ARMA:sellAll")
+                        else
+                            tARMA.notify("~r~Exit your vehicle.")
+                        end
+                    end
+                end,
+                RMenu:Get("trader", "seller"))
             elseif a == "Weed" then
                 RageUI.ButtonWithStyle("Sell Weed","£" .. getMoneyStringFormatted(c["Weed"] or 0),{RightLabel = "→→→"},true,function(m, n, o)
                     if o then
