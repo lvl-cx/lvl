@@ -180,7 +180,7 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
     tARMA.getSubscriptions(user_id, function(cb, plushours, plathours, last_used)
         if cb then
             if plathours >= 168 or plushours >= 168 then
-                if last_used == '' or (os.time() >= tonumber(last_used+24*60*60*7)) or user_id == 1 then
+                if last_used == '' or (os.time() >= tonumber(last_used+24*60*60*7)) then
                     if plathours >= 168 then
                         ARMA.giveInventoryItem(user_id, "Morphine", 5, true)
                         ARMA.giveInventoryItem(user_id, "Taco", 5, true)
@@ -190,8 +190,8 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
                         GiveWeaponToPed(source, 'WEAPON_OLYMPIA', 250, false, true)
                         ARMAclient.allowWeapon(source,{'WEAPON_UMP45'})
                         GiveWeaponToPed(source, 'WEAPON_UMP45', 250, false, true)
-                        ARMAclient.allowWeapon(source,{'WEAPON_AKKAL'})
-                        GiveWeaponToPed(source, 'WEAPON_AKKAL', 250, false, true)
+                        ARMAclient.allowWeapon(source,{'WEAPON_AK200'})
+                        GiveWeaponToPed(source, 'WEAPON_AK200', 250, false, true)
                         ARMAclient.setArmour(source, {100, true})
                         MySQL.execute("subscription/set_lastused", {user_id = user_id, last_used = os.time()})
                     elseif plushours >= 168 then
