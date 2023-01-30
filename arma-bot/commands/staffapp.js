@@ -5,7 +5,7 @@ const settingsjson = require(resourcePath + '/settings.js')
 exports.runcmd = (fivemexports, client, message, params) => {
     let embed = {
         "title": "ARMA Staff Applications",
-        "description": `https://forms.gle/Ai9Lm3jKJgw8HzKR9`,
+        "description": `https://forms.gle/KnPPw3JFxvgvHir28`,
         "color": settingsjson.settings.botColour,
         "footer": {
             "text": ""
