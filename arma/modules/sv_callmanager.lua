@@ -1,15 +1,13 @@
 local tickets = {}
 local callID = 0
+local cooldown = {}
 
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(60000)
-        for k,v in pairs(tickets) do
-            if tickets[k].type == 'admin' and tickets[k].cooldown > 0 then
-                tickets[k].cooldown = tickets[k].cooldown - 1
-                if tickets[k].cooldown == 0 then
-                    tickets[k] = nil
-                end
+        for k,v in pairs(cooldown) do
+            if cooldown[k].time > 0 then
+                cooldown[k].time = cooldown[k].time - 1
             end
         end
     end
@@ -18,13 +16,10 @@ end)
 RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
-    local cooldown = false
-    for k,v in pairs(tickets) do
-        if tickets[k].permID == user_id and tickets[k].type == 'admin' then
-            if tickets[k].cooldown > 0 then
-                ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
-                return
-            end
+    for k,v in pairs(cooldown) do
+        if k == user_id and v.cooldown > 0 then
+            ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
+            return
         end
     end
     ARMA.prompt(user_source, "Please enter call reason: ", "", function(player, reason)
@@ -37,8 +32,8 @@ RegisterCommand("calladmin", function(source)
                     tempID = user_source,
                     reason = reason,
                     type = 'admin',
-                    cooldown = 5,
                 }
+                cooldown[user_id] = {time = 5}
                 for k, v in pairs(ARMA.getUsers({})) do
                     TriggerClientEvent("ARMA:addEmergencyCall", v, callID, GetPlayerName(user_source), user_id, GetEntityCoords(GetPlayerPed(user_source)), reason, 'admin')
                 end
@@ -165,6 +160,7 @@ AddEventHandler("ARMA:TakeTicket", function(ticketID)
                                 tARMA.sendWebhook('ticket-logs',"ARMA Ticket Logs", "> Admin Name: **"..GetPlayerName(admin_source).."**\n> Admin TempID: **"..admin_source.."**\n> Admin PermID: **"..user_id.."**\n> Player Name: **"..v.name.."**\n> Player PermID: **"..v.permID.."**\n> Player TempID: **"..v.tempID.."**\n> Reason: **"..v.reason.."**")
                                 ARMAclient.teleport(admin_source, {table.unpack(coords)})
                                 TriggerClientEvent("ARMA:removeEmergencyCall", -1, ticketID)
+                                tickets[ticketID] = nil
                             end)
                         else
                             ARMAclient.notify(admin_source,{"~r~You can't take your own ticket!"})
