@@ -65,13 +65,13 @@ cfg.GunStores={
     },
     ["LargeArmsDealer"]={
         ["_config"]={{vector3(-1108.3199462891,4934.7392578125,217.35540771484),vector3(5065.6201171875,-4591.3857421875,1.8652405738831)},110,1,"Large Arms Dealer",{"gang.whitelisted"},false},
-        ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_goldak",750000},
-        ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",900000},
-        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",900000},
-        ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",300000},
-        ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_uzi",250000},
-        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup",25000},
-        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02",50000},
+        ["WEAPON_GOLDAK"]={"AK-47 Assault Rifle",750000,0,"N/A","w_ar_goldak",nil,750000},
+        ["WEAPON_MOSIN"]={"Mosin Bolt-Action",900000,0,"N/A","w_ar_mosin",nil,900000},
+        ["WEAPON_OLYMPIA"]={"Olympia Shotgun",900000,0,"N/A","w_sg_olympia",nil,900000},
+        ["WEAPON_UMP45"]={"UMP45 SMG",300000,0,"N/A","w_sb_ump45",nil,300000},
+        ["WEAPON_UZI"]={"Uzi SMG",250000,0,"N/A","w_sb_uzi",nil,250000},
+        ["item1"]={"LVL 1 Armour",25000,0,"N/A","prop_armour_pickup",nil,25000},
+        ["item2"]={"LVL 2 Armour",50000,0,"N/A","prop_bodyarmour_02",nil,50000},
     },
     ["SmallArmsDealer"]={
         ["_config"]={{vector3(2437.5708007813,4966.5610351563,41.34761428833),vector3(-1500.4978027344,-216.72758483887,46.889373779297),vector3(1242.7232666016,-426.84201049805,67.913963317871),vector3(1242.791,-426.7525,67.93467)},110,1,"Small Arms Dealer",{""},true},
@@ -131,13 +131,15 @@ whitelistedGuns = {
     -- ["VIP"]={},
     -- ["Rebel"]={},
     ["LargeArmsDealer"] = {
-        ["WEAPON_GALIL"]={"Galil",750000,0,"N/A","w_ar_galil",6},
-        ["WEAPON_MP5TEMPER"]={"Tempered MP5",300000,0,"N/A","w_sb_mp5temper",929},
-        ["WEAPON_TYLON2"]={"Tylon MP5",300000,0,"N/A","w_sb_tylon2",163},
-        ["WEAPON_CQ300"]={"CQ300",300000,0,"N/A","w_sb_cq300",2},
+        ["WEAPON_GALIL"]={"Galil",750000,0,"N/A","w_ar_galil",6,750000},
+        ["WEAPON_MP5TEMPER"]={"Tempered MP5",300000,0,"N/A","w_sb_mp5temper",929,300000},
+        ["WEAPON_TYLON2"]={"Tylon MP5",300000,0,"N/A","w_sb_tylon2",163,300000},
+        ["WEAPON_CQ300"]={"CQ300",300000,0,"N/A","w_sb_cq300",2,300000},
+        ["WEAPON_VITYAZ"]={"Vityaz",300000,0,"N/A","w_sb_vityaz",778,300000},
     },
     ["SmallArmsDealer"] = {
         ["WEAPON_SUPDEAGLE"]={"Supreme Deagle",100000,0,"N/A","w_pi_supdeagle",817},
+        ["WEAPON_PUNISHER1911"]={"Punisher 1911",80000,0,"N/A","w_pi_punisher1911",778},
     },
     -- ["Legion"] = {},
 }
@@ -368,7 +370,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                                 ARMAclient.notify(source, {'~r~You already have '..GetPedArmour(GetPlayerPed(source))..'% armour.'})
                                                 return
                                             end
-                                            if ARMA.tryPayment(user_id,price) then
+                                            if ARMA.tryPayment(user_id,d[2]) then
                                                 ARMAclient.notify(source, {'~g~You bought '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                                 TriggerClientEvent("arma:PlaySound", source, 1)
                                                 ARMAclient.setArmour(source, {price/1000, true})
@@ -385,7 +387,7 @@ AddEventHandler("ARMA:buyWeapon",function(spawncode, price, name, weaponshop, pu
                                                 if hasWeapon then
                                                     ARMAclient.notify(source, {'~r~You must store your current '..name..' before purchasing another.'})
                                                 else
-                                                    if ARMA.tryPayment(user_id,price) then
+                                                    if ARMA.tryPayment(user_id,d[2]) then
                                                         if price > 0 then
                                                             ARMAclient.notify(source, {'~g~You bought a '..name..' for £'..getMoneyStringFormatted(price)..'.'})
                                                             if weaponshop == 'LargeArmsDealer' then

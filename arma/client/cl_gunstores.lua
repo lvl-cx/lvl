@@ -230,7 +230,7 @@ AddEventHandler("ARMA:recalculateLargeArms",function(G)
         if m=="LargeArmsDealer"then 
             for r,H in pairs(n)do
                 if r ~="_config"then 
-                    local I=i[m][r][6]
+                    local I=i[m][r][7]
                     i[m][r][2]=I*(1+G/100)
                 end     
             end 
