@@ -159,7 +159,6 @@ RageUI.CreateWhile(1.0, true, function()
                 for k, v in pairs(banreasons) do
                     v.itemchecked = false
                 end
-                foundMatch = false
                 RageUI.ButtonWithStyle("All Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                 end, RMenu:Get('adminmenu', 'players'))
                 RageUI.ButtonWithStyle("Nearby Players", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -219,6 +218,7 @@ RageUI.CreateWhile(1.0, true, function()
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchoptions')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            foundMatch = false
             RageUI.ButtonWithStyle("Search by Name", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
             end, RMenu:Get('adminmenu', 'searchname'))
             RageUI.ButtonWithStyle("Search by Perm ID", "", {RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
@@ -543,7 +543,7 @@ RageUI.CreateWhile(1.0, true, function()
                         end, RMenu:Get('adminmenu', 'submenu'))
                     end
                 end
-             end
+            end
         end)
     end
     if RageUI.Visible(RMenu:Get('adminmenu', 'searchtempid')) then
