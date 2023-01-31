@@ -29,10 +29,11 @@ local choice_store_weapons = function(player, choice)
               end
               ARMAclient.notify(player,{"~g~Weapons Stored"})
               TriggerEvent('ARMA:RefreshInventory', player)
+              ARMAclient.ClearWeapons(player,{})
+              data.weapons = {}
               SetTimeout(3000,function()
                   isStoring[player] = nil 
               end)
-              ARMAclient.ClearWeapons(player,{})
             end)
           else
             ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
