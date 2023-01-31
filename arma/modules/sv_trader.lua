@@ -257,7 +257,7 @@ end)
 RegisterCommand('testitem', function(source,args)
     local source = source
     local user_id = ARMA.getUserId(source)
-    if if ARMA.hasGroup(user_id, 'Founder') then
+    if ARMA.hasGroup(user_id, 'Founder') then
         ARMA.giveInventoryItem(user_id, args[1], 1, true)
     end
 end)
