@@ -62,7 +62,7 @@ Citizen.CreateThread(function()
                     if ARMA.getUserSource(k)then
                         if#(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-deliverooStops[v.currentJob.stopNumber].stopPosition)<5.0 then
                             local pay = math.random(1000,1500)
-                            ARMA.giveBankMoney(k,pay)
+                            ARMA.giveBankMoney(k,grindBoost*pay)
                             TriggerClientEvent("ARMA:deliverooJobReachedNextStop",ARMA.getUserSource(k),pay)
                             if v.currentJob.stopNumber==#deliverooStops then
                                 TriggerClientEvent("ARMA:deliverooJobEnd", ARMA.getUserSource(k), true)
