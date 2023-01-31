@@ -357,6 +357,7 @@ cfg.groups = {
         "police.armoury",
         "police.announce",
         "police.commissioner",
+        "police.maxarmour",
     },
     ["Commissioner"] = {
         "cop.whitelisted"
@@ -367,6 +368,7 @@ cfg.groups = {
         "police.armoury",
         "police.announce",
         "police.deputycommissioner",
+        "police.maxarmour",
     },
     ["Deputy Commissioner"] = {
         "cop.whitelisted"
@@ -377,6 +379,7 @@ cfg.groups = {
         "police.armoury",
         "police.announce",
         "police.assistantcommissioner",
+        "police.maxarmour",
     },
     ["Assistant Commissioner"] = {
         "cop.whitelisted"
@@ -387,6 +390,7 @@ cfg.groups = {
         "police.armoury",
         "police.announce",
         "police.deputyassistantcommissioner",
+        "police.maxarmour",
     },
     ["Dep. Asst. Commissioner"] = {
         "cop.whitelisted"
@@ -397,6 +401,7 @@ cfg.groups = {
         "police.armoury",
         "police.announce",
         "police.commander",
+        "police.maxarmour",
     },
     ["Commander"] = {
         "cop.whitelisted"
@@ -406,6 +411,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.chiefsuperintendent",
+        "police.maxarmour",
     },
     ["Chief Superintendent"] = {
         "cop.whitelisted"
@@ -415,6 +421,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.superintendent",
+        "police.maxarmour",
     },
     ["Superintendent"] = {
         "cop.whitelisted"
@@ -425,6 +432,7 @@ cfg.groups = {
         "police.armoury",
         "police.specialconstable",
         "police.announce",
+        "police.maxarmour",
     },
     ["Special Constable"] = {
         "cop.whitelisted"
@@ -434,6 +442,7 @@ cfg.groups = {
         "police.onduty.permission",
         "police.armoury",
         "police.chiefinspector",
+        "police.maxarmour",
     },
     ["Chief Inspector"] = {
         "cop.whitelisted"
