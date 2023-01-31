@@ -36,7 +36,7 @@ AddEventHandler('ARMA:pickupCookingIngredient', function(recipe, ingredient)
         if ingredient == 'bbq' and cookingStages[user_id] == 7 then
             cookingStages[user_id] = nil
             TriggerClientEvent('ARMA:finishedCooking', source)
-            ARMA.giveBankMoney(user_id, 4000)
+            ARMA.giveBankMoney(user_id, grindBoost*4000)
         else
             for k,v in pairs(a) do
                 if k == recipe then
