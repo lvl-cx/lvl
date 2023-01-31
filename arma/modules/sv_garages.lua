@@ -173,7 +173,7 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Wait(300000)
+        Wait(60000)
         MySQL.query('ARMA/fetch_rented_vehs', {}, function(pvehicles)
             for i,v in pairs(pvehicles) do 
                if os.time() > tonumber(v.rentedtime) then
