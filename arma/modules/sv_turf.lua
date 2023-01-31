@@ -8,6 +8,16 @@ turfData = {
     {name = 'LSDSouth', gangOwner = "N/A", commission = 0, beingCaptured = false, timeLeft = 300, cooldown = 0} -- lsd south
 }
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1000)
+        for k,v in pairs(turfData) do
+            if v.cooldown > 0 then
+                v.cooldown = v.cooldown - 1
+            end
+        end
+    end
+end)
 
 RegisterNetEvent('ARMA:refreshTurfOwnershipData')
 AddEventHandler('ARMA:refreshTurfOwnershipData', function()
@@ -37,20 +47,26 @@ RegisterNetEvent('ARMA:checkTurfCapture')
 AddEventHandler('ARMA:checkTurfCapture', function(turfid)
     local source = source
 	local user_id = ARMA.getUserId(source)
-	exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-		for K,V in pairs(gotGangs) do
-			local array = json.decode(V.gangmembers)
-			for I,L in pairs(array) do
-				if tostring(user_id) == I then
-					if turfData[turfid].gangOwner == V.gangname then
-						TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, true, turfData[turfid].name)
-					else
-						TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, false, turfData[turfid].name)
+	if not ARMA.hasPermission(user_id, 'police.onduty.permission') or not ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
+		if turfData[turfid].cooldown > 0 then 
+			ARMAclient.notify(source, {'~r~This turf is on cooldown for another '..turfData[turfid].cooldown..' seconds.'})
+			return
+		end
+		exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+			for K,V in pairs(gotGangs) do
+				local array = json.decode(V.gangmembers)
+				for I,L in pairs(array) do
+					if tostring(user_id) == I then
+						if turfData[turfid].gangOwner == V.gangname then
+							TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, true, turfData[turfid].name)
+						else
+							TriggerClientEvent('ARMA:captureOwnershipReturned', source, turfid, false, turfData[turfid].name)
+						end
 					end
 				end
 			end
-		end
-	end)
+		end)
+	end
 end)
 
 RegisterNetEvent('ARMA:gangDefenseLocationUpdate')
@@ -95,35 +111,35 @@ AddEventHandler('ARMA:initiateGangCapture', function(x,y)
 	local user_id = ARMA.getUserId(source)
 	if not ARMA.hasPermission(user_id, 'police.onduty.permission') or not ARMA.hasPermission(user_id, 'nhs.onduty.permission') then
 		if not turfData[x].beingCaptured then
-			if turfData[x].cooldown == 0 then
-				exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-					for K,V in pairs(gotGangs) do
-						for I,L in pairs(json.decode(V.gangmembers)) do
-							if tostring(user_id) == I then
-								TriggerClientEvent('ARMA:initiateGangCaptureCheck', source, y, true)
-								turfData[x].beingCaptured = true 
-								TriggerClientEvent('chatMessage', -1, "^0The "..turfData[x].name.." trader is being attacked by "..V.gangname..".", { 128, 128, 128 }, message, "alert")
-								if turfData[x].gangOwner ~= 'N/A' then
-									exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-										for K,V in pairs(gotGangs) do
-											if V.gangname == turfData[x].gangOwner then
-												for I,L in pairs(json.decode(V.gangmembers)) do
+			exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+				for K,V in pairs(gotGangs) do
+					for I,L in pairs(json.decode(V.gangmembers)) do
+						if tostring(user_id) == I then
+							TriggerClientEvent('ARMA:initiateGangCaptureCheck', source, y, true)
+							turfData[x].beingCaptured = true 
+							TriggerClientEvent('chatMessage', -1, "^0The "..turfData[x].name.." trader is being attacked by "..V.gangname..".", { 128, 128, 128 }, message, "alert")
+							if turfData[x].gangOwner ~= 'N/A' then
+								exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+									for K,V in pairs(gotGangs) do
+										if V.gangname == turfData[x].gangOwner then
+											for I,L in pairs(json.decode(V.gangmembers)) do
+												if ARMA.getUserSource(I) ~= nil then
 													TriggerClientEvent('ARMA:defendGangCapture', ARMA.getUserSource(I))
 												end
 											end
 										end
-									end)
-								end
+									end
+								end)
 							end
 						end
 					end
-				end)
-			else
-				ARMAclient.notify(source, {'This turf is on cooldown for another '..turfData[x].cooldown..' seconds.'})
-			end
+				end
+			end)
+		else
+			ARMAclient.notify(source, {'~r~This turf is currently being captured.'})
 		end
 	else
-		ARMAclient.notify(source, {'You cannot capture a turf while on duty.'})
+		ARMAclient.notify(source, {'~r~You cannot capture a turf while on duty.'})
 	end
 end)
 
@@ -143,6 +159,7 @@ AddEventHandler('ARMA:gangCaptureSuccess', function(turfname)
 									turfData[k].gangOwner = V.gangname
 									turfData[k].commission = V.commission
 									turfData[k].cooldown = 300
+									turfData[k].beingCaptured = false
 									local data = turfData
 									data[k].ownership = true
 									TriggerClientEvent('ARMA:updateTurfOwner', -1, k, V.gangname)

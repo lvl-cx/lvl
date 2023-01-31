@@ -1,4 +1,4 @@
-local grindBoost = 3.0
+grindBoost = 3.0
 
 local defaultPrices = {
     ["Weed"] = math.floor(1500*grindBoost),
