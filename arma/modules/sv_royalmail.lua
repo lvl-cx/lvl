@@ -74,7 +74,7 @@ Citizen.CreateThread(function()
                     if ARMA.getUserSource(k)then
                         if#(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-RoyalMailDrops[v.currentJob.stopNumber].dropPosition)<5.0 then
                             local pay = math.random(1000,1500)
-                            ARMA.giveBankMoney(k,pay)
+                            ARMA.giveBankMoney(k,grindBoost*pay)
                             TriggerClientEvent("ARMA:royalMailReachedNextStop",ARMA.getUserSource(k),RoyalMailDrops[v.currentJob.stopNumber].dropPosition,pay)
                             if v.currentJob.stopNumber==#RoyalMailDrops then
                                 TriggerClientEvent("ARMA:royalMailJobEnd", ARMA.getUserSource(k))
