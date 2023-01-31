@@ -3,7 +3,6 @@ function rank(_, arg)
 	local user_id = tonumber(arg[1])
     local rank = arg[2]
     print(user_id.." has bought "..rank.."! ^7")
-    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **"..rank.."**")
     if ARMA.getUserSource(user_id) ~= nil then
         ARMA.addUserGroup(user_id,rank)  
     else
@@ -16,18 +15,19 @@ function rank(_, arg)
             end
         end)
     end  
+    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **"..rank.."**")
 end
 
 function moneybag(_, arg)
     if _ ~= 0 then return end
     local user_id = tonumber(arg[1])
     local amount = tonumber(arg[2])
-    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **£"..getMoneyStringFormatted(amount).." money bag**")
     if ARMA.getUserSource(user_id) ~= nil then
         ARMA.giveBankMoney(user_id, amount)
     else
         exports['ghmattimysql']:execute("UPDATE arma_user_moneys SET bank = bank + @amount WHERE user_id = @user_id", {amount = amount, user_id = user_id}, function() end)
     end
+    tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **£"..getMoneyStringFormatted(amount).." money bag**")
 end
 
 function plus(_, arg)
