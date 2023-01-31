@@ -17,7 +17,7 @@ RegisterCommand("calladmin", function(source)
     local user_id = ARMA.getUserId(source)
     local user_source = ARMA.getUserSource(user_id)
     for k,v in pairs(cooldown) do
-        if k == user_id and v.cooldown > 0 then
+        if k == user_id and v.time > 0 then
             ARMAclient.notify(user_source,{"~r~You have already called an admin, please wait 5 minutes before calling again."})
             return
         end
