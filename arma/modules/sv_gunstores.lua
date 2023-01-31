@@ -118,9 +118,6 @@ AddEventHandler("playerJoining", function()
 end)
 
 whitelistedGuns = {
-    -- [store] = {
-    --     [weapon_spawncode] = {weapon_name, weapon_price, 0, "N/A", model, owner_userid}
-    -- }
     ["policeLargeArms"]={
         ["WEAPON_AX50"]={"AX 50",0,0,"N/A","w_sr_ax50",1},
         ["WEAPON_MK18V2"]={"MK18 V2",0,0,"N/A","w_ar_mk18v2",33},
@@ -137,8 +134,8 @@ whitelistedGuns = {
         ["WEAPON_GALIL"]={"Galil",750000,0,"N/A","w_ar_galil",6},
         ["WEAPON_MP5TEMPER"]={"Tempered MP5",300000,0,"N/A","w_sb_mp5temper",929},
         ["WEAPON_TYLON2"]={"Tylon MP5",300000,0,"N/A","w_sb_tylon2",163},
+        ["WEAPON_CQ300"]={"CQ300",0,0,"N/A","w_sb_cq300",2},
     },
-    -- ["SmallArmsDealer"] = {},
     -- ["Legion"] = {},
 }
 
