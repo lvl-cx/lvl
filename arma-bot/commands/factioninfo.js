@@ -32,16 +32,16 @@ exports.runcmd = (fivemexports, client, message, params) => {
                         value: `${result[0].last_clocked_date}`,
                         inline: true,
                     },
-                    {
-                        name: '**Total players jailed this week:**',
-                        value: `${result[0].total_players_fined}`,
-                        inline: true,
-                    },
-                    {
-                        name: '**Total players fined this week:**',
-                        value: `${result[0].total_players_jailed}`,
-                        inline: true,
-                    },
+                    // {
+                    //     name: '**Total players jailed this week:**',
+                    //     value: `${result[0].total_players_fined}`,
+                    //     inline: true,
+                    // },
+                    // {
+                    //     name: '**Total players fined this week:**',
+                    //     value: `${result[0].total_players_jailed}`,
+                    //     inline: true,
+                    // },
                 ],
             }
             message.channel.send({ embed })
