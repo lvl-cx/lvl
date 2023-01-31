@@ -58,7 +58,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
     if activeCrates[crateID].timeTillOpen > 0 then
-        ARMAclient.notify(source, {'~r~Please wait to open the drop'})
+        ARMAclient.notify(source, {'~r~Please wait '..activeCrates[crateID].timeTillOpen..' minutes to open the drop'})
     else
         if (#(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0) or (#(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0) then
             TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
@@ -72,9 +72,9 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
             Wait(15000)
             local lootAmount = nil
             if activeCrates[crateID].oilrig then
-                lootAmount = 8
+                lootAmount = 9
             else
-                lootAmount = 3
+                lootAmount = 5
             end
             while lootAmount > 0 do
                 local randomItem = math.random(1, #availableItems)
