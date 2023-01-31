@@ -730,13 +730,18 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                 if cdata[itemId] and cdata[itemId].amount <= cdata[itemId].amount  then
                     local weightCalculation = ARMA.getInventoryWeight(user_id)+(ARMA.getItemWeight(itemId) * cdata[itemId].amount)
                     if weightCalculation == nil then return end
+                    local amount = cdata[itemId].amount
                     if weightCalculation > ARMA.getInventoryMaxWeight(user_id) and ARMA.getInventoryWeight(user_id) ~= ARMA.getInventoryMaxWeight(user_id) then
-                        cdata[itemId].amount = ARMA.getInventoryMaxWeight(user_id) / ARMA.getItemWeight(itemId)
+                        amount = math.floor(ARMA.getInventoryMaxWeight(user_id) / ARMA.getItemWeight(itemId))
                     end
-                    if math.floor(cdata[itemId].amount) > 0 or weightCalculation <= ARMA.getInventoryMaxWeight(user_id) then
-                        ARMA.giveInventoryItem(user_id, itemId, cdata[itemId].amount, true)
-                        cdata[itemId] = nil;
+                    if math.floor(amount) > 0 or weightCalculation <= ARMA.getInventoryMaxWeight(user_id) then
+                        ARMA.giveInventoryItem(user_id, itemId, amount, true)
                         local FormattedInventoryData = {}
+                        if (cdata[itemId].amount - amount) > 0 then
+                            cdata[itemId].amount = cdata[itemId].amount - amount
+                        else
+                            cdata[itemId] = nil
+                        end
                         for i, v in pairs(cdata) do
                             FormattedInventoryData[i] = {amount = v.amount, ItemName = ARMA.getItemName(i), Weight = ARMA.getItemWeight(i)}
                         end
