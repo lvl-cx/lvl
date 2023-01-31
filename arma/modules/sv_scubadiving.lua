@@ -65,7 +65,7 @@ AddEventHandler("ARMA:claimScubaReward", function(PermID)
     if PermID == user_id then
         if currentDivers[PermID]~=nil and currentDivers[PermID].currentJob.jobActive==false then
             local reward = math.random(a.payPerItemMin*currentDivers[PermID].currentJob.collectedPackages,a.payPerItemMax*currentDivers[PermID].currentJob.collectedPackages)
-            ARMA.giveBankMoney(PermID,reward)
+            ARMA.giveBankMoney(PermID,grindBoost*reward)
             ARMAclient.notify(source, {"~g~You have been paid £"..getMoneyStringFormatted(reward).." for collecting "..currentDivers[PermID].currentJob.collectedPackages.." treasures."})
             currentDivers[PermID]=nil
         end
