@@ -193,7 +193,7 @@ RegisterNetEvent('ARMA:robPlayer')
 AddEventHandler('ARMA:robPlayer', function(playersrc)
     local source = source
     ARMAclient.globalSurrenderring(playersrc, {}, function(is_surrendering) 
-        if is_surrendering or IsEntityPlayingAnim(GetPlayerPed(playersrc), 'missminuteman_1ig_2', 'handsup_enter', 3) then
+        if is_surrendering then
             if not InventorySpamTrack[source] then
                 InventorySpamTrack[source] = true;
                 local user_id = ARMA.getUserId(source) 
