@@ -66,7 +66,7 @@ local wbody_weight = function(args)
           return 1.00
         elseif v.class == "Pistol" then
           return 5.00
-        elseif v.class == "SMG" or v.class == "Shotgun" or v.name == "Mosin Nagant" then
+        elseif v.class == "SMG" or v.class == "Shotgun" then
           return 7.50
         elseif v.class == "AR" then
           return 10.00
