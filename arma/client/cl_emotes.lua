@@ -1,6 +1,7 @@
 local a = module("cfg/cfg_emotes")
 RMenu.Add("emotesmenu","mainmenu",RageUI.CreateMenu("","Main Menu",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","emotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
+RMenu.Add("emotesmenu","searchemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "mainmenu"),"","Search Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","danceemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Dance Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","customemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Custom Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
 RMenu.Add("emotesmenu","gunemotes",RageUI.CreateSubMenu(RMenu:Get("emotesmenu", "emotes"),"","Gun Emotes",tARMA.getRageUIMenuWidth(),tARMA.getRageUIMenuHeight(),"banners", "emotes"))
@@ -282,11 +283,16 @@ local function aw(ar, as)
     end
 end
 
+local emoteString = ''
+local foundMatch = false
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('emotesmenu', 'mainmenu')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            foundMatch = false
             RageUI.Button("Emotes","",{},true,function()
             end,RMenu:Get("emotesmenu", "emotes"))
+            RageUI.Button("Search Emotes","",{},true,function()
+            end,RMenu:Get("emotesmenu", "searchemotes"))
             RageUI.Button("Cancel Emote","",{},true,function(ay, az, aA)
                 if aA then
                     p(false)
@@ -317,6 +323,26 @@ RageUI.CreateWhile(1.0, true, function()
                         a7(E)
                     end
                 end)
+            end
+        end)
+    end
+    if RageUI.Visible(RMenu:Get('emotesmenu', 'searchemotes')) then
+        RageUI.DrawContent({ header = true, glare = false, instructionalButton = false}, function()
+            if foundMatch == false then
+                emoteString = tARMA.KeyboardInput("Enter Emote Name", "", 10)
+                if emoteString == nil then 
+                    emoteString = ""
+                end
+            end
+            for aB, E in aw(a.emotes) do
+                foundMatch = true
+                if string.find(E[3],emoteString) then
+                    RageUI.Button(E[3],"/e (" .. aB .. ")",{},not a6(E),function(ay, az, aA)
+                        if aA then
+                            a7(E)
+                        end
+                    end)
+                end
             end
         end)
     end
