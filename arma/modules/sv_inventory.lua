@@ -732,9 +732,9 @@ AddEventHandler('ARMA:MoveItemAll', function(inventoryType, itemId, inventoryInf
                     if weightCalculation == nil then return end
                     local amount = cdata[itemId].amount
                     if weightCalculation > ARMA.getInventoryMaxWeight(user_id) and ARMA.getInventoryWeight(user_id) ~= ARMA.getInventoryMaxWeight(user_id) then
-                        amount = math.floor(ARMA.getInventoryMaxWeight(user_id) / ARMA.getItemWeight(itemId))
+                        amount = math.floor((ARMA.getInventoryMaxWeight(user_id)-ARMA.getInventoryWeight(user_id)) / ARMA.getItemWeight(itemId))
                     end
-                    if math.floor(amount) > 0 or weightCalculation <= ARMA.getInventoryMaxWeight(user_id) then
+                    if math.floor(amount) > 0 or (weightCalculation <= ARMA.getInventoryMaxWeight(user_id)) then
                         ARMA.giveInventoryItem(user_id, itemId, amount, true)
                         local FormattedInventoryData = {}
                         if (cdata[itemId].amount - amount) > 0 then
