@@ -204,7 +204,7 @@ end)
 local paycheckscfg = module('cfg/cfg_factiongroups')
 
 local function paycheck(tempid, permid, money)
-    ARMA.giveBankMoney(permid, money)
+    ARMA.giveBankMoney(permid, grindBoost*money)
     ARMAclient.notifyPicture(tempid, {'CHAR_BANK_MAZE', 'CHAR_BANK_MAZE', 'Payday: ~g~£'..getMoneyStringFormatted(tostring(money)), "", 'PAYE', '', 1})
 end
 
