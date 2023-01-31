@@ -136,7 +136,9 @@ whitelistedGuns = {
         ["WEAPON_TYLON2"]={"Tylon MP5",300000,0,"N/A","w_sb_tylon2",163},
         ["WEAPON_CQ300"]={"CQ300",300000,0,"N/A","w_sb_cq300",2},
     },
-    -- ["SmallArmsDealer"] = {},
+    ["SmallArmsDealer"] = {
+        ["WEAPON_SUPDEAGLE"]={"Supreme Deagle",100000,0,"N/A","w_pi_supdeagle",817},
+    },
     -- ["Legion"] = {},
 }
 
