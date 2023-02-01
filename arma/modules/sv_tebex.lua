@@ -79,7 +79,7 @@ function addweaponwhitelist(_, arg)
                         end
                         MySQL.execute("ARMA/set_weapons", {user_id = user_id, weapon_info = json.encode(ownedWhitelists)})
                         MySQL.execute("ARMA/remove_weapon_code", {weapon_code = code})
-                        tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **Access code: "..code.."**")
+                        tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **Weapon Access**\n>Access code: **"..code.."**")
                     end)
                 end
             end
