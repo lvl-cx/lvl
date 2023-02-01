@@ -186,7 +186,7 @@ AddEventHandler('ARMA:gangDefenseSuccess', function(turfname)
 					for a,b in pairs(turfData) do
 						if b.name == turfname then
 							TriggerClientEvent('chatMessage', -1, "^0The "..b.name.." trader is no longer being attacked.", { 128, 128, 128 }, message, "alert")
-							turfData[a] = {ownership = true, gangOwner = V.gangname, commission = b.commission, cooldown = 300}
+							turfData[a] = {ownership = true, gangOwner = V.gangname, commission = b.commission, cooldown = 300, beingCaptured = false}
 							TriggerClientEvent('ARMA:gotTurfOwnershipData', -1, turfData)
 							return
 						end
