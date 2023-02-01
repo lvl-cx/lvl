@@ -255,18 +255,16 @@ RageUI.CreateWhile(1.0, true, function()
             if tARMA.getStaffLevel() >= 3 then
                 RageUI.ButtonWithStyle("Offline Ban","",{RightLabel = "→→→"}, true, function(Hovered, Active, Selected)
                     if Selected then
-                        if foundMatch == false then
-                            tARMA.clientPrompt("Perm ID:","",function(a)
-                                banningPermID = a
-                                banningName = 'ID: ' .. banningPermID
-                                o = nil
-                                selectedbans = {}
-                                for k, v in pairs(banreasons) do
-                                    v.itemchecked = false
-                                end
-                                TriggerServerEvent('ARMA:getNotes', banningPermID)
-                            end)
-                        end
+                        tARMA.clientPrompt("Perm ID:","",function(a)
+                            banningPermID = a
+                            banningName = 'ID: ' .. banningPermID
+                            o = nil
+                            selectedbans = {}
+                            for k, v in pairs(banreasons) do
+                                v.itemchecked = false
+                            end
+                            TriggerServerEvent('ARMA:getNotes', banningPermID)
+                        end)
                     end
                 end, RMenu:Get('adminmenu', 'notespreviewban'))
             end
