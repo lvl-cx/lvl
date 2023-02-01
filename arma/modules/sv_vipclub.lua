@@ -97,6 +97,7 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
+                                                                    ARMA.updateInvCap(ARMA.getUserId(target), 40)
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
                                                                     ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
@@ -108,6 +109,7 @@ AddEventHandler("ARMA:beginSellSubscriptionToPlayer", function(subtype)
                                                                     ARMAclient.notify(player,{'~g~You have sold '..hours..' days of '..subtype..' subscription to '..GetPlayerName(target)..' for £'..amount})
                                                                     ARMAclient.notify(target, {'~g~'..GetPlayerName(player)..' has sold '..hours..' days of '..subtype..' subscription to you for £'..amount})
                                                                     ARMA.giveBankMoney(user_id,tonumber(amount))
+                                                                    ARMA.updateInvCap(ARMA.getUserId(target), 50)
                                                                 else
                                                                     ARMAclient.notify(player,{"~r~".. GetPlayerName(target).." doesn't have enough money!"}) --notify original owner
                                                                     ARMAclient.notify(target,{"~r~You don't have enough money!"}) --notify new owner
