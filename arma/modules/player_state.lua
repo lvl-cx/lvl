@@ -218,4 +218,31 @@ AddEventHandler('ARMA:forceStoreWeapons', function()
     if data ~= nil then
         data.inventory = {}
     end
+    tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+        if cb then
+          local invcap = 30
+          if plathours > 0 then
+              invcap = invcap + 20
+          elseif plushours > 0 then
+              invcap = invcap + 10
+          end
+          if invcap == 30 then
+            return
+          end
+          if data.invcap - 15 == invcap then
+            ARMA.giveInventoryItem(user_id, "offwhitebag", 1, false)
+          elseif data.invcap - 20 == invcap then
+            ARMA.giveInventoryItem(user_id, "guccibag", 1, false)
+          elseif data.invcap - 30 == invcap  then
+            ARMA.giveInventoryItem(user_id, "nikebag", 1, false)
+          elseif data.invcap - 35 == invcap  then
+            ARMA.giveInventoryItem(user_id, "huntingbackpack", 1, false)
+          elseif data.invcap - 40 == invcap  then
+            ARMA.giveInventoryItem(user_id, "greenhikingbackpack", 1, false)
+          elseif data.invcap - 70 == invcap  then
+            ARMA.giveInventoryItem(user_id, "rebelbackpack", 1, false)
+          end
+          ARMA.updateInvCap(user_id, invcap)
+        end
+      end)
 end)
