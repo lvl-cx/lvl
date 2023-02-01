@@ -48,7 +48,7 @@ AddEventHandler("ARMA:claimNextLoginReward", function()
             streak = rows[1].streak+1
         end
         for k,v in pairs(cfg.rewards) do
-            if v.day == streak then
+            if v.day+1 == streak then
                 ARMA.giveBankMoney(user_id, v.amount)
                 TriggerClientEvent('ARMA:smallAnnouncement', source, 'login reward', "You have claimed £"..getMoneyStringFormatted(v.amount).." from the login reward!", 33, 10000)
             else
