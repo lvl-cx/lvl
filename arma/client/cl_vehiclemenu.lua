@@ -34,11 +34,22 @@ local s = false
 local t = 1
 Citizen.CreateThread(function()
     while true do
-        if m and tARMA.getPlayerVehicle() ~= k.limitingVehicle then
-            m = false
-            SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), k.predictedMax)
-            predictedMax = nil
-            tARMA.notify("~r~Vehicle Changed, stopping limiter")
+        local aA, cy = tARMA.getPlayerVehicle()
+        if aA ~= 0 and cy then
+            local cz = DecorGetBool(aA, "biometricLock")
+            if cz then
+                local y = tARMA.getUserId()
+                local cA = DecorGetInt(aA, "vRP_owner")
+                if y ~= cA and not tARMA.isDev() then
+                else
+                    if m and tARMA.getPlayerVehicle() ~= k.limitingVehicle then
+                        m = false
+                        SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), k.predictedMax)
+                        predictedMax = nil
+                        tARMA.notify("~r~Vehicle Changed, stopping limiter")
+                    end
+                end
+            end
         end
         Wait(500)
     end
@@ -47,54 +58,6 @@ function convert(speed)
   return speed * 10 * 0.44704 - 0.5
 end
 
-function cruise()
-    accelerating = false
-    Citizen.CreateThread(function()
-        cruiseVehicle = GetVehiclePedIsUsing(tARMA.getPlayerPed())
-        local y = GetEntitySpeed(cruiseVehicle)
-        local u = true
-        while k.cruise and IsPedInAnyVehicle(tARMA.getPlayerPed(), false) and u do
-            while not accelerating and k.cruise and u do
-                if IsControlPressed(1, 71) or IsControlPressed(1, 72) or IsControlPressed(1, 76) or GetVehicleCurrentGear(cruiseVehicle) == 0 then
-                    accelerating = true
-                    y = acceleratingToNewSpeed(cruiseVehicle)
-                else
-                    SetVehicleForwardSpeed(cruiseVehicle, y)
-                    SetVehicleOnGroundProperly(cruiseVehicle)
-                end
-                engineStatus = GetIsVehicleEngineRunning(cruiseVehicle)
-                collision = HasEntityCollidedWithAnything(cruiseVehicle)
-                inWater = IsEntityInWater(cruiseVehicle) and not IsPedInAnyBoat(tARMA.getPlayerPed())
-                u = engineStatus and not collision and not inWater
-                Wait(10)
-            end
-            Wait(600)
-        end
-        if collision then
-            tARMA.notify("~r~Cruise control automatically disabled because a collision was detected")
-        elseif not engineStatus then
-            tARMA.notify("~r~Cruise control automatically disabled because the engine was turned off")
-        elseif inWater then
-            tARMA.notify("~r~Cruise control automatically disabled because you are in water")
-        end
-        n = false
-        k.cruise = false
-  end)
-end
-
-function acceleratingToNewSpeed(cruiseVehicle)
-    while IsControlPressed(1, 71) or IsControlPressed(1, 72) or IsControlPressed(1, 76) or
-        GetVehicleCurrentGear(cruiseVehicle) == 0 and IsPedInAnyVehicle(tARMA.getPlayerPed(), false) do
-        Wait(100)
-    end
-    if not IsPedInAnyVehicle(tARMA.getPlayerPed(), false) then
-        accelerating = false
-        k.cruise = false
-    end
-    accelerating = false
-    local cruiseVehicle = GetVehiclePedIsUsing(tARMA.getPlayerPed())
-    return GetEntitySpeed(cruiseVehicle)
-end
 function limiter()
     Citizen.CreateThread(function()
         while k.limiter do
