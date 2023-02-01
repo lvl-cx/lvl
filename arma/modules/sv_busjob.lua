@@ -61,8 +61,8 @@ Citizen.CreateThread(function()
                 for a,b in pairs(busJobStops)do
                     if ARMA.getUserSource(k)then
                         if#(GetEntityCoords(GetPlayerPed(ARMA.getUserSource(k)))-busJobStops[v.currentJob.stopNumber].stopPosition)<5.0 then
-                            local pay = math.random(1000,1500)
-                            ARMA.giveBankMoney(k,grindBoost*pay)
+                            local pay = grindBoost*math.random(1000,1500)
+                            ARMA.giveBankMoney(k,pay)
                             TriggerClientEvent("ARMA:nextStopReachedBusJob",ARMA.getUserSource(k),pay)
                             if v.currentJob.stopNumber==#busJobStops then
                                 TriggerClientEvent("ARMA:endBusJob", ARMA.getUserSource(k))

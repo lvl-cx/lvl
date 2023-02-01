@@ -168,8 +168,8 @@ Citizen.CreateThread(function()
                             v.currentJob.deposited=true
                             v.currentJob.depositing=false
                             TriggerClientEvent("ARMA:updateJobInformation",ARMA.getUserSource(k),GetCollection(k))
-                            local pay = math.random(8000,12000)
-                            ARMA.giveBankMoney(k,grindBoost*pay)
+                            local pay = grindBoost*math.random(8000,12000)
+                            ARMA.giveBankMoney(k,pay)
                         end
                     end
                 end
