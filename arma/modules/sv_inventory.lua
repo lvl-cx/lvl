@@ -1069,3 +1069,35 @@ function getMoneyStringFormatted(cashString)
 	int = int:reverse():gsub("(%d%d%d)", "%1,")
 	return minus .. int:reverse():gsub("^,", "") .. fraction 
 end
+
+-- local usersLockpicking = {}
+
+-- RegisterNetEvent('ARMA:attemptLockpick')
+-- AddEventHandler('ARMA:attemptLockpick', function(veh, netveh)
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+--     if ARMA.tryGetInventoryItem(user_id, 'Lockpick', 1, true) then
+--         local chance = math.random(1,8)
+--         if chance == 1 then
+--             TriggerClientEvent('ARMA:lockpickClient', source, veh, true)
+--         else
+--             TriggerClientEvent('ARMA:lockpickClient', source, veh, false)
+--         end
+--     end
+-- end)
+
+-- RegisterNetEvent('ARMA:lockpickVehicle')
+-- AddEventHandler('ARMA:lockpickVehicle', function(spawncode, ownerid)
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+    
+-- end)
+
+-- RegisterNetEvent('ARMA:setVehicleLock')
+-- AddEventHandler('ARMA:setVehicleLock', function(netid)
+--     local source = source
+--     local user_id = ARMA.getUserId(source)
+--     if usersLockpicking[user_id] then
+--         SetVehicleDoorsLocked(NetworkGetEntityFromNetworkId(netid), false)
+--     end
+-- end)
