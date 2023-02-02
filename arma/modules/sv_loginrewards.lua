@@ -48,16 +48,17 @@ AddEventHandler("ARMA:claimNextLoginReward", function()
             streak = rows[1].streak+1
         end
         for k,v in pairs(cfg.rewards) do
-            if v.day+1 == streak then
+            if v.day == streak then
                 ARMA.giveBankMoney(user_id, v.amount)
                 TriggerClientEvent('ARMA:smallAnnouncement', source, 'login reward', "You have claimed £"..getMoneyStringFormatted(v.amount).." from the login reward!", 33, 10000)
-            else
-                ARMA.giveBankMoney(user_id, 150000)
-                TriggerClientEvent('ARMA:smallAnnouncement', source, 'login reward', "You have claimed £150,000 from the login reward!", 33, 10000)
+                MySQL.execute("dailyrewards/set_reward_streak", {user_id = user_id, streak = streak})
+                MySQL.execute("dailyrewards/set_reward_time", {user_id = user_id, last_reward = os.time()})
+                return
             end
-            MySQL.execute("dailyrewards/set_reward_streak", {user_id = user_id, streak = streak})
-            MySQL.execute("dailyrewards/set_reward_time", {user_id = user_id, last_reward = os.time()})
-            return
         end
+        ARMA.giveBankMoney(user_id, 150000)
+        TriggerClientEvent('ARMA:smallAnnouncement', source, 'login reward', "You have claimed £150,000 from the login reward!", 33, 10000)
+        MySQL.execute("dailyrewards/set_reward_streak", {user_id = user_id, streak = streak})
+        MySQL.execute("dailyrewards/set_reward_time", {user_id = user_id, last_reward = os.time()})
     end)
 end)
