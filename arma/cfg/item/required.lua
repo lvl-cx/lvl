@@ -40,14 +40,12 @@ local wbody_choices = function(args)
           if k == args[2] then
             if v.policeWeapon then
               if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-                ARMAclient.giveWeapons(player, {weapons})
-                SetPedAmmo(GetPlayerPed(player), args[2], 0)
+                ARMAclient.giveWeapons(player, {weapons, false})
               else
                 ARMAclient.notify(player, {'~r~You cannot equip this weapon.'})
               end
             else
-              ARMAclient.giveWeapons(player, {weapons})
-              SetPedAmmo(GetPlayerPed(player), args[2], 0)
+              ARMAclient.giveWeapons(player, {weapons, false})
             end
           end
         end
