@@ -1504,14 +1504,3 @@ Citizen.CreateThread(function()
         Citizen.Wait(2000)
     end
 end)
-Citizen.CreateThread(function()
-    while true do
-        local aC, cB = tARMA.getPlayerVehicle()
-        if aC ~= 0 and not globalHideUi and GetVehicleClass(aC) ~= 14 and (cB or GetPedInVehicleSeat(aC, 0) == PlayerPedId()) then
-            SendNUIMessage({showSpeed = true, speed = math.ceil(GetEntitySpeed(aC) * 2.2369)})
-        else
-            SendNUIMessage({showSpeed = false, speed = 0})
-        end
-        Citizen.Wait(50)
-    end
-end)
