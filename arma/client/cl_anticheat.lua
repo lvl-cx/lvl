@@ -361,6 +361,9 @@ Citizen.CreateThread(function()
 			end
 		end
 		SetPedInfiniteAmmoClip(i, false)
+		for e, m in pairs(tARMA.getWeapons()) do
+			SetPedInfiniteAmmo(i, false, m.hash)
+		end
 		SetEntityInvincible(k, false)
 		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_SNACK", false)
 		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_STANDARD", false)
