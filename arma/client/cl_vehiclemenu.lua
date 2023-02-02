@@ -34,22 +34,11 @@ local s = false
 local t = 1
 Citizen.CreateThread(function()
     while true do
-        local aA, cy = tARMA.getPlayerVehicle()
-        if aA ~= 0 and cy then
-            local cz = DecorGetBool(aA, "biometricLock")
-            if cz then
-                local y = tARMA.getUserId()
-                local cA = DecorGetInt(aA, "vRP_owner")
-                if y ~= cA and not tARMA.isDev() then
-                else
-                    if m and tARMA.getPlayerVehicle() ~= k.limitingVehicle then
-                        m = false
-                        SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), k.predictedMax)
-                        predictedMax = nil
-                        tARMA.notify("~r~Vehicle Changed, stopping limiter")
-                    end
-                end
-            end
+        if m and tARMA.getPlayerVehicle() ~= k.limitingVehicle then
+            m = false
+            SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), k.predictedMax)
+            predictedMax = nil
+            tARMA.notify("~r~Vehicle Changed, stopping limiter")
         end
         Wait(500)
     end

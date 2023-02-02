@@ -1402,6 +1402,7 @@ RegisterNetEvent("ARMA:displayVehicleBlip",function(a9)
     end
 end)
 
+local cZ = 0
 Citizen.CreateThread(function()
     DecorRegister("biometricLock", 2)
     while true do
@@ -1429,9 +1430,24 @@ Citizen.CreateThread(function()
                     DisableControlAction(0, 110, true)
                     DisableControlAction(0, 111, true)
                     DisableControlAction(0, 112, true)
+                    SetVehicleMaxSpeed(tARMA.getPlayerVehicle(), 0)
                     drawNativeText("This vehicle is locked biometrically to the owner.")
                 end
             end
+        end
+        if GetIsTaskActive(PlayerPedId(), 160) then
+            local vehicleEntering = GetVehiclePedIsEntering(PlayerPedId())
+            if vehicleEntering ~= 0 then
+                local doorStatus = GetVehicleDoorLockStatus(vehicleEntering)
+                if doorStatus == 2 then
+                    cZ = vehicleEntering
+                elseif doorStatus == 1 and vehicleEntering == cZ then
+                    ClearPedTasks(PlayerPedId())
+                    cZ = 0
+                end
+            end
+        else
+            cZ = 0
         end
         Citizen.Wait(0)
     end
