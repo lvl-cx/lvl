@@ -11,6 +11,7 @@ local b = 0
 local c = 0
 local d = 0
 local e = false
+local h = false
 Citizen.CreateThread(function()
     local f = GetResourceKvpString("arma_diagonalweapons") or "false"
     if f == "false" then
@@ -36,6 +37,12 @@ Citizen.CreateThread(function()
         d = true
         TriggerEvent("ARMA:hsSoundsOn")
     end
+    local n = GetResourceKvpString("arma_healthpercentage") or "false"
+    if n == "false" then
+        h = false
+    else
+        h = true
+    end
 end)
 function tARMA.setDiagonalWeaponSetting(i)
     SetResourceKvp("arma_diagonalweapons", tostring(i))
@@ -48,6 +55,12 @@ function tARMA.setHitMarkerSetting(i)
 end
 function tARMA.setCODHitMarkerSetting(i)
     SetResourceKvp("arma_codhitmarkersounds", tostring(i))
+end
+function tARMA.setShowHealthPercentageFlag(p)
+    SetResourceKvp("arma_healthpercentage", tostring(p))
+end
+function tARMA.getShowHealthPercentageFlag()
+    return h
 end
 local function j(k)
     RageUI.CloseAll()
@@ -432,6 +445,14 @@ RageUI.CreateWhile(1.0, true, function()
             end
             RageUI.Checkbox("Cinematic Black Bars","",e,{RightBadge = RageUI.CheckboxStyle.Car},function(a0, a2, a1, a6)
             end,a4,a5)
+            RageUI.Checkbox("Show Health Percentage","Displays the health and armour percentage on the bars.",h,{},function()
+            end,function()
+                h = true
+                tARMA.setShowHealthPercentageFlag(true)
+            end,function()
+                h = false
+                tARMA.setShowHealthPercentageFlag(false)
+            end)
             RageUI.ButtonWithStyle("Change Linked Discord","Begins the process of changing your linked Discord. Your linked discord is used to sync roles with the server.",{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
                     TriggerServerEvent('ARMA:changeLinkedDiscord')
