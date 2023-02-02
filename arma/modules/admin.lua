@@ -157,8 +157,7 @@ AddEventHandler("ARMA:Giveweapon",function()
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, "dev.menu") then
         ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
-            ARMAclient.allowWeapon(source,{'WEAPON_'..string.upper(hash)})
-            GiveWeaponToPed(source, 'weapon_'..hash, 250, false, true)
+            ARMAclient.giveWeapons(source, {{['WEAPON_'..string.upper(hash)] = {ammo = 250}}, false})
             ARMAclient.notify(source,{"~g~Successfully spawned ~b~"..hash})
         end)
     end
@@ -178,8 +177,7 @@ AddEventHandler("ARMA:GiveWeaponToPlayer",function()
             local permsource = ARMA.getUserSource(permid)
             if permsource ~= nil then
                 ARMA.prompt(source,"Weapon Name:","",function(source,hash) 
-                    ARMAclient.allowWeapon(permsource,{'WEAPON_'..string.upper(hash)})
-                    GiveWeaponToPed(permsource, 'weapon_'..hash, 250, false, true)
+                    ARMAclient.giveWeapons(permsource, {{['WEAPON_'..string.upper(hash)] = {ammo = 250}}, false})
                     ARMAclient.notify(source,{"~g~Successfully gave ~b~"..hash..' ~g~to '..GetPlayerName(permsource)})
                 end)
             end
