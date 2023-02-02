@@ -55,7 +55,7 @@ Citizen.CreateThread(function()
         Wait(250)
     end
 end)
-local t = vector2(0.07, 0.475)
+local t = vector2(0.07, 0.35)
 function func_drawFullAnpr()
     if a and s then
         DrawRect(t.x, t.y, 0.145, 0.125, 0, 0, 0, 128)
