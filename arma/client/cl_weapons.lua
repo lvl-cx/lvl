@@ -4,8 +4,8 @@ Citizen.CreateThread(function()
         AddTextEntry(b,c.name)
     end 
 end)
-local aZ = false
 
+local aZ = false
 function tARMA.giveWeapons(d,e)
     local f=PlayerPedId()
     if e then 
@@ -85,14 +85,22 @@ AddEventHandler('onResourceStop',function(t)
     end 
 end)
 
+local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
-        local l,i=GetCurrentPedWeapon(PlayerPedId())
+        local l,i = GetCurrentPedWeapon(PlayerPedId())
         local ammo = GetAmmoInPedWeapon(PlayerPedId(), i)
         Citizen.Wait(100)
-        if GetAmmoInPedWeapon(PlayerPedId(), i) > ammo and not aZ then
-            TriggerServerEvent('ARMA:acType17')
+        local k = GetSelectedPedWeapon(PlayerPedId())
+        if GetAmmoInPedWeapon(PlayerPedId(), i) > ammo and not aZ and not X[k]then
+            for k,v in pairs(a.weapons) do
+                if i == GetHashKey(k) then
+                    TriggerServerEvent('ARMA:acType17', v.name)
+                end
+            end
         end
+        Citizen.Wait(0)
     end
 end)
+
+print('test')
