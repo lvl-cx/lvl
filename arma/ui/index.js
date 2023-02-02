@@ -379,3 +379,15 @@ window.addEventListener("message", function (event) {
         }));
     }
 })
+
+window.addEventListener("message", function (event) {
+    if (event.data.addEnhancedDisplay) {
+        const display = $(".enhanced-display")
+        display.append(event.data.content)
+    } else if (event.data.clearEnhancedDisplay) {
+        $(".enhanced-display").empty()
+    } else if (event.data.finishEnhancedDisplay) {
+        const display = $(".enhanced-display")
+        display.html(display.html())
+    }
+})
