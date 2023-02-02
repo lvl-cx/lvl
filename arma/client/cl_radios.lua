@@ -56,7 +56,6 @@ RegisterNetEvent("ARMA:radiosClearAll",function()
     b = {}
 end)
 RegisterNetEvent("pma-voice:setTalkingOnRadio",function(j, n)
-    --print("pma-voice:setTalkingOnRadio", j, n)
     m(j, n)
 end)
 AddEventHandler("pma-voice:radioActive",function(n)
@@ -103,6 +102,9 @@ local function I()
     SetResourceKvp("radios_advancedEffects", json.encode(E))
 end
 local function J(q, s)
+    if c ~= 0 then
+        t()
+    end
     exports["pma-voice"]:setRadioChannel(q)
     if exports["pma-voice"]:getRadioVolume() == 0 then
         exports["pma-voice"]:setRadioVolume(u("radios_volume", 10) * 10)
@@ -338,15 +340,13 @@ RegisterCommand("radios",function()
         notify("~r~You have no available radio channels")
         return
     end
-    RageUI.Visible(RMenu:Get("radios", "mainmenu"), true)
-end,false)
-RegisterCommand("toggleradiomute",function()
-    if A == 1 then
-        exports["pma-voice"]:setRadioVolume(u("radios_volume", 10) * 10)
-    else
-        exports["pma-voice"]:setRadioVolume(10)
+    local X = {}
+    for q, s in pairs(b) do
+        table.insert(X, {q, s.name})
     end
+    TriggerEvent("ARMAUI:showRadioWheel", X)
 end,false)
+RegisterKeyMapping("radios", "Open Radio Menu", "KEYBOARD", "")
 Citizen.CreateThread(function()
     exports["pma-voice"]:setVoiceProperty("micClicks", false)
     exports["pma-voice"]:setRadioVolume(u("radios_volume", 10) * 10)
@@ -384,6 +384,13 @@ RegisterNetEvent("ARMA:radiosCreateChannel",function(q, h, L, X)
         end
     end
 end)
+-- RegisterNetEvent("ARMA:radiosDeleteChannel",function(q)
+--     if c == q then
+--         assert(not tARMA.isDevMode(), "Deleted channel whilst client was connected")
+--         t()
+--     end
+--     b[q] = nil
+-- end)
 RegisterCommand("toggleradiomute",function()
     if c ~= 0 then
         if exports["pma-voice"]:getRadioVolume() == 0 then
@@ -409,4 +416,17 @@ RegisterNetEvent("ARMA:radiosSetPlayerIsMuted",function(q, j, p)
     if q == c then
         o(j, p)
     end
+end)
+RegisterNetEvent("ARMA:clientJoinRadioChannel",function(q)
+    if b[q] and c ~= q then
+        J(q, b[q])
+    end
+end)
+RegisterNetEvent("ARMA:clientLeaveRadioChannel",function()
+    if c ~= 0 then
+        t()
+    end
+end)
+AddEventHandler("ARMA:openRadioConfig",function()
+    RageUI.Visible(RMenu:Get("radios", "mainmenu"), true)
 end)
