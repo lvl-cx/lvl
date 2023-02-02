@@ -361,7 +361,6 @@ function searchPlayer(entityId)
     end
 end
 
-local cpr_in_progress = false
 
 function revive(entityId)
     local player = GetPlayerByEntityID(entityId)
@@ -370,22 +369,7 @@ function revive(entityId)
         if globalOnNHSDuty then
             TriggerServerEvent("ARMA:nhsRevive",playerSrc)
         else
-            if not cpr_in_progress then
-                TriggerServerEvent("ARMA:attemptCPR",playerSrc)
-                local ad = "missheistfbi3b_ig8_2"
-                local ad2 = "cpr_loop_paramedic"
-                RequestAnimDict(ad)
-                RequestAnimDict(ad2)
-                TaskPlayAnim(PlayerPedId(), ad, ad2, 8.0, 1.0, -1, 12, 0, 0, 0, 0 )
-                RemoveAnimDict(ad)
-                RemoveAnimDict(ad2)
-                cpr_in_progress = true
-                Wait(15000)
-                ClearPedSecondaryTask(PlayerPedId())
-                cpr_in_progress = false
-            else
-                TriggerEvent("ARMA:Notify","~r~CPR in progress")
-            end
+            TriggerServerEvent("ARMA:attemptCPR",playerSrc)
         end
     end
 end
