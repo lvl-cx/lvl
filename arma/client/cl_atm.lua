@@ -200,8 +200,7 @@ RegisterNetEvent("ARMA:atmWireCuttingSuccessSync",function(A)
     StartParticleFxNonLoopedAtCoord("ent_sht_electrical_box",M.x,M.y,M.z - 0.5,L.w,0.0,0.0,2.0,false,false,false)
     RemoveNamedPtfxAsset("core")
     tARMA.loadPtfx("scr_xs_celebration")
-    local N = StartParticleFxLoopedAtCoord("scr_xs_money_rain",M.x,M.y,M.z - 0.2,L.w + 90.0,0.0,0.0,1.0,false,false,false,0
-    )
+    local N = StartParticleFxLoopedAtCoord("scr_xs_money_rain",M.x,M.y,M.z - 0.2,L.w + 90.0,0.0,0.0,1.0,false,false,false,0)
     RemoveNamedPtfxAsset("scr_xs_celebration")
     Citizen.Wait(15000)
     StopParticleFxLooped(N, false)
@@ -226,21 +225,6 @@ RegisterNetEvent("ARMA:atmWireCutSparks",function(A)
     tARMA.loadPtfx("core")
     StartParticleFxNonLoopedAtCoord("ent_dst_electrical",M.x,M.y,M.z - 0.5,L.w,0.0,0.0,2.0,false,false,false)
     RemoveNamedPtfxAsset("core")
-end)
-RegisterNetEvent("ARMA:atmRobberyFakeMoney",function(R, S)
-    tARMA.setPlayerCombatTimer(60, false)
-    local O = GetGameTimer()
-    while true do
-        local T = GetGameTimer() - O
-        if T >= 10000 then
-            TriggerEvent("ARMA:setDisplayRedMoney", R + S)
-            break
-        else
-            local U = T / 10000
-            TriggerEvent("ARMA:setDisplayRedMoney", R + math.floor(S * U))
-        end
-        Citizen.Wait(0)
-    end
 end)
 RegisterNetEvent("ARMA:startAtmWireCutting",function(A)
     y = true

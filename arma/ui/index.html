@@ -2,11 +2,13 @@
 <html>
 
 <head>
+
     <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <!-- <script src="./tubeplayer.js"></script> -->
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-tubeplayer/2.1.0/jquery.tubeplayer.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>  -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="Menu.js" type="text/javascript"></script>
     <script src="ProgressBar.js" type="text/javascript"></script>
     <script src="WPrompt.js" type="text/javascript"></script>
@@ -15,10 +17,14 @@
     <script src="Div.js" type="text/javascript"></script>
     <script src="main.js" type="text/javascript"></script>
     <link href="design.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="style.css">
+    <script src="ogrp.menu.js" type="text/javascript"></script>
+    <script src="ogrp.main.js" type="text/javascript"></script>
+    <script src="newphone.js" type="text/javascript"></script>
+    <link href="ogrp.menu.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">  -->
+    <link href="main.css" rel="stylesheet"></script>
     <link rel="stylesheet" type="text/css" href="pnc/css/index.css">
     <link rel="stylesheet" type="text/css" href="pnc/css/modal.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Notify System -->
     <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
@@ -28,18 +34,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css" />
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="fingerprintHacking/style.css" />
+    <script src="fingerprintHacking/script.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./progress/css/index.css" type="text/css" />
+
+
     <!-- MDBootstrap Datatables  -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
-    <!-- Bootstrap core CSS -->
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"> -->
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"> -->
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://kit.fontawesome.com/16b0bdd294.js" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./progress/css/index.css" type="text/css" />
+
+    <!-- <script src="index.js" type="text/javascript"></script> -->
     <link href="index.css" rel="stylesheet" type="text/css" />
     <script src="./SoundManager.js"></script>
 </head>
@@ -48,9 +61,7 @@
     <div class="progress-container">
         <div id="rprogress"></div>
     </div>
-    <div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
-    <script src="https://www.youtube.com/player_api"></script>
-    <!-- Headbag -->
+    <img id="img" src="fingerprintHacking/blank.png" alt=""/>
     <div class="headbag" style="display:none;">
         <img src="https://i.imgur.com/pZnhZYm.jpg">
     </div>
@@ -73,43 +84,8 @@
             <span class="foot"> | Number of players 20/100 (Queue: 4)</span>
         </div>
     </div>
-    <!-- F10 warnings -->
-    <div id="warningscontainer">
-        <div id="warningHeader">
-            <h1 class="text-center text-white" style="padding-top: 20px;">ARMA Warning System</h1>
-        </div>
-        <div class="container">
-            <br><br>
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-left" scope="col">ID</th>
-                            <th class="text-left" scope="col">Date</th>
-                            <th class="text-left" scope="col">Duration</th>
-                            <th class="text-left" scope="col">Points</th>
-                            <th class="text-left" scope="col">Reason</th>
-                        </tr>
-                    </thead>
-                    <tbody id="warningstablebody">
-                    </tbody>
-                </table>
-            </div>
-            <h2 class="text-center" id="points">0</h2>
-            <div id="myProgress">
-                <div id="myBar"></div>
-            </div>
-        </div>
-    </div>
-    <!-- CCTV -->
-    <div id="Camera_Container">
-        <div id="Camera_Label"></div>
-        <div id="Camera_Label2"></div>
-    </div>
 
-    <script src="index.js" type="text/javascript"></script>
-
-    <!-- Start PNC -->
+  <!-- Start PNC -->
   <div id="pnccontainer">
     <p id="clock">{{clock}}</p>
     <div class="navbuttonspnc">
@@ -129,6 +105,7 @@
 
 <div v-if="page == 'new-fines'">
     <h1>FINES</h1>
+    <!-- <person-search-nav/> -->
     <div class="personNav" style="position: fixed; top: 20%;">
         <p class="inlinep yellow">|</p>
         <p class="inlinep navp" v-on:click="switchPage('personsearch')">Home </p>
@@ -182,6 +159,7 @@
     <div v-for="fine in selectedPerson.otherprevs" v-on:click="selectOldFine(fine)"class="oldfinediv"><p v-for="f in JSON.parse(fine.description)">{{f.fine}}</p></div>
 </div>
     <div v-if="page == 'platesearch'" style="position: fixed; top: 20%;">
+        <!-- <p class="modes">Coming in the garagesv2 update!</p> -->
         <h1 class="modes ownerinfotitle" >OWNER INFORMATION</h1>
         <div class="ownerinfo">
             <p class="modes" style="margin-bottom: 20px;">National Insurance Number: {{searchedVehicle.owner.user_id}}</p>
@@ -195,6 +173,7 @@
             <button class="searchbutton" id="searchP" v-on:click="searchPlate()">Search</button>
             <p>{{plateSearchErr}}</p>
             <p class="modes" style="margin-bottom: 20px;">Vehicle Model: {{searchedVehicle.name}}</p>
+            <!-- <p class="modes" style="margin-bottom: 20px;">Colour: {{searchedVehicle.colour}}</p> -->
             <p class="modes" style="margin-bottom: 20px;">Plate: {{searchedVehicle.plate}}</p>
             <img v-if="!searchedVehicle.owner.user_id == ''" :src="getTaxDisc(searchedVehicle.name, searchedVehicle.plate, searchedVehicle.owner.user_id)" alt="" height="350px" width="350px" id="taxDisc">
             <p v-if="!searchedVehicle.owner.user_id == ''">Vehicle Notes:</p>
@@ -236,7 +215,8 @@
     </div>
 </div>
     <div id="player" style="position: absolute; top: -9999px; left: -9999px;"></div>
-    <script src="https://www.youtube.com/player_api"></script>
+    <script src="http://www.youtube.com/player_api"></script>
+    <!-- <script src="./js/vue.min.js"></script> -->
     <script
     src = "https://code.jquery.com/jquery-3.3.1.min.js"
     integrity = "sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -250,6 +230,44 @@
     <script src="./pnc/js/fine_loader.js" type="text/javascript"></script>
     <script src="./pnc/js/notes.js" type="text/javascript"></script>
     <!-- End PNC -->
+
+    <!-- Start CCTV -->
+    <div id="Camera_Container">
+        <div id="Camera_Label"></div>
+        <div id="Camera_Label2"></div>
+    </div>
+    <!-- End CCTV -->
+
+    <script src="index.js" type="text/javascript"></script>
+
+    <!-- Warning System -->
+    <div id="warningscontainer">
+        <div id="warningHeader">
+            <h1 class="text-center text-white" style="padding-top: 20px;">ARMA Warning System</h1>
+        </div>
+        <div class="container">
+            <br><br>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-left" scope="col">ID</th>
+                            <th class="text-left" scope="col">Date</th>
+                            <th class="text-left" scope="col">Duration</th>
+                            <th class="text-left" scope="col">Points</th>
+                            <th class="text-left" scope="col">Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody id="warningstablebody">
+                    </tbody>
+                </table>
+            </div>
+            <h2 class="text-center" id="points">0</h2>
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Start Kill Feed -->
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
@@ -268,6 +286,7 @@
     <div class="radio-list-container" id="radio-list"></div>
     <script src="radios/index.js"></script>
     <!-- End Radios -->
+
     <!-- Start Speedometer -->
     <link rel="stylesheet" href="speedometer/index.css">
     <div class="speed-huds">
@@ -1093,6 +1112,36 @@
         <script src="radialmenu/index.js" type="text/javascript"></script>
         <script src="radialmenu/RadialMenu.js" type="text/javascript"></script>
         <!-- End Radial Menu -->
-</body>
 
+        <!-- Start ANPR -->
+        <!-- <link href="anpr/index.css" rel="stylesheet" type="text/css" />
+        <div class="anpr-root">
+            <div class="anpr-container">
+                <div class="anpr-column">
+                    <span class="anpr-title">FRONT</span>
+                    <div class="anpr-info">
+                        <span class="anpr-text" id="anpr-front-plate">Plate:</span>
+                        <span class="anpr-text" id="anpr-front-speed">0 MPH</span>
+                        <span class="anpr-text" id="anpr-front-model">Model:</span>
+                    </div>
+                </div>
+                <div class="anpr-column">
+                    <span class="anpr-title">REAR</span>
+                    <div class="anpr-info">
+                        <span class="anpr-text" id="anpr-rear-plate">Plate:</span>
+                        <span class="anpr-text" id="anpr-rear-speed">0 MPH</span>
+                        <span class="anpr-text" id="anpr-rear-model">Model:</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="anpr/index.js" type="text/javascript"></script> -->
+        <!-- End ANPR -->
+
+        <!-- Start Enhanced Display -->
+        <svg class="enhanced-display">
+
+        </svg>
+        <!-- End Enhanced Display -->
+  </body>
 </html>
