@@ -17,6 +17,7 @@ AddEventHandler("ARMA:enterDiamondCasino", function()
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
             TriggerClientEvent('ARMA:setDisplayChips', source, rows[1].chips)
+            return
         end
     end)
 end)
@@ -35,6 +36,7 @@ AddEventHandler("ARMA:getChips", function()
     MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
         if #rows > 0 then
             TriggerClientEvent('ARMA:setDisplayChips', source, rows[1].chips)
+            return
         end
     end)
 end)
@@ -48,8 +50,10 @@ AddEventHandler("ARMA:buyChips", function(amount)
         MySQL.execute("casinochips/add_chips", {user_id = user_id, amount = amount})
         TriggerClientEvent('ARMA:chipsUpdated', source)
         tARMA.sendWebhook('purchase-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
+        return
     else
         ARMAclient.notify(source,{"~r~You don't have enough money."})
+        return
     end
 end)
 
@@ -62,13 +66,15 @@ AddEventHandler("ARMA:sellChips", function(amount)
         if #rows > 0 then
             local chips = rows[1].chips
             if not amount then amount = chips end
-            if amount > chips then
+            if amount > chips or amount < 1 then
                 ARMAclient.notify(source,{"~r~You don't have enough chips."})
+                return
             else
                 MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
                 TriggerClientEvent('ARMA:chipsUpdated', source)
                 tARMA.sendWebhook('sell-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
                 ARMA.giveMoney(user_id, amount)
+                return
             end
         end
     end)
