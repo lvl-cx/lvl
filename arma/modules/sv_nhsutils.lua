@@ -109,7 +109,7 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
                 TriggerClientEvent('ARMA:attemptCPR', source)
                 Wait(15000)
                 if playersInCPR[user_id] then
-                    local cprChance = math.random(1,8)
+                    local cprChance = math.random(1,5)
                     if cprChance == 1 then
                         ARMAclient.RevivePlayer(playersrc, {})
                         ARMAclient.notify(playersrc, {"~b~Your life has been saved."})
@@ -118,6 +118,7 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
                         ARMAclient.notify(source, {'~r~Failed to CPR.'})
                     end
                     playersInCPR[user_id] = nil
+                    TriggerClientEvent('ARMA:cancelCPRAttempt', source)
                 end
             end
         else
@@ -126,8 +127,8 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
     end)
 end)
 
-RegisterServerEvent("ARMA:attemptCPR")
-AddEventHandler('ARMA:attemptCPR', function()
+RegisterServerEvent("ARMA:cancelCPRAttempt")
+AddEventHandler('ARMA:cancelCPRAttempt', function()
     local source = source
     local user_id = ARMA.getUserId(source)
     if playersInCPR[user_id] then
