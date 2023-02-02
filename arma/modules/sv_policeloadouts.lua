@@ -61,8 +61,7 @@ AddEventHandler('ARMA:selectLoadout', function(loadout)
         if k == loadout then
             if ARMA.hasPermission(user_id, 'police.onduty.permission') and ARMA.hasPermission(user_id, v.permission) then
                 for a,b in pairs(v.weapons) do
-                    ARMAclient.allowWeapon(source, {b})
-                    GiveWeaponToPed(GetPlayerPed(source), b, 250, false, false)
+                    ARMAclient.giveWeapons(source, {{[b] = {ammo = 250}}, false})
                 end
                 ARMAclient.notify(source, {"~g~Received "..loadout.." loadout."})
             else
