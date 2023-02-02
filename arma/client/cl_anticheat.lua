@@ -369,6 +369,8 @@ Citizen.CreateThread(function()
 		ToggleUsePickupsForPlayer(j, "PICKUP_HEALTH_STANDARD", false)
 		ToggleUsePickupsForPlayer(j, "PICKUP_WEAPON_PISTOL", false)
 		ToggleUsePickupsForPlayer(j, "PICKUP_AMMO_BULLET_MP", false)
+		Citizen.InvokeNative(0xdef665962974b74c, 2047, false)
+		SetLocalPlayerCanCollectPortablePickups(false)
 		SetPlayerHealthRechargeMultiplier(j, 0.0)
 		Wait(0)
 	end
