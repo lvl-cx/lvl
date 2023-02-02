@@ -633,3 +633,22 @@ a {
       transform: scale(1.2);
   }
 }
+
+.enhanced-display {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.enhanced-bone {
+fill: none;
+stroke: yellow;
+stroke-width: 3;
+}
+
+.enhanced-player {
+fill: none;
+stroke: red;
+stroke-width: 0.5;
+}
