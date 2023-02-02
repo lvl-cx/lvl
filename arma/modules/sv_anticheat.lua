@@ -244,12 +244,12 @@ AddEventHandler("ARMA:failedKeepAlive", function()
 end)
 
 RegisterServerEvent("ARMA:acType17")
-AddEventHandler("ARMA:acType17", function()
+AddEventHandler("ARMA:acType17", function(weapon)
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 17, name, source)
+    TriggerEvent("ARMA:acBan", user_id, 17, name, source, weapon)
 end)
 
 RegisterServerEvent("ARMA:resourceState")
