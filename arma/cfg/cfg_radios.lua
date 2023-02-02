@@ -3,32 +3,44 @@ local cfg = {}
 cfg.standardChannels = {
     ["Police"] = {
         permissions = {
-            "police.onduty.permission"
+            "police.onduty.permission",
+            "nhs.onduty.permission",
+            "prisonguard.onduty.permission",
+            "lfb.onduty.permission"
         },
         deleteWhenEmpty = false,
         isDefault = true
     },
     ["NHS"] = {
         permissions = {
-            "nhs.onduty.permission"
+            "nhs.onduty.permission",
+            "lfb.onduty.permission",
+            "police.onduty.permission",
+            "prisonguard.onduty.permission"
         },
         deleteWhenEmpty = false,
         isDefault = true
     },
     ["HMP"] = {
         permissions = {
-            "prisonguard.onduty.permission"
-        },
-        deleteWhenEmpty = false,
-        isDefault = true
-    },
-    ["LFB"] = {
-        permissions = {
+            "prisonguard.onduty.permission",
+            "nhs.onduty.permission",
+            "police.onduty.permission",
             "lfb.onduty.permission"
         },
         deleteWhenEmpty = false,
         isDefault = true
-    }
+    },
+    -- ["LFB"] = {
+    --     permissions = {
+    --         "lfb.onduty.permission",
+    --         "nhs.onduty.permission",
+    --         "police.onduty.permission",
+    --         "prisonguard.onduty.permission"
+    --     },
+    --     deleteWhenEmpty = false,
+    --     isDefault = true
+    -- },
 }
 
 cfg.sortOrder = {
