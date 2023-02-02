@@ -148,38 +148,44 @@ AddEventHandler("ARMA:depositAllGangBalance", function()
     end)
     TriggerClientEvent('ARMA:ForceRefreshData', source)
 end)
+
+local gangWithdraw = {}
 RegisterServerEvent("ARMA:withdrawGangBalance")
 AddEventHandler("ARMA:withdrawGangBalance", function(amount)
     local source = source
     local user_id = ARMA.getUserId(source)
     local name = GetPlayerName(source)
     local date = os.date("%d/%m/%Y at %X")
-    exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-        for K,V in pairs(gotGangs) do
-            local array = json.decode(V.gangmembers)
-            for I,L in pairs(array) do
-                if tostring(user_id) == I then
-                    local funds = V.funds
-                    local gangname = V.gangname
-                    if tonumber(amount) < 0 then
-                        ARMAclient.notify(source,{"~r~Invalid Amount"})
-                        return
-                    end
-                    if tonumber(funds) < tonumber(amount) then
-                        ARMAclient.notify(source,{"~r~Invalid Amount."})
-                    else
-                        ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
-                        ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
-                        local newamount = tonumber(funds)-tonumber(amount)
-                        -- put webhook here for withdraw
-                        exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount), gangname = gangname}, function()
-                            TriggerClientEvent('ARMA:ForceRefreshData', -1)
-                        end)
+    if not gangWithdraw[source] then
+        gangWithdraw[source] = true
+        exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+            for K,V in pairs(gotGangs) do
+                local array = json.decode(V.gangmembers)
+                for I,L in pairs(array) do
+                    if tostring(user_id) == I then
+                        local funds = V.funds
+                        local gangname = V.gangname
+                        if tonumber(amount) < 0 then
+                            ARMAclient.notify(source,{"~r~Invalid Amount"})
+                            return
+                        end
+                        if tonumber(funds) < tonumber(amount) then
+                            ARMAclient.notify(source,{"~r~Invalid Amount."})
+                        else
+                            ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
+                            ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
+                            local newamount = tonumber(funds)-tonumber(amount)
+                            -- put webhook here for withdraw
+                            exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount), gangname = gangname}, function()
+                                TriggerClientEvent('ARMA:ForceRefreshData', -1)
+                            end)
+                        end
                     end
                 end
             end
-        end
-    end)
+            gangWithdraw[source] = nil
+        end)
+    end
     TriggerClientEvent('ARMA:ForceRefreshData', source)
 end)
 RegisterServerEvent("ARMA:withdrawAllGangBalance")
@@ -188,28 +194,32 @@ AddEventHandler("ARMA:withdrawAllGangBalance", function()
     local user_id = ARMA.getUserId(source)
     local name = GetPlayerName(source)
     local date = os.date("%d/%m/%Y at %X")
-    exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
-        for K,V in pairs(gotGangs) do
-            local array = json.decode(V.gangmembers)
-            for I,L in pairs(array) do
-                if tostring(user_id) == I then
-                    local funds = V.funds
-                    local gangname = V.gangname
-                    local amount = V.funds
-                    if tonumber(funds) < 1 then
-                        ARMAclient.notify(source,{"~r~Invalid Amount."})
-                    else
-                        ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
-                        ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
-                        -- put webhook here for withdraw all
-                        exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount), gangname = gangname}, function()
-                            TriggerClientEvent('ARMA:ForceRefreshData', -1)
-                        end)
+    if not gangWithdraw[source] then
+        gangWithdraw[source] = true
+        exports['ghmattimysql']:execute('SELECT * FROM arma_gangs', function(gotGangs)
+            for K,V in pairs(gotGangs) do
+                local array = json.decode(V.gangmembers)
+                for I,L in pairs(array) do
+                    if tostring(user_id) == I then
+                        local funds = V.funds
+                        local gangname = V.gangname
+                        local amount = V.funds
+                        if tonumber(funds) < 1 then
+                            ARMAclient.notify(source,{"~r~Invalid Amount."})
+                        else
+                            ARMA.setMoney(user_id,tonumber(ARMA.getMoney(user_id))+tonumber(amount))
+                            ARMAclient.notify(source,{"~g~Withdrew £"..getMoneyStringFormatted(amount)})
+                            -- put webhook here for withdraw all
+                            exports['ghmattimysql']:execute("UPDATE arma_gangs SET funds = @funds WHERE gangname=@gangname", {funds = tostring(newamount), gangname = gangname}, function()
+                                TriggerClientEvent('ARMA:ForceRefreshData', -1)
+                            end)
+                        end
                     end
                 end
             end
-        end
-    end)
+            gangWithdraw[source] = nil
+        end)
+    end
     TriggerClientEvent('ARMA:ForceRefreshData', source)
 end)
 RegisterServerEvent("ARMA:PromoteUser")
