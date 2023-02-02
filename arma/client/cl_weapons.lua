@@ -4,12 +4,14 @@ Citizen.CreateThread(function()
         AddTextEntry(b,c.name)
     end 
 end)
+local aZ = false
 
 function tARMA.giveWeapons(d,e)
     local f=PlayerPedId()
     if e then 
         RemoveAllPedWeapons(f,true)
     end
+    aZ = true
     for g,h in pairs(d)do
         local i=GetHashKey(g)
         local j=h.ammo or 0
@@ -20,6 +22,7 @@ function tARMA.giveWeapons(d,e)
             GiveWeaponComponentToPed(f,g,m)
         end 
     end 
+    aZ = false
 end
 function tARMA.isPlayerArmed()
 	local f = PlayerPedId()
@@ -80,4 +83,16 @@ AddEventHandler('onResourceStop',function(t)
     if t==GetCurrentResourceName()then 
         RemoveAllPedWeapons(PlayerPedId(),true)
     end 
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        local l,i=GetCurrentPedWeapon(PlayerPedId())
+        local ammo = GetAmmoInPedWeapon(PlayerPedId(), i)
+        Citizen.Wait(100)
+        if GetAmmoInPedWeapon(PlayerPedId(), i) > ammo and not aZ then
+            TriggerServerEvent('ARMA:acType17')
+        end
+    end
 end)
