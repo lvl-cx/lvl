@@ -889,6 +889,7 @@ customizationSaveDisabled = false
 function tARMA.setPolice(y)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalOnPoliceDuty = y
+  TriggerEvent('ARMA:setPoliceOnDuty', y)
   if y then
     TriggerServerEvent("ARMA:getCallsign", "police")
   end
@@ -905,6 +906,7 @@ end
 function tARMA.setHMP(x)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalOnPrisonDuty = x
+  TriggerEvent('ARMA:setPrisonGuardOnDuty', x)
   if x then
     TriggerServerEvent("ARMA:getCallsign", "prison")
   end
@@ -915,6 +917,7 @@ end
 function tARMA.setNHS(w)
   TriggerServerEvent("ARMA:refreshGaragePermissions")
   globalNHSOnDuty = w
+  TriggerEvent('ARMA:RecieveNHSOnDutyFlag', w)
 end
 function tARMA.globalNHSOnDuty()
   return globalNHSOnDuty
