@@ -411,3 +411,27 @@ local function C()
     end
 end
 tARMA.createThreadOnTick(C)
+
+local K = false
+RegisterNetEvent("ARMA:attemptCPR",function()
+    K = true
+    tARMA.loadAnimDict("missheistfbi3b_ig8_2")
+    TaskPlayAnim(PlayerPedId(),"missheistfbi3b_ig8_2","cpr_loop_paramedic",8.0,1.0,-1,13,0,false,false,false)
+    RemoveAnimDict("missheistfbi3b_ig8_2")
+    ForcePedAiAndAnimationUpdate(PlayerPedId(), false, false)
+    Citizen.Wait(100)
+    while K do
+        if not IsEntityPlayingAnim(PlayerPedId(), "missheistfbi3b_ig8_2", "cpr_loop_paramedic", 3) then
+            K = false
+            TriggerServerEvent("ARMA:cancelCPRAttempt")
+            break
+        end
+        Citizen.Wait(0)
+    end
+end)
+RegisterNetEvent("ARMA:cancelCPRAttempt",function()
+    K = false
+    if tARMA.canAnim() then
+        ClearPedTasks(PlayerPedId())
+    end
+end)

@@ -95,6 +95,7 @@ AddEventHandler('ARMA:nhsRevive', function(playersrc)
     end
 end)
 
+local playersInCPR = {}
 RegisterServerEvent("ARMA:attemptCPR")
 AddEventHandler('ARMA:attemptCPR', function(playersrc)
     local source = source
@@ -104,20 +105,35 @@ AddEventHandler('ARMA:attemptCPR', function(playersrc)
             if GetEntityHealth(GetPlayerPed(playersrc)) > 102 then
                 ARMAclient.notify(source, {"~r~This person already healthy."})
             else
+                playersInCPR[user_id] = true
+                TriggerClientEvent('ARMA:attemptCPR', source)
                 Wait(15000)
-                local cprChance = math.random(1,8)
-                if cprChance == 1 then
-                    ARMAclient.RevivePlayer(playersrc, {})
-                    ARMAclient.notify(playersrc, {"~b~Your life has been saved."})
-                    ARMAclient.notify(source, {"~b~You have saved this Person's Life."})
-                else
-                    ARMAclient.notify(source, {'~r~Failed to CPR.'})
+                if playersInCPR[user_id] then
+                    local cprChance = math.random(1,8)
+                    if cprChance == 1 then
+                        ARMAclient.RevivePlayer(playersrc, {})
+                        ARMAclient.notify(playersrc, {"~b~Your life has been saved."})
+                        ARMAclient.notify(source, {"~b~You have saved this Person's Life."})
+                    else
+                        ARMAclient.notify(source, {'~r~Failed to CPR.'})
+                    end
+                    playersInCPR[user_id] = nil
                 end
             end
         else
             ARMAclient.notify(source, {"~r~Player not found."})
         end
     end)
+end)
+
+RegisterServerEvent("ARMA:attemptCPR")
+AddEventHandler('ARMA:attemptCPR', function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+    if playersInCPR[user_id] then
+        playersInCPR[user_id] = nil
+        TriggerClientEvent('ARMA:cancelCPRAttempt', source)
+    end
 end)
 
 RegisterServerEvent("ARMA:syncWheelchairPosition")
