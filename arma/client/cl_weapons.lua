@@ -85,7 +85,11 @@ AddEventHandler('onResourceStop',function(t)
     end 
 end)
 
-local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
+local X = {
+    GetHashKey("WEAPON_UNARMED"),
+    GetHashKey("WEAPON_PETROLCAN"),
+    GetHashKey("WEAPON_SNOWBALL"),
+}
 Citizen.CreateThread(function()
     while true do
         local l,i = GetCurrentPedWeapon(PlayerPedId())

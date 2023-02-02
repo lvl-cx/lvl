@@ -295,7 +295,11 @@ Citizen.CreateThread(function()
 	end
 end)
 
-local X = {["WEAPON_UNARMED"] = true, ["WEAPON_PETROLCAN"] = true, ["WEAPON_SNOWBALL"] = true}
+local X = {
+    GetHashKey("WEAPON_UNARMED"),
+    GetHashKey("WEAPON_PETROLCAN"),
+    GetHashKey("WEAPON_SNOWBALL"),
+}
 CreateThread(function()
 	while true do
 		local h = tARMA.getPlayerPed()
