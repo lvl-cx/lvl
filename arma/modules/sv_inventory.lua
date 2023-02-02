@@ -254,7 +254,7 @@ AddEventHandler('ARMA:UseItem', function(itemId, itemLoc)
                 end
                 if ARMA.getInventoryMaxWeight(user_id) ~= nil then
                     if ARMA.getInventoryMaxWeight(user_id) > invcap then
-                        ARMAclient.notify(source, {'~r~You cannot use this item as you have a backpack already!'}) return
+                        return
                     end
                 end
                 if itemId == "offwhitebag" then

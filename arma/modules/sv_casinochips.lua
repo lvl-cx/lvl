@@ -57,25 +57,28 @@ AddEventHandler("ARMA:buyChips", function(amount)
     end
 end)
 
+local sellingChips = {}
 RegisterNetEvent("ARMA:sellChips")
 AddEventHandler("ARMA:sellChips", function(amount)
     local source = source
     local user_id = ARMA.getUserId(source)
     local chips = nil
-    MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
-        if #rows > 0 then
-            local chips = rows[1].chips
-            if not amount then amount = chips end
-            if amount > chips or amount < 1 then
-                ARMAclient.notify(source,{"~r~You don't have enough chips."})
-                return
-            else
-                MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
-                TriggerClientEvent('ARMA:chipsUpdated', source)
-                tARMA.sendWebhook('sell-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
-                ARMA.giveMoney(user_id, amount)
-                return
+    if not sellingChips[source] then
+        sellingChips[source] = true
+        MySQL.query("casinochips/get_chips", {user_id = user_id}, function(rows, affected)
+            if #rows > 0 then
+                local chips = rows[1].chips
+                if not amount then amount = chips end
+                if amount > 0 and chips > 0 and chips >= amount then
+                    MySQL.execute("casinochips/remove_chips", {user_id = user_id, amount = amount})
+                    TriggerClientEvent('ARMA:chipsUpdated', source)
+                    tARMA.sendWebhook('sell-chips',"ARMA Chip Logs", "> Player Name: **"..GetPlayerName(source).."**\n> Player TempID: **"..source.."**\n> Player PermID: **"..user_id.."**\n> Amount: **"..getMoneyStringFormatted(amount).."**")
+                    ARMA.giveMoney(user_id, amount)
+                else
+                    ARMAclient.notify(source,{"~r~You don't have enough chips."})
+                end
+                sellingChips[source] = nil
             end
-        end
-    end)
+        end)
+    end
 end)
