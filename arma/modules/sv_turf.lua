@@ -39,7 +39,7 @@ AddEventHandler('ARMA:refreshTurfOwnershipData', function()
 			end
 		end
 		TriggerClientEvent('ARMA:gotTurfOwnershipData', source, data)
-		TriggerClientEvent('ARMA:recalculateLargeArms', source, price)
+		TriggerClientEvent('ARMA:recalculateLargeArms', source, turfData[5].commission)
 		ARMA.updateTraderInfo()
 	end)
 end)
