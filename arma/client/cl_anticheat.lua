@@ -304,11 +304,13 @@ CreateThread(function()
 	while true do
 		local h = tARMA.getPlayerPed()
 		local k = GetSelectedPedWeapon(h)
-		if IsPedShooting(h) and not X[k] then
-			local Y, Z = GetAmmoInClip(h, k)
-			if Z == GetMaxAmmoInClip(h, k) then
-				TriggerServerEvent("ARMA:acType8", "Infinite Ammo")
-				Wait(60000)
+		if IsPedShooting(h) then
+			if not table.has(X, k) then
+				local Y, Z = GetAmmoInClip(h, k)
+				if Z == GetMaxAmmoInClip(h, k) then
+					TriggerServerEvent("ARMA:acType8", "Infinite Ammo")
+					Wait(60000)
+				end
 			end
 		end
 		Wait(0)
