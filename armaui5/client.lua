@@ -324,6 +324,17 @@ function askId(entityId)
     end
 end
 
+function askDriverId(entityId)
+    local ped = GetPedInVehicleSeat(entityId, -1)
+    if ped ~= 0 then
+        local player = GetPlayerByEntityID(ped)
+        local playerSrc = GetPlayerServerId(player)
+        if playerSrc > 0 then
+            TriggerServerEvent("ARMA:askId",playerSrc)
+        end
+    end
+end
+
 function giveCash(entityId)
     local player = GetPlayerByEntityID(entityId)
     local playerSrc = GetPlayerServerId(player)
@@ -479,6 +490,8 @@ RegisterNUICallback("radialClick", function(data)
         impoundVehicle(entityId)
     elseif menu == "askId" then
         askId(entityId)
+    elseif menu == "askDriverId" then
+        askDriverId(entityId)
     elseif menu == "giveCash" then
         giveCash(entityId)
     elseif menu == "search" then
