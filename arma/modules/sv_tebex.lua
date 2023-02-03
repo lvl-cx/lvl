@@ -8,7 +8,7 @@ function rank(_, arg)
     else
         exports['ghmattimysql']:execute("SELECT * FROM arma_user_data WHERE user_id = @user_id", {user_id = user_id}, function(result) 
             if #result > 0 then
-                local dvalue = json.decode(result[0].dvalue)
+                local dvalue = json.decode(result[1].dvalue)
                 local groups = dvalue.groups
                 groups[rank] = true
                 exports['ghmattimysql']:execute("UPDATE arma_user_data SET dvalue = @dvalue WHERE user_id = @user_id", {dvalue = json.encode(dvalue), user_id = user_id}, function() end)
