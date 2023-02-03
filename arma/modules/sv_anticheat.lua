@@ -20,7 +20,6 @@ local actypes = {
     {type = 14, desc = 'Model Dimensions'},
     {type = 15, desc = 'Godmoding'},
     {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
-    {type = 17, desc = 'Spawned Ammo'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -241,15 +240,6 @@ AddEventHandler("ARMA:failedKeepAlive", function()
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     TriggerEvent("ARMA:acBan", user_id, 16, name, source)
-end)
-
-RegisterServerEvent("ARMA:acType17")
-AddEventHandler("ARMA:acType17", function(weapon)
-    local source = source
-    local user_id = ARMA.getUserId(source)
-	local name = GetPlayerName(source)
-    Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 17, name, source, weapon)
 end)
 
 RegisterServerEvent("ARMA:resourceState")

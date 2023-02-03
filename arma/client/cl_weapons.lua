@@ -84,27 +84,3 @@ AddEventHandler('onResourceStop',function(t)
         RemoveAllPedWeapons(PlayerPedId(),true)
     end 
 end)
-
-local X = {
-    GetHashKey("WEAPON_UNARMED"),
-    GetHashKey("WEAPON_PETROLCAN"),
-    GetHashKey("WEAPON_SNOWBALL"),
-}
-Citizen.CreateThread(function()
-    while true do
-        local l,i = GetCurrentPedWeapon(PlayerPedId())
-        local ammo = GetAmmoInPedWeapon(PlayerPedId(), i)
-        Citizen.Wait(100)
-        local k = GetSelectedPedWeapon(PlayerPedId())
-        if GetAmmoInPedWeapon(PlayerPedId(), i) > ammo and not aZ and not X[k]then
-            for k,v in pairs(a.weapons) do
-                if i == GetHashKey(k) then
-                    TriggerServerEvent('ARMA:acType17', v.name)
-                end
-            end
-        end
-        Citizen.Wait(0)
-    end
-end)
-
-print('test')
