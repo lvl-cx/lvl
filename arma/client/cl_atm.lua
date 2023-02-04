@@ -102,7 +102,7 @@ Citizen.CreateThread(function()
         tARMA.addMarker(n.x, n.y, n.z, 0.7, 0.7, 0.5, 0, 255, 125, 125, 50, 29, false, false, true)
         for p, q in pairs(a.robberyAtms) do
             if #(n - q.xyz) < 5.0 then
-                SetBlipColour(o, 1)
+                --SetBlipColour(o, 1)
             end
         end
     end
