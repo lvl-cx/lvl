@@ -315,7 +315,7 @@ CreateThread(function()
 				end
 			end
 		end
-		Wait(0)
+		Wait(1000)
 	end
 end)
 
