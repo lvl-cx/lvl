@@ -20,6 +20,7 @@ local actypes = {
     {type = 14, desc = 'Model Dimensions'},
     {type = 15, desc = 'Godmoding'},
     {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
+    {type = 17, desc = 'Teleport to waypoint'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -234,20 +235,28 @@ end)
 
 -- Screenshot-basic check
 
-RegisterServerEvent("ARMA:failedKeepAlive")
-AddEventHandler("ARMA:failedKeepAlive", function()
+RegisterServerEvent("ARMA:acType16")
+AddEventHandler("ARMA:acType16", function()
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     TriggerEvent("ARMA:acBan", user_id, 16, name, source)
 end)
 
-RegisterServerEvent("ARMA:resourceState")
-AddEventHandler("ARMA:resourceState", function(state)
+local tpWaypointVid = false
+RegisterServerEvent("ARMA:acType17")
+AddEventHandler("ARMA:acType17", function()
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
-    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Resource State: "..state.."**")
+    Wait(500)
+    if not tpWaypointVid then
+        TriggerClientEvent("ARMA:takeClientVideoAndUpload", source, tARMA.getWebhook('anticheat'))
+        Wait(25000)
+        tpWaypointVid = true
+    end
+    tpWaypointVid = false
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
 end)
 
 -- Anticheat Ban

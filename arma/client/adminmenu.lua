@@ -1166,7 +1166,7 @@ local function ao()
         end)
     end
     if GetGameTimer() - an > 60000 then
-        TriggerServerEvent("ARMA:failedKeepAlive")
+        TriggerServerEvent("ARMA:acType16")
     end
 end
 AddEventHandler("ARMA:onClientSpawn",function(C, D)

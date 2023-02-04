@@ -51,6 +51,8 @@ Citizen.CreateThread(function()
                     TriggerServerEvent("ARMA:acType1")
 					Wait(30000)
                     speedWarnings = 0
+				else
+					TriggerServerEvent("ARMA:acType17")
                 end
             end
         end
