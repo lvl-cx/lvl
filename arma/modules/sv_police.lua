@@ -400,11 +400,12 @@ AddEventHandler('ARMA:breathalyserRequest', function(temp)
 end)
 
 seizeBullets = {
-  ['9mm Bullets'] = true,
-  ['7.62mm Bullets'] = true,
-  ['.357 Bullets'] = true,
-  ['12 Gauge Bullets'] = true,
-  ['.308 Sniper Rounds'] = true,
+  ["9mm Bullets"] = true,
+  ["12 Gauge Bullets"] = true,
+  [".308 Sniper Rounds"] = true,
+  ["7.62mm Bullets"] = true,
+  ["5.56mm NATO"] = true,
+  [".357 Bullets"] = true,
 }
 RegisterServerEvent('ARMA:seizeWeapons')
 AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
