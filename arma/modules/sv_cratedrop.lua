@@ -33,7 +33,7 @@ local availableItems = {
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(60000)
+        Citizen.Wait(10000)
         for k,v in pairs(activeCrates) do
             if activeCrates[k].timeTillOpen > 0 then
                 activeCrates[k].timeTillOpen = activeCrates[k].timeTillOpen - 1
@@ -58,7 +58,7 @@ RegisterServerEvent('ARMA:openCrate', function(crateID)
     local user_id = ARMA.getUserId(source)
     if activeCrates[crateID] == nil then return end
     if activeCrates[crateID].timeTillOpen > 0 then
-        ARMAclient.notify(source, {'~r~Please wait '..activeCrates[crateID].timeTillOpen..' minutes to open the drop'})
+        ARMAclient.notify(source, {'~r~Loot crate unlocking in '..activeCrates[crateID].timeTillOpen..' seconds.'})
     else
         if (#(GetEntityCoords(GetPlayerPed(source)) - crateLocations[crateID]) < 2.0) or (#(GetEntityCoords(GetPlayerPed(source)) - rigLocations[crateID]) < 2.0) then
             TriggerClientEvent("ARMA:removeLootcrate", -1, crateID)
@@ -99,7 +99,7 @@ Citizen.CreateThread(function()
         local crateID = math.random(1, #crateLocations)
         local crateCoords = crateLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, false)
-        activeCrates[crateID] = {oilrig = false, timeTillOpen = 5}
+        activeCrates[crateID] = {oilrig = false, timeTillOpen = 300}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
@@ -117,7 +117,7 @@ Citizen.CreateThread(function()
         local crateID = math.random(1, #rigLocations)
         local crateCoords = rigLocations[crateID]
         TriggerClientEvent('ARMA:crateDrop', -1, crateCoords, crateID, true)
-        activeCrates[crateID] = {oilrig = true, timeTillOpen = 5}
+        activeCrates[crateID] = {oilrig = true, timeTillOpen = 300}
         TriggerClientEvent('chatMessage', -1, "^0EVENT | ", {66, 72, 245}, "A cartel plane carrying supplies has had to bail and is parachuting to the ground! Get to it quick, check your GPS!", "alert")
         Wait(20*60*1000)
         if activeCrates[crateID] ~= nil then
