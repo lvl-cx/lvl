@@ -33,7 +33,7 @@ local availableItems = {
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(10000)
+        Citizen.Wait(1000)
         for k,v in pairs(activeCrates) do
             if activeCrates[k].timeTillOpen > 0 then
                 activeCrates[k].timeTillOpen = activeCrates[k].timeTillOpen - 1
