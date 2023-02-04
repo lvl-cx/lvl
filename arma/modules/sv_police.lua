@@ -9,36 +9,46 @@ local choice_store_weapons = function(player, choice)
     local data = ARMA.getUserDataTable(user_id)
     ARMAclient.getWeapons(player,{},function(weapons)
       if not isStoring[player] then
-          if ARMA.getInventoryWeight(user_id) <= 25 then
-            isStoring[player] = true
-            ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
-              for k,v in pairs(weapons) do
-                if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_SMOKEGRENADE' and k~= 'WEAPON_FLASHBANG' then
-                  ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
-                  if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
-                    for i,c in pairs(a.weapons) do
-                      if i == k and c.class ~= 'Melee' then
-                        if v.ammo > 250 then
-                          v.ammo = 250
-                        end
-                        ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
-                      end   
+        tARMA.getSubscriptions(user_id, function(cb, plushours, plathours)
+          if cb then
+            local maxWeight = 30
+            if plathours > 0 then
+              maxWeight = 50
+            elseif plushours > 0 then
+              maxWeight = 40
+            end
+            if ARMA.getInventoryWeight(user_id) <= maxWeight then
+              isStoring[player] = true
+              ARMAclient.giveWeapons(player,{{},true}, function(removedwep)
+                for k,v in pairs(weapons) do
+                  if k ~= 'GADGET_PARACHUTE' and k ~= 'WEAPON_STAFFGUN' and k~= 'WEAPON_SMOKEGRENADE' and k~= 'WEAPON_FLASHBANG' then
+                    ARMA.giveInventoryItem(user_id, "wbody|"..k, 1, true)
+                    if v.ammo > 0 and k ~= 'WEAPON_STUNGUN' then
+                      for i,c in pairs(a.weapons) do
+                        if i == k and c.class ~= 'Melee' then
+                          if v.ammo > 250 then
+                            v.ammo = 250
+                          end
+                          ARMA.giveInventoryItem(user_id, c.ammo, v.ammo, true)
+                        end   
+                      end
                     end
                   end
                 end
-              end
-              ARMAclient.notify(player,{"~g~Weapons Stored"})
-              TriggerEvent('ARMA:RefreshInventory', player)
-              ARMAclient.ClearWeapons(player,{})
-              data.weapons = {}
-              SetTimeout(3000,function()
-                  isStoring[player] = nil 
+                ARMAclient.notify(player,{"~g~Weapons Stored"})
+                TriggerEvent('ARMA:RefreshInventory', player)
+                ARMAclient.ClearWeapons(player,{})
+                data.weapons = {}
+                SetTimeout(3000,function()
+                    isStoring[player] = nil 
+                end)
               end)
-            end)
-          else
-            ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
+            else
+              ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
+            end
+           end
           end
-       end
+      end)  
     end)
 end
 
