@@ -81,10 +81,10 @@ function tARMA.ooc(source, args, raw)
 		elseif ARMA.hasGroup(user_id, "Developer") then
 			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^1 Developer ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 		elseif ARMA.hasGroup(user_id, "Community Manager") then
-			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 Community Manager ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Community Manager ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 			chatCooldown[source] = true
 		elseif ARMA.hasGroup(user_id, "Staff Manager") then
-			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^9 Staff Manager ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
+			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^6 Staff Manager ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
 			chatCooldown[source] = true
 		elseif ARMA.hasGroup(user_id, "Head Admin") then
 			TriggerClientEvent('chatMessage', -1, "^7OOC ^7^r |^3 Head Admin ^7" .. GetPlayerName(source) .."^7 : " , { 128, 128, 128 }, message, "ooc")
