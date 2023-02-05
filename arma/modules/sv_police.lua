@@ -415,7 +415,9 @@ seizeBullets = {
   ['.357 Bullets'] = true,
   ['12 Gauge Bullets'] = true,
   ['.308 Sniper Rounds'] = true,
+  ['5.56mm NATO'] = true,
 }
+
 RegisterServerEvent('ARMA:seizeWeapons')
 AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
     local source = source
