@@ -46,8 +46,8 @@ local choice_store_weapons = function(player, choice)
             else
               ARMAclient.notify(player,{'~r~You do not have enough Weight to store Weapons.'})
             end
-           end
-          end)
+          end
+        end)
       end 
     end)
 end
