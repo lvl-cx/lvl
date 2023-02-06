@@ -198,13 +198,6 @@ client.getPerms = function(msg) {
 
 client.on('message', (message) => {
     if (!message.author.bot){
-        // if (message.content.includes('discord.gg/')){
-        //     if (!message.content.includes('discord.gg/armarp')){
-        //         message.delete()
-        //         return
-        //     }
-        // }
-        // else 
         if (message.channel.name.includes('auction-')){
             if (message.channel.name == '・auction-room'){
                 return
@@ -245,7 +238,7 @@ client.on('message', (message) => {
                     msg.delete(5000)
                 })
                 return
-            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify')) {
+            }else if (!message.channel.name.includes('bot') && !message.channel.name.includes('verify') && !cmd.name === 'embed') {
                 message.delete()
                 message.reply('Please use bot commands for this command.').then(msg => {
                     msg.delete(5000)
@@ -282,7 +275,7 @@ client.on('message', (message) => {
             }
         } else {
             if (cmd.conf.support && message.guild.id === "991500085672288308"){
-                if (message.member.roles.has("1064295533751050351")){
+                if (message.member.roles.has("991500950533574686")){
                     cmd.runcmd(exports, client, message, params, permissions);
                 }
             } else {
