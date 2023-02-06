@@ -243,20 +243,13 @@ AddEventHandler("ARMA:acType16", function()
     TriggerEvent("ARMA:acBan", user_id, 16, name, source)
 end)
 
-local tpWaypointVid = false
 RegisterServerEvent("ARMA:acType17")
 AddEventHandler("ARMA:acType17", function()
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     Wait(500)
-    if not tpWaypointVid then
-        TriggerClientEvent("ARMA:takeClientVideoAndUpload", source, tARMA.getWebhook('anticheat'))
-        Wait(25000)
-        tpWaypointVid = true
-    end
-    tpWaypointVid = false
-    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
+    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #17**\n> Type Meaning: **TP To Waypoint**")
 end)
 
 -- Anticheat Ban
