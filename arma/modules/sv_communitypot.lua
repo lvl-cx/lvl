@@ -18,6 +18,7 @@ AddEventHandler("ARMA:tryDepositCommunityPot", function(amount)
                 local newpotbalance = parseInt(potbalance[1].value) + amount
                 exports['ghmattimysql']:execute("UPDATE arma_community_pot SET value = @newpotbalance", {newpotbalance = newpotbalance})
                 TriggerClientEvent('ARMA:gotCommunityPotAmount', source, newpotbalance)
+                tARMA.sendWebhook('com-pot', 'ARMA Community Pot Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Type: **Deposit**\n> Amount: £**"..getMoneyStringFormatted(amount).."**")
             end
         end)
     end
@@ -35,6 +36,7 @@ AddEventHandler("ARMA:tryWithdrawCommunityPot", function(amount)
                 exports['ghmattimysql']:execute("UPDATE arma_community_pot SET value = @newpotbalance", {newpotbalance = newpotbalance})
                 TriggerClientEvent('ARMA:gotCommunityPotAmount', source, newpotbalance)
                 ARMA.giveMoney(user_id, amount)
+                tARMA.sendWebhook('com-pot', 'ARMA Community Pot Logs', "> Admin Name: **"..GetPlayerName(source).."**\n> Admin TempID: **"..source.."**\n> Admin PermID: **"..user_id.."**\n> Type: **Withdraw**\n> Amount: £**"..getMoneyStringFormatted(amount).."**")
             end
         end)
     end
