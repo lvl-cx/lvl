@@ -293,7 +293,7 @@ cfg.groups = {
         "admin.tickets",
         "admin.screenshot",
         "admin.video",
-        "admin.revive",
+        "admin.ban",
     },
     ["Trial Staff"] = {
         "admin.kick",
