@@ -206,6 +206,8 @@ AddEventHandler("ARMA:claimWeeklyKit", function()
                 else
                     ARMAclient.notify(source,{"~r~You can only claim your weekly kit once a week."})
                 end
+            else
+                ARMAclient.notify(source,{"~r~You require at least 1 week of a subscription to claim a kit."})
             end
         end
     end)
