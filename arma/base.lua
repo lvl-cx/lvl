@@ -472,6 +472,10 @@ function ARMA.getUserIdByIdentifiers(ids, cbr)
                                 MySQL.execute("ARMA/add_identifier", {user_id = user_id, identifier = w})
                             end
                         end
+                        for k,v in pairs(ARMA.getUsers()) do
+                            ARMAclient.notify(v, {'~g~You have received £10,000 as someone new has joined the server.'})
+                            ARMA.giveBankMoney(k, 10000)
+                        end
                         task({user_id})
                     else
                         task()

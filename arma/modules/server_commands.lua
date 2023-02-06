@@ -48,3 +48,15 @@ RegisterCommand('unban', function(source, args)
         print('Incorrect usage: unban [permid]')
     end
 end)
+
+RegisterCommand('givemoneytoall', function(source, args)
+    if source ~= 0 then return end; -- Stops anyone other than the console running it.
+    if tonumber(args[1])  then
+        local amount = tonumber(args[1])
+        for k,v in pairs(ARMA.getUsers()) do
+            ARMA.giveBankMoney(k, amount)
+        end
+    else 
+        print('Incorrect usage: givemoneytoall [amount]')
+    end
+end)
