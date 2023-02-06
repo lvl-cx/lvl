@@ -249,6 +249,7 @@ AddEventHandler("ARMA:acType17", function()
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     Wait(500)
+    TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", source, tARMA.getWebhook('anticheat'))
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #17**\n> Type Meaning: **TP To Waypoint**")
 end)
 
