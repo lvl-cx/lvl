@@ -151,6 +151,11 @@ Citizen.CreateThread(function()
                             TriggerEvent("ARMA:startCombatTimer", false)
                             Wait(1000)
                         end
+                    elseif `prop_box_ammo03a` == entityModel then
+                        Crosshair(true)
+                        if IsControlJustReleased(1, 38) then
+                           -- code for looting loot boxes br
+                        end
                     elseif `xs_prop_arena_crate_01a` == entityModel then
                         Crosshair(true)
                         if IsControlJustReleased(1, 38) then
