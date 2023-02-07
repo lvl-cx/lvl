@@ -21,6 +21,7 @@ local actypes = {
     {type = 15, desc = 'Godmoding'},
     {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
     {type = 17, desc = 'Teleport to waypoint'},
+    {type = 18, desc = 'Spawned Ammo'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -233,8 +234,6 @@ AddEventHandler("ARMA:acType15", function()
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #15**\n> Type Meaning: **Godmoding**")
 end)
 
--- Screenshot-basic check
-
 RegisterServerEvent("ARMA:acType16")
 AddEventHandler("ARMA:acType16", function()
     local source = source
@@ -253,6 +252,13 @@ AddEventHandler("ARMA:acType17", function()
     tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #17**\n> Type Meaning: **TP To Waypoint**")
 end)
 
+RegisterServerEvent("ARMA:acType18")
+AddEventHandler("ARMA:acType18", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+	local name = GetPlayerName(source)
+    TriggerEvent("ARMA:acBan", user_id, 18, name, source)
+end)
 -- Anticheat Ban
 
 RegisterServerEvent("ARMA:acBan")
