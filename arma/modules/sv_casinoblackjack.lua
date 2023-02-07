@@ -342,7 +342,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..getMoneyStringFormatted(tostring(potentialWinAmount)).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "^7Diamond Casino |", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
+                                                                TriggerClientEvent('chatMessage', -1, "^7Diamond Casino |", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "green")
                                                             end
                                                         end
                                                     end
@@ -354,7 +354,7 @@ for i=0,31,1 do
                                                             TriggerClientEvent("Blackjack:blackjackWin",source,tableId)
                                                             TriggerClientEvent("blackjack:notify",source,"~g~+"..getMoneyStringFormatted(tostring(potentialWinAmount)).." chips")
                                                             if potentialPushAmount > 10000000 then
-                                                                TriggerClientEvent('chatMessage', -1, "^7Diamond Casino |", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "alert")
+                                                                TriggerClientEvent('chatMessage', -1, "^7Diamond Casino |", { 128, 128, 128 }, ""..GetPlayerName(source).." has WON "..tostring(getMoneyStringFormatted(potentialWinAmount)).." chips!", "green")
                                                             end
                                                         end
                                                     end
