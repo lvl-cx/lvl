@@ -44,8 +44,10 @@ Citizen.CreateThread(function()
         local h = GetSelectedPedWeapon(PlayerPedId())
         if h == GetHashKey('WEAPON_UNARMED') or GetWeapontypeGroup(h) == GetHashKey("GROUP_MELEE") then
             SetPlayerLockonRangeOverride(g, 50.0)
+            SetPlayerLockon(g, true)
         else
             SetPlayerLockonRangeOverride(g, 0.0)
+            SetPlayerLockon(g, false)
         end
         RestorePlayerStamina(g, 1.0)
         if f ~= 0 and b then
