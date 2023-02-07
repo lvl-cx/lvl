@@ -47,7 +47,6 @@ Citizen.CreateThread(function()
 		then 
 			if not IsPedInAnyVehicle(i, 1) then
                 speedWarnings = speedWarnings + 1
-				tARMA.notify(speedWarnings)
                 if speedWarnings > 15 then
                     TriggerServerEvent("ARMA:acType1")
 					Wait(30000)
