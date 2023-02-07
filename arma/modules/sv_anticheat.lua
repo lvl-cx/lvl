@@ -253,11 +253,11 @@ AddEventHandler("ARMA:acType17", function()
 end)
 
 RegisterServerEvent("ARMA:acType18")
-AddEventHandler("ARMA:acType18", function()
+AddEventHandler("ARMA:acType18", function(weapon)
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
-    TriggerEvent("ARMA:acBan", user_id, 18, name, source)
+    TriggerEvent("ARMA:acBan", user_id, 18, name, source, weapon)
 end)
 -- Anticheat Ban
 
@@ -265,7 +265,7 @@ RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
     local reason = ''
-    if user_id == 1 then return end
+    --if user_id == 1 then return end
     if extra == nil then extra = 'None' end
     if source == '' then
         if not gettingVideo then

@@ -100,11 +100,12 @@ Citizen.CreateThread(function()
             if not table.has(X, k) then
                 for k,v in pairs(a.weapons) do
                     if i == GetHashKey(k) then
-                        TriggerServerEvent('ARMA:acType17', v.name)
+                        TriggerServerEvent('ARMA:acType18', v.name)
+                        Wait(60000)
                     end
                 end
             end
         end
-        Citizen.Wait(0)
+        Wait(1000)
     end
 end)
