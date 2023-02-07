@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
         local dist = #(oldPos-newPos)
         oldPos = newPos
         if dist > 6 and not IsPedFalling(i)
-		and tARMA.getStaffLevel() < 2 
+		and tARMA.getStaffLevel() < 5
 		and not IsPedInParachuteFreeFall(i) 
 		and not IsPedRagdoll(i) 
 		and not tARMA.isPlayerHidingInBoot() 
@@ -41,19 +41,18 @@ Citizen.CreateThread(function()
 		and not tARMA.isInSpectate() 
 		and not carryingBackInProgress 
 		and not tARMA.takeHostageInProgress() 
-		and GetEntityAttachedTo(i) ~= 0
 		and GetPedParachuteState(i) <= 0 
 		and not IsPedRunning(i)
 		and not tARMA.isPlayerRappeling()
-		then if not IsPedInAnyVehicle(i, 1) then
+		then 
+			if not IsPedInAnyVehicle(i, 1) then
                 speedWarnings = speedWarnings + 1
-                if speedWarnings > 18 then
+				tARMA.notify(speedWarnings)
+                if speedWarnings > 15 then
                     TriggerServerEvent("ARMA:acType1")
 					Wait(30000)
                     speedWarnings = 0
-				else
-					TriggerServerEvent("ARMA:acType17")
-                end
+				end
             end
         end
         Wait(100)
@@ -71,7 +70,15 @@ Citizen.CreateThread(function()
         Wait(30000)
     end
 end)
--- No-Clip
+
+AddEventHandler("onClientResourceStart",function(q)
+	local r = string.len(q)
+	local s = string.sub(q, 1, 1)
+	if r >= 15 and q ~= "screenshot-basic" then
+		TriggerServerEvent("ARMA:acType19")
+	end
+	--TriggerServerEvent("ARMA:resourceStarted", q)
+end)
 
 WeaponBL={
 	"WEAPON_BAT",
@@ -315,7 +322,7 @@ CreateThread(function()
 				end
 			end
 		end
-		Wait(1000)
+		Wait(0)
 	end
 end)
 
