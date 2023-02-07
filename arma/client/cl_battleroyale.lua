@@ -132,12 +132,11 @@ RegisterNetEvent("ARMA:syncLootboxesTable",function(t, u)
     for v, w in pairs(g.data.lootBoxes) do
         if #(w.coords - g.gas.coords) < g.gas.radius / 2 then
             g.data.lootBoxes[v].areaId = "armabr_lootbox_" .. v
-            tvRP.setNamedBlip("armabr_lootbox_" .. v, w.coords.x, w.coords.y, w.coords.z, 478, 1, "Lootbox", 0.5)
+            tARMA.setNamedBlip("armabr_lootbox_" .. v, w.coords.x, w.coords.y, w.coords.z, 478, 1, "Lootbox", 0.5)
             local x = function(y)
                 if g.data.lootBoxes[y.box] then
                     if g.data.lootBoxes[y.box].entity == nil then
-                        g.data.lootBoxes[y.box].entity =
-                            CreateObject("prop_box_ammo03a", w.coords, false, false, false)
+                        g.data.lootBoxes[y.box].entity = CreateObject("prop_box_ammo03a", w.coords, false, false, false)
                         DecorSetInt(g.data.lootBoxes[y.box].entity, "lootid", t[y.box])
                         SetEntityHeading(g.data.lootBoxes[y.box].entity, 10.0)
                         PlaceObjectOnGroundProperly(g.data.lootBoxes[y.box].entity)
@@ -166,12 +165,11 @@ RegisterNetEvent("ARMA:syncLootboxesTable",function(t, u)
     tARMA.loadModel("prop_armour_pickup")
     for v, w in pairs(g.data.armourPlates) do
         if #(w.coords - g.gas.coords) < g.gas.radius / 2 then
-            tvRP.setNamedBlip("armabr_armour_" .. v, w.coords.x, w.coords.y, w.coords.z, 175, 1, "Lootbox", 0.5)
+            tARMA.setNamedBlip("armabr_armour_" .. v, w.coords.x, w.coords.y, w.coords.z, 175, 1, "Lootbox", 0.5)
             local B = function(C)
                 if g.data.armourPlates[C.plateId] then
                     if g.data.armourPlates[C.plateId].entity == nil then
-                        g.data.armourPlates[C.plateId].entity =
-                            CreateObject("prop_armour_pickup", w.coords, false, false, false)
+                        g.data.armourPlates[C.plateId].entity = CreateObject("prop_armour_pickup", w.coords, false, false, false)
                         SetEntityHeading(g.data.armourPlates[C.plateId].entity, 10.0)
                         PlaceObjectOnGroundProperly(g.data.armourPlates[C.plateId].entity)
                         FreezeEntityPosition(g.data.armourPlates[C.plateId].entity, true)
@@ -211,8 +209,8 @@ RegisterNetEvent("ARMA:syncLootboxesTable",function(t, u)
     SetModelAsNoLongerNeeded("prop_armour_pickup")
 end)
 RegisterNetEvent("ARMA:removeLootBox",function(G)
-    tvRP.removeArea("armabr_lootbox_" .. G)
-    tvRP.removeNamedBlip("armabr_lootbox_" .. G)
+    tARMA.removeArea("armabr_lootbox_" .. G)
+    tARMA.removeNamedBlip("armabr_lootbox_" .. G)
     if g.data.lootBoxes[G].entity then
         if DoesEntityExist(g.data.lootBoxes[G].entity) then
             DeleteEntity(g.data.lootBoxes[G].entity)
@@ -222,8 +220,8 @@ RegisterNetEvent("ARMA:removeLootBox",function(G)
     g.data.lootBoxes[G] = nil
 end)
 RegisterNetEvent("ARMA:removeArmourPlateCl",function(H)
-    tvRP.removeArea("armabr_armour_" .. H)
-    tvRP.removeNamedBlip("armabr_armour_" .. H)
+    tARMA.removeArea("armabr_armour_" .. H)
+    tARMA.removeNamedBlip("armabr_armour_" .. H)
     if g.data.armourPlates[H] then
         if g.data.armourPlates[H].entity then
             if DoesEntityExist(g.data.armourPlates[H].entity) then
@@ -315,15 +313,15 @@ end)
 tARMA.registerEventCleanupHandler("ARMA Battlegrounds",function()
     currentEvent.isActive = false
     for v, w in pairs(g.data.lootBoxes) do
-        tvRP.removeArea(w.areaId)
-        tvRP.removeNamedBlip(w.areaId)
+        tARMA.removeArea(w.areaId)
+        tARMA.removeNamedBlip(w.areaId)
         if DoesEntityExist(w.entity) then
             DeleteEntity(w.entity)
         end
     end
     for v, w in pairs(g.data.armourPlates) do
-        tvRP.removeArea(w.areaId)
-        tvRP.removeNamedBlip(w.areaId)
+        tARMA.removeArea(w.areaId)
+        tARMA.removeNamedBlip(w.areaId)
         if DoesEntityExist(w.entity) then
             DeleteEntity(w.entity)
         end
