@@ -250,12 +250,13 @@ AddEventHandler("ARMA:acType17", function(weapon)
 end)
 
 RegisterServerEvent("ARMA:acType18")
-AddEventHandler("ARMA:acType18", function()
+AddEventHandler("ARMA:acType18", function(resource)
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerEvent("ARMA:acBan", user_id, 18, name, source)
+    if resource == 'fivem-map-hipster' then return end
+    TriggerEvent("ARMA:acBan", user_id, 18, name, source, resource)
 end)
 
 RegisterServerEvent("ARMA:acBan")
