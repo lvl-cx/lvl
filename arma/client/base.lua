@@ -966,6 +966,9 @@ end
 RegisterNetEvent("ARMA:setBucket",function(ad)
     ac = ad
 end)
+function tARMA.isPurge() -- make this changeable in future when setting up purge weapons
+  return false
+end
 function tARMA.getRageUIMenuWidth()
   local w, h = GetActiveScreenResolution()
 
