@@ -355,6 +355,16 @@ RageUI.CreateWhile(1.0, true, function()
                 end
             end, RMenu:Get("ARMAGarages", "rented_vehicles"))
             RageUI.ButtonWithStyle("Settings", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) end, RMenu:Get("ARMAGarages", "settings"))
+            RageUI.ButtonWithStyle("Spawn Last Vehicle", f, {RightLabel = "→→→"}, true, function(Hovered, Active, Selected) 
+                if Selected then
+                    local ay = globalVehicleOwnership[e]
+                    if ay == nil or not DoesEntityExist(ay[2]) then
+                        TriggerServerEvent("ARMA:spawnPersonalVehicle", e)
+                    else
+                        tARMA.notify("~r~Vehicle is already out!")
+                    end
+                end
+            end)
             RageUI.ButtonWithStyle("~y~Fuel all vehicles. (£25,000)", f, {RightLabel = "→→→"}, true,function(aO, aP, aQ)
                 if aQ then
                     if tARMA.isPlusClub() or tARMA.isPlatClub() then
