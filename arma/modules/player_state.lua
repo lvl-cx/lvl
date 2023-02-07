@@ -24,6 +24,8 @@ AddEventHandler("ARMA:playerSpawn", function(user_id, source, first_spawn)
                     data.invcap = 50
                 elseif plushours > 0 and data.invcap < 40 then
                     data.invcap = 40
+                else
+                    data.invcap = 30
                 end
             end
         end)  
