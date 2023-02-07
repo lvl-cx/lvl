@@ -36,14 +36,17 @@ Citizen.CreateThread(function()
                 DisableControlAction(0, 25, true)
             end
         end
-        if globalInBoxingZone then
-            tARMA.setWeapon(e, 'WEAPON_UNARMED')
-        end
         SetPedCanBeDraggedOut(e, false)
         SetPedConfigFlag(e, 149, true)
         SetPedConfigFlag(e, 438, true)
         SetPedConfigFlag(e, 250, false)
         SetPlayerTargetingMode(3)
+        local h = GetSelectedPedWeapon(PlayerPedId())
+        if h == GetHashKey('WEAPON_UNARMED') or GetWeapontypeGroup(h) == GetHashKey("GROUP_MELEE") then
+            SetPlayerLockonRangeOverride(g, 50.0)
+        else
+            SetPlayerLockonRangeOverride(g, 0.0)
+        end
         RestorePlayerStamina(g, 1.0)
         if f ~= 0 and b then
             if GetPedInVehicleSeat(f, 0) == e then
