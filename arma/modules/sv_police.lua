@@ -423,31 +423,35 @@ AddEventHandler('ARMA:seizeWeapons', function(playerSrc)
     local source = source
     local user_id = ARMA.getUserId(source)
     if ARMA.hasPermission(user_id, 'police.onduty.permission') then
-      RemoveAllPedWeapons(GetPlayerPed(playerSrc), true)
-      local player_id = ARMA.getUserId(playerSrc)
-      local cdata = ARMA.getUserDataTable(player_id)
-      for a,b in pairs(cdata.inventory) do
-          if string.find(a, 'wbody|') then
-              c = a:gsub('wbody|', '')
-              cdata.inventory[c] = b
-              cdata.inventory[a] = nil
-          end
-      end
-      for k,v in pairs(a.weapons) do
-          if cdata.inventory[k] ~= nil then
-              if not v.policeWeapon then
-                cdata.inventory[k] = nil
+      ARMAclient.isHandcuffed(playerSrc,{},function(handcuffed)
+        if handcuffed then
+          RemoveAllPedWeapons(GetPlayerPed(playerSrc), true)
+          local player_id = ARMA.getUserId(playerSrc)
+          local cdata = ARMA.getUserDataTable(player_id)
+          for a,b in pairs(cdata.inventory) do
+              if string.find(a, 'wbody|') then
+                  c = a:gsub('wbody|', '')
+                  cdata.inventory[c] = b
+                  cdata.inventory[a] = nil
               end
           end
-      end
-      for c,d in pairs(cdata.inventory) do
-          if seizeBullets[c] then
-            cdata.inventory[c] = nil
+          for k,v in pairs(a.weapons) do
+              if cdata.inventory[k] ~= nil then
+                  if not v.policeWeapon then
+                    cdata.inventory[k] = nil
+                  end
+              end
           end
-      end
-      TriggerEvent('ARMA:RefreshInventory', playerSrc)
-      ARMAclient.notify(source, {'~r~Seized weapons.'})
-      ARMAclient.notify(playerSrc, {'~r~Your weapons have been seized.'})
+          for c,d in pairs(cdata.inventory) do
+              if seizeBullets[c] then
+                cdata.inventory[c] = nil
+              end
+          end
+          TriggerEvent('ARMA:RefreshInventory', playerSrc)
+          ARMAclient.notify(source, {'~r~Seized weapons.'})
+          ARMAclient.notify(playerSrc, {'~r~Your weapons have been seized.'})
+        end
+      end)
     end
 end)
 
