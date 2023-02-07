@@ -21,3 +21,4 @@ ARMAConfig.Status = 'Development' -- Development, Whitelisted, Online
 ---------------
 ARMAConfig.LootBags = true; -- Enables loot bags and disables looting. 
 ARMAConfig.DisplayNamelLootbag = false; -- Enables notification of who's lootbag you have opened
+ARMAConfig.Purge = false;

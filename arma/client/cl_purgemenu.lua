@@ -51,14 +51,12 @@ end
 if tARMA.isPurge() then
     tARMA.createThreadOnTick(u)
 end
-Citizen.CreateThread(
-    function()
-        Wait(5000)
-        if tARMA.isPurge() then
-            TriggerServerEvent("ARMA:getTopFraggers")
-        end
+Citizen.CreateThread(function()
+    Wait(5000)
+    if tARMA.isPurge() then
+        TriggerServerEvent("ARMA:getTopFraggers")
     end
-)
+end)
 RegisterNetEvent("ARMA:gotTopFraggers")
 AddEventHandler("ARMA:gotTopFraggers",function(x)
     b = x

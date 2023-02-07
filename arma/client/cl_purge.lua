@@ -255,13 +255,13 @@ local f = false
 RageUI.CreateWhile(1.0, true, function()
     if RageUI.Visible(RMenu:Get('purge', 'main')) then
         RageUI.DrawContent({ header = true, glare = false, instructionalButton = true}, function()
-            RageUI.Button("Random Spawnpoint","",true,function(g, h, i)
+            RageUI.Button("Random Spawnpoint","",{},true,function(g, h, i)
                 if i then
                     f = true
                     RageUI.ActuallyCloseAll()
                 end
             end,nil)
-            RageUI.Button("Heathrow Airport","",true,function(g, h, i)
+            RageUI.Button("Heathrow Airport","",{},true,function(g, h, i)
                 if i then
                     e = vector3(-1011.0608520508, -2973.7270507812, 13.951969146729)
                     f = true
@@ -282,7 +282,7 @@ AddEventHandler("ARMA:purgeSpawnClient",function()
     Wait(500)
     TriggerScreenblurFadeIn(100.0)
     e = b()
-    applySavedCustomisation()
+    tARMA.checkCustomization()
     RequestCollisionAtCoord(e.x, e.y, e.z)
     local j = GetGameTimer()
     while HaveAllStreamingRequestsCompleted(PlayerPedId()) ~= 1 and GetGameTimer() - j < 5000 do
@@ -318,7 +318,9 @@ AddEventHandler("ARMA:purgeSpawnClient",function()
     DestroyCam(spawnCam)
     DestroyCam(spawnCam2)
     RenderScriptCams(false, true, 2000, 0, 0)
-    applySavedCustomisation()
+    tARMA.checkCustomization()
+    TriggerServerEvent('ARMA:changeHairstyle')
+    TriggerServerEvent('ARMA:getPlayerTattoos')
     SetEntityHealth(PlayerPedId(), 200)
     TriggerServerEvent("ARMA:purgeClientHasSpawned")
 end)
