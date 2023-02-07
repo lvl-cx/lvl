@@ -20,39 +20,35 @@ exports.runcmd = (fivemexports, client, message, params) => {
             if (!res.data) {
                 return message.reply("Currently unable to fetch from tebex api, use the online store to validate the ID")
             }else{
-                if (res.data.status !== 'Complete') {
-                    return message.reply(`Purchase is currently marked as ${res.data.status}`)
-                }else{
-                    const packages = res.data.packages.map(package => package.name)
-                    let embed = {
-                        "title": `**Tebex Purchase Profile**`,
-                        "description": `> Purchase is currently marked as ${res.data.status}`,
-                        "color": settingsjson.settings.botColour,
-                        "fields": [
-                            {
-                                name: '> Player Name',
-                                value: res.data.player.name,
-                            },
-                            {
-                                name: '> Price Paid',
-                                value: `${res.data.currency.symbol}${res.data.amount}`,
-                            },
-                            {
-                                name: '> Date Purchased',
-                                value: res.data.date.slice(0,10),
-                            },
-                            {
-                                name: '> Item(s) Purchased',
-                                value: packages.join(', \n'),
-                            },
-                        ],
-                        "footer": {
-                            "text": `Requested by ${message.author.username}`
+                const packages = res.data.packages.map(package => package.name)
+                let embed = {
+                    "title": `**Tebex Purchase Profile**`,
+                    "description": `> Purchase is currently marked as ${res.data.status}`,
+                    "color": settingsjson.settings.botColour,
+                    "fields": [
+                        {
+                            name: '> Player Name',
+                            value: res.data.player.name,
                         },
-                        "timestamp": new Date()
-                    }
-                    message.channel.send({embed})
+                        {
+                            name: '> Price Paid',
+                            value: `${res.data.currency.symbol}${res.data.amount}`,
+                        },
+                        {
+                            name: '> Date Purchased',
+                            value: res.data.date.slice(0,10),
+                        },
+                        {
+                            name: '> Item(s) Purchased',
+                            value: packages.join(', \n'),
+                        },
+                    ],
+                    "footer": {
+                        "text": `Requested by ${message.author.username}`
+                    },
+                    "timestamp": new Date()
                 }
+                message.channel.send({embed})
             }
         }).catch(err => {
             console.log(err)
