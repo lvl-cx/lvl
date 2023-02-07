@@ -94,7 +94,7 @@ function setphonenumber(_, arg)
     MySQL.query("ARMA/get_userbyphone", {phone_number}, function(phoneNumberTaken)
         if #phoneNumberTaken > 0 then
         else
-            MySQL.execute("ARMA/update_user_identity", {phone = phone_number, user_id = user_id})
+            MySQL.execute("ARMA/update_user_phone", {phone = phone_number, user_id = user_id})
             tARMA.sendWebhook('donation',"ARMA Donation Logs", "> Player PermID: **"..user_id.."**\n> Package: **Phone Number: "..phone_number.."**")
         end
     end)

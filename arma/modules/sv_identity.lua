@@ -15,6 +15,7 @@ MySQL.createCommand("ARMA/init_user_identity","INSERT IGNORE INTO arma_user_iden
 MySQL.createCommand("ARMA/update_user_identity","UPDATE arma_user_identities SET firstname = @firstname, name = @name, age = @age, registration = @registration, phone = @phone WHERE user_id = @user_id")
 MySQL.createCommand("ARMA/get_userbyreg","SELECT user_id FROM arma_user_identities WHERE registration = @registration")
 MySQL.createCommand("ARMA/get_userbyphone","SELECT user_id FROM arma_user_identities WHERE phone = @phone")
+MySQL.createCommand("ARMA/update_user_phone","UPDATE arma_user_identities SET phone = @phone WHERE user_id = @user_id")
 
 
 
