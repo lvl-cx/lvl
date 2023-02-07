@@ -813,7 +813,7 @@ function tARMA.podiumLeaderboard(P, Q)
         Wait(0)
     end
     for o, aC in pairs(at) do
-        tvRP.removeArea("3dtext_" .. aC)
+        tARMA.removeArea("3dtext_" .. aC)
     end
     ClearPedTasks(S)
     FreezeEntityPosition(S, false)
