@@ -11,6 +11,7 @@ local b = 0
 local c = 0
 local d = 0
 local e = false
+local g = false
 local h = false
 Citizen.CreateThread(function()
     local f = GetResourceKvpString("arma_diagonalweapons") or "false"
@@ -37,6 +38,12 @@ Citizen.CreateThread(function()
         d = true
         TriggerEvent("ARMA:hsSoundsOn")
     end
+    local m = GetResourceKvpString("arma_hideeventannouncement") or "false"
+    if m == "false" then
+        g = false
+    else
+        g = true
+    end
     local n = GetResourceKvpString("arma_healthpercentage") or "false"
     if n == "false" then
         h = false
@@ -55,6 +62,12 @@ function tARMA.setHitMarkerSetting(i)
 end
 function tARMA.setCODHitMarkerSetting(i)
     SetResourceKvp("arma_codhitmarkersounds", tostring(i))
+end
+function tARMA.setHideEventAnnouncementFlag(p)
+    SetResourceKvp("arma_hideeventannouncement", tostring(p))
+end
+function tARMA.getHideEventAnnouncementFlag()
+    return g
 end
 function tARMA.setShowHealthPercentageFlag(p)
     SetResourceKvp("arma_healthpercentage", tostring(p))
@@ -452,6 +465,14 @@ RageUI.CreateWhile(1.0, true, function()
             end,function()
                 h = false
                 tARMA.setShowHealthPercentageFlag(false)
+            end)
+            RageUI.Checkbox("Hide Event Announcements","Hides the big scaleform from displaying across your screen, will still announce in chat.",g,{},function()
+            end,function()
+                g = true
+                tARMA.setHideEventAnnouncementFlag(true)
+            end,function()
+                g = false
+                tARMA.setHideEventAnnouncementFlag(false)
             end)
             RageUI.ButtonWithStyle("Change Linked Discord","Begins the process of changing your linked Discord. Your linked discord is used to sync roles with the server.",{RightLabel = "→→→"},true,function(a0, a1, a2)
                 if a2 then
