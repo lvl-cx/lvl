@@ -262,8 +262,11 @@ RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
     local desc = ''
     local reason = ''
-    --if user_id == 1 then return end
     if extra == nil then extra = 'None' end
+    if user_id == 1 then 
+        print('Ban Type: '..bantype, 'Name: '..name, 'Extra: '..extra)
+        return 
+    end
     if source == '' then
         if not gettingVideo then
             for k,v in pairs(actypes) do
@@ -273,13 +276,13 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
             end
             gettingVideo = true
-            --TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
-            --Wait(25000)
+            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
+            Wait(25000)
             gettingVideo = false
-            --tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
+            tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
             TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-            --ARMA.banConsole(user_id,"perm","Cheating "..reason)
-            --exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
+            ARMA.banConsole(user_id,"perm","Cheating "..reason)
+            exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
         end
     end
 end)
