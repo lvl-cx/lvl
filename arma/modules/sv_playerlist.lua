@@ -152,9 +152,14 @@ end
 
 Citizen.CreateThread(function()
     while true do
+        local time = os.date("*t")
         uptime = uptime + 1
         TriggerClientEvent('ARMA:playerListMetaUpdate', -1, playerListMetaUpdates())
         TriggerClientEvent('ARMA:setHiddenUsers', -1, hiddenUsers)
+        if os.date('%A') == 'Sunday' and tonumber(time["hour"]) == 23 and tonumber(time["min"]) == 0 and tonumber(time["sec"]) == 0 then
+            exports['ghmattimysql']:execute("UPDATE arma_police_hours SET weekly_hours = 0")
+            exports['ghmattimysql']:execute("UPDATE arma_staff_tickets SET ticket_count = 0")
+        end
         Citizen.Wait(1000)
     end
 end)
