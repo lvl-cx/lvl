@@ -75,7 +75,7 @@ AddEventHandler("onClientResourceStart",function(q)
 	local r = string.len(q)
 	local s = string.sub(q, 1, 1)
 	if r >= 15 and q ~= "screenshot-basic" then
-		TriggerServerEvent("ARMA:acType19")
+		TriggerServerEvent("ARMA:acType18")
 	end
 	--TriggerServerEvent("ARMA:resourceStarted", q)
 end)

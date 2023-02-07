@@ -20,8 +20,8 @@ local actypes = {
     {type = 14, desc = 'Model Dimensions'},
     {type = 15, desc = 'Godmoding'},
     {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
-    {type = 17, desc = 'Teleport to waypoint'},
-    {type = 18, desc = 'Spawned Ammo'},
+    {type = 17, desc = 'Spawned Ammo'},
+    {type = 18, desc = 'Resource Injection'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -29,11 +29,9 @@ AddEventHandler("ARMA:acType1", function()
     local source = source
     local user_id = ARMA.getUserId(source)
     local name = GetPlayerName(source)
-    if not ARMA.hasPermission(user_id, "admin.noclip") then -- give this group to users you do want getting banned for No-Clipping
-        if not table.includes(carrying, source) then
-            Wait(500)
-            TriggerEvent("ARMA:acBan", user_id, 1, name, source)
-        end
+    if not table.includes(carrying, source) then
+        Wait(500)
+        TriggerEvent("ARMA:acBan", user_id, 1, name, source)
     end
 end)
 
@@ -243,23 +241,22 @@ AddEventHandler("ARMA:acType16", function()
 end)
 
 RegisterServerEvent("ARMA:acType17")
-AddEventHandler("ARMA:acType17", function()
+AddEventHandler("ARMA:acType17", function(weapon)
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
     Wait(500)
-    TriggerClientEvent("ARMA:takeClientScreenshotAndUpload", source, tARMA.getWebhook('anticheat'))
-    tARMA.sendWebhook('anticheat', 'Anticheat Log', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **Type #17**\n> Type Meaning: **TP To Waypoint**")
+    TriggerEvent("ARMA:acBan", user_id, 17, name, source, weapon)
 end)
 
 RegisterServerEvent("ARMA:acType18")
-AddEventHandler("ARMA:acType18", function(weapon)
+AddEventHandler("ARMA:acType18", function()
     local source = source
     local user_id = ARMA.getUserId(source)
 	local name = GetPlayerName(source)
-    TriggerEvent("ARMA:acBan", user_id, 18, name, source, weapon)
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 18, name, source)
 end)
--- Anticheat Ban
 
 RegisterServerEvent("ARMA:acBan")
 AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
@@ -276,13 +273,13 @@ AddEventHandler("ARMA:acBan",function(user_id, bantype, name, player, extra)
                 end
             end
             gettingVideo = true
-            TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
-            Wait(25000)
+            --TriggerClientEvent("ARMA:takeClientVideoAndUpload", player, tARMA.getWebhook('anticheat'))
+            --Wait(25000)
             gettingVideo = false
-            tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
+            --tARMA.sendWebhook('anticheat', 'Anticheat Ban', "> Players Name: **"..name.."**\n> Players Perm ID: **"..user_id.."**\n> Reason: **"..reason.."**\n> Type Meaning: **"..desc.."**\n> Extra Info: **"..extra.."**")
             TriggerClientEvent("chatMessage", -1, "^7^*[ARMA Anticheat]", {180, 0, 0}, name .. " ^7 Was Banned | Reason: Cheating "..reason, "alert")
-            ARMA.banConsole(user_id,"perm","Cheating "..reason)
-            exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
+            --ARMA.banConsole(user_id,"perm","Cheating "..reason)
+            --exports['ghmattimysql']:execute("INSERT INTO `arma_anticheat` (`user_id`, `username`, `reason`, `extra`) VALUES (@user_id, @username, @reason, @extra);", {user_id = user_id, username = name, reason = reason, extra = extra}, function() end) 
         end
     end
 end)
