@@ -49,7 +49,7 @@ Citizen.CreateThread(function()
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 15 then
                     TriggerServerEvent("ARMA:acType1")
-					Wait(30000)
+					return
                     speedWarnings = 0
 				end
             end
@@ -66,7 +66,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         speedWarnings = 0
-        Wait(30000)
+        return
     end
 end)
 
@@ -179,8 +179,13 @@ Citizen.CreateThread(function()
 			if HasPedGotWeapon(PlayerPedId(),GetHashKey(theWeapon),false) == 1 then
 				RemoveAllPedWeapons(PlayerPedId(),false)
 				TriggerServerEvent("ARMA:acType2", theWeapon)
-				Wait(30000)
+				return
 			end
+		end
+		local _, z = StatGetInt(GetHashKey("mp0_shooting_ability"), true)
+		if z > 100 then
+			TriggerServerEvent("ARMA:acType19")  
+			return
 		end
 	end
 end)
@@ -191,7 +196,7 @@ Citizen.CreateThread(function()
 	while true do
 		if _ >= 100 and not tARMA.isInComa() then
 			TriggerServerEvent("ARMA:acType6")
-			Wait(30000)
+			return
 		end
 		if not tARMA.isStaffedOn() then
 			local j = PlayerId()
@@ -218,7 +223,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(30000)
+		Citizen.return
 		local DetectableTextures = {
 			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
 			{txd = "John", txt = "John2", name = "SugarMenu"},
@@ -238,12 +243,12 @@ Citizen.CreateThread(function()
 			if data.x and data.y then
 				if GetTextureResolution(data.txd, data.txt).x == data.x and GetTextureResolution(data.txd, data.txt).y == data.y then
 					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
-					Wait(30000)
+					return
 				end
 			else 
 				if GetTextureResolution(data.txd, data.txt).x ~= 4.0 then
 					TriggerServerEvent("ARMA:acType7", data.name..' Menu')
-					Wait(30000)
+					return
 				end
 			end
 		end
@@ -272,31 +277,31 @@ Citizen.CreateThread(function()
 		local G = GetPlayerMeleeWeaponDamageModifier()
 		if y > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDamageModifier "..y)
-			Wait(30000)
+			return
 		end
 		if z > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier "..z)
-			Wait(30000)
+			return
 		end
 		if A > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerWeaponDefenseModifier_2 "..A)
-			Wait(30000)
+			return
 		end
 		if B > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDamageModifier "..B)
-			Wait(30000)
+			return
 		end
 		if C > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "PlayerVehicleDefenseModifier "..C)
-			Wait(30000)
+			return
 		end
 		if F > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "GetWeaponDamageModifier "..F)
-			Wait(30000)
+			return
 		end
 		if G > 1.0 then
 			TriggerServerEvent("ARMA:acType8", "GetPlayerMeleeWeaponDamageModifier "..G)
-			Wait(30000)
+			return
 		end
 		RemoveAllPickupsOfType("PICKUP_HEALTH_SNACK")
 		RemoveAllPickupsOfType("PICKUP_HEALTH_STANDARD")

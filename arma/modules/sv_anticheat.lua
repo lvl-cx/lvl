@@ -22,6 +22,7 @@ local actypes = {
     {type = 16, desc = 'Failed Keep Alive (screenshot-basic)'},
     {type = 17, desc = 'Spawned Ammo'},
     {type = 18, desc = 'Resource Injection'},
+    {type = 19, desc = 'Infinite Combat Roll'},
 }
 
 RegisterServerEvent("ARMA:acType1")
@@ -257,6 +258,15 @@ AddEventHandler("ARMA:acType18", function(resource)
     Wait(500)
     if resource == 'fivem-map-hipster' then return end
     TriggerEvent("ARMA:acBan", user_id, 18, name, source, resource)
+end)
+
+RegisterServerEvent("ARMA:acType19")
+AddEventHandler("ARMA:acType19", function()
+    local source = source
+    local user_id = ARMA.getUserId(source)
+	local name = GetPlayerName(source)
+    Wait(500)
+    TriggerEvent("ARMA:acBan", user_id, 19, name, source)
 end)
 
 RegisterServerEvent("ARMA:acBan")
