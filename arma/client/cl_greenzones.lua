@@ -131,17 +131,16 @@ local l = {
         setBit = false,
         maxHeight = 100.0
     },
-    -- Paleto Lodges
-    -- {
-    --     colour = 2,
-    --     id = 1,
-    --     pos = vector3(-732.95123291016, 5812.35546875, 17.42693901062),
-    --     dist = 35,
-    --     nonRP = false,
-    --     setBit = false,
-    --     maxHeight = 210.0
-    -- },
-    -- Kortz
+    {
+        colour = 2,
+        id = 1,
+        pos = vector3(-1437.4920654297, -2961.6879882812, 14.313854217529),
+        dist = 700,
+        nonRP = true,
+        setBit = false,
+        maxHeight = 210.0,
+        isPurge = true
+    },
     {
         colour = 2,
         id = 1,
@@ -166,9 +165,7 @@ local m = {
     {vector3(4982.5634765625, -5175.1079101562, 2.4887988567352), 120.0, 1, 180},
     {vector3(5115.7465820312, -4623.2915039062, 2.642692565918), 85.0, 1, 180},
     {vector3(337.64172363281, -1393.6368408203, 32.509204864502), 50.0, 2, 180},
-    -- Paleto Lodges
-    --{vector3(-732.95123291016, 5812.35546875, 17.42693901062), 35.0, 2, 180},
-    -- Kortz
+    {vector3(-1437.4920654297, -2961.6879882812, 14.31385421759), 700.0, 2, 255, true},
     {vector3(-2335.1215820313, 266.88153076172, 169.60194396973), 50.0, 2, 180} 
 }
 local n = Citizen.CreateThread
@@ -199,61 +196,66 @@ end
 n(
     function()
         for q, r in pairs(m) do
-            local s = AddBlipForRadius(r[1].x, r[1].y, r[1].z, r[2])
-            SetBlipColour(s, r[3])
-            SetBlipAlpha(s, r[4])
+            if not r[5] and not tARMA.isPurge() or r[5] and tARMA.isPurge() then
+                local s = AddBlipForRadius(r[1].x, r[1].y, r[1].z, r[2])
+                SetBlipColour(s, r[3])
+                SetBlipAlpha(s, r[4])
+            end
         end
     end
 )
 n(
     function()
+        local purgeActive = tARMA.isPurge()
         while true do
             local t = tARMA.getPlayerPed()
             local u = tARMA.getPlayerCoords()
             for v, w in pairs(l) do
-                local x = #(u.xy - w.pos.xy)
-                while x < w.dist and u.z < w.maxHeight do
-                    u = tARMA.getPlayerCoords()
-                    x = #(u.xy - w.pos.xy)
-                    if w.nonRP then
-                        c = true
-                    else
-                        if not w.setBit then
-                            b = true
-                            d = true
-                            e = false
-                            f = 5
-                            j = w.pos
-                            k = w.dist
-                            w.setBit = true
+                if not w.isPurge and not purgeActive or w.isPurge and purgeActive then
+                    local x = #(u.xy - w.pos.xy)
+                    while x < w.dist and u.z < w.maxHeight do
+                        u = tARMA.getPlayerCoords()
+                        x = #(u.xy - w.pos.xy)
+                        if w.nonRP then
+                            c = true
+                        else
+                            if not w.setBit then
+                                b = true
+                                d = true
+                                e = false
+                                f = 5
+                                j = w.pos
+                                k = w.dist
+                                w.setBit = true
+                            end
+                            if w.interior then
+                                setDrawGreenInterior = true
+                            end
                         end
-                        if w.interior then
-                            setDrawGreenInterior = true
-                        end
+                        o(100)
                     end
-                    o(100)
-                end
-                if w.setBit then
+                    if w.setBit then
+                        d = false
+                        e = true
+                        f = 5
+                        j = vector3(0.0, 0.0, 0.0)
+                        k = 0.0
+                        w.setBit = false
+                    end
+                    c = false
+                    b = false
                     d = false
-                    e = true
-                    f = 5
-                    j = vector3(0.0, 0.0, 0.0)
-                    k = 0.0
-                    w.setBit = false
+                    setDrawGreenInterior = false
+                    SetEntityInvincible(t, false)
+                    SetPlayerInvincible(tARMA.getPlayerId(), false)
+                    ClearPedBloodDamage(t)
+                    ResetPedVisibleDamage(t)
+                    ClearPedLastWeaponDamage(t)
+                    SetEntityProofs(t, false, false, false, false, false, false, false, false)
+                    SetEntityCanBeDamaged(t, true)
+                    SetLocalPlayerAsGhost(false)
+                    SetNetworkVehicleAsGhost(tARMA.getPlayerVehicle(), false)
                 end
-                c = false
-                b = false
-                d = false
-                setDrawGreenInterior = false
-                SetEntityInvincible(t, false)
-                SetPlayerInvincible(tARMA.getPlayerId(), false)
-                ClearPedBloodDamage(t)
-                ResetPedVisibleDamage(t)
-                ClearPedLastWeaponDamage(t)
-                SetEntityProofs(t, false, false, false, false, false, false, false, false)
-                SetEntityCanBeDamaged(t, true)
-                SetLocalPlayerAsGhost(false)
-                SetNetworkVehicleAsGhost(tARMA.getPlayerVehicle(), false)
             end
             o(250)
         end

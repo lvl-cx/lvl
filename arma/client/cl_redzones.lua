@@ -19,6 +19,7 @@ function tARMA.isPlayerInRedZone()
 end
 local f = 0
 function tARMA.setPlayerCombatTimer(g, h)
+    if tARMA.isPurge() then return end
     b = g
     if h then
         c = true

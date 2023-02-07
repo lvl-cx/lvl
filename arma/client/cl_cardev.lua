@@ -290,7 +290,7 @@ local function B()
     RageUI.Visible(RMenu:Get("cardev", "mainmenu"), not RageUI.Visible(RMenu:Get("cardev", "mainmenu")))
 end
 RegisterCommand("cardev",function(C)
-    if a then
+    if a and not tARMA.isPurge() then
         B()
     end
 end)

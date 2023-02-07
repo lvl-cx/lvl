@@ -2,6 +2,7 @@ local a = {}
 local b = {}
 local c = {}
 Citizen.CreateThread(function()
+    if tARMA.isPurge()then return end
     while true do
         local d = tARMA.getPlayerPed()
         local e = tARMA.getPlayerVehicle()
@@ -39,6 +40,7 @@ Citizen.CreateThread(function()
     end
 end)
 Citizen.CreateThread(function()
+    if tARMA.isPurge()then return end
     while true do
         for g, h in pairs(GetGamePool("CVehicle")) do
             if a[h] == nil then
@@ -54,6 +56,7 @@ Citizen.CreateThread(function()
     end
 end)
 Citizen.CreateThread(function()
+    if tARMA.isPurge()then return end
     while true do
         local l = tARMA.getPlayerCoords()
         for g, h in pairs(GetGamePool("CVehicle")) do

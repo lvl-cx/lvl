@@ -22,7 +22,7 @@ Citizen.CreateThread(function()
 			TriggerServerEvent('ARMA:ejectFromVehicle')
             Wait(1000)
 		end
-		if IsControlPressed(1, 19) and IsControlJustPressed(1, 58) and IsPedArmed(tARMA.getPlayerPed(), 7) then
+		if IsControlPressed(1, 19) and IsControlJustPressed(1, 58) and IsPedArmed(tARMA.getPlayerPed(), 7) and not tARMA.isPurge() then
 			local c = GetSelectedPedWeapon(tARMA.getPlayerPed())
 			if c ~= GetHashKey("WEAPON_UNARMED") then
 				local d = GetWeapontypeGroup(c)

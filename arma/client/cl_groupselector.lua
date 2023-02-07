@@ -6,7 +6,7 @@ local e = ""
 RMenu.Add("main","groupselector",RageUI.CreateMenu("", "", tARMA.getRageUIMenuWidth(), tARMA.getRageUIMenuHeight()))
 RMenu:Get("main", "groupselector"):SetSubtitle("~b~Select a job.")
 AddEventHandler("ARMA:onClientSpawn",function(D, E)
-    if E then
+    if E and not tARMA.isPurge() then
 		TriggerServerEvent("ARMA:getJobSelectors")
         TriggerServerEvent('ARMA:getFactionWhitelistedGroups')
 	end

@@ -992,7 +992,7 @@ RegisterCommand("callanambulance",function()
 end)
 
 RegisterCommand("car",function(bY, bZ, b_)
-    if tARMA.getStaffLevel() >= 6 then
+    if tARMA.getStaffLevel() >= 6 and not tARMA.isPurge() then
         local ap = GetEntityCoords(tARMA.getPlayerPed())
         local c0 = vector3(-1341.9575195313, -3032.8686523438, 13.944421768188)
         local bz, bA, bB = table.unpack(GetOffsetFromEntityInWorldCoords(tARMA.getPlayerPed(), 0.0, 3.0, 0.5))

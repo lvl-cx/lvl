@@ -93,7 +93,9 @@ function func_licenseMenuControl()
         e = 0
     end
 end
-tARMA.createThreadOnTick(func_licenseMenuControl)
+if not tARMA.isPurge() then
+    tARMA.createThreadOnTick(func_licenseMenuControl)
+end
 RegisterNetEvent("ARMA:RecievedLicenses",function(i)
     b = i
     a = true

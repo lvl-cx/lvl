@@ -46,7 +46,7 @@ local function r()
     return q[math.random(1, #q)]
 end
 RegisterNetEvent("ARMA:knockOut",function()
-    if not a then
+    if not a and not tARMA.isPurge() then
         tARMA.setCanAnim(false)
         a = true
         b = r()

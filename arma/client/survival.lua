@@ -101,7 +101,9 @@ Citizen.CreateThread(function()
             if currentBackpack then
                 TriggerEvent('ARMA:removeBackpack')
             end
-            TriggerServerEvent("ARMA:forceStoreWeapons")
+            if not tARMA.isPurge() then
+                TriggerServerEvent("ARMA:forceStoreWeapons")
+            end
             tARMA.ejectVehicle()
             b = true
             j = I
@@ -242,30 +244,36 @@ function tARMA.RevivePlayer()
 end
 
 RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(O)
-    if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
-        bleedoutDuration = 50000
-    elseif O >= 3 and O <= 5 and not globalNHSOnDuty then
-        bleedoutDuration = 170000
-    elseif O >= 3 and not globalNHSOnDuty then
-        bleedoutDuration = 290000
+    if not tARMA.isPurge() then
+        if tARMA.isPlayerInRedZone() or tARMA.isPlayerInTurf() then
+            bleedoutDuration = 50000
+        elseif O >= 3 and O <= 5 and not globalNHSOnDuty then
+            bleedoutDuration = 170000
+        elseif O >= 3 and not globalNHSOnDuty then
+            bleedoutDuration = 290000
+        else
+            bleedoutDuration = 50000
+        end
+        d = bleedoutDuration + 10000
     else
-        bleedoutDuration = 50000
+        d = 3000
     end
-    d = bleedoutDuration + 10000
     e = d / 1000
     h = 10
     k = GetGameTimer()
     l = d
     local P = false
-    if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
-        P = true
-    else
-        TriggerEvent('ARMA:IsInMoneyComa', true)
-        ExecuteCommand('storeallweapons')
-        if not tARMA.globalOnPoliceDuty() then
-            TriggerServerEvent('ARMA:InComa')
+    if not tARMA.isPurge() then
+        if GetVehiclePedIsIn(PlayerPedId(), false) ~= 0 then
+            P = true
+        else
+            TriggerEvent('ARMA:IsInMoneyComa', true)
+            ExecuteCommand('storeallweapons')
+            if not tARMA.globalOnPoliceDuty() then
+                TriggerServerEvent('ARMA:InComa')
+            end
+            ARMAserver.MoneyDrop()
         end
-        ARMAserver.MoneyDrop()
     end
     CreateThread(function()
         local Q = GetGameTimer()
@@ -280,17 +288,19 @@ RegisterNetEvent("ARMA:getNumberOfDocsOnline",function(O)
         f = false
         TriggerEvent("ARMA:SHOW_DEATH_SCREEN", e, R.name or "N/A", R.user_id or "N/A", R.weapon or "N/A", S)
     end)
-    while h <= 10 and h >= 0 do
-        Wait(1000)
-        h = h - 1
-    end
-    if P then
-        TriggerEvent('ARMA:IsInMoneyComa', true)
-        ExecuteCommand('storeallweapons')
-        if not tARMA.globalOnPoliceDuty() then
-            TriggerServerEvent('ARMA:InComa')
+    if not tARMA.isPurge() then
+        while h <= 10 and h >= 0 do
+            Wait(1000)
+            h = h - 1
         end
-        ARMAserver.MoneyDrop()
+        if P then
+            TriggerEvent('ARMA:IsInMoneyComa', true)
+            ExecuteCommand('storeallweapons')
+            if not tARMA.globalOnPoliceDuty() then
+                TriggerServerEvent('ARMA:InComa')
+            end
+            ARMAserver.MoneyDrop()
+        end
     end
 end)
 

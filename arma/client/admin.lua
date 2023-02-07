@@ -185,7 +185,9 @@ function tARMA.staffMode(status)
                 ClearPedLastWeaponDamage(PlayerPedId())
                 SetEntityProofs(PlayerPedId(),false,false,false,false,false,false,false,false)
                 SetEntityCanBeDamaged(PlayerPedId(),true)
-                SetEntityHealth(PlayerPedId(),200)
+                if not tARMA.isPurge() then
+                    SetEntityHealth(PlayerPedId(),200)
+                end
                 tARMA.setCustomization(a)
                 tARMA.notify('~g~Staff Powerz Deactivated.')
             end 
@@ -226,7 +228,9 @@ Citizen.CreateThread(function()
             ClearPedLastWeaponDamage(B)
             SetEntityProofs(B,true,true,true,true,true,true,true,true)
             SetEntityCanBeDamaged(B,false)
-            SetEntityHealth(B,200)
+            if not tARMA.isPurge() then
+                SetEntityHealth(B,200)
+            end
             if not isInTicket then
                 drawNativeText("~r~Reminder: You are /staffon'd.", 255, 0, 0, 255, true)
             end

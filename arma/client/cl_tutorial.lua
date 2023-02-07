@@ -543,7 +543,7 @@ RegisterCommand("tutorial",function()
 end,false)
 RegisterNetEvent("ARMA:playTutorial", ad)
 AddEventHandler("ARMA:onClientSpawn",function(ae, af)
-    if af then
+    if af and not tARMA.isPurge() then
         Citizen.Wait(10000)
         TriggerServerEvent("ARMA:checkTutorial")
     end
@@ -574,12 +574,10 @@ local function ag()
                     FreezeEntityPosition(j, true)
                     aj = true
                 end
-                pcall(
-                    function()
-                        SetTrainSpeed(j, ai)
-                        SetTrainCruiseSpeed(j, ai)
-                    end
-                )
+                pcall(function()
+                    SetTrainSpeed(j, ai)
+                    SetTrainCruiseSpeed(j, ai)
+                end)
                 SetTrainsForceDoorsOpen(false)
                 if aj and GetTrainDoorOpenRatio(j, 0) < 1.0 and k ~= "PREPARE_DEPART_INTRO" then
                     local L = GetFrameTime()
@@ -606,8 +604,11 @@ local function ag()
                 )
             end
         end
-        local E = PlayerPedId()
-        if GetSelectedPedWeapon(E) ~= GetHashKey("WEAPON_UNARMED") then
+        if not tARMA.isPurge() then
+            local E = PlayerPedId()
+            if GetSelectedPedWeapon(E) ~= GetHashKey("WEAPON_UNARMED") then
+                drawNativeNotification("Your weapon has been stored. You must complete the tutorial first.")
+            end
             tARMA.setWeapon(E, "WEAPON_UNARMED", true)
         end
     end
