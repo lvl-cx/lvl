@@ -1,11 +1,6 @@
 local cfg = {}
 
 cfg.simeonsCategories = {
-    ["Starter Cars"] = {
-        ["_config"] = {permissionTable={}},
-        ["kamaz6396"] = {"Kamaz 6396",0},
-        ["italia458"] = {"Ferrari 458",0},
-    },
     ["Compacts"] = {
         ["_config"] = {permissionTable={}},
         ["blista"] = {"Dinka Blista",2000},
@@ -423,7 +418,6 @@ cfg.simeonsInstances = {
         markerColourTable={0,200,0},
         permissionsTable={},
         categorys={
-            "Starter Cars",
             "Compacts",
             "Coupes",
             "Sports",
