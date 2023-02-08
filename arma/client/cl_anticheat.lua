@@ -49,7 +49,7 @@ Citizen.CreateThread(function()
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 15 then
                     TriggerServerEvent("ARMA:acType1")
-                    speedWarnings == 0
+                    speedWarnings = 0
 					return
 				end
             end
@@ -66,7 +66,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         speedWarnings = 0
-        return
+        Wait(30000)
     end
 end)
 
@@ -223,7 +223,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.return
+		Citizen.Wait(30000)
 		local DetectableTextures = {
 			{txd = "HydroMenu", txt = "HydroMenuHeader", name = "HydroMenu"},
 			{txd = "John", txt = "John2", name = "SugarMenu"},
