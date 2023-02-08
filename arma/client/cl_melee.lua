@@ -42,7 +42,7 @@ Citizen.CreateThread(function()
         SetPedConfigFlag(e, 250, false)
         SetPlayerTargetingMode(3)
         local h = GetSelectedPedWeapon(PlayerPedId())
-        if h == GetHashKey('WEAPON_UNARMED') or GetWeapontypeGroup(h) == GetHashKey("GROUP_MELEE") then
+        if h == GetHashKey('WEAPON_UNARMED') or h == GetHashKey('WEAPON_STAFFGUN') or GetWeapontypeGroup(h) == GetHashKey("GROUP_MELEE") then
             SetPlayerLockonRangeOverride(g, 50.0)
             SetPlayerLockon(g, true)
         else
