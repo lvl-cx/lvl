@@ -49,8 +49,8 @@ Citizen.CreateThread(function()
                 speedWarnings = speedWarnings + 1
                 if speedWarnings > 15 then
                     TriggerServerEvent("ARMA:acType1")
+                    speedWarnings == 0
 					return
-                    speedWarnings = 0
 				end
             end
         end
