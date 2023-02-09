@@ -109,6 +109,6 @@ for faction_name, faction_roles in pairs(cfg.Guild_Roles) do
 end
 
 
-cfg.Bot_Token = 'OTg4MTIwODUwNTQ2OTYyNTAy.GcITZ7.dvzSCOOX9do7-jhT3CIQvq3P02xxHmUuWKW7ug'
+cfg.Bot_Token = 'OTg4MTIwODUwNTQ2OTYyNTAy.GNQ3Bb.ITl3cHZvQ8uoiGFSYOSX1Wpk5Vn3_15xwI7e58'
 
 return cfg
