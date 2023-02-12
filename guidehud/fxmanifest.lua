@@ -1,11 +1,9 @@
 fx_version "bodacious"
 game "gta5"
 
-minify "yes"
-
 ui_page "HUD/ui.html"
 
-client_script "client_min/client.lua"
+client_script "client/client.lua"
 
 files {
     "config.js",

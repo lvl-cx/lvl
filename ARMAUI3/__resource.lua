@@ -1,8 +1,6 @@
 -- Manifest Version
 resource_manifest_version "77731fab-63ca-442c-a67b-abc70f28dfa5"
 
-minify "yes"
-
 -- UI
 ui_page "ui/index.html"
 files {
@@ -76,7 +74,7 @@ files {
 
 -- Client Scripts
 client_scripts {
-    "client_min/cl_skin.lua"
+    "client/cl_skin.lua"
 }
 
 -- Server Scripts
