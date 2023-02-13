@@ -14,7 +14,7 @@ exports.runcmd = (fivemexports, client, message, params) => {
     else {
         axios.get(`https://plugin.tebex.io/payments/${params[0]}`, {
             method: 'GET',
-            headers: { 'X-Tebex-Secret': "dce03e16078522544b88710291791bb8951f9db6"},
+            headers: { 'X-Tebex-Secret': "081a08ba0c15fe92eff9c4931ded2bda08e56603"},
         }).then((res) => {
             //console.log(res.data)
             if (!res.data) {
