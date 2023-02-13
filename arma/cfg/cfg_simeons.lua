@@ -1,6 +1,10 @@
 local cfg = {}
 
 cfg.simeonsCategories = {
+    ["Beta Cars"] = {
+        ["_config"] = {permissionTable={}},
+        ["mk8r"] = {"Golf r mk8",0},
+    },
     ["Starter Cars"] = {
         ["_config"] = {permissionTable={}},
         ["kamaz6396"] = {"Kamaz 6396",0},
