@@ -71,7 +71,7 @@ local webhooks = {
     ['anticheat'] = 'https://discord.com/api/webhooks/1074467379335155743/DVCULxYn6kOCOi9Lyxqdy0WcynhPYIhr8JMMvZ1NoUFeN7w0R0cj4spkoE-NIiVBSVaP',
     ['ban-evaders'] = 'https://discord.com/api/webhooks/1074467464110420028/2SDMhA3u_t85CffBeDSk7R54Ko15D8n4P7kbEvrVrvmhlrZJyY_PKqbMG645F4XWuFLk',
     -- dono
-    ['donation'] = 'https://discord.com/api/webhooks/1074467629248561162/Vt3DbZpSFYxyDOn8SpU2OCc6XWIsMrTnbkddraYCSA2b9kc6Y3O9uOJqPLtd_BE0ty65',
+    ['donation'] = 'https://discord.com/api/webhooks/1074695911508279406/P2uFen64uae9S7X2E1lFVSvmd1QWDM8uIxv1akxFBaw4V4j_2ds-Gl8yhY9kF_CWYG2o',
 }
 
 local webhookQueue = {}
