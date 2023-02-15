@@ -14,6 +14,6 @@ exports.settings = {
     VoteChannel: "・votes", // The vote channel
     minBid: 100000, // Minimum bid amount, 
     prevBid: 0,
-    carReportWebhook: "https://discord.com/api/webhooks/1065272623082254387/fZzHQDirxmKpD6hx9LlQr9Pjs6Y9VZOD59aGFLGJrugdVc9rAfQwyBtBSdmqL4YoKNAS",
-    botLogWebhook: "https://discord.com/api/webhooks/1048855441309974618/vjaF1ZWBI79CcNhmYIfdYDlg623YWzKlzm7ywWovAxXBlpPOV6f5DPzV5lrogUrSnx9c",
+    carReportWebhook: "https://discord.com/api/webhooks/1075425954362576896/63QmwJg_zCcPbW6ctsmbHLqf1RxT5gjiaqk4Gtwn8YVimgnBqFIdcIaanpRy9BjQTCDA",
+    botLogWebhook: "https://discord.com/api/webhooks/1075426144607801487/Dzo7py3I4Cqwtoosb9mHyk3IoD9trAQgzr0Ott3NBW6trtEwvfvNO76YSkkiCM8nAh4a",
 }

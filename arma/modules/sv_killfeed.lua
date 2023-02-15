@@ -1,5 +1,5 @@
-local killlogs = 'https://discord.com/api/webhooks/1061534881450045480/feT4_E2xz-PlyPYPwYDalZkCSgX6Nr2Fq27zZ78h2sMXYeoQqVHveK8cWI4fpCC2tAL6'
-local damagelogs = 'https://discord.com/api/webhooks/1061534924072570972/hkQKFWvKIiLBFWeXkbdr44CQAmeG3mSZfCBQZarM-Zr33jofnK-LZKkwW-sHthRu5vX9'
+local killlogs = 'https://discord.com/api/webhooks/1074840323773186160/4ADvFq6qtA11qDCuMZSVUdl_UcHOUofKkFxHfh8BI2U3gub_KgMZG4hOeHLf_yUACjYy'
+local damagelogs = 'https://discord.com/api/webhooks/1074840270648127498/L56Z3X_H7L0_qXWtvCH2tyipKsW0UzKp8Bd9nQhc6YalUXorGfA2TVedoKPr37Hsk38G'
 
 local f = module("arma-weapons", "cfg/weapons")
 f=f.weapons
