@@ -17,7 +17,7 @@ var config = {
   // Change Discord settings and link.
   'discord': {
     'show': true,
-    'discordLink': 'https://discord.gg/armarp',
+    'discordLink': 'https://discord.gg/oasisv',
   },
   // Change which key you have set in guidehud/client/client.lua
   'menuHotkey': 'F1',
@@ -37,12 +37,12 @@ var config = {
 // Home page annountments.
 var announcements = [
 	'Welcome to the #1 British FiveM Community.',
-  'Welcome to ARMA RP.',
+  'Welcome to OASIS RP.',
 ]
 
 // Add/Modify rules below.
 var gettingstarted = [
-  'Welcome to ARMA RP',
+  'Welcome to OASIS RP',
   'Here\'s a couple things you can do to get started within the city:', 
   '',
   '1. To get started, Head to Simeons and purchase your first car.',

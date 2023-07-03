@@ -93,7 +93,7 @@
       </b-button>
     </div>
 
-    <p class="mt-2 p-2 font-weight-bold">Congratulations, you have successfully setup <em>mysql-async</em> to work with the arma server.</p>
+    <p class="mt-2 p-2 font-weight-bold">Congratulations, you have successfully setup <em>mysql-async</em> to work with the oasis server.</p>
   </div>  
 </template>
 

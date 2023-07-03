@@ -16161,7 +16161,7 @@ var ConnectionConfig = __webpack_require__(9);
 
 
 function getConfigFromConnectionString() {
-  const connectionString = GetConvar('mysql_connection_string', 'mysql://root@localhost/arma');
+  const connectionString = GetConvar('mysql_connection_string', 'mysql://root@localhost/oasis');
   let cfg = {};
 
   if (/(?:database|initial\scatalog)=(?:(.*?);|(.*))/gi.test(connectionString)) {
@@ -16196,7 +16196,7 @@ const defaultCfg = {
   host: '127.0.0.1',
   user: 'root',
   password: '',
-  database: 'arma',
+  database: 'oasis',
   supportBigNumbers: true,
   multipleStatements: true
 }; // Switch to just connecting immediately

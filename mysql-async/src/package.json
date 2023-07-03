@@ -1,7 +1,7 @@
 {
   "name": "mysql-async",
   "version": "3.3.2",
-  "description": "arma-mysql-async",
+  "description": "oasis-mysql-async",
   "private": true,
   "scripts": {
     "build": "webpack --progress",

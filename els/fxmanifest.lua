@@ -20,8 +20,8 @@ files {
 	"dlc_security/siren_one.awc",
 	"data/dlcsecurity_sounds.dat54.nametable",
 	"data/dlcsecurity_sounds.dat54.rel",
-	"data/dlc_armaheist_sounds.dat54.rel",
-	"dlc_armaheist/glass_break.awc",
+	"data/dlc_oasisheist_sounds.dat54.rel",
+	"dlc_oasisheist/glass_break.awc",
 	"dlc_elsaudio/elsaudio_one.awc",
     "data/elsaudio_sounds.dat54.rel",
     "data/elsaudio_sounds.dat54.nametable",
@@ -38,8 +38,8 @@ data_file "AUDIO_GAMEDATA" "data/xvehicles_game.dat"
 data_file "AUDIO_WAVEPACK" "dlc_alarm"
 data_file "AUDIO_SOUNDDATA" "data/dlcalarm_sounds.dat"
 data_file "AUDIO_WAVEPACK" "dlc_security"
-data_file "AUDIO_WAVEPACK"  "dlc_armaheist"
-data_file "AUDIO_SOUNDDATA" "data/dlc_armaheist_sounds.dat"
+data_file "AUDIO_WAVEPACK"  "dlc_oasisheist"
+data_file "AUDIO_SOUNDDATA" "data/dlc_oasisheist_sounds.dat"
 data_file "AUDIO_WAVEPACK" "dlc_elsaudio"
 data_file "AUDIO_SOUNDDATA" "data/elsaudio_sounds.dat"
 data_file "AUDIO_WAVEPACK" "dlc_halloween"

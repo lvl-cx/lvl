@@ -11,7 +11,7 @@ const remark = {
 
 module.exports = {
   siteName: 'mysql-async Documentation',
-  pathPrefix: '/arma-mysql-async',
+  pathPrefix: '/oasis-mysql-async',
   plugins: [
     {
       use: '@gridsome/source-filesystem',

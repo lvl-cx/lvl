@@ -106,6 +106,6 @@ exports("setMaxProximityMode", function(maxMode)
 	end
 end)
 
-exports("clearMaxProximityMode", function()
+exports("cleOASISxProximityMode", function()
 	maxProximityMode = 1000
 end)

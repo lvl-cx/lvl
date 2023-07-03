@@ -5517,7 +5517,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
       'ke':' ac co go info me mobi ne or sc ',
       'kh':' com edu gov mil net org per ',
       'ki':' biz com de edu gov info mob net org tel ',
-      'km':' asso com coop edu gouv k medecin mil nom notaires pharmaciens presse tm veterinaire ',
+      'km':' asso com coop edu gouv k medecin mil nom notaires phoasisciens presse tm veterinaire ',
       'kn':' edu gov net org ',
       'kr':' ac busan chungbuk chungnam co daegu daejeon es gangwon go gwangju gyeongbuk gyeonggi gyeongnam hs incheon jeju jeonbuk jeonnam k kg mil ms ne or pe re sc seoul ulsan ',
       'kw':' com edu gov net org ',
@@ -24048,7 +24048,7 @@ module.exports = {
     // Main source: https://www.w3.org/TR/encoding/#gbk-encoder
     // http://icu-project.org/docs/papers/gb18030.html
     // http://source.icu-project.org/repos/icu/data/trunk/charset/data/xml/gb-18030-2000.xml
-    // http://www.khngai.com/chinese/charmap/tblgbk.php?page=0
+    // http://www.khngai.com/chinese/choasisp/tblgbk.php?page=0
     'gb18030': {
         type: '_dbcs',
         table: function() { return __webpack_require__(18).concat(__webpack_require__(45)) },

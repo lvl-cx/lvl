@@ -30,7 +30,7 @@ RegisterNUICallback('closeGuideHud', function(data, cb)
     bIsOpen = false
 end)
 
-RegisterNetEvent("ARMA:setIsNewPlayer", function()
+RegisterNetEvent("OASIS:setIsNewPlayer", function()
 	bIsNewPlayer = true
 end)
 

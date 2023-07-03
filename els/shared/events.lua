@@ -1,10 +1,10 @@
 local lookup = {
-    ["ARMAELS:changeStage"] = "ARMAELS:1",
-    ["ARMAELS:toggleSiren"] = "ARMAELS:2",
-    ["ARMAELS:toggleBullhorn"] = "ARMAELS:3",
-    ["ARMAELS:patternChange"] = "ARMAELS:4",
-    ["ARMAELS:vehicleRemoved"] = "ARMAELS:5",
-    ["ARMAELS:indicatorChange"] = "ARMAELS:6"
+    ["OASISELS:changeStage"] = "OASISELS:1",
+    ["OASISELS:toggleSiren"] = "OASISELS:2",
+    ["OASISELS:toggleBullhorn"] = "OASISELS:3",
+    ["OASISELS:patternChange"] = "OASISELS:4",
+    ["OASISELS:vehicleRemoved"] = "OASISELS:5",
+    ["OASISELS:indicatorChange"] = "OASISELS:6"
 }
 
 local origRegisterNetEvent = RegisterNetEvent
@@ -19,7 +19,7 @@ if IsDuplicityVersion() then
     end
 
     TriggerClientScopeEvent = function(name, target, ...)
-        exports["arma"]:TriggerClientScopeEvent(lookup[name], target, ...)
+        exports["oasis"]:TriggerClientScopeEvent(lookup[name], target, ...)
     end
 else
     local origTriggerServerEvent = TriggerServerEvent
