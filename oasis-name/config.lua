@@ -4,7 +4,7 @@ Config.ShowServerName = true -- Set true to show the given Config.ServerName bel
 
 Config.ServerName = "OasisV" -- Shows this name if Config.ShowServerName = true
 
-Config.ShowPlayerName = false -- Set true to show to player name
+Config.ShowPlayerName = true -- Set true to show to player name
 
 Config.ShowPlayerID = false -- Set True to show to player id
 

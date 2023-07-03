@@ -1,10 +1,10 @@
-RegisterNetEvent('TimeAndDateDisplay-FiveM')
-AddEventHandler('TimeAndDateDisplay-FiveM', function(time)
+RegisterNetEvent('oasis-name')
+AddEventHandler('oasis-name', function(time)
     if Config.ShowServerName and Config.ServerName then
         time = time .." | © " .. Config.ServerName
     end
     if Config.ShowPlayerName then
-        time = time .."\nPlayer Name: " .. GetPlayerName(NetworkGetEntityOwner(PlayerPedId()))
+        time = time .."\n" .. GetPlayerName(NetworkGetEntityOwner(PlayerPedId()))
     end
     if Config.ShowPlayerID then
         time = time .."\nPlayer ID: " .. GetPlayerServerId(NetworkGetEntityOwner(PlayerPedId()))

@@ -33,7 +33,7 @@ end
 
 Citizen.CreateThread(function()
     while true do
-        TriggerClientEvent('TimeAndDateDisplay-FiveM', -1, getTime())
+        TriggerClientEvent('oasis-name', -1, getTime())
         Wait(30000)
     end
 end)
@@ -41,11 +41,11 @@ end)
 AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() == resourceName) then
         Wait(2500)
-        TriggerClientEvent('TimeAndDateDisplay-FiveM', -1, getTime())
+        TriggerClientEvent('oasis-name', -1, getTime())
     end
 end)
   
 
 AddEventHandler("playerJoining", function (data)
-    TriggerClientEvent('TimeAndDateDisplay-FiveM', source, getTime())
+    TriggerClientEvent('oasis-name', source, getTime())
 end)
